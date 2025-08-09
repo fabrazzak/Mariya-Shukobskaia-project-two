@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gem Jam - Premium Survival Game Developer</title>
+    <meta name="description"
+        content="Gem Jam creates immersive survival games like Survival Island: Dinosaurs Pro. Explore our collection of adventure games with stunning 3D graphics and engaging gameplay.">
+    <meta name="keywords"
+        content="survival games, dinosaur games, offline games, pixel ark, gem jam, adventure games, mobile games">
+    <link rel="canonical" href="https://gemjamsurvival.com/">   
+    <link rel="icon" href="/images/favicon.png" type="image/x-icon">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4F46E5',
+                        secondary: '#10B981',
+                        dark: '#1F2937',
+                        darker: '#111827',
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 6s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+</head>
+
+<body class="bg-darker text-gray-100 font-sans antialiased">
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-[#111c1c] backdrop-blur-md z-50 border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center ">
+                    <a href="/" class="flex items-center">
+                        <img src="/images/logo.png" alt="Gem Jam Logo" class="h-14 w-auto rounded-md">
+                      
+                    </a>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="/" class="text-white hover:text-white px-3 py-2 font-medium transition-colors duration-300">Home</a>
+                    <a href="/games/" class="text-white hover:text-white px-3 py-2 font-medium transition-colors duration-300">Games</a>
+                    <a href="/blog/" class="text-white hover:text-white px-3 py-2 font-medium transition-colors duration-300">Blog</a>
+                    <a href="/contact/" class="text-white hover:text-white px-3 py-2 font-medium transition-colors duration-300">Contact</a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center text-white">
+                    <button type="button" id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-white hover:bg-gray-700 focus:outline-none">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile menu -->
+        <div class="md:hidden hidden origin-top" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="/" class="bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium">Home</a>
+                <a href="/games/" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Games</a>
+                <a href="/blog/" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Blog</a>
+                <a href="/contact/" class="text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-24 pb-20 md:pt-32 md:pb-28 min-h-[100vh] flex justify-center items-center overflow-hidden">
+        <!-- Background Video -->
+        <div class="absolute inset-0 z-0">
+            <video autoplay loop muted playsinline class="w-full h-full object-cover opacity-30">
+                <source src="https://play-games.googleusercontent.com/vp/mp4/1280x720/PGKDyUdlQ4M.mp4" type="video/mp4">
+            </video>
+            <div class="absolute inset-0 "></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="md:grid md:grid-cols-2 md:gap-12 items-center">
+                <div class="text-center md:text-left" data-aos="fade-right">
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight mb-6">
+                        <span class="block text-white">Immersive</span>
+                        <span class="block text-secondary">Survival Adventures</span>
+                    </h1>
+                    <p class="mt-3 text-lg md:text-xl text-gray-300 max-w-lg">
+                        Gem Jam creates premium survival games with stunning 3D graphics, engaging gameplay, and endless
+                        adventures. Explore wild islands, tame dinosaurs, and test your survival skills.
+                    </p>
+                    <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                        <a href="/games/" class="px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary hover:bg-primary/90 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                            Explore Games
+                        </a>
+                        <a href="/blog/" class="px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gray-700 hover:bg-gray-600 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                            Latest News
+                        </a>
+                    </div>
+                </div>
+
+                <div class="mt-12 md:mt-0" data-aos="fade-left">
+                    <div class="relative mx-auto max-w-md">
+                        <img src="/images/hero-phone.webp" alt="Survival Island Game on Mobile" class="w-full h-auto animate-float">
+                        <div class="absolute -bottom-8 -left-8 w-24 h-24 rounded-full bg-secondary/20 animate-pulse-slow"></div>
+                        <div class="absolute -top-8 -right-8 w-16 h-16 rounded-full bg-primary/20 animate-pulse-slow animation-delay-1000"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Games Section -->
+    <section id="featured-games" class="py-16 bg-dark">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl font-extrabold text-white sm:text-4xl">
+                    Our Featured Games
+                </h2>
+                <p class="mt-4 max-w-2xl text-xl text-gray-300 mx-auto">
+                    Discover our collection of immersive survival games
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Game 1 - Survival Island: Dinosaurs Pro -->
+                <div class="bg-darker rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300 group" data-aos="fade-up" data-aos-delay="100">
+                    <div class="relative overflow-hidden h-48">
+                        <img src="/images/game1.webp" alt="Survival Island: Dinosaurs Pro" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-darker/90 via-transparent to-transparent"></div>
+                        <div class="absolute bottom-4 left-4">
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-primary text-white">
+                                Featured
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="text-xl font-bold text-white">Survival Island: Dinosaurs Pro</h3>
+                                <div class="flex items-center mt-1">
+                                    <div class="flex text-yellow-400">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                    </div>
+                                    <span class="ml-2 text-gray-400 text-sm">4.7 (10K+ downloads)</span>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="mt-3 text-gray-300">
+                            Stranded on a dinosaur island, craft weapons, build shelters, and survive against
+                            prehistoric creatures in this offline adventure.
+                        </p>
+                        <div class="mt-4 flex flex-wrap gap-2">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-800 text-gray-300">Survival</span>
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-800 text-gray-300">Adventure</span>
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-800 text-gray-300">Offline</span>
+                        </div>
+                        <div class="mt-6">
+                            <a href="https://play.google.com/store/apps/details?id=com.gemjem.survival.island.games.dinosaur.stranded.deep.jurassic.world.far.cry.green.hell" target="_blank" class="w-full inline-flex justify-center items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-secondary hover:bg-secondary/90 transition-colors duration-300">
+                                <i class="fab fa-google-play mr-2"></i> Download on Play Store
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Game 2 - Space Survival: Mars RPG Pro -->
+                <div class="bg-darker rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300 group" data-aos="fade-up" data-aos-delay="200">
+                    <div class="relative overflow-hidden h-48">
+                        <img src="/images/game2.webp" alt="Space Survival: Mars RPG Pro" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-darker/90 via-transparent to-transparent"></div>
+                        <div class="absolute bottom-4 left-4">
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-primary text-white">
+                                Featured
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="text-xl font-bold text-white">Space Survival: Mars RPG Pro</h3>
+                                <div class="flex items-center mt-1">
+                                    <div class="flex text-yellow-400">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                    </div>
+                                    <span class="ml-2 text-gray-400 text-sm">4.9 (100K+ downloads)</span>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="mt-3 text-gray-300">
+                            This game is for fans of survival space games, for true connoisseurs of mars RPG games
+                            atmosphere, who like to be survivor and collect resources.
+                        </p>
+                        <div class="mt-4 flex flex-wrap gap-2">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-800 text-gray-300">Survival</span>
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-800 text-gray-300">Adventure</span>
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-800 text-gray-300">Offline</span>
+                        </div>
+                        <div class="mt-6">
+                            <a href="https://play.google.com/store/apps/details?id=com.nfg.space.survival.alien.rpg.spaceship.survivor.no.man.s.sky.pro" target="_blank" class="w-full inline-flex justify-center items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-secondary hover:bg-secondary/90 transition-colors duration-300">
+                                <i class="fab fa-google-play mr-2"></i> Download on Play Store
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Game 3 - Survival Island: Dinosaurs Pro (Duplicate) -->
+                <div class="bg-darker rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300 group" data-aos="fade-up" data-aos-delay="300">
+                    <div class="relative overflow-hidden h-48">
+                        <img src="/images/game3.webp" alt="Survival Island: Dinosaurs Pro" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-darker/90 via-transparent to-transparent"></div>
+                        <div class="absolute bottom-4 left-4">
+                            <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-primary text-white">
+                                Featured
+                            </span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3 class="text-xl font-bold text-white">Survival Island: Craft & Build</h3>
+                                <div class="flex items-center mt-1">
+                                    <div class="flex text-yellow-400">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                    </div>
+                                    <span class="ml-2 text-gray-400 text-sm">4.8 (10M+ downloads)</span>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="mt-3 text-gray-300">
+                            Step into a free, open world survival simulator where zombies, Jurassic horrors, and primal monsters dominate a tropical wasteland.
+                        </p>
+                        <div class="mt-4 flex flex-wrap gap-2">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-800 text-gray-300">Survival</span>
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-800 text-gray-300">Adventure</span>
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-800 text-gray-300">Offline</span>
+                        </div>
+                        <div class="mt-6">
+                            <a href="https://play.google.com/store/apps/details?id=com.reeltoreal.survivor_adventure" target="_blank" class="w-full inline-flex justify-center items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-secondary hover:bg-secondary/90 transition-colors duration-300">
+                                <i class="fab fa-google-play mr-2"></i> Download on Play Store
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-12 text-center" data-aos="fade-up">
+                <a href="/games/" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gray-700 hover:bg-gray-600 transition-colors duration-300">
+                    View All Games <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-16 bg-gradient-to-b from-dark to-darker">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="lg:text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl font-extrabold text-white sm:text-4xl">
+                    Why Players Love Our Games
+                </h2>
+                <p class="mt-4 max-w-2xl text-xl text-gray-300 lg:mx-auto">
+                    We create immersive experiences with cutting-edge features
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-darker/50 p-8 rounded-xl border border-gray-800 hover:border-secondary transition-colors duration-300" data-aos="fade-up" data-aos-delay="100">
+                    <div class="flex items-center mb-4">
+                        <div class="flex-shrink-0 bg-primary/10 p-3 rounded-lg">
+                            <i class="fas fa-gamepad text-secondary text-xl"></i>
+                        </div>
+                        <h3 class="text-lg font-medium text-white ml-4">Immersive Gameplay</h3>
+                    </div>
+                    <p class="text-gray-300">
+                        Our games offer deep survival mechanics with crafting, building, and exploration systems that
+                        keep players engaged for hours.
+                    </p>
+                </div>
+
+                <div class="bg-darker/50 p-8 rounded-xl border border-gray-800 hover:border-secondary transition-colors duration-300" data-aos="fade-up" data-aos-delay="200">
+                    <div class="flex items-center mb-4">
+                        <div class="flex-shrink-0 bg-primary/10 p-3 rounded-lg">
+                            <i class="fas fa-mobile-alt text-secondary text-xl"></i>
+                        </div>
+                        <h3 class="text-lg font-medium text-white ml-4">Optimized for Mobile</h3>
+                    </div>
+                    <p class="text-gray-300">
+                        Designed specifically for mobile devices with intuitive controls and performance optimizations
+                        for all hardware levels.
+                    </p>
+                </div>
+
+                <div class="bg-darker/50 p-8 rounded-xl border border-gray-800 hover:border-secondary transition-colors duration-300" data-aos="fade-up" data-aos-delay="300">
+                    <div class="flex items-center mb-4">
+                        <div class="flex-shrink-0 bg-primary/10 p-3 rounded-lg">
+                            <i class="fas fa-wifi text-secondary text-xl"></i>
+                        </div>
+                        <h3 class="text-lg font-medium text-white ml-4">Offline Play</h3>
+                    </div>
+                    <p class="text-gray-300">
+                        All our games support full offline play - perfect for travel or areas with limited internet
+                        connectivity.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section class="py-16 bg-dark">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl font-extrabold text-white sm:text-4xl">
+                    Latest From Our Blog
+                </h2>
+                <p class="mt-4 max-w-2xl text-xl text-gray-300 mx-auto">
+                    Game updates, development insights, and survival strategies
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Blog Post 1 -->
+                <div class="bg-darker rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300" data-aos="fade-up" data-aos-delay="100">
+                    <a href="/blog/survival-island-update/" class="block">
+                        <div class="relative h-48 w-full">
+                            <img src="/images/blog-featured.png" alt="Survival Island Update" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-darker/90 via-transparent to-transparent"></div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center text-sm text-gray-400 mb-2">
+                                <span>May 15, 2025</span>
+                                <span class="mx-2">•</span>
+                                <span>8 min read</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-3 hover:text-secondary transition-colors duration-300">
+                                Survival Island v1.5: New Caves & Crafting Recipes
+                            </h3>
+                            <p class="text-gray-300 mb-4">
+                                Discover what's new in our latest Survival Island update, including two massive cave systems and 12 new crafting recipes.
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-800 text-gray-300">Update</span>
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-800 text-gray-300">Features</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Blog Post 2 -->
+                <div class="bg-darker rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300" data-aos="fade-up" data-aos-delay="200">
+                    <a href="/blog/designing-dinosaur-ai/" class="block">
+                        <div class="relative h-48 w-full">
+                            <img src="/images/blog2.image" alt="Designing Dinosaur AI" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-darker/90 via-transparent to-transparent"></div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center text-sm text-gray-400 mb-2">
+                                <span>April 28, 2025</span>
+                                <span class="mx-2">•</span>
+                                <span>6 min read</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-3 hover:text-secondary transition-colors duration-300">
+                                Behind the Scenes: Designing Dinosaur AI
+                            </h3>
+                            <p class="text-gray-300 mb-4">
+                                How we created believable dinosaur behaviors that challenge players without feeling unfair in Survival Island.
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-800 text-gray-300">Game Design</span>
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-800 text-gray-300">AI</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Blog Post 3 -->
+                <div class="bg-darker rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300" data-aos="fade-up" data-aos-delay="300">
+                    <a href="/blog/top-survival-tips/" class="block">
+                        <div class="relative h-48 w-full">
+                            <img src="/images/blog3.webp" alt="Top Survival Tips" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-darker/90 via-transparent to-transparent"></div>
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center text-sm text-gray-400 mb-2">
+                                <span>April 15, 2025</span>
+                                <span class="mx-2">•</span>
+                                <span>5 min read</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white mb-3 hover:text-secondary transition-colors duration-300">
+                                Top 10 Survival Tips for New Players
+                            </h3>
+                            <p class="text-gray-300 mb-4">
+                                Essential tips to help you survive your first week and establish a secure base in Survival Island: Dinosaurs Pro.
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-800 text-gray-300">Tips</span>
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-800 text-gray-300">Guide</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="mt-12 text-center" data-aos="fade-up">
+                <a href="/blog/" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gray-700 hover:bg-gray-600 transition-colors duration-300">
+                    View All Blog Posts <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-16 bg-gradient-to-b from-dark to-darker">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-3xl font-extrabold text-white sm:text-4xl">
+                    What Players Say
+                </h2>
+                <p class="mt-4 max-w-2xl text-xl text-gray-300 mx-auto">
+                    Don't just take our word for it - hear from our community
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-darker p-6 rounded-lg shadow-lg" data-aos="fade-up" data-aos-delay="100">
+                    <div class="flex items-center mb-4">
+                        <div class="flex-shrink-0">
+                            <img class="h-10 w-10 rounded-full" src="/images/avatar1.jpg" alt="User avatar">
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm font-medium text-white">Tigran Avetisyan</p>
+                            <div class="flex space-x-1 text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-gray-300 italic">
+                        "Survival Island: Dinosaurs Pro is hands down the best mobile survival game I've played. The
+                        graphics are stunning and the gameplay is so immersive. I've spent hours exploring and building
+                        my base!"
+                    </div>
+                </div>
+
+                <div class="bg-darker p-6 rounded-lg shadow-lg" data-aos="fade-up" data-aos-delay="200">
+                    <div class="flex items-center mb-4">
+                        <div class="flex-shrink-0">
+                            <img class="h-10 w-10 rounded-full" src="/images/avatar2.jpeg" alt="User avatar">
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm font-medium text-white">Hayk Sargsyan</p>
+                            <div class="flex space-x-1 text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-gray-300 italic">
+                        "The pixel mode in Survival Island is genius! It's like having two games in one. The developers
+                        really listen to their community and keep adding great features."
+                    </div>
+                </div>
+
+                <div class="bg-darker p-6 rounded-lg shadow-lg" data-aos="fade-up" data-aos-delay="300">
+                    <div class="flex items-center mb-4">
+                        <div class="flex-shrink-0">
+                            <img class="h-10 w-10 rounded-full" src="/images/avatar3.jpeg" alt="User avatar">
+                        </div>
+                        <div class="ml-3">
+                            <p class="text-sm font-medium text-white">Ani Grigoryan</p>
+                            <div class="flex space-x-1 text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="text-gray-300 italic">
+                        "As a fan of survival games, I appreciate the depth of crafting and building in Gem Jam's games.
+                        The dinosaur AI is impressive - they actually feel like living creatures!"
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="relative py-20 overflow-hidden bg-gradient-to-r from-primary/20 to-secondary/20">
+        <div class="absolute inset-0 bg-[url('/images/blog-featured.png')] opacity-10"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="text-center" data-aos="zoom-in">
+                <h2 class="text-3xl font-extrabold text-white sm:text-4xl">
+                    Ready for Your Next Adventure?
+                </h2>
+                <p class="mt-4 max-w-2xl text-xl text-gray-300 mx-auto">
+                    Download our games today and experience premium survival gameplay on your mobile device.
+                </p>
+                <div class="mt-8 flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="https://play.google.com/store/apps/details?id=com.gemjem.survival.island.games.dinosaur.stranded.deep.jurassic.world.far.cry.green.hell" target="_blank" class="px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary hover:bg-primary/90 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1 inline-flex items-center">
+                        <i class="fab fa-google-play mr-2 text-xl"></i> Get on Google Play
+                    </a>
+                    <a href="/games/" class="px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-gray-700 hover:bg-gray-600 shadow-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1">
+                        Explore All Games
+                    </a> 
+                 </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-[#111c1c] pt-12 pb-8 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex-shrink-0 flex items-center mb-4">
+                        <a href="/" class="flex items-center">
+                            <img src="/images/logo.png" alt="Gem Jam Logo" class="h-14 w-auto rounded-md">
+                        </a>
+                    </div>
+                    <p class="text-gray-400 mt-2 text-sm">
+                        Creating immersive survival games for mobile platforms.
+                    </p>
+                    <a href="https://play.google.com/store/apps/details?id=com.gemjem.survival.island.games.dinosaur.stranded.deep.jurassic.world.far.cry.green.hell" class="inline-block mt-6">
+                        <img class="w-32" src="/images/play-store.png" alt="Get it on Google Play">
+                    </a>
+                    <div class="flex space-x-4 mt-5">
+                        <a href="https://www.youtube.com/c/NotFoundGames/featured" target="_blank" class="text-gray-400 hover:text-white transition-colors duration-300">
+                            <i class="fab fa-youtube text-lg"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-white font-semibold mb-4">Company</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/about/" class="text-gray-400 hover:text-white transition-colors duration-300">About Us</a></li>
+                        <li><a href="/blog/" class="text-gray-400 hover:text-white transition-colors duration-300">Blog</a></li>
+                        <li><a href="/careers/" class="text-gray-400 hover:text-white transition-colors duration-300">Careers</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-white font-semibold mb-4">Support</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/contact/" class="text-gray-400 hover:text-white transition-colors duration-300">Contact Us</a></li>
+                        <li><a href="/privacy/" class="text-gray-400 hover:text-white transition-colors duration-300">Privacy Policy</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-white font-semibold mb-4">Connect</h3>
+                    <div class="text-gray-400">
+                        <p class="mb-1">36 Manushian</p>
+                        <p class="mb-1">Yerevan 0012, Armenia</p>
+                        <p class="mb-1">+374 93 320134</p>
+                        <p>gemjamllcarm@gmail.com</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-12 pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 text-sm">
+                    &copy; 2025 Gem Jam, LLC. All rights reserved.
+                </p>
+                <div class="mt-4 md:mt-0 flex space-x-6">
+                    <a href="/terms/" class="text-gray-400 hover:text-white text-sm transition-colors duration-300">Terms of Service</a>
+                    <a href="/privacy/" class="text-gray-400 hover:text-white text-sm transition-colors duration-300">Privacy Policy</a>
+                    <a href="/cookies/" class="text-gray-400 hover:text-white text-sm transition-colors duration-300">Cookies</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cookies Consent -->
+    <div id="cookies-consent" class="fixed bottom-0 left-0 right-0 bg-gray-800 text-white p-4 shadow-lg hidden z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <p class="text-gray-300 mb-4 md:mb-0 md:mr-4">
+                    We use cookies to enhance your experience. By continuing to visit this site you agree to our use of
+                    cookies.
+                </p>
+                <div class="flex space-x-4">
+                    <button id="cookies-accept" class="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/90 transition-colors duration-300">
+                        Accept
+                    </button>
+                    <button id="cookies-decline" class="px-4 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-600 transition-colors duration-300">
+                        Decline
+                    </button>
+                    <a href="/cookies/" class="px-4 py-2 text-gray-300 hover:text-white transition-colors duration-300">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS animation
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true
+        });
+
+        // Mobile menu toggle with icon change
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcons = mobileMenuButton.querySelectorAll('svg');
+        
+        mobileMenuButton.addEventListener('click', function() {
+            mobileMenu.classList.toggle('hidden');
+            menuIcons.forEach(icon => icon.classList.toggle('hidden'));
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                menuIcons[0].classList.remove('hidden');
+                menuIcons[1].classList.add('hidden');
+            });
+        });
+
+        // Cookies consent
+        if (!localStorage.getItem('cookiesAccepted')) {
+            document.getElementById('cookies-consent').classList.remove('hidden');
+        }
+
+        document.getElementById('cookies-accept').addEventListener('click', function() {
+            localStorage.setItem('cookiesAccepted', 'true');
+            document.getElementById('cookies-consent').classList.add('hidden');
+        });
+
+        document.getElementById('cookies-decline').addEventListener('click', function() {
+            document.getElementById('cookies-consent').classList.add('hidden');
+        });
+    </script>
+</body>
+
+</html>

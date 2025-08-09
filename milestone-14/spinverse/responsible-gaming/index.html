@@ -1,0 +1,1686 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsible Gaming | SpinVerse Social Casino</title>
+    <meta name="description"
+        content="SpinVerse is committed to responsible gaming. Learn about our policies, tools, and resources to ensure a safe gaming experience.">
+    <meta name="keywords" content="responsible gaming, social casino safety, gaming limits, gambling awareness">
+    <link rel="canonical" href="https://spinverse.org/responsible-gaming/" />
+    <link rel="icon" href="/images/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800&family=Montserrat:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --primary: #8B5CF6;
+            --secondary: #F59E0B;
+            --accent: #EC4899;
+            --dark: #0F172A;
+            --darker: #020617;
+            --light: #F8FAFC;
+            --gold: #D4AF37;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--darker);
+            color: var(--light);
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        .font-serif {
+            font-family: 'Playfair Display', serif;
+        }
+
+        /* Luxury Glass Morphism Effect */
+        .glass-card {
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+        }
+
+        .gold-border {
+            border: 1px solid rgba(212, 175, 55, 0.3);
+        }
+
+        .gold-text {
+            color: var(--gold);
+        }
+
+        /* Diamond Pattern Overlay */
+        .diamond-pattern {
+            background-image:
+                linear-gradient(135deg, rgba(139, 92, 246, 0.03) 25%, transparent 25%),
+                linear-gradient(225deg, rgba(139, 92, 246, 0.03) 25%, transparent 25%),
+                linear-gradient(315deg, rgba(139, 92, 246, 0.03) 25%, transparent 25%),
+                linear-gradient(45deg, rgba(139, 92, 246, 0.03) 25%, transparent 25%);
+            background-size: 20px 20px;
+        }
+
+        /* Animated Gradient Border */
+        .gradient-border {
+            position: relative;
+            border-radius: 12px;
+        }
+
+        .gradient-border::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            z-index: -1;
+            background: linear-gradient(45deg,
+                    var(--primary),
+                    var(--accent),
+                    var(--secondary),
+                    var(--primary));
+            background-size: 400% 400%;
+            border-radius: 14px;
+            animation: gradientBorder 8s ease infinite;
+            opacity: 0.8;
+        }
+
+        @keyframes gradientBorder {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: var(--dark);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 4px;
+        }
+
+        /* Game Card Hover Effect */
+        .game-card {
+            perspective: 1000px;
+            transform-style: preserve-3d;
+            transition: transform 0.3s ease;
+        }
+
+        .game-card:hover {
+            transform: translateY(-10px) scale(1.03);
+        }
+
+        .game-card-inner {
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+        .game-card:hover .game-card-inner {
+            transform: rotateY(15deg);
+        }
+
+        /* Luxury Button */
+        .luxury-btn {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+            transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        .luxury-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(139, 92, 246, 0.3);
+        }
+
+        .luxury-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--accent), var(--primary));
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .luxury-btn:hover::before {
+            opacity: 1;
+        }
+
+        /* Gold Button */
+        .gold-btn {
+            background: linear-gradient(135deg, var(--gold), #FBBF24);
+            color: #1E293B;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gold-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(212, 175, 55, 0.3);
+        }
+
+        /* Custom Hamburger Menu */
+        .hamburger-menu {
+            width: 30px;
+            height: 20px;
+            position: relative;
+            transform: rotate(0deg);
+            transition: .5s ease-in-out;
+            cursor: pointer;
+        }
+
+        .hamburger-menu span {
+            display: block;
+            position: absolute;
+            height: 3px;
+            width: 100%;
+            background: var(--light);
+            border-radius: 3px;
+            opacity: 1;
+            left: 0;
+            transform: rotate(0deg);
+            transition: .25s ease-in-out;
+        }
+
+        .hamburger-menu span:nth-child(1) {
+            top: 0px;
+            transform-origin: left center;
+        }
+
+        .hamburger-menu span:nth-child(2) {
+            top: 10px;
+            transform-origin: left center;
+        }
+
+        .hamburger-menu span:nth-child(3) {
+            top: 20px;
+            transform-origin: left center;
+        }
+
+        .hamburger-menu.open span:nth-child(1) {
+            transform: rotate(45deg);
+            top: -3px;
+            left: 4px;
+        }
+
+        .hamburger-menu.open span:nth-child(2) {
+            width: 0%;
+            opacity: 0;
+        }
+
+        .hamburger-menu.open span:nth-child(3) {
+            transform: rotate(-45deg);
+            top: 19px;
+            left: 4px;
+        }
+
+        /* Floating Elements Animation */
+        @keyframes float {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-15px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-2 {
+            animation: float 5s ease-in-out infinite 1s;
+        }
+
+        .floating-3 {
+            animation: float 7s ease-in-out infinite 0.5s;
+        }
+
+        /* Game Popup */
+        .game-popup {
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+            z-index: 100;
+        }
+
+        .game-popup.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .game-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            border-radius: 12px;
+        }
+
+        /* Login Modal */
+        .login-modal {
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.4s ease;
+            z-index: 90;
+        }
+
+        .login-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        /* Sparkle Effect */
+        .sparkle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: white;
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 0;
+        }
+
+        /* User Dropdown */
+        .user-dropdown {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            z-index: 50;
+        }
+
+        .user-dropdown.active {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        /* Cookie Consent Banner */
+        .cookie-consent {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            right: 20px;
+            max-width: 600px;
+            padding: 20px;
+            background: var(--dark);
+            border: 1px solid var(--primary);
+            border-radius: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            z-index: 999;
+            transform: translateY(150%);
+            transition: transform 0.5s ease;
+        }
+
+        .cookie-consent.show {
+            transform: translateY(0);
+        }
+
+        /* Responsible Gaming Styles */
+        .policy-card {
+            transition: all 0.3s ease;
+        }
+
+        .policy-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(139, 92, 246, 0.15);
+        }
+
+        .tool-icon {
+            background: rgba(139, 92, 246, 0.1);
+            border: 1px solid rgba(139, 92, 246, 0.2);
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .hero-content {
+                padding-top: 80px;
+            }
+
+            .game-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .user-dropdown {
+                width: 100%;
+                left: 0;
+                right: 0;
+            }
+
+            .cookie-consent {
+                left: 10px;
+                right: 10px;
+                bottom: 10px;
+            }
+        }
+    </style>
+</head>
+
+<body class="min-h-screen flex flex-col diamond-pattern">
+
+    <!-- Cookie Consent Banner -->
+    <div id="cookieConsent" class="cookie-consent glass-card">
+        <div class="flex flex-col md:flex-row md:items-center">
+            <div class="flex-grow mb-4 md:mb-0 md:mr-6">
+                <h3 class="text-lg font-bold mb-2">We Use Cookies</h3>
+                <p class="text-sm text-slate-300">We use cookies to enhance your browsing experience, serve personalized
+                    ads or content, and analyze our traffic. By clicking "Accept All", you consent to our use of
+                    cookies.</p>
+            </div>
+            <div class="flex flex-col sm:flex-row gap-2">
+                <button id="acceptCookies" class="luxury-btn text-white px-4 py-2 rounded-lg text-sm">Accept
+                    All</button>
+                <button id="declineCookies"
+                    class="bg-slate-800 hover:bg-slate-700 text-white px-4 py-2 rounded-lg text-sm border border-slate-700">Decline</button>
+                <button id="learnMoreCookies"
+                    class="bg-transparent hover:bg-slate-800 text-purple-400 px-4 py-2 rounded-lg text-sm border border-slate-700">Learn
+                    More</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Age Verification Modal -->
+    <div id="ageVerification"
+        class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-90 transition-opacity duration-500">
+        <div class="glass-card gold-border p-8 rounded-xl max-w-md w-full mx-4 relative overflow-hidden">
+            <div class="absolute -top-20 -right-20 w-40 h-40 bg-purple-500 rounded-full filter blur-3xl opacity-20">
+            </div>
+            <div class="absolute -bottom-20 -left-20 w-40 h-40 bg-amber-400 rounded-full filter blur-3xl opacity-20">
+            </div>
+
+            <div class="text-center mb-6 relative z-10">
+                <div
+                    class="w-16 h-16 bg-gradient-to-br from-purple-500 to-amber-400 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-dice text-2xl text-white"></i>
+                </div>
+                <h2 class="text-2xl font-bold text-white mb-2 font-serif">Age Verification Required</h2>
+                <p class="text-slate-300">You must be 18 years or older to access this social casino experience.</p>
+            </div>
+
+            <div class="flex flex-col space-y-4 relative z-10">
+                <button id="confirmAge"
+                    class="luxury-btn text-white py-3 px-6 rounded-lg font-medium transition duration-300 flex items-center justify-center">
+                    <i class="fas fa-check-circle mr-2"></i> I am 18 or older
+                </button>
+                <button id="denyAge"
+                    class="bg-slate-800 hover:bg-slate-700 text-white py-3 px-6 rounded-lg font-medium transition duration-300 border border-slate-700 flex items-center justify-center">
+                    <i class="fas fa-times-circle mr-2"></i> I am under 18
+                </button>
+            </div>
+
+            <p class="text-xs text-slate-400 mt-6 text-center relative z-10">
+                <i class="fas fa-exclamation-triangle mr-1"></i> Entertainment only - No real money gambling
+            </p>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="loginModal"
+        class="login-modal fixed inset-0 z-40 flex items-center justify-center bg-black bg-opacity-80 p-4">
+        <div class="glass-card gold-border rounded-xl max-w-md w-full relative overflow-hidden">
+            <button id="closeLoginModal" class="absolute top-4 right-4 text-slate-300 hover:text-white text-xl">
+                <i class="fas fa-times"></i>
+            </button>
+
+            <div class="p-8">
+                <div class="text-center mb-8">
+                    <div
+                        class="w-20 h-20 bg-gradient-to-br from-purple-500 to-amber-400 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-user-lock text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white font-serif">Welcome Back!</h3>
+                    <p class="text-slate-300 mt-2">Login to access your account and continue playing</p>
+                </div>
+
+                <div id="loginError" class="bg-red-900/50 border border-red-700 rounded-lg p-3 mb-4 hidden">
+                    <div class="flex items-center">
+                        <i class="fas fa-exclamation-circle text-red-400 mr-2"></i>
+                        <span class="text-red-300" id="loginErrorMessage">Invalid email or password</span>
+                    </div>
+                </div>
+
+                <form id="loginForm" class="space-y-4">
+                    <div>
+                        <label for="loginEmail" class="block text-slate-300 mb-2">Email</label>
+                        <input type="email" id="loginEmail" required
+                            class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+                            placeholder="Your email">
+                    </div>
+
+                    <div>
+                        <label for="loginPassword" class="block text-slate-300 mb-2">Password</label>
+                        <input type="password" id="loginPassword" required
+                            class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+                            placeholder="Your password">
+                    </div>
+
+                    <button type="submit" class="w-full luxury-btn text-white py-3 px-6 rounded-lg font-medium">
+                        <i class="fas fa-sign-in-alt mr-2"></i> Login
+                    </button>
+                </form>
+
+                <div class="text-center mt-6">
+                    <p class="text-slate-400">Don't have an account?</p>
+                    <button id="showRegisterFromLogin"
+                        class="text-purple-400 hover:text-purple-300 font-medium inline-flex items-center mt-2">
+                        <i class="fas fa-user-plus mr-2"></i> Register Now
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Registration Modal -->
+    <div id="registerModal"
+        class="login-modal fixed inset-0 z-40 flex items-center justify-center bg-black bg-opacity-80 p-4">
+        <div class="glass-card gold-border rounded-xl max-w-md w-full relative overflow-hidden">
+            <button id="closeRegisterModal" class="absolute top-4 right-4 text-slate-300 hover:text-white text-xl">
+                <i class="fas fa-times"></i>
+            </button>
+
+            <div class="p-8">
+                <div class="text-center mb-8">
+                    <div
+                        class="w-20 h-20 bg-gradient-to-br from-purple-500 to-amber-400 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-user-plus text-2xl text-white"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold text-white font-serif">Create Account</h3>
+                    <p class="text-slate-300 mt-2">Register to get 5,000 free coins</p>
+                </div>
+
+                <div id="registerError" class="bg-red-900/50 border border-red-700 rounded-lg p-3 mb-4 hidden">
+                    <div class="flex items-center">
+                        <i class="fas fa-exclamation-circle text-red-400 mr-2"></i>
+                        <span class="text-red-300" id="registerErrorMessage">Please fill all fields correctly</span>
+                    </div>
+                </div>
+
+                <form id="registerForm" class="space-y-4">
+                    <div>
+                        <label for="registerUsername" class="block text-slate-300 mb-2">Username</label>
+                        <input type="text" id="registerUsername" required
+                            class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+                            placeholder="Choose a username">
+                    </div>
+
+                    <div>
+                        <label for="registerEmail" class="block text-slate-300 mb-2">Email</label>
+                        <input type="email" id="registerEmail" required
+                            class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+                            placeholder="Your email">
+                    </div>
+
+                    <div>
+                        <label for="registerPassword" class="block text-slate-300 mb-2">Password</label>
+                        <input type="password" id="registerPassword" required minlength="8"
+                            class="w-full bg-slate-800 border border-slate-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-purple-500"
+                            placeholder="Create password (min 8 chars)">
+                    </div>
+
+                    <button type="submit" class="w-full gold-btn text-slate-900 py-3 px-6 rounded-lg font-medium">
+                        <i class="fas fa-user-plus mr-2"></i> Register Now
+                    </button>
+                </form>
+
+                <div class="text-center mt-6">
+                    <p class="text-slate-400">Already have an account?</p>
+                    <button id="showLoginFromRegister"
+                        class="text-purple-400 hover:text-purple-300 font-medium inline-flex items-center mt-2">
+                        <i class="fas fa-sign-in-alt mr-2"></i> Login Here
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Popup -->
+    <div id="gamePopup" class="game-popup fixed inset-0 flex items-center justify-center p-4">
+        <div class="absolute inset-0 bg-black/90"></div>
+        <div class="relative w-full max-w-6xl h-[85vh]">
+            <button id="closePopup"
+                class="absolute -top-12 right-0 text-white hover:text-purple-400 text-3xl transition">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="w-full h-full glass-card rounded-xl overflow-hidden gradient-border">
+                <iframe class="game-iframe" id="gameIframe" src="" spellcheck="false" aria-label="Game iframe"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <!-- Header -->
+    <header class="fixed w-full z-30">
+        <div class="container mx-auto px-4 py-4">
+            <div class="glass-card rounded-xl px-6 py-3 flex justify-between items-center border border-white/10">
+                <div class="flex items-center">
+                    <a href="/" class="flex items-center">
+                        <img src="/assets/logo.png" alt="SpinVerse Logo" class="h-16">
+                    </a>
+                </div>
+
+                <div class="hidden lg:flex items-center space-x-8">
+                    <nav>
+                        <ul class="flex space-x-8">
+                            <li><a href="/" class="text-white hover:text-purple-300 transition flex items-center">
+                                    <i class="fas fa-home mr-2"></i> Home
+                                </a></li>
+                            <li><a href="/games/" class="text-white hover:text-purple-300 transition flex items-center">
+                                    <i class="fas fa-gamepad mr-2"></i> Games
+                                </a></li>
+                            <li><a href="/about/" class="text-white hover:text-purple-300 transition flex items-center">
+                                    <i class="fas fa-info-circle mr-2"></i> About
+                                </a></li>
+                            <li><a href="/responsible-gaming/"
+                                    class="text-purple-400 hover:text-purple-300 transition flex items-center">
+                                    <i class="fas fa-shield-alt mr-2"></i> Responsible Gaming
+                                </a></li>
+                            <li><a href="/contact/"
+                                    class="text-white hover:text-purple-300 transition flex items-center">
+                                    <i class="fas fa-envelope mr-2"></i> Contact
+                                </a></li>
+                        </ul>
+                    </nav>
+                    <div class="flex items-center space-x-4">
+                        <div id="userStatus" class="hidden">
+                            <div class="flex items-center space-x-3 relative group">
+                                <button id="userDropdownButton" class="flex items-center space-x-3 focus:outline-none">
+                                    <div
+                                        class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-amber-400 flex items-center justify-center text-white font-bold">
+                                        <i class="fas fa-user"></i>
+                                    </div>
+                                    <div>
+                                        <div class="text-sm font-medium text-white">Welcome, <span
+                                                id="usernameDisplay">Guest</span></div>
+                                        <div class="text-xs text-purple-300"><span id="coinsDisplay">0</span> Coins
+                                        </div>
+                                    </div>
+                                </button>
+
+                                <!-- User Dropdown -->
+                                <div id="userDropdown"
+                                    class="user-dropdown absolute top-full right-0 mt-2 w-48 glass-card rounded-lg border border-white/10 py-2 shadow-lg">
+                                    <button id="logoutButton"
+                                        class="w-full text-left px-4 py-2 text-white hover:bg-red-500/20 transition flex items-center">
+                                        <i class="fas fa-sign-out-alt mr-3"></i> Logout
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="guestStatus">
+                            <button id="openLoginModal"
+                                class="luxury-btn text-white px-5 py-2 rounded-lg font-medium ml-4">Login</button>
+                            <button id="openRegisterModal"
+                                class="luxury-btn text-white px-5 py-2 rounded-lg font-medium ml-4">
+                                <i class="fas fa-user-plus mr-2"></i> Register
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:hidden flex items-center">
+                    <button id="mobileMenuButton" class="text-white focus:outline-none">
+                        <div class="hamburger-menu">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu"
+            class="hidden lg:hidden absolute top-full left-0 right-0 glass-card border-t border-white/10 mx-4 rounded-b-xl overflow-hidden">
+            <div class="container mx-auto px-4 py-4">
+                <nav>
+                    <ul class="flex flex-col space-y-4">
+                        <li><a href="/"
+                                class="block text-white hover:text-purple-300 transition py-2 flex items-center">
+                                <i class="fas fa-home mr-3"></i> Home
+                            </a></li>
+                        <li><a href="/games/"
+                                class="block text-white hover:text-purple-300 transition py-2 flex items-center">
+                                <i class="fas fa-gamepad mr-3"></i> Games
+                            </a></li>
+                        <li><a href="/about/"
+                                class="block text-white hover:text-purple-300 transition py-2 flex items-center">
+                                <i class="fas fa-info-circle mr-3"></i> About
+                            </a></li>
+                        <li><a href="/responsible-gaming/"
+                                class="block text-purple-400 hover:text-purple-300 transition py-2 flex items-center">
+                                <i class="fas fa-shield-alt mr-3"></i> Responsible Gaming
+                            </a></li>
+                        <li><a href="/contact/"
+                                class="block text-white hover:text-purple-300 transition py-2 flex items-center">
+                                <i class="fas fa-envelope mr-3"></i> Contact
+                            </a></li>
+                        <li class="pt-4 border-t border-white/10">
+                            <button id="openLoginModalMobile"
+                                class="block text-white hover:text-purple-300 transition py-2 flex items-center w-full">
+                                <i class="fas fa-sign-in-alt mr-3"></i> Login
+                            </button>
+                        </li>
+                        <li>
+                            <button id="openRegisterModalMobile"
+                                class="block luxury-btn text-white px-4 py-2 rounded-lg font-medium text-center w-full">
+                                <i class="fas fa-user-plus mr-2"></i> Register
+                            </button>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </header>
+    <!-- Main Content -->
+    <main class="flex-grow pt-24">
+        <!-- Hero Section -->
+        <section class="relative overflow-hidden">
+            <div id="particles-js" class="absolute inset-0 z-0"></div>
+            <div class="absolute inset-0 bg-gradient-to-b from-purple-900/30 via-slate-900/80 to-slate-900 z-1"></div>
+
+            <div class="container mx-auto px-4 py-20 relative z-10">
+                <div class="max-w-5xl mx-auto text-center">
+                    <div class="inline-block mb-6 px-4 py-2 bg-slate-800/50 rounded-full border border-purple-400/30">
+                        <span class="text-purple-300 text-sm font-medium"><i class="fas fa-shield-alt mr-2"></i> SAFE
+                            GAMING</span>
+                    </div>
+
+                    <h1 class="text-5xl md:text-6xl font-bold mb-6 leading-tight font-serif">
+                        <span
+                            class="bg-gradient-to-r from-purple-400 to-amber-300 bg-clip-text text-transparent">Responsible
+                            Gaming</span>
+                        <br>Our Commitment
+                    </h1>
+
+                    <p class="text-xl text-slate-300 mb-10 max-w-3xl mx-auto">
+                        At SpinVerse, we prioritize your well-being. Enjoy our social casino platform responsibly with
+                        our comprehensive tools and resources.
+                    </p>
+                </div>
+            </div>
+
+            <div class="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-slate-900 to-transparent z-10">
+            </div>
+        </section>
+
+        <!-- Policy Section -->
+        <section class="py-16 bg-gradient-to-b from-slate-900 to-slate-950">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold mb-4 font-serif">Our Responsible Gaming Policy</h2>
+                    <p class="text-slate-400 max-w-2xl mx-auto">
+                        We are dedicated to providing a safe and enjoyable gaming environment for all players
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                    <!-- Policy 1 -->
+                    <div class="policy-card glass-card rounded-xl p-8 border border-white/10">
+                        <div
+                            class="w-16 h-16 bg-gradient-to-br from-purple-500 to-amber-400 rounded-full flex items-center justify-center text-white text-2xl mb-6 mx-auto">
+                            <i class="fas fa-coins"></i> <!-- Changed icon -->
+                        </div>
+                        <h3 class="text-xl font-bold text-center mb-4">No Real Money Gambling</h3>
+                        <p class="text-slate-400 text-center">
+                            SpinVerse is a social casino platform only. No real money is wagered or won. All coins are
+                            virtual with no cash value.
+                        </p>
+                    </div>
+
+                    <!-- Policy 2 -->
+                    <div class="policy-card glass-card rounded-xl p-8 border border-white/10">
+                        <div
+                            class="w-16 h-16 bg-gradient-to-br from-blue-500 to-cyan-400 rounded-full flex items-center justify-center text-white text-2xl mb-6 mx-auto">
+                            <i class="fas fa-user-shield"></i> <!-- Changed icon -->
+                        </div>
+                        <h3 class="text-xl font-bold text-center mb-4">Strict Age Verification</h3>
+                        <p class="text-slate-400 text-center">
+                            You must be 18+ to access our platform. We use rigorous age verification to prevent underage
+                            access.
+                        </p>
+                    </div>
+
+                    <!-- Policy 3 -->
+                    <div class="policy-card glass-card rounded-xl p-8 border border-white/10">
+                        <div
+                            class="w-16 h-16 bg-gradient-to-br from-green-500 to-emerald-400 rounded-full flex items-center justify-center text-white text-2xl mb-6 mx-auto">
+                            <i class="fas fa-user-cog"></i> <!-- Changed icon -->
+                        </div>
+                        <h3 class="text-xl font-bold text-center mb-4">Player Protection Tools</h3>
+                        <p class="text-slate-400 text-center">
+                            Set deposit limits, take breaks, or self-exclude through your account settings at any time.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- Tools Section -->
+        <section class="py-16 bg-slate-900">
+            <div class="container mx-auto px-4">
+                <div class="glass-card rounded-xl overflow-hidden border border-white/10">
+                    <div class="grid grid-cols-1 lg:grid-cols-2">
+                        <div class="p-10 lg:p-12 bg-gradient-to-br from-slate-900 to-slate-800">
+                            <h2 class="text-3xl font-bold mb-6 font-serif">Player Protection Tools</h2>
+                            <p class="text-slate-400 mb-8">We provide these tools to help you maintain control of your
+                                gaming activity:</p>
+
+                            <div class="space-y-6">
+                                <div class="flex items-start">
+                                    <div
+                                        class="flex-shrink-0 w-12 h-12 tool-icon rounded-full flex items-center justify-center text-purple-400 mr-4">
+                                        <i class="fas fa-clock"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-white mb-1">Session Limits</h4>
+                                        <p class="text-slate-400">Set maximum time limits for your gaming sessions to
+                                            help manage your play time.</p>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-start">
+                                    <div
+                                        class="flex-shrink-0 w-12 h-12 tool-icon rounded-full flex items-center justify-center text-blue-400 mr-4">
+                                        <i class="fas fa-coins"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-white mb-1">Deposit Limits</h4>
+                                        <p class="text-slate-400">Control your virtual coin purchases with daily, weekly
+                                            or monthly limits.</p>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-start">
+                                    <div
+                                        class="flex-shrink-0 w-12 h-12 tool-icon rounded-full flex items-center justify-center text-amber-400 mr-4">
+                                        <i class="fas fa-bed"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-white mb-1">Take a Break</h4>
+                                        <p class="text-slate-400">Temporarily suspend your account for 24 hours, 7 days,
+                                            or 30 days when you need time away.</p>
+                                    </div>
+                                </div>
+
+                                <div class="flex items-start">
+                                    <div
+                                        class="flex-shrink-0 w-12 h-12 tool-icon rounded-full flex items-center justify-center text-red-400 mr-4">
+                                        <i class="fas fa-lock"></i>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-white mb-1">Self-Exclusion</h4>
+                                        <p class="text-slate-400">For a longer break, you can self-exclude for 6 months
+                                            or permanently close your account.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div
+                            class="p-10 lg:p-12 bg-gradient-to-br from-purple-900/50 to-slate-900 relative overflow-hidden">
+                            <div
+                                class="absolute -top-20 -right-20 w-64 h-64 bg-purple-500 rounded-full filter blur-3xl opacity-10">
+                            </div>
+                            <div
+                                class="absolute -bottom-20 -left-20 w-64 h-64 bg-amber-400 rounded-full filter blur-3xl opacity-10">
+                            </div>
+                            <div class="relative z-10">
+                                <h3 class="text-2xl font-bold mb-6 font-serif">Access Your Control Panel</h3>
+                                <p class="text-slate-300 mb-8">Registered users can access all player protection tools
+                                    through their account settings.</p>
+
+                                <div class="space-y-4">
+                                    <button id="toolsRegisterButton"
+                                        class="gold-btn text-slate-900 py-4 px-6 rounded-lg font-bold text-lg transition duration-300 flex items-center justify-center">
+                                        <i class="fas fa-user-plus mr-3"></i> Register to Access Tools
+                                    </button>
+                                    <button id="toolsLoginButton"
+                                        class="bg-white/10 hover:bg-white/20 text-white py-4 px-6 rounded-lg font-bold text-lg transition duration-300 border border-white/10 flex items-center justify-center">
+                                        <i class="fas fa-sign-in-alt mr-3"></i> Login to Your Account
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Warning Signs Section -->
+        <section class="py-16 bg-gradient-to-b from-slate-950 to-slate-900">
+            <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                    <h2 class="text-4xl font-bold mb-4 font-serif">Recognizing Problem Gaming</h2>
+                    <p class="text-slate-400 max-w-2xl mx-auto">
+                        Be aware of these warning signs that may indicate gaming is becoming problematic
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+                    <!-- Sign 1 -->
+                    <div class="glass-card rounded-xl p-6 border border-red-500/30">
+                        <div class="flex items-center mb-4">
+                            <div
+                                class="w-10 h-10 bg-red-500/20 rounded-full flex items-center justify-center text-red-400 mr-4">
+                                <i class="fas fa-arrow-rotate-left"></i> <!-- Changed icon -->
+                            </div>
+                            <h3 class="font-bold text-white">Chasing Losses</h3>
+                        </div>
+                        <p class="text-slate-400">Continuing to play to recover virtual coins you've lost rather than
+                            for entertainment.</p>
+                    </div>
+
+                    <!-- Sign 2 -->
+                    <div class="glass-card rounded-xl p-6 border border-red-500/30">
+                        <div class="flex items-center mb-4">
+                            <div
+                                class="w-10 h-10 bg-red-500/20 rounded-full flex items-center justify-center text-red-400 mr-4">
+                                <i class="fas fa-user-clock"></i> <!-- Changed icon -->
+                            </div>
+                            <h3 class="font-bold text-white">Neglecting Responsibilities</h3>
+                        </div>
+                        <p class="text-slate-400">Prioritizing gaming over work, school, family or other important
+                            obligations.</p>
+                    </div>
+
+                    <!-- Sign 3 -->
+                    <div class="glass-card rounded-xl p-6 border border-red-500/30">
+                        <div class="flex items-center mb-4">
+                            <div
+                                class="w-10 h-10 bg-red-500/20 rounded-full flex items-center justify-center text-red-400 mr-4">
+                                <i class="fas fa-wallet"></i> <!-- Changed icon -->
+                            </div>
+                            <h3 class="font-bold text-white">Financial Strain</h3>
+                        </div>
+                        <p class="text-slate-400">Spending more on virtual coins than you can comfortably afford.</p>
+                    </div>
+
+                    <!-- Sign 4 -->
+                    <div class="glass-card rounded-xl p-6 border border-red-500/30">
+                        <div class="flex items-center mb-4">
+                            <div
+                                class="w-10 h-10 bg-red-500/20 rounded-full flex items-center justify-center text-red-400 mr-4">
+                                <i class="fas fa-face-angry"></i> <!-- Changed icon -->
+                            </div>
+                            <h3 class="font-bold text-white">Mood Changes</h3>
+                        </div>
+                        <p class="text-slate-400">Feeling anxious, irritable or restless when not playing games.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <section class="py-16 bg-slate-900">
+            <div class="container mx-auto px-4">
+                <div class="glass-card rounded-xl p-10 border border-white/10">
+                    <div class="text-center mb-12">
+                        <h2 class="text-4xl font-bold mb-4 font-serif">Helpful Resources</h2>
+                        <p class="text-slate-400 max-w-2xl mx-auto">
+                            If you're concerned about your gaming habits, these organizations can provide support
+                        </p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        <!-- Resource 1 -->
+                        <div class="glass-card rounded-xl overflow-hidden border border-white/10">
+                            <div class="p-6 bg-gradient-to-br from-slate-900 to-slate-800">
+                                <div class="flex items-center mb-4">
+                                    
+                                    <h3 class="font-bold text-white">GamCare</h3>
+                                </div>
+                                <p class="text-slate-400 mb-4">
+                                    Provides information, advice and support for anyone affected by problem gambling.
+                                </p>
+                                <a href="https://www.gamcare.org.uk/" target="_blank" rel="noopener noreferrer"
+                                    class="text-blue-400 hover:text-blue-300 font-medium inline-flex items-center">
+                                    Visit Website 
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Resource 2 -->
+                        <div class="glass-card rounded-xl overflow-hidden border border-white/10">
+                            <div class="p-6 bg-gradient-to-br from-slate-900 to-slate-800">
+                                <div class="flex items-center mb-4">
+                                    
+                                    <h3 class="font-bold text-white">GambleAware</h3>
+                                </div>
+                                <p class="text-slate-400 mb-4">
+                                    Offers free, confidential help and support for anyone worried about their gambling.
+                                </p>
+                                <a href="https://www.begambleaware.org/" target="_blank" rel="noopener noreferrer"
+                                    class="text-green-400 hover:text-green-300 font-medium inline-flex items-center">
+                                    Visit Website
+                                </a>
+                            </div>
+                        </div>
+
+                        <!-- Resource 3 -->
+                        <div class="glass-card rounded-xl overflow-hidden border border-white/10">
+                            <div class="p-6 bg-gradient-to-br from-slate-900 to-slate-800">
+                                <div class="flex items-center mb-4">
+                                    
+                                    <h3 class="font-bold text-white">Gambling Therapy</h3>
+                                </div>
+                                <p class="text-slate-400 mb-4">
+                                    Provides practical advice and emotional support to gamblers and their families
+                                    worldwide.
+                                </p>
+                                <a href="https://www.gamblingtherapy.org/" target="_blank" rel="noopener noreferrer"
+                                    class="text-purple-400 hover:text-purple-300 font-medium inline-flex items-center">
+                                    Visit Website 
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+
+      
+
+        <!-- Responsible Gaming -->
+        <section class="py-16 bg-slate-950 border-t border-slate-800">
+            <div class="container mx-auto px-4">
+                <div class="glass-card rounded-xl p-8 md:p-12">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
+                        <div>
+                            <h2 class="text-3xl font-bold mb-4 font-serif">Responsible Gaming Commitment</h2>
+                            <p class="text-slate-400 mb-6">SpinVerse is dedicated to promoting responsible gaming
+                                practices. We provide tools and resources to help maintain a safe, enjoyable experience
+                                for all users.</p>
+
+                            <div class="flex flex-wrap gap-4">
+                                <a href="https://www.gamcare.org.uk/" target="_blank" rel="noopener noreferrer"
+                                    class="flex items-center text-purple-400 hover:text-purple-300 border border-purple-400/30 rounded-lg px-4 py-2">
+                                    <i class="fas fa-external-link-alt mr-2"></i> GamCare
+                                </a>
+                                <a href="https://www.begambleaware.org/" target="_blank" rel="noopener noreferrer"
+                                    class="flex items-center text-purple-400 hover:text-purple-300 border border-purple-400/30 rounded-lg px-4 py-2">
+                                    <i class="fas fa-external-link-alt mr-2"></i> GambleAware
+                                </a>
+                                <a href="/responsible-gaming/" id="responsibleGamingButton"
+                                    class="flex items-center text-purple-400 hover:text-purple-300 border border-purple-400/30 rounded-lg px-4 py-2">
+                                    <i class="fas fa-file-alt mr-2"></i> Responsible Gaming Policy
+                                </a>
+                            </div>
+                        </div>
+
+                        <div class="bg-slate-800/50 rounded-lg p-6 border border-slate-700">
+                            <div class="flex items-start mb-4">
+                                <div
+                                    class="flex-shrink-0 w-10 h-10 bg-red-500/20 rounded-full flex items-center justify-center text-red-400 mr-4">
+                                    <i class="fas fa-exclamation-triangle"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-white mb-1">Important Notice</h4>
+                                    <p class="text-slate-400 text-sm">This is a social casino platform for entertainment
+                                        only. No real money gambling or payouts are involved. All coins are virtual and
+                                        have no monetary value.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div
+                                    class="flex-shrink-0 w-10 h-10 bg-blue-500/20 rounded-full flex items-center justify-center text-blue-400 mr-4">
+                                    <i class="fas fa-info-circle"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-white mb-1">Age Restriction</h4>
+                                    <p class="text-slate-400 text-sm">You must be 18+ to access this platform. Underage
+                                        gambling is strictly prohibited.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-slate-950 border-t border-slate-800">
+        <div class="container mx-auto px-4 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                    <a href="/" class="flex items-center">
+                        <img src="/assets/logo.png" alt="SpinVerse Logo" class="h-16 mb-4">
+                    </a>
+                    <p class="text-slate-400 mb-4">The ultimate social casino experience with no real money involved.
+                    </p>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Navigation</h4>
+                    <ul class="space-y-3">
+                        <li><a href="/" class="text-slate-400 hover:text-purple-400 transition flex items-center">
+                                <i class="fas fa-chevron-right text-xs text-purple-400 mr-2"></i> Home
+                            </a></li>
+                        <li><a href="/games/" class="text-slate-400 hover:text-purple-400 transition flex items-center">
+                                <i class="fas fa-chevron-right text-xs text-purple-400 mr-2"></i> Games
+                            </a></li>
+                        <li><a href="/about/" class="text-slate-400 hover:text-purple-400 transition flex items-center">
+                                <i class="fas fa-chevron-right text-xs text-purple-400 mr-2"></i> About
+                            </a></li>
+                        <li><a href="/responsible-gaming/"
+                                class="text-slate-400 hover:text-purple-400 transition flex items-center">
+                                <i class="fas fa-chevron-right text-xs text-purple-400 mr-2"></i> Responsible Gaming
+                            </a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Legal</h4>
+                    <ul class="space-y-3">
+                        <li><a href="/privacy/" id="footerPrivacyButton"
+                                class="text-slate-400 hover:text-purple-400 transition flex items-center">
+                                <i class="fas fa-chevron-right text-xs text-purple-400 mr-2"></i> Privacy Policy
+                            </a></li>
+                        <li><a href="/terms/" id="footerTermsButton"
+                                class="text-slate-400 hover:text-purple-400 transition flex items-center">
+                                <i class="fas fa-chevron-right text-xs text-purple-400 mr-2"></i> Terms of Service
+                            </a></li>
+                        <li><a href="/cookies/" id="footerCookiesButton"
+                                class="text-slate-400 hover:text-purple-400 transition flex items-center">
+                                <i class="fas fa-chevron-right text-xs text-purple-400 mr-2"></i> Cookies Policy
+                            </a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contact Us</h4>
+                    <ul class="space-y-3 text-slate-400">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-3 text-purple-400"></i>
+                            <span>Vestre Ringvei 5, 1831 Askim, Norway</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone-alt mr-3 text-purple-400"></i>
+                            <span>+47 406 96 111</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-3 text-purple-400"></i>
+                            <span>info@spinverse.org</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-slate-800 mt-12 pt-8 text-center">
+                <p class="text-white text-sm mb-2">18+ Only | Social Casino Platform | No Real Money Gambling</p>
+                <p class="text-white text-xs max-w-3xl mx-auto">
+                    This website operates as a social casino platform for entertainment purposes only. No real money
+                    gambling, betting, or wagering is involved. Virtual coins and winnings have no cash value and cannot
+                    be exchanged for real money, prizes, or any monetary compensation. Success in social casino games
+                    does not guarantee future success at real money gambling activities.
+                </p>
+                <p class="text-white text-xs mt-4">© 2025 SpinVerse. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Cookie Consent
+            const cookieConsent = document.getElementById('cookieConsent');
+            const acceptCookies = document.getElementById('acceptCookies');
+            const declineCookies = document.getElementById('declineCookies');
+            const learnMoreCookies = document.getElementById('learnMoreCookies');
+
+            // Check if cookie consent was already given
+            if (!localStorage.getItem('cookieConsent')) {
+                setTimeout(() => {
+                    cookieConsent.classList.add('show');
+                }, 2000);
+            }
+
+            // Handle cookie consent actions
+            if (acceptCookies) {
+                acceptCookies.addEventListener('click', function () {
+                    localStorage.setItem('cookieConsent', 'accepted');
+                    cookieConsent.classList.remove('show');
+                });
+            }
+
+            if (declineCookies) {
+                declineCookies.addEventListener('click', function () {
+                    localStorage.setItem('cookieConsent', 'declined');
+                    cookieConsent.classList.remove('show');
+                });
+            }
+
+            if (learnMoreCookies) {
+                learnMoreCookies.addEventListener('click', function () {
+                });
+            }
+
+            // Age Verification
+            const ageVerification = document.getElementById('ageVerification');
+            const confirmAge = document.getElementById('confirmAge');
+            const denyAge = document.getElementById('denyAge');
+
+            // Check if age is already verified
+            if (!localStorage.getItem('ageVerified')) {
+                ageVerification.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            } else {
+                ageVerification.style.display = 'none';
+                // Initialize particles.js if age is already verified
+                initParticles();
+            }
+
+            confirmAge.addEventListener('click', function () {
+                localStorage.setItem('ageVerified', 'true');
+                gsap.to(ageVerification, {
+                    opacity: 0,
+                    duration: 0.5,
+                    onComplete: () => {
+                        ageVerification.style.display = 'none';
+                        document.body.style.overflow = 'auto';
+                    }
+                });
+
+                // Initialize particles.js after age verification
+                initParticles();
+
+                // Check user status
+                checkUserStatus();
+            });
+
+            denyAge.addEventListener('click', function () {
+                window.location.href = 'https://www.google.com/';
+            });
+
+            // Initialize particles.js
+            function initParticles() {
+                particlesJS('particles-js', {
+                    "particles": {
+                        "number": {
+                            "value": 100,
+                            "density": {
+                                "enable": true,
+                                "value_area": 800
+                            }
+                        },
+                        "color": {
+                            "value": "#8b5cf6"
+                        },
+                        "shape": {
+                            "type": "circle",
+                            "stroke": {
+                                "width": 0,
+                                "color": "#000000"
+                            },
+                            "polygon": {
+                                "nb_sides": 5
+                            }
+                        },
+                        "opacity": {
+                            "value": 0.5,
+                            "random": true,
+                            "anim": {
+                                "enable": true,
+                                "speed": 1,
+                                "opacity_min": 0.1,
+                                "sync": false
+                            }
+                        },
+                        "size": {
+                            "value": 3,
+                            "random": true,
+                            "anim": {
+                                "enable": true,
+                                "speed": 2,
+                                "size_min": 0.1,
+                                "sync": false
+                            }
+                        },
+                        "line_linked": {
+                            "enable": true,
+                            "distance": 150,
+                            "color": "#7c3aed",
+                            "opacity": 0.4,
+                            "width": 1
+                        },
+                        "move": {
+                            "enable": true,
+                            "speed": 2,
+                            "direction": "none",
+                            "random": true,
+                            "straight": false,
+                            "out_mode": "out",
+                            "bounce": false,
+                            "attract": {
+                                "enable": false,
+                                "rotateX": 600,
+                                "rotateY": 1200
+                            }
+                        }
+                    },
+                    "interactivity": {
+                        "detect_on": "canvas",
+                        "events": {
+                            "onhover": {
+                                "enable": true,
+                                "mode": "grab"
+                            },
+                            "onclick": {
+                                "enable": true,
+                                "mode": "push"
+                            },
+                            "resize": true
+                        },
+                        "modes": {
+                            "grab": {
+                                "distance": 140,
+                                "line_linked": {
+                                    "opacity": 1
+                                }
+                            },
+                            "bubble": {
+                                "distance": 400,
+                                "size": 40,
+                                "duration": 2,
+                                "opacity": 8,
+                                "speed": 3
+                            },
+                            "repulse": {
+                                "distance": 200,
+                                "duration": 0.4
+                            },
+                            "push": {
+                                "particles_nb": 4
+                            },
+                            "remove": {
+                                "particles_nb": 2
+                            }
+                        }
+                    },
+                    "retina_detect": true
+                });
+            }
+
+            // Mobile Menu Toggle
+            const mobileMenuButton = document.getElementById('mobileMenuButton');
+            const mobileMenu = document.getElementById('mobileMenu');
+            const hamburger = document.querySelector('.hamburger-menu');
+
+            mobileMenuButton.addEventListener('click', function () {
+                mobileMenu.classList.toggle('hidden');
+                hamburger.classList.toggle('open');
+
+                if (!mobileMenu.classList.contains('hidden')) {
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    document.body.style.overflow = 'auto';
+                }
+            });
+
+            // Login Modal
+            const loginModal = document.getElementById('loginModal');
+            const closeLoginModal = document.getElementById('closeLoginModal');
+            const loginForm = document.getElementById('loginForm');
+            const loginError = document.getElementById('loginError');
+            const loginErrorMessage = document.getElementById('loginErrorMessage');
+            const showLoginFromRegister = document.getElementById('showLoginFromRegister');
+            const showRegisterFromLogin = document.getElementById('showRegisterFromLogin');
+
+            // Open login modal buttons
+            const openLoginModal = document.getElementById('openLoginModal');
+            const openLoginModalMobile = document.getElementById('openLoginModalMobile');
+
+            if (openLoginModal) {
+                openLoginModal.addEventListener('click', function () {
+                    loginModal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                });
+            }
+
+            if (openLoginModalMobile) {
+                openLoginModalMobile.addEventListener('click', function () {
+                    mobileMenu.classList.add('hidden');
+                    hamburger.classList.remove('open');
+                    loginModal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                });
+            }
+
+            closeLoginModal.addEventListener('click', function () {
+                loginModal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            });
+
+            // User Dropdown
+            const userDropdownButton = document.getElementById('userDropdownButton');
+            const userDropdown = document.getElementById('userDropdown');
+            const logoutButton = document.getElementById('logoutButton');
+
+            // Toggle user dropdown
+            if (userDropdownButton) {
+                userDropdownButton.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    userDropdown.classList.toggle('active');
+                });
+            }
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function (e) {
+                if (userDropdown && !userDropdown.contains(e.target)) {
+                    userDropdown.classList.remove('active');
+                }
+            });
+
+            // Logout functionality
+            if (logoutButton) {
+                logoutButton.addEventListener('click', function () {
+                    localStorage.removeItem('userLoggedIn');
+                    localStorage.removeItem('username');
+                    localStorage.removeItem('userEmail');
+                    localStorage.removeItem('userCoins');
+                    checkUserStatus();
+                    userDropdown.classList.remove('active');
+                    updateGameButtons();
+                });
+            }
+
+            // Login form submission
+            if (loginForm) {
+                loginForm.addEventListener('submit', function (e) {
+                    e.preventDefault();
+
+                    const email = document.getElementById('loginEmail').value;
+                    const password = document.getElementById('loginPassword').value;
+
+                    // Get all registered users from localStorage
+                    const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
+
+                    // Find user with matching email and password
+                    const user = registeredUsers.find(user =>
+                        user.email === email && user.password === password
+                    );
+
+                    if (user) {
+                        // Successful login
+                        localStorage.setItem('userLoggedIn', 'true');
+                        localStorage.setItem('username', user.username);
+                        localStorage.setItem('userEmail', user.email);
+                        localStorage.setItem('userCoins', user.coins || '5000');
+
+                        loginModal.classList.remove('active');
+                        document.body.style.overflow = 'auto';
+                        checkUserStatus();
+                        updateGameButtons();
+
+                        // Show welcome back message
+                    } else {
+                        // Failed login
+                        loginErrorMessage.textContent = 'Invalid email or password';
+                        loginError.classList.remove('hidden');
+                        loginError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                });
+            }
+
+            // Check user status function
+            function checkUserStatus() {
+                const userStatus = document.getElementById('userStatus');
+                const guestStatus = document.getElementById('guestStatus');
+
+                if (localStorage.getItem('userLoggedIn')) {
+                    if (userStatus) userStatus.classList.remove('hidden');
+                    if (guestStatus) guestStatus.classList.add('hidden');
+
+                    // Update user info
+                    const username = localStorage.getItem('username') || 'Player';
+                    const coins = localStorage.getItem('userCoins') || '0';
+
+                    if (document.getElementById('usernameDisplay')) {
+                        document.getElementById('usernameDisplay').textContent = username;
+                    }
+
+                    if (document.getElementById('coinsDisplay')) {
+                        document.getElementById('coinsDisplay').textContent = coins;
+                    }
+
+                    if (document.getElementById('usernameInitial')) {
+                        document.getElementById('usernameInitial').textContent = username.charAt(0).toUpperCase();
+                    }
+                } else {
+                    if (userStatus) userStatus.classList.add('hidden');
+                    if (guestStatus) guestStatus.classList.remove('hidden');
+                }
+            }
+
+            // Update game buttons based on login status
+            function updateGameButtons() {
+                const isLoggedIn = localStorage.getItem('userLoggedIn');
+                const vipButtons = document.querySelectorAll('.vip-play-button');
+                const vipLockIcons = document.querySelectorAll('.vip-lock-icon');
+                const vipButtonIcons = document.querySelectorAll('.vip-button-icon');
+                const vipButtonTexts = document.querySelectorAll('.vip-button-text');
+
+                if (isLoggedIn) {
+                    // Change to unlocked state
+                    vipButtons.forEach(button => {
+                        button.classList.remove('bg-slate-800', 'hover:bg-slate-700');
+                        button.classList.add('luxury-btn');
+                    });
+
+                    vipLockIcons.forEach(icon => {
+                        icon.classList.remove('fa-lock');
+                        icon.classList.add('fa-unlock');
+                    });
+
+                    vipButtonIcons.forEach(icon => {
+                        icon.classList.remove('fa-lock');
+                        icon.classList.add('fa-play');
+                    });
+
+                    vipButtonTexts.forEach(text => {
+                        text.textContent = 'Play Now';
+                    });
+                } else {
+                    // Change to locked state
+                    vipButtons.forEach(button => {
+                        button.classList.add('bg-slate-800', 'hover:bg-slate-700');
+                        button.classList.remove('luxury-btn');
+                    });
+
+                    vipLockIcons.forEach(icon => {
+                        icon.classList.add('fa-lock');
+                        icon.classList.remove('fa-unlock');
+                    });
+
+                    vipButtonIcons.forEach(icon => {
+                        icon.classList.add('fa-lock');
+                        icon.classList.remove('fa-play');
+                    });
+
+                    vipButtonTexts.forEach(text => {
+                        text.textContent = 'Unlock to Play';
+                    });
+                }
+            }
+
+            // Registration functionality
+            const registerModal = document.getElementById('registerModal');
+            const closeRegisterModal = document.getElementById('closeRegisterModal');
+            const registerForm = document.getElementById('registerForm');
+            const registerError = document.getElementById('registerError');
+            const registerErrorMessage = document.getElementById('registerErrorMessage');
+
+            // Open register modal buttons
+            const openRegisterModal = document.getElementById('openRegisterModal');
+            const openRegisterModalMobile = document.getElementById('openRegisterModalMobile');
+
+            if (openRegisterModal) {
+                openRegisterModal.addEventListener('click', function () {
+                    registerModal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                });
+            }
+
+            if (openRegisterModalMobile) {
+                openRegisterModalMobile.addEventListener('click', function () {
+                    mobileMenu.classList.add('hidden');
+                    hamburger.classList.remove('open');
+                    registerModal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                });
+            }
+
+            // Close register modal
+            if (closeRegisterModal) {
+                closeRegisterModal.addEventListener('click', function () {
+                    registerModal.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+                });
+            }
+
+            // Switch between login and register modals
+            if (showLoginFromRegister) {
+                showLoginFromRegister.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    registerModal.classList.remove('active');
+                    loginModal.classList.add('active');
+                });
+            }
+
+            if (showRegisterFromLogin) {
+                showRegisterFromLogin.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    loginModal.classList.remove('active');
+                    registerModal.classList.add('active');
+                });
+            }
+
+            // Form submission
+            if (registerForm) {
+                registerForm.addEventListener('submit', function (e) {
+                    e.preventDefault();
+
+                    const username = document.getElementById('registerUsername').value;
+                    const email = document.getElementById('registerEmail').value;
+                    const password = document.getElementById('registerPassword').value;
+
+                    // Simple validation
+                    if (!username || !email || !password) {
+                        showRegisterError("Please fill all fields");
+                        return;
+                    }
+
+                    if (password.length < 8) {
+                        showRegisterError("Password must be at least 8 characters");
+                        return;
+                    }
+
+                    // Check if email is valid
+                    if (!/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
+                        showRegisterError("Please enter a valid email address");
+                        return;
+                    }
+
+                    // Get existing users or create empty array
+                    const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
+
+                    // Check if user already exists
+                    const userExists = registeredUsers.some(user => user.email === email);
+
+                    if (userExists) {
+                        showRegisterError("An account with this email already exists");
+                        return;
+                    }
+
+                    // Create new user object
+                    const newUser = {
+                        username: username,
+                        email: email,
+                        password: password, // Note: In production, never store plain passwords
+                        coins: "5000",
+                        registrationDate: new Date().toISOString()
+                    };
+
+                    // Add new user to array
+                    registeredUsers.push(newUser);
+
+                    // Save updated array to localStorage
+                    localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
+
+                    // Set current user session
+                    localStorage.setItem('userLoggedIn', 'true');
+                    localStorage.setItem('username', username);
+                    localStorage.setItem('userEmail', email);
+                    localStorage.setItem('userCoins', '5000');
+
+                    // Update UI
+                    checkUserStatus();
+                    updateGameButtons();
+
+                    // Show success and close modal
+                    registerModal.classList.remove('active');
+                    document.body.style.overflow = 'auto';
+
+                    // Show welcome message
+                });
+            }
+
+            function showRegisterError(message) {
+                if (registerError && registerErrorMessage) {
+                    registerErrorMessage.textContent = message;
+                    registerError.classList.remove('hidden');
+                    registerError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }
+            }
+
+            // Initialize user status on page load
+            checkUserStatus();
+            updateGameButtons();
+        });
+    </script>
+</body>
+
+</html>

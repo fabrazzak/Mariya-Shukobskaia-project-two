@@ -1,0 +1,811 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DronaGO - AI Video Maker | Create & Earn</title>
+    <meta name="description"
+        content="Create and sell personalized video souvenirs with DronaGO's AI video maker. No experience needed - start earning today!">
+    <meta name="keywords"
+        content="AI video maker, video editing app, earn with videos, drone videos, video souvenirs, mobile video editor">
+    <link rel="canonical" href="https://dronago.app/" />
+
+    <!-- Favicon -->
+    <link rel="icon" href="/image/logo.webp" type="/image/logo.webp">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Slabo+27px&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#B13BFF',
+                        secondary: '#471396',
+                        accent: '#FFCC00',
+                    },
+                    fontFamily: {
+                        slabo: ['"Slabo 27px"', 'serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <!-- Framer Motion -->
+    <!-- <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script> -->
+
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.min.js"></script>
+</head>
+
+<body class="font-slabo bg-gradient-to-b from-secondary to-black text-white">
+    <!-- Cookie Consent Banner -->
+    <div id="cookieConsent" class="fixed bottom-0 left-0 right-0 bg-secondary p-4 z-50 hidden">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <p class="text-sm">We use cookies to enhance your experience. By continuing to visit this site you agree to
+                our use of cookies.</p>
+            <div class="flex gap-2">
+                <button id="learnMoreBtn"
+                    class="px-4 py-2 text-sm border border-accent text-accent rounded hover:bg-accent hover:text-secondary transition">Learn
+                    More</button>
+                <button id="declineCookies"
+                    class="px-4 py-2 text-sm border border-gray-500 text-gray-300 rounded hover:bg-gray-700 transition">Decline</button>
+                <button id="acceptCookies"
+                    class="px-4 py-2 text-sm bg-primary rounded hover:bg-purple-700 transition">Accept</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-40 bg-black bg-opacity-90 backdrop-blur-md">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="/" class="flex items-center">
+                        <img src="/image/logo.webp" alt="DronaGO Logo" class="h-10 w-auto">
+                        <span class="ml-2 text-2xl font-bold text-primary">DronaGO</span>
+                    </a>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="text-white hover:text-primary transition">Home</a>
+                    <a href="/games/" class="text-white hover:text-primary transition">Games</a>
+                    <a href="/responsible/" class="text-white hover:text-primary transition">Responsible</a>
+                    <a href="/about/" class="text-white hover:text-primary transition">About</a>
+                    <a href="/blog/" class="text-white hover:text-primary transition">Blog</a>
+                    <a href="/contact/" class="text-white hover:text-primary transition">Contact</a>
+                    <a href="https://play.google.com/store/apps/details?id=drona.go.app"
+                        class="bg-primary hover:bg-purple-700 text-white px-4 py-2 rounded-lg transition">Download
+                        App</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobileMenuBtn" class="text-white focus:outline-none">
+                        <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="md:hidden hidden bg-black bg-opacity-95 absolute top-20 left-0 right-0 pb-6 px-4">
+            <div class="flex flex-col space-y-4 pt-4">
+                <a href="/" class="text-white hover:text-primary transition border-b border-gray-800 pb-2">Home</a>
+                <a href="/games/"
+                    class="text-white hover:text-primary transition border-b border-gray-800 pb-2">Games</a>
+                <a href="/responsible/"
+                    class="text-white hover:text-primary transition border-b border-gray-800 pb-2">Responsible</a>
+                <a href="/about/"
+                    class="text-white hover:text-primary transition border-b border-gray-800 pb-2">About</a>
+                <a href="/blog/" class="text-white hover:text-primary transition border-b border-gray-800 pb-2">Blog</a>
+                <a href="/contact/"
+                    class="text-white hover:text-primary transition border-b border-gray-800 pb-2">Contact</a>
+                <a href="https://play.google.com/store/apps/details?id=drona.go.app"
+                    class="bg-primary hover:bg-purple-700 text-white px-4 py-3 rounded-lg text-center transition">Download
+                    App</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative md:h-screen flex items-center justify-center overflow-hidden pt-40 md:pt-20 pb-20">
+        <!-- Three.js Background -->
+        <div id="threeJsCanvas" class="absolute inset-0 z-0"></div>
+
+        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent z-10"></div>
+
+        <div class="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <div class="mb-8">
+                <h1 class="text-4xl md:text-6xl font-bold mb-6 animate-fadeIn">
+                    <span class="text-primary">Create</span> Videos & <span class="text-accent">Earn</span> Money
+                </h1>
+                <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto animate-fadeIn delay-100">
+                    Turn moments into money with DronaGO's AI video maker. No experience needed - just your phone!
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4 animate-fadeIn delay-200">
+                    <a href="https://play.google.com/store/apps/details?id=drona.go.app"
+                        class="bg-primary hover:bg-purple-700 text-white px-8 py-4 rounded-lg text-lg font-semibold transition transform hover:scale-105">
+                        Download Now - Free
+                    </a>
+                    <a href="#features"
+                        class="border border-white hover:border-primary text-white hover:text-primary px-8 py-4 rounded-lg text-lg font-semibold transition transform hover:scale-105">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+
+
+        </div>
+    </section>
+
+
+
+
+    <!-- Features Section -->
+    <section id="features" class="pb-20 bg-gradient-to-b from-black to-secondary">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-5xl font-bold mb-6">
+                    Why Choose <span class="text-primary">DronaGO</span>?
+                </h2>
+                <p class="text-xl max-w-3xl mx-auto">
+                    The easiest way to create and sell professional video souvenirs
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div
+                    class="bg-gray-900 bg-opacity-50 rounded-xl p-8 hover:bg-opacity-70 transition transform hover:-translate-y-2">
+                    <img src="/image/earnMoney.png" alt="" class="h-[300px] w-full mb-4 object-cover rounded-lg">
+                    <h3 class="text-2xl font-bold mb-3">Earn Money Easily</h3>
+                    <p class="text-gray-300">Start earning with just your smartphone. No upfront costs, pay only when
+                        you make sales.</p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div
+                    class="bg-gray-900 bg-opacity-50 rounded-xl p-8 hover:bg-opacity-70 transition transform hover:-translate-y-2">
+                    <img src="/image/AIVideo.png" alt="" class="h-[300px] w-full mb-4 object-cover rounded-lg">
+                    <h3 class="text-2xl font-bold mb-3">AI Video Maker</h3>
+                    <p class="text-gray-300">Let our AI create stunning video souvenirs automatically from your photos
+                        and clips.</p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div
+                    class="bg-gray-900 bg-opacity-50 rounded-xl p-8 hover:bg-opacity-70 transition transform hover:-translate-y-2">
+                    <img src="/image/WorkAnywhere.png" alt="" class="h-[300px] w-full mb-4 object-cover rounded-lg">
+                    <h3 class="text-2xl font-bold mb-3">Work Anywhere</h3>
+                    <p class="text-gray-300">Be your own boss, set your schedule, and work from anywhere in the world.
+                    </p>
+                </div>
+
+                <!-- Feature 4 -->
+                <div
+                    class="bg-gray-900 bg-opacity-50 rounded-xl p-8 hover:bg-opacity-70 transition transform hover:-translate-y-2">
+                    <img src="/image/Secure.png" alt="" class="h-[300px] w-full mb-4 object-cover rounded-lg">
+                    <h3 class="text-2xl font-bold mb-3">Secure Payments</h3>
+                    <p class="text-gray-300">Get paid securely via Stripe and withdraw your earnings whenever you want.
+                    </p>
+                </div>
+
+                <!-- Feature 5 -->
+                <div
+                    class="bg-gray-900 bg-opacity-50 rounded-xl p-8 hover:bg-opacity-70 transition transform hover:-translate-y-2">
+                    <img src="/image/Custom .png" alt="" class="h-[300px] w-full mb-4 object-cover rounded-lg">
+                    <h3 class="text-2xl font-bold mb-3">Custom Templates</h3>
+                    <p class="text-gray-300">Create and reuse your own templates to save time and maintain consistency.
+                    </p>
+                </div>
+
+                <!-- Feature 6 -->
+                <div
+                    class="bg-gray-900 bg-opacity-50 rounded-xl p-8 hover:bg-opacity-70 transition transform hover:-translate-y-2">
+                    <img src="/image/Multi-Device.png" alt="" class="h-[300px] w-full mb-4 object-cover rounded-lg">
+                    <h3 class="text-2xl font-bold mb-3">Multi-Device Support</h3>
+                    <p class="text-gray-300">Use footage from your phone, drone, or camera - our app works with all
+                        devices.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Games Grid Section -->
+    <section class="py-20 bg-gradient-to-b from-black to-secondary">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-5xl font-bold mb-6">
+                    Our <span class="text-primary">Video</span> Experiences
+                </h2>
+                <p class="text-xl max-w-3xl mx-auto">
+                    Explore our collection of AI-powered video games and tools
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Game 1 -->
+                <div
+                    class="group relative overflow-hidden rounded-xl shadow-2xl transition-transform duration-500 hover:scale-105">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-80 z-10"></div>
+                    <img src="/image/AIVideo.webp" alt="AI Video Maker"
+                        class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute bottom-0 left-0 right-0 p-6 z-20">
+                        <h3 class="text-2xl font-bold mb-2">Mana Lake</h3>
+                        <p class="text-gray-300 mb-4">Discover the full range of cycling routes available around our
+                            resort with this innovative app.</p>
+                        <a href="https://play.google.com/store/apps/details?id=mana.lake.app"
+                            class="inline-block bg-primary hover:bg-purple-700 text-white px-4 py-2 rounded-lg transition">Play
+                            Now</a>
+                    </div>
+                    <div
+                        class="absolute top-4 right-4 bg-accent text-secondary px-3 py-1 rounded-full text-sm font-bold z-20">
+                        FREE</div>
+                </div>
+
+                <!-- Game 2 -->
+                <div
+                    class="group relative overflow-hidden rounded-xl shadow-2xl transition-transform duration-500 hover:scale-105">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-80 z-10"></div>
+                    <img src="/image/workAnyWhere1.png" alt="Drone Challenge"
+                        class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute bottom-0 left-0 right-0 p-6 z-20">
+                        <h3 class="text-2xl font-bold mb-2">DronaGo : Create Videos $ Earn </h3>
+                        <p class="text-gray-300 mb-4">DronaGo - AI Video Maker is an app that lets you create and sell
+                            personalized video souvenirs, right where they are recorded. </p>
+                        <a href="https://play.google.com/store/apps/details?id=drona.go.app"
+                            class="inline-block bg-primary hover:bg-purple-700 text-white px-4 py-2 rounded-lg transition">Play Now</a>
+                    </div>
+                    <div
+                        class="absolute top-4 right-4 bg-gray-600 text-white px-3 py-1 rounded-full text-sm font-bold z-20">
+                        NEW</div>
+                </div>
+
+                <!-- Game 3 -->
+                <div
+                    class="group relative overflow-hidden rounded-xl shadow-2xl transition-transform duration-500 hover:scale-105">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-80 z-10"></div>
+                    <img src="/image/Custom1.webp" alt="Video Battles"
+                        class="w-full h-64 object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute bottom-0 left-0 right-0 p-6 z-20">
+                        <h3 class="text-2xl font-bold mb-2">Drivers Hall</h3>
+                        <p class="text-gray-300 mb-4">We are Drivers Hall - an ultimate supercar storage facility in the
+                            city of Berlin, a reference for the others, the only address for supercars aficionados!</p>
+                        <a href="https://play.google.com/store/apps/details?id=drivers.hall.app"
+                            class="inline-block bg-primary hover:bg-purple-700 text-white px-4 py-2 rounded-lg transition">Play Now</a>
+                    </div>
+                    <div
+                        class="absolute top-4 right-4 bg-gray-600 text-white px-3 py-1 rounded-full text-sm font-bold z-20">
+                        NEW</div>
+                </div>
+
+
+                
+                <!-- Game 5 -->
+
+            </div>
+            <div class="text-center mt-20 mx-auto flex items-center justify-center">
+                    <a href="/games/"
+                        class="flex justify-center  mx-auto bg-accent hover:bg-yellow-500 text-secondary px-8 py-4 rounded-lg text-lg font-semibold transition transform hover:scale-105">
+                        View All Games
+                    </a>
+                </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="py-20 bg-gradient-to-b from-secondary to-black">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-5xl font-bold mb-6">
+                    How <span class="text-primary">DronaGO</span> Works
+                </h2>
+                <p class="text-xl max-w-3xl mx-auto">
+                    Start earning in just a few simple steps
+                </p>
+            </div>
+
+            <div class="relative">
+                <!-- Timeline -->
+                <div
+                    class="hidden lg:block absolute left-1/2 h-full w-1 bg-gradient-to-b from-primary to-accent transform -translate-x-1/2">
+                </div>
+
+                <!-- Steps -->
+                <div class="space-y-16 lg:space-y-0">
+                    <!-- Step 1 -->
+                    <div class="lg:flex lg:items-center lg:justify-between lg:odd:flex-row-reverse lg:mb-32">
+                        <div class="lg:w-5/12 mb-8 lg:mb-0">
+                            <div class="bg-gray-900 bg-opacity-50 rounded-xl p-8 h-full">
+                                <div class="text-primary text-2xl font-bold mb-2">Step 1</div>
+                                <h3 class="text-2xl font-bold mb-4">Download the Free App</h3>
+                                <p class="text-gray-300">Get started with zero upfront costs. Our AI video maker is
+                                    completely free to download and use.</p>
+                            </div>
+                        </div>
+                        <div class="lg:w-5/12 relative">
+                            <div class="lg:absolute lg:top-1/2 lg:transform lg:-translate-y-1/2">
+                                <div
+                                    class="bg-primary rounded-full w-24 h-24 flex items-center justify-center mx-auto lg:mx-0 text-3xl font-bold">
+                                    1</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="lg:flex lg:items-center lg:justify-between lg:odd:flex-row-reverse lg:mb-32">
+                        <div class="lg:w-5/12 mb-8 lg:mb-0">
+                            <div class="bg-gray-900 bg-opacity-50 rounded-xl p-8 h-full">
+                                <div class="text-primary text-2xl font-bold mb-2">Step 2</div>
+                                <h3 class="text-2xl font-bold mb-4">Set Your Prices & Templates</h3>
+                                <p class="text-gray-300">Customize your pricing and create reusable templates to speed
+                                    up your workflow.</p>
+                            </div>
+                        </div>
+                        <div class="lg:w-5/12 relative">
+                            <div class="lg:absolute lg:top-1/2 lg:transform lg:-translate-y-1/2">
+                                <div
+                                    class="bg-primary rounded-full w-24 h-24 flex items-center justify-center mx-auto lg:mx-0 text-3xl font-bold">
+                                    2</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="lg:flex lg:items-center lg:justify-between lg:odd:flex-row-reverse lg:mb-32">
+                        <div class="lg:w-5/12 mb-8 lg:mb-0">
+                            <div class="bg-gray-900 bg-opacity-50 rounded-xl p-8 h-full">
+                                <div class="text-primary text-2xl font-bold mb-2">Step 3</div>
+                                <h3 class="text-2xl font-bold mb-4">Find Clients & Capture Moments</h3>
+                                <p class="text-gray-300">Approach potential clients at events, tourist spots, or local
+                                    businesses and offer unique video souvenirs.</p>
+                            </div>
+                        </div>
+                        <div class="lg:w-5/12 relative">
+                            <div class="lg:absolute lg:top-1/2 lg:transform lg:-translate-y-1/2">
+                                <div
+                                    class="bg-primary rounded-full w-24 h-24 flex items-center justify-center mx-auto lg:mx-0 text-3xl font-bold">
+                                    3</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="lg:flex lg:items-center lg:justify-between lg:odd:flex-row-reverse">
+                        <div class="lg:w-5/12 mb-8 lg:mb-0">
+                            <div class="bg-gray-900 bg-opacity-50 rounded-xl p-8 h-full">
+                                <div class="text-primary text-2xl font-bold mb-2">Step 4</div>
+                                <h3 class="text-2xl font-bold mb-4">Create & Sell with AI</h3>
+                                <p class="text-gray-300">Let our AI transform moments into personalized souvenirs.
+                                    Deliver instantly and get paid securely.</p>
+                            </div>
+                        </div>
+                        <div class="lg:w-5/12 relative">
+                            <div class="lg:absolute lg:top-1/2 lg:transform lg:-translate-y-1/2">
+                                <div
+                                    class="bg-primary rounded-full w-24 h-24 flex items-center justify-center mx-auto lg:mx-0 text-3xl font-bold">
+                                    4</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-20">
+                <a href="https://play.google.com/store/apps/details?id=drona.go.app"
+                    class="inline-block bg-accent hover:bg-yellow-500 text-secondary px-8 py-4 rounded-lg text-lg font-semibold transition transform hover:scale-105">
+                    Start Earning Today
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-16 bg-gradient-to-b from-secondary to-black">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                    Latest <span class="text-primary">Articles</span>
+                </h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    Fresh content to help you create better videos and grow your business
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Blog Post 1 -->
+                <article class="group relative overflow-hidden rounded-xl shadow-lg bg-gray-900 bg-opacity-50 hover:bg-opacity-70 transition-all duration-300">
+                    <a href="/blog/drone-video-guide" class="block h-full">
+                        <div class="h-60 overflow-hidden">
+                            <img src="/image/Multi-Device.webp" alt="Drone Video Guide" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center mb-3">
+                                <span class="text-primary text-sm font-semibold">Guide</span>
+                                <span class="mx-2 text-gray-400">•</span>
+                                <span class="text-gray-400 text-sm">April 28, 2025</span>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3 group-hover:text-primary transition">The Complete Guide to Drone Video Souvenirs</h3>
+                            <p class="text-gray-300 mb-4 text-sm">Learn how to capture stunning aerial footage and turn it into profitable video souvenirs with DronaGO.</p>
+                            <div class="flex items-center text-accent font-medium text-sm">
+                                <span>Read More</span>
+                                <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </a>
+                </article>
+                
+                <!-- Blog Post 2 -->
+                <article class="group relative overflow-hidden rounded-xl shadow-lg bg-gray-900 bg-opacity-50 hover:bg-opacity-70 transition-all duration-300">
+                    <a href="/blog/travel-video-business" class="block h-full">
+                        <div class="h-60 overflow-hidden">
+                            <img src="/image/travel-blog.jpg" alt="Travel Video Business" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center mb-3">
+                                <span class="text-primary text-sm font-semibold">Business</span>
+                                <span class="mx-2 text-gray-400">•</span>
+                                <span class="text-gray-400 text-sm">April 10, 2025</span>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3 group-hover:text-primary transition">How I Built a Travel Video Business with DronaGO</h3>
+                            <p class="text-gray-300 mb-4 text-sm">One creator's journey from hobbyist to full-time travel video entrepreneur using DronaGO's tools.</p>
+                            <div class="flex items-center text-accent font-medium text-sm">
+                                <span>Read More</span>
+                                <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </a>
+                </article>
+                
+                <!-- Blog Post 3 -->
+                <article class="group relative overflow-hidden rounded-xl shadow-lg bg-gray-900 bg-opacity-50 hover:bg-opacity-70 transition-all duration-300">
+                    <a href="/blog/ai-templates" class="block h-full">
+                        <div class="h-60 overflow-hidden">
+                            <img src="/image/custom-blog.jpg" alt="AI Templates" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center mb-3">
+                                <span class="text-primary text-sm font-semibold">Tutorial</span>
+                                <span class="mx-2 text-gray-400">•</span>
+                                <span class="text-gray-400 text-sm">March 5, 2025</span>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3 group-hover:text-primary transition">Creating Custom AI Video Templates That Sell</h3>
+                            <p class="text-gray-300 mb-4 text-sm">Step-by-step guide to designing reusable templates that speed up your workflow and impress clients.</p>
+                            <div class="flex items-center text-accent font-medium text-sm">
+                                <span>Read More</span>
+                                <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                                </svg>
+                            </div>
+                        </div>
+                    </a>
+                </article>
+            </div>           
+           
+        </div>
+
+        <div class="text-center mt-20 mx-auto flex items-center justify-center">
+                    <a href="/blog/"
+                        class="flex justify-center  mx-auto bg-accent hover:bg-yellow-500 text-secondary px-8 py-4 rounded-lg text-lg font-semibold transition transform hover:scale-105">
+                        View All Blogs
+                    </a>
+                </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-20 bg-black">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-5xl font-bold mb-6">
+                    What Our <span class="text-primary">Users</span> Say
+                </h2>
+                <p class="text-xl max-w-3xl mx-auto">
+                    Real people earning real money with DronaGO
+                </p>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="bg-gray-900 rounded-xl p-8">
+                    <div class="flex items-center mb-4">
+                        <div class="text-yellow-400 text-xl">★★★★★</div>
+                        <div class="ml-2 text-gray-400 text-sm">2 days ago</div>
+                    </div>
+                    <p class="mb-6">"I made $200 in my first weekend with DronaGO at a local festival. The app is so
+                        easy to use and clients love the instant videos!"</p>
+                    <div class="flex items-center">
+                        <img src="/image/Sarah K..jpeg" alt="User" class="w-12 h-12 rounded-full mr-4 object-cover">
+                        <div>
+                            <div class="font-bold">Sarah K.</div>
+                            <div class="text-gray-400 text-sm">Travel Photographer</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="bg-gray-900 rounded-xl p-8">
+                    <div class="flex items-center mb-4">
+                        <div class="text-yellow-400 text-xl">★★★★★</div>
+                        <div class="ml-2 text-gray-400 text-sm">1 week ago</div>
+                    </div>
+                    <p class="mb-6">"As a drone operator, DronaGO has doubled my income. I now offer video souvenirs
+                        after aerial shoots and clients can't get enough."</p>
+                    <div class="flex items-center">
+                        <img src="/image/Mike T..jpeg" alt="User" class="w-12 h-12 rounded-full mr-4 object-cover">
+                        <div>
+                            <div class="font-bold">Mike T.</div>
+                            <div class="text-gray-400 text-sm">Drone Pilot</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="bg-gray-900 rounded-xl p-8">
+                    <div class="flex items-center mb-4">
+                        <div class="text-yellow-400 text-xl">★★★★☆</div>
+                        <div class="ml-2 text-gray-400 text-sm">3 weeks ago</div>
+                    </div>
+                    <p class="mb-6">"Perfect side hustle! I use DronaGO at weddings and parties. The AI makes
+                        professional edits in minutes that would take me hours."</p>
+                    <div class="flex items-center">
+                        <img src="/image/Jessica L.jpeg" alt="User" class="w-12 h-12 rounded-full mr-4 object-cover">
+                        <div>
+                            <div class="font-bold">Jessica L.</div>
+                            <div class="text-gray-400 text-sm">College Student</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   <!-- CTA Section -->
+<section class="py-20 bg-gradient-to-r from-primary to-secondary relative overflow-hidden">
+    <!-- Three.js Background for CTA -->
+    <div id="ctaThreeJsCanvas" class="absolute inset-0 z-0"></div>
+    <div class="relative z-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h2 class="text-3xl md:text-5xl font-bold mb-6">
+            Ready to Start <span class="text-accent">Earning</span>?
+        </h2>
+        <p class="text-xl mb-8 max-w-3xl mx-auto">
+            Download DronaGO today and turn your creativity into income!
+        </p>
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+            <a href="https://play.google.com/store/apps/details?id=drona.go.app"
+                class="bg-accent hover:bg-yellow-500 text-secondary px-8 py-4 rounded-lg text-lg font-semibold transition transform hover:scale-105">
+                Download Now - Free
+            </a>
+            <a href="/contact/"
+                class="bg-white hover:bg-gray-200 text-secondary px-8 py-4 rounded-lg text-lg font-semibold transition transform hover:scale-105">
+                Contact Us
+            </a>
+        </div>
+    </div>
+</section>
+    <!-- Footer -->
+    <footer class="bg-black py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <h3 class="text-lg font-bold text-primary mb-4">DronaGO</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/about/" class="text-gray-400 hover:text-white transition">About Us</a></li>
+                        <li><a href="/blog/" class="text-gray-400 hover:text-white transition">Blog</a></li>
+                        <li><a href="/contact/" class="text-gray-400 hover:text-white transition">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-bold text-primary mb-4">Legal</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/privacy/" class="text-gray-400 hover:text-white transition">Privacy Policy</a>
+                        </li>
+                        <li><a href="/terms/" class="text-gray-400 hover:text-white transition">Terms of Service</a>
+                        </li>
+                        <li><a href="/cookies/" class="text-gray-400 hover:text-white transition">Cookies Policy</a>
+                        </li>
+                        <li><a href="/responsible/" class="text-gray-400 hover:text-white transition">Responsible
+                                Gaming</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-bold text-primary mb-4">Support</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/contact/" class="text-gray-400 hover:text-white transition">Contact Us</a></li>
+                        <li><a href="/faq/" class="text-gray-400 hover:text-white transition">FAQ</a></li>
+                         
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-bold text-primary mb-4">Connect</h3>
+
+                    <div class="text-gray-400">
+                        <p class="mb-2">Email: info@dronago.app</p>
+                        <p>Phone: +16047757200</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 pt-8">
+                <div class="flex flex-col  justify-between items-center">
+                    <p class="text-gray-400 text-sm mb-4 md:mb-0">
+                        © 2025 NOCADIS SP Z O O. All rights reserved.
+                    </p>
+                    <p class="text-gray-400 text-sm text-center">
+                        This app is intended for adult audiences. Practice or success at social gaming does not imply
+                        future success at real money gambling.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Cookie Consent
+        const cookieConsent = document.getElementById('cookieConsent');
+        const acceptCookies = document.getElementById('acceptCookies');
+        const declineCookies = document.getElementById('declineCookies');
+        const learnMoreBtn = document.getElementById('learnMoreBtn');
+
+        if (!localStorage.getItem('cookieConsent')) {
+            cookieConsent.classList.remove('hidden');
+        }
+
+        acceptCookies.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'accepted');
+            cookieConsent.classList.add('hidden');
+        });
+
+        declineCookies.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'declined');
+            cookieConsent.classList.add('hidden');
+        });
+
+        learnMoreBtn.addEventListener('click', () => {
+            window.location.href = '/cookies/';
+        });
+
+        // Three.js Background
+        const threeJsContainer = document.getElementById('threeJsCanvas');
+
+        // Only initialize Three.js if container exists and window is large enough
+        if (threeJsContainer && window.innerWidth > 768) {
+            // Scene setup
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            threeJsContainer.appendChild(renderer.domElement);
+
+            // Particles
+            const particlesGeometry = new THREE.BufferGeometry();
+            const particleCount = 1000;
+
+            const posArray = new Float32Array(particleCount * 3);
+
+            for (let i = 0; i < particleCount * 3; i++) {
+                posArray[i] = (Math.random() - 0.5) * 10;
+            }
+
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+
+            const particlesMaterial = new THREE.PointsMaterial({
+                size: 0.02,
+                color: 0xB13BFF,
+                transparent: true,
+                opacity: 0.8,
+                blending: THREE.AdditiveBlending
+            });
+
+            const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+            scene.add(particlesMesh);
+
+            camera.position.z = 3;
+
+            // Animation
+            function animate() {
+                requestAnimationFrame(animate);
+
+                particlesMesh.rotation.x += 0.0005;
+                particlesMesh.rotation.y += 0.0005;
+
+                renderer.render(scene, camera);
+            }
+
+            animate();
+
+            // Handle resize
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        }
+
+        // Three.js Background for CTA Section
+const ctaThreeJsContainer = document.getElementById('ctaThreeJsCanvas');
+
+// Only initialize Three.js if container exists and window is large enough
+if (ctaThreeJsContainer && window.innerWidth > 768) {
+    // Scene setup
+    const ctaScene = new THREE.Scene();
+    const ctaCamera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    const ctaRenderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+    ctaRenderer.setSize(window.innerWidth, window.innerHeight);
+    ctaThreeJsContainer.appendChild(ctaRenderer.domElement);
+
+    // Particles - Different color for CTA section
+    const ctaParticlesGeometry = new THREE.BufferGeometry();
+    const ctaParticleCount = 800; // Slightly fewer particles for variety
+
+    const ctaPosArray = new Float32Array(ctaParticleCount * 3);
+
+    for (let i = 0; i < ctaParticleCount * 3; i++) {
+        ctaPosArray[i] = (Math.random() - 0.5) * 8; // Smaller spread than hero section
+    }
+
+    ctaParticlesGeometry.setAttribute('position', new THREE.BufferAttribute(ctaPosArray, 3));
+
+    const ctaParticlesMaterial = new THREE.PointsMaterial({
+        size: 0.03, // Slightly larger particles
+        color: 0xFFCC00, // Using your accent color
+        transparent: true,
+        opacity: 0.7,
+        blending: THREE.AdditiveBlending
+    });
+
+    const ctaParticlesMesh = new THREE.Points(ctaParticlesGeometry, ctaParticlesMaterial);
+    ctaScene.add(ctaParticlesMesh);
+
+    ctaCamera.position.z = 3;
+
+    // Animation - Different rotation speed for variety
+    function animateCTA() {
+        requestAnimationFrame(animateCTA);
+
+        ctaParticlesMesh.rotation.x += 0.0008;
+        ctaParticlesMesh.rotation.y += 0.0003; // Different rotation on Y axis
+
+        ctaRenderer.render(ctaScene, ctaCamera);
+    }
+
+    animateCTA();
+
+    // Handle resize
+    window.addEventListener('resize', () => {
+        ctaCamera.aspect = window.innerWidth / window.innerHeight;
+        ctaCamera.updateProjectionMatrix();
+        ctaRenderer.setSize(window.innerWidth, window.innerHeight);
+    });
+}
+    </script>
+</body>
+
+</html>

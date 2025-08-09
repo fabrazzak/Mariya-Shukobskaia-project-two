@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <link rel="shortcut icon" href="/images/fav-logo.png" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Fayez Spa Hair Salon in Spruce Grove, AB - Award-winning stylists offering premium hair services including cuts, coloring, smoothing treatments, and more. Book your appointment today.">
+    <meta name="keywords" content="hair salon, spa, haircut, hair color, bumble and bumble, keratin treatment, balayage, ombre, foil highlights, hair styling, Spruce Grove, Alberta, Canada">
+    <link rel="canonical" href="https://fayezspa-hairsalon.com/">
+    <title>Fayez Spa Hair Salon | Premium Hair Services in Spruce Grove</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#9d4edd',
+                        secondary: '#7b2cbf',
+                        dark: '#10002b',
+                        light: '#e0aaff',
+                        accent: '#c77dff',
+                    },
+                    fontFamily: {
+                        sans: ['"Montserrat"', 'sans-serif'],
+                        display: ['"Playfair Display"', 'serif'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 6s infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #10002b;
+            color: #f8f9fa;
+            overflow-x: hidden;
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, #10002b 0%, #240046 50%, #3c096c 100%);
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(157, 78, 221, 0.3), 0 10px 10px -5px rgba(157, 78, 221, 0.1);
+        }
+        
+        .text-gradient {
+            background: linear-gradient(90deg, #e0aaff 0%, #c77dff 50%, #9d4edd 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .border-gradient {
+            border: 2px solid transparent;
+            background: linear-gradient(#10002b, #10002b) padding-box,
+                        linear-gradient(135deg, #9d4edd 0%, #7b2cbf 100%) border-box;
+        }
+        
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+        
+        .content-wrapper {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .blob {
+            position: absolute;
+            filter: blur(40px);
+            opacity: 0.2;
+            z-index: -1;
+        }
+        
+        .blob-1 {
+            width: 300px;
+            height: 300px;
+            background: #9d4edd;
+            top: 20%;
+            left: 10%;
+            animation: float 8s ease-in-out infinite;
+        }
+        
+        .blob-2 {
+            width: 400px;
+            height: 400px;
+            background: #7b2cbf;
+            bottom: 10%;
+            right: 10%;
+            animation: float 10s ease-in-out infinite 2s;
+        }
+        
+        .review-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 25px -5px rgba(157, 78, 221, 0.4), 0 10px 10px -5px rgba(157, 78, 221, 0.2);
+        }
+        
+        .nav-link::after {
+            content: '';
+            display: block;
+            width: 0;
+            height: 2px;
+            background: #e0aaff;
+            transition: width 0.3s;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #e0aaff;
+            color: #10002b;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .cookie-consent {
+            transform: translateY(100%);
+            transition: transform 0.5s ease-out;
+        }
+        
+        .cookie-consent.show {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <!-- Cookie Consent -->
+    <div class="cookie-consent fixed bottom-0 left-0 right-0 bg-dark bg-opacity-90 backdrop-blur-sm p-4 border-t border-accent z-50">
+        <div class="container mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <p class="text-sm text-light max-w-3xl">
+                We use cookies to enhance your experience on our website. By continuing to browse, you agree to our use of cookies. 
+                <a href="/privacy/" class="text-accent hover:underline">Learn more</a>
+            </p>
+            <div class="flex gap-3">
+                <button id="decline-cookies" class="px-4 py-2 border border-accent text-accent rounded-full hover:bg-accent hover:bg-opacity-10 transition-colors">
+                    Decline
+                </button>
+                <button id="accept-cookies" class="px-4 py-2 bg-accent text-dark rounded-full hover:bg-light transition-colors font-medium">
+                    Accept
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-40 bg-dark bg-opacity-90 backdrop-blur-sm border-b border-dark border-opacity-20">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="/" class="flex items-center">
+                        <img alt="logo" src="/images/logo.png"  class="h-14"/>
+                    </a>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="nav-link text-light font-medium hover:text-accent transition-colors">Home</a>
+                    <a href="/about/" class="nav-link text-light font-medium hover:text-accent transition-colors">About</a>
+                    <a href="/services/" class="nav-link text-light font-medium hover:text-accent transition-colors">Services</a>
+                    <a href="/blog/" class="nav-link text-light font-medium hover:text-accent transition-colors">Blog</a>
+                    <a href="/contact/" class="nav-link text-light font-medium hover:text-accent transition-colors">Contact</a>
+                    
+                    <!-- Cart Icon -->
+                    <div class="relative">
+                        <a href="/cart/" class="text-light hover:text-accent transition-colors">
+                            <i class="fas fa-shopping-bag text-xl"></i>
+                            <span class="cart-count hidden">0</span>
+                        </a>
+                    </div>
+                    
+                    <!-- Book Now Button -->
+                    <a href="tel:+17809966209" class="px-6 py-2 bg-gradient-to-r from-primary to-secondary rounded-full font-medium hover:opacity-90 transition-opacity">
+                        Book Now
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-button" class="text-light focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-dark bg-opacity-95 backdrop-blur-sm px-6 py-4 border-t border-dark border-opacity-20">
+            <div class="flex flex-col space-y-4">
+                <a href="/" class="text-light font-medium hover:text-accent transition-colors">Home</a>
+                <a href="/about/" class="text-light font-medium hover:text-accent transition-colors">About</a>
+                <a href="/services/" class="text-light font-medium hover:text-accent transition-colors">Services</a>
+                <a href="/blog/" class="text-light font-medium hover:text-accent transition-colors">Blog</a>
+                <a href="/contact/" class="text-light font-medium hover:text-accent transition-colors">Contact</a>
+                <a href="/cart/" class="text-light font-medium hover:text-accent transition-colors flex items-center">
+                    <i class="fas fa-shopping-bag mr-2"></i> Cart
+                    <span class="cart-count-mobile ml-2 hidden bg-accent text-dark rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold">0</span>
+                </a>
+                <a href="tel:+17809966209" class="px-6 py-2 bg-gradient-to-r from-primary to-secondary rounded-full font-medium text-center hover:opacity-90 transition-opacity">
+                    Book Now
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-gradient min-h-screen flex items-center justify-center relative overflow-hidden pt-20">
+        <div id="particles-js"></div>
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        
+        <div class="container mx-auto px-6 py-20 content-wrapper">
+            <div class="flex flex-col lg:flex-row items-center justify-between gap-12">
+                <!-- Hero Content -->
+                <div class="lg:w-1/2 space-y-8 text-center lg:text-left">
+                    <h1 class="text-4xl md:text-6xl font-bold leading-tight">
+                        <span class="text-gradient">Transform Your Hair</span><br>
+                        With Award-Winning Stylists
+                    </h1>
+                    <p class="text-lg text-light max-w-2xl">
+                        Experience luxury hair care with our team of Bumble and Bumble trained stylists. 
+                        From precision cuts to vibrant colors, we bring your hair dreams to life.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                        <a href="tel:+17809966209" class="px-8 py-3 bg-gradient-to-r from-primary to-secondary rounded-full font-medium hover:opacity-90 transition-opacity text-center">
+                            Book Appointment
+                        </a>
+                        <a href="/services/" class="px-8 py-3 border border-accent text-accent rounded-full hover:bg-accent hover:bg-opacity-10 transition-colors text-center">
+                            Explore Services
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Hero Image -->
+                <div class="lg:w-1/2 relative">
+                    <div class="relative w-full max-w-lg mx-auto">
+                        <div class="absolute -inset-4 bg-gradient-to-r from-primary to-secondary rounded-3xl opacity-20 blur-lg"></div>
+                        <img src="/images/hero-hair-styling.jpg" alt="Hair styling at Fayez Spa" class="relative rounded-2xl w-full h-auto object-cover shadow-2xl border-gradient">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="py-20 bg-dark">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                    <span class="text-gradient">Our Signature</span> Services
+                </h2>
+                <p class="text-light max-w-2xl mx-auto">
+                    Discover our range of premium hair services designed to enhance your natural beauty and boost your confidence.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Service 1 -->
+                <div class="service-card bg-dark border border-dark border-opacity-20 rounded-xl p-6 transition-all duration-300 hover:border-accent hover:border-opacity-40">
+                     <img src="/images/girl-getting-hair-styled-salon-side-view.jpg" alt="Fayez Spa interior" class=" rounded-2xl w-full mb-6 h-64 object-cover shadow-2xl border-gradient">
+                    
+                    <h3 class="text-xl font-bold mb-3">Ladies' Cut & Blowout</h3>
+                    <p class="text-light mb-4">Precision haircut tailored to your face shape and lifestyle, finished with a professional blowout.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-accent font-bold">$80.00</span>
+                        <button class="add-to-cart px-4 py-2 bg-accent bg-opacity-10 text-accent rounded-full hover:bg-opacity-20 transition-colors" 
+                                data-service="Ladies' Cut & Blowout" data-price="80.00">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Service 2 -->
+                <div class="service-card bg-dark border border-dark border-opacity-20 rounded-xl p-6 transition-all duration-300 hover:border-accent hover:border-opacity-40">
+                    <img src="/images/female-client-getting-her-hair-dried-hairdresser.jpg" alt="Fayez Spa interior" class=" rounded-2xl w-full mb-6 h-64 object-cover shadow-2xl border-gradient">
+                   
+                    <h3 class="text-xl font-bold mb-3">Ombre/Balayage & Blowout</h3>
+                    <p class="text-light mb-4">Hand-painted color technique for a natural, sun-kissed look with a silky blowout finish.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-accent font-bold">From $225.00</span>
+                        <button class="add-to-cart px-4 py-2 bg-accent bg-opacity-10 text-accent rounded-full hover:bg-opacity-20 transition-colors" 
+                                data-service="Ombre/Balayage & Blowout" data-price="225.00">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Service 3 -->
+                <div class="service-card bg-dark border border-dark border-opacity-20 rounded-xl p-6 transition-all duration-300 hover:border-accent hover:border-opacity-40">
+                   <img src="/images/skik-touch-smoothing.jpg" alt="Fayez Spa interior" class=" rounded-2xl w-full mb-6 h-64 object-cover shadow-2xl border-gradient">
+                   
+                    <h3 class="text-xl font-bold mb-3">Silk Touch Smoothing</h3>
+                    <p class="text-light mb-4">Formaldehyde-free treatment that eliminates frizz and adds shine for up to 6 months.</p>
+                    <div class="flex justify-between items-center">
+                        <span class="text-accent font-bold">From $392.00</span>
+                        <button class="add-to-cart px-4 py-2 bg-accent bg-opacity-10 text-accent rounded-full hover:bg-opacity-20 transition-colors" 
+                                data-service="Silk Touch Smoothing Treatment" data-price="392.00">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="/services/" class="inline-flex items-center px-6 py-3 border border-accent text-accent rounded-full hover:bg-accent hover:bg-opacity-10 transition-colors">
+                    View All Services
+                    <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="py-20 bg-gradient-to-b from-dark to-primary">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col lg:flex-row items-center gap-12">
+                <!-- About Image -->
+                <div class="lg:w-1/2">
+                    <div class="relative">
+                        <div class="absolute -inset-4 bg-gradient-to-r from-accent to-secondary rounded-3xl opacity-20 blur-lg"></div>
+                        <img src="/images/salon-interior.jpg" alt="Fayez Spa interior" class="relative rounded-2xl w-full h-auto object-cover shadow-2xl border-gradient">
+                    </div>
+                </div>
+                
+                <!-- About Content -->
+                <div class="lg:w-1/2 space-y-6">
+                    <h2 class="text-3xl md:text-4xl font-bold">
+                        <span class="text-gradient">35 Years</span> of Hair Excellence
+                    </h2>
+                    <p class="text-light">
+                        Following in the footsteps of a multiple award-winning stylist, the Fayez team continues the tradition of excellence with 35 years of experience in the hair industry.
+                    </p>
+                    <p class="text-light">
+                        As an exclusive Bumble and Bumble salon, our stylists train in New York City at the famous Bumble University and Styling Salon, receiving intensive, hands-on professional training.
+                    </p>
+                    <div class="pt-4">
+                        <a href="/about/" class="inline-flex items-center px-6 py-3 bg-accent text-dark rounded-full font-medium hover:bg-light transition-colors">
+                            Our Story
+                            <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-20 bg-dark">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                    <span class="text-gradient">Client</span> Testimonials
+                </h2>
+                <p class="text-light max-w-2xl mx-auto">
+                    Hear what our clients have to say about their experiences at Fayez Spa Hair Salon.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="review-card bg-dark border border-dark border-opacity-20 rounded-xl p-6 transition-all duration-300 hover:border-accent hover:border-opacity-40">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center mr-4">
+                            <span class="text-white font-bold">AC</span>
+                        </div>
+                        <div>
+                            <h4 class="font-bold">Andrea C</h4>
+                            <div class="flex text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-light italic mb-4">
+                        "Amazing experience today. My daughter and I had gift cards for spa pedicures and we had a really relaxing time. The girls doing our pedicures were wonderful. And our toes look beautiful."
+                    </p>
+                    <div class="text-xs text-light opacity-70">July 16, 2025</div>
+                </div>
+                
+                <!-- Testimonial 2 -->
+                <div class="review-card bg-dark border border-dark border-opacity-20 rounded-xl p-6 transition-all duration-300 hover:border-accent hover:border-opacity-40">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center mr-4">
+                            <span class="text-white font-bold">JW</span>
+                        </div>
+                        <div>
+                            <h4 class="font-bold">Jade Williamson</h4>
+                            <div class="flex text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-light italic mb-4">
+                        "Adam did a beautiful job on my hair!! I can be quite particular with my hair, but I left with the most gorgeous platinum blonde. The perfect tone and the best blonde I've had to date."
+                    </p>
+                    <div class="text-xs text-light opacity-70">July 5, 2025</div>
+                </div>
+                
+                <!-- Testimonial 3 -->
+                <div class="review-card bg-dark border border-dark border-opacity-20 rounded-xl p-6 transition-all duration-300 hover:border-accent hover:border-opacity-40">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-gradient-to-br from-primary to-secondary flex items-center justify-center mr-4">
+                            <span class="text-white font-bold">KG</span>
+                        </div>
+                        <div>
+                            <h4 class="font-bold">Kate Goodwin</h4>
+                            <div class="flex text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-light italic mb-4">
+                        "Fayez is truly the best spa in London. Adam has been doing my hair for 10+ years and I cannot recommend him enough. He always gives me the cut and colour I want."
+                    </p>
+                    <div class="text-xs text-light opacity-70">June 27, 2025</div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="https://www.google.com/search?q=Fayez+Spa" target="_blank" rel="noopener noreferrer" class="inline-flex items-center px-6 py-3 border border-accent text-accent rounded-full hover:bg-accent hover:bg-opacity-10 transition-colors">
+                    <i class="fab fa-google mr-2"></i>
+                    Read More Reviews
+                </a>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Blog Preview Section -->
+    <section class="py-20 bg-dark">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                    <span class="text-gradient">Latest</span> From Our Blog
+                </h2>
+                <p class="text-light max-w-2xl mx-auto">
+                    Discover hair care tips, styling trends, and salon news from our expert stylists.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Blog Post 1 -->
+                <a href="/blog/silk-touch-treatment/" class="group">
+                    <div class="bg-dark border border-dark border-opacity-20 rounded-xl overflow-hidden transition-all duration-300 group-hover:border-accent group-hover:border-opacity-40">
+                        <div class="h-48 overflow-hidden">
+                            <img src="/images/blog-silk-touch.avif" alt="Silk Touch Smoothing Treatment" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                        </div>
+                        <div class="p-6">
+                            <span class="text-xs font-semibold text-accent">TREATMENTS</span>
+                            <h3 class="text-xl font-bold mt-2 mb-3 group-hover:text-accent transition-colors">Why Choose Our Silk Touch Smoothing Treatment</h3>
+                            <p class="text-light text-sm">Discover the benefits of our formaldehyde-free smoothing treatment that lasts up to 6 months.</p>
+                            <div class="mt-4 flex items-center text-accent text-sm font-medium">
+                                Read More
+                                <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- Blog Post 2 -->
+                <a href="/blog/summer-hair-trends/" class="group">
+                    <div class="bg-dark border border-dark border-opacity-20 rounded-xl overflow-hidden transition-all duration-300 group-hover:border-accent group-hover:border-opacity-40">
+                        <div class="h-48 overflow-hidden">
+                            <img src="/images/blog-summer-trends.webp" alt="Summer Hair Trends" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                        </div>
+                        <div class="p-6">
+                            <span class="text-xs font-semibold text-accent">TRENDS</span>
+                            <h3 class="text-xl font-bold mt-2 mb-3 group-hover:text-accent transition-colors">Top Summer Hair Trends for 2025</h3>
+                            <p class="text-light text-sm">From beachy waves to bold colors, discover this season's hottest hair trends.</p>
+                            <div class="mt-4 flex items-center text-accent text-sm font-medium">
+                                Read More
+                                <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- Blog Post 3 -->
+                <a href="/blog/hair-care-tips/" class="group">
+                    <div class="bg-dark border border-dark border-opacity-20 rounded-xl overflow-hidden transition-all duration-300 group-hover:border-accent group-hover:border-opacity-40">
+                        <div class="h-48 overflow-hidden">
+                            <img src="/images/blog-hair-care.avif" alt="Hair Care Tips" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                        </div>
+                        <div class="p-6">
+                            <span class="text-xs font-semibold text-accent">TIPS</span>
+                            <h3 class="text-xl font-bold mt-2 mb-3 group-hover:text-accent transition-colors">5 Essential Hair Care Tips From Our Stylists</h3>
+                            <p class="text-light text-sm">Professional advice to keep your hair healthy and vibrant between salon visits.</p>
+                            <div class="mt-4 flex items-center text-accent text-sm font-medium">
+                                Read More
+                                <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- Blog Post 4 -->
+                <a href="/blog/balayage-guide/" class="group">
+                    <div class="bg-dark border border-dark border-opacity-20 rounded-xl overflow-hidden transition-all duration-300 group-hover:border-accent group-hover:border-opacity-40">
+                        <div class="h-48 overflow-hidden">
+                            <img src="/images/balayage-guide.jpeg" alt="Balayage Hair" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105">
+                        </div>
+                        <div class="p-6">
+                            <span class="text-xs font-semibold text-accent">COLOR</span>
+                            <h3 class="text-xl font-bold mt-2 mb-3 group-hover:text-accent transition-colors">The Complete Guide to Balayage</h3>
+                            <p class="text-light text-sm">Everything you need to know about this popular coloring technique.</p>
+                            <div class="mt-4 flex items-center text-accent text-sm font-medium">
+                                Read More
+                                <i class="fas fa-arrow-right ml-2 transition-transform group-hover:translate-x-1"></i>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="/blog/" class="inline-flex items-center px-6 py-3 border border-accent text-accent rounded-full hover:bg-accent hover:bg-opacity-10 transition-colors">
+                    View All Articles
+                    <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact CTA Section -->
+    <section class="py-20 bg-gradient-to-b from-secondary to-dark">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">
+                Ready to Transform Your Hair?
+            </h2>
+            <p class="text-light max-w-2xl mx-auto mb-10">
+                Contact us today to schedule your consultation with one of our award-winning stylists.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="tel:+17809966209" class="px-8 py-4 bg-accent text-dark rounded-full font-bold hover:bg-light transition-colors flex items-center justify-center">
+                    <i class="fas fa-phone-alt mr-3"></i>
+                    Call Now
+                </a>
+                <a href="mailto:info@fayezspa-hairsalon.com" class="px-8 py-4 border border-accent text-accent rounded-full font-bold hover:bg-accent hover:bg-opacity-10 transition-colors flex items-center justify-center">
+                    <i class="fas fa-envelope mr-3"></i>
+                    Email Us
+                </a>
+            </div>
+        </div>
+    </section>
+
+    
+
+
+    <!-- Footer -->
+    <footer class="bg-dark bg-opacity-95 border-t border-dark border-opacity-20 pt-12 pb-8">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+                <!-- Footer Column 1 -->
+                <div>
+                    <a href="/" class="flex items-center mb-6">                       
+                        <img alt="logo" src="/images/logo.png"  class="h-14"/>                 
+                    </a>
+                    <p class="text-light text-sm mb-4">
+                        Award-winning hair salon in Spruce Grove offering premium hair services with 35 years of experience.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="https://www.facebook.com/FayezSpa/" target="_blank" rel="noopener noreferrer" class="text-light hover:text-accent transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.instagram.com/fayezspa_london/" target="_blank" rel="noopener noreferrer" class="text-light hover:text-accent transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://www.youtube.com/channel/UCB4IZRHlDBjc4JyhH_3Ot4g" target="_blank" rel="noopener noreferrer" class="text-light hover:text-accent transition-colors">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Footer Column 2 -->
+                <div>
+                    <h4 class="text-lg font-bold mb-6 text-light">Quick Links</h4>
+                    <ul class="space-y-3">
+                        <li><a href="/" class="text-light hover:text-accent transition-colors">Home</a></li>
+                        <li><a href="/about/" class="text-light hover:text-accent transition-colors">About Us</a></li>
+                        <li><a href="/services/" class="text-light hover:text-accent transition-colors">Services</a></li>
+                        <li><a href="/blog/" class="text-light hover:text-accent transition-colors">Blog</a></li>
+                        <li><a href="/contact/" class="text-light hover:text-accent transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Footer Column 3 -->
+                <div>
+                    <h4 class="text-lg font-bold mb-6 text-light">Services</h4>
+                    <ul class="space-y-3">
+                        <li><a href="/services/#cuts" class="text-light hover:text-accent transition-colors">Hair Cuts</a></li>
+                        <li><a href="/services/#color" class="text-light hover:text-accent transition-colors">Hair Coloring</a></li>
+                        <li><a href="/services/#treatments" class="text-light hover:text-accent transition-colors">Hair Treatments</a></li>
+                        <li><a href="/services/#styling" class="text-light hover:text-accent transition-colors">Styling</a></li>
+                    
+                    </ul>
+                </div>
+                
+                <!-- Footer Column 4 -->
+                <div>
+                    <h4 class="text-lg font-bold mb-6 text-light">Contact Info</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt text-accent mt-1 mr-3"></i>
+                            <span class="text-light">27 Lake Shore Dr, Spruce Grove, AB T7X 3V1, Canada</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-phone-alt text-accent mt-1 mr-3"></i>
+                            <span class="text-light">+1 (780) 996-6209</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-envelope text-accent mt-1 mr-3"></i>
+                            <span class="text-light">info@fayezspa-hairsalon.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-dark border-opacity-20 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-light text-sm mb-4 md:mb-0">
+                        &copy; 2025 Fayez Spa Hair Salon. All rights reserved.
+                    </p>
+                    <div class="flex space-x-6">
+                        <a href="/privacy/" class="text-light hover:text-accent transition-colors text-sm">Privacy Policy</a>
+                        <a href="/terms/" class="text-light hover:text-accent transition-colors text-sm">Terms of Service</a>
+                        <a href="/cookies/" class="text-light hover:text-accent transition-colors text-sm">Cookies Policy</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Mobile Menu Toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+        
+        // Cookie Consent
+        const cookieConsent = document.querySelector('.cookie-consent');
+        const acceptCookies = document.getElementById('accept-cookies');
+        const declineCookies = document.getElementById('decline-cookies');
+        
+        if (!localStorage.getItem('cookiesAccepted')) {
+            setTimeout(() => {
+                cookieConsent.classList.add('show');
+            }, 1000);
+        }
+        
+        acceptCookies.addEventListener('click', () => {
+            localStorage.setItem('cookiesAccepted', 'true');
+            cookieConsent.classList.remove('show');
+        });
+        
+        declineCookies.addEventListener('click', () => {
+            cookieConsent.classList.remove('show');
+        });
+        
+        // Cart Functionality
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        
+        function updateCartCount() {
+            const count = cart.reduce((total, item) => total + item.quantity, 0);
+            const cartCounts = document.querySelectorAll('.cart-count, .cart-count-mobile');
+            
+            cartCounts.forEach(element => {
+                if (count > 0) {
+                    element.textContent = count;
+                    element.classList.remove('hidden');
+                } else {
+                    element.classList.add('hidden');
+                }
+            });
+        }
+        
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', function() {
+                const service = this.getAttribute('data-service');
+                const price = parseFloat(this.getAttribute('data-price'));
+                
+                const existingItem = cart.find(item => item.service === service);
+                
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    cart.push({
+                        service: service,
+                        price: price,
+                        quantity: 1
+                    });
+                }
+                
+                localStorage.setItem('cart', JSON.stringify(cart));
+                updateCartCount();
+                
+                // Animation feedback
+                this.textContent = 'Added!';
+                this.classList.add('bg-accent', 'text-dark');
+                setTimeout(() => {
+                    this.textContent = 'Add to Cart';
+                    this.classList.remove('bg-accent', 'text-dark');
+                    this.classList.add('bg-accent', 'bg-opacity-10', 'text-accent');
+                }, 1000);
+            });
+        });
+        
+        // Initialize cart count on page load
+        updateCartCount();
+        
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Animate hero elements
+        gsap.from('.hero-gradient h1, .hero-gradient p, .hero-gradient a', {
+            duration: 1,
+            y: 50,
+            opacity: 0,
+            stagger: 0.2,
+            ease: 'power3.out'
+        });
+        
+        gsap.from('.hero-gradient img', {
+            duration: 1,
+            x: 50,
+            opacity: 0,
+            ease: 'power3.out',
+            delay: 0.5
+        });
+        
+        // Animate sections on scroll
+        gsap.utils.toArray('section').forEach(section => {
+            gsap.from(section, {
+                scrollTrigger: {
+                    trigger: section,
+                    start: 'top 80%',
+                    toggleActions: 'play none none none'
+                },
+                opacity: 0,
+                y: 50,
+                duration: 1
+            });
+        });
+        
+        // Animate service cards individually
+        gsap.utils.toArray('.service-card').forEach((card, i) => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: 'top 80%',
+                    toggleActions: 'play none none none'
+                },
+                opacity: 0,
+                y: 30,
+                duration: 0.8,
+                delay: i * 0.1
+            });
+        });
+        
+        // Initialize particles.js
+        document.addEventListener('DOMContentLoaded', function() {
+            if (document.getElementById('particles-js')) {
+                particlesJS('particles-js', {
+                    "particles": {
+                        "number": {
+                            "value": 80,
+                            "density": {
+                                "enable": true,
+                                "value_area": 800
+                            }
+                        },
+                        "color": {
+                            "value": "#e0aaff"
+                        },
+                        "shape": {
+                            "type": "circle",
+                            "stroke": {
+                                "width": 0,
+                                "color": "#000000"
+                            },
+                            "polygon": {
+                                "nb_sides": 5
+                            }
+                        },
+                        "opacity": {
+                            "value": 0.3,
+                            "random": true,
+                            "anim": {
+                                "enable": true,
+                                "speed": 1,
+                                "opacity_min": 0.1,
+                                "sync": false
+                            }
+                        },
+                        "size": {
+                            "value": 3,
+                            "random": true,
+                            "anim": {
+                                "enable": true,
+                                "speed": 2,
+                                "size_min": 0.1,
+                                "sync": false
+                            }
+                        },
+                        "line_linked": {
+                            "enable": true,
+                            "distance": 150,
+                            "color": "#c77dff",
+                            "opacity": 0.2,
+                            "width": 1
+                        },
+                        "move": {
+                            "enable": true,
+                            "speed": 1,
+                            "direction": "none",
+                            "random": true,
+                            "straight": false,
+                            "out_mode": "out",
+                            "bounce": false,
+                            "attract": {
+                                "enable": true,
+                                "rotateX": 600,
+                                "rotateY": 1200
+                            }
+                        }
+                    },
+                    "interactivity": {
+                        "detect_on": "canvas",
+                        "events": {
+                            "onhover": {
+                                "enable": true,
+                                "mode": "grab"
+                            },
+                            "onclick": {
+                                "enable": true,
+                                "mode": "push"
+                            },
+                            "resize": true
+                        },
+                        "modes": {
+                            "grab": {
+                                "distance": 140,
+                                "line_linked": {
+                                    "opacity": 0.5
+                                }
+                            },
+                            "bubble": {
+                                "distance": 400,
+                                "size": 40,
+                                "duration": 2,
+                                "opacity": 8,
+                                "speed": 3
+                            },
+                            "repulse": {
+                                "distance": 200,
+                                "duration": 0.4
+                            },
+                            "push": {
+                                "particles_nb": 4
+                            },
+                            "remove": {
+                                "particles_nb": 2
+                            }
+                        }
+                    },
+                    "retina_detect": true
+                });
+            }
+        });
+    </script>
+</body>
+</html>

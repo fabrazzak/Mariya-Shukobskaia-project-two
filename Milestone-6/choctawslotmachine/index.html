@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Choctaw Slots - Premium Casino Games Experience</title>
+    <meta name="description"
+        content="Play 100+ free casino slots, video poker, blackjack, roulette and more with Choctaw Slots. Download now for your welcome bonus!">
+    <meta name="keywords"
+        content="Choctaw Slots, casino games, free slots, video poker, blackjack, roulette, keno, bingo, casino app">
+    <meta name="canonical" content="https://choctawslotmachine.com/">
+    <link rel="icon" href="/assets/logo.webp" type="image/x-icon">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#e63946',
+                        secondary: '#1d3557',
+                        accent: '#f1faee',
+                        dark: '#0a1128',
+                        gold: '#ffd700',
+                    },
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'],
+                        casino: ['"Playfair Display"', 'serif'],
+                    },
+                    animation: {
+                        'spin-slow': 'spin 3s linear infinite',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.min.js"></script>
+</head>
+
+<body class="bg-dark text-accent font-sans overflow-x-hidden">
+    <!-- Cookie Consent Banner -->
+    <div id="cookieConsent" class="fixed bottom-0 left-0 right-0 bg-secondary text-white p-4 z-50 hidden">
+        <div class="container mx-auto flex flex-col md:flex-row items-center justify-between">
+            <p class="mb-4 md:mb-0 md:mr-4">We use cookies to enhance your experience. By continuing to visit this site
+                you agree to our use of cookies.</p>
+            <div class="flex space-x-4">
+                <button id="learnMoreBtn"
+                    class="px-4 py-2 border border-accent rounded hover:bg-accent hover:text-dark transition">Learn
+                    More</button>
+                <button id="acceptCookiesBtn"
+                    class="px-4 py-2 bg-primary rounded hover:bg-opacity-90 transition">Accept</button>
+                <button id="declineCookiesBtn"
+                    class="px-4 py-2 border border-accent rounded hover:bg-accent hover:text-dark transition">Decline</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 bg-dark bg-opacity-90 backdrop-blur-md z-40 shadow-lg">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="/" class="flex items-center">
+                        <img src="/assets/logo.webp" alt="Choctaw Slots Logo" class="h-10 mr-3 rounded-full"> 
+                        <span class="text-2xl font-casino font-bold text-gold">Choctaw Slots</span>
+                    </a>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="text-accent hover:text-primary transition font-medium">Home</a>
+                    <a href="/how-to-play/" class="text-accent hover:text-primary transition font-medium">How to
+                        Play</a>
+                    <a href="/responsible-gaming/"
+                        class="text-accent hover:text-primary transition font-medium">Responsible Gaming</a>
+                    <a href="/contact/" class="text-accent hover:text-primary transition font-medium">Contact</a>
+                    <a href="https://play.google.com/store/apps/details?id=com.rubyseven.choctawslots&hl=en_US" id="downloadBtn"
+                        class="bg-primary hidden lg:flex  hover:bg-opacity-90 text-white px-6 py-2 rounded-full font-medium transition transform hover:scale-105 shadow-lg">Download
+                        Now</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button id="mobileMenuBtn" class="text-accent focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu"
+            class="hidden md:hidden bg-dark bg-opacity-95 backdrop-blur-md absolute top-full left-0 right-0 py-4 px-6 shadow-lg">
+            <div class="flex flex-col space-y-4">
+                <a href="/" class="text-accent hover:text-primary transition font-medium">Home</a>
+                <a href="/how-to-play/" class="text-accent hover:text-primary transition font-medium">How to Play</a>
+                <a href="/responsible-gaming/" class="text-accent hover:text-primary transition font-medium">Responsible
+                    Gaming</a>
+                <a href="/contact/" class="text-accent hover:text-primary transition font-medium">Contact</a>
+                <a href="https://play.google.com/store/apps/details?id=com.rubyseven.choctawslots&hl=en_US" id="mobileDownloadBtn"
+                    class="bg-primary hover:bg-opacity-90 text-white px-6 py-2 rounded-full font-medium transition text-center">Download
+                    Now</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section with Three.js Background -->
+    <section class="relative md:h-screen h-[80vh]  flex items-center justify-center overflow-hidden">
+        <!-- Three.js Container -->
+        <div id="threejsContainer" class="absolute top-0 left-0 w-full h-full z-0"></div>
+
+        <!-- Overlay -->
+        <div class="absolute inset-0 bg-black bg-opacity-50 z-10"></div>
+
+        <!-- Content -->
+        <div class="container mx-auto px-6 relative z-20 text-center">
+            <h1
+                class="text-4xl md:text-6xl lg:text-7xl font-casino font-bold text-gold mb-6 animate__animated animate__fadeInDown">
+                Experience Vegas <span class="text-primary">Anywhere</span>
+            </h1>
+            <p class="text-xl md:text-2xl mb-10 max-w-3xl mx-auto animate__animated animate__fadeIn animate__delay-1s">
+                Play 100+ free casino slots, video poker, blackjack, roulette and more with Choctaw Slots!
+            </p>
+            <div
+                class="flex flex-col sm:flex-row justify-center gap-4 animate__animated animate__fadeIn animate__delay-2s">
+                <a href="https://play.google.com/store/apps/details?id=com.rubyseven.choctawslots&hl=en_US" id="heroDownloadBtn"
+                    class="bg-primary hover:bg-opacity-90 text-white px-8 py-4 rounded-full font-bold text-lg transition transform hover:scale-105 shadow-lg">
+                    Download & Get Bonus
+                </a>
+                <a href="/how-to-play/"
+                    class="border-2 border-gold hover:bg-gold hover:text-dark text-gold px-8 py-4 rounded-full font-bold text-lg transition transform hover:scale-105">
+                    How to play
+                </a>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20 animate-bounce">
+            <a href="#features" class="text-white hover:text-primary transition">
+                <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                </svg>
+            </a>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 bg-gradient-to-b from-dark to-secondary">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl lg:text-5xl font-casino font-bold text-gold mb-6">
+                    Why Choose <span class="text-primary">Choctaw Slots?</span>
+                </h2>
+                <p class="text-lg md:text-xl max-w-3xl mx-auto">
+                    Discover the ultimate casino experience with our wide selection of games and exciting features
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+                <!-- Feature 1 -->
+                <div
+                    class="bg-dark bg-opacity-70 rounded-xl p-8 hover:shadow-xl hover:shadow-primary/20 transition-all duration-300 transform hover:-translate-y-2 border border-secondary">
+                    <div class="text-primary mb-6">
+                        <img src="/assets/games-1.png" alt="Feature 1" class="h-64 rounded-lg mx-auto"     />
+                    </div>
+                    <h3 class="text-2xl font-bold text-center mb-4 text-gold">100+ Free Slots</h3>
+                    <p class="text-center">
+                        Enjoy a vast collection of slot machines including popular titles like Pinatas Ole, Rakin'
+                        Bacon, and Star Watch Jungle.
+                    </p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div
+                    class="bg-dark bg-opacity-70 rounded-xl p-8 hover:shadow-xl hover:shadow-primary/20 transition-all duration-300 transform hover:-translate-y-2 border border-secondary">
+                     <div class="text-primary mb-6">
+                        <img src="/assets/game-2.png" alt="Feature 1" class="h-64 rounded-lg mx-auto"     />
+                    </div>
+                    <h3 class="text-2xl font-bold text-center mb-4 text-gold">35+ Video Poker Games</h3>
+                    <p class="text-center">
+                        Play classic and multi-hand video poker including Jokers Wild, Jacks or Better, and Double
+                        Double Bonus.
+                    </p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div
+                    class="bg-dark bg-opacity-70 rounded-xl p-8 hover:shadow-xl hover:shadow-primary/20 transition-all duration-300 transform hover:-translate-y-2 border border-secondary">
+                     <div class="text-primary mb-6">
+                        <img src="/assets/game-3.png" alt="Feature 1" class="h-64 rounded-lg mx-auto"     />
+                    </div>
+                    <h3 class="text-2xl font-bold text-center mb-4 text-gold">Live Tournaments</h3>
+                    <p class="text-center">
+                        Compete in hourly live slot tournaments three times a week for a chance to win huge coin
+                        bonuses.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Promo Section with Video Background -->
+    <section class="relative h-96 md:h-screen/2 flex items-center justify-center overflow-hidden">
+        <!-- Video Background -->
+        <video autoplay muted loop class="absolute w-full h-full object-cover z-0">
+            <source src="https://play-games.googleusercontent.com/vp/mp4/1280x720/y5LQbKBBBx8.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+
+        <!-- Overlay -->
+        <div class="absolute inset-0 bg-black bg-opacity-60 z-10"></div>
+
+        <!-- Content -->
+        <div class="container mx-auto px-6 relative z-20 text-center">
+            <h2 class="text-3xl md:text-4xl lg:text-5xl font-casino font-bold text-gold mb-6">
+                Get Your <span class="text-primary">Welcome Bonus</span>
+            </h2>
+            <p class="text-xl md:text-2xl mb-10 max-w-3xl mx-auto">
+                Download now and receive a generous welcome coin bonus to start your casino adventure!
+            </p>
+            <div class="flex justify-center">
+                <a href="https://play.google.com/store/apps/details?id=com.rubyseven.choctawslots&hl=en_US" id="promoDownloadBtn"
+                    class="bg-primary hover:bg-opacity-90 text-white px-8 py-4 rounded-full font-bold text-lg transition transform hover:scale-105 shadow-lg flex items-center">
+                    <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                    </svg>
+                    Download Now
+                </a>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- How to Play Section -->
+<section id="how-to-play" class="py-20 bg-gradient-to-b from-secondary to-dark">
+    <div class="container mx-auto px-6">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl lg:text-5xl font-casino font-bold text-gold mb-6">
+                How to Play <span class="text-primary">Choctaw Slots</span>
+            </h2>
+            <p class="text-lg md:text-xl max-w-3xl mx-auto">
+                Get started with our easy-to-follow guide and become a casino pro in no time!
+            </p>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+            <!-- Step 1 -->
+            <div class="bg-dark bg-opacity-70 rounded-xl p-8 border border-secondary relative">
+                <div class="absolute -top-4 -left-4 bg-primary text-white w-10 h-10 rounded-full flex items-center justify-center font-bold text-xl">1</div>
+                <h3 class="text-2xl font-bold mb-4 text-gold">Download the App</h3>
+                <p class="mb-4">Get Choctaw Slots from the Google Play Store or Apple App Store. It's completely free to download and play.</p>
+                <div class="flex justify-start space-x-4 mt-6">
+                    <a href="https://play.google.com/store/apps/details?id=com.rubyseven.choctawslots&hl=en_US" class="hover:opacity-80 transition">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Google_Play_Store_badge_EN.svg/2560px-Google_Play_Store_badge_EN.svg.png" alt="Google Play" class="h-12">
+                    </a>
+                    
+                </div>
+            </div>
+
+            <!-- Step 2 -->
+            <div class="bg-dark bg-opacity-70 rounded-xl p-8 border border-secondary relative">
+                <div class="absolute -top-4 -left-4 bg-primary text-white w-10 h-10 rounded-full flex items-center justify-center font-bold text-xl">2</div>
+                <h3 class="text-2xl font-bold mb-4 text-gold">Claim Your Bonus</h3>
+                <p class="mb-4">Open the app and register to claim your welcome bonus coins. Check the promotions tab for daily login bonuses and special offers.</p>
+                <div class="flex justify-center mt-6">
+                    <div class="bg-gold text-dark px-6 py-2 rounded-full font-bold text-sm">+5,000 COINS</div>
+                </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div class="bg-dark bg-opacity-70 rounded-xl p-8 border border-secondary relative">
+                <div class="absolute -top-4 -left-4 bg-primary text-white w-10 h-10 rounded-full flex items-center justify-center font-bold text-xl">3</div>
+                <h3 class="text-2xl font-bold mb-4 text-gold">Start Playing</h3>
+                <p class="mb-4">Choose from 100+ slot machines or try your hand at video poker, blackjack, roulette and more. The more you play, the more coins you can win!</p>
+                <div class="flex justify-center mt-6">
+                    <div class="bg-primary text-white px-6 py-2 rounded-full font-bold text-sm">SPIN TO WIN</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Game Types -->
+        <div class="bg-dark bg-opacity-70 rounded-xl p-8 border border-secondary">
+            <h3 class="text-2xl font-bold text-center mb-8 text-gold">Game Types & Rules</h3>
+            
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Slots -->
+                <div class="bg-secondary rounded-lg p-6">
+                    <div class="flex items- flex-col mb-4">
+                        <div class="">
+                            <img src="/assets/slot-1.png" alt="Slots Icon" class="h-52  rounded-lg mb-10" />
+                        </div>
+                        <h4 class="text-xl font-bold text-gold">Slot Machines</h4>
+                    </div>
+                    <ul class="space-y-2 pl-4 flex  mx-auto flex-col ">
+                        <li class="flex items-start">
+                            <svg class="w-4 h-4 mt-1 mr-2 text-primary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span>Choose your bet amount and number of paylines</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-4 h-4 mt-1 mr-2 text-primary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span>Hit SPIN or use Auto-Spin for continuous play</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-4 h-4 mt-1 mr-2 text-primary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span>Match symbols on active paylines to win</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-4 h-4 mt-1 mr-2 text-primary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span>Trigger bonus rounds for bigger wins</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Video Poker -->
+                <div class="bg-secondary rounded-lg p-6">
+                    <div class="flex items- flex-col mb-4">
+                        <div class="">
+                            <img src="/assets/game-2.png" alt="Slots Icon" class=" h-52 object-cover w-full  rounded-lg mb-10" />
+                        </div>
+                        <h4 class="text-xl font-bold text-gold">Video Poker</h4>
+                    </div>
+                    <ul class="space-y-2 pl-4">
+                        <li class="flex items-start">
+                            <svg class="w-4 h-4 mt-1 mr-2 text-primary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span>Place your bet and receive 5 cards</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-4 h-4 mt-1 mr-2 text-primary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span>Choose which cards to hold and which to discard</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-4 h-4 mt-1 mr-2 text-primary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span>Receive new cards for those you discarded</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-4 h-4 mt-1 mr-2 text-primary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span>Win based on your final poker hand ranking</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Blackjack -->
+                <div class="bg-secondary rounded-lg p-6">
+                     <div class="flex items- flex-col mb-4">
+                        <div class="">
+                            <img src="/assets/blackjac.png" alt="Slots Icon" class=" h-52 object-cover w-full  rounded-lg mb-10" />
+                        </div>
+                        <h4 class="text-xl font-bold text-gold">Blackjack</h4>
+                    </div>
+                    <ul class="space-y-2 pl-4">
+                        <li class="flex items-start">
+                            <svg class="w-4 h-4 mt-1 mr-2 text-primary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span>Place your bet to receive two cards</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-4 h-4 mt-1 mr-2 text-primary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span>Decide to Hit (take another card) or Stand (keep your hand)</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-4 h-4 mt-1 mr-2 text-primary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span>Try to get as close to 21 without going over</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-4 h-4 mt-1 mr-2 text-primary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span>Beat the dealer's hand without busting to win</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Roulette -->
+                <div class="bg-secondary rounded-lg p-6">
+                   <div class="flex items- flex-col mb-4">
+                        <div class="">
+                            <img src="/assets/routette.png" alt="Slots Icon" class=" h-52 object-cover w-full  rounded-lg mb-10" />
+                        </div>
+                        <h4 class="text-xl font-bold text-gold">Roulette</h4>
+                    </div>
+                    <ul class="space-y-2 pl-4">
+                        <li class="flex items-start">
+                            <svg class="w-4 h-4 mt-1 mr-2 text-primary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span>Place chips on the number(s) or color you want to bet on</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-4 h-4 mt-1 mr-2 text-primary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span>Spin the wheel and wait for the ball to land</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-4 h-4 mt-1 mr-2 text-primary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span>Win if the ball lands on your chosen number/color</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-4 h-4 mt-1 mr-2 text-primary flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span>Different bets offer different payout odds</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-20 bg-dark">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl lg:text-5xl font-casino font-bold text-gold mb-6">
+                    What Players <span class="text-primary">Say</span>
+                </h2>
+                <p class="text-lg md:text-xl max-w-3xl mx-auto">
+                    Hear from our community of casino enthusiasts
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="bg-secondary rounded-xl p-8 relative">
+                    <div class="absolute -top-4 -left-4 text-6xl text-primary opacity-20 font-casino">"</div>
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full overflow-hidden mr-4">
+                            <img src="/assets/user1.jpg" alt="User review" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gold">Sarah J.</h4>
+                            <div class="flex">
+                                <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                                    </path>
+                                </svg>
+                                <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                                    </path>
+                                </svg>
+                                <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                                    </path>
+                                </svg>
+                                <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                                    </path>
+                                </svg>
+                                <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                                    </path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="italic">"I love the variety of games in Choctaw Slots! The graphics are amazing and the
+                        bonuses keep coming. My favorite is the Rakin' Bacon slot - so much fun!"</p>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="bg-secondary rounded-xl p-8 relative">
+                    <div class="absolute -top-4 -left-4 text-6xl text-primary opacity-20 font-casino">"</div>
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full overflow-hidden mr-4">
+                            <img src="/assets/user=2.jpeg" alt="User review" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gold">Michael T.</h4>
+                            <div class="flex">
+                                <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                                    </path>
+                                </svg>
+                                <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                                    </path>
+                                </svg>
+                                <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                                    </path>
+                                </svg>
+                                <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                                    </path>
+                                </svg>
+                                <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                                    </path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="italic">"The video poker selection is incredible! I especially enjoy the multi-hand games.
+                        The daily bonuses keep me coming back for more."</p>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="bg-secondary rounded-xl p-8 relative">
+                    <div class="absolute -top-4 -left-4 text-6xl text-primary opacity-20 font-casino">"</div>
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full overflow-hidden mr-4">
+                            <img src="/assets/user3.jpg" alt="User review" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gold">Lisa M.</h4>
+                            <div class="flex">
+                                <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                                    </path>
+                                </svg>
+                                <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                                    </path>
+                                </svg>
+                                <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                                    </path>
+                                </svg>
+                                <svg class="w-5 h-5 text-yellow-400" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                                    </path>
+                                </svg>
+                                <svg class="w-5 h-5 text-gray-300" fill="currentColor" viewBox="0 0 20 20"
+                                    xmlns="http://www.w3.org/2000/svg">
+                                    <path
+                                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                                    </path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="italic">"The live tournaments are so exciting! I've won several times and the coin bonuses
+                        are generous. This app really captures the thrill of a real casino."</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download CTA Section -->
+    <section class="relative py-20 bg-gradient-to-r from-secondary to-dark">
+        <!-- Background Video -->
+        <video autoplay muted loop playsinline class="absolute inset-0 w-full h-full object-cover z-0">
+            <source src="https://play-games.googleusercontent.com/vp/mp4/1280x720/y5LQbKBBBx8.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+
+        <!-- Overlay -->
+        <div class="absolute inset-0 bg-black bg-opacity-60 z-10"></div>
+
+        <!-- Foreground Content -->
+        <div class="container mx-auto px-6 text-center relative z-20">
+            <h2 class="text-3xl md:text-4xl lg:text-5xl font-casino font-bold text-gold mb-6">
+                Ready to <span class="text-primary">Play?</span>
+            </h2>
+            <p class="text-xl md:text-2xl mb-10 max-w-3xl mx-auto text-white">
+                Join over 100,000 players enjoying Choctaw Slots today!
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="javascript:void(0)" id="finalDownloadBtn"
+                    class="bg-primary hover:bg-opacity-90 text-white px-8 py-4 rounded-full font-bold text-lg transition transform hover:scale-105 shadow-lg flex items-center justify-center">
+                    <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                        xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                    </svg>
+                    Download Now
+                </a>
+            </div>
+            <p class="text-sm mt-6 opacity-80 text-white max-w-xl mx-auto">
+                For players 18 years or older. No real money gambling or prizes. Practice or success at social casino
+                gaming
+                does not imply future success at real money gambling.
+            </p>
+        </div>
+    </section>
+
+
+
+    <!-- Footer -->
+    <footer class="bg-dark py-12 border-t border-secondary">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <!-- Logo Column -->
+                <div>
+                    <a href="/" class="flex items-center mb-6">
+                        <img src="/assets/logo.webp" alt="Choctaw Slots Logo" class="h-10 mr-3 rounded-full"> 
+                        <span class="text-2xl font-casino font-bold text-gold">Choctaw Slots</span>
+                    </a>
+                    <p class="mb-4">
+                        The ultimate casino experience in the palm of your hand. Play 100+ free slots, video poker,
+                        blackjack and more!
+                    </p>
+                    
+                </div>
+
+                <!-- Links Column -->
+                <div>
+                    <h3 class="text-lg font-bold mb-4 text-gold">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/" class="text-accent hover:text-primary transition">Home</a></li>
+                        <li><a href="/how-to-play/" class="text-accent hover:text-primary transition">How to Play</a>
+                        </li>
+                        <li><a href="/responsible-gaming/" class="text-accent hover:text-primary transition">Responsible
+                                Gaming</a></li>
+                        <li><a href="/contact/" class="text-accent hover:text-primary transition">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <!-- Legal Column -->
+                <div>
+                    <h3 class="text-lg font-bold mb-4 text-gold">Legal</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/privacy/" class="text-accent hover:text-primary transition">Privacy Policy</a>
+                        </li>
+                        <li><a href="/terms/" class="text-accent hover:text-primary transition">Terms of Service</a>
+                        </li>
+                        <li><a href="/cookies/" class="text-accent hover:text-primary transition">Cookies Policy</a>
+                        </li>
+                       
+                    </ul>
+                </div>
+
+                <!-- Contact Column -->
+                <div>
+                    <h3 class="text-lg font-bold mb-4 text-gold">Contact</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 mr-2 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z">
+                                </path>
+                            </svg>
+                            <span>+12896833814</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 mr-2 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+                                </path>
+                            </svg>
+                            <span>info@choctawslotmachine.com</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 mr-2 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
+                                </path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                            <span>116 Queen St, Flin Flon, MB R8A 0M5, Canada</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-secondary mt-12 pt-8 text-center text-sm opacity-80">
+                <p>© 2025 Choctaw Slots by Ruby Seven Studios Inc. All rights reserved. | 18+ Only | Play Responsibly
+                </p>
+                <p class="mt-2">This game is intended for an adult audience and does not offer "real money gambling".
+                    Practice or success at social gaming does not imply future success at "real money gambling".</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Download Button Handler (all download buttons)
+        const downloadButtons = [
+            document.getElementById('downloadBtn'),
+            document.getElementById('mobileDownloadBtn'),
+            document.getElementById('heroDownloadBtn'),
+            document.getElementById('promoDownloadBtn'),
+            document.getElementById('finalDownloadBtn')
+        ];
+
+        downloadButtons.forEach(button => {
+            if (button) {
+                button.addEventListener('click', () => {
+                    // Replace with actual Google Play URL
+                    window.location.href = 'https://play.google.com/store/apps/details?id=com.choctaw.slots';
+                });
+            }
+        });
+
+        // Cookie Consent
+        const cookieConsent = document.getElementById('cookieConsent');
+        const acceptCookiesBtn = document.getElementById('acceptCookiesBtn');
+        const declineCookiesBtn = document.getElementById('declineCookiesBtn');
+        const learnMoreBtn = document.getElementById('learnMoreBtn');
+
+        // Check if consent was already given
+        if (!localStorage.getItem('cookieConsent')) {
+            cookieConsent.classList.remove('hidden');
+        }
+
+        acceptCookiesBtn.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'accepted');
+            cookieConsent.classList.add('hidden');
+        });
+
+        declineCookiesBtn.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'declined');
+            cookieConsent.classList.add('hidden');
+        });
+
+        learnMoreBtn.addEventListener('click', () => {
+            window.location.href = '/cookies/';
+        });
+
+        // Do Not Sell My Data
+        const doNotSellBtn = document.getElementById('doNotSellBtn');
+        if (doNotSellBtn) {
+            doNotSellBtn.addEventListener('click', () => {
+                window.location.href = 'mailto:info@choctawslots.com?subject=Do Not Sell My Data Request';
+            });
+        }
+
+        // Three.js Background for Hero Section
+        function initThreeJS() {
+            const container = document.getElementById('threejsContainer');
+            if (!container) return;
+
+            // Scene
+            const scene = new THREE.Scene();
+
+            // Camera
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 5;
+
+            // Renderer
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(container.offsetWidth, container.offsetHeight);
+            container.appendChild(renderer.domElement);
+
+            // Lights
+            const ambientLight = new THREE.AmbientLight(0x404040);
+            scene.add(ambientLight);
+
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            directionalLight.position.set(1, 1, 1);
+            scene.add(directionalLight);
+
+            // Create floating casino chips
+            const chips = [];
+            const chipGeometry = new THREE.CylinderGeometry(0.5, 0.5, 0.2, 32);
+            const chipMaterials = [
+                new THREE.MeshPhongMaterial({ color: 0xe63946 }), // Red
+                new THREE.MeshPhongMaterial({ color: 0x1d3557 }), // Blue
+                new THREE.MeshPhongMaterial({ color: 0xffd700 }), // Gold
+                new THREE.MeshPhongMaterial({ color: 0xf1faee }), // White
+            ];
+
+            for (let i = 0; i < 20; i++) {
+                const chip = new THREE.Mesh(
+                    chipGeometry,
+                    chipMaterials[Math.floor(Math.random() * chipMaterials.length)]
+                );
+
+                chip.position.x = (Math.random() - 0.5) * 10;
+                chip.position.y = (Math.random() - 0.5) * 10;
+                chip.position.z = (Math.random() - 0.5) * 10;
+
+                chip.rotation.x = Math.random() * Math.PI;
+                chip.rotation.y = Math.random() * Math.PI;
+
+                chip.userData = {
+                    speed: 0.01 + Math.random() * 0.02,
+                    direction: new THREE.Vector3(
+                        (Math.random() - 0.5) * 0.02,
+                        (Math.random() - 0.5) * 0.02,
+                        (Math.random() - 0.5) * 0.02
+                    )
+                };
+
+                scene.add(chip);
+                chips.push(chip);
+            }
+
+            // Create floating cards
+            const cards = [];
+            const cardGeometry = new THREE.BoxGeometry(0.7, 1, 0.02);
+            const cardMaterial = new THREE.MeshPhongMaterial({
+                color: 0xf1faee,
+                emissive: 0x111111,
+                specular: 0xffffff,
+                shininess: 30,
+                side: THREE.DoubleSide
+            });
+
+            for (let i = 0; i < 10; i++) {
+                const card = new THREE.Mesh(cardGeometry, cardMaterial);
+
+                card.position.x = (Math.random() - 0.5) * 10;
+                card.position.y = (Math.random() - 0.5) * 10;
+                card.position.z = (Math.random() - 0.5) * 10;
+
+                card.rotation.x = Math.random() * Math.PI;
+                card.rotation.y = Math.random() * Math.PI;
+                card.rotation.z = Math.random() * Math.PI;
+
+                card.userData = {
+                    speed: 0.005 + Math.random() * 0.01,
+                    direction: new THREE.Vector3(
+                        (Math.random() - 0.5) * 0.01,
+                        (Math.random() - 0.5) * 0.01,
+                        (Math.random() - 0.5) * 0.01
+                    )
+                };
+
+                scene.add(card);
+                cards.push(card);
+            }
+
+            // Create floating dice
+            const dice = [];
+            const diceGeometry = new THREE.BoxGeometry(0.4, 0.4, 0.4);
+            const diceMaterial = new THREE.MeshPhongMaterial({
+                color: 0xf1faee,
+                emissive: 0x111111,
+                specular: 0xffffff,
+                shininess: 30
+            });
+
+            for (let i = 0; i < 5; i++) {
+                const die = new THREE.Mesh(diceGeometry, diceMaterial);
+
+                die.position.x = (Math.random() - 0.5) * 10;
+                die.position.y = (Math.random() - 0.5) * 10;
+                die.position.z = (Math.random() - 0.5) * 10;
+
+                die.rotation.x = Math.random() * Math.PI;
+                die.rotation.y = Math.random() * Math.PI;
+
+                die.userData = {
+                    speed: 0.01 + Math.random() * 0.02,
+                    direction: new THREE.Vector3(
+                        (Math.random() - 0.5) * 0.01,
+                        (Math.random() - 0.5) * 0.01,
+                        (Math.random() - 0.5) * 0.01
+                    )
+                };
+
+                scene.add(die);
+                dice.push(die);
+            }
+
+            // Animation
+            function animate() {
+                requestAnimationFrame(animate);
+
+                // Animate chips
+                chips.forEach(chip => {
+                    chip.rotation.x += chip.userData.speed;
+                    chip.rotation.y += chip.userData.speed;
+
+                    chip.position.x += chip.userData.direction.x;
+                    chip.position.y += chip.userData.direction.y;
+                    chip.position.z += chip.userData.direction.z;
+
+                    // Bounce off boundaries
+                    if (Math.abs(chip.position.x) > 5) chip.userData.direction.x *= -1;
+                    if (Math.abs(chip.position.y) > 5) chip.userData.direction.y *= -1;
+                    if (Math.abs(chip.position.z) > 5) chip.userData.direction.z *= -1;
+                });
+
+                // Animate cards
+                cards.forEach(card => {
+                    card.rotation.x += card.userData.speed;
+                    card.rotation.y += card.userData.speed;
+                    card.rotation.z += card.userData.speed;
+
+                    card.position.x += card.userData.direction.x;
+                    card.position.y += card.userData.direction.y;
+                    card.position.z += card.userData.direction.z;
+
+                    // Bounce off boundaries
+                    if (Math.abs(card.position.x) > 5) card.userData.direction.x *= -1;
+                    if (Math.abs(card.position.y) > 5) card.userData.direction.y *= -1;
+                    if (Math.abs(card.position.z) > 5) card.userData.direction.z *= -1;
+                });
+
+                // Animate dice
+                dice.forEach(die => {
+                    die.rotation.x += die.userData.speed;
+                    die.rotation.y += die.userData.speed;
+
+                    die.position.x += die.userData.direction.x;
+                    die.position.y += die.userData.direction.y;
+                    die.position.z += die.userData.direction.z;
+
+                    // Bounce off boundaries
+                    if (Math.abs(die.position.x) > 5) die.userData.direction.x *= -1;
+                    if (Math.abs(die.position.y) > 5) die.userData.direction.y *= -1;
+                    if (Math.abs(die.position.z) > 5) die.userData.direction.z *= -1;
+                });
+
+                renderer.render(scene, camera);
+            }
+
+            // Handle window resize
+            function onWindowResize() {
+                camera.aspect = container.offsetWidth / container.offsetHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(container.offsetWidth, container.offsetHeight);
+            }
+
+            window.addEventListener('resize', onWindowResize);
+
+            animate();
+        }
+
+        // Initialize Three.js when DOM is loaded
+        document.addEventListener('DOMContentLoaded', initThreeJS);
+
+        // Game Carousel
+        function initGameCarousel() {
+            const carousel = document.querySelector('.game-carousel');
+            if (!carousel) return;
+
+            const inner = carousel.querySelector('.flex');
+            const items = carousel.querySelectorAll('.min-w-full, .min-w-1/2, .min-w-1/3');
+            const prevBtn = carousel.parentElement.querySelector('button:first-of-type');
+            const nextBtn = carousel.parentElement.querySelector('button:last-of-type');
+
+            let currentIndex = 0;
+            const itemWidth = items[0].offsetWidth;
+            const gap = 16; // px-4 = 1rem = 16px
+
+            function updateCarousel() {
+                const offset = -currentIndex * (itemWidth + gap);
+                inner.style.transform = `translateX(${offset}px)`;
+            }
+
+            prevBtn.addEventListener('click', () => {
+                if (currentIndex > 0) {
+                    currentIndex--;
+                    updateCarousel();
+                }
+            });
+
+            nextBtn.addEventListener('click', () => {
+                if (currentIndex < items.length - 1) {
+                    currentIndex++;
+                    updateCarousel();
+                }
+            });
+
+            // Handle responsive changes
+            function handleResponsive() {
+                const width = window.innerWidth;
+                if (width >= 1024) {
+                    inner.classList.remove('min-w-1/2');
+                    inner.classList.add('min-w-1/3');
+                } else if (width >= 768) {
+                    inner.classList.remove('min-w-full', 'min-w-1/3');
+                    inner.classList.add('min-w-1/2');
+                } else {
+                    inner.classList.remove('min-w-1/2', 'min-w-1/3');
+                    inner.classList.add('min-w-full');
+                }
+            }
+
+            window.addEventListener('resize', handleResponsive);
+            handleResponsive();
+        }
+
+        document.addEventListener('DOMContentLoaded', initGameCarousel);
+    </script>
+</body>
+
+</html>

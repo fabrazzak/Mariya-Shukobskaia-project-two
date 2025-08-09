@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart | Outsiders Store</title>
+    <meta name="description" content="Review your items at Outsiders Store. Premium outdoor footwear including KEEN shoes and sandals.">
+    <meta name="keywords" content="KEEN shoes cart, outdoor footwear, hiking boots, sandals, shopping cart, Zoetermeer, Netherlands">
+    
+    <!-- Favicon -->
+  <link rel="icon" href="/assets/logo.png" type="image/x-icon">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1a1a1a',
+                        secondary: '#333333',
+                        accent: '#e63946',
+                        light: '#f8f9fa',
+                        dark: '#212529',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        
+        .cart-item {
+            transition: all 0.3s ease;
+        }
+        
+        .cart-item:hover {
+            background-color: rgba(0, 0, 0, 0.02);
+        }
+        
+        .quantity-input {
+            width: 50px;
+            text-align: center;
+        }
+        
+        .remove-item:hover {
+            color: #e63946;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-primary">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-md sticky top-0 z-40">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <a href="/" class="text-2xl font-bold flex items-center">
+                     <img src="/assets/logo.png" alt="Outsiders Store Logo" class="h-14 mr-2">
+                     
+                </a>
+            </div>
+            
+            <div class="hidden md:flex space-x-6">
+                <a href="/" class="hover:text-accent transition">Home</a>
+                <a href="/shop/" class="hover:text-accent transition">Shop</a>
+                <a href="/blog/" class="hover:text-accent transition">Blog</a>
+                <a href="/about/" class="hover:text-accent transition">About</a>
+                <a href="/contact/" class="hover:text-accent transition">Contact</a>
+            </div>
+            
+            <div class="flex items-center space-x-4">
+                <a href="/cart/" class="relative">
+                    <i class="fas fa-shopping-bag text-xl text-accent"></i>
+                    <span id="cart-count" class="absolute -top-2 -right-2 bg-accent text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                </a>
+                <button id="mobile-menu-button" class="md:hidden text-xl">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-white absolute left-0 right-0 shadow-lg">
+            <div class="container mx-auto px-4 py-3 flex flex-col space-y-3">
+                <a href="/" class="py-2 hover:text-accent transition">Home</a>
+                <a href="/shop/" class="py-2 hover:text-accent transition">Shop</a>
+                <a href="/blog/" class="py-2 hover:text-accent transition">Blog</a>
+                <a href="/about/" class="py-2 hover:text-accent transition">About</a>
+                <a href="/contact/" class="py-2 hover:text-accent transition">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Cart Section -->
+    <section class="py-12">
+        <div class="container mx-auto px-4">
+            <h1 class="text-3xl font-bold mb-8">Your Shopping Cart</h1>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-2">
+                    <!-- Cart Items -->
+                    <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="hidden md:grid grid-cols-12 bg-gray-100 p-4 font-medium">
+                            <div class="col-span-5">Product</div>
+                            <div class="col-span-2 text-center">Price</div>
+                            <div class="col-span-3 text-center">Quantity</div>
+                            <div class="col-span-2 text-right">Total</div>
+                        </div>
+                        
+                        <div id="cart-items-container">
+                            <!-- Cart items will be dynamically inserted here -->
+                            <div class="text-center p-8" id="empty-cart-message">
+                                <i class="fas fa-shopping-cart text-4xl text-gray-300 mb-4"></i>
+                                <p class="text-gray-500">Your cart is empty</p>
+                                <a href="/shop/" class="inline-block mt-4 bg-accent text-white px-6 py-2 rounded hover:bg-opacity-90 transition">Continue Shopping</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Coupon Code -->
+                    <div class="mt-6 bg-white rounded-lg shadow-md p-6">
+                        <h3 class="font-semibold mb-4">Have a coupon code?</h3>
+                        <div class="flex">
+                            <input type="text" placeholder="Enter coupon code" class="flex-grow border rounded-l px-4 py-2 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent">
+                            <button class="bg-dark text-white px-6 py-2 rounded-r hover:bg-opacity-90 transition">Apply</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Continue Shopping -->
+                    <div class="mt-6">
+                        <a href="/shop/" class="inline-flex items-center text-accent hover:text-opacity-80 transition">
+                            <i class="fas fa-arrow-left mr-2"></i>
+                            Continue Shopping
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Order Summary -->
+                <div class="bg-white rounded-lg shadow-md p-6 h-fit sticky top-4">
+                    <h2 class="text-xl font-bold mb-6">Order Summary</h2>
+                    
+                    <div class="space-y-4">
+                        <div class="flex justify-between">
+                            <span>Subtotal</span>
+                            <span id="subtotal">£0.00</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Shipping</span>
+                            <span id="shipping">Calculated at checkout</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span>Discount</span>
+                            <span id="discount">-£0.00</span>
+                        </div>
+                        
+                        <div class="border-t border-gray-200 my-4"></div>
+                        
+                        <div class="flex justify-between font-bold text-lg">
+                            <span>Total</span>
+                            <span id="total">£0.00</span>
+                        </div>
+                        
+                        <a href="/checkout/" id="checkout-btn" class="block w-full bg-accent text-white text-center py-3 rounded hover:bg-opacity-90 transition mt-6 disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                            Proceed to Checkout
+                        </a>
+                        
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                      <a href="/" class="text-2xl font-bold flex items-center">
+                    <img src="/assets/logo-fotter.png" alt="Outsiders Store Logo" class="h-14 mb-4">
+                </a>
+                    <p class="text-gray-400 mb-4">Premium outdoor footwear for adventurers and urban explorers.</p>
+                     
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4">Shop</h4>
+                  <ul class="space-y-2">
+                        <li><a href="/shop/" class="text-gray-400 hover:text-white transition">Men's Collection</a></li>
+                        <li><a href="/shop/" class="text-gray-400 hover:text-white transition">Women's Collection</a></li>
+                        <li><a href="/shop/" class="text-gray-400 hover:text-white transition">Sandals</a></li>
+                        <li><a href="/shop/" class="text-gray-400 hover:text-white transition">New Arrivals</a></li>
+                        <li><a href="/shop/" class="text-gray-400 hover:text-white transition">Sale</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4">Information</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/about/" class="text-gray-400 hover:text-white transition">About Us</a></li>
+                        <li><a href="/blog/" class="text-gray-400 hover:text-white transition">Blog</a></li>
+                        <li><a href="/contact/" class="text-gray-400 hover:text-white transition">Contact Us</a></li>
+                       
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4">Legal</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/privacy/" class="text-gray-400 hover:text-white transition">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="text-gray-400 hover:text-white transition">Terms of Service</a></li>
+                        <li><a href="/cookies/" class="text-gray-400 hover:text-white transition">Cookies Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 Outsiders Store. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Cart Functionality
+        function updateCartDisplay() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartItemsContainer = document.getElementById('cart-items-container');
+            const emptyCartMessage = document.getElementById('empty-cart-message');
+            const checkoutBtn = document.getElementById('checkout-btn');
+            
+            // Update cart count in header
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            document.getElementById('cart-count').textContent = totalItems;
+            
+            if (cart.length === 0) {
+                emptyCartMessage.classList.remove('hidden');
+                checkoutBtn.disabled = true;
+                return;
+            } else {
+                emptyCartMessage.classList.add('hidden');
+                checkoutBtn.disabled = false;
+            }
+            
+            // Clear existing items
+            while (cartItemsContainer.firstChild && cartItemsContainer.firstChild.id !== 'empty-cart-message') {
+                cartItemsContainer.removeChild(cartItemsContainer.firstChild);
+            }
+            
+            // Add cart items to display
+            let subtotal = 0;
+            
+            cart.forEach((item, index) => {
+                // Extract numeric price value
+                const priceValue = parseFloat(item.price.replace(/[^0-9.]/g, ''));
+                const itemTotal = priceValue * item.quantity;
+                subtotal += itemTotal;
+                
+                // Create cart item element
+                const cartItem = document.createElement('div');
+                cartItem.className = 'cart-item grid grid-cols-12 p-4 border-b border-gray-100';
+                cartItem.innerHTML = `
+                    <div class="col-span-12 md:col-span-5 flex items-center mb-4 md:mb-0">
+                        <img src="${item.image}" alt="${item.title}" class="w-16 h-16 object-cover rounded mr-4">
+                        <div>
+                            <h3 class="font-medium">${item.title}</h3>
+                            <button class="remove-item text-sm text-gray-500 hover:text-accent transition mt-1" data-index="${index}">
+                                <i class="fas fa-trash-alt mr-1"></i> Remove
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-span-4 md:col-span-2 flex items-center md:justify-center">
+                        <span class="font-medium">${item.price}</span>
+                    </div>
+                    <div class="col-span-4 md:col-span-3 flex items-center md:justify-center">
+                        <div class="flex items-center border rounded">
+                            <button class="decrease-quantity px-2 py-1 text-gray-500 hover:bg-gray-100" data-index="${index}">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <input type="number" min="1" value="${item.quantity}" class="quantity-input border-0 px-2 py-1 w-12 text-center" data-index="${index}">
+                            <button class="increase-quantity px-2 py-1 text-gray-500 hover:bg-gray-100" data-index="${index}">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-span-4 md:col-span-2 flex items-center md:justify-end">
+                        <span class="font-medium">£${itemTotal.toFixed(2)}</span>
+                    </div>
+                `;
+                
+                cartItemsContainer.insertBefore(cartItem, emptyCartMessage);
+            });
+            
+            // Update order summary
+            document.getElementById('subtotal').textContent = `£${subtotal.toFixed(2)}`;
+            document.getElementById('total').textContent = `£${subtotal.toFixed(2)}`;
+        }
+        
+        // Event delegation for cart actions
+        document.addEventListener('click', (e) => {
+            // Remove item
+            if (e.target.classList.contains('remove-item') ){
+                const index = e.target.getAttribute('data-index');
+                let cart = JSON.parse(localStorage.getItem('cart')) || [];
+                cart.splice(index, 1);
+                localStorage.setItem('cart', JSON.stringify(cart));
+                updateCartDisplay();
+            }
+            
+            // Decrease quantity
+            if (e.target.classList.contains('decrease-quantity') || e.target.parentElement.classList.contains('decrease-quantity')) {
+                const index = e.target.getAttribute('data-index') || e.target.parentElement.getAttribute('data-index');
+                let cart = JSON.parse(localStorage.getItem('cart')) || [];
+                if (cart[index].quantity > 1) {
+                    cart[index].quantity--;
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    updateCartDisplay();
+                }
+            }
+            
+            // Increase quantity
+            if (e.target.classList.contains('increase-quantity') || e.target.parentElement.classList.contains('increase-quantity')) {
+                const index = e.target.getAttribute('data-index') || e.target.parentElement.getAttribute('data-index');
+                let cart = JSON.parse(localStorage.getItem('cart')) || [];
+                cart[index].quantity++;
+                localStorage.setItem('cart', JSON.stringify(cart));
+                updateCartDisplay();
+            }
+        });
+        
+        // Handle manual quantity input changes
+        document.addEventListener('change', (e) => {
+            if (e.target.classList.contains('quantity-input')) {
+                const index = e.target.getAttribute('data-index');
+                const newQuantity = parseInt(e.target.value);
+                
+                if (newQuantity > 0) {
+                    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+                    cart[index].quantity = newQuantity;
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    updateCartDisplay();
+                } else {
+                    e.target.value = 1; // Reset to minimum quantity
+                }
+            }
+        });
+        
+        // Initialize cart display
+        updateCartDisplay();
+    </script>
+</body>
+</html>

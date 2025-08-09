@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gem Jam Blog | Game Development & Survival Tips</title>
+    <meta name="description" content="Read the latest news about Gem Jam games, development insights, and survival game strategies from our team.">
+    <meta name="keywords" content="game development blog, survival game tips, gem jam news, mobile game updates">
+    <link rel="canonical" href="https://gemjamsurvival.com/blog/">
+   <link rel="icon" href="/images/favicon.png" type="image/x-icon">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4F46E5',
+                        secondary: '#10B981',
+                        dark: '#1F2937',
+                        darker: '#111827',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* Mobile menu styles */
+        #mobile-menu {
+            display: none;
+            transition: all 0.3s ease;
+        }
+        
+        #mobile-menu.active {
+            display: block;
+        }
+        
+        .menu-icon-open {
+            display: block;
+        }
+        
+        .menu-icon-close {
+            display: none;
+        }
+        
+        #mobile-menu-button.active .menu-icon-open {
+            display: none;
+        }
+        
+        #mobile-menu-button.active .menu-icon-close {
+            display: block;
+        }
+        
+        /* Prevent horizontal overflow */
+        body, html {
+            overflow-x: hidden;
+            width: 100%;
+        }
+        
+        /* Responsive video background */
+        .video-bg-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        .video-bg {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* Ensure images don't overflow containers */
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        /* Better spacing for mobile */
+        @media (max-width: 640px) {
+            .header-content {
+                padding-top: 6rem;
+                padding-bottom: 4rem;
+            }
+            
+            .blog-content {
+                padding-top: 1.5rem;
+                padding-bottom: 1.5rem;
+            }
+            
+            .featured-post {
+                margin-bottom: 2rem;
+            }
+            
+            .post-content {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-darker text-gray-100 font-sans antialiased">
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-[#111c1c] backdrop-blur-md z-50 border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="/" class="flex items-center">
+                      <img src="/images/logo.png" alt="Gem Jam Logo" class="h-14 w-auto rounded-xl">
+                    </a>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="/" class=" text-white   hover:text-secondary px-3 py-2 font-medium transition-colors duration-300">Home</a>
+                    <a href="/games/" class="text-white  text-white hover:text-white px-3 py-2 font-medium transition-colors duration-300">Games</a>
+                    <a href="/blog/" class="text-white hover:text-white px-3 py-2 font-medium transition-colors duration-300">Blog</a>
+                    <a href="/contact/" class="text-white hover:text-white px-3 py-2 font-medium transition-colors duration-300">Contact</a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button type="button" id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                        <span class="sr-only">Open main menu</span>
+                        <!-- Menu open icon -->
+                        <svg class="menu-icon-open h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <!-- Menu close icon -->
+                        <svg class="menu-icon-close h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile menu -->
+        <div class="md:hidden hidden origin-top" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="/" class=" text-white block px-3 py-2 rounded-md text-base font-medium">Home</a>
+                <a href="/games/" class="text-white hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Games</a>
+                <a href="/blog/" class="text-white hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Blog</a>                
+                <a href="/contact/" class="text-white hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Contact</a>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Page Header -->
+    <header class="relative pt-32 pb-20 bg-gradient-to-b from-primary/10 to-darker overflow-hidden header-content">
+        <div class="absolute inset-0 z-0 video-bg-container">
+            <video autoplay loop muted playsinline class="video-bg opacity-30">
+                <source src="https://play-games.googleusercontent.com/vp/mp4/1280x720/PGKDyUdlQ4M.mp4" type="video/mp4">
+            </video>
+            <div class="absolute inset-0 bg-gradient-to-b from-darker/30 to-darker"></div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center">
+                <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">
+                    Gem Jam Blog
+                </h1>
+                <p class="max-w-2xl mx-auto text-xl text-gray-300">
+                    Game updates, development insights, and survival strategies
+                </p>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Blog Content -->
+    <main class="py-16 bg-dark blog-content">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex max-w-4xl gap-8 mx-auto ">
+                <!-- Main Content -->
+                <div class="lg:col-span-2 mx-auto space-y-12">
+                    <!-- Featured Post -->
+                    <article class="bg-darker rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300 featured-post">
+                        <a href="/blog/survival-island-update/" class="block">
+                            <div class="relative h-64 w-full">
+                                <img src="/images/blog-featured.png" alt="Survival Island Update" class="w-full h-full object-cover">
+                                <div class="absolute inset-0 bg-gradient-to-t from-darker/90 via-transparent to-transparent"></div>
+                                <div class="absolute top-4 left-4">
+                                    <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-primary text-white">
+                                        Featured
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="p-6 md:p-8 post-content">
+                                <div class="flex items-center text-sm text-gray-400 mb-2">
+                                    <span>May 15, 2025</span>
+                                    <span class="mx-2">•</span>
+                                    <span>8 min read</span>
+                                </div>
+                                <h2 class="text-2xl font-bold text-white mb-4 hover:text-secondary transition-colors duration-300">
+                                    Survival Island v1.5: New Caves & Crafting Recipes
+                                </h2>
+                                <p class="text-gray-300 mb-4">
+                                    Discover what's new in our latest Survival Island update, including two massive cave systems, 12 new crafting recipes, and quality-of-life improvements based on player feedback.
+                                </p>
+                               
+                            </div>
+                        </a>
+                    </article>
+                    
+                    <!-- Regular Posts -->
+                    <article class="bg-darker rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300">
+                        <a href="/blog/designing-dinosaur-ai/" class="block">
+                            <img src="/images/blog2.image" alt="Designing Dinosaur AI" class="w-full h-48 object-cover">
+                            <div class="p-6 post-content">
+                                <div class="flex items-center text-sm text-gray-400 mb-2">
+                                    <span>April 28, 2025</span>
+                                    <span class="mx-2">•</span>
+                                    <span>6 min read</span>
+                                </div>
+                                <h2 class="text-xl font-bold text-white mb-3 hover:text-secondary transition-colors duration-300">
+                                    Behind the Scenes: Designing Dinosaur AI for Survival Island
+                                </h2>
+                                <p class="text-gray-300 mb-4">
+                                    How we created believable dinosaur behaviors that challenge players without feeling unfair. Learn about our AI systems and balancing process.
+                                </p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-800 text-gray-300">Game Design</span>
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-800 text-gray-300">AI</span>
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-800 text-gray-300">Development</span>
+                                </div>
+                            </div>
+                        </a>
+                    </article>
+                    
+                    <article class="bg-darker rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300">
+                        <a href="/blog/top-survival-tips/" class="block">
+                            <img src="/images/blog3.webp" alt="Top Survival Tips" class="w-full h-48 object-cover">
+                            <div class="p-6 post-content">
+                                <div class="flex items-center text-sm text-gray-400 mb-2">
+                                    <span>April 15, 2025</span>
+                                    <span class="mx-2">•</span>
+                                    <span>5 min read</span>
+                                </div>
+                                <h2 class="text-xl font-bold text-white mb-3 hover:text-secondary transition-colors duration-300">
+                                    Top 10 Survival Tips for New Players
+                                </h2>
+                                <p class="text-gray-300 mb-4">
+                                    Just stranded on the island? These essential tips will help you survive your first week and establish a secure base in Survival Island: Dinosaurs Pro.
+                                </p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-800 text-gray-300">Tips</span>
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-800 text-gray-300">Gameplay</span>
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-800 text-gray-300">Guide</span>
+                                </div>
+                            </div>
+                        </a>
+                    </article>
+                    
+                    <article class="bg-darker rounded-xl overflow-hidden shadow-xl hover:shadow-2xl transition-shadow duration-300">
+                        <a href="/blog/pixel-mode-development/" class="block">
+                            <img src="/images/blog4.webp" alt="Pixel Mode Development" class="w-full h-48 object-cover">
+                            <div class="p-6 post-content">
+                                <div class="flex items-center text-sm text-gray-400 mb-2">
+                                    <span>March 30, 2025</span>
+                                    <span class="mx-2">•</span>
+                                    <span>7 min read</span>
+                                </div>
+                                <h2 class="text-xl font-bold text-white mb-3 hover:text-secondary transition-colors duration-300">
+                                    Why We Added Pixel Mode to Survival Island
+                                </h2>
+                                <p class="text-gray-300 mb-4">
+                                    The story behind our most requested feature - how we implemented a complete visual overhaul while maintaining the same deep gameplay experience.
+                                </p>
+                                <div class="flex flex-wrap gap-2">
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-800 text-gray-300">Features</span>
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-800 text-gray-300">Art</span>
+                                    <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-800 text-gray-300">Retro</span>
+                                </div>
+                            </div>
+                        </a>
+                    </article>
+                    
+                    
+                </div>
+                
+                
+            </div>
+        </div>
+    </main>
+    
+    <!-- Footer -->
+  <footer class="bg-[#111c1c] pt-12 pb-8 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex-shrink-0 flex items-center mb-4">
+                        <a href="/" class="flex items-center">
+                             <img src="/images/logo.png" alt="Gem Jam Logo" class="h-14 w-auto rounded-xl">
+                        </a>
+                    </div>
+
+                    <a href="https://play.google.com/store/apps/details?id=com.gemjem.survival.island.games.dinosaur.stranded.deep.jurassic.world.far.cry.green.hell">
+                        <img class="w-32 mt-6" src="/images/play-store.png" alt="Get it on Google Play">
+                    </a>
+
+                    <div class="flex space-x-4 mb-4 mt-5">
+                        <a href="https://www.youtube.com/c/NotFoundGames/featured" target="_blank" class="text-gray-400 hover:text-white transition-colors duration-300">
+                            <i class="fab fa-youtube text-lg"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-white font-semibold mb-4">Company</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/about/" class="text-gray-400 hover:text-white transition-colors duration-300">About Us</a></li>
+                        <li><a href="/blog/" class="text-gray-400 hover:text-white transition-colors duration-300">Blog</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-white font-semibold mb-4">Support</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/contact/" class="text-gray-400 hover:text-white transition-colors duration-300">Contact Us</a></li>
+                        <li><a href="/privacy/" class="text-gray-400 hover:text-white transition-colors duration-300">Privacy Policy</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-white font-semibold mb-4">Connect</h3>
+                    <div class="text-gray-400">
+                        <p class="mb-1">36 Manushian</p>
+                        <p class="mb-1">Yerevan 0012, Armenia</p>
+                        <p class="mb-1">+374 93 320134</p>
+                        <p>gemjamllcarm@gmail.com</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-12 pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 text-sm">
+                    &copy; 2025 Gem Jam, LLC. All rights reserved.
+                </p>
+                <div class="mt-4 md:mt-0 flex space-x-6">
+                    <a href="/terms/" class="text-gray-400 hover:text-white text-sm transition-colors duration-300">Terms of Service</a>
+                    <a href="/privacy/" class="text-gray-400 hover:text-white text-sm transition-colors duration-300">Privacy Policy</a>
+                    <a href="/cookies/" class="text-gray-400 hover:text-white text-sm transition-colors duration-300">Cookies</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Cookies Consent -->
+    <div id="cookies-consent" class="fixed bottom-0 left-0 right-0 bg-gray-800 text-white p-4 shadow-lg hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <p class="text-gray-300 mb-4 md:mb-0 md:mr-4">
+                    We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies.
+                </p>
+                <div class="flex space-x-4">
+                    <button id="cookies-accept" class="px-4 py-2 bg-primary text-white rounded-md hover:bg-primary/90 transition-colors duration-300">
+                        Accept
+                    </button>
+                    <button id="cookies-decline" class="px-4 py-2 bg-gray-700 text-white rounded-md hover:bg-gray-600 transition-colors duration-300">
+                        Decline
+                    </button>
+                    <a href="/cookies/" class="px-4 py-2 text-gray-300 hover:text-white transition-colors duration-300">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Scripts -->
+    <script>
+        // Mobile menu toggle with icon change
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', function() {
+            this.classList.toggle('active');
+            mobileMenu.classList.toggle('hidden');
+            mobileMenu.classList.toggle('active');
+            
+            // Toggle aria-expanded attribute
+            const isExpanded = this.getAttribute('aria-expanded') === 'true';
+            this.setAttribute('aria-expanded', !isExpanded);
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenuButton.classList.remove('active');
+                mobileMenu.classList.add('hidden');
+                mobileMenu.classList.remove('active');
+                mobileMenuButton.setAttribute('aria-expanded', 'false');
+            });
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', function(event) {
+            const isClickInside = mobileMenu.contains(event.target) || mobileMenuButton.contains(event.target);
+            if (!isClickInside && mobileMenu.classList.contains('active')) {
+                mobileMenuButton.classList.remove('active');
+                mobileMenu.classList.add('hidden');
+                mobileMenu.classList.remove('active');
+                mobileMenuButton.setAttribute('aria-expanded', 'false');
+            }
+        });
+
+        // Cookies consent
+        if (!localStorage.getItem('cookiesAccepted')) {
+            document.getElementById('cookies-consent').classList.remove('hidden');
+        }
+        
+        document.getElementById('cookies-accept').addEventListener('click', function() {
+            localStorage.setItem('cookiesAccepted', 'true');
+            document.getElementById('cookies-consent').classList.add('hidden');
+        });
+        
+        document.getElementById('cookies-decline').addEventListener('click', function() {
+            document.getElementById('cookies-consent').classList.add('hidden');
+        });
+
+        // Prevent default form submission
+        document.querySelectorAll('form').forEach(form => {
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+            });
+        });
+    </script>
+</body>
+</html>

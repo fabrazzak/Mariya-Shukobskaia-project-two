@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Art of Treasure: Designing Rewards That Excite Players | Alex Pro Studio</title>
+    <meta name="description" content="A deep dive into our design process for creating the various treasures in Sea Money and what makes them satisfying to collect.">
+    <meta name="keywords" content="game design, treasure mechanics, reward systems, game psychology, mobile games, alex pro studio">
+    <link rel="canonical" href="https://alexprostudio.com/blog/treasure-design/" />
+    <link rel="icon" href="/favicon.ico" type="image/x-icon">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0066cc',
+                        secondary: '#00aaff',
+                        darkblue: '#003366',
+                        deepblue: '#001a33',
+                        ocean: '#0077be',
+                        gold: '#ffd700',
+                        treasure: '#f4a261',
+                        relic: '#e9c46a',
+                        gem: '#2a9d8f'
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-reverse': 'float-reverse 5s ease-in-out infinite',
+                        'pulse-slow': 'pulse 5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'shine': 'shine 3s ease-in-out infinite',
+                        'spin-slow': 'spin 8s linear infinite',
+                        'bounce-slow': 'bounce 3s infinite'
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        'float-reverse': {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(15px)' },
+                        },
+                        shine: {
+                            '0%': { 'background-position': '0% 50%' },
+                            '100%': { 'background-position': '100% 50%' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Righteous&display=swap" rel="stylesheet">
+    
+      <link rel="shortcut icon" href="/images/logo.webp" type="image/x-icon">
+<style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #001a33;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+        .logo-font {
+            font-family: 'Righteous', cursive;
+        }
+        .hero-gradient {
+            background: radial-gradient(circle at 50% 0%, rgba(0,102,204,0.2) 0%, rgba(0,26,51,1) 70%);
+        }
+        .gradient-text {
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #00aaff;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        .bubble {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(0, 170, 255, 0.3);
+            animation: bubble linear infinite;
+        }
+        @keyframes bubble {
+            0% { transform: translateY(0) scale(1); opacity: 0.7; }
+            100% { transform: translateY(-100px) scale(1.2); opacity: 0; }
+        }
+        .content-block {
+            background: linear-gradient(135deg, rgba(0, 26, 51, 0.8) 0%, rgba(0, 51, 102, 0.6) 100%);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 170, 255, 0.2);
+        }
+        .treasure-card {
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+        }
+        .treasure-card:hover {
+            transform: translateY(-10px) rotateY(5deg);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+        .treasure-glow {
+            position: relative;
+            overflow: hidden;
+        }
+        .treasure-glow::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(255, 255, 255, 0) 0%,
+                rgba(255, 255, 255, 0) 30%,
+                rgba(255, 255, 255, 0.1) 45%,
+                rgba(255, 215, 0, 0.2) 50%,
+                rgba(255, 255, 255, 0.1) 55%,
+                rgba(255, 255, 255, 0) 70%,
+                rgba(255, 255, 255, 0) 100%
+            );
+            transform: rotate(30deg);
+            animation: shine 3s infinite;
+        }
+        .progress-ring {
+            transform: rotate(-90deg);
+        }
+        .progress-ring-circle {
+            stroke-dasharray: 283;
+            stroke-dashoffset: 283;
+            transition: stroke-dashoffset 1s ease;
+        }
+        .parallax-container {
+            perspective: 1px;
+            height: 100%;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        .parallax-layer {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+        }
+        .parallax-layer-base {
+            transform: translateZ(0);
+        }
+        .parallax-layer-back {
+            transform: translateZ(-1px) scale(2);
+        }
+    .btn-download {
+            background: linear-gradient(135deg, #ffd700 0%, #ffaa00 100%);
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .btn-download:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 20px rgba(255, 215, 0, 0.6);
+        }
+
+        .btn-download:active {
+            transform: translateY(1px);
+        }
+
+ </style>
+</head>
+<body class="antialiased">
+    <!-- Cookie Consent Banner -->
+    <div id="cookieConsent" class="fixed bottom-0 left-0 right-0 bg-darkblue text-white p-4 z-50 hidden transform translate-y-full transition-transform duration-300">
+        <div class="container mx-auto flex flex-col md:flex-row items-center justify-between">
+            <div class="mb-4 md:mb-0 md:mr-8">
+                <p class="text-sm">We use cookies to enhance your experience on our website. By continuing to browse, you agree to our use of cookies.</p>
+            </div>
+            <div class="flex space-x-3">
+                <button id="learnMoreBtn" class="px-4 py-2 text-sm border border-secondary rounded-full hover:bg-secondary hover:bg-opacity-20 transition-colors">Learn More</button>
+                <button id="declineCookies" class="px-4 py-2 text-sm border border-gray-500 rounded-full hover:bg-gray-700 transition-colors">Decline</button>
+                <button id="acceptCookies" class="px-4 py-2 text-sm bg-secondary rounded-full hover:bg-opacity-80 transition-colors">Accept</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating Bubbles Background -->
+    <div class="fixed inset-0 overflow-hidden z-0 pointer-events-none">
+        <div id="bubbles-container"></div>
+    </div>
+
+    <!-- Navigation -->
+    <nav
+        class="fixed top-0 left-0 right-0 z-40 bg-[#2A2C35]  backdrop-filter backdrop-blur-md border-b border-opacity-10 border-secondary">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <a href="/" class="flex items-center">
+                        <div
+                            class="w-48 rounded-full   flex items-center justify-center mr-3">
+                            <img src="/images/logo.png" class="" alt="website logo" />
+                        </div>
+                    </a>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                   <a href="/" class="nav-link text-white hover:text-secondary font-medium">Home</a>
+                    <a href="/games/" class="nav-link text-white hover:text-secondary font-medium">Games</a>
+                    <a href="/blog/" class="nav-link text-white hover:text-secondary font-medium">Blog</a>                    
+                    <a href="/contact/" class="nav-link text-white hover:text-secondary font-medium">Contact</a>
+                    <a href="https://play.google.com/store/apps/developer?id=Alex_Pro" class="btn btn-download px-4 py-1 rounded-full   font-medium">Our Games</a>
+                
+                </div>
+                
+                <div class="md:hidden">
+                    <button id="mobileMenuBtn" class="text-white focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-deepblue py-4 px-6 absolute top-full left-0 right-0 shadow-lg">
+            <div class="flex flex-col space-y-4">
+                <a href="/" class="text-white hover:text-secondary">Home</a>
+                <a href="/games/" class="text-white hover:text-secondary">Our Games</a>
+                 
+                <a href="/blog/" class="text-secondary">Blog</a>
+               
+                <a href="/contact/" class="text-white hover:text-secondary">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Blog Hero Section -->
+    <section class="hero-gradient pt-32 pb-32  md:pb-40 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-50 bg-gradient-to-b from-primary to-transparent"></div>
+        
+        <div class="container mx-auto px-6 z-10 relative">
+            <div class="max-w-4xl mx-auto text-center">
+                <div class="inline-block mb-6 px-4 py-2 bg-gold bg-opacity-20 rounded-full text-sm font-medium text-gold">
+                    Game Design • April 10, 2025
+                </div>
+                <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+                    <span class="gradient-text bg-gradient-to-r from-gold to-treasure">The Art of Treasure</span>
+                    <span class="text-white">Designing Rewards That Excite Players</span>
+                </h1>
+                <p class="text-lg text-gray-300">
+                    How we crafted the treasure hunting experience in Sea Money to create satisfying and rewarding gameplay.
+                </p>
+            </div>
+        </div>
+        
+        <div class="absolute bottom-0 left-0 right-0 overflow-hidden">
+            <svg viewBox="0 0 1200 120" preserveAspectRatio="none" class="w-full h-20 md:h-32">
+                <path d="M0,0V46.29c47.79,22.2,103.59,32.17,158,28,70.36-5.37,136.33-33.31,206.8-37.5C438.64,32.43,512.34,53.67,583,72.05c69.27,18,138.3,24.88,209.4,13.08,36.15-6,69.85-17.84,104.45-29.34C989.49,25,1113-14.29,1200,52.47V0Z" opacity=".25" fill="#f4a261"></path>
+                <path d="M0,0V15.81C13,36.92,27.64,56.86,47.69,72.05,99.41,111.27,165,111,224.58,91.58c31.15-10.15,60.09-26.07,89.67-39.8,40.92-19,84.73-46,130.83-49.67,36.26-2.85,70.9,9.42,98.6,31.56,31.77,25.39,62.32,62,103.63,73,40.44,10.79,81.35-6.69,119.13-24.28s75.16-39,116.92-43.05c59.73-5.85,113.28,22.88,168.9,38.84,30.2,8.66,59,6.17,87.09-7.5,22.43-10.89,48-26.93,60.65-49.24V0Z" opacity=".5" fill="#f4a261"></path>
+                <path d="M0,0V5.63C149.93,59,314.09,71.32,475.83,42.57c43-7.64,84.23-20.12,127.61-26.46,59-8.63,112.48,12.24,165.56,35.4C827.93,77.22,886,95.24,951.2,90c86.53-7,172.46-45.71,248.8-84.81V0Z" fill="#f4a261"></path>
+            </svg>
+        </div>
+    </section>
+
+    <!-- Blog Content -->
+    <section class="py-20 relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-full opacity-10">
+            <div class="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-gold filter blur-3xl opacity-20"></div>
+            <div class="absolute bottom-1/3 right-1/4 w-64 h-64 rounded-full bg-treasure filter blur-3xl opacity-20"></div>
+        </div>
+        
+        <div class="container mx-auto px-6 z-10">
+            <div class="max-w-4xl mx-auto">
+                <!-- Featured Image with Parallax -->
+                <div class="parallax-container rounded-2xl overflow-hidden mb-12 h-96 relative group">
+                    <div class="parallax-layer parallax-layer-back">
+                        <img src="/images/blog-design.avif" alt="Treasure Background" class="w-full h-full object-cover opacity-30">
+                    </div>
+                    <div class="parallax-layer parallax-layer-base flex items-center justify-center">
+                        <div class="relative z-10 text-center p-6">
+                            <div class="inline-block mb-4 px-4 py-2 bg-black bg-opacity-50 rounded-full text-gold text-sm font-medium">
+                                Sea Money Treasure System
+                            </div>
+                            <h2 class="text-3xl md:text-5xl font-bold mb-4 text-white">Discover What Lies Beneath</h2>
+                            <p class="text-gray-300 max-w-2xl mx-auto">Designing rewards that create excitement and keep players engaged</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Content -->
+                <div class="content-block rounded-2xl p-8 mb-12">
+                    <p class="text-gray-300 mb-8">
+                        Treasure hunting is at the core of Sea Money's gameplay, but creating rewards that feel truly valuable and exciting is more complex than it seems. Through extensive playtesting and iteration, we developed a system that makes each discovery feel special and rewarding.
+                    </p>
+                    
+                    <!-- Treasure Types Section -->
+                    <div class="mb-16">
+                        <h2 class="text-2xl md:text-3xl font-bold mb-8 gradient-text bg-gradient-to-r from-gold to-treasure">
+                            <i class="fas fa-gem mr-3"></i> Treasure Categories
+                        </h2>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                            <!-- Common Treasure -->
+                            <div class="treasure-card content-block rounded-xl overflow-hidden">
+                                <div class="treasure-glow h-40 bg-gradient-to-br from-gray-600 to-gray-800 flex items-center justify-center relative">
+                                    <i class="fas fa-coins text-5xl text-gray-300"></i>
+                                    <div class="absolute bottom-4 left-4 px-3 py-1 bg-gray-800 rounded-full text-xs font-medium">
+                                        Common
+                                    </div>
+                                </div>
+                                <div class="p-6">
+                                    <h3 class="text-xl font-bold mb-3">Gold Coins</h3>
+                                    <p class="text-gray-400 text-sm mb-4">Basic currency found throughout the ocean</p>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-xs text-gray-500">Drop rate: 65%</span>
+                                        <span class="text-xs font-medium text-gray-300">10-50 value</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Rare Treasure -->
+                            <div class="treasure-card content-block rounded-xl overflow-hidden">
+                                <div class="treasure-glow h-40 bg-gradient-to-br from-treasure to-relic flex items-center justify-center relative">
+                                    <i class="fas fa-gem text-5xl text-white"></i>
+                                    <div class="absolute bottom-4 left-4 px-3 py-1 bg-treasure rounded-full text-xs font-medium">
+                                        Rare
+                                    </div>
+                                </div>
+                                <div class="p-6">
+                                    <h3 class="text-xl font-bold mb-3">Ancient Gems</h3>
+                                    <p class="text-gray-400 text-sm mb-4">Precious stones from lost civilizations</p>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-xs text-gray-500">Drop rate: 25%</span>
+                                        <span class="text-xs font-medium text-gray-300">100-300 value</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Legendary Treasure -->
+                            <div class="treasure-card content-block rounded-xl overflow-hidden">
+                                <div class="treasure-glow h-40 bg-gradient-to-br from-gold to-yellow-600 flex items-center justify-center relative">
+                                    <i class="fas fa-crown text-5xl text-white"></i>
+                                    <div class="absolute bottom-4 left-4 px-3 py-1 bg-gold rounded-full text-xs font-medium text-darkblue">
+                                        Legendary
+                                    </div>
+                                </div>
+                                <div class="p-6">
+                                    <h3 class="text-xl font-bold mb-3">Royal Relics</h3>
+                                    <p class="text-gray-400 text-sm mb-4">Priceless artifacts from sunken kingdoms</p>
+                                    <div class="flex justify-between items-center">
+                                        <span class="text-xs text-gray-500">Drop rate: 10%</span>
+                                        <span class="text-xs font-medium text-gray-300">500-1000 value</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <p class="text-gray-300">
+                            We balanced these categories to create a satisfying progression curve where players consistently find useful items while still getting excited about rare discoveries. The visual distinction between tiers helps players immediately recognize the value of their finds.
+                        </p>
+                    </div>
+                    
+                    <!-- Psychology of Rewards -->
+                    <div class="mb-16">
+                        <h2 class="text-2xl md:text-3xl font-bold mb-8 gradient-text bg-gradient-to-r from-gold to-treasure">
+                            <i class="fas fa-brain mr-3"></i> The Psychology of Rewards
+                        </h2>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                            <div class="content-block rounded-xl p-6">
+                                <div class="flex items-center mb-4">
+                                    <div class="w-12 h-12 rounded-full bg-gold bg-opacity-20 flex items-center justify-center text-gold text-xl mr-4">
+                                        <i class="fas fa-random"></i>
+                                    </div>
+                                    <h3 class="text-xl font-bold">Variable Rewards</h3>
+                                </div>
+                                <p class="text-gray-300">
+                                    Using unpredictable reward schedules creates excitement and anticipation. Players never know exactly what they'll find, which makes each scan more engaging.
+                                </p>
+                            </div>
+                            
+                            <div class="content-block rounded-xl p-6">
+                                <div class="flex items-center mb-4">
+                                    <div class="w-12 h-12 rounded-full bg-gold bg-opacity-20 flex items-center justify-center text-gold text-xl mr-4">
+                                        <i class="fas fa-chart-line"></i>
+                                    </div>
+                                    <h3 class="text-xl font-bold">Progressive Value</h3>
+                                </div>
+                                <p class="text-gray-300">
+                                    As players upgrade their radar, they can find more valuable treasures in deeper areas, creating a natural sense of progression and achievement.
+                                </p>
+                            </div>
+                            
+                            <div class="content-block rounded-xl p-6">
+                                <div class="flex items-center mb-4">
+                                    <div class="w-12 h-12 rounded-full bg-gold bg-opacity-20 flex items-center justify-center text-gold text-xl mr-4">
+                                        <i class="fas fa-eye"></i>
+                                    </div>
+                                    <h3 class="text-xl font-bold">Visual Feedback</h3>
+                                </div>
+                                <p class="text-gray-300">
+                                    Distinctive visual and sound effects for different treasure types create immediate satisfaction when discovering valuable items.
+                                </p>
+                            </div>
+                            
+                            <div class="content-block rounded-xl p-6">
+                                <div class="flex items-center mb-4">
+                                    <div class="w-12 h-12 rounded-full bg-gold bg-opacity-20 flex items-center justify-center text-gold text-xl mr-4">
+                                        <i class="fas fa-trophy"></i>
+                                    </div>
+                                    <h3 class="text-xl font-bold">Achievement</h3>
+                                </div>
+                                <p class="text-gray-300">
+                                    Rare treasures trigger special achievements and collection goals, giving players long-term objectives to work toward.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Treasure Discovery Process -->
+                    <div class="mb-16">
+                        <h2 class="text-2xl md:text-3xl font-bold mb-8 gradient-text bg-gradient-to-r from-gold to-treasure">
+                            <i class="fas fa-radar mr-3"></i> The Discovery Process
+                        </h2>
+                        
+                        <div class="content-block rounded-xl p-8 mb-8">
+                            <div class="flex flex-col md:flex-row items-center mb-8">
+                                <div class="w-full md:w-1/2 mb-6 md:mb-0 md:pr-8">
+                                    <h3 class="text-xl font-bold mb-4">From Detection to Collection</h3>
+                                    <p class="text-gray-300 mb-4">
+                                        We designed a multi-stage discovery process to maximize player excitement:
+                                    </p>
+                                    <ol class="list-decimal pl-6 space-y-3 text-gray-300">
+                                        <li>Radar pings indicate something is nearby</li>
+                                        <li>Signal strength increases as you get closer</li>
+                                        <li>Treasure type is revealed when in range</li>
+                                        <li>Special effects play for rare finds</li>
+                                        <li>Collection animation with satisfying sounds</li>
+                                    </ol>
+                                </div>
+                                <div class="w-full md:w-1/2">
+                                    <div class="relative h-64">
+                                        <div class="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                                            <div class="w-40 h-40 rounded-full border-4 border-secondary border-opacity-30 animate-pulse-slow"></div>
+                                        </div>
+                                        <div class="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                                            <div class="w-32 h-32 rounded-full border-4 border-secondary border-opacity-50 animate-pulse-slow" style="animation-delay: 0.5s"></div>
+                                        </div>
+                                        <div class="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                                            <div class="w-24 h-24 rounded-full border-4 border-secondary animate-pulse-slow" style="animation-delay: 1s"></div>
+                                        </div>
+                                        <div class="absolute top-0 left-0 w-full h-full flex items-center justify-center">
+                                            <div class="w-16 h-16 bg-gold rounded-full flex items-center justify-center text-darkblue text-xl animate-bounce-slow">
+                                                <i class="fas fa-gem"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-darkblue rounded-xl p-6 border-l-4 border-gold">
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0 text-gold text-2xl mr-4">
+                                        <i class="fas fa-lightbulb"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-bold text-lg mb-2">Design Insight</h3>
+                                        <p class="text-gray-300">Adding a brief delay between detection and revealing the treasure type (with appropriate sound effects) significantly increased player excitement during playtesting.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Visual Design -->
+                    <div class="mb-16">
+                        <h2 class="text-2xl md:text-3xl font-bold mb-8 gradient-text bg-gradient-to-r from-gold to-treasure">
+                            <i class="fas fa-palette mr-3"></i> Visual Design
+                        </h2>
+                        
+                        <div class="content-block rounded-xl p-6 mb-8">
+                            <div class="flex flex-col md:flex-row items-center">
+                                <div class="w-full md:w-1/2 mb-6 md:mb-0 md:pr-8">
+                                    <h3 class="text-xl font-bold mb-4">Creating Distinctive Treasures</h3>
+                                    <p class="text-gray-300 mb-4">
+                                        Each treasure type has unique visual characteristics:
+                                    </p>
+                                    <ul class="list-disc pl-6 space-y-3 text-gray-300">
+                                        <li>Common items use simpler shapes and muted colors</li>
+                                        <li>Rare treasures feature more complex designs and brighter colors</li>
+                                        <li>Legendary items have animated effects and unique silhouettes</li>
+                                        <li>All treasures maintain a consistent art style</li>
+                                    </ul>
+                                </div>
+                                <div class="w-full md:w-1/2">
+                                    <div class="flex justify-center space-x-4">
+                                        <div class="w-16 h-16 bg-gray-600 rounded-lg flex items-center justify-center text-2xl animate-float">
+                                            <i class="fas fa-coins text-gray-300"></i>
+                                        </div>
+                                        <div class="w-16 h-16 bg-treasure rounded-lg flex items-center justify-center text-2xl animate-float" style="animation-delay: 0.5s">
+                                            <i class="fas fa-gem text-white"></i>
+                                        </div>
+                                        <div class="w-16 h-16 bg-gradient-to-br from-gold to-yellow-600 rounded-lg flex items-center justify-center text-2xl animate-float" style="animation-delay: 1s">
+                                            <i class="fas fa-crown text-white"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                            <div class="bg-darkblue rounded-lg p-4 flex flex-col items-center">
+                                <div class="w-12 h-12 bg-gray-600 rounded-full flex items-center justify-center text-xl mb-3">
+                                    <i class="fas fa-coins text-gray-300"></i>
+                                </div>
+                                <span class="text-sm text-center">Common</span>
+                                <span class="text-xs text-gray-500">Simple</span>
+                            </div>
+                            <div class="bg-darkblue rounded-lg p-4 flex flex-col items-center">
+                                <div class="w-12 h-12 bg-treasure rounded-full flex items-center justify-center text-xl mb-3">
+                                    <i class="fas fa-gem text-white"></i>
+                                </div>
+                                <span class="text-sm text-center">Rare</span>
+                                <span class="text-xs text-gray-500">Detailed</span>
+                            </div>
+                            <div class="bg-darkblue rounded-lg p-4 flex flex-col items-center">
+                                <div class="w-12 h-12 bg-gradient-to-br from-gold to-yellow-600 rounded-full flex items-center justify-center text-xl mb-3">
+                                    <i class="fas fa-crown text-white"></i>
+                                </div>
+                                <span class="text-sm text-center">Legendary</span>
+                                <span class="text-xs text-gray-500">Animated</span>
+                            </div>
+                            <div class="bg-darkblue rounded-lg p-4 flex flex-col items-center">
+                                <div class="w-12 h-12 bg-gradient-to-br from-gem to-blue-600 rounded-full flex items-center justify-center text-xl mb-3 animate-spin-slow">
+                                    <i class="fas fa-dragon text-white"></i>
+                                </div>
+                                <span class="text-sm text-center">Mythic</span>
+                                <span class="text-xs text-gray-500">Coming Soon</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Player Feedback -->
+                    <div class="mb-16">
+                        <h2 class="text-2xl md:text-3xl font-bold mb-8 gradient-text bg-gradient-to-r from-gold to-treasure">
+                            <i class="fas fa-comments mr-3"></i> Player Feedback
+                        </h2>
+                        
+                        <div class="content-block rounded-xl p-6 mb-8">
+                            <div class="flex items-center mb-6">
+                                <div class="w-14 h-14 rounded-full bg-gold bg-opacity-20 flex items-center justify-center text-gold text-2xl mr-6">
+                                    <i class="fas fa-quote-left"></i>
+                                </div>
+                                <h3 class="text-xl font-bold">What Players Say About Our Treasure System</h3>
+                            </div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="bg-darkblue rounded-lg p-6">
+                                    <div class="flex items-center mb-4">
+                                        <div class="w-10 h-10 rounded-full bg-primary bg-opacity-20 flex items-center justify-center text-secondary mr-4">
+                                            <i class="fas fa-user"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-bold">Mark T.</h4>
+                                            <div class="flex text-yellow-400 text-xs">
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="text-gray-300 text-sm italic">
+                                        "Finding a legendary treasure after scanning for ages gives me such a rush! The sound effects and animations make it feel so rewarding."
+                                    </p>
+                                </div>
+                                
+                                <div class="bg-darkblue rounded-lg p-6">
+                                    <div class="flex items-center mb-4">
+                                        <div class="w-10 h-10 rounded-full bg-primary bg-opacity-20 flex items-center justify-center text-secondary mr-4">
+                                            <i class="fas fa-user"></i>
+                                        </div>
+                                        <div>
+                                            <h4 class="font-bold">Sarah L.</h4>
+                                            <div class="flex text-yellow-400 text-xs">
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star"></i>
+                                                <i class="fas fa-star-half-alt"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="text-gray-300 text-sm italic">
+                                        "I love how each treasure type looks distinct. Even without seeing the value, I can tell immediately if I've found something special."
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="content-block rounded-xl p-6">
+                            <h3 class="text-xl font-bold mb-6">Retention Metrics</h3>
+                            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6">
+                                <div class="bg-darkblue rounded-lg p-4 flex flex-col items-center">
+                                    <div class="text-3xl font-bold text-gold mb-2">87%</div>
+                                    <span class="text-sm text-center">Day 1 Retention</span>
+                                </div>
+                                <div class="bg-darkblue rounded-lg p-4 flex flex-col items-center">
+                                    <div class="text-3xl font-bold text-gold mb-2">4.8★</div>
+                                    <span class="text-sm text-center">Average Rating</span>
+                                </div>
+                                <div class="bg-darkblue rounded-lg p-4 flex flex-col items-center">
+                                    <div class="text-3xl font-bold text-gold mb-2">63%</div>
+                                    <span class="text-sm text-center">Day 7 Retention</span>
+                                </div>
+                                <div class="bg-darkblue rounded-lg p-4 flex flex-col items-center">
+                                    <div class="text-3xl font-bold text-gold mb-2">92%</div>
+                                    <span class="text-sm text-center">Positive Reviews</span>
+                                </div>
+                            </div>
+                            <p class="text-gray-300 text-sm">
+                                These metrics show significantly higher engagement compared to our previous reward systems, demonstrating the effectiveness of our treasure design approach.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- Future Improvements -->
+                    <div class="mb-16">
+                        <h2 class="text-2xl md:text-3xl font-bold mb-8 gradient-text bg-gradient-to-r from-gold to-treasure">
+                            <i class="fas fa-crystal-ball mr-3"></i> Future Improvements
+                        </h2>
+                        
+                        <div class="content-block rounded-xl p-8">
+                            <div class="flex flex-col md:flex-row items-center mb-8">
+                                <div class="w-full md:w-1/2 mb-6 md:mb-0 md:pr-8">
+                                    <h3 class="text-xl font-bold mb-4">What's Next for Sea Money Treasures</h3>
+                                    <p class="text-gray-300 mb-4">
+                                        Based on player feedback and analytics, we're planning these enhancements:
+                                    </p>
+                                    <ul class="list-disc pl-6 space-y-3 text-gray-300">
+                                        <li>Treasure sets that provide bonuses when collected</li>
+                                        <li>Seasonal limited-time treasures</li>
+                                        <li>Treasure trading between players</li>
+                                        <li>More visual customization options</li>
+                                        <li>Treasure maps for special hunting challenges</li>
+                                    </ul>
+                                </div>
+                                <div class="w-full md:w-1/2">
+                                    <div class="relative h-64">
+                                        <div class="absolute top-0 left-0 w-40 h-40 bg-gradient-to-br from-purple-500 to-blue-600 rounded-full filter blur-xl opacity-30 animate-pulse-slow"></div>
+                                        <div class="absolute bottom-0 right-0 w-40 h-40 bg-gradient-to-br from-red-500 to-pink-600 rounded-full filter blur-xl opacity-30 animate-pulse-slow" style="animation-delay: 1s"></div>
+                                        <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-48 h-48 bg-darkblue rounded-xl border-2 border-gold border-opacity-50 flex items-center justify-center">
+                                            <div class="text-center">
+                                                <div class="text-gold text-4xl mb-2">
+                                                    <i class="fas fa-lock-open"></i>
+                                                </div>
+                                                <h4 class="font-bold text-white">Coming Soon</h4>
+                                                <p class="text-gray-400 text-sm">Next Update</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="text-center">
+                                <a href="https://play.google.com/store/apps/details?id=sbc.seamoney" class="inline-block px-8 py-4 bg-gradient-to-r from-gold to-treasure rounded-full font-bold text-darkblue hover:opacity-90 transition-opacity">
+                                    Try Sea Money Now
+                                    <i class="fas fa-arrow-right ml-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Author Bio -->
+                
+                
+                <!-- Related Posts -->
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-deepblue text-gray-400 pt-16 pb-8">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+                <div>
+                     <a href="/" class="flex items-center">
+                        <div
+                            class="w-48 rounded-full   flex items-center justify-center mr-3">
+                            <img src="/images/logo.png" class="" alt="website logo" />
+                        </div>
+                    </a>
+                    <p class="mb-6">Creating immersive mobile gaming experiences that captivate and entertain players worldwide.</p>
+                     
+                </div>
+                
+                <div>
+                    <h3 class="text-white text-lg font-semibold mb-6">Quick Links</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/" class="hover:text-secondary transition-colors">Home</a></li>
+                      <li><a href="/games/" class="hover:text-secondary transition-colors">Our Games</a></li>
+                         
+                        <li><a href="/blog/" class="text-secondary">Blog</a></li>
+                        
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-white text-lg font-semibold mb-6">Legal</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/privacy/" class="hover:text-secondary transition-colors">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="hover:text-secondary transition-colors">Terms of Service</a></li>
+                        <li><a href="/cookies/" class="hover:text-secondary transition-colors">Cookies Policy</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-white text-lg font-semibold mb-6">Contact Us</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-envelope mt-1 mr-3 text-secondary"></i>
+                            <a href="mailto:bryutt1@ya.ru" class="hover:text-secondary transition-colors">bryutt1@ya.ru</a>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-3 text-secondary"></i>
+                            <span>Ул. Фоканова д.1, Жлобин, Гомельская область 247197, Belarus</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p>&copy; 2025 Alex Pro Studio. All rights reserved.</p>
+                <div class="mt-4 md:mt-0">
+                    <a href="https://play.google.com/store/apps/details?id=sbc.seamoney" class="text-secondary hover:text-primary transition-colors font-medium">
+                        <img src="/images/play-store.png" alt="Get it on Google Play" class="w-40 cursor-pointer" />
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Create floating bubbles
+        function createBubbles() {
+            const bubblesContainer = document.getElementById('bubbles-container');
+            const bubbleCount = 20;
+            
+            for (let i = 0; i < bubbleCount; i++) {
+                const bubble = document.createElement('div');
+                bubble.classList.add('bubble');
+                
+                // Random size between 5 and 20px
+                const size = Math.random() * 15 + 5;
+                bubble.style.width = `${size}px`;
+                bubble.style.height = `${size}px`;
+                
+                // Random position
+                bubble.style.left = `${Math.random() * 100}%`;
+                bubble.style.bottom = `-${size}px`;
+                
+                // Random animation duration between 5 and 15s
+                const duration = Math.random() * 10 + 5;
+                bubble.style.animationDuration = `${duration}s`;
+                
+                // Random delay
+                bubble.style.animationDelay = `${Math.random() * 5}s`;
+                
+                bubblesContainer.appendChild(bubble);
+            }
+        }
+        
+        // Cookie Consent
+        function checkCookieConsent() {
+            if (!localStorage.getItem('cookieConsent')) {
+                const cookieBanner = document.getElementById('cookieConsent');
+                cookieBanner.classList.remove('hidden');
+                setTimeout(() => {
+                    cookieBanner.classList.remove('translate-y-full');
+                }, 100);
+            }
+        }
+        
+        document.getElementById('acceptCookies').addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'accepted');
+            document.getElementById('cookieConsent').classList.add('translate-y-full');
+            setTimeout(() => {
+                document.getElementById('cookieConsent').classList.add('hidden');
+            }, 300);
+        });
+        
+        document.getElementById('declineCookies').addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'declined');
+            document.getElementById('cookieConsent').classList.add('translate-y-full');
+            setTimeout(() => {
+                document.getElementById('cookieConsent').classList.add('hidden');
+            }, 300);
+        });
+        
+        document.getElementById('learnMoreBtn').addEventListener('click', () => {
+            window.location.href = '/cookies/';
+        });
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            createBubbles();
+            checkCookieConsent();
+            
+            // Animate treasure cards on scroll
+            const animateOnScroll = () => {
+                const elements = document.querySelectorAll('.content-block, .treasure-card');
+                
+                elements.forEach(element => {
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const screenPosition = window.innerHeight / 1.2;
+                    
+                    if (elementPosition < screenPosition) {
+                        element.classList.add('opacity-100', 'translate-y-0');
+                    }
+                });
+            };
+            
+            // Initially hide animated elements
+            document.querySelectorAll('.content-block, .treasure-card').forEach(el => {
+                el.classList.add('opacity-0', 'translate-y-10', 'transition-all', 'duration-500');
+            });
+            
+            window.addEventListener('scroll', animateOnScroll);
+            animateOnScroll(); // Run once on load
+            
+            // Add shine effect to treasure cards on hover
+            document.querySelectorAll('.treasure-card').forEach(card => {
+                const glowElement = card.querySelector('.treasure-glow');
+                
+                card.addEventListener('mouseenter', () => {
+                    glowElement.classList.add('treasure-glow');
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    setTimeout(() => {
+                        glowElement.classList.remove('treasure-glow');
+                    }, 300);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

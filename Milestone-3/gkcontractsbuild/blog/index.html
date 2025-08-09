@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Construction Blog - GK Contracts Build | Building Tips & News</title>
+    <meta name="description" content="Read the latest construction tips, trends and news from GK Contracts Build. Expert advice on home building, extensions and renovations in Banbridge.">
+    <meta name="keywords" content="construction blog, building tips, home extensions, new builds, renovation advice, Banbridge builders, construction trends">
+    <link rel="canonical" href="https://gkcontractsbuild.com/blog/" />
+    <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+
+    <!-- Load GSAP from CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollToPlugin.min.js"></script>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        dark: '#121212',         // Dark background
+                        darker: '#0D0D0D',       // Even darker elements
+                        primary: '#1E40AF',      // Deep blue (primary)
+                        secondary: '#D97706',    // Amber (accent)
+                        accent: '#2563EB',       // Lighter blue
+                        light: '#1F2937',        // Light elements on dark
+                        text: '#E5E7EB',         // Primary text
+                        textSecondary: '#9CA3AF' // Secondary text
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'wave': 'wave 1.5s linear infinite'
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        wave: {
+                            '0%': { transform: 'rotate(0deg)' },
+                            '10%': { transform: 'rotate(14deg)' },
+                            '20%': { transform: 'rotate(-8deg)' },
+                            '30%': { transform: 'rotate(14deg)' },
+                            '40%': { transform: 'rotate(-4deg)' },
+                            '50%': { transform: 'rotate(10deg)' },
+                            '60%': { transform: 'rotate(0deg)' },
+                            '100%': { transform: 'rotate(0deg)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style type="text/css">
+        /* Base dark theme styles */
+        body {
+            background-color: #121212;
+            color: #E5E7EB;
+        }
+        
+        /* Gradient background for hero */
+        .hero-gradient {
+            background: linear-gradient(135deg, rgba(18, 18, 18, 0.95) 0%, rgba(30, 64, 175, 0.9) 100%);
+        }
+        
+        /* Modern card hover effect */
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            background-color: #1F2937;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.4);
+            background-color: #1E40AF;
+        }
+        
+        /* Underline animation */
+        .underline-animation {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .underline-animation::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #D97706;
+            transition: width 0.3s ease;
+        }
+        
+        .underline-animation:hover::after {
+            width: 100%;
+        }
+        
+        /* Loading animation */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #121212;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s, visibility 0.5s;
+        }
+        
+        .loader-hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+        
+        .loader::after {
+            content: "";
+            width: 75px;
+            height: 75px;
+            border: 8px solid rgba(255, 255, 255, 0.1);
+            border-top-color: #D97706;
+            border-radius: 50%;
+            animation: loading 1s ease infinite;
+        }
+        
+        @keyframes loading {
+            from { transform: rotate(0turn); }
+            to { transform: rotate(1turn); }
+        }
+        
+        /* Particle background effect */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+        
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+        
+        /* Glow effect */
+        .glow {
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 5px rgba(217, 119, 6, 0.5);
+            }
+            to {
+                box-shadow: 0 0 20px rgba(217, 119, 6, 0.8);
+            }
+        }
+        
+        /* 3D tilt effect */
+        .tilt-effect {
+            transition: transform 0.5s ease;
+        }
+        
+        .tilt-effect:hover {
+            transform: perspective(1000px) rotateX(5deg) rotateY(5deg) scale(1.03);
+        }
+        
+        /* Gradient text */
+        .gradient-text {
+            background: linear-gradient(90deg, #D97706, #F59E0B);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        /* Ensure content is visible even if JavaScript fails */
+        .no-js .gsap-animate {
+            opacity: 1 !important;
+            transform: none !important;
+        }
+        
+        /* Dark form inputs */
+        .dark-input {
+            background-color: #1F2937;
+            border-color: #374151;
+            color: #E5E7EB;
+        }
+        
+        .dark-input:focus {
+            border-color: #D97706;
+            box-shadow: 0 0 0 2px rgba(217, 119, 6, 0.5);
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #1F2937;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #D97706;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #B45309;
+        }
+        
+        /* Category button styles */
+        .category-btn {
+            transition: all 0.3s ease;
+        }
+        
+        .category-active {
+            background-color: #1E40AF !important;
+            color: #E5E7EB !important;
+            border-color: #1E40AF !important;
+        }
+        
+        /* Hero background */
+        .hero-bg {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('/images/construction-hero.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+    </style>
+
+    <!-- No-JS fallback -->
+    <noscript>
+        <style>
+            .gsap-animate {
+                opacity: 1 !important;
+                transform: none !important;
+            }
+            .loader {
+                display: none !important;
+            }
+        </style>
+    </noscript>
+</head>
+
+<body class="font-sans antialiased overflow-x-hidden no-js bg-dark text-text">
+    <!-- Loading Animation -->
+    <div class="loader" id="pageLoader">
+        <div class="loader-inner"></div>
+    </div>
+
+    <!-- Cookie Consent Banner -->
+    <div id="cookieConsent"
+        class="fixed bottom-0 left-0 right-0 bg-darker text-text p-4 hidden z-50 transform translate-y-full transition-transform duration-300 shadow-lg border-t border-gray-800">
+        <div class="container mx-auto flex flex-col md:flex-row items-center justify-between">
+            <p class="mb-4 md:mb-0 md:mr-4">We use cookies to enhance your experience. By continuing to visit this site
+                you agree to our use of cookies.</p>
+            <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
+                <button onclick="acceptCookies()"
+                    class="bg-secondary text-dark font-bold px-6 py-2 rounded-full hover:bg-opacity-90 transition-all transform hover:scale-105 shadow-md">Accept</button>
+                <button onclick="declineCookies()"
+                    class="border border-textSecondary px-6 py-2 rounded-full hover:bg-light hover:text-text transition-all transform hover:scale-105">Decline</button>
+                <a href="/privacy/"
+                    class="border border-textSecondary px-6 py-2 rounded-full hover:bg-light hover:text-text transition-all transform hover:scale-105 text-center">Learn
+                    More</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="bg-darker shadow-md sticky top-0 z-40 transition-all duration-300 backdrop-blur-sm bg-opacity-90 border-b border-gray-800">
+        <div class="container mx-auto px-6 py-3">
+            <div class="flex justify-between items-center">
+                <!-- Logo -->
+                <div class="flex items-center space-x-2">
+                    <a href="/" class="group">
+                        <img class="w-[180px] transition-all duration-300 group-hover:scale-105" src="/images/logo.png" alt="GK Contracts Build Logo"/>
+                    </a>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="text-textSecondary hover:text-text transition-all underline-animation">Home</a>
+                    <a href="/new-builds/"
+                        class="text-textSecondary hover:text-text transition-all underline-animation">New Builds</a>
+                    <a href="/extensions/"
+                        class="text-textSecondary hover:text-text transition-all underline-animation">Extensions</a>
+                    <a href="/projects/"
+                        class="text-textSecondary hover:text-text transition-all underline-animation">Projects</a>
+                    <a href="/blog/"
+                        class="text-text font-medium border-b-2 border-secondary pb-1">Blog</a>
+                    <a href="/contact/"
+                        class="bg-secondary text-dark px-6 py-2 rounded-full font-bold hover:bg-opacity-90 transition-all transform hover:scale-105 shadow-md">Contact Us</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button id="mobileMenuButton" class="text-textSecondary hover:text-text focus:outline-none transition-all transform hover:scale-110">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobileMenu" class="md:hidden hidden mt-4 pb-4 bg-darker rounded-lg shadow-lg border border-gray-800">
+                <a href="/" class="block py-3 px-4 text-text hover:bg-light rounded transition-all">Home</a>
+                <a href="/new-builds/" class="block py-3 px-4 text-textSecondary hover:bg-light rounded hover:text-text transition-all">New Builds</a>
+                <a href="/extensions/" class="block py-3 px-4 text-textSecondary hover:bg-light rounded hover:text-text transition-all">Extensions</a>
+                <a href="/projects/" class="block py-3 px-4 text-textSecondary hover:bg-light rounded hover:text-text transition-all">Projects</a>
+                <a href="/blog/" class="block py-3 px-4 text-text font-medium hover:bg-light rounded">Blog</a>
+                <a href="/contact/"
+                    class="block mt-2 mx-4 bg-secondary text-dark px-6 py-3 rounded-full font-bold hover:bg-opacity-90 transition-all text-center transform hover:scale-105 shadow-md">Contact Us</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-bg md:min-h-[60vh] min-h-[50vh] flex items-center justify-center relative overflow-hidden">
+        <!-- Particle Background -->
+        <div class="particles" id="particles-js"></div>
+        
+        <div class="container mx-auto px-6 text-center z-10">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6 gsap-animate" id="heroTitle">
+                GK Contracts Build <span class="gradient-text">Blog</span>
+            </h1>
+            <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto gsap-animate" id="heroSubtitle">Construction tips, trends and insights from our team of building experts</p>
+            <div class="gsap-animate" id="heroButtons">
+                <a href="#blog-posts"
+                    class="bg-secondary text-dark font-bold px-8 py-4 rounded-full hover:bg-opacity-90 transition-all transform hover:scale-105 shadow-lg glow">Read Our Articles</a>
+            </div>
+        </div>
+        
+        <!-- Animated scroll down indicator -->
+        <a href="#blog-posts" class="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-10 animate-bounce">
+            <div class="w-10 h-10 rounded-full bg-white bg-opacity-10 flex items-center justify-center">
+                <svg class="w-6 h-6 text-text" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3">
+                    </path>
+                </svg>
+            </div>
+        </a>
+    </section>
+
+    <!-- Blog Categories -->
+    <section class="py-12 bg-darker">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-wrap justify-center gap-4 gsap-animate">
+                <button class="category-btn px-6 py-2 rounded-full border border-primary text-primary hover:bg-primary hover:text-text transition-all category-active" data-category="all">All Articles</button>
+                <button class="category-btn px-6 py-2 rounded-full border border-primary text-primary hover:bg-primary hover:text-text transition-all" data-category="tips">Building Tips</button>
+                <button class="category-btn px-6 py-2 rounded-full border border-primary text-primary hover:bg-primary hover:text-text transition-all" data-category="trends">Design Trends</button>
+                <button class="category-btn px-6 py-2 rounded-full border border-primary text-primary hover:bg-primary hover:text-text transition-all" data-category="advice">Expert Advice</button>
+                <button class="category-btn px-6 py-2 rounded-full border border-primary text-primary hover:bg-primary hover:text-text transition-all" data-category="news">Industry News</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Posts -->
+    <section id="blog-posts" class="py-20 bg-dark">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Article 1 -->
+                <div class="rounded-xl overflow-hidden card-hover gsap-animate border border-gray-800" data-category="trends">
+                    <a href="/blog/post1/" class="block h-full">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="/images/blog-trends.jpg" alt="2025 home design trends" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                            <div class="absolute inset-0 bg-gradient-to-t from-dark to-transparent opacity-70"></div>
+                        </div>
+                        <div class="p-8">
+                            <span class="inline-block bg-primary bg-opacity-10 text-primary text-sm px-3 py-1 text-white rounded-full mb-4">Design Trends</span>
+                            <h3 class="text-xl font-bold mb-3">Top Home Design Trends for 2025</h3>
+                            <p class="text-textSecondary mb-6">Discover the most popular design trends shaping new homes and renovations this year in Northern Ireland.</p>
+                            <div class="flex items-center text-sm text-textSecondary">
+                                <span>May 15, 2025</span>
+                                <span class="mx-2">•</span>
+                                <span>5 min read</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                
+                <!-- Article 2 -->
+                <div class="rounded-xl overflow-hidden card-hover gsap-animate border border-gray-800" data-category="tips" style="animation-delay: 0.1s">
+                    <a href="/blog/post2/" class="block h-full">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="/images/blog-planning.jpg" alt="House extension planning" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                            <div class="absolute inset-0 bg-gradient-to-t from-dark to-transparent opacity-70"></div>
+                        </div>
+                        <div class="p-8">
+                            <span class="inline-block bg-primary bg-opacity-10 text-primary text-sm px-3  text-white py-1 rounded-full mb-4">Building Tips</span>
+                            <h3 class="text-xl font-bold mb-3">Essential Planning Tips for Your House Extension</h3>
+                            <p class="text-textSecondary mb-6">Key considerations and steps to ensure your extension project runs smoothly from start to finish.</p>
+                            <div class="flex items-center text-sm text-textSecondary">
+                                <span>May 28, 2025</span>
+                                <span class="mx-2">•</span>
+                                <span>7 min read</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                
+                <!-- Article 3 -->
+                <div class="rounded-xl overflow-hidden card-hover gsap-animate border border-gray-800" data-category="advice" style="animation-delay: 0.2s">
+                    <a href="/blog/post3/" class="block h-full">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="/images/blog-energy.png" alt="Energy efficient home features" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                            <div class="absolute inset-0 bg-gradient-to-t from-dark to-transparent opacity-70"></div>
+                        </div>
+                        <div class="p-8">
+                            <span class="inline-block bg-primary bg-opacity-10 text-primary text-sm px-3 py-1 rounded-full  text-white mb-4">Expert Advice</span>
+                            <h3 class="text-xl font-bold mb-3">Building Energy Efficient Homes in Northern Ireland</h3>
+                            <p class="text-textSecondary mb-6">How modern construction techniques can significantly reduce your energy bills and carbon footprint.</p>
+                            <div class="flex items-center text-sm text-textSecondary">
+                                <span>May 12, 2025</span>
+                                <span class="mx-2">•</span>
+                                <span>8 min read</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                
+                <!-- Article 4 -->
+                <div class="rounded-xl overflow-hidden card-hover gsap-animate border border-gray-800" data-category="news" style="animation-delay: 0.3s">
+                    <a href="/blog/post4/" class="block h-full">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="/images/blog-regulations.webp" alt="Building regulations documents" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                            <div class="absolute inset-0 bg-gradient-to-t from-dark to-transparent opacity-70"></div>
+                        </div>
+                        <div class="p-8">
+                            <span class="inline-block bg-primary bg-opacity-10 text-primary text-sm px-3 py-1 rounded-full mb-4  text-white">Industry News</span>
+                            <h3 class="text-xl font-bold mb-3">2025 Building Regulations Updates: What You Need to Know</h3>
+                            <p class="text-textSecondary mb-6">Overview of the latest changes to building regulations and how they affect your construction project.</p>
+                            <div class="flex items-center text-sm text-textSecondary">
+                                <span>April 30, 2025</span>
+                                <span class="mx-2">•</span>
+                                <span>6 min read</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                
+                <!-- Article 5 -->
+                <div class="rounded-xl overflow-hidden card-hover gsap-animate border border-gray-800" data-category="tips" style="animation-delay: 0.4s">
+                    <a href="/blog/post5/" class="block h-full">
+                        <div class="relative h-64 overflow-hidden">
+                            <img src="/images/blog-materials.webp" alt="Construction materials" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                            <div class="absolute inset-0 bg-gradient-to-t from-dark to-transparent opacity-70"></div>
+                        </div>
+                        <div class="p-8">
+                            <span class="inline-block bg-primary bg-opacity-10 text-primary text-sm px-3 py-1 rounded-full mb-4  text-white">Building Tips</span>
+                            <h3 class="text-xl font-bold mb-3">Choosing the Right Materials for Your Construction Project</h3>
+                            <p class="text-textSecondary mb-6">A guide to selecting the best construction materials for durability, aesthetics and budget.</p>
+                            <div class="flex items-center text-sm text-textSecondary">
+                                <span>April 18, 2025</span>
+                                <span class="mx-2">•</span>
+                                <span>9 min read</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="py-20 bg-primary text-text">
+        <div class="container mx-auto px-6 text-center gsap-animate">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">Stay Updated With Our Latest Articles</h2>
+            <p class="text-xl mb-8 max-w-2xl mx-auto">Subscribe to our newsletter for construction tips, trends and company news</p>
+            
+            <form class="max-w-lg mx-auto flex flex-col sm:flex-row gap-4">
+                <input type="email" placeholder="Your email address" class="flex-grow px-6 py-4 rounded focus:outline-none focus:ring-2 focus:ring-secondary dark-input">
+                <button type="submit" class="bg-secondary text-dark font-bold px-8 py-4 rounded-full hover:bg-opacity-90 transition-all transform hover:scale-105 shadow-md">Subscribe</button>
+            </form>
+            
+            <p class="text-sm mt-4 text-textSecondary">We respect your privacy. Unsubscribe at any time.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-darker text-text py-12 border-t border-gray-800">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- About -->
+                <div class="gsap-animate">
+                    <div class="flex items-center space-x-2 mb-4">
+                    <img class="w-[180px] transition-all duration-300 group-hover:scale-105" src="/images/logo.png" alt="GK Contracts Build Logo"/>
+                    </div>
+                    <p class="mb-4 text-textSecondary">With over 25 years of experience, we're Banbridge's trusted building contractors for new homes, extensions, and renovations.</p>
+                   <p>
+                        <a href="https://www.facebook.com/GKContractsBanbridge" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-facebook fa-lg text-white hover:text-blue-800"></i>
+                        </a>
+                    </p>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="gsap-animate">
+                    <h3 class="text-xl font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/" class="hover:text-secondary transition-all underline-animation">Home</a></li>
+                        <li><a href="/new-builds/" class="hover:text-secondary transition-all underline-animation">New Builds</a></li>
+                        <li><a href="/extensions/" class="hover:text-secondary transition-all underline-animation">Extensions</a></li>
+                        <li><a href="/projects/" class="hover:text-secondary transition-all underline-animation">Projects</a></li>
+                        <li><a href="/blog/" class="hover:text-secondary transition-all underline-animation">Blog</a></li>
+                        <li><a href="/contact/" class="hover:text-secondary transition-all underline-animation">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Services -->
+                <div class="gsap-animate">
+                    <h3 class="text-xl font-bold mb-4">Services</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/new-builds/" class="hover:text-secondary transition-all underline-animation">Custom Home Building</a></li>
+                        <li><a href="/extensions/" class="hover:text-secondary transition-all underline-animation">House Extensions</a></li>
+                        <li><a href="/projects/" class="hover:text-secondary transition-all underline-animation">Home Renovations</a></li>
+                        
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="gsap-animate">
+                    <h3 class="text-xl font-bold mb-4">Contact Us</h3>
+                    <address class="not-italic">
+                        <p class="mb-2 text-textSecondary">36 Glebe Rd, Banbridge</p>
+                        <p class="mb-2 text-textSecondary">BT32 5AX</p>
+                        <p class="mb-2"><a href="tel:+447979877464"
+                                class="hover:text-secondary transition-all underline-animation font-medium">+44 7979 877464</a></p>
+                        <p class="mb-4"><a href="mailto:info@gkcontractsbuild.com"
+                                class="hover:text-secondary transition-all underline-animation font-medium">info@gkcontractsbuild.com</a>
+                        </p>
+                        <a href="/contact/"
+                            class="inline-block border-2 border-text text-text px-6 py-2 rounded-full hover:bg-text hover:text-dark transition-all transform hover:scale-105">Contact Form</a>
+                    </address>
+                </div>
+            </div>
+
+            <div
+                class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center ">
+                <p class="text-textSecondary">&copy; 2025 GK Contracts Build. All rights reserved.</p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <a href="/privacy/" class="text-textSecondary hover:text-secondary transition-all underline-animation">Privacy Policy</a>
+                    <a href="/terms/" class="text-textSecondary hover:text-secondary transition-all underline-animation">Terms of Service</a>
+                    <a href="/cookies/" class="text-textSecondary hover:text-secondary transition-all underline-animation">Cookies Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop"
+        class="fixed bottom-8 right-8 bg-secondary text-dark w-14 h-14 rounded-full shadow-lg flex items-center justify-center transform translate-y-20 transition-transform duration-300 z-30 hover:bg-opacity-90 hover:scale-110">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+        </svg>
+    </button>
+
+    <script>
+        // Remove no-js class if JavaScript is enabled
+        document.body.classList.remove('no-js');
+
+        // Loading animation
+        window.addEventListener('load', function () {
+            const loader = document.getElementById('pageLoader');
+            setTimeout(function () {
+                loader.classList.add('loader-hidden');
+                loader.addEventListener('transitionend', function () {
+                    loader.remove();
+                });
+            }, 500);
+        });
+
+        // Mobile menu toggle
+        document.getElementById('mobileMenuButton').addEventListener('click', function () {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+            this.classList.toggle('text-secondary');
+        });
+
+        // Cookie consent functions
+        function checkCookies() {
+            if (!localStorage.getItem('cookiesDecision')) {
+                const consentBanner = document.getElementById('cookieConsent');
+                consentBanner.classList.remove('hidden');
+                setTimeout(() => {
+                    consentBanner.classList.remove('translate-y-full');
+                }, 100);
+            }
+        }
+
+        function acceptCookies() {
+            localStorage.setItem('cookiesDecision', 'accepted');
+            localStorage.setItem('cookiesAccepted', 'true');
+            const consentBanner = document.getElementById('cookieConsent');
+            consentBanner.classList.add('translate-y-full');
+            setTimeout(() => {
+                consentBanner.classList.add('hidden');
+            }, 300);
+            initializeCookies();
+        }
+
+        function declineCookies() {
+            localStorage.setItem('cookiesDecision', 'declined');
+            localStorage.setItem('cookiesAccepted', 'false');
+            const consentBanner = document.getElementById('cookieConsent');
+            consentBanner.classList.add('translate-y-full');
+            setTimeout(() => {
+                consentBanner.classList.add('hidden');
+            }, 300);
+            disableNonEssentialCookies();
+        }
+
+        function initializeCookies() {
+            console.log('Cookies accepted - initializing tracking');
+        }
+
+        function disableNonEssentialCookies() {
+            console.log('Cookies declined - disabling non-essential cookies');
+        }
+
+        // Back to top button
+        const backToTopButton = document.getElementById('backToTop');
+        window.addEventListener('scroll', function () {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.remove('translate-y-20');
+            } else {
+                backToTopButton.classList.add('translate-y-20');
+            }
+        });
+
+        backToTopButton.addEventListener('click', function () {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Particle background effect
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles-js');
+            if (!particlesContainer) return;
+            
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random size between 2px and 6px
+                const size = Math.random() * 4 + 2;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // Random position
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                
+                // Random opacity
+                particle.style.opacity = Math.random() * 0.5 + 0.1;
+                
+                // Random animation duration and delay
+                const duration = Math.random() * 20 + 10;
+                const delay = Math.random() * 5;
+                particle.style.animation = `float ${duration}s ease-in-out ${delay}s infinite`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Blog category filtering
+        function setupCategoryFiltering() {
+            const categoryButtons = document.querySelectorAll('.category-btn');
+            const blogCards = document.querySelectorAll('.blog-card');
+
+            categoryButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Update active button
+                    categoryButtons.forEach(btn => btn.classList.remove('category-active'));
+                    this.classList.add('category-active');
+                    
+                    const category = this.getAttribute('data-category');
+                    
+                    // Filter blog cards
+                    blogCards.forEach(card => {
+                        if (category === 'all' || card.getAttribute('data-category') === category) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+        }
+
+        // Initialize GSAP animations
+        document.addEventListener('DOMContentLoaded', function () {
+            checkCookies();
+            createParticles();
+            setupCategoryFiltering();
+
+            // If cookies were previously accepted, initialize them
+            if (localStorage.getItem('cookiesDecision') === 'accepted') {
+                initializeCookies();
+            }
+
+            // Register ScrollTrigger plugin
+            if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+                gsap.registerPlugin(ScrollTrigger);
+
+                // Set initial state for animated elements
+                gsap.set('.gsap-animate', {
+                    opacity: 0,
+                    y: 50
+                });
+
+                // Animate all elements with gsap-animate class
+                gsap.utils.toArray('.gsap-animate').forEach((element, i) => {
+                    gsap.to(element, {
+                        scrollTrigger: {
+                            trigger: element,
+                            start: "top 80%",
+                            toggleActions: "play none none none",
+                            markers: false // Set to true for debugging
+                        },
+                        y: 0,
+                        opacity: 1,
+                        duration: 0.8,
+                        ease: "power2.out",
+                        delay: i * 0.1
+                    });
+                });
+            }
+
+            // Navbar shadow on scroll
+            window.addEventListener('scroll', function () {
+                const nav = document.querySelector('nav');
+                if (window.scrollY > 50) {
+                    nav.classList.add('shadow-lg', 'backdrop-blur-md');
+                } else {
+                    nav.classList.remove('shadow-lg', 'backdrop-blur-md');
+                }
+            });
+
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        gsap.to(window, {
+                            duration: 0.8,
+                            scrollTo: {
+                                y: target,
+                                offsetY: 80
+                            },
+                            ease: "power2.out"
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

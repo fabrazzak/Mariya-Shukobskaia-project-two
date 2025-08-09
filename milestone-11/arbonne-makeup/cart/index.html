@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart | Arbonne Makeup | Premium Vegan Cosmetics</title>
+    <meta name="description" content="Your shopping cart at Arbonne. Review your selected premium vegan makeup products before checkout.">
+    <meta name="keywords" content="Arbonne makeup cart, vegan cosmetics checkout, cruelty-free makeup purchase, Arbonne shopping bag">
+    
+    <!-- Favicon -->
+   <link rel="icon" href="/assets/favicon.png" type="image/x-icon">
+    <link rel="canonical" href="https://arbonne-makeup.com/cart/" />
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            DEFAULT: '#9C7C5D',
+                            light: '#B89B7D',
+                            dark: '#7A5D42',
+                        },
+                        secondary: {
+                            DEFAULT: '#D4BFA8',
+                            light: '#E8D9C8',
+                            dark: '#BFA68D',
+                        },
+                        accent: {
+                            DEFAULT: '#E8C4A2',
+                            light: '#F5DBC1',
+                            dark: '#D9AD83',
+                        },
+                        dark: {
+                            DEFAULT: '#1A1A1A',
+                            light: '#2D2D2D',
+                            lighter: '#3D3D3D',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Montserrat"', 'sans-serif'],
+                        serif: ['"Playfair Display"', 'serif'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-reverse': 'float-reverse 5s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        'float-reverse': {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(15px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollTrigger.min.js"></script>
+    
+    <style>
+        .animate-fade-in {
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+        
+        .animate-fade-out {
+            animation: fadeOut 0.3s ease-out forwards;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes fadeOut {
+            from { opacity: 1; transform: translateY(0); }
+            to { opacity: 0; transform: translateY(20px); }
+        }
+        
+        .empty-cart-icon {
+            font-size: 6rem;
+            opacity: 0.2;
+        }
+    </style>
+</head>
+<body class="bg-dark text-gray-200 font-sans antialiased overflow-x-hidden">
+    <!-- Header Top -->
+    <div class="bg-dark-light py-2 px-4 border-b border-dark-lighter">
+        <div class="container mx-auto flex flex-col md:flex-row justify-between items-center">
+            <div class="flex items-center space-x-4 mb-2 md:mb-0">
+                <a href="mailto:info@arbonne-makeup.com" class="text-accent hover:text-accent-light transition-colors text-sm">
+                    <i class="fas fa-envelope mr-1"></i> info@arbonne-makeup.com
+                </a>
+                <a href="tel:+16479977626" class="text-accent hover:text-accent-light transition-colors text-sm">
+                    <i class="fas fa-phone mr-1"></i> +1 (647) 997-7626
+                </a>
+            </div>
+            <div class="flex items-center space-x-4">
+                <a href="https://www.facebook.com/arbonne" target="_blank" class="text-secondary hover:text-accent transition-colors">
+                    <i class="fab fa-facebook-f"></i>
+                </a>
+                <a href="https://www.instagram.com/arbonne/" target="_blank" class="text-secondary hover:text-accent transition-colors">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <a href="https://x.com/arbonne" target="_blank" class="text-secondary hover:text-accent transition-colors">
+                    <i class="fab fa-twitter"></i>
+                </a>
+                <a href="https://www.youtube.com/arbonne" target="_blank" class="text-secondary hover:text-accent transition-colors">
+                    <i class="fab fa-youtube"></i>
+                </a>
+                <a href="https://www.pinterest.com/arbonne/" target="_blank" class="text-secondary hover:text-accent transition-colors">
+                    <i class="fab fa-pinterest-p"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Header Bottom -->
+    <header class="sticky top-0 z-50 bg-dark border-b border-dark-lighter backdrop-filter backdrop-blur-lg bg-opacity-90">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <!-- Logo -->
+            <a href="/" class="flex items-center">
+                <img src="/assets/logo.png" class="h-16 w-auto" alt="logo">
+            </a>
+            
+            <!-- Navigation -->
+            <nav class="hidden lg:flex items-center space-x-8">
+                <a href="/" class="text-white hover:text-accent transition-colors relative group">
+                    Home
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all group-hover:w-full"></span>
+                </a>
+                <a href="/shop/" class="text-white hover:text-accent transition-colors relative group">
+                    Shop
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all group-hover:w-full"></span>
+                </a>
+                <a href="/about/" class="text-white hover:text-accent transition-colors relative group">
+                    About
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all group-hover:w-full"></span>
+                </a>
+                <a href="/blog/" class="text-white hover:text-accent transition-colors relative group">
+                    Blog
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all group-hover:w-full"></span>
+                </a>
+                <a href="/events/" class="text-white hover:text-accent transition-colors relative group">
+                    Events
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all group-hover:w-full"></span>
+                </a>
+                <a href="/contact/" class="text-white hover:text-accent transition-colors relative group">
+                    Contact
+                    <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-accent transition-all group-hover:w-full"></span>
+                </a>
+            </nav>
+            
+            <!-- Cart -->
+            <div class="flex items-center space-x-6">
+                <a href="/cart/" class="relative text-accent transition-colors">
+                    <i class="fas fa-shopping-bag text-xl"></i>
+                    <span id="cart-count" class="absolute -top-2 -right-2 bg-accent text-dark text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">0</span>
+                </a>
+                
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-button" class="lg:hidden text-white focus:outline-none">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="lg:hidden hidden bg-dark-light absolute w-full left-0 top-full z-50 px-4 py-4 shadow-lg">
+            <div class="flex flex-col space-y-4">
+                <a href="/" class="text-white hover:text-accent transition-colors py-2 border-b border-dark-lighter">Home</a>
+                <a href="/shop/" class="text-white hover:text-accent transition-colors py-2 border-b border-dark-lighter">Shop</a>
+                <a href="/about/" class="text-white hover:text-accent transition-colors py-2 border-b border-dark-lighter">About</a>
+                <a href="/blog/" class="text-white hover:text-accent transition-colors py-2 border-b border-dark-lighter">Blog</a>
+                <a href="/events/" class="text-white hover:text-accent transition-colors py-2 border-b border-dark-lighter">Events</a>
+                <a href="/contact/" class="text-white hover:text-accent transition-colors py-2">Contact</a>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Cart Hero -->
+    <section class="relative py-16 bg-gradient-to-br from-dark to-dark-light overflow-hidden">
+        <div class="absolute inset-0 opacity-20">
+            <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-r from-primary/30 via-accent/20 to-secondary/30"></div>
+            <div class="absolute top-0 left-0 w-full h-full bg-[url('/assets/patterns/diamond-pattern.avif')] bg-cover opacity-50"></div>
+        </div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="max-w-4xl mx-auto text-center">
+                <h1 class="text-4xl md:text-5xl font-serif font-bold mb-6 leading-tight">
+                    <span class="bg-gradient-to-r from-accent to-primary bg-clip-text text-transparent">Your Shopping Cart</span>
+                </h1>
+                <p class="text-lg text-secondary-light max-w-2xl mx-auto">
+                    Review your selected premium vegan makeup products before checkout.
+                </p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Cart Content -->
+    <section class="py-16 bg-dark">
+        <div class="container mx-auto px-4">
+            <div id="cart-content">
+                <!-- Cart items will be dynamically inserted here -->
+                <div class="text-center py-20">
+                    <i class="fas fa-shopping-bag empty-cart-icon mb-6"></i>
+                    <h3 class="text-2xl font-serif font-bold text-white mb-4">Your cart is empty</h3>
+                    <p class="text-secondary-light mb-6">Looks like you haven't added anything to your cart yet</p>
+                    <a href="/shop/" class="inline-block bg-accent hover:bg-accent-dark text-dark font-bold py-3 px-8 rounded-full transition-all transform hover:scale-105">
+                        Continue Shopping
+                    </a>
+                </div>
+            </div>
+            
+            <!-- Cart Summary (hidden when empty) -->
+            <div id="cart-summary" class="hidden mt-12 bg-dark-light rounded-xl p-8">
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-xl font-serif font-bold text-white mb-6">Order Summary</h3>
+                        <div class="space-y-4">
+                            <div class="flex justify-between">
+                                <span class="text-secondary-light">Subtotal</span>
+                                <span id="subtotal" class="text-white font-medium">$0.00</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-secondary-light">Shipping</span>
+                                <span id="shipping" class="text-white font-medium">Calculated at checkout</span>
+                            </div>
+                            <div class="flex justify-between border-t border-dark-lighter pt-4">
+                                <span class="text-white font-bold">Estimated Total</span>
+                                <span id="total" class="text-accent font-bold text-xl">$0.00</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="flex flex-col justify-between">
+                        <div class="mb-6">
+                            <h3 class="text-xl font-serif font-bold text-white mb-4">Promo Code</h3>
+                            <div class="flex">
+                                <input type="text" placeholder="Enter promo code" class="flex-grow px-4 py-3 rounded-l-lg bg-dark border border-dark-lighter text-white focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent">
+                                <button class="bg-primary hover:bg-primary-dark text-white font-bold py-3 px-6 rounded-r-lg transition-colors">
+                                    Apply
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <a href="/checkout/"><button id="checkout-btn" class="w-full bg-accent hover:bg-accent-dark text-dark font-bold py-4 px-6 rounded-lg transition-all transform hover:scale-[1.02] text-lg">
+                                Proceed to Checkout
+                            </button></a>
+                            <p class="text-xs text-secondary-light mt-3 text-center">
+                                Secure checkout. Your information is protected.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Continue Shopping Button (hidden when cart has items) -->
+            <div id="continue-shopping" class="text-center mt-12 hidden">
+                <a href="/shop/" class="inline-flex items-center text-accent hover:text-accent-light transition-colors">
+                    <i class="fas fa-arrow-left mr-2"></i>
+                    Continue Shopping
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Recently Viewed -->
+    <section id="recently-viewed" class="py-16 bg-dark-light hidden">
+        <div class="container mx-auto px-4">
+            <h2 class="text-2xl font-serif font-bold text-white mb-8">You May Also Like</h2>
+            
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                <!-- Product 1 -->
+                <div class="group relative bg-dark rounded-xl overflow-hidden transition-all duration-500 hover:shadow-xl hover:shadow-primary/10">
+                    <div class="relative overflow-hidden bg-white">
+                        <img src="/assets/products/eye-palette.png" alt="The Essential Eye Palette" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                            <button class="add-to-cart bg-accent hover:bg-accent-dark text-dark font-bold py-2 px-4 rounded-full w-full transition-all transform group-hover:translate-y-0 translate-y-4" data-product-id="8019" data-product-name="The Essential Eye Palette" data-product-price="44.00" data-product-image="/assets/products/essential-eye-palette.jpg">
+                                Add to Cart
+                            </button>
+                        </div>
+                        <div class="absolute top-4 left-4 bg-primary text-white text-xs font-bold px-2 py-1 rounded">
+                            NEW
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-lg font-bold text-white mb-1">The Essential Eye Palette</h3>
+                        <div class="flex items-center mb-2">
+                            <div class="flex text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="text-accent font-bold">$44.00</span>
+                            <span class="text-secondary line-through text-xs ml-2">$55.00</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 2 -->
+                <div class="group relative bg-dark rounded-xl overflow-hidden transition-all duration-500 hover:shadow-xl hover:shadow-primary/10">
+                    <div class="relative overflow-hidden bg-white">
+                        <img src="/assets/products/lip-serum-strawberry.png" alt="LipOil Tinted Lip Serum - Strawberry" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                            <button class="add-to-cart bg-accent hover:bg-accent-dark text-dark font-bold py-2 px-4 rounded-full w-full transition-all transform group-hover:translate-y-0 translate-y-4" data-product-id="7970" data-product-name="LipOil Tinted Lip Serum - Strawberry" data-product-price="27.20" data-product-image="/assets/products/lip-serum-strawberry.jpg">
+                                Add to Cart
+                            </button>
+                        </div>
+                        <div class="absolute top-4 left-4 bg-primary text-white text-xs font-bold px-2 py-1 rounded">
+                            BEST SELLER
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-lg font-bold text-white mb-1">LipOil Tinted Lip Serum - Strawberry</h3>
+                        <div class="flex items-center mb-2">
+                            <div class="flex text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="text-accent font-bold">$27.20</span>
+                            <span class="text-secondary line-through text-xs ml-2">$34.00</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 3 -->
+                <div class="group relative bg-dark rounded-xl overflow-hidden transition-all duration-500 hover:shadow-xl hover:shadow-primary/10">
+                    <div class="relative overflow-hidden bg-white">
+                        <img src="/assets/products/makeup-primer.jpg" alt="Makeup Primer" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                            <button class="add-to-cart bg-accent hover:bg-accent-dark text-dark font-bold py-2 px-4 rounded-full w-full transition-all transform group-hover:translate-y-0 translate-y-4" data-product-id="7825" data-product-name="Makeup Primer" data-product-price="40.00" data-product-image="/assets/products/makeup-primer.jpg">
+                                Add to Cart
+                            </button>
+                        </div>
+                        <div class="absolute top-4 left-4 bg-primary text-white text-xs font-bold px-2 py-1 rounded">
+                            BEST SELLER
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-lg font-bold text-white mb-1">Makeup Primer</h3>
+                        <div class="flex items-center mb-2">
+                            <div class="flex text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="text-accent font-bold">$40.00</span>
+                            <span class="text-secondary line-through text-xs ml-2">$50.00</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 4 -->
+                <div class="group relative bg-dark rounded-xl overflow-hidden transition-all duration-500 hover:shadow-xl hover:shadow-primary/10">
+                    <div class="relative overflow-hidden bg-white">
+                        <img src="/assets/products/lip-balm.png" alt="Arbonne® Botaniques Vanilla Moisturizing Lip Balm" class="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
+                            <button class="add-to-cart bg-accent hover:bg-accent-dark text-dark font-bold py-2 px-4 rounded-full w-full transition-all transform group-hover:translate-y-0 translate-y-4" data-product-id="6843" data-product-name="Arbonne® Botaniques Vanilla Moisturizing Lip Balm" data-product-price="14.40" data-product-image="/assets/products/lip-balm.jpg">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-lg font-bold text-white mb-1">Vanilla Moisturizing Lip Balm</h3>
+                        <div class="flex items-center mb-2">
+                            <div class="flex text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="text-accent font-bold">$14.40</span>
+                            <span class="text-secondary line-through text-xs ml-2">$18.00</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Newsletter -->
+    <section class="py-20 bg-gradient-to-br from-primary-dark to-primary">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="text-3xl md:text-4xl font-serif font-bold text-white mb-6">Join Our Beauty Community</h2>
+                <p class="text-secondary-light mb-8">
+                    Subscribe to receive exclusive offers, beauty tips, and early access to new products. 
+                    Plus, get 15% off your first order.
+                </p>
+                <form class="flex flex-col sm:flex-row gap-4 max-w-lg mx-auto">
+                    <input type="email" placeholder="Your email address" class="flex-grow px-6 py-3 rounded-full bg-white/10 text-white placeholder-secondary-light focus:outline-none focus:ring-2 focus:ring-accent border border-white/20">
+                    <button type="submit" class="bg-accent hover:bg-accent-dark text-dark font-bold py-3 px-8 rounded-full transition-all transform hover:scale-105 shadow-lg">
+                        Subscribe
+                    </button>
+                </form>
+                <p class="text-xs text-secondary-light mt-4">
+                    We respect your privacy. Unsubscribe at any time.
+                </p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="bg-dark pt-20 pb-10">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+                <!-- Column 1 -->
+                <div>
+                    <a href="/" class="flex items-center">
+                        <img src="/assets/logo.png" class="h-16 w-auto mb-4" alt="logo">
+                    </a>
+                    <p class="text-secondary-light mb-6">
+                        Effortless, elevated beauty with premium vegan makeup products that enhance your natural radiance.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="https://www.facebook.com/arbonne" target="_blank" class="text-secondary hover:text-accent transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.instagram.com/arbonne/" target="_blank" class="text-secondary hover:text-accent transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://x.com/arbonne" target="_blank" class="text-secondary hover:text-accent transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://www.youtube.com/arbonne" target="_blank" class="text-secondary hover:text-accent transition-colors">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                        <a href="https://www.pinterest.com/arbonne/" target="_blank" class="text-secondary hover:text-accent transition-colors">
+                            <i class="fab fa-pinterest-p"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Column 2 -->
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-6">Shop</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/shop/" class="text-secondary-light hover:text-accent transition-colors">Eye Makeup</a></li>
+                        <li><a href="/shop/" class="text-secondary-light hover:text-accent transition-colors">Lip Products</a></li>
+                        <li><a href="/shop/" class="text-secondary-light hover:text-accent transition-colors">Face Makeup</a></li>
+                        <li><a href="/shop/" class="text-secondary-light hover:text-accent transition-colors">Makeup Kits</a></li>
+                        <li><a href="/shop/" class="text-secondary-light hover:text-accent transition-colors">New Arrivals</a></li>
+                        <li><a href="/shop/" class="text-secondary-light hover:text-accent transition-colors">Sale</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Column 3 -->
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-6">About</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/about/" class="text-secondary-light hover:text-accent transition-colors">Our Story</a></li>
+                        <li><a href="/blog/" class="text-secondary-light hover:text-accent transition-colors">Blog</a></li>
+                        <li><a href="/events/" class="text-secondary-light hover:text-accent transition-colors">Events</a></li>
+                        <li><a href="/contact/" class="text-secondary-light hover:text-accent transition-colors">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Column 4 -->
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-6">Contact</h3>
+                    <address class="not-italic text-secondary-light space-y-3">
+                        <p class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-3 text-accent"></i>
+                            <span>36 St Andrews Gardens,<br>Toronto, ON M4W 2E1,<br>Canada</span>
+                        </p>
+                        <p class="flex items-center">
+                            <i class="fas fa-phone mr-3 text-accent"></i>
+                            <a href="tel:+16479977626" class="hover:text-accent transition-colors">+1 (647) 997-7626</a>
+                        </p>
+                        <p class="flex items-center">
+                            <i class="fas fa-envelope mr-3 text-accent"></i>
+                            <a href="mailto:info@arbonne-makeup.com" class="hover:text-accent transition-colors">info@arbonne-makeup.com</a>
+                        </p>
+                    </address>
+                </div>
+            </div>
+            
+            <div class="border-t border-dark-lighter pt-10">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-secondary-light text-sm mb-4 md:mb-0">
+                        &copy; 2025 Arbonne Makeup. All rights reserved.
+                    </p>
+                    <div class="flex space-x-6">
+                        <a href="/privacy/" class="text-secondary-light hover:text-accent transition-colors text-sm">Privacy Policy</a>
+                        <a href="/terms/" class="text-secondary-light hover:text-accent transition-colors text-sm">Terms of Service</a>
+                        <a href="/cookies/" class="text-secondary-light hover:text-accent transition-colors text-sm">Cookies</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Cookie Consent -->
+    <div id="cookie-consent" class="fixed bottom-0 left-0 right-0 bg-dark-light border-t border-dark-lighter p-6 hidden z-50">
+        <div class="container mx-auto">
+            <div class="flex flex-col lg:flex-row items-center justify-between">
+                <div class="mb-4 lg:mb-0 lg:mr-8">
+                    <h3 class="text-white font-bold mb-2">We Value Your Privacy</h3>
+                    <p class="text-secondary-light text-sm">
+                        We use cookies to enhance your browsing experience, serve personalized ads or content, 
+                        and analyze our traffic. By clicking "Accept", you consent to our use of cookies.
+                    </p>
+                </div>
+                <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-3 w-full sm:w-auto">
+                    <button id="cookie-accept" class="bg-primary hover:bg-primary-dark text-white font-bold py-2 px-6 rounded-full transition-colors text-sm">
+                        Accept
+                    </button>
+                    <button id="cookie-decline" class="border border-secondary-light hover:border-accent text-secondary-light hover:text-accent font-bold py-2 px-6 rounded-full transition-colors text-sm">
+                        Decline
+                    </button>
+                    <a href="/cookies/" class="border border-secondary-light hover:border-accent text-secondary-light hover:text-accent font-bold py-2 px-6 rounded-full transition-colors text-sm text-center">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Scripts -->
+    <script>
+        // Mobile Menu Toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+        
+        // Cookie Consent
+        if (!localStorage.getItem('cookieConsent')) {
+            document.getElementById('cookie-consent').classList.remove('hidden');
+        }
+        
+        document.getElementById('cookie-accept').addEventListener('click', function() {
+            localStorage.setItem('cookieConsent', 'accepted');
+            document.getElementById('cookie-consent').classList.add('hidden');
+        });
+        
+        document.getElementById('cookie-decline').addEventListener('click', function() {
+            localStorage.setItem('cookieConsent', 'declined');
+            document.getElementById('cookie-consent').classList.add('hidden');
+        });
+        
+        // Initialize cart count
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            document.getElementById('cart-count').textContent = cart.reduce((total, item) => total + item.quantity, 0);
+        }
+        
+        updateCartCount();
+        
+        // Render cart items
+        function renderCart() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartContent = document.getElementById('cart-content');
+            const cartSummary = document.getElementById('cart-summary');
+            const continueShopping = document.getElementById('continue-shopping');
+            const recentlyViewed = document.getElementById('recently-viewed');
+            
+            if (cart.length === 0) {
+                cartContent.innerHTML = `
+                    <div class="text-center py-20">
+                        <i class="fas fa-shopping-bag empty-cart-icon mb-6"></i>
+                        <h3 class="text-2xl font-serif font-bold text-white mb-4">Your cart is empty</h3>
+                        <p class="text-secondary-light mb-6">Looks like you haven't added anything to your cart yet</p>
+                        <a href="/shop/" class="inline-block bg-accent hover:bg-accent-dark text-dark font-bold py-3 px-8 rounded-full transition-all transform hover:scale-105">
+                            Continue Shopping
+                        </a>
+                    </div>
+                `;
+                cartSummary.classList.add('hidden');
+                continueShopping.classList.add('hidden');
+                recentlyViewed.classList.add('hidden');
+                return;
+            }
+            
+            // Calculate totals
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const tax = subtotal * 0.13; // 13% tax
+            const total = subtotal + tax;
+            
+            // Update summary
+            document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`;
+            document.getElementById('total').textContent = `$${total.toFixed(2)}`;
+            
+            // Show cart items
+            cartContent.innerHTML = `
+                <div class="bg-dark-light rounded-xl overflow-hidden">
+                    <div class="hidden md:grid grid-cols-12 gap-4 bg-dark-lighter p-4 border-b border-dark">
+                        <div class="col-span-6 font-bold text-secondary-light">Product</div>
+                        <div class="col-span-2 font-bold text-secondary-light text-center">Price</div>
+                        <div class="col-span-2 font-bold text-secondary-light text-center">Quantity</div>
+                        <div class="col-span-2 font-bold text-secondary-light text-right">Total</div>
+                    </div>
+                    <div id="cart-items">
+                        ${cart.map(item => `
+                            <div class="cart-item grid grid-cols-1 md:grid-cols-12 gap-4 p-4 border-b border-dark" data-product-id="${item.id}">
+                                <div class="col-span-6 flex items-center">
+                                    <div class="w-20 h-20 bg-white rounded-lg overflow-hidden mr-4 flex-shrink-0">
+                                        <img src="${item.image}" alt="${item.name}" class="w-full h-full object-contain">
+                                    </div>
+                                    <div>
+                                        <h3 class="font-bold text-white">${item.name}</h3>
+                                        <button class="remove-item text-secondary-light hover:text-accent transition-colors text-sm mt-1">
+                                            Remove
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-span-2 flex items-center justify-center">
+                                    <span class="text-accent">$${item.price.toFixed(2)}</span>
+                                </div>
+                                <div class="col-span-2 flex items-center justify-center">
+                                    <div class="flex items-center border border-dark-lighter rounded-lg overflow-hidden">
+                                        <button class="quantity-decrease bg-dark-light text-white px-3 py-1 hover:bg-dark-lighter transition-colors">
+                                            -
+                                        </button>
+                                        <span class="quantity px-4 py-1 bg-dark text-center">${item.quantity}</span>
+                                        <button class="quantity-increase bg-dark-light text-white px-3 py-1 hover:bg-dark-lighter transition-colors">
+                                            +
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-span-2 flex items-center justify-end">
+                                    <span class="text-white font-medium">$${(item.price * item.quantity).toFixed(2)}</span>
+                                </div>
+                            </div>
+                        `).join('')}
+                    </div>
+                </div>
+            `;
+            
+            // Show summary and continue shopping
+            cartSummary.classList.remove('hidden');
+            continueShopping.classList.remove('hidden');
+            recentlyViewed.classList.remove('hidden');
+            
+            // Add event listeners to cart buttons
+            document.querySelectorAll('.remove-item').forEach(button => {
+                button.addEventListener('click', function() {
+                    const productId = this.closest('.cart-item').getAttribute('data-product-id');
+                    removeFromCart(productId);
+                });
+            });
+            
+            document.querySelectorAll('.quantity-decrease').forEach(button => {
+                button.addEventListener('click', function() {
+                    const productId = this.closest('.cart-item').getAttribute('data-product-id');
+                    updateQuantity(productId, -1);
+                });
+            });
+            
+            document.querySelectorAll('.quantity-increase').forEach(button => {
+                button.addEventListener('click', function() {
+                    const productId = this.closest('.cart-item').getAttribute('data-product-id');
+                    updateQuantity(productId, 1);
+                });
+            });
+            
+           
+        }
+        
+        // Remove item from cart
+        function removeFromCart(productId) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart = cart.filter(item => item.id !== productId);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+            renderCart();
+            
+            // Show removed notification
+            const notification = document.createElement('div');
+            notification.className = 'fixed bottom-4 right-4 bg-primary text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-fade-in';
+            notification.innerHTML = `
+                <div class="flex items-center">
+                    <i class="fas fa-trash-alt mr-2"></i>
+                    <span>Item removed from cart</span>
+                </div>
+            `;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.classList.add('animate-fade-out');
+                setTimeout(() => {
+                    notification.remove();
+                }, 300);
+            }, 3000);
+        }
+        
+        // Update item quantity
+        function updateQuantity(productId, change) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const itemIndex = cart.findIndex(item => item.id === productId);
+            
+            if (itemIndex !== -1) {
+                cart[itemIndex].quantity += change;
+                
+                // Remove if quantity is 0 or less
+                if (cart[itemIndex].quantity <= 0) {
+                    cart.splice(itemIndex, 1);
+                }
+                
+                localStorage.setItem('cart', JSON.stringify(cart));
+                updateCartCount();
+                renderCart();
+            }
+        }
+        
+        // Add to cart functionality for recommended products
+        function setupAddToCartButtons() {
+            document.querySelectorAll('.add-to-cart').forEach(button => {
+                button.addEventListener('click', function() {
+                    const productId = this.getAttribute('data-product-id');
+                    const productName = this.getAttribute('data-product-name');
+                    const productPrice = parseFloat(this.getAttribute('data-product-price'));
+                    const productImage = this.getAttribute('data-product-image');
+                    
+                    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+                    
+                    // Check if product already exists in cart
+                    const existingItem = cart.find(item => item.id === productId);
+                    
+                    if (existingItem) {
+                        existingItem.quantity += 1;
+                    } else {
+                        cart.push({
+                            id: productId,
+                            name: productName,
+                            price: productPrice,
+                            image: productImage,
+                            quantity: 1
+                        });
+                    }
+                    
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    updateCartCount();
+                    renderCart();
+                    
+                    // Show added to cart notification
+                    const notification = document.createElement('div');
+                    notification.className = 'fixed bottom-4 right-4 bg-primary text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-fade-in';
+                    notification.innerHTML = `
+                        <div class="flex items-center">
+                            <i class="fas fa-check-circle mr-2"></i>
+                            <span>Added to cart: ${productName}</span>
+                        </div>
+                    `;
+                    document.body.appendChild(notification);
+                    
+                    // Remove notification after 3 seconds
+                    setTimeout(() => {
+                        notification.classList.add('animate-fade-out');
+                        setTimeout(() => {
+                            notification.remove();
+                        }, 300);
+                    }, 3000);
+                });
+            });
+        }
+        
+        // Initialize cart on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            renderCart();
+            setupAddToCartButtons();
+        });
+    </script>
+</body>
+</html>

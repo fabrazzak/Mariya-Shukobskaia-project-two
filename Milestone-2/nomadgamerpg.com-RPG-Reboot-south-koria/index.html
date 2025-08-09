@@ -1,0 +1,1293 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <link rel="icon" href="/asset/favicon.png" type="image/png" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="Everybody's RPG: Reboot - An idle fantasy RPG where you recruit legendary heroes, build strategic teams, and conquer endless stages. Grow your power even when offline!" />
+  <meta name="keywords"
+    content="idle RPG, fantasy game, mobile RPG, auto battle game, hero collector, Korean mobile game, offline progression, strategy RPG" />
+  <meta name="author" content="Nomad Game Studio" />
+  <link rel="canonical" href="https://nomadgamerpg.com/" />
+  <title>Everybody's RPG: Reboot | Idle Fantasy RPG Adventure</title>
+
+
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    :root {
+      --primary: #6a35ff;
+      --secondary: #ff6b35;
+      --dark: #1a1a2e;
+      --light: #f8f9fa;
+      --accent: #35ff6b;
+      --text: #333;
+      --text-light: #f8f9fa;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #f5f5f5;
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    /* Header Styles */
+    header {
+      background: linear-gradient(135deg, var(--dark), var(--primary));
+      color: var(--text-light);
+      padding: 1rem 5%;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo img {
+      height: 60px;
+      width: auto;
+    }
+
+    .logo h1 {
+      font-size: 1.5rem;
+      font-weight: 700;
+      background: linear-gradient(to right, var(--accent), var(--secondary));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+
+    nav a {
+      color: var(--text-light);
+      text-decoration: none;
+      font-weight: 500;
+      transition: color 0.3s;
+      position: relative;
+    }
+
+    nav a:hover {
+      color: var(--accent);
+    }
+
+    nav a::after {
+      content: "";
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -5px;
+      left: 0;
+      background-color: var(--accent);
+      transition: width 0.3s;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    .mobile-menu-btn {
+      display: none;
+      background: none;
+      border: none;
+      color: var(--text-light);
+      font-size: 1.5rem;
+      cursor: pointer;
+    }
+
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(rgba(26, 26, 46, 0.8),
+          rgba(26, 26, 46, 0.8)),
+        url("./asset/hero.jpg") no-repeat center center/cover;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: 0 5%;
+      margin-top: 70px;
+      color: var(--text-light);
+      text-align: left;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: auto;
+    }
+
+    .hero-content {
+      max-width: 600px;
+    }
+
+    .hero h2 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      line-height: 1.2;
+    }
+
+    .hero h2 span {
+      color: var(--accent);
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      opacity: 0.9;
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 1rem;
+    }
+
+    .btn {
+      padding: 12px 24px;
+      border-radius: 30px;
+      font-weight: 600;
+      text-decoration: none;
+      transition: all 0.3s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background-color: #5a2de6;
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(106, 53, 255, 0.3);
+    }
+
+    .btn-secondary {
+      background-color: transparent;
+      color: white;
+      border: 2px solid white;
+    }
+
+    .btn-secondary:hover {
+      background-color: rgba(255, 255, 255, 0.1);
+      transform: translateY(-3px);
+    }
+
+    /* Features Section */
+    .features {
+      padding: 5rem 5%;
+      background-color: white;
+    }
+
+    .section-title {
+      text-align: center;
+      margin-bottom: 3rem;
+    }
+
+    .section-title h2 {
+      font-size: 2.5rem;
+      color: var(--dark);
+      margin-bottom: 1rem;
+    }
+
+    .section-title p {
+      color: #666;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .feature-card {
+      background-color: var(--light);
+      border-radius: 10px;
+      padding: 2rem;
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+      border: 1px solid #eee;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    }
+
+    .feature-icon {
+      font-size: 3rem;
+      color: var(--primary);
+      margin-bottom: 1.5rem;
+    }
+
+    .feature-card h3 {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: var(--dark);
+    }
+
+    /* Screenshots Section */
+    .screenshots {
+      padding: 5rem 5%;
+      background-color: #f9f9f9;
+    }
+
+    .screenshot-slider {
+      display: flex;
+      overflow-x: auto;
+      gap: 1.5rem;
+      padding: 2rem 0;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .screenshot-slider::-webkit-scrollbar {
+      height: 8px;
+    }
+
+    .screenshot-slider::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
+
+    .screenshot-slider::-webkit-scrollbar-thumb {
+      background: var(--primary);
+      border-radius: 10px;
+    }
+
+    .screenshot {
+      flex: 0 0 300px;
+      scroll-snap-align: start;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s;
+    }
+
+    .screenshot:hover {
+      transform: scale(1.05);
+    }
+
+    .screenshot img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    /* Testimonials */
+    .testimonials {
+      padding: 5rem 5%;
+      background-color: white;
+    }
+
+    .testimonial-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+      margin-top: 3rem;
+    }
+
+    .testimonial-card {
+      background-color: var(--light);
+      padding: 2rem;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      position: relative;
+    }
+
+    .testimonial-card::before {
+      content: '"';
+      font-size: 5rem;
+      color: rgba(106, 53, 255, 0.1);
+      position: absolute;
+      top: 10px;
+      left: 20px;
+      line-height: 1;
+    }
+
+    .testimonial-content {
+      position: relative;
+      z-index: 1;
+      margin-bottom: 1.5rem;
+    }
+
+    .testimonial-author {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .author-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+
+    .author-avatar img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .author-info h4 {
+      margin-bottom: 0.2rem;
+      color: var(--dark);
+    }
+
+    .author-info p {
+      color: #666;
+      font-size: 0.9rem;
+    }
+
+    .rating {
+      color: #ffc107;
+      margin-top: 0.3rem;
+    }
+
+    /* CTA Section */
+    .cta {
+      padding: 5rem 5%;
+      background: linear-gradient(135deg, var(--primary), var(--dark));
+      color: white;
+      text-align: center;
+    }
+
+    .cta h2 {
+      font-size: 2.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .cta p {
+      max-width: 700px;
+      margin: 0 auto 2rem;
+      opacity: 0.9;
+    }
+
+    /* Footer */
+    footer {
+      background-color: var(--dark);
+      color: var(--text-light);
+      padding: 3rem 5% 1rem;
+    }
+
+    .footer-content {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+      margin-bottom: 2rem;
+    }
+
+    .footer-column h3 {
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
+      position: relative;
+      padding-bottom: 10px;
+    }
+
+    .footer-column h3::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 50px;
+      height: 2px;
+      background-color: var(--accent);
+    }
+
+    .footer-column ul {
+      list-style: none;
+    }
+
+    .footer-column ul li {
+      margin-bottom: 0.8rem;
+    }
+
+    .footer-column a {
+      color: #ccc;
+      text-decoration: none;
+      transition: color 0.3s;
+    }
+
+    .footer-column a:hover {
+      color: var(--accent);
+    }
+
+    .social-links {
+      display: flex;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+
+    .social-links a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      color: white;
+      transition: all 0.3s;
+    }
+
+    .social-links a:hover {
+      background-color: var(--accent);
+      transform: translateY(-3px);
+    }
+
+    .footer-bottom {
+      text-align: center;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      color: #aaa;
+      font-size: 0.9rem;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 992px) {
+      nav ul {
+        gap: 1.5rem;
+      }
+
+      .hero h2 {
+        font-size: 2.5rem;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .mobile-menu-btn {
+        display: block;
+      }
+
+      nav {
+        position: fixed;
+        top: 70px;
+        left: -100%;
+        width: 80%;
+        height: calc(100vh - 70px);
+        background-color: var(--dark);
+        flex-direction: column;
+        padding: 2rem;
+        transition: left 0.3s;
+        z-index: 999;
+      }
+
+      nav.active {
+        left: 0;
+      }
+
+      nav ul {
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+
+      .hero {
+        text-align: center;
+      }
+
+      .hero-content {
+        margin: 0 auto;
+        text-align: center;
+      }
+
+      .cta-buttons {
+        justify-content: center;
+      }
+    }
+
+    @media (max-width: 576px) {
+      .hero h2 {
+        font-size: 2rem;
+      }
+
+      .hero p {
+        font-size: 1rem;
+      }
+
+      .btn {
+        padding: 10px 20px;
+      }
+
+      .section-title h2 {
+        font-size: 2rem;
+      }
+
+      .cta h2 {
+        font-size: 2rem;
+      }
+    }
+
+    /* Animation */
+    @keyframes float {
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-20px);
+      }
+    }
+
+    .floating {
+      animation: float 3s ease-in-out infinite;
+    }
+  </style>
+
+  <style>
+    /* Blog Section Wrapper */
+.blog-section {
+  max-width: 1200px;
+  margin: 3rem auto;
+  padding: 0 1rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.section-titles {
+  text-align: center;
+  margin-bottom: 2rem;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #222;
+}
+
+/* Grid Layout */
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2rem;
+}
+
+/* Blog Post Card */
+.blog-post {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgb(0 0 0 / 0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.blog-post:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgb(0 0 0 / 0.15);
+}
+
+/* Post Image */
+.post-image img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Post Content */
+.post-content {
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+/* Post Meta */
+.post-meta {
+  font-size: 0.875rem;
+  color: #666;
+  margin-bottom: 0.5rem;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+/* Post Tags */
+.post-tags {
+  margin-bottom: 0.75rem;
+}
+
+.post-tag {
+  display: inline-block;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  color: white;
+  font-weight: 600;
+  margin-right: 0.5rem;
+  user-select: none;
+}
+
+.post-tag.update {
+  background-color: #9538e2;
+}
+
+.post-tag.heroes {
+  background-color: #6b46c1;
+}
+
+.post-tag.event {
+  background-color: #d97706;
+}
+
+.post-tag.rewards {
+  background-color: #ea580c;
+}
+
+.post-tag.guide {
+  background-color: #2563eb;
+}
+
+.post-tag.strategy {
+  background-color: #1e40af;
+}
+
+/* Post Title */
+.post-title {
+  font-size: 1.5rem;
+  margin-bottom: 0.75rem;
+  font-weight: 700;
+  color: #222;
+}
+
+/* Post Excerpt */
+.post-excerpt {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #444;
+  margin-bottom: 1rem;
+  flex-grow: 1;
+}
+
+/* Read More Link */
+.read-more {
+  color: #9538e2;
+  font-weight: 600;
+  text-decoration: none;
+  font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  transition: color 0.3s ease;
+}
+
+.read-more:hover {
+  color: #6b21a8;
+}
+
+/* Icons spacing if needed */
+.read-more i {
+  font-size: 0.9rem;
+}
+
+/* Responsive tweaks */
+@media (max-width: 480px) {
+  .post-meta {
+    font-size: 0.75rem;
+    gap: 0.5rem;
+  }
+
+  .post-title {
+    font-size: 1.25rem;
+  }
+
+  .post-excerpt {
+    font-size: 0.9rem;
+  }
+}
+
+  </style>
+</head>
+
+<body>
+  <!-- Header -->
+  <header>
+    <a href="/" class="logo" style="text-decoration: none;">
+      <img style="border-radius: 6px" src="/asset/logo.webp" alt="Everybody's RPG: Reboot Logo" />
+      <h1>Nomad Game RPG</h1>
+    </a>
+
+    <button class="mobile-menu-btn" id="mobileMenuBtn">
+      <i class="fas fa-bars"></i>
+    </button>
+
+    <nav id="mainNav">
+      <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/how-to-play/">How to Play</a></li>
+        <li><a href="/blog/">Blog</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-content">
+      <h2>
+        Recruit <span>Legendary Heroes</span> and Conquer Endless Stages!
+      </h2>
+      <p>
+        From auto battles to mining and upgrading! A true idle fantasy RPG
+        that keeps growing even when you're away!
+      </p>
+      <div class="cta-buttons">
+        <a href="https://play.google.com/store/apps/details?id=com.nomadgames.dungeonmaster&pli=1" class="btn ">
+          <img src="/asset/googleplay.png" style="width: 200px; " />
+
+        </a>
+          <a href="https://apps.apple.com/us/app/everybodys-rpg/id1353701442" class="btn ">
+          <img src="/asset/btn_app_store.png" style="width: 200px; " />
+
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features ">
+    <div class="section-title">
+      <h2>Game Features</h2>
+      <p>
+        Discover what makes Everybody's RPG: Reboot the ultimate idle fantasy
+        adventure
+      </p>
+    </div>
+
+    <div class="features-grid">
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-users"></i>
+        </div>
+        <h3>Legendary Heroes</h3>
+        <p>
+          Collect and upgrade unique heroes with special abilities to create
+          your ultimate team.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-robot"></i>
+        </div>
+        <h3>Auto Battles</h3>
+        <p>
+          Watch your heroes fight automatically while you strategize your next
+          move.
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-coins"></i>
+        </div>
+        <h3>Offline Progression</h3>
+        <p>
+          Your adventure continues even when you're not playing - come back to
+          rewards!
+        </p>
+      </div>
+
+
+      <div class="feature-card">
+        <div class="feature-icon">
+          <i class="fas fa-mountain"></i>
+        </div>
+        <h3>Endless Content</h3>
+        <p>
+          With constantly updating stages and challenges, the adventure never
+          ends.
+        </p>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Screenshots Section -->
+  <section class="screenshots">
+    <div class="section-title">
+      <h2>Game Screenshots</h2>
+      <p>Take a look at the stunning visuals and exciting gameplay</p>
+    </div>
+
+    <div class="screenshot-slider">
+      <div class="screenshot">
+        <img src="./asset/unnamed.webp" alt="Everybody's RPG: Reboot gameplay screenshot showing hero selection" />
+      </div>
+      <div class="screenshot">
+        <img src="./asset/unnamed2.webp" alt="Everybody's RPG: Reboot battle scene with multiple heroes" />
+      </div>
+      <div class="screenshot">
+        <img src="./asset/unnamed3.webp" alt="Everybody's RPG: Reboot upgrade and progression system" />
+      </div>
+      <div class="screenshot">
+        <img src="./asset/unnamed4.webp" alt="Everybody's RPG: Reboot mining and resource collection" />
+      </div>
+      <div class="screenshot">
+        <img src="./asset/unnamed5.webp" alt="Everybody's RPG: Reboot hero abilities and skills" />
+      </div>
+    </div>
+  </section>
+
+  <!-- Testimonials Section -->
+  <section class="testimonials ">
+    <div class="section-title">
+      <h2>Player Reviews</h2>
+      <p>See what our community is saying about Everybody's RPG: Reboot</p>
+    </div>
+
+    <div class="testimonial-grid">
+      <div class="testimonial-card">
+        <div class="testimonial-content">
+          <p>
+            Amazing support! Had problems with the game and the staff team
+            helped me resolve the issue quickly. The game is fun - you should
+            definitely try it!
+          </p>
+        </div>
+        <div class="testimonial-author">
+          <div class="author-avatar">
+            <img src="./asset/review-1.png" alt="Player avatar" />
+          </div>
+          <div class="author-info">
+            <h4>Scot Kidd</h4>
+            <p>Level 85 Player</p>
+            <div class="rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="testimonial-content">
+          <p>
+            I love how the game progresses even when I'm not playing. Coming
+            back to see what my team has accomplished is always exciting!
+          </p>
+        </div>
+        <div class="testimonial-author">
+          <div class="author-avatar">
+            <img src="./asset/review-2.jpg" alt="Player avatar" />
+          </div>
+          <div class="author-info">
+            <h4>Young Fischer</h4>
+            <p>Daily Player</p>
+            <div class="rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star-half-alt"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testimonial-card">
+        <div class="testimonial-content">
+          <p>
+            The hero combinations and team strategies add so much depth to
+            what seems like a simple idle game. Highly recommended for RPG
+            fans!
+          </p>
+        </div>
+        <div class="testimonial-author">
+          <div class="author-avatar">
+            <img src="./asset/review.jpeg" alt="Player avatar" />
+          </div>
+          <div class="author-info">
+            <h4>Kristina Frey</h4>
+            <p>Strategy Expert</p>
+            <div class="rating">
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+              <i class="fas fa-star"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="blog-section">
+  <h1 class="section-titles">Latest Blog Posts</h1>
+
+  <div class="blog-grid">
+    <!-- Blog Post 1 -->
+    <article class="blog-post">
+      <div class="post-image">
+        <img src="../asset/unnamed5.webp" alt="New Hero Update: Valkyrie Queen" />
+      </div>
+      <div class="post-content">
+        <div class="post-meta">
+          <span><i class="far fa-calendar"></i> May 15, 2025</span>
+          <span><i class="far fa-user"></i> By Admin</span>
+          <span><i class="far fa-comment"></i> 12 Comments</span>
+        </div>
+        <div class="post-tags">
+          <span class="post-tag update">Update</span>
+          <span class="post-tag heroes">Heroes</span>
+        </div>
+        <h2 class="post-title">New Hero Update: Valkyrie Queen Joins the Battle</h2>
+        <p class="post-excerpt">
+          The latest update brings the powerful Valkyrie Queen to Everybody's RPG: Reboot. Learn about her abilities, synergies, and how to maximize her potential in your team compositions.
+        </p>
+        <a href="/blog/post1/" class="read-more">
+          Read More <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
+    </article>
+
+    <!-- Blog Post 2 -->
+    <article class="blog-post">
+      <div class="post-image">
+        <img src="../asset/unnamed.webp" alt="Season 3 Battle Pass Rewards" />
+      </div>
+      <div class="post-content">
+        <div class="post-meta">
+          <span><i class="far fa-calendar"></i> may 5, 2025</span>
+          <span><i class="far fa-user"></i> By Game Master</span>
+          <span><i class="far fa-comment"></i> 24 Comments</span>
+        </div>
+        <div class="post-tags">
+          <span class="post-tag event">Event</span>
+          <span class="post-tag rewards">Rewards</span>
+        </div>
+        <h2 class="post-title">Season 3 Battle Pass: Exclusive Rewards and Challenges</h2>
+        <p class="post-excerpt">
+          Season 3 is here with exciting new rewards! Discover all the exclusive skins, heroes, and resources you can earn in this season's Battle Pass.
+        </p>
+        <a href="/blog/post2/" class="read-more">
+          Read More <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
+    </article>
+
+    <!-- Blog Post 3 -->
+    <article class="blog-post">
+      <div class="post-image">
+        <img src="../asset/unnamed4.webp" alt="Top Team Compositions" />
+      </div>
+      <div class="post-content">
+        <div class="post-meta">
+          <span><i class="far fa-calendar"></i> May 28, 2025</span>
+          <span><i class="far fa-user"></i> By Strategy Expert</span>
+          <span><i class="far fa-comment"></i> 36 Comments</span>
+        </div>
+        <div class="post-tags">
+          <span class="post-tag guide">Guide</span>
+          <span class="post-tag strategy">Strategy</span>
+        </div>
+        <h2 class="post-title">Top 5 Team Compositions for Late Game Progression</h2>
+        <p class="post-excerpt">
+          Struggling with late game content? Check out these powerful team compositions that will help you push through the toughest stages.
+        </p>
+        <a href="/blog/post3/" class="read-more">
+          Read More <i class="fas fa-arrow-right"></i>
+        </a>
+      </div>
+    </article>
+  </div>
+</section>
+
+
+
+<section
+  style="
+    position: relative;
+    overflow: hidden;
+    color: white;
+    padding: 5rem 1rem;
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin:  40px;
+    
+      border-radius: 24px;
+  "
+>
+  <!-- Background YouTube video iframe -->
+  <iframe
+    src="https://www.youtube.com/embed/cc1U3OYue8Y?autoplay=1&mute=1&loop=1&playlist=cc1U3OYue8Y&controls=0&showinfo=0&rel=0&modestbranding=1"
+    frameborder="0"
+    allow="autoplay; fullscreen"
+    allowfullscreen
+    style="
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 177.77vh; /* 16:9 aspect ratio relative to viewport height */
+      height: 100vh;
+      transform: translate(-50%, -50%);
+      pointer-events: none;
+      z-index: 0;
+      border-radius: 24px;
+      filter: brightness(0.5);
+    "
+  ></iframe>
+
+ 
+
+  <!-- Content wrapper -->
+  <div
+    style="
+      position: relative;
+      z-index: 2;
+      max-width: 700px;
+      margin: 0 auto;
+    "
+  >
+    <h2
+      style="
+        font-size: clamp(2rem, 5vw, 3rem);
+        margin-bottom: 1rem;
+        font-weight: 700;
+        text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
+      "
+    >
+      Ready for Your Adventure?
+    </h2>
+
+    <p
+      style="
+        font-size: clamp(1rem, 2.5vw, 1.25rem);
+        margin-bottom: 2rem;
+        line-height: 1.5;
+        text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
+      "
+    >
+      Join millions of players worldwide in this epic idle RPG experience.
+      Download now and start your journey!
+    </p>
+
+    <a
+      href="https://play.google.com/store/apps/details?id=com.nomadgames.dungeonmaster&pli=1"
+      style="display: inline-block;"
+    >
+      <img
+        src="/asset/googleplay.png"
+        alt="Get it on Google Play"
+        style="width: 200px; max-width: 100%; height: auto; margin-right: 15px;"
+      />
+    </a> 
+    <a
+      href="https://apps.apple.com/us/app/everybodys-rpg/id1353701442"
+      style="display: inline-block;"
+    >
+      <img
+        src="/asset/btn_app_store.png"
+        alt="Get it on Google Play"
+        style="width: 200px; max-width: 100%; height: auto;"
+      />
+    </a>
+  </div>
+</section>
+
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-content">
+      <div class="footer-column">
+        <h3>Everybody's RPG: Reboot</h3>
+        <p>
+          Recruit legendary heroes and conquer endless stages in this exciting
+          idle fantasy RPG adventure!
+        </p>
+         <a
+      href="https://play.google.com/store/apps/details?id=com.nomadgames.dungeonmaster&pli=1"
+      style="display: inline-block; margin-top: 20px;"
+    >
+      <img
+        src="/asset/googleplay.png"
+        alt="Get it on Google Play"
+        style="width: 200px; max-width: 100%; height: auto; margin-right: 15px;"
+      />
+    </a> 
+    <a
+      href="https://apps.apple.com/us/app/everybodys-rpg/id1353701442"
+      style="display: inline-block;"
+    >
+      <img
+        src="/asset/btn_app_store.png"
+        alt="Get it on Google Play"
+        style="width: 200px; max-width: 100%; height: auto;"
+      />
+    </a>
+      </div>
+
+      <div class="footer-column">
+        <h3>Quick Links</h3>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/how-to-play/">How to Play</a></li>
+          <li><a href="/blog/">Blog</a></li>
+          <li><a href="/contact/">Contact</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <h3>Legal</h3>
+        <ul>
+          <li><a href="/privacy/">Privacy Policy</a></li>
+          <li><a href="/terms/">Terms of Service</a></li>
+          <li><a href="/cookies/">Cookies Policy</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-column">
+        <h3>Contact Us</h3>
+        <ul>
+          <li><i class="fas fa-map-marker-alt"></i> 1219ho, 18 Woldecupbuk-ro 5na-gil,
+Mapo-gu, Seoul 04002,
+South Korea</li>
+          <li><i class="fas fa-envelope"></i> nomadgamesdev@gmail.com</li>
+         
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>&copy; 2025 Nomad Game Studio. All Rights Reserved.</p>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile Menu Toggle
+    document
+      .getElementById("mobileMenuBtn")
+      .addEventListener("click", function () {
+        document.getElementById("mainNav").classList.toggle("active");
+      });
+
+    // Smooth scrolling for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+      anchor.addEventListener("click", function (e) {
+        e.preventDefault();
+
+        document.querySelector(this.getAttribute("href")).scrollIntoView({
+          behavior: "smooth",
+        });
+      });
+    });
+
+    // Screenshot slider navigation
+    const slider = document.querySelector(".screenshot-slider");
+    let isDown = false;
+    let startX;
+    let scrollLeft;
+
+    slider.addEventListener("mousedown", (e) => {
+      isDown = true;
+      slider.classList.add("active");
+      startX = e.pageX - slider.offsetLeft;
+      scrollLeft = slider.scrollLeft;
+    });
+
+    slider.addEventListener("mouseleave", () => {
+      isDown = false;
+      slider.classList.remove("active");
+    });
+
+    slider.addEventListener("mouseup", () => {
+      isDown = false;
+      slider.classList.remove("active");
+    });
+
+    slider.addEventListener("mousemove", (e) => {
+      if (!isDown) return;
+      e.preventDefault();
+      const x = e.pageX - slider.offsetLeft;
+      const walk = (x - startX) * 2;
+      slider.scrollLeft = scrollLeft - walk;
+    });
+
+    function checkCookieConsent() {
+      if (!localStorage.getItem("cookieConsent")) {
+        const cookieBanner = document.createElement("div");
+        cookieBanner.style.position = "fixed";
+        cookieBanner.style.bottom = "0";
+        cookieBanner.style.left = "0";
+        cookieBanner.style.right = "0";
+        cookieBanner.style.backgroundColor = "var(--dark)";
+        cookieBanner.style.color = "white";
+        cookieBanner.style.padding = "1rem";
+        cookieBanner.style.zIndex = "1000";
+        cookieBanner.style.display = "flex";
+        cookieBanner.style.justifyContent = "space-between";
+        cookieBanner.style.alignItems = "center";
+        cookieBanner.style.flexWrap = "wrap";
+        cookieBanner.style.gap = "0.5rem";
+
+        cookieBanner.innerHTML = `
+        <div style="flex: 1; min-width: 200px;">
+          <p>We use cookies to enhance your experience on our website. By continuing to browse, you agree to our use of cookies. Learn more in our 
+            <a href="/cookies/" style="color: var(--accent); text-decoration: underline;">Cookies Policy</a>.
+          </p>
+        </div>
+        <div style="display: flex; gap: 0.5rem;">
+          <button class="accept-btn" style="background-color: var(--accent); color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer;">Accept Cookies</button>
+          <button class="decline-btn" style="background-color: gray; color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer;">Decline Cookies</button>
+        </div>
+      `;
+
+        document.body.appendChild(cookieBanner);
+
+        // Wait for DOM to append and then select the buttons inside the banner
+        const acceptBtn = cookieBanner.querySelector(".accept-btn");
+        const declineBtn = cookieBanner.querySelector(".decline-btn");
+
+        acceptBtn.addEventListener("click", () => {
+          localStorage.setItem("cookieConsent", "true");
+          cookieBanner.remove();
+        });
+
+        declineBtn.addEventListener("click", () => {
+          localStorage.setItem("cookieConsent", "false");
+          cookieBanner.remove();
+        });
+      }
+    }
+
+    // Run after DOM is loaded
+    document.addEventListener("DOMContentLoaded", checkCookieConsent);
+
+
+    // Initialize when DOM is loaded
+    document.addEventListener("DOMContentLoaded", function () {
+      checkCookieConsent();
+    });
+  </script>
+</body>
+
+</html>

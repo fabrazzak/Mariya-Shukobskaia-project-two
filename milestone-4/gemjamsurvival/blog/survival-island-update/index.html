@@ -1,0 +1,527 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Survival Island v1.5 Update | Gem Jam Blog</title>
+    <meta name="description"
+        content="Discover what's new in Survival Island v1.5, including two massive cave systems, 12 new crafting recipes, and quality-of-life improvements based on player feedback.">
+    <meta name="keywords"
+        content="survival island update, game patch notes, new caves, crafting recipes, gem jam games">
+    <link rel="canonical" href="https://gemjamsurvival.com/blog/survival-island-update/">
+   <link rel="icon" href="/images/favicon.png" type="image/x-icon">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4F46E5',
+                        secondary: '#10B981',
+                        dark: '#1F2937',
+                        darker: '#111827',
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 6s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <!-- Prism.js for code highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css" rel="stylesheet" />
+</head>
+
+<body class="bg-darker text-gray-100 font-sans antialiased">
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-[#111c1c] backdrop-blur-md z-50 border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="/" class="flex items-center">                        
+                         <img src="/images/logo.png" alt="Gem Jam Logo" class="h-14 w-auto rounded-xl">
+                    </a>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex space-x-8">
+                    <a href="/"
+                        class="text-white hover:text-secondary px-3 py-2 font-medium transition-colors duration-300">Home</a>
+                    <a href="/games/"
+                        class="text-white hover:text-white px-3 py-2 font-medium transition-colors duration-300">Games</a>
+                    <a href="/blog/"
+                        class="text-white hover:text-white px-3 py-2 font-medium transition-colors duration-300">Blog</a>
+                    <a href="/contact/"
+                        class="text-white hover:text-white px-3 py-2 font-medium transition-colors duration-300">Contact</a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button type="button" id="mobile-menu-button"
+                        class="inline-flex items-center justify-center p-2 rounded-md text-white hover:text-white hover:bg-gray-700 focus:outline-none">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                            stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile menu -->
+        <div class="md:hidden hidden origin-top" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="/" class="text-white block px-3 py-2 rounded-md text-base font-medium">Home</a>
+                <a href="/games/"
+                    class="text-white hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Games</a>
+                <a href="/blog/"
+                    class="text-white hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Blog</a>
+                <a href="/contact/"
+                    class="text-white hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="relative pt-32 pb-20  overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <img src="/images/blog-featured.png" alt="Survival Island Update"
+                class="w-full h-full object-cover opacity-30">
+            <div class="absolute inset-0  to-darker"></div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center" data-aos="fade-up">
+                <div
+                    class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-primary text-white mb-4">
+                    Game Update
+                </div>
+                <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight mb-4">
+                    Survival Island v1.5: New Caves & Crafting Recipes
+                </h1>
+                <div class="max-w-2xl mx-auto flex items-center justify-center">
+                    <img src="/images/team2.jpeg" alt="Ani Petrosyan" class="h-10 w-10 rounded-full">
+                    <div class="ml-3 text-left">
+                        <p class="text-sm font-medium text-white">Ani Petrosyan</p>
+                        <p class="text-xs text-gray-400">Posted on May 15, 2025 • 8 min read</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Blog Content -->
+    <main class="py-16 bg-dark">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col lg:flex-row max-w-3xl mx-auto gap-8">
+                <!-- Main Content -->
+                <article class="lg:col-span-2 bg-darker rounded-xl shadow-xl overflow-hidden">
+                    <!-- Featured Image -->
+                    <div class="relative h-64 sm:h-80 md:h-96 w-full mb-8">
+                        <img src="/images/blog-featured.png" alt="Survival Island Update"
+                            class="w-full h-full object-cover">
+                    </div>
+
+                    <!-- Article Content -->
+                    <div class="px-4 sm:px-6 pb-8">
+
+                        <!-- Article Body -->
+                        <div class="prose prose-invert max-w-none">
+                            <p class="lead text-lg sm:text-xl text-gray-300 mb-8">
+                                Our biggest update yet brings two expansive cave systems, a dozen new crafting recipes,
+                                and numerous quality-of-life improvements based on your feedback. Let's dive into what's
+                                new in Survival Island: Dinosaurs Pro!
+                            </p>
+
+                            <h2 class="text-2xl font-bold text-white mb-4">The Crystal Caverns & Lava Tunnels</h2>
+                            <p>After months of development, we're excited to introduce two massive new underground
+                                environments:</p>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
+                                <div class="bg-gray-800/50 p-4 rounded-lg border border-gray-700">
+                                    <h3 class="text-lg font-semibold text-white mb-2">Crystal Caverns</h3>
+                                    <p class="text-gray-300 mb-3">A breathtaking network of caves filled with luminous
+                                        crystals that provide natural light and rare crafting materials.</p>
+                                    <ul class="text-sm text-gray-400 space-y-1">
+                                        <li class="flex items-start">
+                                            <span class="text-secondary mr-2">•</span>
+                                            <span>5 new mineral types to discover</span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <span class="text-secondary mr-2">•</span>
+                                            <span>Unique crystal-based ecosystem</span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <span class="text-secondary mr-2">•</span>
+                                            <span>Hidden ancient ruins to explore</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="bg-gray-800/50 p-4 rounded-lg border border-gray-700">
+                                    <h3 class="text-lg font-semibold text-white mb-2">Lava Tunnels</h3>
+                                    <p class="text-gray-300 mb-3">Dangerous volcanic passages with extreme temperatures
+                                        and valuable resources near molten lava flows.</p>
+                                    <ul class="text-sm text-gray-400 space-y-1">
+                                        <li class="flex items-start">
+                                            <span class="text-secondary mr-2">•</span>
+                                            <span>Thermal protection gear required</span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <span class="text-secondary mr-2">•</span>
+                                            <span>Obsidian and rare metals</span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <span class="text-secondary mr-2">•</span>
+                                            <span>New lava-based creatures</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+
+                            <h2 class="text-2xl font-bold text-white mb-4 mt-8 sm:mt-12">New Crafting System Additions</h2>
+                            <p>We've expanded the crafting system with 12 new recipes, including:</p>
+                            <ul class="my-4 space-y-2">
+                                <li class="flex items-start">
+                                    <span class="text-secondary mr-2">•</span>
+                                    <span>Thermal Suit - Protects against extreme temperatures in caves</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-secondary mr-2">•</span>
+                                    <span>Crystal Torch - Permanent light source using cavern minerals</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-secondary mr-2">•</span>
+                                    <span>Obsidian Tools - More durable than flint but harder to craft</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-secondary mr-2">•</span>
+                                    <span>Glider - Limited flight capability from high points</span>
+                                </li>
+                            </ul>
+
+                            <div class="my-6 p-4 sm:p-6 bg-gray-800 rounded-lg border-l-4 border-primary">
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0 pt-1">
+                                        <svg class="h-5 w-5 text-primary" fill="currentColor" viewBox="0 0 20 20">
+                                            <path fill-rule="evenodd"
+                                                d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7-4a1 1 0 11-2 0 1 1 0 012 0zM9 9a1 1 0 000 2v3a1 1 0 001 1h1a1 1 0 100-2h-1V9z"
+                                                clip-rule="evenodd"></path>
+                                        </svg>
+                                    </div>
+                                    <div class="ml-3">
+                                        <h3 class="text-lg font-medium text-white">Pro Tip</h3>
+                                        <div class="mt-2 text-gray-300">
+                                            <p>The new Crystal Torch doesn't consume fuel like regular torches, making
+                                                it ideal for cave exploration. However, it requires rare materials from
+                                                the Crystal Caverns.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h2 class="text-2xl font-bold text-white mb-4 mt-8 sm:mt-12">Quality of Life Improvements</h2>
+                            <p>Based on player feedback, we've implemented numerous improvements:</p>
+
+                            <div class="my-6 overflow-x-auto">
+                                <div class="min-w-full inline-block align-middle">
+                                    <div class="overflow-hidden rounded-lg border border-gray-700">
+                                        <table class="min-w-full divide-y divide-gray-700">
+                                            <thead class="bg-gray-800">
+                                                <tr>
+                                                    <th scope="col"
+                                                        class="px-4 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                                                        Feature</th>
+                                                    <th scope="col"
+                                                        class="px-4 py-3 text-left text-xs font-medium text-gray-300 uppercase tracking-wider">
+                                                        Improvement</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody class="bg-gray-800/50 divide-y divide-gray-700">
+                                                <tr>
+                                                    <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-white">
+                                                        Inventory</td>
+                                                    <td class="px-4 py-3 text-sm text-gray-300">New quick-stack button and
+                                                        category sorting</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-white">
+                                                        Building</td>
+                                                    <td class="px-4 py-3 text-sm text-gray-300">Snapping system improved for
+                                                        easier base construction</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-white">Map
+                                                    </td>
+                                                    <td class="px-4 py-3 text-sm text-gray-300">Added custom markers and notes
+                                                        functionality</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="px-4 py-3 whitespace-nowrap text-sm font-medium text-white">
+                                                        Crafting</td>
+                                                    <td class="px-4 py-3 text-sm text-gray-300">Favorites system and recent
+                                                        items category</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <h2 class="text-2xl font-bold text-white mb-4 mt-8 sm:mt-12">Bug Fixes & Optimizations</h2>
+                            <p>This update addresses over 50 reported issues, including:</p>
+                            <ul class="my-4 space-y-2">
+                                <li class="flex items-start">
+                                    <span class="text-secondary mr-2">•</span>
+                                    <span>Fixed rare crash when entering water during storms</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-secondary mr-2">•</span>
+                                    <span>Improved dinosaur pathfinding around player structures</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-secondary mr-2">•</span>
+                                    <span>Optimized memory usage on mobile devices</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-secondary mr-2">•</span>
+                                    <span>Fixed inventory item duplication glitch</span>
+                                </li>
+                            </ul>
+
+                            <div class="my-6 p-4 sm:p-6 bg-gray-800 rounded-lg">
+                                <h3 class="text-lg font-bold text-white mb-4">Update Changelog</h3>
+                                <pre class="bg-gray-900 p-4 rounded overflow-x-auto text-sm"><code class="language-markdown">
+## v1.5.0 - May 15, 2025
+
+### New Features
+- Added Crystal Caverns biome
+- Added Lava Tunnels biome
+- 12 new crafting recipes
+- New thermal mechanics for caves
+- Glider equipment item
+- Map marker system
+
+### Improvements
+- Inventory management upgrades
+- Building system enhancements
+- Crafting UI improvements
+- 15% performance optimization
+- Mobile control customization
+
+### Bug Fixes
+- Fixed 27 collision issues
+- Resolved 15 multiplayer sync bugs
+- Addressed 8 crash scenarios
+- Fixed various visual glitches
+                                </code></pre>
+                            </div>
+
+                            <h2 class="text-2xl font-bold text-white mb-4 mt-8 sm:mt-12">What's Next?</h2>
+                            <p>We're already working on the next major update planned for late summer, which will
+                                include:</p>
+                            <ul class="my-4 space-y-2">
+                                <li class="flex items-start">
+                                    <span class="text-secondary mr-2">•</span>
+                                    <span>Multiplayer co-op mode (currently in alpha testing)</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-secondary mr-2">•</span>
+                                    <span>New taming system for smaller dinosaurs</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-secondary mr-2">•</span>
+                                    <span>Underwater exploration content</span>
+                                </li>
+                            </ul>
+
+                            <div class="mt-8 sm:mt-12 pt-6 sm:pt-8 border-t border-gray-800">
+                                <p class="text-gray-400 italic">We want to thank our amazing community for all the
+                                    feedback and bug reports that helped shape this update. Your support means
+                                    everything to our small team!</p>
+                                <p class="mt-4 text-white font-medium">- The Gem Jam Development Team</p>
+                            </div>
+                        </div>
+
+                        <!-- Tags -->
+                        <div class="mt-8 flex flex-wrap gap-2">
+                            <span class="px-3 py-1 rounded-full text-xs font-medium bg-gray-800 text-gray-300">#gameupdate</span>
+                            <span class="px-3 py-1 rounded-full text-xs font-medium bg-gray-800 text-gray-300">#survivalgames</span>
+                            <span class="px-3 py-1 rounded-full text-xs font-medium bg-gray-800 text-gray-300">#newfeatures</span>
+                            <span class="px-3 py-1 rounded-full text-xs font-medium bg-gray-800 text-gray-300">#crafting</span>
+                        </div>
+
+                        <!-- Author Bio -->
+                        <div class="mt-8 sm:mt-12 pt-6 sm:pt-8 border-t border-gray-800">
+                            <div class="flex items-center">
+                                <img src="/images/team2.jpeg" alt="Ani Petrosyan" class="h-14 sm:h-16 w-14 sm:w-16 rounded-full">
+                                <div class="ml-4">
+                                    <h3 class="text-lg font-bold text-white">Ani Petrosyan</h3>
+                                    <p class="text-gray-400">Lead Developer at Gem Jam</p>
+                                    <p class="mt-2 text-sm sm:text-base text-gray-300">Ani oversees all technical development and gameplay
+                                        systems. With 8 years in game development, she specializes in survival mechanics
+                                        and procedural generation.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Comments Section -->
+                        <div class=" sm:mt-12 pt-6 sm:pt-8 border-t border-gray-800">                           
+
+                            <!-- Comment Form -->
+                            <div class="mt-8 bg-gray-800/50 p-4 sm:p-6 rounded-lg">
+                                <h4 class="text-md font-medium text-white mb-4">Leave a comment</h4>
+                                <form class="space-y-4">
+                                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                        <div>
+                                            <label for="name"
+                                                class="block text-sm font-medium text-gray-300 mb-1">Name</label>
+                                            <input type="text" id="name"
+                                                class="w-full px-4 py-2 rounded-md border border-gray-700 bg-gray-800 text-white focus:ring-2 focus:ring-primary focus:border-transparent focus:outline-none">
+                                        </div>
+                                        <div>
+                                            <label for="email"
+                                                class="block text-sm font-medium text-gray-300 mb-1">Email (won't be
+                                                published)</label>
+                                            <input type="email" id="email"
+                                                class="w-full px-4 py-2 rounded-md border border-gray-700 bg-gray-800 text-white focus:ring-2 focus:ring-primary focus:border-transparent focus:outline-none">
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <label for="comment"
+                                            class="block text-sm font-medium text-gray-300 mb-1">Comment</label>
+                                        <textarea id="comment" rows="4"
+                                            class="w-full px-4 py-2 rounded-md border border-gray-700 bg-gray-800 text-white focus:ring-2 focus:ring-primary focus:border-transparent focus:outline-none"></textarea>
+                                    </div>
+                                    <button type="submit"
+                                        class="px-6 py-2 bg-primary text-white rounded-md hover:bg-primary/90 transition-colors duration-300">
+                                        Post Comment
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </main>
+
+  <footer class="bg-[#111c1c] pt-12 pb-8 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+                <div>
+                    <div class="flex-shrink-0 flex items-center mb-4">
+                        <a href="/" class="flex items-center">
+                            <img src="/images/logo.png" alt="Gem Jam Logo" class="h-14 w-auto rounded-xl">
+                        </a>
+                    </div>
+                    <p class="text-gray-400 mt-2 text-sm">
+                        Creating immersive survival games for mobile platforms.
+                    </p>
+                    <a href="https://play.google.com/store/apps/details?id=com.gemjem.survival.island.games.dinosaur.stranded.deep.jurassic.world.far.cry.green.hell" class="inline-block mt-6">
+                        <img class="w-32" src="/images/play-store.png" alt="Get it on Google Play">
+                    </a>
+                    <div class="flex space-x-4 mt-5">
+                        <a href="https://www.youtube.com/c/NotFoundGames/featured" target="_blank" class="text-gray-400 hover:text-white transition-colors duration-300">
+                            <i class="fab fa-youtube text-lg"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-white font-semibold mb-4">Company</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/about/" class="text-gray-400 hover:text-white transition-colors duration-300">About Us</a></li>
+                        <li><a href="/blog/" class="text-gray-400 hover:text-white transition-colors duration-300">Blog</a></li>
+                        <li><a href="/careers/" class="text-gray-400 hover:text-white transition-colors duration-300">Careers</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-white font-semibold mb-4">Support</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/contact/" class="text-gray-400 hover:text-white transition-colors duration-300">Contact Us</a></li>
+                        <li><a href="/privacy/" class="text-gray-400 hover:text-white transition-colors duration-300">Privacy Policy</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-white font-semibold mb-4">Connect</h3>
+                    <div class="text-gray-400 text-sm">
+                        <p class="mb-1">36 Manushian</p>
+                        <p class="mb-1">Yerevan 0012, Armenia</p>
+                        <p class="mb-1">+374 93 320134</p>
+                        <p>gemjamllcarm@gmail.com</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-8 sm:mt-12 pt-6 sm:pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 text-sm">
+                    &copy; 2025 Gem Jam, LLC. All rights reserved.
+                </p>
+                <div class="mt-4 md:mt-0 flex space-x-6">
+                    <a href="/terms/" class="text-gray-400 hover:text-white text-sm transition-colors duration-300">Terms of Service</a>
+                    <a href="/privacy/" class="text-gray-400 hover:text-white text-sm transition-colors duration-300">Privacy Policy</a>
+                    <a href="/cookies/" class="text-gray-400 hover:text-white text-sm transition-colors duration-300">Cookies</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+    <script>
+        // Initialize AOS animation
+        AOS.init({
+            duration: 800,
+            easing: 'ease-in-out',
+            once: true
+        });
+
+        // Mobile menu toggle with icon change
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcons = mobileMenuButton.querySelectorAll('svg');
+
+        mobileMenuButton.addEventListener('click', function () {
+            mobileMenu.classList.toggle('hidden');
+            menuIcons.forEach(icon => icon.classList.toggle('hidden'));
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+                menuIcons[0].classList.remove('hidden');
+                menuIcons[1].classList.add('hidden');
+            });
+        });
+    </script>
+</body>
+
+</html>

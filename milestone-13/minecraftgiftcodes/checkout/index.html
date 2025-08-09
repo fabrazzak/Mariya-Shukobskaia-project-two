@@ -1,0 +1,855 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | Minecraft Gift Codes</title>
+    <meta name="description" content="Complete your Minecraft gift codes, skins, and mods purchase. Secure checkout with instant delivery.">
+    <meta name="keywords" content="minecraft checkout, minecraft payment, minecraft codes, minecraft purchase">
+    <link rel="canonical" href="https://minecraftgiftcodes.com/checkout/">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/assets/favicon.png" type="image/x-icon">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            DEFAULT: '#4CAF50',
+                            light: '#81C784',
+                            dark: '#388E3C'
+                        },
+                        secondary: {
+                            DEFAULT: '#FF9800',
+                            light: '#FFB74D',
+                            dark: '#F57C00'
+                        },
+                        dark: {
+                            DEFAULT: '#121212',
+                            light: '#1E1E1E',
+                            lighter: '#2D2D2D'
+                        }
+                    },
+                    animation: {
+                        'float': 'float 3s ease-in-out infinite',
+                        'float-reverse': 'float-reverse 3s ease-in-out infinite',
+                        'pulse-slow': 'pulse 5s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' }
+                        },
+                        'float-reverse': {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(10px)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #121212;
+            color: #f5f5f5;
+            overflow-x: hidden;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, #4CAF50, #8BC34A, #FF9800);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(139, 195, 74, 0.1), rgba(255, 152, 0, 0.1));
+        }
+        
+        /* Unique Hamburger Menu */
+        .hamburger {
+            width: 30px;
+            height: 20px;
+            position: relative;
+            transform: rotate(0deg);
+            transition: .5s ease-in-out;
+            cursor: pointer;
+        }
+        
+        .hamburger span {
+            display: block;
+            position: absolute;
+            height: 3px;
+            width: 100%;
+            background: #4CAF50;
+            border-radius: 3px;
+            opacity: 1;
+            left: 0;
+            transform: rotate(0deg);
+            transition: .25s ease-in-out;
+        }
+        
+        .hamburger span:nth-child(1) {
+            top: 0px;
+            transform-origin: left center;
+        }
+        
+        .hamburger span:nth-child(2) {
+            top: 10px;
+            transform-origin: left center;
+        }
+        
+        .hamburger span:nth-child(3) {
+            top: 20px;
+            transform-origin: left center;
+        }
+        
+        .hamburger.open span:nth-child(1) {
+            transform: rotate(45deg);
+            top: -3px;
+            left: 5px;
+        }
+        
+        .hamburger.open span:nth-child(2) {
+            width: 0%;
+            opacity: 0;
+        }
+        
+        .hamburger.open span:nth-child(3) {
+            transform: rotate(-45deg);
+            top: 19px;
+            left: 5px;
+        }
+        
+        .mobile-menu {
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+        
+        .mobile-menu.open {
+            max-height: 1000px;
+            opacity: 1;
+        }
+        
+        /* Particle canvas */
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+        
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #1E1E1E;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #4CAF50;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #388E3C;
+        }
+        
+        /* Form styles */
+        .form-input {
+            background-color: #1E1E1E;
+            border: 1px solid #2D2D2D;
+            border-radius: 6px;
+            padding: 12px;
+            width: 100%;
+            color: #f5f5f5;
+            transition: all 0.3s ease;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #4CAF50;
+            box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-select {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e");
+            background-position: right 12px center;
+            background-repeat: no-repeat;
+            background-size: 1.5em 1.5em;
+            padding-right: 40px;
+        }
+        
+        .payment-card {
+            background: linear-gradient(135deg, #1E1E1E, #2D2D2D);
+            border-radius: 10px;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #2D2D2D;
+        }
+        
+        .payment-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, #4CAF50, #FF9800);
+        }
+        
+        /* Checkbox style */
+        .checkbox-container {
+            display: block;
+            position: relative;
+            padding-left: 30px;
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        .checkbox-container input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+        
+        .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 20px;
+            width: 20px;
+            background-color: #1E1E1E;
+            border: 1px solid #2D2D2D;
+            border-radius: 4px;
+        }
+        
+        .checkbox-container:hover input ~ .checkmark {
+            background-color: #2D2D2D;
+        }
+        
+        .checkbox-container input:checked ~ .checkmark {
+            background-color: #4CAF50;
+            border-color: #4CAF50;
+        }
+        
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+        
+        .checkbox-container input:checked ~ .checkmark:after {
+            display: block;
+        }
+        
+        .checkbox-container .checkmark:after {
+            left: 7px;
+            top: 3px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <!-- Navigation -->
+    <header class="fixed w-full z-40 bg-dark shadow-md">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="/" class="flex items-center">
+                        <img src="/assets/logo.png" alt="Minecraft Gift Codes" class="h-12 mr-2">
+                    </a>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="text-white hover:text-primary transition">Home</a>
+                    <a href="/shop/" class="text-white hover:text-primary transition">Shop</a>
+                    <a href="/about/" class="text-white hover:text-primary transition">About</a>
+                    <a href="/blog/" class="text-white hover:text-primary transition">Blog</a>
+                    <a href="/contact/" class="text-white hover:text-primary transition">Contact</a>
+                    <div class="flex items-center space-x-4 ml-4">
+                        <a href="/cart/" class="relative text-white hover:text-primary transition">
+                            <i class="fas fa-shopping-cart text-xl"></i>
+                            <span id="cart-count" class="absolute -top-2 -right-2 bg-secondary text-dark text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                        </a>
+                       <a href="/login/" class="px-4 py-2 bg-primary rounded hover:bg-primary-dark transition ">
+                            <i class="fas fa-user"></i>
+                        </a>
+                    </div>
+                </nav>
+                
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center space-x-4">
+                    <a href="/cart/" class="relative text-white hover:text-primary transition">
+                        <i class="fas fa-shopping-cart text-xl"></i>
+                        <span id="mobile-cart-count" class="absolute -top-2 -right-2 bg-secondary text-dark text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                    </a>
+                    <button id="menu-toggle" class="hamburger focus:outline-none">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="mobile-menu md:hidden bg-dark-light rounded-lg mt-2">
+                <div class="px-4 py-3 space-y-4">
+                    <a href="/" class="block text-white hover:text-primary transition">Home</a>
+                    <a href="/shop/" class="block text-white hover:text-primary transition">Shop</a>
+                    <a href="/about/" class="block text-white hover:text-primary transition">About</a>
+                    <a href="/blog/" class="block text-white hover:text-primary transition">Blog</a>
+                     <a href="/contact/" class="block text-white hover:text-primary transition pb-4">Contact</a>
+                    <a href="/login/" class="block px-4 py-2 bg-primary text-center rounded hover:bg-primary-dark transition">
+                        <i class="fas fa-user"></i>
+                    </a>
+                    <div class="pt-4 border-t border-gray-700">
+                        <p class="text-xs text-gray-400">We are not an affiliate agency. All products are sold independently through our platform.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="relative pt-24 pb-16 min-h-screen">
+        <div id="particles-js"></div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="max-w-4xl mx-auto">
+                <div class="flex items-center justify-between mb-8">
+                    <h1 class="text-3xl font-bold">Checkout</h1>
+                    <a href="/cart/" class="text-primary hover:underline">Back to cart</a>
+                </div>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    <!-- Left Column - Form -->
+                    <div class="lg:col-span-2">
+                        <form id="checkout-form" class="space-y-6">
+                            <!-- Contact Information -->
+                            <div class="bg-dark-light rounded-lg shadow-lg p-6">
+                                <h2 class="text-xl font-bold mb-4">Contact Information</h2>
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div class="form-group">
+                                        <label for="first-name" class="form-label">First Name</label>
+                                        <input type="text" id="first-name" class="form-input" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="last-name" class="form-label">Last Name</label>
+                                        <input type="text" id="last-name" class="form-input" required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email" class="form-label">Email Address</label>
+                                    <input type="email" id="email" class="form-input" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone" class="form-label">Phone Number</label>
+                                    <input type="tel" id="phone" class="form-input" required>
+                                </div>
+                            </div>
+                            
+                            <!-- Payment Method -->
+                            <div class="bg-dark-light rounded-lg shadow-lg p-6">
+                                <h2 class="text-xl font-bold mb-4">Payment Method</h2>
+                                <div class="payment-card">
+                                    <div class="flex items-center">
+                                        <input type="radio" id="cash-on-delivery" name="payment-method" value="cash-on-delivery" class="mr-3" checked>
+                                        <label for="cash-on-delivery" class="font-bold">Cash on Delivery</label>
+                                    </div>
+                                    <div class="mt-4 text-gray-400 text-sm">
+                                        <p>Pay with cash when your order is delivered.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Delivery Address -->
+                            <div class="bg-dark-light rounded-lg shadow-lg p-6">
+                                <h2 class="text-xl font-bold mb-4">Delivery Address</h2>
+                                <div class="form-group">
+                                    <label for="address" class="form-label">Street Address</label>
+                                    <input type="text" id="address" class="form-input" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="address2" class="form-label">Apt, Suite, etc. (Optional)</label>
+                                    <input type="text" id="address2" class="form-input">
+                                </div>
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    <div class="form-group">
+                                        <label for="country" class="form-label">Country</label>
+                                        <select id="country" class="form-input form-select" required>
+                                            <option value="">Select Country</option>
+                                            <option value="US">United States</option>
+                                            <option value="CA">Canada</option>
+                                            <option value="UK">United Kingdom</option>
+                                            <option value="AU">Australia</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="state" class="form-label">State/Province</label>
+                                        <input type="text" id="state" class="form-input" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="zip" class="form-label">ZIP/Postal Code</label>
+                                        <input type="text" id="zip" class="form-input" required>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Delivery Instructions -->
+                            <div class="bg-dark-light rounded-lg shadow-lg p-6">
+                                <h2 class="text-xl font-bold mb-4">Delivery Instructions</h2>
+                                <div class="form-group">
+                                    <label for="instructions" class="form-label">Special Instructions (Optional)</label>
+                                    <textarea id="instructions" class="form-input" rows="3"></textarea>
+                                </div>
+                            </div>
+                            
+                            <!-- Terms and Conditions -->
+                            <div class="bg-dark-light rounded-lg shadow-lg p-6">
+                                <label class="checkbox-container">I agree to the <a href="/terms/" class="text-primary hover:underline">Terms of Service</a> and <a href="/privacy/" class="text-primary hover:underline">Privacy Policy</a>
+                                    <input type="checkbox" id="terms" required>
+                                    <span class="checkmark"></span>
+                                </label>
+                                <label class="checkbox-container mt-3">I want to receive news and special offers via email
+                                    <input type="checkbox" id="newsletter">
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                            
+                            <button type="submit" class="w-full py-3 bg-secondary text-dark font-bold rounded hover:bg-secondary-dark transition text-lg">
+                                Place Order
+                            </button>
+                        </form>
+                    </div>
+                    
+                    <!-- Right Column - Order Summary -->
+                    <div class="lg:col-span-1">
+                        <div class="bg-dark-light rounded-lg shadow-lg p-6 sticky top-24">
+                            <h2 class="text-xl font-bold mb-4">Order Summary</h2>
+                            
+                            <div id="checkout-items" class="space-y-4 mb-6 max-h-96 overflow-y-auto">
+                                <!-- Cart items will be dynamically inserted here -->
+                            </div>
+                            
+                            <div class="space-y-3 border-t border-gray-700 pt-4">
+                                <div class="flex justify-between">
+                                    <span class="text-gray-400">Subtotal</span>
+                                    <span id="subtotal" class="font-medium">$0.00</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-400">Shipping</span>
+                                    <span class="font-medium text-primary">Free</span>
+                                </div>
+                                <div class="flex justify-between">
+                                    <span class="text-gray-400">Tax</span>
+                                    <span id="tax" class="font-medium">$0.00</span>
+                                </div>
+                                <div class="border-t border-gray-700 my-2"></div>
+                                <div class="flex justify-between">
+                                    <span class="font-bold">Total</span>
+                                    <span id="total" class="font-bold text-xl">$0.00</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-dark-light rounded-lg shadow-lg p-6 mt-6">
+                            <h3 class="font-bold mb-3">Delivery Information</h3>
+                            <p class="text-sm text-gray-400 mb-4">Orders will be delivered within 3-5 business days. Our delivery agent will contact you before arrival.</p>
+                            <div class="flex items-center text-sm text-gray-400">
+                                <i class="fas fa-phone-alt mr-2"></i>
+                                <span>Need help? Call: +1 (819) 824-3146</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark pt-12 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <!-- Column 1 -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4 flex items-center">
+                        <img src="/assets/logo.png" alt="Minecraft Gift Codes" class="h-12 mr-2">
+                    </h3>
+                    <p class="text-gray-400 mb-4">Your trusted source for authentic Minecraft digital products and gift codes.</p>
+                </div>
+                
+                <!-- Column 2 -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Shop</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/shop/" class="text-gray-400 hover:text-primary transition">Gift Cards</a></li>
+                        <li><a href="/shop/" class="text-gray-400 hover:text-primary transition">Mods</a></li>
+                        <li><a href="/shop/" class="text-gray-400 hover:text-primary transition">Bundles</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Column 3 -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Quick Link</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/contact/" class="text-gray-400 hover:text-primary transition">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Column 4 -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Legal</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/privacy/" class="text-gray-400 hover:text-primary transition">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="text-gray-400 hover:text-primary transition">Terms of Service</a></li>
+                        <li><a href="/cookies/" class="text-gray-400 hover:text-primary transition">Cookie Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="pt-8 border-t border-gray-800">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-500 text-sm mb-4 md:mb-0">
+                        &copy; 2025 MinecraftGiftCodes.com. All rights reserved.
+                    </p>
+                    <p class="text-gray-500 text-sm">
+                        We are not an affiliate agency. All products are sold independently through our platform.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Particles.js -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    
+    <script>
+        // Check for existing user session on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentUser = localStorage.getItem('currentUser');
+            
+            // If user is logged in, pre-fill their information if available
+            if (currentUser) {
+                const user = JSON.parse(currentUser);
+                const users = JSON.parse(localStorage.getItem('users')) || [];
+                const userData = users.find(u => u.email === user.email);
+                
+                if (userData && userData.orderHistory && userData.orderHistory.length > 0) {
+                    const lastOrder = userData.orderHistory[userData.orderHistory.length - 1];
+                    
+                    if (lastOrder.contact) {
+                        document.getElementById('first-name').value = lastOrder.contact.firstName || '';
+                        document.getElementById('last-name').value = lastOrder.contact.lastName || '';
+                        document.getElementById('email').value = lastOrder.contact.email || '';
+                        document.getElementById('phone').value = lastOrder.contact.phone || '';
+                    }
+                    
+                    if (lastOrder.delivery) {
+                        document.getElementById('address').value = lastOrder.delivery.address || '';
+                        document.getElementById('address2').value = lastOrder.delivery.address2 || '';
+                        document.getElementById('country').value = lastOrder.delivery.country || '';
+                        document.getElementById('state').value = lastOrder.delivery.state || '';
+                        document.getElementById('zip').value = lastOrder.delivery.zip || '';
+                        document.getElementById('instructions').value = lastOrder.delivery.instructions || '';
+                    }
+                }
+            }
+            
+            // Initialize checkout functionality
+            initCheckout();
+        });
+
+        // Checkout functionality
+        function initCheckout() {
+            // Mobile Menu Toggle
+            const menuToggle = document.getElementById('menu-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            if (menuToggle && mobileMenu) {
+                menuToggle.addEventListener('click', () => {
+                    menuToggle.classList.toggle('open');
+                    mobileMenu.classList.toggle('open');
+                });
+            }
+            
+            // Update cart count
+            function updateCartCount() {
+                const cart = getCart();
+                const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
+                
+                const cartCountElements = [
+                    document.getElementById('cart-count'),
+                    document.getElementById('mobile-cart-count')
+                ];
+                
+                cartCountElements.forEach(el => {
+                    if (el) el.textContent = cartCount;
+                });
+                
+                return cartCount;
+            }
+            
+            // Get cart from localStorage
+            function getCart() {
+                return JSON.parse(localStorage.getItem('cart')) || [];
+            }
+            
+            // Render order summary
+            function renderOrderSummary() {
+                const cart = getCart();
+                const checkoutItemsContainer = document.getElementById('checkout-items');
+                
+                // Redirect to cart if empty
+                if (cart.length === 0 && window.location.pathname.includes('/checkout/')) {
+                    window.location.href = '/cart/';
+                    return;
+                }
+                
+                // Calculate totals
+                const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                const tax = subtotal * 0.1; // 10% tax for example
+                const total = subtotal + tax;
+                
+                // Update totals in UI
+                if (document.getElementById('subtotal')) {
+                    document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`;
+                }
+                if (document.getElementById('tax')) {
+                    document.getElementById('tax').textContent = `$${tax.toFixed(2)}`;
+                }
+                if (document.getElementById('total')) {
+                    document.getElementById('total').textContent = `$${total.toFixed(2)}`;
+                }
+                
+                // Render cart items if container exists
+                if (checkoutItemsContainer) {
+                    checkoutItemsContainer.innerHTML = '';
+                    
+                    cart.forEach(item => {
+                        const cartItemElement = document.createElement('div');
+                        cartItemElement.className = 'flex items-center justify-between';
+                        
+                        cartItemElement.innerHTML = `
+                            <div class="flex items-center">
+                                <div>
+                                    <h4 class="font-medium">${item.name}</h4>
+                                    <p class="text-sm text-gray-400">Qty: ${item.quantity}</p>
+                                </div>
+                            </div>
+                            <span class="font-bold">$${(item.price * item.quantity).toFixed(2)}</span>
+                        `;
+                        
+                        checkoutItemsContainer.appendChild(cartItemElement);
+                    });
+                }
+            }
+            
+            // Handle form submission
+            const checkoutForm = document.getElementById('checkout-form');
+            
+            if (checkoutForm) {
+                checkoutForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // Validate terms checkbox
+                    if (!document.getElementById('terms').checked) {
+                        alert('Please agree to the Terms of Service and Privacy Policy');
+                        return;
+                    }
+                    
+                    // Get form data
+                    const formData = {
+                        contact: {
+                            firstName: document.getElementById('first-name').value,
+                            lastName: document.getElementById('last-name').value,
+                            email: document.getElementById('email').value,
+                            phone: document.getElementById('phone').value
+                        },
+                        payment: {
+                            method: document.querySelector('input[name="payment-method"]:checked').value
+                        },
+                        delivery: {
+                            address: document.getElementById('address').value,
+                            address2: document.getElementById('address2').value,
+                            country: document.getElementById('country').value,
+                            state: document.getElementById('state').value,
+                            zip: document.getElementById('zip').value,
+                            instructions: document.getElementById('instructions').value
+                        },
+                        terms: document.getElementById('terms').checked,
+                        newsletter: document.getElementById('newsletter').checked,
+                        cart: getCart(),
+                        orderDate: new Date().toISOString(),
+                        orderId: 'ORD-' + Math.random().toString(36).substr(2, 9).toUpperCase(),
+                        status: 'Processing'
+                    };
+                    
+                    // Save order data to localStorage
+                    localStorage.setItem('orderData', JSON.stringify(formData));
+                    
+                    // Check if user is logged in
+                    const currentUser = localStorage.getItem('currentUser');
+                    
+                    if (currentUser) {
+                        // If logged in, add order to user's order history
+                        const user = JSON.parse(currentUser);
+                        const users = JSON.parse(localStorage.getItem('users')) || [];
+                        const userIndex = users.findIndex(u => u.email === user.email);
+                        
+                        if (userIndex !== -1) {
+                            // Initialize orderHistory if it doesn't exist
+                            if (!users[userIndex].orderHistory) {
+                                users[userIndex].orderHistory = [];
+                            }
+                            
+                            // Add new order to history
+                            users[userIndex].orderHistory.push(formData);
+                            
+                            // Save updated user data
+                            localStorage.setItem('users', JSON.stringify(users));
+                        }
+                        
+                        // Clear cart and redirect to confirmation
+                        localStorage.removeItem('cart');
+                        window.location.href = '/account/';
+                    } else {
+                        // If not logged in, redirect to registration
+                        localStorage.removeItem('cart');
+                        window.location.href = '/register/';
+                    }
+                });
+            }
+            
+            // Initialize particles.js background
+            if (document.getElementById('particles-js')) {
+                particlesJS('particles-js', {
+                    "particles": {
+                        "number": {
+                            "value": 80,
+                            "density": {
+                                "enable": true,
+                                "value_area": 800
+                            }
+                        },
+                        "color": {
+                            "value": "#4CAF50"
+                        },
+                        "shape": {
+                            "type": "circle",
+                            "stroke": {
+                                "width": 0,
+                                "color": "#000000"
+                            }
+                        },
+                        "opacity": {
+                            "value": 0.5,
+                            "random": false,
+                            "anim": {
+                                "enable": false,
+                                "speed": 1,
+                                "opacity_min": 0.1,
+                                "sync": false
+                            }
+                        },
+                        "size": {
+                            "value": 3,
+                            "random": true,
+                            "anim": {
+                                "enable": false,
+                                "speed": 40,
+                                "size_min": 0.1,
+                                "sync": false
+                            }
+                        },
+                        "line_linked": {
+                            "enable": true,
+                            "distance": 150,
+                            "color": "#4CAF50",
+                            "opacity": 0.4,
+                            "width": 1
+                        },
+                        "move": {
+                            "enable": true,
+                            "speed": 2,
+                            "direction": "none",
+                            "random": false,
+                            "straight": false,
+                            "out_mode": "out",
+                            "bounce": false
+                        }
+                    },
+                    "interactivity": {
+                        "detect_on": "canvas",
+                        "events": {
+                            "onhover": {
+                                "enable": true,
+                                "mode": "grab"
+                            },
+                            "onclick": {
+                                "enable": true,
+                                "mode": "push"
+                            },
+                            "resize": true
+                        },
+                        "modes": {
+                            "grab": {
+                                "distance": 140,
+                                "line_linked": {
+                                    "opacity": 1
+                                }
+                            },
+                            "push": {
+                                "particles_nb": 4
+                            }
+                        }
+                    },
+                    "retina_detect": true
+                });
+            }
+            
+            // Initialize page
+            updateCartCount();
+            renderOrderSummary();
+        }
+    </script>
+</body>
+</html>

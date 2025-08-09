@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Popcorn Invasion promotes responsible gaming. Learn about healthy play habits, parental controls, and setting limits for a balanced gaming experience.">
+    <meta name="keywords" content="responsible gaming, game addiction, parental controls, gaming limits, healthy gaming habits">
+    <meta name="author" content="Weasel Warrior Studios">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://popcorninvasiontap.com/responsible-gaming/">
+    <title>Responsible Gaming | Popcorn Invasion: Tapping Game</title>
+    
+    <!-- Favicon -->
+   <link rel="icon" href="/assets/favicon.png" type="image/x-icon">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        popcorn: {
+                            light: '#FFF4D9',
+                            DEFAULT: '#FFD166',
+                            dark: '#E6B000',
+                        },
+                        butter: '#FFEE93',
+                        burnt: '#D8572A',
+                        alien: '#06D6A0',
+                        theater: '#1A1A2E',
+                    },
+                    fontFamily: {
+                        arcade: ['"Press Start 2P"', 'cursive'],
+                        fun: ['"Bangers"', 'cursive'],
+                    },
+                    animation: {
+                        'pop': 'pop 0.5s ease-out',
+                        'float': 'float 3s ease-in-out infinite',
+                        'pulse-slow': 'pulse 5s infinite',
+                    },
+                    keyframes: {
+                        pop: {
+                            '0%': { transform: 'scale(0.5)', opacity: '0' },
+                            '80%': { transform: 'scale(1.1)', opacity: '1' },
+                            '100%': { transform: 'scale(1)', opacity: '1' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Press+Start+2P&display=swap" rel="stylesheet">
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+</head>
+<body class="bg-theater text-white font-sans overflow-x-hidden">
+    <!-- Cookie Consent Banner -->
+    <div id="cookieConsent" class="fixed bottom-0 left-0 right-0 bg-gray-900 text-white p-4 hidden z-50">
+        <div class="container mx-auto flex flex-col md:flex-row items-center justify-between">
+            <p class="mb-4 md:mb-0">We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies.</p>
+            <div class="flex space-x-4">
+                <button id="acceptCookies" class="bg-alien hover:bg-green-600 px-4 py-2 rounded">Accept</button>
+                <button id="declineCookies" class="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded">Decline</button>
+                <a href="/cookies/" class="bg-popcorn-dark hover:bg-popcorn-darker text-black px-4 py-2 rounded">Learn More</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 bg-black bg-opacity-90 z-40 backdrop-blur-md shadow-lg">
+       <div class="container mx-auto px-6 ">
+            <div class="flex justify-between items-center">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="/" class="flex items-center">
+                        <img src="/assets/logo.png" alt="Popcorn Invasion Logo" class="h-20 w-auto mr-3">                      
+                    </a>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button id="mobileMenuButton" class="text-popcorn focus:outline-none">
+                        <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="text-white hover:text-butter">Home</a>
+                    <a href="/how-to-play/" class="text-white hover:text-butter">How to Play</a>
+                    <a href="/responsible-gaming/" class="text-popcorn hover:text-butter font-bold">Responsible Gaming</a>
+                    <a href="/blog/" class="text-white hover:text-butter">Blog</a>
+                    <a href="/contact/" class="text-white hover:text-butter">Contact</a>
+                    <a href="https://play.google.com/store/apps/details?id=com.WeaselWarriorStudios.PopcornInvasion" class="bg-popcorn hover:bg-popcorn-dark text-black font-bold px-6 py-2 rounded-full transition-all transform hover:scale-105 shadow-lg hover:shadow-popcorn/50">Download</a>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobileMenu" class="hidden md:hidden mt-4 pb-4">
+                <a href="/" class="block py-2 text-white">Home</a>
+                <a href="/how-to-play/" class="block py-2 text-white">How to Play</a>
+                <a href="/responsible-gaming/" class="block py-2 text-popcorn font-bold">Responsible Gaming</a>
+                <a href="/blog/" class="block py-2 text-white">Blog</a>
+                <a href="/contact/" class="block py-2 text-white">Contact</a>
+                <a href="https://play.google.com/store/apps/details?id=com.WeaselWarriorStudios.PopcornInvasion" class="mt-3 inline-block bg-popcorn hover:bg-popcorn-dark text-black font-bold px-6 py-2 rounded-full transition-all transform hover:scale-105">Download</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 bg-gradient-to-b from-black to-theater overflow-hidden">
+        <!-- Decorative elements -->
+        <div class="absolute top-0 left-0 w-full h-full opacity-10 bg-[url('/assets/features-2.png')] bg-repeat"></div>
+        <div class="absolute -top-20 -left-20 w-64 h-64 bg-popcorn rounded-full filter blur-3xl opacity-10"></div>
+        <div class="absolute -bottom-20 -right-20 w-64 h-64 bg-alien rounded-full filter blur-3xl opacity-10"></div>
+        
+        <div class="container mx-auto px-6 relative">
+            <div class="max-w-4xl mx-auto text-center">
+                <h1 class="text-4xl md:text-6xl font-fun mb-6 text-popcorn animate-pop">
+                    RESPONSIBLE GAMING
+                </h1>
+                <p class="text-xl md:text-2xl mb-8 text-butter">
+                    Enjoy Popcorn Invasion as part of a healthy, balanced lifestyle
+                </p>
+                <div class="flex justify-center">
+                    <a href="#tips" class="bg-popcorn hover:bg-popcorn-dark text-black font-bold px-8 py-4 rounded-full text-lg transition-all transform hover:scale-105 shadow-lg hover:shadow-popcorn/50">
+                        Healthy Gaming Tips
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Commitment Section -->
+    <section class="py-20 bg-theater relative">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto">
+                <div class="bg-gray-800 bg-opacity-50 rounded-xl p-8 backdrop-blur-sm border border-gray-700">
+                    <div class="text-center mb-8">
+                        <h2 class="text-3xl md:text-4xl font-fun text-popcorn mb-4">Our Commitment</h2>
+                        <div class="w-24 h-1 bg-butter mx-auto"></div>
+                    </div>
+                    
+                    <p class="text-gray-300 mb-6">At Weasel Warrior Studios, we believe games should be fun, engaging, and positive experiences. While Popcorn Invasion is designed to be family-friendly and enjoyable, we recognize the importance of responsible gaming habits.</p>
+                    
+                    <p class="text-gray-300 mb-8">This page provides resources to help players and parents maintain healthy gaming habits, set appropriate limits, and understand our game's features.</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div class="bg-gray-900 bg-opacity-50 p-6 rounded-lg border border-gray-700">
+                            <div class="text-popcorn text-4xl mb-3">3+</div>
+                            <h3 class="text-xl font-bold text-butter mb-2">Age Rating</h3>
+                            <p class="text-gray-300 text-sm">Our game is rated for ages 3 and up, with content suitable for all ages.</p>
+                        </div>
+                        
+                        <div class="bg-gray-900 bg-opacity-50 p-6 rounded-lg border border-gray-700">
+                            <div class="text-popcorn text-4xl mb-3">0%</div>
+                            <h3 class="text-xl font-bold text-butter mb-2">Gambling</h3>
+                            <p class="text-gray-300 text-sm">Popcorn Invasion contains no gambling elements or loot boxes.</p>
+                        </div>
+                        
+                        <div class="bg-gray-900 bg-opacity-50 p-6 rounded-lg border border-gray-700">
+                            <div class="text-popcorn text-4xl mb-3">✓</div>
+                            <h3 class="text-xl font-bold text-butter mb-2">Parental Controls</h3>
+                            <p class="text-gray-300 text-sm">Supports device-level parental controls for purchases and play time.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Healthy Gaming Tips -->
+    <section id="tips" class="py-20 bg-gradient-to-b from-theater to-gray-900 relative overflow-hidden">
+        <!-- Decorative elements -->
+        <div class="absolute -top-20 left-0 w-64 h-64 bg-popcorn rounded-full filter blur-3xl opacity-10"></div>
+        <div class="absolute -bottom-20 right-0 w-64 h-64 bg-burnt rounded-full filter blur-3xl opacity-10"></div>
+        
+        <div class="container mx-auto px-6 relative">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-fun text-popcorn mb-4">Healthy Gaming Tips</h2>
+                <div class="w-24 h-1 bg-butter mx-auto"></div>
+                <p class="text-xl text-butter mt-4 max-w-3xl mx-auto">Recommendations for maintaining a balanced approach to gaming</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <!-- Tip 1 -->
+                <div class="bg-gray-800 bg-opacity-50 rounded-xl p-8 backdrop-blur-sm border border-gray-700 hover:border-popcorn transition-all transform hover:-translate-y-2 hover:shadow-lg hover:shadow-popcorn/20">
+                    <div class="flex items-center mb-4">
+                        <div class="flex-shrink-0">
+                            <div class="w-12 h-12 rounded-full bg-popcorn text-black flex items-center justify-center text-xl font-bold">1</div>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-xl font-bold text-butter">Set Time Limits</h3>
+                        </div>
+                    </div>
+                    <p class="text-gray-300">Establish reasonable time limits for gameplay sessions. Consider using device timers or parental control features to help manage play time.</p>
+                    <div class="mt-4 pt-4 border-t border-gray-700">
+                        <h4 class="text-sm font-bold text-butter mb-2">Suggested Limits:</h4>
+                        <ul class="text-sm text-gray-300 space-y-1">
+                            <li class="flex items-start">
+                                <svg class="h-4 w-4 text-popcorn mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Children under 6: 20-30 minutes per day</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="h-4 w-4 text-popcorn mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Children 6-12: 1 hour per day</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="h-4 w-4 text-popcorn mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Teens & Adults: Take regular breaks every hour</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Tip 2 -->
+                <div class="bg-gray-800 bg-opacity-50 rounded-xl p-8 backdrop-blur-sm border border-gray-700 hover:border-popcorn transition-all transform hover:-translate-y-2 hover:shadow-lg hover:shadow-popcorn/20">
+                    <div class="flex items-center mb-4">
+                        <div class="flex-shrink-0">
+                            <div class="w-12 h-12 rounded-full bg-popcorn text-black flex items-center justify-center text-xl font-bold">2</div>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-xl font-bold text-butter">Balance Activities</h3>
+                        </div>
+                    </div>
+                    <p class="text-gray-300">Ensure gaming is part of a balanced lifestyle that includes physical activity, social interaction, and other hobbies.</p>
+                    <div class="mt-4 pt-4 border-t border-gray-700">
+                        <h4 class="text-sm font-bold text-butter mb-2">Healthy Balance Ideas:</h4>
+                        <ul class="text-sm text-gray-300 space-y-1">
+                            <li class="flex items-start">
+                                <svg class="h-4 w-4 text-popcorn mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Follow the 20-20-20 rule: Every 20 minutes, look at something 20 feet away for 20 seconds</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="h-4 w-4 text-popcorn mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Engage in physical activity before/after gaming sessions</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="h-4 w-4 text-popcorn mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Schedule gaming as a reward after completing other activities</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Tip 3 -->
+                <div class="bg-gray-800 bg-opacity-50 rounded-xl p-8 backdrop-blur-sm border border-gray-700 hover:border-popcorn transition-all transform hover:-translate-y-2 hover:shadow-lg hover:shadow-popcorn/20">
+                    <div class="flex items-center mb-4">
+                        <div class="flex-shrink-0">
+                            <div class="w-12 h-12 rounded-full bg-popcorn text-black flex items-center justify-center text-xl font-bold">3</div>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-xl font-bold text-butter">Monitor Spending</h3>
+                        </div>
+                    </div>
+                    <p class="text-gray-300">While Popcorn Invasion is free to play, it offers optional in-app purchases. Set clear spending limits and use device-level controls.</p>
+                    <div class="mt-4 pt-4 border-t border-gray-700">
+                        <h4 class="text-sm font-bold text-butter mb-2">Spending Controls:</h4>
+                        <ul class="text-sm text-gray-300 space-y-1">
+                            <li class="flex items-start">
+                                <svg class="h-4 w-4 text-popcorn mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Use password protection for purchases</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="h-4 w-4 text-popcorn mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Set monthly spending budgets</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="h-4 w-4 text-popcorn mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Review purchase history regularly</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Tip 4 -->
+                <div class="bg-gray-800 bg-opacity-50 rounded-xl p-8 backdrop-blur-sm border border-gray-700 hover:border-popcorn transition-all transform hover:-translate-y-2 hover:shadow-lg hover:shadow-popcorn/20">
+                    <div class="flex items-center mb-4">
+                        <div class="flex-shrink-0">
+                            <div class="w-12 h-12 rounded-full bg-popcorn text-black flex items-center justify-center text-xl font-bold">4</div>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-xl font-bold text-butter">Play Together</h3>
+                        </div>
+                    </div>
+                    <p class="text-gray-300">For younger players, consider co-playing to make gaming a shared family activity and to monitor content appropriateness.</p>
+                    <div class="mt-4 pt-4 border-t border-gray-700">
+                        <h4 class="text-sm font-bold text-butter mb-2">Family Play Ideas:</h4>
+                        <ul class="text-sm text-gray-300 space-y-1">
+                            <li class="flex items-start">
+                                <svg class="h-4 w-4 text-popcorn mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Take turns playing and cheering each other on</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="h-4 w-4 text-popcorn mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Discuss strategies and high scores together</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="h-4 w-4 text-popcorn mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Use gaming as a reward for completing family activities</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Tip 5 -->
+                <div class="bg-gray-800 bg-opacity-50 rounded-xl p-8 backdrop-blur-sm border border-gray-700 hover:border-popcorn transition-all transform hover:-translate-y-2 hover:shadow-lg hover:shadow-popcorn/20">
+                    <div class="flex items-center mb-4">
+                        <div class="flex-shrink-0">
+                            <div class="w-12 h-12 rounded-full bg-popcorn text-black flex items-center justify-center text-xl font-bold">5</div>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-xl font-bold text-butter">Watch for Signs</h3>
+                        </div>
+                    </div>
+                    <p class="text-gray-300">Be aware of potential signs of problematic gaming behavior and take appropriate action if needed.</p>
+                    <div class="mt-4 pt-4 border-t border-gray-700">
+                        <h4 class="text-sm font-bold text-butter mb-2">Warning Signs:</h4>
+                        <ul class="text-sm text-gray-300 space-y-1">
+                            <li class="flex items-start">
+                                <svg class="h-4 w-4 text-burnt mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Neglecting school/work or personal hygiene</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="h-4 w-4 text-burnt mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Becoming irritable when not playing</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="h-4 w-4 text-burnt mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Lying about time or money spent on gaming</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Tip 6 -->
+                <div class="bg-gray-800 bg-opacity-50 rounded-xl p-8 backdrop-blur-sm border border-gray-700 hover:border-popcorn transition-all transform hover:-translate-y-2 hover:shadow-lg hover:shadow-popcorn/20">
+                    <div class="flex items-center mb-4">
+                        <div class="flex-shrink-0">
+                            <div class="w-12 h-12 rounded-full bg-popcorn text-black flex items-center justify-center text-xl font-bold">6</div>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-xl font-bold text-butter">Use Parental Controls</h3>
+                        </div>
+                    </div>
+                    <p class="text-gray-300">Take advantage of built-in device features to manage play time and spending.</p>
+                    <div class="mt-4 pt-4 border-t border-gray-700">
+                        <h4 class="text-sm font-bold text-butter mb-2">Control Options:</h4>
+                        <ul class="text-sm text-gray-300 space-y-1">
+                            <li class="flex items-start">
+                                <svg class="h-4 w-4 text-popcorn mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Android Digital Wellbeing settings</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="h-4 w-4 text-popcorn mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Google Play Store purchase authentication</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="h-4 w-4 text-popcorn mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                    <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                </svg>
+                                <span>Third-party parental control apps</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Parental Controls Guide -->
+    <section class="py-20 bg-theater relative">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-fun text-popcorn mb-4">Parental Controls Guide</h2>
+                <div class="w-24 h-1 bg-butter mx-auto"></div>
+                <p class="text-xl text-butter mt-4 max-w-3xl mx-auto">Step-by-step instructions for setting up controls on Android devices</p>
+            </div>
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="bg-gray-800 bg-opacity-50 rounded-xl p-8 backdrop-blur-sm border border-gray-700">
+                    <!-- Android Controls -->
+                    <div class="mb-12">
+                        <h3 class="text-2xl font-bold text-butter mb-6 flex items-center">
+                            <svg class="h-8 w-8 mr-3" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M3 20.5v-17c0-.59.34-1.11.84-1.35l13.5-6.5c.58-.27 1.26-.11 1.68.36.42.47.44 1.15.06 1.64l-12.08 15.36-1.5-1.5 8.9-11.13c.43-.54.34-1.34-.2-1.77-.54-.43-1.34-.34-1.77.2l-9.6 12c-.12.15-.18.34-.17.53v3.5c0 .28.22.5.5.5h3.5c.55 0 1-.45 1-1 0-.28-.11-.53-.29-.71l-1.21-1.21z"></path>
+                            </svg>
+                            Android Device Controls
+                        </h3>
+                        
+                        <div class="space-y-6">
+                            <!-- Step 1 -->
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 mt-1">
+                                    <div class="w-8 h-8 rounded-full bg-popcorn text-black flex items-center justify-center font-bold">1</div>
+                                </div>
+                                <div class="ml-4">
+                                    <h4 class="text-lg font-bold text-butter mb-2">Set Up Digital Wellbeing</h4>
+                                    <p class="text-gray-300">Go to Settings > Digital Wellbeing & parental controls. Here you can:</p>
+                                    <ul class="mt-2 text-gray-300 space-y-1">
+                                        <li class="flex items-start">
+                                            <svg class="h-4 w-4 text-popcorn mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                            </svg>
+                                            <span>Set daily app timers for Popcorn Invasion</span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <svg class="h-4 w-4 text-popcorn mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                            </svg>
+                                            <span>Enable Bedtime mode to restrict access during certain hours</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <!-- Step 2 -->
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 mt-1">
+                                    <div class="w-8 h-8 rounded-full bg-popcorn text-black flex items-center justify-center font-bold">2</div>
+                                </div>
+                                <div class="ml-4">
+                                    <h4 class="text-lg font-bold text-butter mb-2">Restrict Purchases</h4>
+                                    <p class="text-gray-300">In the Google Play Store app:</p>
+                                    <ul class="mt-2 text-gray-300 space-y-1">
+                                        <li class="flex items-start">
+                                            <svg class="h-4 w-4 text-popcorn mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                            </svg>
+                                            <span>Tap Menu > Settings > Require authentication for purchases</span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <svg class="h-4 w-4 text-popcorn mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                            </svg>
+                                            <span>Select "For all purchases through Google Play on this device"</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <!-- Step 3 -->
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 mt-1">
+                                    <div class="w-8 h-8 rounded-full bg-popcorn text-black flex items-center justify-center font-bold">3</div>
+                                </div>
+                                <div class="ml-4">
+                                    <h4 class="text-lg font-bold text-butter mb-2">Create a Restricted Profile</h4>
+                                    <p class="text-gray-300">For shared devices, create a restricted profile:</p>
+                                    <ul class="mt-2 text-gray-300 space-y-1">
+                                        <li class="flex items-start">
+                                            <svg class="h-4 w-4 text-popcorn mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                            </svg>
+                                            <span>Go to Settings > System > Multiple users</span>
+                                        </li>
+                                        <li class="flex items-start">
+                                            <svg class="h-4 w-4 text-popcorn mt-0.5 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                                                <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                            </svg>
+                                            <span>Add a restricted profile and customize app access</span>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- In-Game Controls -->
+                    <div>
+                        <h3 class="text-2xl font-bold text-butter mb-6 flex items-center">
+                            <svg class="h-8 w-8 mr-3" fill="currentColor" viewBox="0 0 24 24">
+                                <path d="M17 10.5V7c0-.55-.45-1-1-1H4c-.55 0-1 .45-1 1v10c0 .55.45 1 1 1h12c.55 0 1-.45 1-1v-3.5l4 4v-11l-4 4zM14 13h-3v3H9v-3H6v-2h3V8h2v3h3v2z"></path>
+                            </svg>
+                            In-Game Settings
+                        </h3>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="bg-gray-900 bg-opacity-50 p-6 rounded-lg border border-gray-700">
+                                <h4 class="text-lg font-bold text-butter mb-3">Sound & Vibration</h4>
+                                <p class="text-gray-300 text-sm">Adjust or disable haptic feedback and sound effects in the game's Settings menu under Audio Options.</p>
+                            </div>
+                            
+                            <div class="bg-gray-900 bg-opacity-50 p-6 rounded-lg border border-gray-700">
+                                <h4 class="text-lg font-bold text-butter mb-3">Ad Preferences</h4>
+                                <p class="text-gray-300 text-sm">While ads support our free game, you can manage ad personalization in Google Account Ad Settings.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+  
+
+    <!-- Gambling Support Resources -->
+<section class="py-16 bg-theater">
+    <div class="container mx-auto px-6">
+        <div class="max-w-4xl mx-auto space-y-8">
+            <!-- BeGambleAware Card -->
+            <div class="bg-gray-800 bg-opacity-50 rounded-xl p-8 backdrop-blur-sm border border-gray-700">
+                <div class="flex flex-col md:flex-row items-start md:items-center">
+                    <div class="flex-1">
+                        <img src="/assets/adiction_begambleaware.svg" alt="need-help-logo" class="mb-6">
+                        <p class="text-gray-300 mb-4">National gambling support service providing free, confidential help through helpline, online chat, and forums for anyone affected by gambling problems.</p>
+                    </div>
+                    <a href="https://www.gambleaware.org/" target="_blank" rel="noopener noreferrer" class="bg-popcorn hover:bg-popcorn-dark text-black font-bold px-6 py-3 rounded-full transition-all transform hover:scale-105 whitespace-nowrap">
+                        Visit BeGambleAware
+                    </a>
+                </div>
+            </div>
+            
+            <!-- GameCare Card -->
+            <div class="bg-gray-800 bg-opacity-50 rounded-xl p-8 backdrop-blur-sm border border-gray-700">
+                <div class="flex flex-col md:flex-row items-start md:items-center">
+                    <div class="flex-1">
+                       <img src="/assets/adiction_begambleaware.svg" alt="need-help-logo" class="mb-6">
+                        <p class="text-gray-300 mb-4">Leading UK gambling support charity committed to reducing gambling-related harm through information, advice, and support services.</p>
+                    </div>
+                    <a href="https://www.gamcare.org.uk/" target="_blank" rel="noopener noreferrer" class="bg-popcorn hover:bg-popcorn-dark text-black font-bold px-6 py-3 rounded-full transition-all transform hover:scale-105 whitespace-nowrap">
+                        Visit GameCare
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    
+   <!-- CTA Section -->
+<section class="py-20 bg-gradient-to-r from-popcorn-dark to-burnt relative overflow-hidden bg-cover bg-center" style="background-image: url('/assets/features-2.png');">
+    <!-- Decorative elements -->
+     <div class="absolute inset-0 bg-black/50"></div>
+    <div class="absolute -top-20 left-0 w-64 h-64 bg-white rounded-full filter blur-3xl opacity-10"></div>
+    <div class="absolute -bottom-20 right-0 w-64 h-64 bg-alien rounded-full filter blur-3xl opacity-20"></div>
+    
+    <div class="container mx-auto px-6 relative">
+        <div class="max-w-3xl mx-auto text-center bg-white/80 p-8 rounded-xl shadow-lg">
+            <h2 class="text-4xl md:text-5xl font-fun text-black mb-6">Ready to Defend Your Theater?</h2>
+            <p class="text-xl text-black mb-10">Join over 10,000 players in the most satisfying popcorn-popping adventure!</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="https://play.google.com/store/apps/details?id=com.WeaselWarriorStudios.PopcornInvasion" class="bg-black hover:bg-gray-900 text-popcorn font-bold px-8 py-4 rounded-full text-lg transition-all transform hover:scale-105 shadow-lg hover:shadow-black/50">
+                    Download Now - It's Free!
+                </a>
+                <a href="/how-to-play/" class="bg-white hover:bg-gray-100 text-black font-bold px-8 py-4 rounded-full text-lg transition-all transform hover:scale-105">
+                    Learn How to Play
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- Footer -->
+    <footer class="bg-black text-gray-400 py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="md:col-span-2">
+                     <a href="/" class="flex items-center">
+                        <img src="/assets/logo.png" alt="Popcorn Invasion Logo" class="h-24 w-auto mr-3">                      
+                    </a>
+                    <p class="mb-4">Defend your movie theater from alien popcorn invaders in this exciting tapping game with realistic physics and addictive gameplay.</p>
+                    <p>© 2025 Weasel Warrior Studios. All rights reserved.</p>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold text-butter mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/" class="hover:text-popcorn">Home</a></li>
+                        <li><a href="/how-to-play/" class="hover:text-popcorn">How to Play</a></li>
+                        <li><a href="/responsible-gaming/" class="hover:text-popcorn">Responsible Gaming</a></li>
+                        <li><a href="/blog/" class="hover:text-popcorn">Blog</a></li>
+                        <li><a href="/contact/" class="hover:text-popcorn">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold text-butter mb-4">Legal</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/privacy/" class="hover:text-popcorn">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="hover:text-popcorn">Terms of Service</a></li>
+                        <li><a href="/cookies/" class="hover:text-popcorn">Cookies Policy</a></li>
+                    </ul>
+                    
+                    <h3 class="text-lg font-bold text-butter mt-6 mb-4">Contact</h3>
+                    <address class="not-italic">
+                        <p>36 St Andrews Gardens</p>
+                        <p>Toronto, ON M4W 2E1</p>
+                        <p>Canada</p>
+                        <p class="mt-2">Phone: +1 647 997 7626</p>
+                        <p>Email: info@popcorninvasiontap.com</p>
+                    </address>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center">
+                <p>Popcorn Invasion: Tapping Game is rated for ages 3+ and contains in-app purchases.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- GSAP Animations -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Mobile menu toggle
+            const mobileMenuButton = document.getElementById('mobileMenuButton');
+            const mobileMenu = document.getElementById('mobileMenu');
+            
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            // Cookie consent
+            const cookieConsent = document.getElementById('cookieConsent');
+            const acceptCookies = document.getElementById('acceptCookies');
+            const declineCookies = document.getElementById('declineCookies');
+            
+            if (!localStorage.getItem('cookiesAccepted')) {
+                setTimeout(() => {
+                    cookieConsent.classList.remove('hidden');
+                    gsap.from(cookieConsent, {
+                        y: 100,
+                        opacity: 0,
+                        duration: 0.5,
+                        ease: 'power2.out'
+                    });
+                }, 2000);
+            }
+            
+            acceptCookies.addEventListener('click', () => {
+                localStorage.setItem('cookiesAccepted', 'true');
+                gsap.to(cookieConsent, {
+                    y: 100,
+                    opacity: 0,
+                    duration: 0.3,
+                    ease: 'power2.in',
+                    onComplete: () => cookieConsent.classList.add('hidden')
+                });
+            });
+            
+            declineCookies.addEventListener('click', () => {
+                gsap.to(cookieConsent, {
+                    y: 100,
+                    opacity: 0,
+                    duration: 0.3,
+                    ease: 'power2.in',
+                    onComplete: () => cookieConsent.classList.add('hidden')
+                });
+            });
+            
+            // Scroll animations
+            gsap.registerPlugin(ScrollTrigger);
+            
+            // Animate commitment section
+            gsap.from('.commitment-card', {
+                scrollTrigger: {
+                    trigger: '.commitment-card',
+                    start: 'top 80%',
+                    toggleActions: 'play none none none'
+                },
+                y: 50,
+                opacity: 0,
+                duration: 0.8,
+                stagger: 0.1,
+                ease: 'power2.out'
+            });
+            
+            // Animate tips
+            gsap.utils.toArray('.healthy-tip').forEach((tip, i) => {
+                gsap.from(tip, {
+                    scrollTrigger: {
+                        trigger: tip,
+                        start: 'top 80%',
+                        toggleActions: 'play none none none'
+                    },
+                    y: 50,
+                    opacity: 0,
+                    duration: 0.6,
+                    delay: i * 0.1,
+                    ease: 'back.out'
+                });
+            });
+            
+            // Animate parental controls
+            gsap.utils.toArray('.control-step').forEach((step, i) => {
+                gsap.from(step, {
+                    scrollTrigger: {
+                        trigger: step,
+                        start: 'top 80%',
+                        toggleActions: 'play none none none'
+                    },
+                    x: -50,
+                    opacity: 0,
+                    duration: 0.6,
+                    delay: i * 0.15,
+                    ease: 'power2.out'
+                });
+            });
+            
+            // Animate resources
+            gsap.utils.toArray('.resource-card').forEach((card, i) => {
+                gsap.from(card, {
+                    scrollTrigger: {
+                        trigger: card,
+                        start: 'top 80%',
+                        toggleActions: 'play none none none'
+                    },
+                    y: 50,
+                    opacity: 0,
+                    duration: 0.6,
+                    delay: i * 0.1,
+                    ease: 'back.out'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

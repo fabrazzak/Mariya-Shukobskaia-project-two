@@ -1,0 +1,600 @@
+
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <link rel="shortcut icon" href="/images/fav-logo.png" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Contact Fayez Spa Hair Salon in Spruce Grove. Book appointments, ask questions, or visit our salon at 27 Lake Shore Dr.">
+    <meta name="keywords" content="contact hair salon, book appointment, Spruce Grove salon, Fayez Spa contact, salon hours">
+    <link rel="canonical" href="https://fayezspa-hairsalon.com/contact/">
+    <title>Contact Us | Fayez Spa Hair Salon | Spruce Grove, AB</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollTrigger.min.js"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#9d4edd',
+                        secondary: '#7b2cbf',
+                        dark: '#10002b',
+                        light: '#e0aaff',
+                        accent: '#c77dff',
+                    },
+                    fontFamily: {
+                        sans: ['"Montserrat"', 'sans-serif'],
+                        display: ['"Playfair Display"', 'serif'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #10002b;
+            color: #f8f9fa;
+            overflow-x: hidden;
+        }
+        
+        .contact-gradient {
+            background: linear-gradient(135deg, #10002b 0%, #240046 50%, #3c096c 100%);
+        }
+        
+        .text-gradient {
+            background: linear-gradient(90deg, #e0aaff 0%, #c77dff 50%, #9d4edd 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .border-gradient {
+            border: 2px solid transparent;
+            background: linear-gradient(#10002b, #10002b) padding-box,
+                        linear-gradient(135deg, #9d4edd 0%, #7b2cbf 100%) border-box;
+        }
+        
+        .nav-link::after {
+            content: '';
+            display: block;
+            width: 0;
+            height: 2px;
+            background: #e0aaff;
+            transition: width 0.3s;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #e0aaff;
+            color: #10002b;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .cookie-consent {
+            transform: translateY(100%);
+            transition: transform 0.5s ease-out;
+        }
+        
+        .cookie-consent.show {
+            transform: translateY(0);
+        }
+        
+        .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -5px rgba(157, 78, 221, 0.2);
+        }
+        
+        .blob {
+            position: absolute;
+            filter: blur(40px);
+            opacity: 0.2;
+            z-index: -1;
+        }
+        
+        .blob-1 {
+            width: 300px;
+            height: 300px;
+            background: #9d4edd;
+            top: 20%;
+            left: 10%;
+            animation: float 8s ease-in-out infinite;
+        }
+        
+        .blob-2 {
+            width: 400px;
+            height: 400px;
+            background: #7b2cbf;
+            bottom: 10%;
+            right: 10%;
+            animation: float 10s ease-in-out infinite 2s;
+        }
+        
+        input:focus, textarea:focus {
+            outline: none;
+            border-color: #c77dff;
+            box-shadow: 0 0 0 2px rgba(199, 125, 255, 0.2);
+        }
+        
+        .success-message {
+            opacity: 0;
+            height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .success-message.show {
+            opacity: 1;
+            height: auto;
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <!-- Cookie Consent -->
+    <div class="cookie-consent fixed bottom-0 left-0 right-0 bg-dark bg-opacity-90 backdrop-blur-sm p-4 border-t border-accent z-50">
+        <div class="container mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <p class="text-sm text-light max-w-3xl">
+                We use cookies to enhance your experience on our website. By continuing to browse, you agree to our use of cookies. 
+                <a href="/privacy/" class="text-accent hover:underline">Learn more</a>
+            </p>
+            <div class="flex gap-3">
+                <button id="decline-cookies" class="px-4 py-2 border border-accent text-accent rounded-full hover:bg-accent hover:bg-opacity-10 transition-colors">
+                    Decline
+                </button>
+                <button id="accept-cookies" class="px-4 py-2 bg-accent text-dark rounded-full hover:bg-light transition-colors font-medium">
+                    Accept
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-40 bg-dark bg-opacity-90 backdrop-blur-sm border-b border-dark border-opacity-20">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                 <div class="flex items-center">
+                    <a href="/" class="flex items-center ">                        
+                        <img alt="logo" src="/images/logo.png"  class="h-14"/>                 
+                    </a>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="nav-link text-light font-medium hover:text-accent transition-colors">Home</a>
+                    <a href="/about/" class="nav-link text-light font-medium hover:text-accent transition-colors">About</a>
+                    <a href="/services/" class="nav-link text-light font-medium hover:text-accent transition-colors">Services</a>
+                    <a href="/blog/" class="nav-link text-light font-medium hover:text-accent transition-colors">Blog</a>
+                    <a href="/contact/" class="nav-link text-accent font-medium">Contact</a>
+                    
+                    <!-- Cart Icon -->
+                    <div class="relative">
+                        <a href="/cart/" class="text-light hover:text-accent transition-colors">
+                            <i class="fas fa-shopping-bag text-xl"></i>
+                            <span class="cart-count hidden">0</span>
+                        </a>
+                    </div>
+                    
+                    <!-- Book Now Button -->
+                    <a href="tel:+17809966209" class="px-6 py-2 bg-gradient-to-r from-primary to-secondary rounded-full font-medium hover:opacity-90 transition-opacity">
+                        Book Now
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-button" class="text-light focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-dark bg-opacity-95 backdrop-blur-sm px-6 py-4 border-t border-dark border-opacity-20">
+            <div class="flex flex-col space-y-4">
+                <a href="/" class="text-light font-medium hover:text-accent transition-colors">Home</a>
+                <a href="/about/" class="text-light font-medium hover:text-accent transition-colors">About</a>
+                <a href="/services/" class="text-light font-medium hover:text-accent transition-colors">Services</a>
+                <a href="/blog/" class="text-light font-medium hover:text-accent transition-colors">Blog</a>
+                <a href="/contact/" class="text-light font-medium text-accent">Contact</a>
+                <a href="/cart/" class="text-light font-medium hover:text-accent transition-colors flex items-center">
+                    <i class="fas fa-shopping-bag mr-2"></i> Cart
+                    <span class="cart-count-mobile ml-2 hidden bg-accent text-dark rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold">0</span>
+                </a>
+                <a href="tel:+17809966209" class="px-6 py-2 bg-gradient-to-r from-primary to-secondary rounded-full font-medium text-center hover:opacity-90 transition-opacity">
+                    Book Now
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="contact-gradient pt-32 pb-20 relative overflow-hidden">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        
+        <div class="container mx-auto px-6 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6">
+                <span class="text-gradient">Get In</span> Touch
+            </h1>
+            <p class="text-light text-lg max-w-3xl mx-auto">
+                We'd love to hear from you! Book your appointment, ask questions, or visit our salon in Spruce Grove.
+            </p>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="py-12 bg-dark">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- Contact Form -->
+                <div>
+                    <div class="bg-dark border border-dark border-opacity-20 rounded-xl p-6 mb-8">
+                        <h2 class="text-2xl font-bold mb-6">Send Us a Message</h2>
+                        
+                        <div id="success-message" class="success-message mb-6 bg-green-900 bg-opacity-30 border border-green-500 rounded-lg p-4">
+                            <div class="flex items-center">
+                                <i class="fas fa-check-circle text-green-400 mr-3"></i>
+                                <p class="text-light">Thank you! Your message has been sent. We'll respond as soon as possible.</p>
+                            </div>
+                        </div>
+                        
+                        <form id="contact-form" class="space-y-6">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label for="name" class="block text-light mb-2">Your Name</label>
+                                    <input type="text" id="name" name="name" required 
+                                           class="w-full px-4 py-3 bg-dark border border-accent border-opacity-20 rounded-lg focus:border-accent transition-colors">
+                                </div>
+                                
+                                <div>
+                                    <label for="email" class="block text-light mb-2">Email Address</label>
+                                    <input type="email" id="email" name="email" required 
+                                           class="w-full px-4 py-3 bg-dark border border border-accent border-opacity-20 rounded-lg focus:border-accent transition-colors">
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label for="phone" class="block text-light mb-2">Phone Number</label>
+                                <input type="tel" id="phone" name="phone" 
+                                       class="w-full px-4 py-3 bg-dark border border border-accent border-opacity-20 rounded-lg focus:border-accent transition-colors">
+                            </div>
+                            
+                            <div>
+                                <label for="subject" class="block text-light mb-2">Subject</label>
+                                <select id="subject" name="subject" required 
+                                        class="w-full px-4 py-3 bg-dark border border border-accent border-opacity-20 rounded-lg focus:border-accent transition-colors">
+                                    <option value="" disabled selected>Select a subject</option>
+                                    <option value="booking">Book an Appointment</option>
+                                    <option value="question">General Question</option>
+                                    <option value="feedback">Feedback</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label for="message" class="block text-light mb-2">Your Message</label>
+                                <textarea id="message" name="message" rows="4" required 
+                                          class="w-full px-4 py-3 bg-dark border border border-accent border-opacity-20 rounded-lg focus:border-accent transition-colors"></textarea>
+                            </div>
+                            
+                            <button type="submit" class="w-full px-6 py-3 bg-gradient-to-r from-primary to-secondary rounded-full font-medium hover:opacity-90 transition-opacity">
+                                Send Message
+                            </button>
+                        </form>
+                    </div>
+                    
+                    
+                </div>
+                
+                <!-- Contact Info & Map -->
+                <div>
+                    <div class="bg-dark border border-dark border-opacity-20 rounded-xl p-6 mb-8">
+                        <h2 class="text-2xl font-bold mb-6">Visit Our Salon</h2>
+                        
+                        
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <i class="fas fa-map-marker-alt text-accent mt-1 mr-4"></i>
+                                <div>
+                                    <h3 class="font-bold mb-1">Address</h3>
+                                    <p class="text-light">27 Lake Shore Dr, Spruce Grove, AB T7X 3V1, Canada</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <i class="fas fa-phone-alt text-accent mt-1 mr-4"></i>
+                                <div>
+                                    <h3 class="font-bold mb-1">Phone</h3>
+                                    <p class="text-light">+1 (780) 996-6209</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <i class="fas fa-envelope text-accent mt-1 mr-4"></i>
+                                <div>
+                                    <h3 class="font-bold mb-1">Email</h3>
+                                    <p class="text-light">info@fayezspa-hairsalon.com</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <i class="fas fa-clock text-accent mt-1 mr-4"></i>
+                                <div>
+                                    <h3 class="font-bold mb-1">Hours</h3>
+                                    <p class="text-light">
+                                        <span class="block">Monday - Friday: 9:00 AM - 7:00 PM</span>
+                                        <span class="block">Saturday: 9:00 AM - 5:00 PM</span>
+                                        <span class="block">Sunday: 10:00 AM - 4:00 PM</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div class="contact-card bg-dark border border-dark border-opacity-20 rounded-xl p-6 transition-all duration-300 hover:border-accent hover:border-opacity-40">
+                            <div class="w-12 h-12 bg-gradient-to-br from-primary to-secondary rounded-xl flex items-center justify-center mb-4">
+                                <i class="fas fa-calendar-check text-white text-xl"></i>
+                            </div>
+                            <h3 class="text-lg font-bold mb-2">Book an Appointment</h3>
+                            <p class="text-light text-sm">
+                                Schedule your consultation or service with one of our award-winning stylists.
+                            </p>
+                        </div>
+                        
+                        <div class="contact-card bg-dark border border-dark border-opacity-20 rounded-xl p-6 transition-all duration-300 hover:border-accent hover:border-opacity-40">
+                            <div class="w-12 h-12 bg-gradient-to-br from-primary to-secondary rounded-xl flex items-center justify-center mb-4">
+                                <i class="fas fa-gift text-white text-xl"></i>
+                            </div>
+                            <h3 class="text-lg font-bold mb-2">Gift Cards</h3>
+                            <p class="text-light text-sm">
+                                Purchase gift cards for any occasion, redeemable for services or products.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+<!-- Contact CTA Section -->
+    <section class="py-20 bg-gradient-to-b from-secondary to-dark">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">
+                Ready to Transform Your Hair?
+            </h2>
+            <p class="text-light max-w-2xl mx-auto mb-10">
+                Contact us today to schedule your consultation with one of our award-winning stylists.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="tel:+17809966209" class="px-8 py-4 bg-accent text-dark rounded-full font-bold hover:bg-light transition-colors flex items-center justify-center">
+                    <i class="fas fa-phone-alt mr-3"></i>
+                    Call Now
+                </a>
+                <a href="mailto:info@fayezspa-hairsalon.com" class="px-8 py-4 border border-accent text-accent rounded-full font-bold hover:bg-accent hover:bg-opacity-10 transition-colors flex items-center justify-center">
+                    <i class="fas fa-envelope mr-3"></i>
+                    Email Us
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark bg-opacity-95 border-t border-dark border-opacity-20 pt-12 pb-8">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+                <!-- Footer Column 1 -->
+                <div>
+                    <a href="/" class="flex items-center mb-6">                       
+                        <img alt="logo" src="/images/logo.png"  class="h-14"/>                 
+                    </a>
+                    <p class="text-light text-sm mb-4">
+                        Award-winning hair salon in Spruce Grove offering premium hair services with 35 years of experience.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="https://www.facebook.com/FayezSpa/" target="_blank" rel="noopener noreferrer" class="text-light hover:text-accent transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.instagram.com/fayezspa_london/" target="_blank" rel="noopener noreferrer" class="text-light hover:text-accent transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://www.youtube.com/channel/UCB4IZRHlDBjc4JyhH_3Ot4g" target="_blank" rel="noopener noreferrer" class="text-light hover:text-accent transition-colors">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Footer Column 2 -->
+                <div>
+                    <h4 class="text-lg font-bold mb-6 text-light">Quick Links</h4>
+                    <ul class="space-y-3">
+                        <li><a href="/" class="text-light hover:text-accent transition-colors">Home</a></li>
+                        <li><a href="/about/" class="text-light hover:text-accent transition-colors">About Us</a></li>
+                        <li><a href="/services/" class="text-light hover:text-accent transition-colors">Services</a></li>
+                        <li><a href="/blog/" class="text-light hover:text-accent transition-colors">Blog</a></li>
+                        <li><a href="/contact/" class="text-light hover:text-accent transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Footer Column 3 -->
+                <div>
+                    <h4 class="text-lg font-bold mb-6 text-light">Services</h4>
+                    <ul class="space-y-3">
+                        <li><a href="/services/#cuts" class="text-light hover:text-accent transition-colors">Hair Cuts</a></li>
+                        <li><a href="/services/#color" class="text-light hover:text-accent transition-colors">Hair Coloring</a></li>
+                        <li><a href="/services/#treatments" class="text-light hover:text-accent transition-colors">Hair Treatments</a></li>
+                        <li><a href="/services/#styling" class="text-light hover:text-accent transition-colors">Styling</a></li>
+                    
+                    </ul>
+                </div>
+                
+                <!-- Footer Column 4 -->
+                <div>
+                    <h4 class="text-lg font-bold mb-6 text-light">Contact Info</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt text-accent mt-1 mr-3"></i>
+                            <span class="text-light">27 Lake Shore Dr, Spruce Grove, AB T7X 3V1, Canada</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-phone-alt text-accent mt-1 mr-3"></i>
+                            <span class="text-light">+1 (780) 996-6209</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-envelope text-accent mt-1 mr-3"></i>
+                            <span class="text-light">info@fayezspa-hairsalon.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-dark border-opacity-20 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-light text-sm mb-4 md:mb-0">
+                        &copy; 2025 Fayez Spa Hair Salon. All rights reserved.
+                    </p>
+                    <div class="flex space-x-6">
+                        <a href="/privacy/" class="text-light hover:text-accent transition-colors text-sm">Privacy Policy</a>
+                        <a href="/terms/" class="text-light hover:text-accent transition-colors text-sm">Terms of Service</a>
+                        <a href="/cookies/" class="text-light hover:text-accent transition-colors text-sm">Cookies Policy</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Mobile Menu Toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+        
+        // Cookie Consent
+        const cookieConsent = document.querySelector('.cookie-consent');
+        const acceptCookies = document.getElementById('accept-cookies');
+        const declineCookies = document.getElementById('decline-cookies');
+        
+        if (!localStorage.getItem('cookiesAccepted')) {
+            setTimeout(() => {
+                cookieConsent.classList.add('show');
+            }, 1000);
+        }
+        
+        acceptCookies.addEventListener('click', () => {
+            localStorage.setItem('cookiesAccepted', 'true');
+            cookieConsent.classList.remove('show');
+        });
+        
+        declineCookies.addEventListener('click', () => {
+            cookieConsent.classList.remove('show');
+        });
+        
+        // Cart Functionality
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        
+        function updateCartCount() {
+            const count = cart.reduce((total, item) => total + item.quantity, 0);
+            const cartCounts = document.querySelectorAll('.cart-count, .cart-count-mobile');
+            
+            cartCounts.forEach(element => {
+                if (count > 0) {
+                    element.textContent = count;
+                    element.classList.remove('hidden');
+                } else {
+                    element.classList.add('hidden');
+                }
+            });
+        }
+        
+        // Initialize cart count on page load
+        updateCartCount();
+        
+        // Form Submission
+        document.getElementById('contact-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Show loading state on button
+            const submitBtn = this.querySelector('button[type="submit"]');
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Sending...';
+            submitBtn.disabled = true;
+            
+            // Simulate form submission (in a real app, this would be an API call)
+            setTimeout(() => {
+                // Show success message
+                document.getElementById('success-message').classList.add('show');
+                
+                // Reset form
+                this.reset();
+                submitBtn.innerHTML = 'Send Message';
+                submitBtn.disabled = false;
+                
+                // Hide success message after 5 seconds
+                setTimeout(() => {
+                    document.getElementById('success-message').classList.remove('show');
+                }, 5000);
+            }, 1500);
+        });
+        
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Animate contact cards
+        gsap.utils.toArray(".contact-card").forEach((card, i) => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                },
+                opacity: 0,
+                y: 50,
+                duration: 0.8,
+                delay: i * 0.1
+            });
+        });
+        
+        // Animate form elements
+        gsap.from("#contact-form", {
+            scrollTrigger: {
+                trigger: "#contact-form",
+                start: "top 80%",
+                toggleActions: "play none none none"
+            },
+            opacity: 0,
+            y: 50,
+            duration: 1
+        });
+    </script>
+</body>
+</html>

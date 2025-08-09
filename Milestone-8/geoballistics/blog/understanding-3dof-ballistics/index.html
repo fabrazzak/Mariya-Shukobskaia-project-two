@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Understanding 3DOF Ballistics Calculations | GeoBallistics Blog</title>
+    <meta name="description" content="Comprehensive guide to 3 Degree of Freedom ballistics calculations and how they improve long-range shooting accuracy in the GeoBallistics app.">
+    <meta name="keywords" content="3DOF ballistics, long range shooting, bullet trajectory, GeoBallistics solver, precision shooting calculations">
+    <link rel="canonical" href="https://geoballistics.app/blog/understanding-3dof-ballistics/">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/image/logo.webp" type="image/x-icon">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Roboto:wght@300;400;500&family=Orbitron:wght@500&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2A2E35',
+                        secondary: '#4B5320',
+                        accent: '#FFB400',
+                    },
+                    fontFamily: {
+                        heading: ['Rajdhani', 'sans-serif'],
+                        body: ['Roboto', 'sans-serif'],
+                        tactical: ['Orbitron', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+</head>
+<body class="bg-primary text-gray-200 font-body antialiased">
+    <!-- Cookie Consent Banner -->
+    <div id="cookieConsent" class="fixed bottom-0 left-0 right-0 bg-primary border-t border-secondary hidden z-50">
+        <div class="container mx-auto px-4 py-3 flex flex-col md:flex-row items-center justify-between">
+            <p class="mb-3 md:mb-0 md:mr-4">We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies.</p>
+            <div class="flex space-x-3">
+                <button id="cookieDecline" class="px-4 py-2 border border-secondary hover:bg-secondary transition-colors">Decline</button>
+                <button id="cookieAccept" class="px-4 py-2 bg-accent text-primary font-heading font-semibold hover:bg-yellow-500 transition-colors">Accept</button>
+                <a href="/cookies/" class="px-4 py-2 border border-accent text-accent hover:bg-opacity-10 hover:bg-accent transition-colors">Learn More</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 bg-primary bg-opacity-90 backdrop-blur-sm z-40 border-b border-secondary">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <a href="/" class="flex items-center space-x-2">
+                    <div class="w-10 h-10 rounded-sm flex items-center justify-center">
+                        <img src="/image/logo.webp" alt="GeoBallistics Logo" class="rounded-full">
+                    </div>
+                    <span class="text-xl font-heading font-bold tracking-tight">GEO<span class="text-accent">BALLISTICS</span></span>
+                </a>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="hover:text-accent transition-colors font-heading">Home</a>
+                    <a href="/games/" class="block px-3 py-2 hover:text-accent transition-colors font-heading">Games</a>
+                    <a href="/about/" class="hover:text-accent transition-colors font-heading">About</a>
+                    <a href="/blog/" class="text-accent font-heading font-medium">Blog</a>
+                    <a href="/contact/" class="hover:text-accent transition-colors font-heading">Contact</a>
+                    <a href="https://play.google.com/store/apps/details?id=com.geoballistics.ballisticsarc" target="_blank" class="bg-accent text-primary px-4 py-2 rounded-sm font-heading font-semibold hover:bg-yellow-500 transition-colors">Download App</a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuButton" class="md:hidden text-gray-300 hover:text-accent focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-primary border-t border-secondary">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="/" class="block px-3 py-2 hover:text-accent transition-colors font-heading">Home</a>
+                <a href="/games/" class="block px-3 py-2 hover:text-accent transition-colors font-heading">Games</a>
+                <a href="/about/" class="block px-3 py-2 hover:text-accent transition-colors font-heading">About</a>
+                <a href="/blog/" class="block px-3 py-2 text-accent font-heading">Blog</a>
+                <a href="/contact/" class="block px-3 py-2 hover:text-accent transition-colors font-heading">Contact</a>
+                <a href="https://play.google.com/store/apps/details?id=com.geoballistics.ballisticsarc" target="_blank" class="block px-3 py-2 bg-accent text-primary rounded-sm text-center font-heading font-semibold">Download App</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Blog Header -->
+    <section class="pt-32 pb-20 bg-gray-900 relative overflow-hidden">
+        <!-- Animated Background Elements -->
+        <div class="absolute top-0 left-0 w-full h-full opacity-10">
+            <div class="absolute top-1/4 left-1/4 w-32 h-32 bg-accent rounded-full filter blur-xl animate-pulse"></div>
+            <div class="absolute top-3/4 right-1/4 w-24 h-24 bg-accent rounded-full filter blur-xl animate-pulse animation-delay-2000"></div>
+        </div>
+        
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="max-w-4xl mx-auto">
+                <div class="flex items-center mb-6">
+                    <a href="/blog/" class="text-accent hover:underline font-heading">← Back to Blog</a>
+                </div>
+                
+                <div class="flex items-center mb-6">
+                    <span class="text-sm text-accent font-heading">BALLISTICS</span>
+                    <span class="mx-3 text-gray-500">•</span>
+                    <span class="text-sm text-gray-500">June 15, 2025</span>
+                </div>
+                
+                <h1 class="text-4xl md:text-5xl font-heading font-bold mb-8 leading-tight">
+                    Understanding 3DOF Ballistics Calculations
+                </h1>
+                
+                <div class="flex items-center">
+                    <div class="w-12 h-12 rounded-full bg-gray-700 flex items-center justify-center mr-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="text-sm font-heading">GeoBallistics Team</div>
+                        <div class="text-xs text-gray-500">15 min read</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Content -->
+    <article class="py-16 bg-primary relative">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto">
+                <!-- Featured Image -->
+                <div class="mb-12 rounded-sm overflow-hidden">
+                    <img src="/image/blog1.jpg" alt="3DOF Ballistics Visualization" class="w-full h-auto object-cover">
+                </div>
+                
+                <!-- Content -->
+                <div class="prose prose-invert max-w-none">
+                    <p class="lead text-xl text-gray-300 mb-8">
+                        In the world of precision shooting, understanding your bullet's flight path is everything. Traditional ballistics calculators use simplified models that often fall short in real-world conditions. This is where 3 Degree of Freedom (3DOF) calculations come in, offering unprecedented accuracy for long-range shooters. In this comprehensive guide, we'll explore the physics behind 3DOF solvers and how GeoBallistics implements this advanced technology in your pocket.
+                    </p>
+                    
+                    <h2 class="text-3xl font-heading font-bold mb-6 mt-12 text-accent">The Limitations of Traditional Ballistics Models</h2>
+                    
+                    <p>Most basic ballistics calculators use what's known as a "point mass" model, which treats the bullet as a single point moving through space. This simplified approach makes several assumptions:</p>
+                    
+                    <ul>
+                        <li>The bullet follows a perfectly parabolic trajectory</li>
+                        <li>Drag is constant throughout the flight</li>
+                        <li>Environmental factors have linear effects</li>
+                        <li>Spin drift and Coriolis effects can be approximated</li>
+                    </ul>
+                    
+                    <p>While these models work reasonably well at shorter ranges (under 300 yards), their accuracy degrades significantly as distance increases. At 1000+ yards, these simplifications can result in errors of several feet - the difference between a perfect hit and a complete miss.</p>
+                    
+                    <div class="my-8 p-6 bg-gray-900 border-l-4 border-accent rounded-sm">
+                        <h3 class="font-heading font-bold text-lg mb-2">Key Insight:</h3>
+                        <p>3DOF models account for the bullet's actual shape, orientation, and rotation during flight, providing significantly more accurate predictions at extreme distances.</p>
+                    </div>
+                    
+                    <h2 class="text-3xl font-heading font-bold mb-6 mt-12 text-accent">What Exactly is 3DOF?</h2>
+                    
+                    <p>3DOF stands for "3 Degrees of Freedom," referring to the three spatial dimensions in which the bullet moves and rotates:</p>
+                    
+                    <ol>
+                        <li><strong>Forward Motion (X-axis):</strong> The bullet's movement downrange</li>
+                        <li><strong>Vertical Motion (Y-axis):</strong> The bullet's rise and fall due to gravity</li>
+                        <li><strong>Horizontal Motion (Z-axis):</strong> The bullet's lateral movement from wind and other factors</li>
+                    </ol>
+                    
+                    <p>Unlike simpler models, a true 3DOF solver like the one in GeoBallistics calculates each of these dimensions independently while accounting for their interactions. This means it can model complex phenomena like:</p>
+                    
+                    <div class="grid md:grid-cols-2 gap-6 my-8">
+                        <div class="bg-gray-900 p-4 rounded-sm border border-secondary">
+                            <h4 class="font-heading font-semibold mb-2 text-accent">Gyroscopic Drift</h4>
+                            <p>The bullet's spin causes it to drift in the direction of rotation due to gyroscopic precession.</p>
+                        </div>
+                        <div class="bg-gray-900 p-4 rounded-sm border border-secondary">
+                            <h4 class="font-heading font-semibold mb-2 text-accent">Coriolis Effect</h4>
+                            <p>The Earth's rotation causes apparent deflection that changes with latitude and direction of fire.</p>
+                        </div>
+                        <div class="bg-gray-900 p-4 rounded-sm border border-secondary">
+                            <h4 class="font-heading font-semibold mb-2 text-accent">Spin Damping</h4>
+                            <p>Air resistance gradually reduces the bullet's rotational velocity, affecting stability.</p>
+                        </div>
+                        <div class="bg-gray-900 p-4 rounded-sm border border-secondary">
+                            <h4 class="font-heading font-semibold mb-2 text-accent">Magnus Effect</h4>
+                            <p>Interaction between spin and crosswinds creates additional lift forces.</p>
+                        </div>
+                    </div>
+                    
+                    <h2 class="text-3xl font-heading font-bold mb-6 mt-12 text-accent">The Physics Behind 3DOF Calculations</h2>
+                    
+                    <p>At its core, a 3DOF solver integrates multiple physics equations simultaneously to model the bullet's flight. The primary forces acting on the bullet are:</p>
+                    
+                    <h3 class="text-2xl font-heading font-semibold mt-8 mb-4">1. Gravity</h3>
+                    <p>The constant downward acceleration (9.8 m/s²) that causes bullet drop. In 3DOF models, gravity's effect changes slightly with altitude.</p>
+                    
+                    <h3 class="text-2xl font-heading font-semibold mt-8 mb-4">2. Drag</h3>
+                    <p>Air resistance that slows the bullet. 3DOF models use detailed drag coefficients (Cd) that vary with:</p>
+                    <ul>
+                        <li>Bullet velocity (transonic effects)</li>
+                        <li>Air density (altitude/temperature)</li>
+                        <li>Bullet shape and surface finish</li>
+                    </ul>
+                    
+                    <h3 class="text-2xl font-heading font-semibold mt-8 mb-4">3. Lift</h3>
+                    <p>Forces perpendicular to the flight path caused by:</p>
+                    <ul>
+                        <li>Angle of attack (bullet not perfectly aligned with flight path)</li>
+                        <li>Spin-induced Magnus effect</li>
+                    </ul>
+                    
+                    <figure class="my-12">
+                       
+                        <figcaption class="text-center mt-2 text-sm text-gray-500">Diagram showing the complex forces acting on a bullet in 3DOF calculations</figcaption>
+                    </figure>
+                    
+                    <h2 class="text-3xl font-heading font-bold mb-6 mt-12 text-accent">How GeoBallistics Implements 3DOF</h2>
+                    
+                    <p>The GeoBallistics app uses a proprietary implementation of 3DOF calculations called BallisticsARC (Ballistics, Atmospherics, and Range Card). Here's what makes our solution special:</p>
+                    
+                    <h3 class="text-2xl font-heading font-semibold mt-8 mb-4">Custom Drag Models</h3>
+                    <p>We've developed bullet-specific drag models for over 1,500 common projectiles, with the ability to add custom profiles. Each model accounts for:</p>
+                    <ul>
+                        <li>Transonic instability (Mach 0.8-1.2)</li>
+                        <li>Base drag variations</li>
+                        <li>Boat-tail effects</li>
+                    </ul>
+                    
+                    <h3 class="text-2xl font-heading font-semibold mt-8 mb-4">Environmental Sensing</h3>
+                    <p>GeoBallistics integrates with weather stations and Kestrel devices to get real-time:</p>
+                    <ul>
+                        <li>Barometric pressure</li>
+                        <li>Temperature</li>
+                        <li>Humidity</li>
+                        <li>Wind speed/direction at multiple ranges</li>
+                    </ul>
+                    
+                    <h3 class="text-2xl font-heading font-semibold mt-8 mb-4">Advanced Spin Drift Calculation</h3>
+                    <p>Our model goes beyond simple approximations to calculate:</p>
+                    <ul>
+                        <li>Gyroscopic precession</li>
+                        <li>Dynamic stability factor</li>
+                        <li>Spin decay over distance</li>
+                    </ul>
+                    
+                    <div class="my-8 p-6 bg-gray-900 border-l-4 border-accent rounded-sm">
+                        <h3 class="font-heading font-bold text-lg mb-2">Real-World Impact:</h3>
+                        <p>In field tests, GeoBallistics' 3DOF solver demonstrated 12-18% better accuracy at 1000+ yards compared to traditional point-mass calculators, with the difference increasing at longer ranges.</p>
+                    </div>
+                    
+                    <h2 class="text-3xl font-heading font-bold mb-6 mt-12 text-accent">Practical Applications for Shooters</h2>
+                    
+                    <p>Understanding 3DOF calculations helps you make better use of GeoBallistics' features:</p>
+                    
+                    <h3 class="text-2xl font-heading font-semibold mt-8 mb-4">1. Muzzle Velocity Truing</h3>
+                    <p>The app can back-calculate your actual muzzle velocity based on observed impacts at known distances, accounting for all 3DOF effects.</p>
+                    
+                    <h3 class="text-2xl font-heading font-semibold mt-8 mb-4">2. Moving Target Solutions</h3>
+                    <p>3DOF properly models the changing lead requirements as bullets slow down during flight.</p>
+                    
+                    <h3 class="text-2xl font-heading font-semibold mt-8 mb-4">3. High-Angle Shooting</h3>
+                    <p>The solver correctly accounts for different drag effects during steep ascents and descents.</p>
+                    
+                    <h3 class="text-2xl font-heading font-semibold mt-8 mb-4">4. Extreme Long Range (ELR)</h3>
+                    <p>At distances beyond 1500 yards, 3DOF becomes essential for predicting transonic transitions and stability loss.</p>
+                    
+                    <figure class="my-12">
+                       
+                        <figcaption class="text-center mt-2 text-sm text-gray-500">GeoBallistics provides accurate solutions even at extreme distances</figcaption>
+                    </figure>
+                    
+                    <h2 class="text-3xl font-heading font-bold mb-6 mt-12 text-accent">Comparing 3DOF to Other Models</h2>
+                    
+                    <div class="overflow-x-auto my-8">
+                        <table class="min-w-full border border-secondary">
+                            <thead>
+                                <tr class="bg-gray-900">
+                                    <th class="px-4 py-3 text-left font-heading border-b border-secondary">Model Type</th>
+                                    <th class="px-4 py-3 text-left font-heading border-b border-secondary">Complexity</th>
+                                    <th class="px-4 py-3 text-left font-heading border-b border-secondary">Typical Error at 1000yd</th>
+                                    <th class="px-4 py-3 text-left font-heading border-b border-secondary">Hardware Requirements</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b border-secondary">
+                                    <td class="px-4 py-3">Point Mass (Basic)</td>
+                                    <td class="px-4 py-3">Low</td>
+                                    <td class="px-4 py-3">24-36 inches</td>
+                                    <td class="px-4 py-3">Any smartphone</td>
+                                </tr>
+                                <tr class="border-b border-secondary">
+                                    <td class="px-4 py-3">Modified Point Mass</td>
+                                    <td class="px-4 py-3">Medium</td>
+                                    <td class="px-4 py-3">12-18 inches</td>
+                                    <td class="px-4 py-3">Any smartphone</td>
+                                </tr>
+                                <tr class="border-b border-secondary bg-accent bg-opacity-10">
+                                    <td class="px-4 py-3 font-medium">3DOF (GeoBallistics)</td>
+                                    <td class="px-4 py-3 font-medium">High</td>
+                                    <td class="px-4 py-3 font-medium">6-9 inches</td>
+                                    <td class="px-4 py-3 font-medium">Modern smartphones</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3">6DOF (Advanced)</td>
+                                    <td class="px-4 py-3">Very High</td>
+                                    <td class="px-4 py-3">3-6 inches</td>
+                                    <td class="px-4 py-3">High-end PCs</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <h2 class="text-3xl font-heading font-bold mb-6 mt-12 text-accent">Conclusion</h2>
+                    
+                    <p>3DOF ballistics represents a significant leap forward in precision shooting calculations, bridging the gap between simple point-mass models and computationally intensive 6DOF simulations. By implementing a sophisticated 3DOF solver in GeoBallistics, we've brought military-grade ballistics to your smartphone, giving you the edge in long-range shooting scenarios.</p>
+                    
+                    <p class="mt-6">To experience the difference for yourself, download GeoBallistics from the Google Play Store and try the PRO version with full 3DOF capabilities. The advanced solver is particularly valuable for:</p>
+                    <ul class="mt-4">
+                        <li>Competitive PRS shooters</li>
+                        <li>ELR enthusiasts</li>
+                        <li>Tactical marksmen</li>
+                        <li>Hunters in extreme environments</li>
+                    </ul>
+                    
+                    <div class="mt-12 text-center">
+                        <a href="https://play.google.com/store/apps/details?id=com.geoballistics.ballisticsarc" target="_blank" class="inline-block bg-accent text-primary px-8 py-4 rounded-sm font-heading font-semibold hover:bg-yellow-500 transition-colors text-lg">
+                            Download GeoBallistics PRO
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8 mb-12">
+                <!-- About -->
+                <div>
+                    <h3 class="text-lg font-heading font-semibold text-white mb-4">About GeoBallistics</h3>
+                    <p class="mb-4">The most advanced mobile ballistics solution featuring 3DOF calculations, range cards, and hardware integration for precision shooting.</p>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-lg font-heading font-semibold text-white mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/games/" class="hover:text-accent transition-colors">Games</a></li>
+                        <li><a href="/about/" class="hover:text-accent transition-colors">About Us</a></li>
+                        <li><a href="/blog/" class="hover:text-accent transition-colors">Blog</a></li>
+                        <li><a href="/contact/" class="hover:text-accent transition-colors">Contact</a></li>
+                        <li><a href="https://play.google.com/store/apps/details?id=com.geoballistics.ballisticsarc" target="_blank" class="hover:text-accent transition-colors">Download</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Support -->
+                <div>
+                    <h3 class="text-lg font-heading font-semibold text-white mb-4">Support</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/privacy/" class="hover:text-accent transition-colors">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="hover:text-accent transition-colors">Terms of Service</a></li>
+                        <li><a href="/cookies/" class="hover:text-accent transition-colors">Cookies Policy</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Contact -->
+                <div>
+                    <h3 class="text-lg font-heading font-semibold text-white mb-4">Contact Us</h3>
+                    <address class="not-italic">
+                        <div class="mb-2">Sheltered Wings, Inc.</div>
+                        <div class="mb-2">1 Vortex Dr</div>
+                        <div class="mb-2">Barneveld, WI 53507</div>
+                        <div class="mb-2">United States</div>
+                        <div class="mb-2">Phone: <a href="tel:+16086022295" class="hover:text-accent transition-colors">+1 608-602-2295</a></div>
+                        <div class="mb-2">Email: <a href="mailto:info@geoballistics.app" class="hover:text-accent transition-colors">info@geoballistics.app</a></div>
+                    </address>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8 text-sm text-center">
+                <p>&copy; 2025 GeoBallistics by Sheltered Wings, Inc. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Cookie Consent
+        const cookieConsent = document.getElementById('cookieConsent');
+        const cookieAccept = document.getElementById('cookieAccept');
+        const cookieDecline = document.getElementById('cookieDecline');
+        
+        if (!localStorage.getItem('cookieConsent')) {
+            cookieConsent.classList.remove('hidden');
+        }
+        
+        cookieAccept.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'accepted');
+            cookieConsent.classList.add('hidden');
+        });
+        
+        cookieDecline.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'declined');
+            cookieConsent.classList.add('hidden');
+        });
+        
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Animate content on scroll
+        gsap.utils.toArray('.prose h2, .prose h3, .prose p, .prose ul, .prose figure').forEach((element, i) => {
+            gsap.from(element, {
+                scrollTrigger: {
+                    trigger: element,
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                },
+                opacity: 0,
+                y: 30,
+                duration: 0.8,
+                delay: i * 0.05
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsible Gaming - Cash VIP Spin</title>
+    <meta name="description"
+        content="Learn about responsible gaming practices with Cash VIP Spin. We promote safe and enjoyable social casino gaming for adult players.">
+    <meta name="keywords"
+        content="responsible gaming, social casino, safe gambling, gaming limits, slot machine, Vegas slots">
+    <link rel="canonical" href="https://cashvipspin.com/responsible-gaming/" />
+    <link rel="icon" href="/image/logo.webp" type="image/x-icon">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4DA8DA',
+                        secondary: '#80D8C3',
+                        accent: '#FFD66B',
+                    },
+                    animation: {
+                        'spin-slow': 'spin 3s linear infinite',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-reverse': 'float-reverse 5s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        'float-reverse': {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(20px)' },
+                        },
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Framer Motion -->
+    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: #ffffff;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+           .video-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    object-fit: cover;
+    transform: scale(1.3) translateY(-5%);   
+  
+}
+
+        .content-overlay {
+            background: rgba(0, 0, 0, 0.6);
+            position: relative;
+            min-height: 100vh;
+        }
+
+        .card-hover {
+            transition: all 0.3s ease;
+            transform: perspective(1000px) rotateY(0deg);
+        }
+
+        .card-hover:hover {
+            transform: perspective(1000px) rotateY(5deg) translateY(-5px);
+            box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-hover {
+            transition: all 0.3s ease;
+            transform: translateY(0);
+        }
+
+        .btn-hover:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 15px -5px rgba(0, 0, 0, 0.2);
+        }
+
+        .cookie-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 999;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+        }
+
+        .check-item {
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .check-item:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.4rem;
+            width: 1.25rem;
+            height: 1.25rem;
+            background-color: #4DA8DA;
+            border-radius: 0.25rem;
+        }
+
+        .check-item:after {
+            content: '✓';
+            position: absolute;
+            left: 0.25rem;
+            top: 0.25rem;
+            color: white;
+            font-size: 0.75rem;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Video Background -->
+    <video autoplay muted loop class="video-background">
+        <source src="https://play-games.googleusercontent.com/vp/mp4/1280x720/swpJWjQzMiQ.mp4" type="video/mp4">
+    </video>
+
+    <!-- Content Overlay -->
+    <div class="content-overlay">
+        <!-- Cookie Banner -->
+        <div id="cookieBanner" class="cookie-banner p-6 hidden">
+            <div class="container mx-auto flex flex-col md:flex-row items-center justify-between">
+                <div class="mb-4 md:mb-0 md:mr-8">
+                    <p class="text-white text-sm">We use cookies to enhance your experience. By continuing to visit this
+                        site, you agree to our use of cookies. <a href="/privacy/" class="text-accent font-medium">Learn
+                            more</a></p>
+                </div>
+                <div class="flex space-x-3">
+                    <button id="declineCookies"
+                        class="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition duration-300 text-sm font-medium">Decline</button>
+                    <button id="acceptCookies"
+                        class="px-4 py-2 bg-accent text-gray-900 rounded-lg hover:bg-yellow-500 transition duration-300 text-sm font-medium">Accept</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="bg-black bg-opacity-70 shadow-md sticky top-0 z-50 backdrop-filter backdrop-blur-sm">
+            <div class="container mx-auto px-4 py-3">
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center space-x-2">
+                        <img src="/image/logo.webp" alt="Cash VIP Spin Logo" class="h-10 w-auto rounded-full">
+                        <a href="/" class="text-xl font-bold text-white">Cash VIP Spin</a>
+                    </div>
+
+                    <div class="hidden md:flex items-center space-x-6">
+                        <a href="/" class="text-gray-300 hover:text-white transition">Home</a>
+                        <a href="/how-to-play/" class="text-gray-300 hover:text-white transition">How to Play</a>
+                        <a href="/responsible-gaming/"
+                            class="text-white font-medium hover:text-accent transition">Responsible Gaming</a>
+                        <a href="/contact/" class="text-gray-300 hover:text-white transition">Contact</a>
+                    </div>
+
+                    <div class="flex items-center space-x-4 md:hidden lg:flex">
+                        <a href="https://play.google.com/store/apps/details?id=com.bagelcode.slots3&hl=en_US"
+                            class="bg-accent hover:bg-yellow-500 text-gray-900 px-4 py-2 rounded-lg font-medium transition duration-300 hidden md:inline-block btn-hover">
+                            Download Now
+                        </a>
+                        <button id="mobileMenuButton" class="md:hidden text-white focus:outline-none">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M4 6h16M4 12h16M4 18h16"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Mobile Menu -->
+             <div id="mobileMenu" class="md:hidden h-screen  hidden mt-12 pb-4 flex   ">
+                    <div class="flex flex-col space-y-5">
+                        <a href="/" class="text-gray-300">Home</a>
+                        <a href="/how-to-play/" class="text-gray-300">How to Play</a>
+                        <a href="/responsible-gaming/" class="text-white font-medium">Responsible Gaming</a>
+                        <a href="/contact/" class="text-gray-300">Contact</a>
+                        <a href="https://play.google.com/store/apps/details?id=com.bagelcode.slots3&hl=en_US"
+                            class="bg-accent text-gray-900 px-4 py-2 rounded-lg font-medium text-center btn-hover">
+                            Download Now
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section class="py-32 bg-gradient-to-b from-primary to-primary-dark">
+            <div class="container flex flex-col mx-auto px-4 text-center">
+                <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8 }}
+                    class="text-4xl md:text-5xl font-bold text-white mb-6">
+                    Responsible <span class="text-accent">Gaming</span>
+                </motion.h1>
+
+                <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.8,
+                    delay: 0.2 }} class="text-xl text-gray-200 max-w-3xl mx-auto">
+                    Our commitment to promoting safe and enjoyable social casino gaming for adult players.
+                </motion.p>
+            </div>
+        </section>
+
+        <!-- Main Content -->
+        <section class="py-20">
+            <div class="container mx-auto px-4">
+                <div class="max-w-4xl mx-auto">
+                    <!-- Introduction -->
+                    <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{
+                        duration: 0.6 }} viewport={{ once: true }} class="mb-16">
+                        <h2 class="text-3xl font-bold text-white mb-6">Our Commitment</h2>
+                        <div class="bg-gray-900 bg-opacity-70 p-6 rounded-lg border-l-4 border-accent">
+                            <p class="text-gray-300">
+                                At Cash VIP Spin, we are committed to providing an entertaining and responsible social
+                                gaming experience. While our games simulate casino-style entertainment, we emphasize
+                                that this is not real money gambling. We encourage all players to enjoy our games
+                                responsibly as a form of leisure activity.
+                            </p>
+                        </div>
+                    </motion.div>
+
+                    <!-- Age Restriction -->
+                    <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{
+                        duration: 0.6, delay: 0.1 }} viewport={{ once: true }} class="mb-16">
+                        <h2 class="text-3xl font-bold text-white mb-6">Age Restrictions</h2>
+                        <div class="bg-gray-900 bg-opacity-70 p-6 rounded-lg">
+                            <p class="text-gray-300 mb-4">
+                                Cash VIP Spin is intended for adult players aged 18 and over. We do not knowingly allow
+                                underage individuals to access or use our games. By playing our games, you confirm that
+                                you meet the minimum age requirement.
+                            </p>
+                            <div class="flex items-center bg-black bg-opacity-50 p-4 rounded-lg">
+                                <i class="fas fa-exclamation-triangle text-3xl text-accent mr-4"></i>
+                                <p class="text-gray-300">
+                                    <strong>Important:</strong> This game does not offer real money gambling or an
+                                    opportunity to win real money or prizes. Success in social casino gaming does not
+                                    imply future success at real money gambling.
+                                </p>
+                            </div>
+                        </div>
+                    </motion.div>
+
+                    <!-- Healthy Gaming Tips -->
+                    <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{
+                        duration: 0.6, delay: 0.2 }} viewport={{ once: true }} class="mb-16">
+                        <h2 class="text-3xl font-bold text-white mb-6">Healthy Gaming Tips</h2>
+                        <div class="bg-gray-900 bg-opacity-70 p-6 rounded-lg">
+                            <p class="text-gray-300 mb-6">
+                                To maintain a healthy relationship with gaming, we recommend following these guidelines:
+                            </p>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                                <div class="bg-gray-800 bg-opacity-70 p-5 rounded-lg card-hover">
+                                    <div class="flex items-center mb-3">
+                                        <div
+                                            class="bg-primary bg-opacity-20 w-12 h-12 rounded-full flex items-center justify-center mr-4">
+                                            <i class="fas fa-clock text-primary"></i>
+                                        </div>
+                                        <h3 class="text-xl font-bold text-white">Set Time Limits</h3>
+                                    </div>
+                                    <p class="text-gray-300">
+                                        Decide in advance how much time you want to spend playing and stick to it. Take
+                                        regular breaks to maintain balance with other activities.
+                                    </p>
+                                </div>
+
+                                <div class="bg-gray-800 bg-opacity-70 p-5 rounded-lg card-hover">
+                                    <div class="flex items-center mb-3">
+                                        <div
+                                            class="bg-secondary bg-opacity-20 w-12 h-12 rounded-full flex items-center justify-center mr-4">
+                                            <i class="fas fa-wallet text-secondary"></i>
+                                        </div>
+                                        <h3 class="text-xl font-bold text-white">Set Spending Limits</h3>
+                                    </div>
+                                    <p class="text-gray-300">
+                                        If you choose to make in-app purchases, set a budget and never spend more than
+                                        you can afford. Remember all purchases are for virtual items only.
+                                    </p>
+                                </div>
+
+                                <div class="bg-gray-800 bg-opacity-70 p-5 rounded-lg card-hover">
+                                    <div class="flex items-center mb-3">
+                                        <div
+                                            class="bg-accent bg-opacity-20 w-12 h-12 rounded-full flex items-center justify-center mr-4">
+                                            <i class="fas fa-gamepad text-accent"></i>
+                                        </div>
+                                        <h3 class="text-xl font-bold text-white">Play for Fun</h3>
+                                    </div>
+                                    <p class="text-gray-300">
+                                        Remember that our games are meant for entertainment purposes only. The outcomes
+                                        are based on random number generation.
+                                    </p>
+                                </div>
+
+                                <div class="bg-gray-800 bg-opacity-70 p-5 rounded-lg card-hover">
+                                    <div class="flex items-center mb-3">
+                                        <div
+                                            class="bg-primary bg-opacity-20 w-12 h-12 rounded-full flex items-center justify-center mr-4">
+                                            <i class="fas fa-balance-scale text-primary"></i>
+                                        </div>
+                                        <h3 class="text-xl font-bold text-white">Maintain Balance</h3>
+                                    </div>
+                                    <p class="text-gray-300">
+                                        Ensure gaming remains one of many leisure activities. Don't let it interfere
+                                        with work, study, or personal relationships.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </motion.div>
+
+                    <!-- Warning Signs -->
+                    <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{
+                        duration: 0.6, delay: 0.3 }} viewport={{ once: true }} class="mb-16">
+                        <h2 class="text-3xl font-bold text-white mb-6">Warning Signs</h2>
+                        <div class="bg-gray-900 bg-opacity-70 p-6 rounded-lg">
+                            <p class="text-gray-300 mb-6">
+                                Be aware of these signs that may indicate gaming is becoming problematic:
+                            </p>
+
+                            <div class="space-y-4 mb-6">
+                                <div class="check-item">
+                                    <p class="text-gray-300">Spending more time or money on gaming than intended</p>
+                                </div>
+                                <div class="check-item">
+                                    <p class="text-gray-300">Neglecting work, studies, or personal relationships due to
+                                        gaming</p>
+                                </div>
+                                <div class="check-item">
+                                    <p class="text-gray-300">Using gaming to escape from problems or negative feelings
+                                    </p>
+                                </div>
+                                <div class="check-item">
+                                    <p class="text-gray-300">Borrowing money or selling possessions to fund gaming</p>
+                                </div>
+                                <div class="check-item">
+                                    <p class="text-gray-300">Feeling restless or irritable when trying to cut down on
+                                        gaming</p>
+                                </div>
+                                <div class="check-item">
+                                    <p class="text-gray-300">Lying to family or friends about gaming habits</p>
+                                </div>
+                            </div>
+
+                            <div class="bg-black bg-opacity-50 p-4 rounded-lg border-l-4 border-secondary">
+                                <p class="text-gray-300">
+                                    <strong>If you recognize these signs in yourself or someone you know,</strong>
+                                    consider seeking help from professional organizations that specialize in
+                                    gaming-related issues.
+                                </p>
+                            </div>
+                        </div>
+                    </motion.div>
+
+                    <!-- Self-Exclusion -->
+                    <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{
+                        duration: 0.6, delay: 0.4 }} viewport={{ once: true }} class="mb-16">
+                        <h2 class="text-3xl font-bold text-white mb-6">Self-Exclusion Options</h2>
+                        <div class="bg-gray-900 bg-opacity-70 p-6 rounded-lg">
+                            <p class="text-gray-300 mb-6">
+                                If you feel you need to take a break from gaming, we provide the following options:
+                            </p>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                                <div class="bg-gray-800 bg-opacity-70 p-5 rounded-lg">
+                                    <h3 class="text-xl font-bold text-white mb-3 flex items-center">
+                                        <i class="fas fa-ban text-red-400 mr-3"></i> Account Deletion
+                                    </h3>
+                                    <p class="text-gray-300 mb-4">
+                                        You can permanently delete your account by contacting our support team at 
+                                    </p>
+                                </div>
+
+                                <div class="bg-gray-800 bg-opacity-70 p-5 rounded-lg">
+                                    <h3 class="text-xl font-bold text-white mb-3 flex items-center">
+                                        <i class="fas fa-mobile-alt text-blue-400 mr-3"></i> Device Restrictions
+                                    </h3>
+                                    <p class="text-gray-300 mb-4">
+                                        Use built-in device controls (like Screen Time on iOS or Digital Wellbeing on
+                                        Android) to limit app usage.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </motion.div>
+
+                    <!-- Support Services Section -->
+                    <motion.div initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{
+                        duration: 0.6, delay: 0.6 }} viewport={{ once: true }} class="mb-16">
+                        <h2 class="text-3xl font-bold text-white mb-6">Support Services</h2>
+                        <div class="bg-gray-900 bg-opacity-70 p-6 rounded-lg">
+                            <p class="text-gray-300 mb-6">
+                                If you need help with gambling-related issues, these organizations provide free and
+                                confidential support:
+                            </p>
+
+                            <div class="space-y-6">
+                                <!-- BeGambleAware Card -->
+                                <div
+                                    class="bg-gray-800 bg-opacity-70 p-6 rounded-lg hover:bg-gray-700 transition duration-300">
+                                    <div class="flex flex-col md:flex-row md:items-center">
+                                        <div class="md:w-1/3 mb-4 md:mb-0">
+                                            <img alt="BeGambleAware" src="/image/adiction_begambleaware.svg" />
+                                           
+                                        </div>
+                                        <div class="md:w-2/3">
+                                            <p class="text-gray-300 mb-4">
+                                                BeGambleAware provides free, confidential support through helpline,
+                                                online chat, and forums for anyone suffering from a gambling problem.
+                                            </p>
+                                            <a href="https://www.gambleaware.org/" target="_blank"
+                                                rel="noopener noreferrer"
+                                                class="inline-block bg-primary hover:bg-blue-600 text-white font-medium px-6 py-2 rounded-lg transition duration-300 btn-hover">
+                                                Visit BeGambleAware
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Divider -->
+                                <div class="border-t border-gray-700 my-4"></div>
+
+                                <!-- GameCare Card -->
+                                <div
+                                    class="bg-gray-800 bg-opacity-70 p-6 rounded-lg hover:bg-gray-700 transition duration-300">
+                                    <div class="flex flex-col md:flex-row md:items-center">
+                                        <div class="md:w-1/3 mb-4 md:mb-0">
+                                            <img alt="BeGambleAware" src="/image/adiction_gamecare.svg" />                                              
+                                        </div>
+                                        <div class="md:w-2/3">
+                                            <p class="text-gray-300 mb-4">
+                                                GameCare is the leading charity in Britain committed to minimising
+                                                gambling-related harm. They provide information, advice, and support for
+                                                those affected by gambling problems.
+                                            </p>
+                                            <a href="https://www.gamcare.org.uk/" target="_blank"
+                                                rel="noopener noreferrer"
+                                                class="inline-block bg-primary hover:bg-blue-600 text-white font-medium px-6 py-2 rounded-lg transition duration-300 btn-hover">
+                                                Visit GameCare
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </motion.div>
+
+                    <!-- Resources -->
+                    
+                </div>
+            </div>
+        </section>
+
+        <!-- Final Note -->
+        <section class="py-16  bg-black/50">
+            <div class="container mx-auto px-4 text-center">
+                <motion.div initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} transition={{
+                    duration: 0.6 }} viewport={{ once: true }} class="max-w-4xl mx-auto">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">
+                        Enjoy <span class="text-accent">Responsible</span> Gaming
+                    </h2>
+                    <p class="text-xl text-white mb-8 max-w-2xl mx-auto">
+                        At Cash VIP Spin, we believe gaming should always be fun, entertaining, and under control.
+                    </p>
+                    <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+                        <a href="/how-to-play/"
+                            class="bg-white hover:bg-gray-100 text-gray-900 font-bold px-8 py-3 rounded-full text-lg transition duration-300 shadow-lg btn-hover">
+                            Learn How to Play
+                        </a>
+                        <a href="/contact/"
+                            class="bg-transparent hover:bg-white hover:bg-opacity-10 text-white font-bold px-8 py-3 rounded-full text-lg transition duration-300 border-2 border-white btn-hover">
+                            Contact Support
+                        </a>
+                    </div>
+                </motion.div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="bg-black bg-opacity-90 pt-16 pb-8">
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+                    <div>
+                        <div class="flex items-center space-x-2 mb-6">
+                            <img src="/image/logo.webp" alt="Cash VIP Spin Logo" class="h-8 w-auto rounded-full">
+                            <span class="text-xl font-bold text-white">Cash VIP Spin</span>
+                        </div>
+                        <p class="text-gray-400 mb-6">The ultimate Vegas-style slot machine experience with huge
+                            jackpots and daily bonuses.</p>
+
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold text-white mb-6">Quick Links</h3>
+                        <ul class="space-y-3">
+                            <li><a href="/" class="text-gray-400 hover:text-white transition">Home</a></li>
+                            <li><a href="/how-to-play/" class="text-gray-400 hover:text-white transition">How to
+                                    Play</a></li>
+                            <li><a href="/responsible-gaming/"
+                                    class="text-gray-400 hover:text-white transition">Responsible Gaming</a></li>
+                            <li><a href="/contact/" class="text-gray-400 hover:text-white transition">Contact Us</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold text-white mb-6">Legal</h3>
+                        <ul class="space-y-3">
+                            <li><a href="/privacy/" class="text-gray-400 hover:text-white transition">Privacy Policy</a>
+                            </li>
+                            <li><a href="/terms/" class="text-gray-400 hover:text-white transition">Terms of Service</a>
+                            </li>
+                            <li><a href="/cookies/" class="text-gray-400 hover:text-white transition">Cookies Policy</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 class="text-lg font-bold text-white mb-6">Contact</h3>
+                        <ul class="space-y-4 text-gray-400">
+                            <li class="flex items-start">
+                                <i class="fas fa-envelope mt-1 mr-4 text-primary"></i>
+                                <span>apps@cashvipspin.com</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-phone-alt mt-1 mr-4 text-primary"></i>
+                                <span>+82 10-9284-8372</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-map-marker-alt mt-1 mr-4 text-primary"></i>
+                                <span>328 Teheran-ro, Gangnam-gu, Seoul, South Korea</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="border-t border-gray-800 pt-8">
+                    <p class="text-gray-500 text-sm text-center">
+                        © 2025 ARK Casino by Murka Games. All rights reserved. | 18+ Only | Play Responsibly | *Powered
+                        by Intel® technology
+                    </p>
+                    <p class="text-gray-600 text-xs text-center mt-4 max-w-3xl mx-auto">
+                        This game is intended for an adult audience and does not offer "real money gambling". Practice
+                        or success at social gaming does not imply future success at "real money gambling". Use of this
+                        application is governed by Murka's Terms of Service. Collection and use of personal data are
+                        subject to Murka's Privacy Policy.
+                    </p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Cookie Banner
+        const cookieBanner = document.getElementById('cookieBanner');
+        const acceptCookies = document.getElementById('acceptCookies');
+        const declineCookies = document.getElementById('declineCookies');
+
+        // Check if cookie consent was given
+        if (!localStorage.getItem('cookieConsent')) {
+            setTimeout(() => {
+                cookieBanner.classList.remove('hidden');
+            }, 2000);
+        }
+
+        // Handle accept cookies
+        acceptCookies.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'accepted');
+            cookieBanner.classList.add('hidden');
+        });
+
+        // Handle decline cookies
+        declineCookies.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'declined');
+            cookieBanner.classList.add('hidden');
+        });
+    </script>
+</body>
+
+</html>

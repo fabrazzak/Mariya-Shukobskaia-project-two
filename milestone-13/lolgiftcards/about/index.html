@@ -1,0 +1,981 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn about LOLGiftCards - your trusted source for League of Legends gift cards, skins, and in-game content. Discover our mission, values, and team.">
+    <meta name="keywords" content="about LOLGiftCards, League of Legends gift cards, LoL skins, gaming shop, Riot Points">
+    <meta name="author" content="LOLGiftCards">
+    <title>About Us | LOLGiftCards.com - Official League of Legends Gift Cards</title>
+    <link rel="canonical" href="https://lolgiftcards.com/about/" />
+  <link rel="icon" href="/image/logo.png" type="image/x-icon" class="w-40 h-40 object-cover">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0f1923',
+                        secondary: '#1a2a3a',
+                        accent: '#ff4655',
+                        riot: '#ce3e3e',
+                        dark: '#0a0e12',
+                        light: '#f8f9fa',
+                    },
+                    fontFamily: {
+                        sans: ['Beaufort', 'Helvetica', 'Arial', 'sans-serif'],
+                        beaufort: ['Beaufort', 'serif'],
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Beaufort+Pro:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollTrigger.min.js"></script>
+    
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <style>
+        body {
+            font-family: 'Beaufort Pro', serif;
+            background-color: #0a0e12;
+            color: #f8f9fa;
+            overflow-x: hidden;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, #ff4655, #ce3e3e);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #0f1923 0%, #1a2a3a 100%);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(255, 70, 85, 0.25);
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #ff4655;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .btn-accent {
+            background: linear-gradient(135deg, #ff4655 0%, #ce3e3e 100%);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 70, 85, 0.3);
+        }
+        
+        .btn-accent:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 70, 85, 0.4);
+        }
+        
+        .particles-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        
+        .hero-gradient {
+            background: radial-gradient(circle at 20% 50%, rgba(255, 70, 85, 0.15) 0%, rgba(15, 25, 35, 0) 50%);
+        }
+        
+        .glow {
+            filter: drop-shadow(0 0 8px rgba(255, 70, 85, 0.7));
+        }
+        
+        .feature-icon {
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1) rotate(5deg);
+            color: #ff4655;
+        }
+        
+        .scroll-down {
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-20px);
+            }
+            60% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        .ripple {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .ripple:after {
+            content: "";
+            display: block;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            background-image: radial-gradient(circle, #fff 10%, transparent 10.01%);
+            background-repeat: no-repeat;
+            background-position: 50%;
+            transform: scale(10, 10);
+            opacity: 0;
+            transition: transform .5s, opacity 1s;
+        }
+        
+        .ripple:active:after {
+            transform: scale(0, 0);
+            opacity: .3;
+            transition: 0s;
+        }
+        
+        .tilt-hover {
+            transition: transform 0.3s ease;
+        }
+        
+        .tilt-hover:hover {
+            transform: rotateY(10deg) rotateX(5deg);
+        }
+        
+        .parallax-bg {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-left: 3rem;
+            margin-bottom: 3rem;
+        }
+        
+        .timeline-item:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 2px;
+            height: 100%;
+            background: linear-gradient(to bottom, #ff4655, #ce3e3e);
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            left: -0.5rem;
+            top: 0;
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: 50%;
+            background: #ff4655;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        
+        .team-card:hover .team-social {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .team-social {
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .value-card {
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, rgba(15, 25, 35, 0.7) 0%, rgba(26, 42, 58, 0.7) 100%);
+            backdrop-filter: blur(10px);
+        }
+        
+        .value-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(255, 70, 85, 0.1), 0 10px 10px -5px rgba(255, 70, 85, 0.04);
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <!-- Particles Background -->
+    <div id="particles-js" class="particles-container fixed inset-0 w-full h-full"></div>
+    
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-primary/90 backdrop-blur-md border-b border-secondary">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="/" class="flex items-center">
+                        <img src="/image/logo.png" alt="LOLGiftCards Logo" class="h-20 w-30 object-cover glow">
+                    </a>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="nav-link text-light hover:text-accent font-medium">Home</a>
+                    <a href="/shop/" class="nav-link text-light hover:text-accent font-medium">Shop</a>
+                    <a href="/blog/" class="nav-link text-light hover:text-accent font-medium">Blog</a>
+                    <a href="/about/" class="nav-link text-accent font-medium">About</a>
+                    <a href="/contact/" class="nav-link text-light hover:text-accent font-medium">Contact</a>
+                    
+                    <!-- Cart Icon -->
+                    <a href="/cart/" class="relative p-2 text-light hover:text-accent">
+                        <i class="fas fa-shopping-cart text-xl"></i>
+                        <span id="cart-count" class="absolute -top-1 -right-1 bg-accent text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                    </a>
+                    
+                    <!-- Auth Buttons -->
+                    <a href="/login/" class="text-white hover:text-accent">
+                        <i class="fas fa-user"></i>
+                    </a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-button" class="text-light hover:text-accent focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-primary border-t border-secondary">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="/" class="block px-3 py-2 text-light hover:text-accent font-medium">Home</a>
+                <a href="/shop/" class="block px-3 py-2 text-light hover:text-accent font-medium">Shop</a>
+                <a href="/blog/" class="block px-3 py-2 text-light hover:text-accent font-medium">Blog</a>
+                <a href="/about/" class="block px-3 py-2 text-accent font-medium">About</a>
+                <a href="/contact/" class="block px-3 py-2 text-light hover:text-accent font-medium">Contact</a>
+                <a href="/cart/" class="block px-3 py-2 text-light hover:text-accent font-medium">
+                    <span>Cart</span>
+                    <span id="mobile-cart-count" class="ml-2 bg-accent text-white text-xs font-bold rounded-full h-5 w-5 inline-flex items-center justify-center">0</span>
+                </a>
+                <a href="/login/" class="text-white hover:text-accent">
+                        <i class="fas fa-user"></i>
+                    </a>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="relative pt-24 pb-20 md:pt-32 md:pb-28 hero-gradient overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div class="text-center md:text-left">
+                    <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+                        <span class="gradient-text">Our Story</span><br>
+                        Powering Your Gaming Journey
+                    </h1>
+                    <p class="text-lg md:text-xl text-gray-300 mb-8 max-w-lg">
+                        Since 2020, we've been dedicated to providing League of Legends players with instant access to the best gift cards, skins, and in-game content.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                        <a href="#mission" class="btn-accent px-8 py-4 rounded-md text-white font-bold text-lg ripple transform hover:scale-105 transition-transform duration-300">
+                            Our Mission <i class="fas fa-arrow-down ml-2"></i>
+                        </a>
+                        <a href="/contact/" class="bg-secondary hover:bg-secondary/80 px-8 py-4 rounded-md text-white font-bold text-lg border border-accent/50 ripple transform hover:scale-105 transition-transform duration-300">
+                            Contact Us <i class="fas fa-envelope ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="absolute inset-0 bg-accent/20 rounded-3xl blur-3xl -z-10"></div>
+                    <div class="relative tilt-hover">
+                        <img src="/image/gift-cards.jpg" alt="League of Legends Team" class="w-full h-auto rounded-3xl object-cover glow transform transition-all duration-500 hover:rotate-1 hover:scale-105">
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+       
+        
+        <!-- Scroll Down Indicator -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 scroll-down">
+            <a href="#mission" class="text-gray-400 hover:text-accent">
+                <i class="fas fa-chevron-down text-2xl"></i>
+            </a>
+        </div>
+    </section>
+    
+    <!-- Mission Section -->
+    <section id="mission" class="py-16 bg-gradient-to-b from-primary to-secondary">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                    Our <span class="gradient-text">Mission & Values</span>
+                </h2>
+                <p class="text-lg text-gray-300 max-w-2xl mx-auto">
+                    We're more than just a store - we're passionate gamers committed to enhancing your League of Legends experience.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Value 1 -->
+                <div class="value-card card-hover p-8 rounded-xl border border-gray-800">
+                    <div class="text-accent text-4xl mb-6">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Instant Delivery</h3>
+                    <p class="text-gray-300">
+                        We guarantee immediate access to your purchases because we know you want to get back to the game as soon as possible.
+                    </p>
+                </div>
+                
+                <!-- Value 2 -->
+                <div class="value-card card-hover p-8 rounded-xl border border-gray-800">
+                    <div class="text-accent text-4xl mb-6">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">100% Secure</h3>
+                    <p class="text-gray-300">
+                        Your security is our priority. We use advanced encryption and verification to protect every transaction.
+                    </p>
+                </div>
+                
+                <!-- Value 3 -->
+                <div class="value-card card-hover p-8 rounded-xl border border-gray-800">
+                    <div class="text-accent text-4xl mb-6">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Community Focused</h3>
+                    <p class="text-gray-300">
+                        We actively engage with and support the LoL community through events, guides, and exclusive deals.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Timeline Section -->
+    <section class="py-16 bg-dark">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                    Our <span class="gradient-text">Journey</span>
+                </h2>
+                <p class="text-lg text-gray-300 max-w-2xl mx-auto">
+                    From humble beginnings to becoming a trusted name in the League of Legends community.
+                </p>
+            </div>
+            
+            <div class="space-y-8">
+                <!-- Timeline Item 1 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot">
+                        <i class="fas fa-rocket text-xs"></i>
+                    </div>
+                    <div class="bg-secondary rounded-xl p-6 border border-gray-800">
+                        <h3 class="text-xl font-bold mb-2">Founded in 2020</h3>
+                        <p class="text-gray-300 mb-2">
+                            Started as a small team of passionate League players who wanted to create a better way to purchase RP and skins.
+                        </p>
+                        <span class="text-sm text-accent">June 2020</span>
+                    </div>
+                </div>
+                
+                <!-- Timeline Item 2 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot">
+                        <i class="fas fa-users text-xs"></i>
+                    </div>
+                    <div class="bg-secondary rounded-xl p-6 border border-gray-800">
+                        <h3 class="text-xl font-bold mb-2">First 10,000 Customers</h3>
+                        <p class="text-gray-300 mb-2">
+                            Reached our first major milestone by serving 10,000 satisfied customers with instant digital deliveries.
+                        </p>
+                        <span class="text-sm text-accent">December 2021</span>
+                    </div>
+                </div>
+                
+                <!-- Timeline Item 3 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot">
+                        <i class="fas fa-globe text-xs"></i>
+                    </div>
+                    <div class="bg-secondary rounded-xl p-6 border border-gray-800">
+                        <h3 class="text-xl font-bold mb-2">Expanded to NA Market</h3>
+                        <p class="text-gray-300 mb-2">
+                            Officially launched our North American operations with dedicated servers and support team.
+                        </p>
+                        <span class="text-sm text-accent">March 2025</span>
+                    </div>
+                </div>
+                
+                <!-- Timeline Item 4 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot">
+                        <i class="fas fa-trophy text-xs"></i>
+                    </div>
+                    <div class="bg-secondary rounded-xl p-6 border border-gray-800">
+                        <h3 class="text-xl font-bold mb-2">100k+ Happy Customers</h3>
+                        <p class="text-gray-300 mb-2">
+                            Celebrated serving over 100,000 League of Legends players with our fast and reliable service.
+                        </p>
+                        <span class="text-sm text-accent">July 2025</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Team Section -->
+    <section class="py-16 bg-gradient-to-b from-dark to-primary">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                    Meet Our <span class="gradient-text">Team</span>
+                </h2>
+                <p class="text-lg text-gray-300 max-w-2xl mx-auto">
+                    The passionate gamers and professionals behind LOLGiftCards
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Team Member 1 -->
+                <div class="team-card bg-secondary rounded-xl overflow-hidden border border-gray-800 text-center p-6 relative">
+                    <div class="relative mx-auto w-32 h-32 rounded-full overflow-hidden border-2 border-accent mb-4">
+                        <img src="/image/Team/team1.png" alt="Alex Johnson" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="text-xl font-bold mb-1">Alex Johnson</h3>
+                    <p class="text-accent mb-4">CEO & Founder</p>
+                    <p class="text-gray-300 text-sm mb-4">
+                        Former Diamond-ranked player turned entrepreneur with a vision for better gaming commerce.
+                    </p>
+                   
+                </div>
+                
+                <!-- Team Member 2 -->
+                <div class="team-card bg-secondary rounded-xl overflow-hidden border border-gray-800 text-center p-6 relative">
+                    <div class="relative mx-auto w-32 h-32 rounded-full overflow-hidden border-2 border-accent mb-4">
+                        <img src="/image/Team/team2.jpg" alt="Sarah Chen" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="text-xl font-bold mb-1">Sarah Chen</h3>
+                    <p class="text-accent mb-4">Head of Operations</p>
+                    <p class="text-gray-300 text-sm mb-4">
+                        Ensures seamless transactions and customer satisfaction across all platforms.
+                    </p>
+                   
+                </div>
+                
+                <!-- Team Member 3 -->
+                <div class="team-card bg-secondary rounded-xl overflow-hidden border border-gray-800 text-center p-6 relative">
+                    <div class="relative mx-auto w-32 h-32 rounded-full overflow-hidden border-2 border-accent mb-4">
+                        <img src="/image/Team/team3.webp" alt="Marcus Lee" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="text-xl font-bold mb-1">Marcus Lee</h3>
+                    <p class="text-accent mb-4">Tech Lead</p>
+                    <p class="text-gray-300 text-sm mb-4">
+                        Builds and maintains our secure platform with cutting-edge technology.
+                    </p>
+                   
+                </div>
+                
+                <!-- Team Member 4 -->
+                <div class="team-card bg-secondary rounded-xl overflow-hidden border border-gray-800 text-center p-6 relative">
+                    <div class="relative mx-auto w-32 h-32 rounded-full overflow-hidden border-2 border-accent mb-4">
+                        <img src="/image/Team/team4.jpg" alt="Jamie Rodriguez" class="w-full h-full object-cover">
+                    </div>
+                    <h3 class="text-xl font-bold mb-1">Jamie Rodriguez</h3>
+                    <p class="text-accent mb-4">Community Manager</p>
+                    <p class="text-gray-300 text-sm mb-4">
+                        Connects with players and creates engaging content for our community.
+                    </p>
+                   
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <p class="text-gray-400 max-w-2xl mx-auto">
+                    We're always looking for passionate gamers to join our team. Check out our careers page for current opportunities.
+                </p>
+                <a href="/shop/" class="inline-flex items-center mt-6 px-6 py-3 border border-accent text-accent font-bold rounded-md hover:bg-accent hover:text-white transition-colors duration-300">
+                    View Open Positions <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Stats Section -->
+    <section class="py-16 bg-secondary">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <!-- Stat 1 -->
+                <div class="p-6">
+                    <div class="text-4xl md:text-5xl font-bold gradient-text mb-2">100K+</div>
+                    <div class="text-gray-300">Happy Customers</div>
+                </div>
+                
+                <!-- Stat 2 -->
+                <div class="p-6">
+                    <div class="text-4xl md:text-5xl font-bold gradient-text mb-2">24/7</div>
+                    <div class="text-gray-300">Customer Support</div>
+                </div>
+                
+                <!-- Stat 3 -->
+                <div class="p-6">
+                    <div class="text-4xl md:text-5xl font-bold gradient-text mb-2">99.9%</div>
+                    <div class="text-gray-300">Uptime</div>
+                </div>
+                
+                <!-- Stat 4 -->
+                <div class="p-6">
+                    <div class="text-4xl md:text-5xl font-bold gradient-text mb-2">5</div>
+                    <div class="text-gray-300">Years in Business</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Testimonials -->
+    <section class="py-16 bg-dark">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                    What Our <span class="gradient-text">Customers Say</span>
+                </h2>
+                <p class="text-lg text-gray-300 max-w-2xl mx-auto">
+                    Don't just take our word for it - hear from our satisfied customers
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="bg-primary rounded-xl p-8 border border-gray-800">
+                    <div class="flex items-center mb-4">
+                        <div class="flex text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-6">
+                        "Got my RP code instantly after purchase! Was able to buy the new skin I wanted right away. Will definitely be using this service again."
+                    </p>
+                    <div class="flex items-center">
+                        <img src="/image/Testimonials/avatar1.jpg" alt="Christina" class="h-10 w-10 rounded-full">
+                        <div class="ml-3">
+                            <h4 class="font-bold text-light">Christina</h4>
+                            <p class="text-sm text-gray-400">Verified Buyer</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 2 -->
+                <div class="bg-primary rounded-xl p-8 border border-gray-800">
+                    <div class="flex items-center mb-4">
+                        <div class="flex text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-6">
+                        "Super fast delivery and great customer service when I had a question. The $50 gift card was perfect for my brother's birthday gift!"
+                    </p>
+                    <div class="flex items-center">
+                        <img src="/image/Testimonials/avatar2.jpg" alt="GeekyPanda404" class="h-10 w-10 rounded-full">
+                        <div class="ml-3">
+                            <h4 class="font-bold text-light">GeekyPanda404</h4>
+                            <p class="text-sm text-gray-400">Verified Buyer</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 3 -->
+                <div class="bg-primary rounded-xl p-8 border border-gray-800">
+                    <div class="flex items-center mb-4">
+                        <div class="flex text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-6">
+                        "I was skeptical at first but the code worked perfectly. Received it in my email within minutes of ordering. Will be back for more!"
+                    </p>
+                    <div class="flex items-center">
+                        <img src="/image/Testimonials/avatar3.jpg" alt="Arianna" class="h-10 w-10 rounded-full">
+                        <div class="ml-3">
+                            <h4 class="font-bold text-light">Arianna</h4>
+                            <p class="text-sm text-gray-400">Verified Buyer</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-r from-primary to-accent/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6 text-light">
+                Ready to Enhance Your <span class="gradient-text">Gaming Experience</span>?
+            </h2>
+            <p class="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+                Join thousands of players who trust us for their League of Legends gift cards and skins.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="/shop/" class="bg-white text-primary px-8 py-4 rounded-md font-bold text-lg ripple transform hover:scale-105 transition-transform duration-300">
+                    Shop Now <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+                <a href="/register/" class="bg-accent hover:bg-accent/90 text-white px-8 py-4 rounded-md font-bold text-lg border border-white/20 ripple transform hover:scale-105 transition-transform duration-300">
+                    Register for 10% Bonus <i class="fas fa-gift ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="bg-dark pt-16 pb-8 border-t border-secondary">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+                <!-- Column 1 -->
+                <div>
+                    <a href="/" class="flex items-center mb-6">
+                         <img src="/image/logo.png" alt="LOLGiftCards Logo" class="h-20 w-30 object-cover glow">
+                        
+                    </a>
+                    <p class="text-gray-400 mb-6">
+                        Your trusted source for League of Legends gift cards, skins, and in-game content. Instant delivery guaranteed.
+                    </p>
+                    
+                </div>
+                
+                <!-- Column 2 -->
+                <div>
+                    <h3 class="text-lg font-bold text-light mb-6">Shop</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/shop/" class="text-gray-400 hover:text-accent transition-colors">Gift Cards</a></li>
+                        <li><a href="/shop/" class="text-gray-400 hover:text-accent transition-colors">Skins</a></li>
+                        <li><a href="/shop/" class="text-gray-400 hover:text-accent transition-colors">Champions</a></li>
+                        <li><a href="/shop/" class="text-gray-400 hover:text-accent transition-colors">Bundles</a></li>
+                        <li><a href="/shop/" class="text-gray-400 hover:text-accent transition-colors">Sales & Deals</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Column 3 -->
+                <div>
+                    <h3 class="text-lg font-bold text-light mb-6">Company</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/about/" class="text-gray-400 hover:text-accent transition-colors">About Us</a></li>
+                        <li><a href="/blog/" class="text-gray-400 hover:text-accent transition-colors">Blog</a></li>
+                        <li><a href="/contact/" class="text-gray-400 hover:text-accent transition-colors">Contact Us</a></li>
+                      
+                    </ul>
+                </div>
+                
+                <!-- Column 4 -->
+                <div>
+                    <h3 class="text-lg font-bold text-light mb-6">Support</h3>
+                    <ul class="space-y-3">
+                        
+                        <li><a href="/privacy/" class="text-gray-400 hover:text-accent transition-colors">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="text-gray-400 hover:text-accent transition-colors">Terms of Service</a></li>
+                        <li><a href="/cookies/" class="text-gray-400 hover:text-accent transition-colors">Cookies</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-secondary mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-500 text-sm mb-4 md:mb-0">
+                    &copy; 2025 LOLGiftCards.com. All rights reserved.
+                </p>
+                <p class="text-gray-500 text-sm text-center">
+                    We are not an affiliate agency. All products are sold independently through our platform.
+                </p>
+                
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Cookies Consent -->
+    <div id="cookies-consent" class="hidden fixed bottom-0 left-0 right-0 bg-primary border-t border-secondary p-4 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <div class="mb-4 md:mb-0">
+                    <p class="text-gray-300">
+                        We use cookies to enhance your experience on our website. By continuing to browse, you agree to our use of cookies.
+                    </p>
+                </div>
+                <div class="flex space-x-4">
+                    <button id="accept-cookies" class="btn-accent px-6 py-2 rounded-md text-white font-medium ripple">
+                        Accept
+                    </button>
+                    <button id="decline-cookies" class="bg-secondary hover:bg-secondary/80 px-6 py-2 rounded-md text-white font-medium border border-gray-700 ripple">
+                        Decline
+                    </button>
+                    <a href="/privacy/" class="bg-transparent hover:bg-secondary/50 px-6 py-2 rounded-md text-accent font-medium border border-accent ripple">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script>
+        // Mobile Menu Toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+        
+        // Initialize Particles.js
+        particlesJS('particles-js', {
+            "particles": {
+                "number": {
+                    "value": 80,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#ff4655"
+                },
+                "shape": {
+                    "type": "circle",
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000000"
+                    },
+                    "polygon": {
+                        "nb_sides": 5
+                    }
+                },
+                "opacity": {
+                    "value": 0.3,
+                    "random": false,
+                    "anim": {
+                        "enable": false,
+                        "speed": 1,
+                        "opacity_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 3,
+                    "random": true,
+                    "anim": {
+                        "enable": false,
+                        "speed": 40,
+                        "size_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#ff4655",
+                    "opacity": 0.2,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 2,
+                    "direction": "none",
+                    "random": false,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                    "attract": {
+                        "enable": false,
+                        "rotateX": 600,
+                        "rotateY": 1200
+                    }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "grab"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {
+                        "distance": 140,
+                        "line_linked": {
+                            "opacity": 1
+                        }
+                    },
+                    "bubble": {
+                        "distance": 400,
+                        "size": 40,
+                        "duration": 2,
+                        "opacity": 8,
+                        "speed": 3
+                    },
+                    "repulse": {
+                        "distance": 200,
+                        "duration": 0.4
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    },
+                    "remove": {
+                        "particles_nb": 2
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+        
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+        
+        gsap.from(".hero-gradient", {
+            duration: 1.5,
+            opacity: 0,
+            y: 50,
+            ease: "power3.out"
+        });
+        
+        gsap.utils.toArray(".card-hover").forEach(card => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                },
+                opacity: 0,
+                y: 50,
+                duration: 0.8,
+                ease: "power2.out"
+            });
+        });
+        
+        gsap.utils.toArray(".timeline-item").forEach(item => {
+            gsap.from(item, {
+                scrollTrigger: {
+                    trigger: item,
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                },
+                opacity: 0,
+                x: -50,
+                duration: 0.8,
+                ease: "power2.out"
+            });
+        });
+        
+        gsap.utils.toArray(".team-card").forEach(card => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                },
+                opacity: 0,
+                y: 50,
+                duration: 0.8,
+                ease: "power2.out",
+                stagger: 0.1
+            });
+        });
+        
+        // Cart functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize cart count
+            updateCartCount();
+            
+            // Cookies Consent
+            if (!localStorage.getItem('cookiesAccepted')) {
+                document.getElementById('cookies-consent').classList.remove('hidden');
+            }
+            
+            document.getElementById('accept-cookies').addEventListener('click', function() {
+                localStorage.setItem('cookiesAccepted', 'true');
+                document.getElementById('cookies-consent').classList.add('hidden');
+            });
+            
+            document.getElementById('decline-cookies').addEventListener('click', function() {
+                localStorage.setItem('cookiesDeclined', 'true');
+                document.getElementById('cookies-consent').classList.add('hidden');
+            });
+        });
+        
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            
+            document.getElementById('cart-count').textContent = totalItems;
+            document.getElementById('mobile-cart-count').textContent = totalItems;
+        }
+    </script>
+</body>
+</html>

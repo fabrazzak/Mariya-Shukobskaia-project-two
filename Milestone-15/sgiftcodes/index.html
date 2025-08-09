@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SGiftCodes - Premium Gaming Gift Cards & Codes</title>
+    <meta name="description" content="Buy digital gaming gift cards, skins, mods and codes for PlayStation, Xbox, Roblox and more. Instant delivery worldwide.">
+    <meta name="keywords" content="gaming codes, PlayStation gift card, Xbox live code, Robux, digital game codes, esports skins, game mods">
+    <link rel="canonical" href="https://sgiftcodes.com/">
+    <link rel="icon" href="/assets/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Oxanium:wght@400;500;600;700&family=Rubik:wght@400;500;600;700&display=swap');
+        
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --accent: #fd79a8;
+            --dark: #2d3436;
+            --light: #f5f6fa;
+        }
+        
+        body {
+            font-family: 'Rubik', sans-serif;
+            background-color: #0f0f13;
+            color: #e0e0e0;
+            overflow-x: hidden;
+        }
+        
+        .font-gaming {
+            font-family: 'Oxanium', cursive;
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+        }
+        
+        .glow-text {
+            text-shadow: 0 0 10px rgba(108, 92, 231, 0.7);
+        }
+        
+        .glow-box {
+            box-shadow: 0 0 15px rgba(108, 92, 231, 0.5);
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(108, 92, 231, 0.3);
+        }
+        
+        .hamburger-menu {
+            width: 30px;
+            height: 20px;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .hamburger-menu span {
+            display: block;
+            position: absolute;
+            height: 3px;
+            width: 100%;
+            background: white;
+            border-radius: 3px;
+            opacity: 1;
+            left: 0;
+            transform: rotate(0deg);
+            transition: .25s ease-in-out;
+        }
+        
+        .hamburger-menu span:nth-child(1) {
+            top: 0px;
+        }
+        
+        .hamburger-menu span:nth-child(2), .hamburger-menu span:nth-child(3) {
+            top: 10px;
+        }
+        
+        .hamburger-menu span:nth-child(4) {
+            top: 20px;
+        }
+        
+        .hamburger-menu.open span:nth-child(1) {
+            top: 10px;
+            width: 0%;
+            left: 50%;
+        }
+        
+        .hamburger-menu.open span:nth-child(2) {
+            transform: rotate(45deg);
+        }
+        
+        .hamburger-menu.open span:nth-child(3) {
+            transform: rotate(-45deg);
+        }
+        
+        .hamburger-menu.open span:nth-child(4) {
+            top: 10px;
+            width: 0%;
+            left: 50%;
+        }
+        
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+        
+        .content-over-particle {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .threejs-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .scroll-down {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0) translateX(-50%);
+            }
+            40% {
+                transform: translateY(-20px) translateX(-50%);
+            }
+            60% {
+                transform: translateY(-10px) translateX(-50%);
+            }
+        }
+        
+        .gradient-border {
+            position: relative;
+            border-radius: 12px;
+        }
+        
+        .gradient-border::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #6c5ce7, #fd79a8, #00cec9);
+            border-radius: 14px;
+            z-index: -1;
+            opacity: 0.7;
+        }
+        
+        .newsletter-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(108, 92, 231, 0.5);
+        }
+        
+        .product-slider {
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary) transparent;
+        }
+        
+        .product-slider::-webkit-scrollbar {
+            height: 6px;
+        }
+        
+        .product-slider::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        
+        .product-slider::-webkit-scrollbar-thumb {
+            background-color: var(--primary);
+            border-radius: 6px;
+        }
+
+        /* Responsive slider styles */
+        .slider-container {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        .slider-track {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+
+        .slider-item {
+            flex: 0 0 100%;
+            padding: 0 10px;
+            box-sizing: border-box;
+        }
+
+        @media (min-width: 640px) {
+            .slider-item {
+                flex: 0 0 50%;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .slider-item {
+                flex: 0 0 33.333%;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .slider-item {
+                flex: 0 0 25%;
+            }
+        }
+
+        .slider-nav {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(0,0,0,0.5);
+            color: white;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            z-index: 10;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .slider-prev {
+            left: 10px;
+        }
+
+        .slider-next {
+            right: 10px;
+        }
+
+        .slider-nav:hover {
+            background: rgba(108, 92, 231, 0.8);
+        }
+
+        .slider-dots {
+            display: flex;
+            justify-content: center;
+            margin-top: 15px;
+        }
+
+        .slider-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #6c5ce7;
+            opacity: 0.3;
+            margin: 0 5px;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        .slider-dot.active {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <!-- Header -->
+    <header class="fixed w-full z-50 bg-black bg-opacity-90 backdrop-blur-sm border-b border-gray-800">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <!-- Logo -->
+            <div class="flex items-center">
+                <a href="/" class="flex items-center">
+                    <div class="w-10 h-10 rounded-full bg-gradient-to-r from-purple-600 to-pink-500 flex items-center justify-center mr-2">
+                        <span class="font-gaming font-bold text-white text-xl">SC</span>
+                    </div>
+                    <span class="font-gaming text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-400">SGiftCodes</span>
+                </a>
+            </div>
+            
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="/" class="text-white hover:text-purple-400 transition font-medium">Home</a>
+                <a href="/shop/" class="text-white hover:text-purple-400 transition font-medium">Shop</a>
+                <a href="/blog/" class="text-white hover:text-purple-400 transition font-medium">Blog</a>
+                <a href="/about/" class="text-white hover:text-purple-400 transition font-medium">About</a>
+                <a href="/contact/" class="text-white hover:text-purple-400 transition font-medium">Contact</a>
+                <div id="account-nav" class="hidden">
+                    <a href="/account/" class="text-white hover:text-purple-400 transition font-medium">Account</a>
+                </div>
+            </nav>
+            
+            <!-- Right Side Icons -->
+            <div class="flex items-center space-x-4">
+                <a href="/cart/" class="relative text-white hover:text-purple-400 transition">
+                    <i class="fas fa-shopping-cart text-xl"></i>
+                    <span id="cart-count" class="absolute -top-2 -right-2 bg-purple-600 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                </a>
+                
+                <a href="/login/" class="hidden md:block ml-4 px-4 py-2 bg-gradient-to-r from-purple-600 to-pink-500 text-white rounded-lg font-medium hover:opacity-90 transition">Login</a>
+                
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <div id="hamburger" class="hamburger-menu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-gray-900 bg-opacity-95 backdrop-blur-sm w-full absolute top-16 left-0 py-4 px-4 border-t border-gray-800">
+            <div class="flex flex-col space-y-4">
+                <a href="/" class="text-white hover:text-purple-400 transition font-medium py-2">Home</a>
+                <a href="/shop/" class="text-white hover:text-purple-400 transition font-medium py-2">Shop</a>
+                <a href="/blog/" class="text-white hover:text-purple-400 transition font-medium py-2">Blog</a>
+                <a href="/about/" class="text-white hover:text-purple-400 transition font-medium py-2">About</a>
+                <a href="/contact/" class="text-white hover:text-purple-400 transition font-medium py-2">Contact</a>
+                <div id="mobile-account-nav" class="hidden">
+                    <a href="/account/" class="text-white hover:text-purple-400 transition font-medium py-2">Account</a>
+                </div>
+                <a href="/login/" class="mt-4 px-4 py-2 bg-gradient-to-r from-purple-600 to-pink-500 text-white rounded-lg font-medium hover:opacity-90 transition text-center">Login</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section with Three.js Background -->
+    <section class="relative hero-gradient min-h-screen flex items-center pt-16 overflow-hidden">
+        <div id="particles-js" class="absolute top-0 left-0 w-full h-full"></div>
+        <div class="threejs-container" id="threejs-container"></div>
+        
+        <div class="container mx-auto px-4 py-20 content-over-particle">
+            <div class="max-w-4xl mx-auto text-center">
+                <h1 class="font-gaming text-4xl md:text-6xl font-bold text-white mb-6 glow-text">
+                    <span class="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-400">Premium Gaming Codes</span> Delivered Instantly
+                </h1>
+                <p class="text-xl text-gray-300 mb-10 max-w-2xl mx-auto">
+                    Get digital game codes, gift cards, skins and mods for PlayStation, Xbox, Roblox and more. Instant delivery worldwide.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="/shop/" class="px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-500 text-white rounded-lg font-bold text-lg hover:opacity-90 transition transform hover:scale-105">
+                        Shop Now
+                    </a>
+                    <a href="#featured" class="px-8 py-4 bg-transparent border-2 border-purple-500 text-white rounded-lg font-bold text-lg hover:bg-purple-900 hover:bg-opacity-30 transition transform hover:scale-105">
+                        Featured Products
+                    </a>
+                </div>
+            </div>
+            
+            <div class="scroll-down">
+                <a href="#featured" class="text-white animate-bounce">
+                    <i class="fas fa-chevron-down text-2xl"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Products -->
+    <section id="featured" class="py-20 bg-gray-900">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="font-gaming text-3xl md:text-4xl font-bold text-white mb-4">
+                    <span class="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-400">Featured</span> Products
+                </h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">
+                    Check out our most popular gaming codes and gift cards. Instant delivery after purchase.
+                </p>
+            </div>
+            
+            <!-- Responsive Product Slider -->
+            <div class="slider-container">
+                <div class="slider-track" id="product-slider">
+                    <!-- Products will be loaded here via JavaScript -->
+                </div>
+                <button class="slider-nav slider-prev" id="slider-prev">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="slider-nav slider-next" id="slider-next">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+                <div class="slider-dots" id="slider-dots">
+                    <!-- Dots will be added via JavaScript -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="py-20 bg-gray-800">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="font-gaming text-3xl md:text-4xl font-bold text-white mb-4">
+                    Shop by <span class="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-400">Category</span>
+                </h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">
+                    Find exactly what you're looking for in our specialized categories
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <a href="/shop/playstation/" class="gradient-border bg-gray-900 rounded-xl p-6 flex flex-col items-center hover:bg-gray-850  hover:scale-105">
+                    <div class="w-16 h-16 bg-purple-900 rounded-full flex items-center justify-center mb-4">
+                        <i class="fab fa-playstation text-3xl text-white"></i>
+                    </div>
+                    <h3 class="font-gaming text-xl text-white mb-2">PlayStation</h3>
+                    <p class="text-gray-400 text-sm text-center">Gift Cards & Codes</p>
+                </a>
+                
+                <a href="/shop/xbox/" class="gradient-border bg-gray-900 rounded-xl p-6 flex flex-col items-center hover:bg-gray-850 hover:scale-105">
+                    <div class="w-16 h-16 bg-green-900 rounded-full flex items-center justify-center mb-4">
+                        <i class="fab fa-xbox text-3xl text-white"></i>
+                    </div>
+                    <h3 class="font-gaming text-xl text-white mb-2">Xbox</h3>
+                    <p class="text-gray-400 text-sm text-center">Live Gold & Gift Cards</p>
+                </a>
+                
+                <a href="/shop/roblox/" class="gradient-border bg-gray-900 rounded-xl p-6 flex flex-col items-center hover:bg-gray-850  hover:scale-105">
+                    <div class="w-16 h-16 bg-red-900 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-gamepad text-3xl text-white"></i>
+                    </div>
+                    <h3 class="font-gaming text-xl text-white mb-2">Roblox</h3>
+                    <p class="text-gray-400 text-sm text-center">Robux Gift Cards</p>
+                </a>
+                
+                <a href="/shop/skins/" class="gradient-border bg-gray-900 rounded-xl p-6 flex flex-col items-center hover:bg-gray-850  hover:scale-105">
+                    <div class="w-16 h-16 bg-blue-900 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-paint-brush text-3xl text-white"></i>
+                    </div>
+                    <h3 class="font-gaming text-xl text-white mb-2">Skins</h3>
+                    <p class="text-gray-400 text-sm text-center">Exclusive Game Skins</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us -->
+    <section class="py-20 bg-gray-900">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="font-gaming text-3xl md:text-4xl font-bold text-white mb-4">
+                    Why <span class="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-400">Choose Us</span>
+                </h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">
+                    We provide the best digital gaming products with exceptional service
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="bg-gray-800 rounded-xl p-8 glow-box hover:bg-gray-750 transition">
+                    <div class="w-14 h-14 bg-purple-600 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-bolt text-2xl text-white"></i>
+                    </div>
+                    <h3 class="font-gaming text-xl text-white mb-3">Instant Delivery</h3>
+                    <p class="text-gray-400">Receive your digital codes instantly via email after purchase. No waiting required.</p>
+                </div>
+                
+                <div class="bg-gray-800 rounded-xl p-8 glow-box hover:bg-gray-750 transition">
+                    <div class="w-14 h-14 bg-pink-600 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-globe text-2xl text-white"></i>
+                    </div>
+                    <h3 class="font-gaming text-xl text-white mb-3">Worldwide Availability</h3>
+                    <p class="text-gray-400">We deliver digital products worldwide. No regional restrictions for most items.</p>
+                </div>
+                
+                <div class="bg-gray-800 rounded-xl p-8 glow-box hover:bg-gray-750 transition">
+                    <div class="w-14 h-14 bg-blue-600 rounded-full flex items-center justify-center mb-6">
+                        <i class="fas fa-shield-alt text-2xl text-white"></i>
+                    </div>
+                    <h3 class="font-gaming text-xl text-white mb-3">Secure Payments</h3>
+                    <p class="text-gray-400">All transactions are encrypted and secure. Your payment information is protected.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- New Arrivals -->
+    <section class="py-20 bg-gray-800">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="font-gaming text-3xl md:text-4xl font-bold text-white mb-4">
+                    <span class="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-400">New</span> Arrivals
+                </h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">
+                    Check out our latest additions to the store
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Products will be loaded here via JavaScript -->
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="/shop/" class="inline-block px-8 py-3 bg-gradient-to-r from-purple-600 to-pink-500 text-white rounded-lg font-bold text-lg hover:opacity-90 transition transform hover:scale-105">
+                    View All Products
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="py-20 bg-gradient-to-br from-purple-900 to-gray-900">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto bg-gray-900 bg-opacity-50 rounded-xl p-8 md:p-12 backdrop-blur-sm border border-gray-800">
+                <div class="text-center mb-8">
+                    <h2 class="font-gaming text-3xl md:text-4xl font-bold text-white mb-4">
+                        Get <span class="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-400">Exclusive</span> Deals
+                    </h2>
+                    <p class="text-gray-400">
+                        Subscribe to our newsletter and receive special offers, new product announcements, and gaming tips.
+                    </p>
+                </div>
+                
+                <form class="flex flex-col sm:flex-row gap-4 max-w-2xl mx-auto">
+                    <input type="email" placeholder="Your email address" class="flex-grow px-6 py-4 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 newsletter-input focus:border-purple-500 transition">
+                    <button type="submit" class="px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-500 text-white rounded-lg font-bold hover:opacity-90 transition">
+                        Subscribe
+                    </button>
+                </form>
+                
+                <p class="text-gray-500 text-sm text-center mt-4">
+                    We respect your privacy. Unsubscribe at any time.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Preview -->
+    <section class="py-20 bg-gray-900">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="font-gaming text-3xl md:text-4xl font-bold text-white mb-4">
+                    Latest <span class="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-400">Blog</span> Posts
+                </h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">
+                    Stay updated with the latest gaming news, tips and guides
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <a href="/blog/playstation-summer-sale/" class="bg-gray-800 rounded-xl overflow-hidden hover:bg-gray-750 transition transform hover:scale-[1.02]">
+                    <div class="h-48 bg-gradient-to-r from-purple-900 to-blue-900 flex items-center justify-center">
+                        <i class="fab fa-playstation text-6xl text-white opacity-30"></i>
+                    </div>
+                    <div class="p-6">
+                        <span class="text-purple-400 text-sm font-medium">June 15, 2025</span>
+                        <h3 class="text-xl font-bold text-white mt-2 mb-3">PlayStation Summer Sale 2025 - Best Deals</h3>
+                        <p class="text-gray-400">Discover the hottest deals in this year's PlayStation Summer Sale event.</p>
+                    </div>
+                </a>
+                
+                <a href="/blog/roblax-update/" class="bg-gray-800 rounded-xl overflow-hidden hover:bg-gray-750 transition transform hover:scale-[1.02]">
+                    <div class="h-48 bg-gradient-to-r from-red-900 to-orange-900 flex items-center justify-center">
+                        <i class="fas fa-gamepad text-6xl text-white opacity-30"></i>
+                    </div>
+                    <div class="p-6">
+                        <span class="text-purple-400 text-sm font-medium">June 10, 2025</span>
+                        <h3 class="text-xl font-bold text-white mt-2 mb-3">Roblox Summer Update - What's New</h3>
+                        <p class="text-gray-400">Everything you need to know about the latest Roblox summer update.</p>
+                    </div>
+                </a>
+                
+                <a href="/blog/xbox-game-pass/" class="bg-gray-800 rounded-xl overflow-hidden hover:bg-gray-750 transition transform hover:scale-[1.02]">
+                    <div class="h-48 bg-gradient-to-r from-green-900 to-teal-900 flex items-center justify-center">
+                        <i class="fab fa-xbox text-6xl text-white opacity-30"></i>
+                    </div>
+                    <div class="p-6">
+                        <span class="text-purple-400 text-sm font-medium">June 5, 2025</span>
+                        <h3 class="text-xl font-bold text-white mt-2 mb-3">Xbox Game Pass July 2025 Games Lineup</h3>
+                        <p class="text-gray-400">Check out the exciting games coming to Xbox Game Pass next month.</p>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="/blog/" class="inline-block px-8 py-3 bg-transparent border-2 border-purple-500 text-white rounded-lg font-bold text-lg hover:bg-purple-900 hover:bg-opacity-30 transition transform hover:scale-105">
+                    View All Posts
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-r from-purple-900 to-indigo-900">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="font-gaming text-3xl md:text-4xl font-bold text-white mb-6">
+                Ready to Get Your Gaming Codes?
+            </h2>
+            <p class="text-gray-300 max-w-2xl mx-auto mb-10">
+                Join thousands of satisfied gamers who trust us for their digital gaming needs.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="/shop/" class="px-8 py-4 bg-white text-purple-900 rounded-lg font-bold text-lg hover:bg-gray-100 transition transform hover:scale-105">
+                    Shop Now
+                </a>
+                <a href="/register/" class="px-8 py-4 bg-transparent border-2 border-white text-white rounded-lg font-bold text-lg hover:bg-white hover:bg-opacity-10 transition transform hover:scale-105">
+                    Register Now
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 pt-20 pb-10 border-t border-gray-800">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+                <div>
+                    <div class="flex items-center mb-6">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-r from-purple-600 to-pink-500 flex items-center justify-center mr-2">
+                            <span class="font-gaming font-bold text-white text-xl">SC</span>
+                        </div>
+                        <span class="font-gaming text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-400">SGiftCodes</span>
+                    </div>
+                    <p class="text-gray-400 mb-6">
+                        Your premier destination for digital gaming codes, gift cards, skins and mods.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-purple-400 transition">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-purple-400 transition">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-purple-400 transition">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-purple-400 transition">
+                            <i class="fab fa-discord"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="font-gaming text-xl text-white mb-6">Shop</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/shop/playstation/" class="text-gray-400 hover:text-purple-400 transition">PlayStation</a></li>
+                        <li><a href="/shop/xbox/" class="text-gray-400 hover:text-purple-400 transition">Xbox</a></li>
+                        <li><a href="/shop/roblox/" class="text-gray-400 hover:text-purple-400 transition">Roblox</a></li>
+                        <li><a href="/shop/skins/" class="text-gray-400 hover:text-purple-400 transition">Skins</a></li>
+                        <li><a href="/shop/mods/" class="text-gray-400 hover:text-purple-400 transition">Mods</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="font-gaming text-xl text-white mb-6">Company</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/about/" class="text-gray-400 hover:text-purple-400 transition">About Us</a></li>
+                        <li><a href="/blog/" class="text-gray-400 hover:text-purple-400 transition">Blog</a></li>
+                        <li><a href="/contact/" class="text-gray-400 hover:text-purple-400 transition">Contact</a></li>
+                        <li><a href="/careers/" class="text-gray-400 hover:text-purple-400 transition">Careers</a></li>
+                        <li><a href="/press/" class="text-gray-400 hover:text-purple-400 transition">Press</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="font-gaming text-xl text-white mb-6">Support</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/faq/" class="text-gray-400 hover:text-purple-400 transition">FAQ</a></li>
+                        <li><a href="/shipping/" class="text-gray-400 hover:text-purple-400 transition">Shipping & Delivery</a></li>
+                        <li><a href="/returns/" class="text-gray-400 hover:text-purple-400 transition">Returns & Refunds</a></li>
+                        <li><a href="/privacy/" class="text-gray-400 hover:text-purple-400 transition">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="text-gray-400 hover:text-purple-400 transition">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="pt-10 border-t border-gray-800">
+                <p class="text-gray-500 text-center">
+                    &copy; 2025 SGiftCodes. All rights reserved.
+                </p>
+                <p class="text-gray-600 text-center text-sm mt-2">
+                    We are not an affiliate agency. All products are sold independently through our platform.
+                </p>
+                <p class="text-gray-600 text-center text-sm mt-2">
+                    Address: 490 Chem. de Vassan, Val-d'Or, QC J9P 0C1, Canada | Phone: +1 (819) 824-3146 | Email: info@sgiftcodes.com
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cookies Consent -->
+    <div id="cookies-consent" class="hidden fixed bottom-0 left-0 right-0 bg-gray-800 border-t border-gray-700 z-50 p-4">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <div class="mb-4 md:mb-0 md:mr-6">
+                    <p class="text-gray-300">
+                        We use cookies to enhance your experience on our website. By continuing to browse, you agree to our use of cookies.
+                    </p>
+                </div>
+                <div class="flex space-x-4">
+                    <button id="accept-cookies" class="px-6 py-2 bg-purple-600 text-white rounded-lg font-medium hover:bg-purple-700 transition">
+                        Accept
+                    </button>
+                    <a href="/privacy/" class="px-6 py-2 bg-transparent border border-gray-600 text-gray-300 rounded-lg font-medium hover:bg-gray-700 transition">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check if user is logged in (simulated)
+        const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+        
+        // Update UI based on login status
+        if (isLoggedIn) {
+            document.getElementById('account-nav').classList.remove('hidden');
+            document.getElementById('mobile-account-nav').classList.remove('hidden');
+        }
+        
+        // Mobile menu toggle
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('open');
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('open');
+                mobileMenu.classList.add('hidden');
+            });
+        });
+        
+        // Sample product data
+        const products = [
+            {
+                id: 1,
+                name: "$10 PlayStation Store Gift Card",
+                price: 10.00,
+                image: "/assets/products/ps10.jpg",
+                category: "PlayStation",
+                rating: 4.6,
+                reviews: 270021,
+                platform: "PlayStation 4 | PlayStation 5",
+                description: "Redeem for anything on PlayStation Store: games, add-ons, PlayStation Plus and more."
+            },
+            {
+                id: 2,
+                name: "$25 PlayStation Store Gift Card",
+                price: 25.00,
+                image: "/assets/products/ps25.jpg",
+                category: "PlayStation",
+                rating: 4.6,
+                reviews: 270021,
+                platform: "PlayStation 4 | PlayStation 5",
+                description: "Redeem for anything on PlayStation Store: games, add-ons, PlayStation Plus and more."
+            },
+            {
+                id: 3,
+                name: "$50 PlayStation Store Gift Card",
+                price: 50.00,
+                image: "/assets/products/ps50.jpg",
+                category: "PlayStation",
+                rating: 4.6,
+                reviews: 270021,
+                platform: "PlayStation 4 | PlayStation 5",
+                description: "Redeem for anything on PlayStation Store: games, add-ons, PlayStation Plus and more."
+            },
+            {
+                id: 4,
+                name: "$100 PlayStation Store Gift Card",
+                price: 100.00,
+                image: "/assets/products/ps100.jpg",
+                category: "PlayStation",
+                rating: 4.6,
+                reviews: 270021,
+                platform: "PlayStation 4 | PlayStation 5",
+                description: "Redeem for anything on PlayStation Store: games, add-ons, PlayStation Plus and more."
+            },
+            {
+                id: 5,
+                name: "Roblox 1,000 Robux Gift Card",
+                price: 10.00,
+                image: "/assets/products/roblox1000.jpg",
+                category: "Roblox",
+                rating: 4.5,
+                reviews: 174602,
+                platform: "Windows | Mac | Mobile",
+                description: "Includes exclusive virtual item. Redeem for Robux to use in Roblox games."
+            },
+            {
+                id: 6,
+                name: "$10 Xbox Gift Card",
+                price: 10.00,
+                image: "/assets/products/xbox10.jpg",
+                category: "Xbox",
+                rating: 4.6,
+                reviews: 187899,
+                platform: "Xbox One | Xbox Series X|S",
+                description: "Redeem for games, movies, TV shows, devices, and more at Microsoft Store."
+            }
+        ];
+        
+        // Responsive slider functionality
+        const sliderTrack = document.getElementById('product-slider');
+        const sliderDots = document.getElementById('slider-dots');
+        const prevBtn = document.getElementById('slider-prev');
+        const nextBtn = document.getElementById('slider-next');
+        
+        let currentSlide = 0;
+        let slidesPerView = 1;
+        
+        function updateSlider() {
+            const width = window.innerWidth;
+            
+            if (width >= 1024) {
+                slidesPerView = 4;
+            } else if (width >= 768) {
+                slidesPerView = 3;
+            } else if (width >= 640) {
+                slidesPerView = 2;
+            } else {
+                slidesPerView = 1;
+            }
+            
+            updateSliderPosition();
+            updateDots();
+        }
+        
+        function updateSliderPosition() {
+            const slideWidth = 100 / slidesPerView;
+            sliderTrack.style.transform = `translateX(-${currentSlide * slideWidth}%)`;
+        }
+        
+        function updateDots() {
+            sliderDots.innerHTML = '';
+            const dotCount = Math.ceil(products.length / slidesPerView);
+            
+            for (let i = 0; i < dotCount; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'slider-dot';
+                if (i === currentSlide) {
+                    dot.classList.add('active');
+                }
+                dot.addEventListener('click', () => {
+                    currentSlide = i;
+                    updateSliderPosition();
+                    updateDots();
+                });
+                sliderDots.appendChild(dot);
+            }
+        }
+        
+        prevBtn.addEventListener('click', () => {
+            if (currentSlide > 0) {
+                currentSlide--;
+            } else {
+                currentSlide = Math.ceil(products.length / slidesPerView) - 1;
+            }
+            updateSliderPosition();
+            updateDots();
+        });
+        
+        nextBtn.addEventListener('click', () => {
+            const maxSlide = Math.ceil(products.length / slidesPerView) - 1;
+            if (currentSlide < maxSlide) {
+                currentSlide++;
+            } else {
+                currentSlide = 0;
+            }
+            updateSliderPosition();
+            updateDots();
+        });
+        
+        window.addEventListener('resize', updateSlider);
+        
+        // Load products into slider
+        products.forEach(product => {
+            const productElement = document.createElement('div');
+            productElement.className = 'slider-item';
+            productElement.innerHTML = `
+                <div class="bg-gray-800 rounded-xl overflow-hidden product-card h-full mx-2">
+                    <div class="h-[350px] bg-gray-700 flex items-center justify-center p-4">
+                        <img src="${product.image}" alt="${product.name}" class="w-full object-cover ">
+                    </div>
+                    <div class="p-4">
+                        <div class="flex items-center mb-2">
+                            <div class="flex text-yellow-400">
+                                ${Array(Math.floor(product.rating)).fill('<i class="fas fa-star"></i>').join('')}
+                                ${product.rating % 1 >= 0.5 ? '<i class="fas fa-star-half-alt"></i>' : ''}
+                            </div>
+                            <span class="text-gray-400 text-sm ml-2">(${product.reviews.toLocaleString()})</span>
+                        </div>
+                        <h3 class="font-gaming text-lg text-white mb-2 truncate">${product.name}</h3>
+                        <p class="text-gray-400 text-sm mb-3 line-clamp-2">${product.description}</p>
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-white">$${product.price.toFixed(2)}</span>
+                            <button class="add-to-cart px-4 py-2 bg-purple-600 text-white rounded-lg text-sm font-medium hover:bg-purple-700 transition" data-id="${product.id}">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            sliderTrack.appendChild(productElement);
+        });
+        
+        // Load new arrivals
+        const newArrivalsContainer = document.querySelector('.grid.grid-cols-1.sm\\:grid-cols-2.lg\\:grid-cols-3');
+        products.slice(0, 3).forEach(product => {
+            const productElement = document.createElement('div');
+            productElement.className = 'bg-gray-900 rounded-xl overflow-hidden product-card hover:shadow-lg';
+            productElement.innerHTML = `
+                <div class=" bg-gray-800 flex items-center justify-center p-6">
+                    <img src="${product.image}" alt="${product.name}" class=" object-cover">
+                </div>
+                <div class="p-6">
+                    <h3 class="font-gaming text-xl text-white mb-2">${product.name}</h3>
+                    <p class="text-gray-400 text-sm mb-4">${product.platform}</p>
+                    <p class="text-gray-300 mb-4 line-clamp-2">${product.description}</p>
+                    <div class="flex justify-between items-center">
+                        <span class="font-bold text-white text-lg">$${product.price.toFixed(2)}</span>
+                        <button class="add-to-cart px-4 py-2 bg-gradient-to-r from-purple-600 to-pink-500 text-white rounded-lg font-medium hover:opacity-90 transition" data-id="${product.id}">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            `;
+            newArrivalsContainer.appendChild(productElement);
+        });
+        
+        // Initialize slider
+        updateSlider();
+        
+        // Cart functionality
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        
+        function updateCartCount() {
+            const count = cart.reduce((total, item) => total + item.quantity, 0);
+            document.getElementById('cart-count').textContent = count;
+        }
+        
+        // Event delegation for add to cart buttons
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('add-to-cart') || e.target.closest('.add-to-cart')) {
+                const button = e.target.classList.contains('add-to-cart') ? e.target : e.target.closest('.add-to-cart');
+                const productId = parseInt(button.getAttribute('data-id'));
+                const product = products.find(p => p.id === productId);
+                
+                const existingItem = cart.find(item => item.id === productId);
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    cart.push({
+                        id: product.id,
+                        name: product.name,
+                        price: product.price,
+                        image: product.image,
+                        quantity: 1
+                    });
+                }
+                
+                localStorage.setItem('cart', JSON.stringify(cart));
+                updateCartCount();
+                
+                // Show added to cart notification
+                const notification = document.createElement('div');
+                notification.className = 'fixed bottom-4 right-4 bg-green-600 text-white px-4 py-2 rounded-lg shadow-lg flex items-center';
+                notification.innerHTML = `
+                    <i class="fas fa-check-circle mr-2"></i>
+                    ${product.name} added to cart!
+                `;
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.classList.add('opacity-0', 'transition-opacity', 'duration-300');
+                    setTimeout(() => notification.remove(), 300);
+                }, 2000);
+            }
+        });
+        
+        // Initialize cart count
+        updateCartCount();
+        
+        // Cookies consent
+        const cookiesConsent = document.getElementById('cookies-consent');
+        const acceptCookies = document.getElementById('accept-cookies');
+        
+        if (!localStorage.getItem('cookiesAccepted')) {
+            setTimeout(() => {
+                cookiesConsent.classList.remove('hidden');
+            }, 2000);
+        }
+        
+        acceptCookies.addEventListener('click', () => {
+            localStorage.setItem('cookiesAccepted', 'true');
+            cookiesConsent.classList.add('hidden');
+        });
+        
+        // Three.js background for hero section
+        function initThreeJS() {
+            const container = document.getElementById('threejs-container');
+            if (!container) return;
+            
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+            
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(width, height);
+            container.appendChild(renderer.domElement);
+            
+            // Create floating particles
+            const particlesGeometry = new THREE.BufferGeometry();
+            const particleCount = 500;
+            
+            const posArray = new Float32Array(particleCount * 3);
+            
+            for (let i = 0; i < particleCount * 3; i++) {
+                posArray[i] = (Math.random() - 0.5) * 10;
+            }
+            
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+            
+            const particlesMaterial = new THREE.PointsMaterial({
+                size: 0.02,
+                color: 0x6c5ce7,
+                transparent: true,
+                opacity: 0.8,
+                blending: THREE.AdditiveBlending
+            });
+            
+            const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+            scene.add(particlesMesh);
+            
+            camera.position.z = 3;
+            
+            // Animation loop
+            function animate() {
+                requestAnimationFrame(animate);
+                
+                particlesMesh.rotation.x += 0.0005;
+                particlesMesh.rotation.y += 0.0005;
+                
+                renderer.render(scene, camera);
+            }
+            
+            animate();
+            
+            // Handle resize
+            window.addEventListener('resize', () => {
+                const width = container.clientWidth;
+                const height = container.clientHeight;
+                
+                camera.aspect = width / height;
+                camera.updateProjectionMatrix();
+                renderer.setSize(width, height);
+            });
+        }
+        
+        // Initialize Three.js when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            initThreeJS();
+            
+            // Initialize particles.js
+            if (typeof particlesJS !== 'undefined') {
+                particlesJS('particles-js', {
+                    "particles": {
+                        "number": {
+                            "value": 80,
+                            "density": {
+                                "enable": true,
+                                "value_area": 800
+                            }
+                        },
+                        "color": {
+                            "value": "#6c5ce7"
+                        },
+                        "shape": {
+                            "type": "circle",
+                            "stroke": {
+                                "width": 0,
+                                "color": "#000000"
+                            },
+                            "polygon": {
+                                "nb_sides": 5
+                            }
+                        },
+                        "opacity": {
+                            "value": 0.5,
+                            "random": false,
+                            "anim": {
+                                "enable": false,
+                                "speed": 1,
+                                "opacity_min": 0.1,
+                                "sync": false
+                            }
+                        },
+                        "size": {
+                            "value": 3,
+                            "random": true,
+                            "anim": {
+                                "enable": false,
+                                "speed": 40,
+                                "size_min": 0.1,
+                                "sync": false
+                            }
+                        },
+                        "line_linked": {
+                            "enable": true,
+                            "distance": 150,
+                            "color": "#6c5ce7",
+                            "opacity": 0.4,
+                            "width": 1
+                        },
+                        "move": {
+                            "enable": true,
+                            "speed": 2,
+                            "direction": "none",
+                            "random": false,
+                            "straight": false,
+                            "out_mode": "out",
+                            "bounce": false,
+                            "attract": {
+                                "enable": false,
+                                "rotateX": 600,
+                                "rotateY": 1200
+                            }
+                        }
+                    },
+                    "interactivity": {
+                        "detect_on": "canvas",
+                        "events": {
+                            "onhover": {
+                                "enable": true,
+                                "mode": "grab"
+                            },
+                            "onclick": {
+                                "enable": true,
+                                "mode": "push"
+                            },
+                            "resize": true
+                        },
+                        "modes": {
+                            "grab": {
+                                "distance": 140,
+                                "line_linked": {
+                                    "opacity": 1
+                                }
+                            },
+                            "bubble": {
+                                "distance": 400,
+                                "size": 40,
+                                "duration": 2,
+                                "opacity": 8,
+                                "speed": 3
+                            },
+                            "repulse": {
+                                "distance": 200,
+                                "duration": 0.4
+                            },
+                            "push": {
+                                "particles_nb": 4
+                            },
+                            "remove": {
+                                "particles_nb": 2
+                            }
+                        }
+                    },
+                    "retina_detect": true
+                });
+            }
+            
+            // GSAP animations
+            gsap.from(".hero-gradient h1", {
+                duration: 1.5,
+                y: 50,
+                opacity: 0,
+                ease: "power3.out"
+            });
+            
+            gsap.from(".hero-gradient p", {
+                duration: 1.5,
+                y: 50,
+                opacity: 0,
+                ease: "power3.out",
+                delay: 0.3
+            });
+            
+            gsap.from(".hero-gradient a", {
+                duration: 1.5,
+                y: 50,
+                opacity: 0,
+                ease: "power3.out",
+                delay: 0.6,
+                stagger: 0.2
+            });
+            
+            gsap.from(".product-card", {
+                duration: 1,
+                y: 50,
+                opacity: 0,
+                ease: "power3.out",
+                stagger: 0.1,
+                scrollTrigger: {
+                    trigger: "#featured",
+                    start: "top 80%"
+                }
+            });
+            
+            gsap.from(".gradient-border", {
+                duration: 1,
+                y: 50,
+                opacity: 0,
+                ease: "power3.out",
+                stagger: 0.1,
+                scrollTrigger: {
+                    trigger: ".bg-gray-800",
+                    start: "top 80%"
+                }
+            });
+        });
+    </script>
+</body>
+</html>

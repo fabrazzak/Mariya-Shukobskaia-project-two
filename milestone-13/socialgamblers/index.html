@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SocialGamblers - Premium social casino platform with free virtual coins and exciting games. No real money gambling involved.">
+    <meta name="keywords" content="social casino, free slots, virtual gambling, casino games, play for fun, no real money">
+    <meta name="author" content="SocialGamblers">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://socialgamblers.org/" />
+    <title>SocialGamblers | Premium Social Casino Platform</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/assets/favicon.png" type="image/x-icon">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3b82f6',
+                        secondary: '#10b981',
+                        accent: '#f59e0b',
+                        dark: '#1e293b',
+                        darker: '#0f172a',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+    
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <!-- Particles.js -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            background-color: #0f172a;
+            color: #f8fafc;
+        }
+        
+        .hamburger-menu {
+            width: 30px;
+            height: 20px;
+            position: relative;
+            transform: rotate(0deg);
+            transition: .5s ease-in-out;
+            cursor: pointer;
+        }
+        
+        .hamburger-menu span {
+            display: block;
+            position: absolute;
+            height: 3px;
+            width: 100%;
+            background: white;
+            border-radius: 3px;
+            opacity: 1;
+            left: 0;
+            transform: rotate(0deg);
+            transition: .25s ease-in-out;
+        }
+        
+        .hamburger-menu span:nth-child(1) {
+            top: 0px;
+        }
+        
+        .hamburger-menu span:nth-child(2), .hamburger-menu span:nth-child(3) {
+            top: 10px;
+        }
+        
+        .hamburger-menu span:nth-child(4) {
+            top: 20px;
+        }
+        
+        .hamburger-menu.open span:nth-child(1) {
+            top: 10px;
+            width: 0%;
+            left: 50%;
+        }
+        
+        .hamburger-menu.open span:nth-child(2) {
+            transform: rotate(45deg);
+        }
+        
+        .hamburger-menu.open span:nth-child(3) {
+            transform: rotate(-45deg);
+        }
+        
+        .hamburger-menu.open span:nth-child(4) {
+            top: 10px;
+            width: 0%;
+            left: 50%;
+        }
+        
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .game-modal {
+            background-color: #1e293b;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 1200px;
+            height: 80vh;
+            padding: 20px;
+            position: relative;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+        
+        .modal-overlay.active .game-modal {
+            transform: scale(1);
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #3b82f6;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 1001;
+        }
+        
+        .game-iframe-container {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+        
+        .game-iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        .age-verification {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(15, 23, 42, 0.95);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .age-content {
+            background-color: #1e293b;
+            padding: 40px;
+            border-radius: 12px;
+            max-width: 600px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        .marquee {
+            white-space: nowrap;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .marquee span {
+            display: inline-block;
+            padding-left: 100%;
+            animation: marquee 15s linear infinite;
+        }
+        
+        @keyframes marquee {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(-100%, 0); }
+        }
+        
+        .free-play-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background-color: #10b981;
+            color: white;
+            font-size: 12px;
+            font-weight: bold;
+            padding: 3px 8px;
+            border-radius: 4px;
+            z-index: 10;
+        }
+    </style>
+</head>
+<body class="bg-darker text-slate-100">
+    <!-- Age Verification Modal -->
+    <div class="age-verification" id="ageVerification">
+        <div class="age-content">
+            <h2 class="text-3xl font-bold mb-4 text-accent">Age Verification Required</h2>
+            <p class="text-lg mb-6">You must be 18 years or older to access this social casino platform. Please confirm your age to continue and enjoy our premium gaming experience.</p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button onclick="verifyAge(true)" class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300">
+                    <i class="fas fa-check-circle mr-2"></i> I am 18 or older
+                </button>
+                <button onclick="verifyAge(false)" class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300">
+                    <i class="fas fa-times-circle mr-2"></i> I am under 18
+                </button>
+            </div>
+            
+            <p class="text-sm mt-6 text-slate-400">
+                <i class="fas fa-exclamation-triangle mr-2"></i> Important: This platform is for entertainment only. No real money gambling is involved.
+            </p>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="bg-dark sticky top-0 z-50 shadow-lg">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <a href="/" class="flex items-center">
+                    <img src="/assets/logo.png" alt="SocialGamblers Logo" class="h-14 mr-2">
+                    
+                </a>
+            </div>
+            
+            <div class="hidden md:flex items-center space-x-6">
+                <a href="/" class="text-white hover:text-accent transition">Home</a>
+                <a href="/games/" class="text-white hover:text-accent transition">Games</a>
+                <a href="/about/" class="text-white hover:text-accent transition">About Us</a>
+                <a href="/responsible-gaming/" class="text-white hover:text-accent transition">Responsible Gaming</a>
+                <a href="/contact/" class="text-white hover:text-accent transition">Contact</a>
+            </div>
+            
+            <div class="flex items-center space-x-4">
+                <button id="loginBtn" class="hidden md:block bg-primary hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition">
+                    <i class="fas fa-sign-in-alt mr-2"></i> Login
+                </button>
+                <button id="registerBtn" class="hidden md:block bg-accent hover:bg-yellow-700 text-white px-4 py-2 rounded-lg transition">
+                    <i class="fas fa-user-plus mr-2"></i> Register
+                </button>
+                
+                <!-- Mobile menu button -->
+                <button id="mobileMenuButton" class="md:hidden focus:outline-none">
+                    <div class="hamburger-menu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="md:hidden hidden bg-darker absolute w-full left-0 right-0 shadow-lg z-40">
+            <div class="container mx-auto px-4 py-4 flex flex-col space-y-4">
+                <a href="/" class="text-white hover:text-accent transition py-2 border-b border-slate-700">Home</a>
+                <a href="/games/" class="text-white hover:text-accent transition py-2 border-b border-slate-700">Games</a>
+                <a href="/about/" class="text-white hover:text-accent transition py-2 border-b border-slate-700">About Us</a>
+                <a href="/responsible-gaming/" class="text-white hover:text-accent transition py-2 border-b border-slate-700">Responsible Gaming</a>
+                <a href="/contact/" class="text-white hover:text-accent transition py-2 border-b border-slate-700">Contact</a>
+                
+                <div class="pt-4">
+                    <button id="mobileLoginBtn" class="w-full bg-primary hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition mb-2">
+                        <i class="fas fa-sign-in-alt mr-2"></i> Login
+                    </button>
+                    <button id="mobileRegisterBtn" class="w-full bg-accent hover:bg-yellow-700 text-white px-4 py-2 rounded-lg transition">
+                        <i class="fas fa-user-plus mr-2"></i> Register
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden bg-gradient-to-br from-darker to-dark min-h-[80vh] flex items-center">
+        <div id="particles-js"></div>
+        <div class="hero-content container mx-auto px-4 py-20 z-10">
+            <div class="flex flex-col lg:flex-row items-center">
+                <div class="lg:w-1/2 mb-10 lg:mb-0">
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+                        <span class="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">Premium Social Casino</span> Experience
+                    </h1>
+                    <p class="text-xl mb-8 text-slate-300">Play the hottest casino games for fun with free virtual coins. No real money involved!</p>
+                    
+                    <div class="flex flex-col sm:flex-row gap-4">
+                        <button id="heroRegisterBtn" class="bg-accent hover:bg-yellow-700 text-white font-bold py-4 px-8 rounded-lg text-lg hover:scale-105">
+                            <i class="fas fa-gift mr-2"></i> Register Now - Get 5,000 Coins Free!
+                        </button>
+                        <button id="heroGamesBtn" class="bg-primary hover:bg-blue-700 text-white font-bold py-4 px-8 rounded-lg text-lg border-2 border-primary hover:border-blue-700">
+                            <i class="fas fa-gamepad mr-2"></i> Explore Games
+                        </button>
+                    </div>
+                    
+                    <div class="mt-6 bg-slate-800 bg-opacity-50 p-4 rounded-lg inline-block">
+                        <p class="text-sm text-slate-300"><i class="fas fa-star text-accent mr-2"></i> Limited-time offer for new players only</p>
+                    </div>
+                </div>
+                
+                <div class="lg:w-1/2 flex justify-center">
+                    <div class="relative">
+                        <div class="absolute -top-6 -left-6 w-32 h-32 bg-primary rounded-full opacity-20 animate-pulse"></div>
+                        <div class="absolute -bottom-6 -right-6 w-32 h-32 bg-accent rounded-full opacity-20 animate-pulse delay-300"></div>
+                        <img src="/assets/hero-image.webp" alt="Casino Games" class="relative z-10 max-w-md w-full rounded-xl shadow-2xl">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Marquee -->
+    <div class="bg-primary py-3 overflow-hidden">
+        <div class="marquee">
+            <span class="text-white font-medium">
+                <i class="fas fa-bullhorn mr-4"></i> New Game Added: Wanted by Hacksaw Gaming • Get 5,000 Free Coins When You Register • Play Responsibly • No Real Money Involved • 
+                <i class="fas fa-bullhorn mr-4"></i> New Game Added: Wanted by Hacksaw Gaming • Get 5,000 Free Coins When You Register • Play Responsibly • No Real Money Involved •
+            </span>
+        </div>
+    </div>
+
+    <!-- Features Section -->
+    <section class="py-16 bg-dark">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Why Players Love <span class="text-primary">SocialGamblers</span></h2>
+                <p class="text-lg text-slate-300 max-w-3xl mx-auto">Experience the thrill of casino games without any financial risk. Our platform is designed purely for entertainment.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="bg-slate-800 p-6 rounded-xl hover:bg-slate-700 transition duration-300 transform hover:-translate-y-2">
+                    <div class="w-16 h-16 bg-primary bg-opacity-20 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-shield-alt text-2xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Safe & Secure</h3>
+                    <p class="text-slate-300">Your data is protected with industry-standard security measures.</p>
+                </div>
+                
+                <div class="bg-slate-800 p-6 rounded-xl hover:bg-slate-700 transition duration-300 transform hover:-translate-y-2">
+                    <div class="w-16 h-16 bg-green-500 bg-opacity-20 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-coins text-2xl text-green-500"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Free Virtual Coins</h3>
+                    <p class="text-slate-300">Start with 5,000 free coins and enjoy endless entertainment.</p>
+                </div>
+                
+                <div class="bg-slate-800 p-6 rounded-xl hover:bg-slate-700 transition duration-300 transform hover:-translate-y-2">
+                    <div class="w-16 h-16 bg-purple-500 bg-opacity-20 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-gamepad text-2xl text-purple-500"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">100+ Games</h3>
+                    <p class="text-slate-300">Massive selection of slots and table games from top providers.</p>
+                </div>
+                
+                <div class="bg-slate-800 p-6 rounded-xl hover:bg-slate-700 transition duration-300 transform hover:-translate-y-2">
+                    <div class="w-16 h-16 bg-accent bg-opacity-20 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-sync-alt text-2xl text-accent"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Weekly Updates</h3>
+                    <p class="text-slate-300">New games added every week to keep the experience fresh.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Popular Games Section -->
+    <section class="py-16 bg-darker">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Our <span class="text-accent">Most Popular</span> Games</h2>
+                <p class="text-lg text-slate-300 max-w-3xl mx-auto">Try these fan favorites from our extensive game library</p>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-6">
+                <!-- Game Card 1 - Wanted (Free to play) -->
+                <div class="game-card bg-slate-800 rounded-xl overflow-hidden shadow-lg hover:shadow-xl ">
+                    <div class="relative overflow-hidden">
+                        <img src="/assets/games/wanted.avif" alt="Wanted" class="game-image w-full h-48 object-cover transition duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
+                        <div class="absolute bottom-0 left-0 p-4">
+                            <h3 class="text-xl font-bold text-white">Wanted</h3>
+                            <p class="text-sm text-slate-300">Hacksaw Gaming</p>
+                        </div>
+                        <div class="free-play-badge">FREE PLAY</div>
+                    </div>
+                    <div class="p-4">
+                        <button class="free-play-btn w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg transition" data-game="Wanted" data-src="https://d2q0k52vlk25jc.cloudfront.net/launcher/static-launcher.html?gameid=1067&channel=desktop&language=en&currency=USD&partner=gamdom_prod&mode=demo&token=&lobbyurl=http%3A%2F%2Fgamdom.com/casino">
+                            <i class="fas fa-play mr-2"></i> Play Now
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Game Card 2 - Rip City (Free to play) -->
+                <div class="game-card bg-slate-800 rounded-xl overflow-hidden shadow-lg hover:shadow-xl ">
+                    <div class="relative overflow-hidden">
+                        <img src="/assets/games/rip-city.avif" alt="Rip City" class="game-image w-full h-48 object-cover transition duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
+                        <div class="absolute bottom-0 left-0 p-4">
+                            <h3 class="text-xl font-bold text-white">Rip City</h3>
+                            <p class="text-sm text-slate-300">Hacksaw Gaming</p>
+                        </div>
+                        <div class="free-play-badge">FREE PLAY</div>
+                    </div>
+                    <div class="p-4">
+                        <button class="free-play-btn w-full bg-green-600 hover:bg-green-700 text-white py-2 rounded-lg transition" data-game="Rip City" data-src="https://d2q0k52vlk25jc.cloudfront.net/launcher/static-launcher.html?gameid=1233&channel=desktop&language=en&currency=USD&partner=gamdom_prod&mode=demo&token=&lobbyurl=http%3A%2F%2Fgamdom.com/casino">
+                            <i class="fas fa-play mr-2"></i> Play Now
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Game Card 3 - Le Bandit -->
+                <div class="game-card bg-slate-800 rounded-xl overflow-hidden shadow-lg hover:shadow-xl ">
+                    <div class="relative overflow-hidden">
+                        <img src="/assets/games/le-bandit.avif" alt="Le Bandit" class="game-image w-full h-48 object-cover transition duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
+                        <div class="absolute bottom-0 left-0 p-4">
+                            <h3 class="text-xl font-bold text-white">Le Bandit</h3>
+                            <p class="text-sm text-slate-300">Hacksaw Gaming</p>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <button class="play-now-btn w-full bg-primary hover:bg-blue-700 text-white py-2 rounded-lg transition" data-game="Le Bandit" data-src="https://d2q0k52vlk25jc.cloudfront.net/launcher/static-launcher.html?gameid=1309&channel=desktop&language=en&currency=USD&partner=gamdom_prod&mode=demo&token=&lobbyurl=http%3A%2F%2Fgamdom.com/casino">
+                            <i class="fas fa-play mr-2"></i> Play Now
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Game Card 4 - Chaos Crew -->
+                <div class="game-card bg-slate-800 rounded-xl overflow-hidden shadow-lg hover:shadow-xl ">
+                    <div class="relative overflow-hidden">
+                        <img src="/assets/games/chaos-crew.avif" alt="Chaos Crew" class="game-image w-full h-48 object-cover transition duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
+                        <div class="absolute bottom-0 left-0 p-4">
+                            <h3 class="text-xl font-bold text-white">Chaos Crew</h3>
+                            <p class="text-sm text-slate-300">Hacksaw Gaming</p>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <button class="play-now-btn w-full bg-primary hover:bg-blue-700 text-white py-2 rounded-lg transition" data-game="Chaos Crew" data-src="https://d2q0k52vlk25jc.cloudfront.net/launcher/static-launcher.html?gameid=1059&channel=desktop&language=en&currency=USD&partner=gamdom_prod&mode=demo&token=&lobbyurl=http%3A%2F%2Fgamdom.com/casino">
+                            <i class="fas fa-play mr-2"></i> Play Now
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Game Card 5 - Stack 'em -->
+                <div class="game-card bg-slate-800 rounded-xl overflow-hidden shadow-lg hover:shadow-xl ">
+                    <div class="relative overflow-hidden">
+                        <img src="/assets/games/stack-em.avif" alt="Stack 'em" class="game-image w-full h-48 object-cover transition duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
+                        <div class="absolute bottom-0 left-0 p-4">
+                            <h3 class="text-xl font-bold text-white">Stack 'em</h3>
+                            <p class="text-sm text-slate-300">Hacksaw Gaming</p>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <button class="play-now-btn w-full bg-primary hover:bg-blue-700 text-white py-2 rounded-lg transition" data-game="Stack 'em" data-src="https://d2q0k52vlk25jc.cloudfront.net/launcher/static-launcher.html?gameid=1084&channel=desktop&language=en&currency=USD&partner=gamdom_prod&mode=demo&token=&lobbyurl=http%3A%2F%2Fgamdom.com/casino">
+                            <i class="fas fa-play mr-2"></i> Play Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-10">
+                <a href="/games/" class="inline-block bg-accent hover:bg-yellow-700 text-white font-bold py-3 px-8 rounded-lg transition duration-300">
+                    <i class="fas fa-arrow-right mr-2"></i> View All Games
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-16 bg-dark">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">What Our <span class="text-primary">Players Say</span></h2>
+                <p class="text-lg text-slate-300 max-w-3xl mx-auto">Don't just take our word for it - hear from our community</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-slate-800 p-6 rounded-xl">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-primary flex items-center justify-center text-white font-bold mr-4">JD</div>
+                        <div>
+                            <h4 class="font-bold">John D.</h4>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-slate-300">"I love the variety of games on SocialGamblers. It's the perfect way to enjoy casino games without any financial risk. The free coins are generous too!"</p>
+                </div>
+                
+                <div class="bg-slate-800 p-6 rounded-xl">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-green-500 flex items-center justify-center text-white font-bold mr-4">SM</div>
+                        <div>
+                            <h4 class="font-bold">Sarah M.</h4>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-slate-300">"As someone who enjoys the social aspect of casino games, this platform is perfect. The leaderboards add a fun competitive element without any pressure."</p>
+                </div>
+                
+                <div class="bg-slate-800 p-6 rounded-xl">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-purple-500 flex items-center justify-center text-white font-bold mr-4">RT</div>
+                        <div>
+                            <h4 class="font-bold">Robert T.</h4>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-slate-300">"The graphics and gameplay are top-notch. It feels like a real casino experience but I know I'm just playing for fun. Great way to relax after work!"</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Leaderboard Section -->
+    <section class="py-16 bg-darker">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Weekly <span class="text-accent">Leaderboard</span></h2>
+                <p class="text-lg text-slate-300 max-w-3xl mx-auto">Our top players this week - will you be next?</p>
+            </div>
+            
+            <div class="bg-slate-800 rounded-xl overflow-hidden shadow-lg max-w-4xl mx-auto">
+                <div class="grid grid-cols-12 bg-slate-700 p-4 font-bold">
+                    <div class="col-span-1">#</div>
+                    <div class="col-span-6">Player</div>
+                    <div class="col-span-3">Games Played</div>
+                    <div class="col-span-2 text-right">Coins</div>
+                </div>
+                
+                <div class="divide-y divide-slate-700">
+                    <!-- Leaderboard Row 1 -->
+                    <div class="grid grid-cols-12 p-4 items-center hover:bg-slate-700 transition">
+                        <div class="col-span-1 font-bold text-accent">1</div>
+                        <div class="col-span-6 flex items-center">
+                            <div class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white font-bold mr-3">JD</div>
+                            <span>JohnDoe88</span>
+                        </div>
+                        <div class="col-span-3">247</div>
+                        <div class="col-span-2 text-right font-bold">72,500</div>
+                    </div>
+                    
+                    <!-- Leaderboard Row 2 -->
+                    <div class="grid grid-cols-12 p-4 items-center hover:bg-slate-700 transition">
+                        <div class="col-span-1 font-bold text-accent">2</div>
+                        <div class="col-span-6 flex items-center">
+                            <div class="w-8 h-8 rounded-full bg-green-500 flex items-center justify-center text-white font-bold mr-3">SM</div>
+                            <span>SlotMaster</span>
+                        </div>
+                        <div class="col-span-3">198</div>
+                        <div class="col-span-2 text-right font-bold">68,200</div>
+                    </div>
+                    
+                    <!-- Leaderboard Row 3 -->
+                    <div class="grid grid-cols-12 p-4 items-center hover:bg-slate-700 transition">
+                        <div class="col-span-1 font-bold text-accent">3</div>
+                        <div class="col-span-6 flex items-center">
+                            <div class="w-8 h-8 rounded-full bg-purple-500 flex items-center justify-center text-white font-bold mr-3">RT</div>
+                            <span>RouletteKing</span>
+                        </div>
+                        <div class="col-span-3">176</div>
+                        <div class="col-span-2 text-right font-bold">59,800</div>
+                    </div>
+                    
+                    <!-- Leaderboard Row 4 -->
+                    <div class="grid grid-cols-12 p-4 items-center hover:bg-slate-700 transition">
+                        <div class="col-span-1 font-bold">4</div>
+                        <div class="col-span-6 flex items-center">
+                            <div class="w-8 h-8 rounded-full bg-yellow-500 flex items-center justify-center text-white font-bold mr-3">AL</div>
+                            <span>AliceInSlots</span>
+                        </div>
+                        <div class="col-span-3">154</div>
+                        <div class="col-span-2 text-right font-bold">52,300</div>
+                    </div>
+                    
+                    <!-- Leaderboard Row 5 -->
+                    <div class="grid grid-cols-12 p-4 items-center hover:bg-slate-700 transition">
+                        <div class="col-span-1 font-bold">5</div>
+                        <div class="col-span-6 flex items-center">
+                            <div class="w-8 h-8 rounded-full bg-red-500 flex items-center justify-center text-white font-bold mr-3">BJ</div>
+                            <span>BlackjackPro</span>
+                        </div>
+                        <div class="col-span-3">142</div>
+                        <div class="col-span-2 text-right font-bold">48,700</div>
+                    </div>
+                </div>
+                
+                <div class="p-4 text-center border-t border-slate-700">
+                    <p class="text-slate-400">Sign up now to join the competition!</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 bg-gradient-to-r from-primary to-accent">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6 text-white">Ready to Play?</h2>
+            <p class="text-xl mb-8 text-white opacity-90 max-w-3xl mx-auto">Join thousands of players enjoying our social casino platform. No risk, just fun!</p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button id="bottomRegisterBtn" class="bg-white hover:bg-gray-100 text-primary font-bold py-4 px-8 rounded-lg text-lg    hover:scale-105">
+                    <i class="fas fa-user-plus mr-2"></i> Register Now - Get 5,000 Coins
+                </button>
+                <a href="/games/" class="bg-black bg-opacity-30 hover:bg-opacity-50 text-white font-bold py-4 px-8 rounded-lg text-lg transition duration-300 border-2 border-white">
+                    <i class="fas fa-gamepad mr-2"></i> Browse Games
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="py-16 bg-dark">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col lg:flex-row items-center">
+                <div class="lg:w-1/2 mb-10 lg:mb-0 lg:pr-10">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6">About <span class="text-primary">SocialGamblers</span></h2>
+                    <p class="text-lg mb-4 text-slate-300">SocialGamblers is a premier social casino platform designed for entertainment purposes only. We provide a safe, responsible environment where players can enjoy the thrill of casino games without any financial risk.</p>
+                    <p class="text-lg mb-6 text-slate-300">Our platform uses virtual coins that have no monetary value and cannot be exchanged for real money or prizes. We strictly adhere to responsible gaming practices and encourage all players to enjoy our games in moderation.</p>
+                    
+                    <div class="flex flex-wrap gap-4">
+                        <div class="flex items-center bg-slate-800 px-4 py-2 rounded-lg">
+                            <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                            <span>No Real Money Gambling</span>
+                        </div>
+                        <div class="flex items-center bg-slate-800 px-4 py-2 rounded-lg">
+                            <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                            <span>100% Legal Worldwide</span>
+                        </div>
+                        <div class="flex items-center bg-slate-800 px-4 py-2 rounded-lg">
+                            <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                            <span>Responsible Gaming</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lg:w-1/2">
+                    <div class="relative">
+                        <div class="absolute -top-6 -left-6 w-32 h-32 bg-primary rounded-full opacity-20 animate-pulse"></div>
+                        <div class="absolute -bottom-6 -right-6 w-32 h-32 bg-accent rounded-full opacity-20 animate-pulse delay-300"></div>
+                        <img src="/assets/about-image.avif" alt="About SocialGamblers" class="relative z-10 rounded-xl shadow-2xl">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Responsible Gaming Section -->
+    <section class="py-16 bg-slate-900">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="md:col-span-1">
+                    <h3 class="text-2xl font-bold mb-4 text-accent">Responsible Gaming Commitment</h3>
+                    <p class="text-slate-300">SocialGamblers is committed to promoting responsible gaming practices. We provide comprehensive tools and resources to help players maintain control over their gaming habits and ensure a safe, enjoyable experience for all users.</p>
+                </div>
+                
+                <div class="md:col-span-1">
+                    <h3 class="text-2xl font-bold mb-4 text-accent">Important Notice</h3>
+                    <p class="text-slate-300">This is a social casino platform for entertainment only. No real money gambling or payouts are involved. All coins are virtual and have no monetary value.</p>
+                </div>
+                
+                <div class="md:col-span-1">
+                    <h3 class="text-2xl font-bold mb-4 text-accent">Resources</h3>
+                    <div class="space-y-3">
+                        <a href="https://www.gamcare.org.uk/" target="_blank" class="flex items-center text-slate-300 hover:text-primary transition">
+                            <i class="fas fa-external-link-alt mr-2"></i> GamCare
+                        </a>
+                        <a href="https://www.begambleaware.org/" target="_blank" class="flex items-center text-slate-300 hover:text-primary transition">
+                            <i class="fas fa-external-link-alt mr-2"></i> GambleAware
+                        </a>
+                        <a href="/responsible-gaming/" class="flex items-center text-slate-300 hover:text-primary transition">
+                            <i class="fas fa-file-alt mr-2"></i> Responsible Gaming Policy
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-darker py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                       
+                        <a href="/" >  <a href="/" >  <img src="/assets/logo.png" alt="SocialGamblers Logo" class="h-12 mr-2"> </a> </a>
+                    </div>
+                    <p class="text-slate-400 mb-4">The premier social casino platform for entertainment without financial risk.</p>
+                     
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/" class="text-slate-400 hover:text-primary transition">Home</a></li>
+                        <li><a href="/games/" class="text-slate-400 hover:text-primary transition">Games</a></li>
+                        <li><a href="/about/" class="text-slate-400 hover:text-primary transition">About Us</a></li>                         
+                        <li><a href="/contact/" class="text-slate-400 hover:text-primary transition">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Legal</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/privacy/" class="text-slate-400 hover:text-primary transition">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="text-slate-400 hover:text-primary transition">Terms of Service</a></li>
+                        <li><a href="/cookies/" class="text-slate-400 hover:text-primary transition">Cookies Policy</a></li>
+                        <li><a href="/responsible-gaming/" class="text-slate-400 hover:text-primary transition">Responsible Gaming</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Contact Us</h3>
+                    <ul class="space-y-2 text-slate-400">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-2 text-primary"></i>
+                            <span>490 Chem. de Vassan, Val-d'Or, QC J9P 0C1, Canada</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone-alt mr-2 text-primary"></i>
+                            <span>+1 (819) 824-3146</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-2 text-primary"></i>
+                            <span>info@socialgamblers.org</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-slate-800 pt-8">
+                <p class="text-center text-slate-500 text-sm">
+                    <strong>18+ Only | Social Casino Platform | No Real Money Gambling</strong><br>
+                    This website operates as a social casino platform for entertainment purposes only. No real money gambling, betting, or wagering is involved. Virtual coins and winnings have no cash value and cannot be exchanged for real money, prizes, or any monetary compensation. Success in social casino games does not guarantee future success at real money gambling activities.
+                </p>
+                <p class="text-center text-slate-600 text-sm mt-4">
+                    &copy; 2023 SocialGamblers. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Game Modal -->
+    <div class="modal-overlay" id="gameModal">
+        <div class="game-modal">
+            <div class="close-modal" id="closeModal">
+                <i class="fas fa-times"></i>
+            </div>
+            <div class="game-iframe-container">
+                <iframe class="game-iframe" id="gameIframe" src="" spellcheck="false" aria-label="Game iframe"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div class="modal-overlay" id="loginModal">
+        <div class="bg-slate-800 rounded-xl p-8 max-w-md w-full relative">
+            <div class="close-modal" id="closeLoginModal">
+                <i class="fas fa-times"></i>
+            </div>
+            <h2 class="text-2xl font-bold mb-6 text-center">Login to Your Account</h2>
+            <form id="loginForm">
+                <div class="mb-4">
+                    <label for="loginEmail" class="block text-sm font-medium mb-2">Email</label>
+                    <input type="email" id="loginEmail" class="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" required>
+                </div>
+                <div class="mb-6">
+                    <label for="loginPassword" class="block text-sm font-medium mb-2">Password</label>
+                    <input type="password" id="loginPassword" class="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" required>
+                </div>
+                <button type="submit" class="w-full bg-primary hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition mb-4">
+                    <i class="fas fa-sign-in-alt mr-2"></i> Login
+                </button>
+                <div class="text-center text-sm">
+                    <a href="#" class="text-primary hover:underline">Forgot password?</a>
+                    <p class="mt-2 text-slate-400">Don't have an account? <a href="#" id="showRegisterFromLogin" class="text-accent hover:underline">Register now</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="modal-overlay" id="registerModal">
+        <div class="bg-slate-800 rounded-xl p-8 max-w-md w-full relative">
+            <div class="close-modal" id="closeRegisterModal">
+                <i class="fas fa-times"></i>
+            </div>
+            <h2 class="text-2xl font-bold mb-6 text-center">Create Your Account</h2>
+            <form id="registerForm">
+                <div class="mb-4">
+                    <label for="registerUsername" class="block text-sm font-medium mb-2">Username</label>
+                    <input type="text" id="registerUsername" class="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" required>
+                </div>
+                <div class="mb-4">
+                    <label for="registerEmail" class="block text-sm font-medium mb-2">Email</label>
+                    <input type="email" id="registerEmail" class="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" required>
+                </div>
+                <div class="mb-6">
+                    <label for="registerPassword" class="block text-sm font-medium mb-2">Password</label>
+                    <input type="password" id="registerPassword" class="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" required>
+                </div>
+                <div class="mb-6 flex items-start">
+                    <input type="checkbox" id="registerTerms" class="mt-1 mr-2" required>
+                    <label for="registerTerms" class="text-sm text-slate-400">I confirm I am 18+ and agree to the <a href="/terms/" class="text-primary hover:underline">Terms</a> and <a href="/privacy/" class="text-primary hover:underline">Privacy Policy</a></label>
+                </div>
+                <button type="submit" class="w-full bg-accent hover:bg-yellow-700 text-white font-bold py-3 px-4 rounded-lg transition mb-4">
+                    <i class="fas fa-user-plus mr-2"></i> Register Now & Get 5,000 Coins
+                </button>
+                <div class="text-center text-sm">
+                    <p class="text-slate-400">Already have an account? <a href="#" id="showLoginFromRegister" class="text-primary hover:underline">Login here</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Cookies Consent -->
+    <div class="fixed bottom-0 left-0 right-0 bg-slate-800 border-t border-slate-700 p-4 z-50 hidden" id="cookiesConsent">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <div class="mb-4 md:mb-0 md:mr-6">
+                    <p class="text-slate-300">We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies. <a href="/cookies/" class="text-primary hover:underline">Learn more</a></p>
+                </div>
+                <div class="flex space-x-3">
+                    <button id="acceptCookies" class="bg-primary hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition">Accept</button>
+                    <button id="rejectCookies" class="bg-slate-700 hover:bg-slate-600 text-white px-4 py-2 rounded-lg transition">Reject</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Age Verification
+        function verifyAge(isAdult) {
+            const ageVerification = document.getElementById('ageVerification');
+            
+            if (isAdult) {
+                // User is 18+, hide the modal
+                ageVerification.style.display = 'none';
+                // Set a cookie/localStorage to remember the choice
+                localStorage.setItem('ageVerified', 'true');
+                // Show cookies consent if not already shown
+                showCookiesConsent();
+            } else {
+                // User is under 18, redirect to Google
+                window.location.href = 'https://www.google.com/';
+            }
+        }
+        
+        // Check if age is already verified
+        if (localStorage.getItem('ageVerified') === 'true') {
+            document.getElementById('ageVerification').style.display = 'none';
+            // Show cookies consent if not already shown
+            showCookiesConsent();
+        }
+        
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const hamburgerMenu = document.querySelector('.hamburger-menu');
+        
+        mobileMenuButton.addEventListener('click', function() {
+            mobileMenu.classList.toggle('hidden');
+            hamburgerMenu.classList.toggle('open');
+        });
+        
+        // Game Modal
+        const playButtons = document.querySelectorAll('.play-now-btn');
+        const freePlayButtons = document.querySelectorAll('.free-play-btn');
+        const gameModal = document.getElementById('gameModal');
+        const gameIframe = document.getElementById('gameIframe');
+        const closeModal = document.getElementById('closeModal');
+        
+        // Handle regular game buttons (require login)
+        playButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const gameSrc = this.getAttribute('data-src');
+                const gameName = this.getAttribute('data-game');
+                
+                // Check if user is logged in (simulated)
+                const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+                
+                if (!isLoggedIn) {
+                    // Show login modal if not logged in
+                    document.getElementById('loginModal').classList.add('active');
+                    // Store the game they wanted to play
+                    localStorage.setItem('pendingGame', gameSrc);
+                } else {
+                    // Show game modal
+                    gameIframe.src = gameSrc;
+                    document.title = `${gameName} | SocialGamblers`;
+                    gameModal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                }
+            });
+        });
+        
+        // Handle free play buttons (no login required)
+        freePlayButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const gameSrc = this.getAttribute('data-src');
+                const gameName = this.getAttribute('data-game');
+                
+                // Show game modal immediately for free play games
+                gameIframe.src = gameSrc;
+                document.title = `${gameName} | SocialGamblers`;
+                gameModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+        
+        closeModal.addEventListener('click', function() {
+            gameModal.classList.remove('active');
+            gameIframe.src = '';
+            document.body.style.overflow = 'auto';
+            document.title = 'SocialGamblers | Premium Social Casino Platform';
+        });
+        
+        // Login/Register Modals
+        const loginBtn = document.getElementById('loginBtn');
+        const registerBtn = document.getElementById('registerBtn');
+        const mobileLoginBtn = document.getElementById('mobileLoginBtn');
+        const mobileRegisterBtn = document.getElementById('mobileRegisterBtn');
+        const heroRegisterBtn = document.getElementById('heroRegisterBtn');
+        const bottomRegisterBtn = document.getElementById('bottomRegisterBtn');
+        const heroGamesBtn = document.getElementById('heroGamesBtn');
+        
+        const loginModal = document.getElementById('loginModal');
+        const registerModal = document.getElementById('registerModal');
+        const closeLoginModal = document.getElementById('closeLoginModal');
+        const closeRegisterModal = document.getElementById('closeRegisterModal');
+        const showRegisterFromLogin = document.getElementById('showRegisterFromLogin');
+        const showLoginFromRegister = document.getElementById('showLoginFromRegister');
+        
+        function openLoginModal() {
+            loginModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            // Close mobile menu if open
+            mobileMenu.classList.add('hidden');
+            hamburgerMenu.classList.remove('open');
+        }
+        
+        function openRegisterModal() {
+            registerModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            // Close mobile menu if open
+            mobileMenu.classList.add('hidden');
+            hamburgerMenu.classList.remove('open');
+        }
+        
+        function closeAllModals() {
+            loginModal.classList.remove('active');
+            registerModal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        
+        loginBtn.addEventListener('click', openLoginModal);
+        mobileLoginBtn.addEventListener('click', openLoginModal);
+        registerBtn.addEventListener('click', openRegisterModal);
+        mobileRegisterBtn.addEventListener('click', openRegisterModal);
+        heroRegisterBtn.addEventListener('click', openRegisterModal);
+        bottomRegisterBtn.addEventListener('click', openRegisterModal);
+        
+        closeLoginModal.addEventListener('click', closeAllModals);
+        closeRegisterModal.addEventListener('click', closeAllModals);
+        
+        showRegisterFromLogin.addEventListener('click', function(e) {
+            e.preventDefault();
+            loginModal.classList.remove('active');
+            registerModal.classList.add('active');
+        });
+        
+        showLoginFromRegister.addEventListener('click', function(e) {
+            e.preventDefault();
+            registerModal.classList.remove('active');
+            loginModal.classList.add('active');
+        });
+        
+        // Login Form
+        const loginForm = document.getElementById('loginForm');
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Simulate login
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('username', 'Alex');
+            localStorage.setItem('coins', '5000');
+            
+            // Update UI to show logged in state
+            updateUserUI();
+            
+            // Close modal
+            closeAllModals();
+            
+            // Check if there was a pending game to play
+            const pendingGame = localStorage.getItem('pendingGame');
+            if (pendingGame) {
+                gameIframe.src = pendingGame;
+                gameModal.classList.add('active');
+                document.body.style.overflow = 'hidden';
+                localStorage.removeItem('pendingGame');
+            }
+            
+            // Show welcome message
+            showWelcomeMessage();
+        });
+        
+        // Register Form
+        const registerForm = document.getElementById('registerForm');
+        registerForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Simulate registration
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('username', document.getElementById('registerUsername').value || 'Alex');
+            localStorage.setItem('coins', '5000'); // Give 5000 coins as bonus
+            
+            // Update UI to show logged in state
+            updateUserUI();
+            
+            // Close modal
+            closeAllModals();
+            
+            // Show welcome message
+            showWelcomeMessage();
+        });
+        
+        // Update UI based on login state
+        function updateUserUI() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            
+            if (isLoggedIn) {
+                const username = localStorage.getItem('username') || 'User';
+                const coins = localStorage.getItem('coins') || '0';
+                
+                // Update login/register buttons to show user info
+                if (loginBtn) loginBtn.innerHTML = `<i class="fas fa-user mr-2"></i> ${username} • ${coins} Coins`;
+                if (mobileLoginBtn) mobileLoginBtn.innerHTML = `<i class="fas fa-user mr-2"></i> ${username} • ${coins} Coins`;
+                
+                // Hide register button
+                if (registerBtn) registerBtn.style.display = 'none';
+                if (mobileRegisterBtn) mobileRegisterBtn.style.display = 'none';
+                if (heroRegisterBtn) heroRegisterBtn.style.display = 'none';
+                if (bottomRegisterBtn) bottomRegisterBtn.style.display = 'none';
+            }
+        }
+        
+        // Show welcome message
+        function showWelcomeMessage() {
+            const username = localStorage.getItem('username') || 'User';
+            const coins = localStorage.getItem('coins') || '0';
+            
+            // Create welcome notification
+            const welcomeDiv = document.createElement('div');
+            welcomeDiv.className = 'fixed top-4 right-4 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg z-50 flex items-center';
+            welcomeDiv.innerHTML = `
+                <i class="fas fa-check-circle mr-2 text-xl"></i>
+                <div>
+                    <p class="font-bold">Welcome, ${username}!</p>
+                    <p class="text-sm">You've received ${coins} free coins to start playing!</p>
+                </div>
+            `;
+            
+            document.body.appendChild(welcomeDiv);
+            
+            // Remove after 5 seconds
+            setTimeout(() => {
+                welcomeDiv.style.opacity = '0';
+                welcomeDiv.style.transition = 'opacity 0.5s ease';
+                setTimeout(() => welcomeDiv.remove(), 500);
+            }, 5000);
+        }
+        
+        // Initialize UI on load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateUserUI();
+            
+            // Initialize particles.js
+            if (typeof particlesJS !== 'undefined') {
+                particlesJS('particles-js', {
+                    particles: {
+                        number: { value: 80, density: { enable: true, value_area: 800 } },
+                        color: { value: "#3b82f6" },
+                        shape: { type: "circle" },
+                        opacity: { value: 0.5, random: true },
+                        size: { value: 3, random: true },
+                        line_linked: { enable: true, distance: 150, color: "#3b82f6", opacity: 0.4, width: 1 },
+                        move: { enable: true, speed: 2, direction: "none", random: true, straight: false, out_mode: "out" }
+                    },
+                    interactivity: {
+                        detect_on: "canvas",
+                        events: {
+                            onhover: { enable: true, mode: "grab" },
+                            onclick: { enable: true, mode: "push" }
+                        }
+                    }
+                });
+            }
+            
+            // GSAP animations
+            if (typeof gsap !== 'undefined') {
+                gsap.from(".hero-content h1", { 
+                    duration: 1, 
+                    y: 50, 
+                    opacity: 0, 
+                    ease: "power3.out",
+                    delay: 0.3
+                });
+                
+                gsap.from(".hero-content p", { 
+                    duration: 1, 
+                    y: 50, 
+                    opacity: 0, 
+                    ease: "power3.out",
+                    delay: 0.5
+                });
+                
+                gsap.from(".hero-content button", { 
+                    duration: 1, 
+                    y: 50, 
+                    opacity: 0, 
+                    ease: "power3.out",
+                    delay: 0.7,
+                    stagger: 0.2
+                });
+                
+                gsap.from(".game-card", {
+                    duration: 0.8,
+                    y: 50,                  
+                    ease: "back.out(1.7)",
+                    stagger: 0.1,
+                    scrollTrigger: {
+                        trigger: ".game-card",
+                        start: "top 80%"
+                    }
+                });
+            }
+        });
+        
+        // Cookies Consent
+        function showCookiesConsent() {
+            if (localStorage.getItem('cookiesAccepted') === null) {
+                const cookiesConsent = document.getElementById('cookiesConsent');
+                cookiesConsent.classList.remove('hidden');
+                
+                document.getElementById('acceptCookies').addEventListener('click', function() {
+                    localStorage.setItem('cookiesAccepted', 'true');
+                    cookiesConsent.style.opacity = '0';
+                    setTimeout(() => cookiesConsent.style.display = 'none', 500);
+                });
+                
+                document.getElementById('rejectCookies').addEventListener('click', function() {
+                    localStorage.setItem('cookiesAccepted', 'false');
+                    cookiesConsent.style.opacity = '0';
+                    setTimeout(() => cookiesConsent.style.display = 'none', 500);
+                });
+            }
+        }
+        
+        // Games button behavior
+        if (heroGamesBtn) {
+            heroGamesBtn.addEventListener('click', function() {
+                // Check if logged in
+                const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+                
+                if (isLoggedIn) {
+                    window.location.href = '/games/';
+                } else {
+                    openRegisterModal();
+                }
+            });
+        }
+    </script>
+</body>
+</html>

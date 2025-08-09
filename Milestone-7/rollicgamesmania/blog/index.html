@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Latest news, updates, and articles about Rollic Games and our exciting mobile games like Pressure Washing Run.">
+    <meta name="keywords" content="Rollic Games blog, mobile gaming news, game updates, gaming tips, Pressure Washing Run">
+    <meta name="author" content="Rollic Games">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://rollicgamesmania.com/blog/">
+    
+    <title>Blog | Rollic Games Mania - Latest News & Updates</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/image/logo.webp" type="image/x-icon">
+    
+    <!-- Google Fonts - Rajdhani -->
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        rajdhani: ['Rajdhani', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#00ffff',
+                        secondary: '#8e05c2',
+                        accent: '#ff0066',
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <style>
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background-color: #0f0f1a;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, #00ffff, #8e05c2, #ff0066);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .hero-bg {
+            background: radial-gradient(circle at 30% 50%, rgba(142, 5, 194, 0.2) 0%, rgba(0, 0, 0, 0) 50%),
+                        radial-gradient(circle at 70% 30%, rgba(0, 255, 255, 0.2) 0%, rgba(0, 0, 0, 0) 50%),
+                        radial-gradient(circle at 50% 80%, rgba(255, 0, 102, 0.2) 0%, rgba(0, 0, 0, 0) 50%);
+        }
+        
+        .parallax-bg {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        
+        .blog-card {
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+        
+        .blog-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px -12px rgba(0, 255, 255, 0.3);
+        }
+        
+        .blob {
+            position: absolute;
+            filter: blur(60px);
+            border-radius: 50%;
+            z-index: -1;
+        }
+        
+        .blob-1 {
+            width: 500px;
+            height: 500px;
+            background: rgba(0, 255, 255, 0.2);
+            top: -200px;
+            left: -200px;
+        }
+        
+        .blob-2 {
+            width: 400px;
+            height: 400px;
+            background: rgba(142, 5, 194, 0.2);
+            bottom: -150px;
+            right: -100px;
+        }
+        
+        .threejs-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.3;
+        }
+        
+        .article-content p {
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+        
+        .article-content h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin: 2rem 0 1rem;
+            color: #00ffff;
+        }
+        
+        .article-content h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 1.5rem 0 1rem;
+            color: #8e05c2;
+        }
+        
+        .article-content ul {
+            list-style-type: disc;
+            padding-left: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .article-content ol {
+            list-style-type: decimal;
+            padding-left: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .article-content a {
+            color: #00ffff;
+            text-decoration: underline;
+        }
+        
+        .article-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 0.5rem;
+            margin: 1.5rem 0;
+        }
+        
+        .article-content blockquote {
+            border-left: 4px solid #8e05c2;
+            padding-left: 1.5rem;
+            margin: 1.5rem 0;
+            font-style: italic;
+            color: #d1d5db;
+        }
+    </style>
+</head>
+<body class="font-rajdhani">
+    <!-- Cookie Consent Banner -->
+    <div id="cookie-banner" class="fixed bottom-0 left-0 right-0 bg-gray-900 text-white p-4 z-50 hidden">
+        <div class="container mx-auto flex flex-col md:flex-row items-center justify-between">
+            <div class="mb-4 md:mb-0 md:mr-4">
+                <p class="text-sm">We use cookies to enhance your experience. By continuing to visit this site, you agree to our use of cookies.</p>
+            </div>
+            <div class="flex space-x-3">
+                <button id="cookie-decline" class="px-4 py-2 text-sm border border-accent text-accent rounded-md hover:bg-accent hover:text-white transition-colors">Decline</button>
+                <button id="cookie-accept" class="px-4 py-2 text-sm bg-accent text-white rounded-md hover:bg-opacity-90 transition-colors">Accept</button>
+                <a href="/cookies/" class="px-4 py-2 text-sm border border-primary text-primary rounded-md hover:bg-primary hover:text-gray-900 transition-colors">Learn More</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-40 bg-gray-900 bg-opacity-90 backdrop-blur-md border-b border-gray-800">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <a href="/" class="flex items-center gap-3">
+                        <img src="/image/logo.png" alt="logo" class="rounded-full md:h-14 h-10 ">                         
+                    </a>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="text-white hover:text-primary transition-colors">Home</a>
+                    <a href="/games/" class="text-white hover:text-primary transition-colors">Games</a>
+                    <a href="/about/" class="text-white hover:text-primary transition-colors">About</a>
+                    <a href="/blog/" class="text-primary font-semibold transition-colors">Blog</a>
+                    <a href="/responsible-gaming/" class="text-white hover:text-primary transition-colors">Responsible Gaming</a>
+                    <a href="/contact/" class="text-white hover:text-primary transition-colors">Contact</a>
+                </div>
+                
+                <div class="flex items-center space-x-4 md:hidden lg:block">
+                    <a href="https://play.google.com/store/apps/details?id=com.wixot.pressurewashing&hl=en" class="hidden md:block px-4 py-2 bg-primary text-gray-900 font-semibold rounded-md hover:bg-opacity-90 transition-colors">Download Now</a>
+                    <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-gray-900">
+            <div class="container mx-auto px-6 py-4 flex flex-col space-y-4">
+                <a href="/" class="text-white hover:text-primary transition-colors">Home</a>
+                <a href="/games/" class="text-white hover:text-primary transition-colors">Games</a>
+                <a href="/about/" class="text-white hover:text-primary transition-colors">About</a>
+                <a href="/blog/" class="text-primary font-semibold transition-colors">Blog</a>
+                <a href="/responsible-gaming/" class="text-white hover:text-primary transition-colors">Responsible Gaming</a>
+                <a href="/contact/" class="text-white hover:text-primary transition-colors">Contact</a>
+                <a href="https://play.google.com/store/apps/details?id=com.wixot.pressurewashing&hl=en" class="px-4 py-2 bg-primary text-gray-900 font-semibold rounded-md hover:bg-opacity-90 transition-colors text-center">Download Now</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Blog Hero Section -->
+    <section class="relative min-h-[50vh] flex items-center justify-center overflow-hidden hero-bg pt-20">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        
+        <div class="threejs-container" id="threejs-canvas"></div>
+        
+        <div class="container mx-auto px-6 py-20 z-10 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6">
+                <span class="gradient-text">Rollic Games</span> Blog
+            </h1>
+            <p class="text-xl text-gray-300 max-w-2xl mx-auto">Stay updated with the latest news, game updates, and insider tips from our development team.</p>
+        </div>
+    </section>
+
+   <!-- Blog Content Section -->
+<section class="py-20 bg-gray-900 text-white">
+    <div class="container mx-auto px-6 space-y-16">
+
+        <!-- Featured Blog Post (Full Width) -->
+        <article class="blog-card bg-gray-800 rounded-xl overflow-hidden border border-gray-700 hover:border-primary transition-all duration-300">
+            <a href="/blog/new-levels-update/" class="block md:flex">
+                <div class="md:w-1/2 h-72 md:h-auto overflow-hidden">
+                    <img src="/image/blog1.webp" alt="New Levels Update"
+                         class="w-full h-full md:h-[500px] object-cover transition-transform duration-500 hover:scale-110">
+                </div>
+                <div class="p-6 md:w-1/2 flex flex-col justify-center">
+                    <div class="flex items-center mb-4">
+                        <span class="text-sm text-primary font-semibold">Update</span>
+                        <span class="mx-2 text-gray-500">•</span>
+                        <span class="text-sm text-gray-400">July 3, 2025</span>
+                    </div>
+                    <h2 class="text-3xl font-bold mb-3 hover:text-primary transition-colors">New Levels Added in Latest Update</h2>
+                    <p class="text-gray-400 mb-4">Discover the 10 challenging new levels added to Pressure Washing Run in our latest content update.</p>
+                    <div class="flex items-center text-primary font-semibold">
+                        Read More
+                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                  d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                        </svg>
+                    </div>
+                </div>
+            </a>
+        </article>
+
+        <!-- Blog Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <!-- Blog Post 2 -->
+            <article class="blog-card bg-gray-800 rounded-xl overflow-hidden border border-gray-700 hover:border-secondary transition-all duration-300">
+                <a href="/blog/cleaning-tips/" class="block">
+                    <div class="h-64 overflow-hidden">
+                        <img src="/image/background.png" alt="Cleaning Tips" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <span class="text-sm text-secondary font-semibold">Tips</span>
+                            <span class="mx-2 text-gray-500">•</span>
+                            <span class="text-sm text-gray-400">June 25, 2025</span>
+                        </div>
+                        <h2 class="text-2xl font-bold mb-3 hover:text-secondary transition-colors">Pro Cleaning Tips for High Scores</h2>
+                        <p class="text-gray-400 mb-4">Learn the strategies top players use to maximize their cleaning efficiency and climb the leaderboards.</p>
+                        <div class="flex items-center text-secondary font-semibold">
+                            Read More
+                            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </a>
+            </article>
+
+            <!-- Blog Post 3 -->
+            <article class="blog-card bg-gray-800 rounded-xl overflow-hidden border border-gray-700 hover:border-accent transition-all duration-300">
+                <a href="/blog/upgrade-guide/" class="block">
+                    <div class="h-64 overflow-hidden">
+                        <img src="/image/PathGuide.jpg" alt="Upgrade Guide" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <span class="text-sm text-accent font-semibold">Guide</span>
+                            <span class="mx-2 text-gray-500">•</span>
+                            <span class="text-sm text-gray-400">June 18, 2025</span>
+                        </div>
+                        <h2 class="text-2xl font-bold mb-3 hover:text-accent transition-colors">Ultimate Upgrade Path Guide</h2>
+                        <p class="text-gray-400 mb-4">Which upgrades should you prioritize? Our comprehensive guide helps you make the best choices.</p>
+                        <div class="flex items-center text-accent font-semibold">
+                            Read More
+                            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </a>
+            </article>
+
+            <!-- Blog Post 4 -->
+            <article class="blog-card bg-gray-800 rounded-xl overflow-hidden border border-gray-700 hover:border-primary transition-all duration-300">
+                <a href="/blog/community-spotlight/" class="block">
+                    <div class="h-64 overflow-hidden">
+                        <img src="/image/CreativePlayers.jpeg" alt="Community Spotlight" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <span class="text-sm text-primary font-semibold">Community</span>
+                            <span class="mx-2 text-gray-500">•</span>
+                            <span class="text-sm text-gray-400">June 10, 2025</span>
+                        </div>
+                        <h2 class="text-2xl font-bold mb-3 hover:text-primary transition-colors">Community Spotlight: Top Players</h2>
+                        <p class="text-gray-400 mb-4">Meet the players dominating our global leaderboards and learn their secrets to success.</p>
+                        <div class="flex items-center text-primary font-semibold">
+                            Read More
+                            <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                            </svg>
+                        </div>
+                    </div>
+                </a>
+            </article>
+        </div>
+
+        
+    </div>
+</section>
+
+
+    <!-- Newsletter Section -->
+    <section class="py-20 bg-gray-900">
+        <div class="container mx-auto px-6 max-w-4xl">
+            <div class="bg-gradient-to-r from-gray-800 to-gray-900 rounded-xl p-8 md:p-12 border border-gray-700">
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">Never Miss an <span class="gradient-text">Update</span></h2>
+                    <p class="text-gray-400">Subscribe to our newsletter for the latest game updates, tips, and exclusive content.</p>
+                </div>
+                
+                <form class="flex flex-col sm:flex-row gap-4">
+                    <input type="email" placeholder="Your email address" class="flex-grow px-6 py-4 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-white placeholder-gray-400">
+                    <button type="submit" class="px-8 py-4 bg-primary text-gray-900 font-bold rounded-lg hover:bg-opacity-90 transition-colors">Subscribe</button>
+                </form>
+                
+                <p class="text-xs text-gray-500 mt-4 text-center">We respect your privacy. Unsubscribe at any time.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 border-t border-gray-800">
+        <div class="container mx-auto px-6 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+                <div>
+                   <a href="/" class="flex items-center gap-3">
+                        <img src="/image/logo.png" alt="logo" class="rounded-full md:h-14 h-10  mb-4">                         
+                    </a>
+                    <p class="text-gray-400 mb-6">Creating satisfying and engaging mobile gaming experiences for players worldwide.</p>
+                   
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-6">Quick Links</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/games/" class="text-gray-400 hover:text-primary transition-colors">Our Games</a></li>
+                        <li><a href="/about/" class="text-gray-400 hover:text-primary transition-colors">About Us</a></li>
+                        <li><a href="/blog/" class="text-gray-400 hover:text-primary transition-colors">Blog</a></li>
+                        <li><a href="/responsible-gaming/" class="text-gray-400 hover:text-primary transition-colors">Responsible Gaming</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-6">Support</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/contact/" class="text-gray-400 hover:text-primary transition-colors">Contact Us</a></li>
+                        
+                        <li><a href="/privacy/" class="text-gray-400 hover:text-primary transition-colors">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="text-gray-400 hover:text-primary transition-colors">Terms of Service</a></li>
+                        <li><a href="/cookies/" class="text-gray-400 hover:text-primary transition-colors">Cookie Policy</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-6">Contact Info</h3>
+                    <ul class="space-y-3 text-gray-400">
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 mr-3 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                            <span>Flat 9B, Block D80 Maida Vale Residences Visnezade Road, Kensington London, W8 5AA United Kingdom</span>
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 mr-3 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                            </svg>
+                            <span>+90 212 243 32 43</span>
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 mr-3 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                            </svg>
+                            <span>info@rollicgamesmania.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-500 text-sm mb-4 md:mb-0">© 2025 Rollic Games. All rights reserved.</p>
+                <div class="flex space-x-6">
+                    <a href="/privacy/" class="text-gray-500 hover:text-primary transition-colors text-sm">Privacy Policy</a>
+                    <a href="/terms/" class="text-gray-500 hover:text-primary transition-colors text-sm">Terms of Service</a>
+                    <a href="/cookies/" class="text-gray-500 hover:text-primary transition-colors text-sm">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Cookie Banner
+        const cookieBanner = document.getElementById('cookie-banner');
+        const cookieAccept = document.getElementById('cookie-accept');
+        const cookieDecline = document.getElementById('cookie-decline');
+        
+        if (!localStorage.getItem('cookiesAccepted')) {
+            cookieBanner.classList.remove('hidden');
+        }
+        
+        cookieAccept.addEventListener('click', () => {
+            localStorage.setItem('cookiesAccepted', 'true');
+            cookieBanner.classList.add('hidden');
+        });
+        
+        cookieDecline.addEventListener('click', () => {
+            localStorage.setItem('cookiesAccepted', 'false');
+            cookieBanner.classList.add('hidden');
+        });
+        
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+        
+        gsap.from('.hero-bg h1', {
+            duration: 1,
+            y: 50,
+            opacity: 0,
+            ease: 'power3.out'
+        });
+        
+        gsap.from('.hero-bg p', {
+            duration: 1,
+            y: 50,
+            opacity: 0,
+            delay: 0.3,
+            ease: 'power3.out'
+        });
+        
+        gsap.utils.toArray('.blog-card').forEach((card, i) => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: 'top 80%',
+                    toggleActions: 'play none none none'
+                },
+                opacity: 0,
+                y: 50,
+                duration: 0.8,
+                delay: i * 0.1,
+                ease: 'power3.out'
+            });
+        });
+        
+        // Three.js Background
+        const threejsContainer = document.getElementById('threejs-canvas');
+        
+        if (threejsContainer) {
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(threejsContainer.offsetWidth, threejsContainer.offsetHeight);
+            threejsContainer.appendChild(renderer.domElement);
+            
+            // Create particles
+            const particlesGeometry = new THREE.BufferGeometry();
+            const particleCount = 1000;
+            
+            const posArray = new Float32Array(particleCount * 3);
+            
+            for (let i = 0; i < particleCount * 3; i++) {
+                posArray[i] = (Math.random() - 0.5) * 10;
+            }
+            
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+            
+            const particlesMaterial = new THREE.PointsMaterial({
+                size: 0.02,
+                color: 0x00ffff,
+                transparent: true,
+                opacity: 0.8,
+                blending: THREE.AdditiveBlending
+            });
+            
+            const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+            scene.add(particlesMesh);
+            
+            camera.position.z = 3;
+            
+            // Animation
+            function animate() {
+                requestAnimationFrame(animate);
+                
+                particlesMesh.rotation.x += 0.0005;
+                particlesMesh.rotation.y += 0.0005;
+                
+                renderer.render(scene, camera);
+            }
+            
+            animate();
+            
+            // Handle resize
+            window.addEventListener('resize', () => {
+                camera.aspect = threejsContainer.offsetWidth / threejsContainer.offsetHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(threejsContainer.offsetWidth, threejsContainer.offsetHeight);
+            });
+        }
+    </script>
+</body>
+</html>

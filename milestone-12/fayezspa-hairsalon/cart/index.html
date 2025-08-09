@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <link rel="shortcut icon" href="/images/fav-logo.png" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Your shopping cart at Fayez Spa Hair Salon. Review your selected services before booking your appointment.">
+    <meta name="keywords" content="hair salon cart, spa services, book appointment, hair services, Spruce Grove salon">
+    <link rel="canonical" href="https://fayezspa-hairsalon.com/cart/">
+    <title>Your Cart | Fayez Spa Hair Salon</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#9d4edd',
+                        secondary: '#7b2cbf',
+                        dark: '#10002b',
+                        light: '#e0aaff',
+                        accent: '#c77dff',
+                    },
+                    fontFamily: {
+                        sans: ['"Montserrat"', 'sans-serif'],
+                        display: ['"Playfair Display"', 'serif'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #10002b;
+            color: #f8f9fa;
+            overflow-x: hidden;
+        }
+        
+        .cart-gradient {
+            background: linear-gradient(135deg, #10002b 0%, #240046 50%, #3c096c 100%);
+        }
+        
+        .text-gradient {
+            background: linear-gradient(90deg, #e0aaff 0%, #c77dff 50%, #9d4edd 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .border-gradient {
+            border: 2px solid transparent;
+            background: linear-gradient(#10002b, #10002b) padding-box,
+                        linear-gradient(135deg, #9d4edd 0%, #7b2cbf 100%) border-box;
+        }
+        
+        .nav-link::after {
+            content: '';
+            display: block;
+            width: 0;
+            height: 2px;
+            background: #e0aaff;
+            transition: width 0.3s;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: #e0aaff;
+            color: #10002b;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+        
+        .cookie-consent {
+            transform: translateY(100%);
+            transition: transform 0.5s ease-out;
+        }
+        
+        .cookie-consent.show {
+            transform: translateY(0);
+        }
+        
+        .quantity-btn {
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: rgba(157, 78, 221, 0.1);
+            color: #e0aaff;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .quantity-btn:hover {
+            background-color: rgba(157, 78, 221, 0.3);
+        }
+        
+        .quantity-input {
+            width: 40px;
+            text-align: center;
+            background-color: transparent;
+            border: none;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .remove-btn {
+            color: #f87171;
+            transition: all 0.3s;
+        }
+        
+        .remove-btn:hover {
+            color: #ef4444;
+            transform: scale(1.1);
+        }
+        
+        .empty-cart-icon {
+            font-size: 5rem;
+            background: linear-gradient(135deg, #9d4edd 0%, #7b2cbf 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1.5rem;
+        }
+        
+        .blob {
+            position: absolute;
+            filter: blur(40px);
+            opacity: 0.2;
+            z-index: -1;
+        }
+        
+        .blob-1 {
+            width: 300px;
+            height: 300px;
+            background: #9d4edd;
+            top: 20%;
+            left: 10%;
+            animation: float 8s ease-in-out infinite;
+        }
+        
+        .blob-2 {
+            width: 400px;
+            height: 400px;
+            background: #7b2cbf;
+            bottom: 10%;
+            right: 10%;
+            animation: float 10s ease-in-out infinite 2s;
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <!-- Cookie Consent -->
+    <div class="cookie-consent fixed bottom-0 left-0 right-0 bg-dark bg-opacity-90 backdrop-blur-sm p-4 border-t border-accent z-50">
+        <div class="container mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <p class="text-sm text-light max-w-3xl">
+                We use cookies to enhance your experience on our website. By continuing to browse, you agree to our use of cookies. 
+                <a href="/privacy/" class="text-accent hover:underline">Learn more</a>
+            </p>
+            <div class="flex gap-3">
+                <button id="decline-cookies" class="px-4 py-2 border border-accent text-accent rounded-full hover:bg-accent hover:bg-opacity-10 transition-colors">
+                    Decline
+                </button>
+                <button id="accept-cookies" class="px-4 py-2 bg-accent text-dark rounded-full hover:bg-light transition-colors font-medium">
+                    Accept
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-40 bg-dark bg-opacity-90 backdrop-blur-sm border-b border-dark border-opacity-20">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                 <div class="flex items-center">
+                    <a href="/" class="flex items-center ">                        
+                        <img alt="logo" src="/images/logo.png"  class="h-14"/>                 
+                    </a>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="nav-link text-light font-medium hover:text-accent transition-colors">Home</a>
+                    <a href="/about/" class="nav-link text-light font-medium hover:text-accent transition-colors">About</a>
+                    <a href="/services/" class="nav-link text-light font-medium hover:text-accent transition-colors">Services</a>
+                    <a href="/blog/" class="nav-link text-light font-medium hover:text-accent transition-colors">Blog</a>
+                    <a href="/contact/" class="nav-link text-light font-medium hover:text-accent transition-colors">Contact</a>
+                    
+                    <!-- Cart Icon -->
+                    <div class="relative">
+                        <a href="/cart/" class="text-accent font-medium">
+                            <i class="fas fa-shopping-bag text-xl"></i>
+                            <span class="cart-count hidden">0</span>
+                        </a>
+                    </div>
+                    
+                    <!-- Book Now Button -->
+                    <a href="tel:+17809966209" class="px-6 py-2 bg-gradient-to-r from-primary to-secondary rounded-full font-medium hover:opacity-90 transition-opacity">
+                        Book Now
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-button" class="text-light focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-dark bg-opacity-95 backdrop-blur-sm px-6 py-4 border-t border-dark border-opacity-20">
+            <div class="flex flex-col space-y-4">
+                <a href="/" class="text-light font-medium hover:text-accent transition-colors">Home</a>
+                <a href="/about/" class="text-light font-medium hover:text-accent transition-colors">About</a>
+                <a href="/services/" class="text-light font-medium hover:text-accent transition-colors">Services</a>
+                <a href="/blog/" class="text-light font-medium hover:text-accent transition-colors">Blog</a>
+                <a href="/contact/" class="text-light font-medium hover:text-accent transition-colors">Contact</a>
+                <a href="/cart/" class="text-light font-medium text-accent flex items-center">
+                    <i class="fas fa-shopping-bag mr-2"></i> Cart
+                    <span class="cart-count-mobile ml-2 hidden bg-accent text-dark rounded-full w-5 h-5 flex items-center justify-center text-xs font-bold">0</span>
+                </a>
+                <a href="tel:+17809966209" class="px-6 py-2 bg-gradient-to-r from-primary to-secondary rounded-full font-medium text-center hover:opacity-90 transition-opacity">
+                    Book Now
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="cart-gradient pt-32 pb-20 relative overflow-hidden">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        
+        <div class="container mx-auto px-6 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6">
+                <span class="text-gradient">Your</span> Cart
+            </h1>
+            <p class="text-light text-lg max-w-3xl mx-auto">
+                Review your selected services before booking your appointment with our award-winning stylists.
+            </p>
+        </div>
+    </section>
+
+    <!-- Cart Section -->
+    <section class="py-12 bg-dark">
+        <div class="container mx-auto px-6">
+            <div id="cart-container">
+                <!-- Cart items will be dynamically inserted here -->
+                <div class="text-center py-20" id="empty-cart-message">
+                    <div class="empty-cart-icon">
+                        <i class="fas fa-shopping-bag"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Your cart is empty</h3>
+                    <p class="text-light mb-8 max-w-md mx-auto">
+                        Looks like you haven't added any services yet. Explore our services to find what you're looking for.
+                    </p>
+                    <a href="/services/" class="px-8 py-3 bg-gradient-to-r from-primary to-secondary rounded-full font-medium hover:opacity-90 transition-opacity">
+                        Browse Services
+                    </a>
+                </div>
+                
+                <div class="hidden" id="cart-with-items">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <div class="lg:col-span-2">
+                            <div class="bg-dark border border-dark border-opacity-20 rounded-xl overflow-hidden">
+                                <!-- Cart Items Table -->
+                                <table class="w-full">
+                                    <thead class="border-b border-dark border-opacity-20">
+                                        <tr>
+                                            <th class="text-left py-4 px-6 text-light font-medium">Service</th>
+                                            <th class="text-center py-4 px-6 text-light font-medium">Price</th>
+                                            <th class="text-center py-4 px-6 text-light font-medium">Quantity</th>
+                                            <th class="text-center py-4 px-6 text-light font-medium">Total</th>
+                                            <th class="text-right py-4 px-6 text-light font-medium"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="cart-items">
+                                        <!-- Cart items will be inserted here -->
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                            <!-- Continue Shopping Button -->
+                            <div class="mt-6">
+                                <a href="/services/" class="inline-flex items-center text-accent hover:text-light transition-colors">
+                                    <i class="fas fa-arrow-left mr-2"></i>
+                                    Continue Shopping
+                                </a>
+                            </div>
+                        </div>
+                        
+                        <!-- Order Summary -->
+                        <div>
+                            <div class="bg-dark border border-dark border-opacity-20 rounded-xl p-6 sticky top-6">
+                                <h3 class="text-xl font-bold mb-6">Order Summary</h3>
+                                
+                                <div class="space-y-4 mb-6">
+                                    <div class="flex justify-between">
+                                        <span class="text-light">Subtotal</span>
+                                        <span class="font-medium" id="cart-subtotal">$0.00</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-light">Tax (5%)</span>
+                                        <span class="font-medium" id="cart-tax">$0.00</span>
+                                    </div>
+                                    <div class="border-t border-dark border-opacity-20 pt-4 flex justify-between">
+                                        <span class="text-light font-bold">Total</span>
+                                        <span class="font-bold text-lg text-accent" id="cart-total">$0.00</span>
+                                    </div>
+                                </div>
+                                
+                                <p class="text-light text-sm mb-6">
+                                    * All prices include taxes. Final price may vary based on consultation.
+                                </p>
+                                
+                                <a href="/checkout/" id="checkout-btn" class="block w-full px-6 py-3 bg-gradient-to-r from-primary to-secondary rounded-full font-medium text-center hover:opacity-90 transition-opacity">
+                                    Proceed to Checkout
+                                </a>
+                                
+                                <div class="mt-4 text-center">
+                                    <p class="text-light text-sm">
+                                        or <a href="tel:+17809966209" class="text-accent hover:underline">call us at (780) 996-6209</a> to book
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Choose Us Section -->
+    <section class="py-20 bg-gradient-to-b from-primary to-dark">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                    <span class="text-gradient">Why Choose</span> Fayez Spa
+                </h2>
+                <p class="text-light max-w-2xl mx-auto">
+                    Experience the difference of working with award-winning stylists trained at Bumble and Bumble University.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-dark bg-opacity-50 border border-dark border-opacity-20 rounded-xl p-6 text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-primary to-secondary rounded-xl flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-award text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Award-Winning Stylists</h3>
+                    <p class="text-light">Our team includes multiple award-winning stylists with 35+ years of combined experience.</p>
+                </div>
+                
+                <div class="bg-dark bg-opacity-50 border border-dark border-opacity-20 rounded-xl p-6 text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-primary to-secondary rounded-xl flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-gem text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Premium Products</h3>
+                    <p class="text-light">We use only the highest quality products, including exclusive Bumble and Bumble formulations.</p>
+                </div>
+                
+                <div class="bg-dark bg-opacity-50 border border-dark border-opacity-20 rounded-xl p-6 text-center">
+                    <div class="w-16 h-16 bg-gradient-to-br from-primary to-secondary rounded-xl flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-heart text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Personalized Service</h3>
+                    <p class="text-light">Every service begins with a consultation to ensure we meet your exact needs and preferences.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark bg-opacity-95 border-t border-dark border-opacity-20 pt-12 pb-8">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+                <!-- Footer Column 1 -->
+                <div>
+                    <a href="/" class="flex items-center mb-6">                       
+                        <img alt="logo" src="/images/logo.png"  class="h-14"/>                 
+                    </a>
+                    <p class="text-light text-sm mb-4">
+                        Award-winning hair salon in Spruce Grove offering premium hair services with 35 years of experience.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="https://www.facebook.com/FayezSpa/" target="_blank" rel="noopener noreferrer" class="text-light hover:text-accent transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.instagram.com/fayezspa_london/" target="_blank" rel="noopener noreferrer" class="text-light hover:text-accent transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://www.youtube.com/channel/UCB4IZRHlDBjc4JyhH_3Ot4g" target="_blank" rel="noopener noreferrer" class="text-light hover:text-accent transition-colors">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Footer Column 2 -->
+                <div>
+                    <h4 class="text-lg font-bold mb-6 text-light">Quick Links</h4>
+                    <ul class="space-y-3">
+                        <li><a href="/" class="text-light hover:text-accent transition-colors">Home</a></li>
+                        <li><a href="/about/" class="text-light hover:text-accent transition-colors">About Us</a></li>
+                        <li><a href="/services/" class="text-light hover:text-accent transition-colors">Services</a></li>
+                        <li><a href="/blog/" class="text-light hover:text-accent transition-colors">Blog</a></li>
+                        <li><a href="/contact/" class="text-light hover:text-accent transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Footer Column 3 -->
+                <div>
+                    <h4 class="text-lg font-bold mb-6 text-light">Services</h4>
+                    <ul class="space-y-3">
+                        <li><a href="/services/#cuts" class="text-light hover:text-accent transition-colors">Hair Cuts</a></li>
+                        <li><a href="/services/#color" class="text-light hover:text-accent transition-colors">Hair Coloring</a></li>
+                        <li><a href="/services/#treatments" class="text-light hover:text-accent transition-colors">Hair Treatments</a></li>
+                        <li><a href="/services/#styling" class="text-light hover:text-accent transition-colors">Styling</a></li>
+                    
+                    </ul>
+                </div>
+                
+                <!-- Footer Column 4 -->
+                <div>
+                    <h4 class="text-lg font-bold mb-6 text-light">Contact Info</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt text-accent mt-1 mr-3"></i>
+                            <span class="text-light">27 Lake Shore Dr, Spruce Grove, AB T7X 3V1, Canada</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-phone-alt text-accent mt-1 mr-3"></i>
+                            <span class="text-light">+1 (780) 996-6209</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-envelope text-accent mt-1 mr-3"></i>
+                            <span class="text-light">info@fayezspa-hairsalon.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-dark border-opacity-20 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-light text-sm mb-4 md:mb-0">
+                        &copy; 2025 Fayez Spa Hair Salon. All rights reserved.
+                    </p>
+                    <div class="flex space-x-6">
+                        <a href="/privacy/" class="text-light hover:text-accent transition-colors text-sm">Privacy Policy</a>
+                        <a href="/terms/" class="text-light hover:text-accent transition-colors text-sm">Terms of Service</a>
+                        <a href="/cookies/" class="text-light hover:text-accent transition-colors text-sm">Cookies Policy</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Mobile Menu Toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+        
+        // Cookie Consent
+        const cookieConsent = document.querySelector('.cookie-consent');
+        const acceptCookies = document.getElementById('accept-cookies');
+        const declineCookies = document.getElementById('decline-cookies');
+        
+        if (!localStorage.getItem('cookiesAccepted')) {
+            setTimeout(() => {
+                cookieConsent.classList.add('show');
+            }, 1000);
+        }
+        
+        acceptCookies.addEventListener('click', () => {
+            localStorage.setItem('cookiesAccepted', 'true');
+            cookieConsent.classList.remove('show');
+        });
+        
+        declineCookies.addEventListener('click', () => {
+            cookieConsent.classList.remove('show');
+        });
+        
+        // Cart Functionality
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        
+        function updateCartCount() {
+            const count = cart.reduce((total, item) => total + item.quantity, 0);
+            const cartCounts = document.querySelectorAll('.cart-count, .cart-count-mobile');
+            
+            cartCounts.forEach(element => {
+                if (count > 0) {
+                    element.textContent = count;
+                    element.classList.remove('hidden');
+                } else {
+                    element.classList.add('hidden');
+                }
+            });
+        }
+        
+        function renderCart() {
+            const cartItemsContainer = document.getElementById('cart-items');
+            const emptyCartMessage = document.getElementById('empty-cart-message');
+            const cartWithItems = document.getElementById('cart-with-items');
+            const cartSubtotal = document.getElementById('cart-subtotal');
+            const cartTax = document.getElementById('cart-tax');
+            const cartTotal = document.getElementById('cart-total');
+            const checkoutBtn = document.getElementById('checkout-btn');
+            
+            if (cart.length === 0) {
+                emptyCartMessage.classList.remove('hidden');
+                cartWithItems.classList.add('hidden');
+                checkoutBtn.classList.add('hidden');
+                return;
+            }
+            
+            emptyCartMessage.classList.add('hidden');
+            cartWithItems.classList.remove('hidden');
+            checkoutBtn.classList.remove('hidden');
+            
+            // Clear existing items
+            cartItemsContainer.innerHTML = '';
+            
+            // Calculate totals
+            let subtotal = 0;
+            
+            // Add each item to the cart
+            cart.forEach((item, index) => {
+                const itemTotal = item.price * item.quantity;
+                subtotal += itemTotal;
+                
+                const row = document.createElement('tr');
+                row.className = 'border-b border-dark border-opacity-20';
+                row.innerHTML = `
+                    <td class="py-4 px-6">
+                        <div class="flex items-center">
+                            <div class="ml-4">
+                                <h4 class="font-bold">${item.service}</h4>
+                            </div>
+                        </div>
+                    </td>
+                    <td class="py-4 px-6 text-center">
+                        $${item.price.toFixed(2)}
+                    </td>
+                    <td class="py-4 px-6 text-center">
+                        <div class="flex items-center justify-center space-x-2">
+                            <button class="quantity-btn decrease-quantity" data-index="${index}">
+                                <i class="fas fa-minus"></i>
+                            </button>
+                            <input type="text" value="${item.quantity}" class="quantity-input" data-index="${index}" readonly>
+                            <button class="quantity-btn increase-quantity" data-index="${index}">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </td>
+                    <td class="py-4 px-6 text-center font-bold">
+                        $${itemTotal.toFixed(2)}
+                    </td>
+                    <td class="py-4 px-6 text-right">
+                        <button class="remove-btn remove-item" data-index="${index}">
+                            <i class="fas fa-trash"></i>
+                        </button>
+                    </td>
+                `;
+                
+                cartItemsContainer.appendChild(row);
+            });
+            
+            // Calculate tax (5%) and total
+            const tax = subtotal * 0.05;
+            const total = subtotal + tax;
+            
+            // Update totals display
+            cartSubtotal.textContent = `$${subtotal.toFixed(2)}`;
+            cartTax.textContent = `$${tax.toFixed(2)}`;
+            cartTotal.textContent = `$${total.toFixed(2)}`;
+            
+            // Add event listeners to new buttons
+            document.querySelectorAll('.decrease-quantity').forEach(button => {
+                button.addEventListener('click', function() {
+                    const index = parseInt(this.getAttribute('data-index'));
+                    if (cart[index].quantity > 1) {
+                        cart[index].quantity--;
+                        localStorage.setItem('cart', JSON.stringify(cart));
+                        renderCart();
+                        updateCartCount();
+                    }
+                });
+            });
+            
+            document.querySelectorAll('.increase-quantity').forEach(button => {
+                button.addEventListener('click', function() {
+                    const index = parseInt(this.getAttribute('data-index'));
+                    cart[index].quantity++;
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    renderCart();
+                    updateCartCount();
+                });
+            });
+            
+            document.querySelectorAll('.remove-item').forEach(button => {
+                button.addEventListener('click', function() {
+                    const index = parseInt(this.getAttribute('data-index'));
+                    cart.splice(index, 1);
+                    localStorage.setItem('cart', JSON.stringify(cart));
+                    renderCart();
+                    updateCartCount();
+                    
+                    // Show animation when last item is removed
+                    if (cart.length === 0) {
+                        const emptyCartIcon = document.querySelector('.empty-cart-icon i');
+                        emptyCartIcon.classList.add('animate-bounce');
+                        setTimeout(() => {
+                            emptyCartIcon.classList.remove('animate-bounce');
+                        }, 1000);
+                    }
+                });
+            });
+        }
+        
+        // Initialize cart on page load
+        updateCartCount();
+        renderCart();
+        
+        
+        // Animate cart items on load
+        gsap.from("#cart-container", {
+            opacity: 0,
+            y: 50,
+            duration: 1,
+            ease: "power3.out"
+        });
+        
+        // Animate why choose us section
+        gsap.utils.toArray(".bg-dark.bg-opacity-50").forEach((card, i) => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                },
+                opacity: 0,
+                y: 50,
+                duration: 0.8,
+                delay: i * 0.1
+            });
+        });
+    </script>
+</body>
+</html>

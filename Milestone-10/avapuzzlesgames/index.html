@@ -1,0 +1,1500 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description"
+        content="Word Game Wonders: Crossword - The most addictive word puzzle game with 2000+ levels. Improve vocabulary & spelling skills with beautiful graphics.">
+    <meta name="keywords"
+        content="word game, crossword puzzle, word search, vocabulary game, brain training, word puzzle, offline game, word wonders, word swipe">
+    <meta name="author" content="A.V.A - puzzles games">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://avapuzzlesgames.com/" />
+    <title>Word Game Wonders: Crossword | A.V.A - Puzzles Games</title>
+    <link rel="icon" href="/images/favicon.webp" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        secondary: {
+                            50: '#f5f3ff',
+                            100: '#ede9fe',
+                            200: '#ddd6fe',
+                            300: '#c4b5fd',
+                            400: '#a78bfa',
+                            500: '#8b5cf6',
+                            600: '#7c3aed',
+                            700: '#6d28d9',
+                            800: '#5b21b6',
+                            900: '#4c1d95',
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-reverse': 'float-reverse 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 8s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        'float-reverse': {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            background-color: #0f172a;
+            color: #f8fafc;
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #38bdf8, #8b5cf6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.1), rgba(139, 92, 246, 0.1));
+        }
+
+        .card-hover-effect {
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+        }
+
+        .card-hover-effect:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        .word-tile {
+            display: inline-block;
+            transition: all 0.3s ease;
+        }
+
+        .word-tile:hover {
+            transform: scale(1.1) rotate(5deg);
+            color: #38bdf8;
+        }
+
+        .threejs-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        .scroll-indicator {
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateY(0);
+            }
+
+            40% {
+                transform: translateY(-20px);
+            }
+
+            60% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .screenshot-gallery {
+            perspective: 1000px;
+        }
+
+        .screenshot-item {
+            transition: all 0.5s ease;
+            transform-style: preserve-3d;
+        }
+
+        .screenshot-item:hover {
+            transform: rotateY(10deg) scale(1.05);
+            z-index: 10;
+        }
+
+        .review-card {
+            background: linear-gradient(145deg, rgba(15, 23, 42, 0.8), rgba(30, 41, 59, 0.8));
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .review-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.2);
+        }
+
+        .faq-item {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .faq-item:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .download-cta {
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.2), rgba(139, 92, 246, 0.2));
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            transition: all 0.3s ease;
+        }
+
+        .download-cta:hover {
+            transform: scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+
+        .floating-icon {
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .floating-icon:nth-child(2n) {
+            animation-name: float-reverse;
+        }
+
+        .floating-icon:nth-child(3n) {
+            animation-duration: 7s;
+        }
+
+        .floating-icon:nth-child(4n) {
+            animation-duration: 5s;
+        }
+
+        .parallax-bg {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .gradient-border {
+            position: relative;
+            border-radius: 1rem;
+        }
+
+        .gradient-border::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            z-index: -1;
+            border-radius: 1rem;
+            background: linear-gradient(45deg, #38bdf8, #8b5cf6, #38bdf8);
+            background-size: 200% 200%;
+            animation: gradient 5s ease infinite;
+        }
+
+        @keyframes gradient {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+    </style>
+    <style>
+        /* Add these styles to your existing styles */
+
+        /* FAQ Improvements */
+        .faq-item {
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            padding: 0 1.5rem;
+        }
+
+        .faq-answer-inner {
+            padding: 0 0 1.5rem 0;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 300px;
+            /* Adjust based on your content */
+        }
+
+        .faq-icon {
+            transition: transform 0.3s ease;
+        }
+
+        .faq-item.active .faq-icon {
+            transform: rotate(180deg);
+        }
+
+       
+    </style>
+</head>
+
+<body class="antialiased">
+    <!-- Three.js Background -->
+    <div id="threejs-background" class="threejs-container"></div>
+
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-40 bg-gray-900/80 backdrop-blur-md border-b border-gray-800">
+        <div class="container mx-auto px-6 py-2">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <a href="/" class="flex items-center space-x-2">
+                        <img src="/images/logo.png" alt="Word Game Wonders Logo" class="h-16 w-auto">
+                    </a>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="text-white hover:text-primary-400 transition-colors font-medium">Home</a>
+                    <a href="/how-to-play/" class="text-gray-400 hover:text-primary-400 transition-colors">How to
+                        Play</a>
+                    <a href="/responsible-gaming/"
+                        class="text-gray-400 hover:text-primary-400 transition-colors">Responsible Gaming</a>
+                    <a href="/blog/" class="text-gray-400 hover:text-primary-400 transition-colors">Blog</a>
+                    <a href="/contact/" class="text-gray-400 hover:text-primary-400 transition-colors">Contact</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="https://play.google.com/store/apps/details?id=com.smartgames.word.puzzle.block.crush.wonders"
+                        class="hidden md:block px-4 py-2 bg-gradient-to-r from-primary-600 to-secondary-600 text-white rounded-lg font-medium hover:opacity-90 transition-opacity">Download
+                        Now</a>
+                    <button id="mobile-menu-button" class="md:hidden text-gray-400 hover:text-white focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-gray-900 border-t border-gray-800">
+            <div class="container mx-auto px-6 py-4 flex flex-col space-y-4">
+                <a href="/" class="text-white hover:text-primary-400 transition-colors font-medium">Home</a>
+                <a href="/how-to-play/" class="text-gray-400 hover:text-primary-400 transition-colors">How to Play</a>
+                <a href="/responsible-gaming/"
+                    class="text-gray-400 hover:text-primary-400 transition-colors">Responsible Gaming</a>
+                <a href="/blog/" class="text-gray-400 hover:text-primary-400 transition-colors">Blog</a>
+                <a href="/contact/" class="text-gray-400 hover:text-primary-400 transition-colors">Contact</a>
+                <a href="https://play.google.com/store/apps/details?id=com.smartgames.word.puzzle.block.crush.wonders"
+                    class="px-4 py-2 bg-gradient-to-r from-primary-600 to-secondary-600 text-white rounded-lg font-medium hover:opacity-90 transition-opacity text-center">Download
+                    Now</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center pt-20 overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-gray-900 to-gray-800 opacity-90"></div>
+        <div class="container mx-auto px-6 py-20 z-10">
+            <div class="flex flex-col lg:flex-row items-center justify-between">
+                <div class="lg:w-1/2 mb-12 lg:mb-0">
+                    <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
+                        <span class="gradient-text">Word Game</span><br>
+                        <span class="text-white">Wonders: Crossword</span>
+                    </h1>
+                    <p class="text-xl text-gray-300 mb-8 max-w-lg">
+                        The most addictive word puzzle game with over 2000 unique levels. Improve your vocabulary,
+                        spelling skills, and have fun with beautiful graphics!
+                    </p>
+                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                        <a href="https://play.google.com/store/apps/details?id=com.smartgames.word.puzzle.block.crush.wonders"
+                            class="px-8 py-4 bg-gradient-to-r from-primary-600 to-secondary-600 text-white rounded-lg font-bold text-lg hover:opacity-90 transition-opacity flex items-center justify-center space-x-3">
+                            <i class="fab fa-google-play text-2xl"></i>
+                            <span>Download on Google Play</span>
+                        </a>
+                        <a href="/how-to-play/"
+                            class="px-8 py-4 bg-gray-800 hover:bg-gray-700 text-white rounded-lg font-bold text-lg transition-colors flex items-center justify-center space-x-3">
+                            <i class="fas fa-gamepad text-2xl"></i>
+                            <span>How to Play</span>
+                        </a>
+                    </div>
+                    <div class="mt-12 flex items-center space-x-4">
+                        <div class="flex items-center">
+                            <span class="ml-3 text-gray-300">5,000+ Downloads</span>
+                        </div>
+                        <div class="flex items-center">
+                            <div class="flex items-center text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span class="ml-2 text-gray-300">4.7/5</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:w-1/2 relative">
+                    <div class="relative max-w-md mx-auto lg:mx-0 lg:ml-auto">
+                        <img src="/images/hero-phone.webp" alt="Word Game Wonders App Screenshot"
+                            class="w-full h-auto rounded-lg animation-float">
+                        <div
+                            class="absolute -top-10 -left-10 w-20 h-20 bg-primary-500 rounded-full opacity-20 filter blur-xl">
+                        </div>
+                        <div
+                            class="absolute -bottom-10 -right-10 w-24 h-24 bg-secondary-500 rounded-full opacity-20 filter blur-xl">
+                        </div>
+                        <div
+                            class="absolute top-20 -right-20 w-16 h-16 bg-yellow-500 rounded-full opacity-10 filter blur-xl">
+                        </div>
+                    </div>
+                    <div class="floating-icon absolute top-0 left-0 text-primary-400 text-4xl opacity-30">
+                        <i class="fas fa-square"></i>
+                    </div>
+                    <div class="floating-icon absolute top-1/4 right-0 text-secondary-400 text-3xl opacity-30">
+                        <i class="fas fa-circle"></i>
+                    </div>
+                    <div class="floating-icon absolute bottom-0 left-1/4 text-yellow-400 text-5xl opacity-20">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="floating-icon absolute bottom-1/3 right-1/4 text-pink-400 text-2xl opacity-30">
+                        <i class="fas fa-heart"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-10 scroll-indicator">
+            <a href="#about" class="text-gray-400 hover:text-white transition-colors">
+                <i class="fas fa-chevron-down text-2xl animate-bounce"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-gray-900/50 relative overflow-hidden">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4">
+                    <span class="gradient-text">About The Game</span>
+                </h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                    A brand new addictive word puzzle game that will challenge your vocabulary and entertain you for
+                    hours
+                </p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="bg-gray-800/50 rounded-xl p-6 card-hover-effect border border-gray-700/50">
+                    <div class="text-primary-400 text-4xl mb-4">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Brain Training</h3>
+                    <p class="text-gray-400">Improve your vocabulary and spelling skills while having fun with thousands
+                        of word puzzles.</p>
+                </div>
+                <div class="bg-gray-800/50 rounded-xl p-6 card-hover-effect border border-gray-700/50">
+                    <div class="text-secondary-400 text-4xl mb-4">
+                        <i class="fas fa-mobile-alt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Offline Play</h3>
+                    <p class="text-gray-400">No internet required - play anytime, anywhere without any time limits.</p>
+                </div>
+                <div class="bg-gray-800/50 rounded-xl p-6 card-hover-effect border border-gray-700/50">
+                    <div class="text-yellow-400 text-4xl mb-4">
+                        <i class="fas fa-paint-brush"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Beautiful Themes</h3>
+                    <p class="text-gray-400">Unlock amazing landscapes and themes as you progress through the game.</p>
+                </div>
+                <div class="bg-gray-800/50 rounded-xl p-6 card-hover-effect border border-gray-700/50">
+                    <div class="text-pink-400 text-4xl mb-4">
+                        <i class="fas fa-coins"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Free Coins</h3>
+                    <p class="text-gray-400">Earn free coins every 30 minutes to get hints and unlock special features.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-20 bg-gradient-to-b from-gray-900/50 to-gray-900 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4">
+                    <span class="gradient-text">Amazing Features</span>
+                </h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                    Discover what makes Word Game Wonders: Crossword the best word puzzle experience
+                </p>
+            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="relative">
+                    <div class="gradient-border p-1 rounded-xl">
+                        <div class="bg-gray-900 rounded-xl p-6 h-full">
+                            <div class="flex flex-col space-y-8">
+                                <div class="flex items-start space-x-4 feature-item">
+                                    <div class="text-primary-400 text-2xl mt-1">
+                                        <i class="fas fa-search"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-xl font-bold mb-2">Creative Word Search Puzzles</h3>
+                                        <p class="text-gray-400">Search and swipe letters to find hidden words. Letter
+                                            blocks crush after correct words being swiped out, forming new hidden words.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start space-x-4 feature-item">
+                                    <div class="text-secondary-400 text-2xl mt-1">
+                                        <i class="fas fa-lightbulb"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-xl font-bold mb-2">Addictive Word Finder with Clues</h3>
+                                        <p class="text-gray-400">A new kind of word finder game to tease your brain with
+                                            a phrase/word clue for every puzzle. Find as many hidden words as possible.
+                                        </p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start space-x-4 feature-item">
+                                    <div class="text-yellow-400 text-2xl mt-1">
+                                        <i class="fas fa-palette"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-xl font-bold mb-2">Clear Animations & Amazing Landscapes</h3>
+                                        <p class="text-gray-400">Enjoy clear graphics and animations for each tap or
+                                            swipe. Change themes to get amazing landscapes as background.</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-start space-x-4 feature-item">
+                                    <div class="text-pink-400 text-2xl mt-1">
+                                        <i class="fas fa-layer-group"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="text-xl font-bold mb-2">Thousands of Levels</h3>
+                                        <p class="text-gray-400">Starts easy and becomes challenging fast. Find bonus
+                                            words to earn extra coins and unlock more challenges.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div
+                        class="absolute -top-10 -left-10 w-32 h-32 bg-primary-500 rounded-full opacity-10 filter blur-xl z-0">
+                    </div>
+                    <div
+                        class="absolute -bottom-10 -right-10 w-40 h-40 bg-secondary-500 rounded-full opacity-10 filter blur-xl z-0">
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="flex justify-end ">
+                        <img src="/images/features-img.webp" alt="features img" class="md:w-[70%] rounded-lg" />
+                    </div>
+                    <div
+                        class="absolute top-0 right-0 w-24 h-24 bg-yellow-500 rounded-full opacity-10 filter blur-xl -mt-12 -mr-12">
+                    </div>
+                    <div
+                        class="absolute bottom-0 left-0 w-20 h-20 bg-pink-500 rounded-full opacity-10 filter blur-xl -mb-10 -ml-10">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="py-20 bg-gray-900 relative overflow-hidden">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4">
+                    <span class="gradient-text">How It Works</span>
+                </h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                    Simple steps to start your word puzzle adventure
+                </p>
+            </div>
+            <div class="relative">
+                <div
+                    class="hidden lg:block absolute left-1/2 top-0 h-full w-1 bg-gradient-to-b from-primary-500 to-secondary-500 -ml-0.5">
+                </div>
+                <div class="space-y-12 lg:space-y-0 lg:grid lg:grid-cols-2 lg:gap-x-8">
+                    <!-- Step 1 -->
+                    <div class="relative lg:mb-12 step-item">
+                        <div
+                            class="flex items-center justify-center h-12 w-12 rounded-full bg-primary-500 text-white text-xl font-bold absolute left-0 lg:left-1/2 -translate-x-1/2 -translate-y-1/2 top-0 border-4 border-gray-900 z-10">
+                            1
+                        </div>
+                        <div class="lg:ml-12 lg:mr-0 lg:pl-12 lg:pr-0 lg:text-left text-center">
+                            <h3 class="text-2xl font-bold mb-4">Download & Install</h3>
+                            <p class="text-gray-400 mb-4">
+                                Get the game from Google Play Store and install it on your Android device (requires
+                                Android 5.1 or up).
+                            </p>
+                            <div class="flex justify-center lg:justify-start">
+                                <a href="https://play.google.com/store/apps/details?id=com.smartgames.word.puzzle.block.crush.wonders"
+                                    class="px-6 py-2 bg-gray-800 hover:bg-gray-700 rounded-lg text-white transition-colors inline-flex items-center space-x-2">
+                                    <i class="fab fa-google-play"></i>
+                                    <span>Get it on Google Play</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 2 -->
+                    <div class="relative lg:mt-12 step-item">
+                        <div
+                            class="flex items-center justify-center h-12 w-12 rounded-full bg-secondary-500 text-white text-xl font-bold absolute left-0 lg:left-1/2 -translate-x-1/2 -translate-y-1/2 top-0 border-4 border-gray-900 z-10">
+                            2
+                        </div>
+                        <div class="lg:mr-12 lg:ml-0 lg:pr-12 lg:pl-0 lg:text-right text-center">
+                            <h3 class="text-2xl font-bold mb-4">Start Playing</h3>
+                            <p class="text-gray-400 mb-4">
+                                Open the app and begin with the tutorial levels to learn the basic mechanics of the word
+                                search game.
+                            </p>
+
+                        </div>
+                    </div>
+
+                    <!-- Step 3 -->
+                    <div class="relative lg:mb-12 step-item">
+                        <div
+                            class="flex items-center justify-center h-12 w-12 rounded-full bg-yellow-500 text-white text-xl font-bold absolute left-0 lg:left-1/2 -translate-x-1/2 -translate-y-1/2 top-0 border-4 border-gray-900 z-10">
+                            3
+                        </div>
+                        <div class="lg:ml-12 lg:mr-0 lg:pl-12 lg:pr-0 lg:text-left text-center">
+                            <h3 class="text-2xl font-bold mb-4">Solve Puzzles</h3>
+                            <p class="text-gray-400 mb-4">
+                                Swipe letters to form words matching the clues. Use hints when needed and find bonus
+                                words for extra coins.
+                            </p>
+
+                        </div>
+                    </div>
+
+                    <!-- Step 4 -->
+                    <div class="relative lg:mt-12 step-item">
+                        <div
+                            class="flex items-center justify-center h-12 w-12 rounded-full bg-pink-500 text-white text-xl font-bold absolute left-0 lg:left-1/2 -translate-x-1/2 -translate-y-1/2 top-0 border-4 border-gray-900 z-10">
+                            4
+                        </div>
+                        <div class="lg:mr-12 lg:ml-0 lg:pr-12 lg:pl-0 lg:text-right text-center">
+                            <h3 class="text-2xl font-bold mb-4">Unlock Themes</h3>
+                            <p class="text-gray-400 mb-4">
+                                Progress through levels to earn coins and unlock beautiful themes that change your game
+                                background.
+                            </p>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Screenshots Section -->
+    <section class="py-20 bg-gray-900/50 relative overflow-hidden">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4">
+                    <span class="gradient-text">Game Screenshots</span>
+                </h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                    See the beautiful visuals and intuitive interface of Word Game Wonders
+                </p>
+            </div>
+            <div class="screenshot-gallery">
+                <div
+                    class="flex flex-col md:flex-row items-center justify-center space-y-8 md:space-y-0 md:space-x-8 -mx-4">
+                    <div class="screenshot-item px-4 w-full md:w-1/3 lg:w-1/4">
+                        <div class="bg-gray-800 rounded-2xl overflow-hidden shadow-xl border border-gray-700/50">
+                            <img src="/images/screenshot1.webp" alt="Game Screenshot 1" class="w-full h-auto">
+                            <div class="p-4">
+                                <h3 class="text-lg font-bold mb-2">Word Search Puzzle</h3>
+                                <p class="text-gray-400 text-sm">Swipe letters to find hidden words matching the clue.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="screenshot-item px-4 w-full md:w-1/3 lg:w-1/4">
+                        <div class="bg-gray-800 rounded-2xl overflow-hidden shadow-xl border border-gray-700/50">
+                            <img src="/images/screenshot2.webp" alt="Game Screenshot 2" class="w-full h-auto">
+                            <div class="p-4">
+                                <h3 class="text-lg font-bold mb-2">Level Completion</h3>
+                                <p class="text-gray-400 text-sm">Celebrate your success when you complete a puzzle.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="screenshot-item px-4 w-full md:w-1/3 lg:w-1/4">
+                        <div class="bg-gray-800 rounded-2xl overflow-hidden shadow-xl border border-gray-700/50">
+                            <img src="/images/screenshot3.webp" alt="Game Screenshot 3" class="w-full h-auto">
+                            <div class="p-4">
+                                <h3 class="text-lg font-bold mb-2">Theme Selection</h3>
+                                <p class="text-gray-400 text-sm">Choose from various beautiful background themes.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="screenshot-item px-4 w-full md:w-1/3 lg:w-1/4 hidden lg:block">
+                        <div class="bg-gray-800 rounded-2xl overflow-hidden shadow-xl border border-gray-700/50">
+                            <img src="/images/screenshot4.webp" alt="Game Screenshot 4" class="w-full h-auto">
+                            <div class="p-4">
+                                <h3 class="text-lg font-bold mb-2">Hint System</h3>
+                                <p class="text-gray-400 text-sm">Use hints when you get stuck on a difficult puzzle.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Reviews Section -->
+    <section class="py-20 bg-gray-900 relative overflow-hidden">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4">
+                    <span class="gradient-text">Player Reviews</span>
+                </h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                    What our players say about Word Game Wonders: Crossword
+                </p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="review-card rounded-xl p-6">
+                    <div class="flex items-center mb-4">
+
+                        <div>
+                            <h4 class="font-bold">Sarah Johnson</h4>
+                            <div class="flex items-center text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4">
+                        "Absolutely addictive! The variety of puzzles keeps me coming back. I've improved my vocabulary
+                        so much since I started playing."
+                    </p>
+                    <div class="text-gray-500 text-sm">
+                        <i class="fas fa-clock mr-1"></i> 2 weeks ago
+                    </div>
+                </div>
+                <div class="review-card rounded-xl p-6">
+                    <div class="flex items-center mb-4">
+
+                        <div>
+                            <h4 class="font-bold">Michael Chen</h4>
+                            <div class="flex items-center text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4">
+                        "The graphics are beautiful and the gameplay is smooth. I love that I can play offline during my
+                        commute. Highly recommend!"
+                    </p>
+                    <div class="text-gray-500 text-sm">
+                        <i class="fas fa-clock mr-1"></i> 1 month ago
+                    </div>
+                </div>
+                <div class="review-card rounded-xl p-6">
+                    <div class="flex items-center mb-4">
+
+                        <div>
+                            <h4 class="font-bold">David Martinez</h4>
+                            <div class="flex items-center text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4">
+                        "Best word game I've played! The bonus words add an extra challenge and the themes are stunning.
+                        Can't wait for more levels!"
+                    </p>
+                    <div class="text-gray-500 text-sm">
+                        <i class="fas fa-clock mr-1"></i> 3 days ago
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section class="py-20 bg-gray-900/50 relative overflow-hidden">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4">
+                    <span class="gradient-text">Latest News</span>
+                </h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                    Stay updated with game tips, updates, and word puzzle strategies
+                </p>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <a href="/blog/improve-vocabulary/" class="group">
+                    <div
+                        class="bg-gray-800 rounded-xl overflow-hidden card-hover-effect border border-gray-700/50 h-full flex flex-col">
+                        <div class="relative overflow-hidden h-48">
+                            <img src="/images/blog-featured.webp" alt="Improve Vocabulary"
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent"></div>
+                        </div>
+                        <div class="p-6 flex-grow">
+                            <div class="text-primary-400 text-sm font-medium mb-2">Tips & Tricks</div>
+                            <h3 class="text-xl font-bold mb-3 group-hover:text-primary-400 transition-colors">How to
+                                Improve Your Vocabulary with Word Games</h3>
+                            <p class="text-gray-400 mb-4">Discover effective strategies to expand your vocabulary while
+                                having fun with word puzzles.</p>
+                            <div class="text-gray-500 text-sm flex items-center">
+                                <i class="far fa-clock mr-1"></i> 5 min read
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="/blog/new-update/" class="group">
+                    <div
+                        class="bg-gray-800 rounded-xl overflow-hidden card-hover-effect border border-gray-700/50 h-full flex flex-col">
+                        <div class="relative overflow-hidden h-48">
+                            <img src="/images/blog2.webp" alt="Game Update"
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent"></div>
+                        </div>
+                        <div class="p-6 flex-grow">
+                            <div class="text-secondary-400 text-sm font-medium mb-2">Update</div>
+                            <h3 class="text-xl font-bold mb-3 group-hover:text-secondary-400 transition-colors">New
+                                Update: 200 Additional Levels Added</h3>
+                            <p class="text-gray-400 mb-4">Exciting news! We've added 200 new challenging levels to keep
+                                your brain engaged.</p>
+                            <div class="text-gray-500 text-sm flex items-center">
+                                <i class="far fa-clock mr-1"></i> 3 min read
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="/blog/bonus-words/" class="group">
+                    <div
+                        class="bg-gray-800 rounded-xl overflow-hidden card-hover-effect border border-gray-700/50 h-full flex flex-col">
+                        <div class="relative overflow-hidden h-48">
+                            <img src="/images/blog3.png" alt="Bonus Words"
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent"></div>
+                        </div>
+                        <div class="p-6 flex-grow">
+                            <div class="text-yellow-400 text-sm font-medium mb-2">Gameplay</div>
+                            <h3 class="text-xl font-bold mb-3 group-hover:text-yellow-400 transition-colors">Mastering
+                                Bonus Words for Extra Coins</h3>
+                            <p class="text-gray-400 mb-4">Learn how to find those elusive bonus words to maximize your
+                                coin earnings.</p>
+                            <div class="text-gray-500 text-sm flex items-center">
+                                <i class="far fa-clock mr-1"></i> 7 min read
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                <a href="/blog/theme-guide/" class="group">
+                    <div
+                        class="bg-gray-800 rounded-xl overflow-hidden card-hover-effect border border-gray-700/50 h-full flex flex-col">
+                        <div class="relative overflow-hidden h-48">
+                            <img src="/images/blog4.jpg" alt="Theme Guide"
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent"></div>
+                        </div>
+                        <div class="p-6 flex-grow">
+                            <div class="text-pink-400 text-sm font-medium mb-2">Guide</div>
+                            <h3 class="text-xl font-bold mb-3 group-hover:text-pink-400 transition-colors">Unlocking All
+                                Themes: A Complete Guide</h3>
+                            <p class="text-gray-400 mb-4">Find out how to unlock all the beautiful background themes in
+                                the game.</p>
+                            <div class="text-gray-500 text-sm flex items-center">
+                                <i class="far fa-clock mr-1"></i> 4 min read
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="text-center mt-12">
+                <a href="/blog/"
+                    class="px-6 py-3 bg-gray-800 hover:bg-gray-700 text-white rounded-lg font-medium transition-colors inline-flex items-center space-x-2">
+                    <i class="fas fa-book-open"></i>
+                    <span>View All Articles</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section class="py-20 bg-gray-900 relative overflow-hidden">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl font-bold mb-4">
+                    <span class="gradient-text">Frequently Asked Questions</span>
+                </h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                    Find answers to common questions about Word Game Wonders
+                </p>
+            </div>
+            <div class="max-w-3xl mx-auto">
+                <div class="space-y-4">
+                    <div class="faq-item bg-gray-800/50 border border-gray-700/50">
+                        <div class="faq-question">
+                            <h3 class="text-xl font-bold">Is the game completely free to play?</h3>
+                            <i class="fas fa-chevron-down faq-icon text-gray-400"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-inner">
+                                <p class="text-gray-400">
+                                    Yes, Word Game Wonders: Crossword is free to download and play. The game contains
+                                    optional in-app purchases for hints and coins, but all puzzles can be completed
+                                    without spending money. You also earn free coins every 30 minutes.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item bg-gray-800/50 border border-gray-700/50">
+                        <div class="faq-question">
+                            <h3 class="text-xl font-bold">Does the game require an internet connection?</h3>
+                            <i class="fas fa-chevron-down faq-icon text-gray-400"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-inner">
+                                <p class="text-gray-400">
+                                    No, once downloaded, you can play the game offline without any internet connection.
+                                    However, some features like in-app purchases may require an internet connection
+                                    temporarily.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item bg-gray-800/50 border border-gray-700/50">
+                        <div class="faq-question">
+                            <h3 class="text-xl font-bold">How many levels does the game have?</h3>
+                            <i class="fas fa-chevron-down faq-icon text-gray-400"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-inner">
+                                <p class="text-gray-400">
+                                    Currently, the game features over 2000 unique levels with varying difficulty. We
+                                    regularly add new levels through updates to keep the game fresh and challenging.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item bg-gray-800/50 border border-gray-700/50">
+                        <div class="faq-question">
+                            <h3 class="text-xl font-bold">What devices are supported?</h3>
+                            <i class="fas fa-chevron-down faq-icon text-gray-400"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-inner">
+                                <p class="text-gray-400">
+                                    The game requires Android 5.1 or later. It's optimized for both phones and tablets.
+                                    Unfortunately, it's not currently available for iOS devices.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="faq-item bg-gray-800/50 border border-gray-700/50">
+                        <div class="faq-question">
+                            <h3 class="text-xl font-bold">How do I unlock new themes?</h3>
+                            <i class="fas fa-chevron-down faq-icon text-gray-400"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <div class="faq-answer-inner">
+                                <p class="text-gray-400">
+                                    You can unlock new themes by earning coins through gameplay. Complete levels, find
+                                    bonus words, and collect your free coins every 30 minutes to unlock beautiful
+                                    background themes.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt-12">
+                    <a href="/contact/"
+                        class="px-6 py-3 bg-gray-800 hover:bg-gray-700 text-white rounded-lg font-medium transition-colors inline-flex items-center space-x-2">
+                        <i class="fas fa-question-circle"></i>
+                        <span>Still Have Questions?</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Download CTA Section -->
+    <section class="py-20 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-primary-900/20 to-secondary-900/20 z-0"></div>
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="download-cta rounded-2xl p-8 md:p-12 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold mb-6">
+                    Ready to Start Your Word Puzzle Adventure?
+                </h2>
+                <p class="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
+                    Download Word Game Wonders: Crossword now and join thousands of players enjoying this addictive word
+                    puzzle experience!
+                </p>
+                <a href="https://play.google.com/store/apps/details?id=com.smartgames.word.puzzle.block.crush.wonders"
+                    class="px-8 py-4 bg-gradient-to-r from-primary-600 to-secondary-600 text-white rounded-lg font-bold text-lg hover:opacity-90 transition-opacity inline-flex items-center justify-center space-x-3 mx-auto">
+                    <i class="fab fa-google-play text-2xl"></i>
+                    <span>Download on Google Play</span>
+                </a>
+                <div class="mt-8 flex flex-wrap items-center justify-center gap-6">
+                    <div class="flex items-center text-gray-300">
+                        <i class="fas fa-check-circle text-green-400 mr-2"></i>
+                        <span>No Ads</span>
+                    </div>
+                    <div class="flex items-center text-gray-300">
+                        <i class="fas fa-check-circle text-green-400 mr-2"></i>
+                        <span>Offline Play</span>
+                    </div>
+                    <div class="flex items-center text-gray-300">
+                        <i class="fas fa-check-circle text-green-400 mr-2"></i>
+                        <span>2000+ Levels</span>
+                    </div>
+                    <div class="flex items-center text-gray-300">
+                        <i class="fas fa-check-circle text-green-400 mr-2"></i>
+                        <span>Beautiful Themes</span>
+                    </div>
+                </div>
+                <div class="absolute top-0 left-0 w-32 h-32 bg-primary-500 rounded-full opacity-10 filter blur-xl">
+                </div>
+                <div
+                    class="absolute bottom-0 right-0 w-40 h-40 bg-secondary-500 rounded-full opacity-10 filter blur-xl">
+                </div>
+                <div class="floating-icon absolute top-8 left-8 text-primary-400 text-4xl opacity-20">
+                    <i class="fas fa-gamepad"></i>
+                </div>
+                <div class="floating-icon absolute bottom-8 right-8 text-secondary-400 text-4xl opacity-20">
+                    <i class="fas fa-puzzle-piece"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 border-t border-gray-800">
+        <div class="container mx-auto px-6 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+                <div>
+                    <div class="flex items-center space-x-2 mb-6">
+                        <img src="/images/logo.png" alt="Word Game Wonders Logo" class="h-16 w-auto">
+                    </div>
+                    <p class="text-gray-400 mb-4">
+                        The most addictive word puzzle game with beautiful graphics and thousands of challenging levels.
+                    </p>
+
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-6">Quick Links</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/" class="text-gray-400 hover:text-primary-400 transition-colors">Home</a></li>
+                        <li><a href="/how-to-play/" class="text-gray-400 hover:text-primary-400 transition-colors">How
+                                to Play</a></li>
+                        <li><a href="/responsible-gaming/"
+                                class="text-gray-400 hover:text-primary-400 transition-colors">Responsible Gaming</a>
+                        </li>
+                        <li><a href="/blog/" class="text-gray-400 hover:text-primary-400 transition-colors">Blog</a>
+                        </li>
+                        <li><a href="/contact/"
+                                class="text-gray-400 hover:text-primary-400 transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-6">Legal</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/privacy/" class="text-gray-400 hover:text-primary-400 transition-colors">Privacy
+                                Policy</a></li>
+                        <li><a href="/terms/" class="text-gray-400 hover:text-primary-400 transition-colors">Terms of
+                                Service</a></li>
+                        <li><a href="/cookies/" class="text-gray-400 hover:text-primary-400 transition-colors">Cookies
+                                Policy</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-6">Contact Us</h3>
+                    <ul class="space-y-3 text-gray-400">
+                        <li class="flex items-start space-x-3">
+                            <i class="fas fa-map-marker-alt mt-1 text-primary-400"></i>
+                            <span>36 St Andrews Gardens, Toronto, ON M4W 2E1, Canada</span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <i class="fas fa-phone text-primary-400"></i>
+                            <span>+1 647-997-7626</span>
+                        </li>
+                        <li class="flex items-center space-x-3">
+                            <i class="fas fa-envelope text-primary-400"></i>
+                            <span>info@avapuzzlesgames.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-500 mb-4 md:mb-0">
+                    © 2025 A.V.A - puzzles games. All rights reserved.
+                </p>
+                <div class="flex space-x-6">
+                    <a href="/privacy/" class="text-gray-500 hover:text-primary-400 transition-colors text-sm">Privacy
+                        Policy</a>
+                    <a href="/terms/" class="text-gray-500 hover:text-primary-400 transition-colors text-sm">Terms of
+                        Service</a>
+                    <a href="/cookies/"
+                        class="text-gray-500 hover:text-primary-400 transition-colors text-sm">Cookies</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    <!-- Cookie Consent Popup -->
+<div id="cookie-consent" class="fixed bottom-0 left-0 right-0 bg-gray-800 text-white p-4 shadow-lg z-50 hidden">
+    <div class="container mx-auto flex flex-col md:flex-row items-center justify-between">
+        <div class="mb-4 md:mb-0 md:mr-4">
+            <p class="text-sm">We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies.</p>
+        </div>
+        <div class="flex space-x-3">
+            <button id="cookie-accept" class="px-4 py-2 bg-primary-600 hover:bg-primary-700 rounded-lg text-sm font-medium transition-colors">Accept</button>
+            <button id="cookie-decline" class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-sm font-medium transition-colors">Decline</button>
+            <a href="/cookies/" class="px-4 py-2 bg-transparent hover:bg-gray-700 rounded-lg text-sm font-medium transition-colors border border-gray-600">Learn More</a>
+        </div>
+    </div>
+</div>
+
+<!-- Cookie Consent Script -->
+<script>
+    const initCookieConsent = () => {
+        const cookieConsent = document.getElementById('cookie-consent');
+        const cookieAccept = document.getElementById('cookie-accept');
+        const cookieDecline = document.getElementById('cookie-decline');
+
+        if (!localStorage.getItem('cookieConsent')) {
+            cookieConsent.classList.remove('hidden');
+        }
+
+        if (cookieAccept) {
+            cookieAccept.addEventListener('click', function () {
+                localStorage.setItem('cookieConsent', 'accepted');
+                cookieConsent.classList.add('hidden');
+            });
+        }
+
+        if (cookieDecline) {
+            cookieDecline.addEventListener('click', function () {
+                localStorage.setItem('cookieConsent', 'declined');
+                cookieConsent.classList.add('hidden');
+            });
+        }
+    };
+
+    // Call the function on page load
+    document.addEventListener('DOMContentLoaded', initCookieConsent);
+</script>
+
+    <script>
+      
+// Initialize all functionality when DOM is loaded
+document.addEventListener('DOMContentLoaded', function() {
+    // Mobile menu toggle
+    const mobileMenuButton = document.getElementById('mobile-menu-button');
+    const mobileMenu = document.getElementById('mobile-menu');
+
+    if (mobileMenuButton && mobileMenu) {
+        mobileMenuButton.addEventListener('click', function() {
+            const isHidden = mobileMenu.classList.contains('hidden');
+            mobileMenu.classList.remove('hidden');
+
+            if (isHidden) {
+                gsap.fromTo(mobileMenu,
+                    { height: 0, opacity: 0 },
+                    {
+                        height: 'auto',
+                        opacity: 1,
+                        duration: 0.3,
+                        ease: "power2.out",
+                        onComplete: () => {
+                            mobileMenu.style.height = 'auto';
+                        }
+                    }
+                );
+            } else {
+                gsap.to(mobileMenu, {
+                    height: 0,
+                    opacity: 0,
+                    duration: 0.3,
+                    ease: "power2.in",
+                    onComplete: () => {
+                        mobileMenu.classList.add('hidden');
+                        mobileMenu.style.height = '';
+                    }
+                });
+            }
+        });
+    }
+
+    // Initialize Three.js background if container exists
+    const initThreeJSBackground = () => {
+        const container = document.getElementById('threejs-background');
+        if (!container) return;
+
+        if (typeof THREE === 'undefined' || !THREE.WebGLRenderer) {
+            container.style.display = 'none';
+            return;
+        }
+
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({
+            alpha: true,
+            antialias: true,
+            powerPreference: "low-power"
+        });
+
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(window.devicePixelRatio > 1 ? 1.5 : 1);
+        container.appendChild(renderer.domElement);
+
+        const particlesGeometry = new THREE.BufferGeometry();
+        const particleCount = 100;
+
+        const posArray = new Float32Array(particleCount * 3);
+        const colorArray = new Float32Array(particleCount * 3);
+
+        for (let i = 0; i < particleCount * 3; i++) {
+            posArray[i] = (Math.random() - 0.5) * 40;
+            colorArray[i] = Math.random() * 0.5 + 0.5;
+        }
+
+        particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+        particlesGeometry.setAttribute('color', new THREE.BufferAttribute(colorArray, 3));
+
+        const particlesMaterial = new THREE.PointsMaterial({
+            size: 0.2,
+            transparent: true,
+            opacity: 0.3,
+            vertexColors: true
+        });
+
+        const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+        scene.add(particlesMesh);
+
+        camera.position.z = 20;
+
+        let frameId = null;
+        const animate = () => {
+            frameId = requestAnimationFrame(animate);
+            particlesMesh.rotation.x += 0.001;
+            particlesMesh.rotation.y += 0.001;
+            renderer.render(scene, camera);
+        };
+
+        let resizeTimeout;
+        const handleResize = () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            }, 200);
+        };
+
+        window.addEventListener('resize', handleResize);
+        animate();
+
+        return () => {
+            cancelAnimationFrame(frameId);
+            window.removeEventListener('resize', handleResize);
+            renderer.dispose();
+            particlesGeometry.dispose();
+            particlesMaterial.dispose();
+            if (container.contains(renderer.domElement)) {
+                container.removeChild(renderer.domElement);
+            }
+        };
+    };
+
+    if (window.innerWidth > 768 && typeof THREE !== 'undefined') {
+        const cleanupThreeJS = initThreeJSBackground();
+        window.addEventListener('beforeunload', () => {
+            if (cleanupThreeJS) cleanupThreeJS();
+        });
+    }
+
+    // GSAP Animations
+    if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+        gsap.registerPlugin(ScrollTrigger);
+
+        gsap.from(".gradient-text", {
+            duration: 1.5,
+            opacity: 0,
+            y: 50,
+            stagger: 0.2,
+            ease: "power3.out"
+        });
+
+        gsap.from(".animation-float", {
+            duration: 1.5,
+            opacity: 0,
+            scale: 0.8,
+            ease: "back.out(1.7)"
+        });
+
+        const createScrollAnimations = () => {
+            gsap.utils.toArray(".feature-item").forEach((item, i) => {
+                gsap.from(item, {
+                    scrollTrigger: {
+                        trigger: item,
+                        start: "top 80%",
+                        toggleActions: "play none none none"
+                    },
+                    opacity: 0,
+                    y: 50,
+                    duration: 0.8,
+                    delay: i * 0.1
+                });
+            });
+
+            const steps = gsap.timeline({
+                scrollTrigger: {
+                    trigger: ".step-item",
+                    start: "top 75%",
+                    toggleActions: "play none none none"
+                }
+            });
+
+            gsap.utils.toArray(".step-item").forEach((item, i) => {
+                steps.from(item, {
+                    opacity: 0,
+                    x: i % 2 === 0 ? -50 : 50,
+                    duration: 0.8
+                }, i * 0.2);
+            });
+
+            gsap.utils.toArray(".screenshot-item").forEach((item, i) => {
+                gsap.from(item, {
+                    scrollTrigger: {
+                        trigger: ".screenshot-gallery",
+                        start: "top 80%",
+                        toggleActions: "play none none none"
+                    },
+                    opacity: 0,
+                    y: 50,
+                    duration: 0.6,
+                    delay: i * 0.15,
+                    ease: "power2.out"
+                });
+            });
+
+            gsap.utils.toArray(".review-card").forEach((item, i) => {
+                gsap.from(item, {
+                    scrollTrigger: {
+                        trigger: item,
+                        start: "top 80%",
+                        toggleActions: "play none none none"
+                    },
+                    opacity: 0,
+                    y: 50,
+                    duration: 0.6,
+                    delay: i * 0.1
+                });
+            });
+
+            gsap.utils.toArray(".faq-item").forEach((item, i) => {
+                gsap.from(item, {
+                    scrollTrigger: {
+                        trigger: item,
+                        start: "top 85%",
+                        toggleActions: "play none none none"
+                    },
+                    opacity: 0,
+                    y: 30,
+                    duration: 0.5,
+                    delay: i * 0.1
+                });
+            });
+        };
+
+        createScrollAnimations();
+    }
+
+    // FAQ accordion with improved functionality
+    const initFAQAccordion = () => {
+        const faqItems = document.querySelectorAll('.faq-item');
+        if (!faqItems.length) return;
+
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            const answer = item.querySelector('.faq-answer');
+            const icon = item.querySelector('.faq-icon');
+
+            if (!question || !answer) return;
+
+            question.setAttribute('aria-expanded', 'false');
+            question.setAttribute('role', 'button');
+            answer.setAttribute('aria-hidden', 'true');
+
+            question.addEventListener('click', (e) => {
+                const isActive = item.classList.contains('active');
+
+                // Close all items first
+                faqItems.forEach(otherItem => {
+                    if (otherItem !== item) {
+                        otherItem.classList.remove('active');
+                        const otherAnswer = otherItem.querySelector('.faq-answer');
+                        const otherQuestion = otherItem.querySelector('.faq-question');
+                        const otherIcon = otherItem.querySelector('.faq-icon');
+
+                        if (otherQuestion) otherQuestion.setAttribute('aria-expanded', 'false');
+                        if (otherAnswer) otherAnswer.setAttribute('aria-hidden', 'true');
+                        if (otherIcon) otherIcon.style.transform = 'rotate(0deg)';
+                    }
+                });
+
+                // Toggle current item
+                if (!isActive) {
+                    item.classList.add('active');
+                    question.setAttribute('aria-expanded', 'true');
+                    answer.setAttribute('aria-hidden', 'false');
+                    if (icon) icon.style.transform = 'rotate(180deg)';
+
+                    if (!isElementInViewport(item)) {
+                        item.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                    }
+                } else {
+                    item.classList.remove('active');
+                    question.setAttribute('aria-expanded', 'false');
+                    answer.setAttribute('aria-hidden', 'true');
+                    if (icon) icon.style.transform = 'rotate(0deg)';
+                }
+            });
+
+            question.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    question.click();
+                }
+            });
+        });
+
+        function isElementInViewport(el) {
+            const rect = el.getBoundingClientRect();
+            return (
+                rect.top >= 0 &&
+                rect.left >= 0 &&
+                rect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
+                rect.right <= (window.innerWidth || document.documentElement.clientWidth)
+            );
+        }
+    };
+
+    initFAQAccordion();
+    initCookieConsent();
+
+    // Smooth scrolling
+    const initSmoothScrolling = () => {
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+
+                const targetElement = document.querySelector(targetId);
+                if (!targetElement) return;
+
+                const headerHeight = document.querySelector('nav')?.offsetHeight || 80;
+                const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - headerHeight;
+
+                window.scrollTo({
+                    top: targetPosition,
+                    behavior: 'smooth'
+                });
+
+                if (history.pushState) {
+                    history.pushState(null, null, targetId);
+                } else {
+                    window.location.hash = targetId;
+                }
+            });
+        });
+    };
+
+    initSmoothScrolling();
+
+    // Clean up GSAP ScrollTriggers when navigating away
+    window.addEventListener('beforeunload', () => {
+        if (typeof ScrollTrigger !== 'undefined') {
+            ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+        }
+    });
+});
+    </script>
+</body>
+
+</html>

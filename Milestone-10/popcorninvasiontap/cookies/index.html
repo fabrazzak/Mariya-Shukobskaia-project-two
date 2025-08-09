@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Cookies Policy for Popcorn Invasion: Tapping Game. Learn how we use cookies to enhance your gaming experience.">
+    <meta name="keywords" content="popcorn invasion cookies, game cookies policy, data tracking, cookie consent">
+    <meta name="author" content="Weasel Warrior Studios">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://popcorninvasiontap.com/cookies/">
+    <title>Cookies Policy | Popcorn Invasion: Tapping Game</title>
+    
+    <!-- Favicon -->
+   <link rel="icon" href="/assets/favicon.png" type="image/x-icon">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        popcorn: {
+                            light: '#FFF4D9',
+                            DEFAULT: '#FFD166',
+                            dark: '#E6B000',
+                        },
+                        butter: '#FFEE93',
+                        burnt: '#D8572A',
+                        alien: '#06D6A0',
+                        theater: '#1A1A2E',
+                    },
+                    fontFamily: {
+                        arcade: ['"Press Start 2P"', 'cursive'],
+                        fun: ['"Bangers"', 'cursive'],
+                    },
+                    animation: {
+                        'pop': 'pop 0.5s ease-out',
+                        'float': 'float 3s ease-in-out infinite',
+                        'pulse-slow': 'pulse 5s infinite',
+                        'fade-in': 'fadeIn 0.5s ease-out',
+                        'slide-up': 'slideUp 0.5s ease-out',
+                    },
+                    keyframes: {
+                        pop: {
+                            '0%': { transform: 'scale(0.5)', opacity: '0' },
+                            '80%': { transform: 'scale(1.1)', opacity: '1' },
+                            '100%': { transform: 'scale(1)', opacity: '1' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(50px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Press+Start+2P&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Additional CSS for animations */
+        @keyframes cookieSlideUp {
+            0% { transform: translateY(100px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+        
+        @keyframes cookieSlideDown {
+            0% { transform: translateY(0); opacity: 1; }
+            100% { transform: translateY(100px); opacity: 0; }
+        }
+        
+        .cookie-slide-up {
+            animation: cookieSlideUp 0.5s ease-out forwards;
+        }
+        
+        .cookie-slide-down {
+            animation: cookieSlideDown 0.3s ease-in forwards;
+        }
+        
+        /* Section animations */
+        .section-animate {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+        
+        .section-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Mobile menu animation */
+        .mobile-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        
+        .mobile-menu.open {
+            max-height: 500px;
+        }
+        
+        /* Popcorn particle animation */
+        @keyframes popcornExplode {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-100px) scale(0); opacity: 0; }
+        }
+        
+        .popcorn-particle {
+            animation: popcornExplode 1s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="bg-theater text-white font-sans overflow-x-hidden">
+    <!-- Cookie Consent Banner -->
+    <div id="cookieConsent" class="fixed bottom-0 left-0 right-0 bg-gray-900 text-white p-4 hidden z-50">
+        <div class="container mx-auto flex flex-col md:flex-row items-center justify-between">
+            <p class="mb-4 md:mb-0">We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies.</p>
+            <div class="flex space-x-4">
+                <button id="acceptCookies" class="bg-alien hover:bg-green-600 px-4 py-2 rounded">Accept</button>
+                <button id="declineCookies" class="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded">Decline</button>
+                <a href="/cookies/" class="bg-popcorn-dark hover:bg-popcorn-darker text-black px-4 py-2 rounded">Learn More</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 bg-black bg-opacity-90 z-40 backdrop-blur-md shadow-lg">
+       <div class="container mx-auto px-6 ">
+            <div class="flex justify-between items-center">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="/" class="flex items-center">
+                        <img src="/assets/logo.png" alt="Popcorn Invasion Logo" class="h-20 w-auto mr-3">                      
+                    </a>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button id="mobileMenuButton" class="text-popcorn focus:outline-none">
+                        <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="text-white hover:text-butter">Home</a>
+                    <a href="/how-to-play/" class="text-white hover:text-butter">How to Play</a>
+                    <a href="/responsible-gaming/" class="text-white hover:text-butter">Responsible Gaming</a>
+                    <a href="/blog/" class="text-white hover:text-butter">Blog</a>
+                    <a href="/contact/" class="text-white hover:text-butter">Contact</a>
+                    <a href="https://play.google.com/store/apps/details?id=com.WeaselWarriorStudios.PopcornInvasion" class="bg-popcorn hover:bg-popcorn-dark text-black font-bold px-6 py-2 rounded-full transition-all transform hover:scale-105 shadow-lg hover:shadow-popcorn/50">Download</a>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobileMenu" class="mobile-menu hidden md:hidden mt-4 pb-4">
+                <a href="/" class="block py-2 text-white">Home</a>
+                <a href="/how-to-play/" class="block py-2 text-white">How to Play</a>
+                <a href="/responsible-gaming/" class="block py-2 text-white">Responsible Gaming</a>
+                <a href="/blog/" class="block py-2 text-white">Blog</a>
+                <a href="/contact/" class="block py-2 text-white">Contact</a>
+                <a href="https://play.google.com/store/apps/details?id=com.WeaselWarriorStudios.PopcornInvasion" class="mt-3 inline-block bg-popcorn hover:bg-popcorn-dark text-black font-bold px-6 py-2 rounded-full transition-all transform hover:scale-105">Download</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 bg-gradient-to-b from-black to-theater overflow-hidden">
+        <!-- Decorative elements -->
+        <div class="absolute top-0 left-0 w-full h-full opacity-10 bg-[url('/assets/features-1.png')] bg-repeat"></div>
+        <div class="absolute -top-20 -left-20 w-64 h-64 bg-popcorn rounded-full filter blur-3xl opacity-10"></div>
+        <div class="absolute -bottom-20 -right-20 w-64 h-64 bg-alien rounded-full filter blur-3xl opacity-10"></div>
+        
+        <div class="container mx-auto px-6 relative">
+            <div class="max-w-4xl mx-auto text-center">
+                <h1 class="text-4xl md:text-6xl font-fun mb-6 text-popcorn animate-pop">
+                    COOKIES POLICY
+                </h1>
+                <p class="text-xl md:text-2xl mb-8 text-butter">
+                    Last Updated: March 16, 2025
+                </p>
+                <div class="flex justify-center">
+                    <a href="#what-are-cookies" class="bg-popcorn hover:bg-popcorn-dark text-black font-bold px-8 py-4 rounded-full text-lg transition-all transform hover:scale-105 shadow-lg hover:shadow-popcorn/50">
+                        Jump to Section
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cookies Content -->
+    <section class="py-20 ">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto">
+                <div class="bg-gray-800 bg-opacity-50 rounded-xl p-8 backdrop-blur-sm border border-gray-700">
+                    <!-- Introduction -->
+                    <div class="mb-12">
+                        <p class="text-gray-300 mb-6">Welcome to the Cookies Policy for Popcorn Invasion: Tapping Game ("Game"), developed and published by Weasel Warrior Studios ("we," "us," or "our"). This policy explains how we use cookies and similar tracking technologies when you visit our website or play our Game.</p>
+                        <p class="text-gray-300">By using our website or Game, you consent to the use of cookies in accordance with this policy. If you do not agree to our use of cookies, you should adjust your browser settings accordingly or refrain from using our website and Game.</p>
+                    </div>
+                    
+                    <!-- Table of Contents -->
+                    <div class="mb-12 bg-gray-900 bg-opacity-50 p-6 rounded-lg border border-gray-700">
+                        <h3 class="text-xl font-bold text-butter mb-4">Table of Contents</h3>
+                        <ol class="list-decimal pl-5 space-y-2 text-gray-300">
+                            <li><a href="#what-are-cookies" class="text-popcorn hover:underline">What Are Cookies?</a></li>
+                            <li><a href="#how-we-use" class="text-popcorn hover:underline">How We Use Cookies</a></li>
+                            <li><a href="#types-of-cookies" class="text-popcorn hover:underline">Types of Cookies We Use</a></li>
+                            <li><a href="#third-party" class="text-popcorn hover:underline">Third-Party Cookies</a></li>
+                            <li><a href="#managing-cookies" class="text-popcorn hover:underline">Managing Cookies</a></li>
+                            <li><a href="#changes" class="text-popcorn hover:underline">Changes to This Policy</a></li>
+                            <li><a href="#contact" class="text-popcorn hover:underline">Contact Information</a></li>
+                        </ol>
+                    </div>
+                    
+                    <!-- Cookies Sections -->
+                    <div class="space-y-12">
+                        <!-- Section 1 -->
+                        <div id="what-are-cookies" class="scroll-mt-20 section-animate">
+                            <h2 class="text-2xl md:text-3xl font-bold text-butter mb-4">1. What Are Cookies?</h2>
+                            <div class="text-gray-300 space-y-4">
+                                <p>Cookies are small text files that are placed on your computer, smartphone, or other device when you visit a website or use an app. They are widely used to make websites and apps work more efficiently, as well as to provide information to the owners of the site or app.</p>
+                                <p>Cookies can be "persistent" or "session" cookies. Persistent cookies remain on your device when you go offline, while session cookies are deleted as soon as you close your web browser or app.</p>
+                                <div class="bg-gray-900 bg-opacity-50 p-4 rounded-lg border border-gray-700">
+                                    <h4 class="font-bold text-popcorn mb-2">Did You Know?</h4>
+                                    <p>The term "cookie" comes from "magic cookie," a concept in early computing where a small piece of data would be passed between programs unchanged.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Section 2 -->
+                        <div id="how-we-use" class="scroll-mt-20 section-animate">
+                            <h2 class="text-2xl md:text-3xl font-bold text-butter mb-4">2. How We Use Cookies</h2>
+                            <div class="text-gray-300 space-y-4">
+                                <p>We use cookies for several purposes, including:</p>
+                                <ul class="list-disc pl-5 space-y-2">
+                                    <li><strong>Essential Operation:</strong> Cookies that are necessary for our website and Game to function properly</li>
+                                    <li><strong>Performance Tracking:</strong> To analyze how visitors use our website and Game to improve performance</li>
+                                    <li><strong>Functionality:</strong> To remember your preferences and provide enhanced features</li>
+                                    <li><strong>Advertising:</strong> To deliver relevant advertisements and measure their effectiveness</li>
+                                    <li><strong>Security:</strong> To protect against malicious activities and unauthorized access</li>
+                                </ul>
+                                <p>We may combine information from cookies with other personal data we hold about you to improve your experience.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Section 3 -->
+                        <div id="types-of-cookies" class="scroll-mt-20 section-animate">
+                            <h2 class="text-2xl md:text-3xl font-bold text-butter mb-4">3. Types of Cookies We Use</h2>
+                            <div class="text-gray-300 space-y-4">
+                                <div class="overflow-x-auto">
+                                    <table class="min-w-full bg-gray-900 bg-opacity-50 border border-gray-700">
+                                        <thead>
+                                            <tr class="border-b border-gray-700">
+                                                <th class="px-4 py-3 text-left text-butter">Cookie Type</th>
+                                                <th class="px-4 py-3 text-left text-butter">Purpose</th>
+                                                <th class="px-4 py-3 text-left text-butter">Duration</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody class="divide-y divide-gray-700">
+                                            <tr>
+                                                <td class="px-4 py-3 font-medium">Essential Cookies</td>
+                                                <td class="px-4 py-3">Enable core functionality like security, network management, and accessibility</td>
+                                                <td class="px-4 py-3">Session or up to 1 year</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-4 py-3 font-medium">Performance Cookies</td>
+                                                <td class="px-4 py-3">Help us understand how visitors interact with our website</td>
+                                                <td class="px-4 py-3">Up to 2 years</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-4 py-3 font-medium">Functional Cookies</td>
+                                                <td class="px-4 py-3">Remember your preferences and settings</td>
+                                                <td class="px-4 py-3">Up to 1 year</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="px-4 py-3 font-medium">Advertising Cookies</td>
+                                                <td class="px-4 py-3">Deliver targeted ads and measure ad performance</td>
+                                                <td class="px-4 py-3">Up to 1 year</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <p class="text-sm text-gray-400 mt-2">* Some cookies may persist for longer periods if you don't clear them from your browser.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Section 4 -->
+                        <div id="third-party" class="scroll-mt-20 section-animate">
+                            <h2 class="text-2xl md:text-3xl font-bold text-butter mb-4">4. Third-Party Cookies</h2>
+                            <div class="text-gray-300 space-y-4">
+                                <p>In addition to our own cookies, we may use various third-party cookies to report usage statistics of the Game, deliver advertisements, and provide other services.</p>
+                                <p>Some key third-party services we use include:</p>
+                                <ul class="list-disc pl-5 space-y-2">
+                                    <li><strong>Google Analytics:</strong> For analyzing website traffic and user behavior</li>
+                                    <li><strong>Google AdSense:</strong> For displaying relevant advertisements</li>
+                                    <li><strong>Firebase:</strong> For game analytics and crash reporting</li>
+                                    <li><strong>Unity Ads:</strong> For in-game advertising services</li>
+                                </ul>
+                                <p>These third-party services may place their own cookies on your device. We don't control these cookies and you should review the respective privacy policies of these third parties for more information.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Section 5 -->
+                        <div id="managing-cookies" class="scroll-mt-20 section-animate">
+                            <h2 class="text-2xl md:text-3xl font-bold text-butter mb-4">5. Managing Cookies</h2>
+                            <div class="text-gray-300 space-y-4">
+                                <p>You have several options to manage cookies:</p>
+                                
+                                <div class="bg-gray-900 bg-opacity-50 p-6 rounded-lg border border-gray-700">
+                                    <h3 class="text-xl font-bold text-butter mb-3">Browser Settings</h3>
+                                    <p class="mb-4">Most web browsers allow you to control cookies through their settings. You can usually find these settings in the "Options" or "Preferences" menu of your browser.</p>
+                                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                        <div class="bg-black p-4 rounded-lg">
+                                            <h4 class="font-bold text-popcorn mb-2">Chrome</h4>
+                                            <p>Settings > Privacy and security > Cookies and other site data</p>
+                                        </div>
+                                        <div class="bg-black p-4 rounded-lg">
+                                            <h4 class="font-bold text-popcorn mb-2">Firefox</h4>
+                                            <p>Options > Privacy & Security > Cookies and Site Data</p>
+                                        </div>
+                                        <div class="bg-black p-4 rounded-lg">
+                                            <h4 class="font-bold text-popcorn mb-2">Safari</h4>
+                                            <p>Preferences > Privacy > Cookies and website data</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="bg-gray-900 bg-opacity-50 p-6 rounded-lg border border-gray-700">
+                                    <h3 class="text-xl font-bold text-butter mb-3">Mobile Devices</h3>
+                                    <p>On mobile devices, you can manage cookies through your browser settings or device settings, depending on your operating system.</p>
+                                </div>
+                                
+                                <div class="bg-gray-900 bg-opacity-50 p-6 rounded-lg border border-gray-700">
+                                    <h3 class="text-xl font-bold text-butter mb-3">Opt-Out Tools</h3>
+                                    <p>You can opt out of certain types of cookies, particularly advertising cookies:</p>
+                                    <ul class="list-disc pl-5 mt-2 space-y-1">
+                                        <li><a href="https://optout.aboutads.info/" class="text-popcorn hover:underline">Digital Advertising Alliance</a></li>
+                                        <li><a href="https://www.networkadvertising.org/choices/" class="text-popcorn hover:underline">Network Advertising Initiative</a></li>
+                                        <li><a href="https://tools.google.com/dlpage/gaoptout" class="text-popcorn hover:underline">Google Analytics Opt-out</a></li>
+                                    </ul>
+                                </div>
+                                
+                                <p>Please note that disabling cookies may affect the functionality of our website and Game. Some features may not work properly if cookies are disabled.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Section 6 -->
+                        <div id="changes" class="scroll-mt-20 section-animate">
+                            <h2 class="text-2xl md:text-3xl font-bold text-butter mb-4">6. Changes to This Policy</h2>
+                            <div class="text-gray-300 space-y-4">
+                                <p>We may update this Cookies Policy from time to time to reflect changes in our practices or for other operational, legal, or regulatory reasons.</p>
+                                <p>When we make changes, we will update the "Last Updated" date at the top of this page. We encourage you to periodically review this page for the latest information on our use of cookies.</p>
+                                <p>Your continued use of our website and Game after any changes to this Cookies Policy constitutes your acceptance of the updated policy.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Section 7 -->
+                        <div id="contact" class="scroll-mt-20 section-animate">
+                            <h2 class="text-2xl md:text-3xl font-bold text-butter mb-4">7. Contact Information</h2>
+                            <div class="text-gray-300 space-y-4">
+                                <p>If you have any questions about our use of cookies or this Cookies Policy, please contact us at:</p>
+                                <address class="not-italic bg-gray-900 bg-opacity-50 p-4 rounded-lg">
+                                    Weasel Warrior Studios<br>
+                                    36 St Andrews Gardens<br>
+                                    Toronto, ON M4W 2E1<br>
+                                    Canada<br>
+                                    Email: <a href="mailto:info@popcorninvasiontap.com" class="text-popcorn hover:underline">info@popcorninvasiontap.com</a><br>
+                                    Phone: +1 647 997 7626
+                                </address>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Final Acknowledgement -->
+                    <div class="mt-12 pt-6 border-t border-gray-700">
+                        <p class="text-gray-300">By using Popcorn Invasion: Tapping Game and our website, you acknowledge that you have read this Cookies Policy, understand it, and agree to the use of cookies as described.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-r from-popcorn-dark to-burnt relative overflow-hidden">
+        <!-- Decorative elements -->
+        <div class="absolute -top-20 left-0 w-64 h-64 bg-white rounded-full filter blur-3xl opacity-10"></div>
+        <div class="absolute -bottom-20 right-0 w-64 h-64 bg-alien rounded-full filter blur-3xl opacity-20"></div>
+        
+        <div class="container mx-auto px-6 relative">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="text-4xl md:text-5xl font-fun text-black mb-6">Ready to Start Popping?</h2>
+                <p class="text-xl text-black mb-10">Download Popcorn Invasion now and defend your theater from alien popcorn invaders!</p>
+                <div class="flex justify-center">
+                    <a href="https://play.google.com/store/apps/details?id=com.WeaselWarriorStudios.PopcornInvasion" class="bg-black hover:bg-gray-900 text-popcorn font-bold px-8 py-4 rounded-full text-lg transition-all transform hover:scale-105 shadow-lg hover:shadow-black/50">
+                        Download Now - It's Free!
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black text-gray-400 py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="md:col-span-2">
+                     <a href="/" class="flex items-center">
+                        <img src="/assets/logo.png" alt="Popcorn Invasion Logo" class="h-24 w-auto mr-3">                      
+                    </a>
+                    <p class="mb-4">Defend your movie theater from alien popcorn invaders in this exciting tapping game with realistic physics and addictive gameplay.</p>
+                    <p>© 2025 Weasel Warrior Studios. All rights reserved.</p>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold text-butter mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/" class="hover:text-popcorn">Home</a></li>
+                        <li><a href="/how-to-play/" class="hover:text-popcorn">How to Play</a></li>
+                        <li><a href="/responsible-gaming/" class="hover:text-popcorn">Responsible Gaming</a></li>
+                        <li><a href="/blog/" class="hover:text-popcorn">Blog</a></li>
+                        <li><a href="/contact/" class="hover:text-popcorn">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold text-butter mb-4">Legal</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/privacy/" class="hover:text-popcorn">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="hover:text-popcorn">Terms of Service</a></li>
+                        <li><a href="/cookies/" class="hover:text-popcorn">Cookies Policy</a></li>
+                    </ul>
+                    
+                    <h3 class="text-lg font-bold text-butter mt-6 mb-4">Contact</h3>
+                    <address class="not-italic">
+                        <p>36 St Andrews Gardens</p>
+                        <p>Toronto, ON M4W 2E1</p>
+                        <p>Canada</p>
+                        <p class="mt-2">Phone: +1 647 997 7626</p>
+                        <p>Email: info@popcorninvasiontap.com</p>
+                    </address>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center">
+                <p>Popcorn Invasion: Tapping Game is rated for ages 3+ and contains in-app purchases.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Mobile menu toggle
+            const mobileMenuButton = document.getElementById('mobileMenuButton');
+            const mobileMenu = document.getElementById('mobileMenu');
+            
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+                mobileMenu.classList.toggle('open');
+            });
+            
+            // Cookie consent
+            const cookieConsent = document.getElementById('cookieConsent');
+            const acceptCookies = document.getElementById('acceptCookies');
+            const declineCookies = document.getElementById('declineCookies');
+            
+            if (!localStorage.getItem('cookiesAccepted')) {
+                setTimeout(() => {
+                    cookieConsent.classList.remove('hidden');
+                    cookieConsent.classList.add('cookie-slide-up');
+                }, 2000);
+            }
+            
+            acceptCookies.addEventListener('click', () => {
+                localStorage.setItem('cookiesAccepted', 'true');
+                cookieConsent.classList.remove('cookie-slide-up');
+                cookieConsent.classList.add('cookie-slide-down');
+                
+                // Hide after animation completes
+                setTimeout(() => {
+                    cookieConsent.classList.add('hidden');
+                }, 300);
+                
+                // Create and animate popcorn particles
+                createParticles();
+            });
+            
+            declineCookies.addEventListener('click', () => {
+                cookieConsent.classList.remove('cookie-slide-up');
+                cookieConsent.classList.add('cookie-slide-down');
+                
+                // Hide after animation completes
+                setTimeout(() => {
+                    cookieConsent.classList.add('hidden');
+                }, 300);
+            });
+            
+            // Create popcorn particles for accept animation
+            function createParticles() {
+                const container = document.querySelector('body');
+                for (let i = 0; i < 20; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'popcorn-particle absolute w-3 h-3 bg-popcorn rounded-full pointer-events-none';
+                    particle.style.left = `${Math.random() * 100}%`;
+                    particle.style.bottom = '60px';
+                    container.appendChild(particle);
+                    
+                    // Remove particle after animation
+                    setTimeout(() => {
+                        particle.remove();
+                    }, 1000);
+                }
+            }
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 100,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Intersection Observer for section animations
+            const animateSections = () => {
+                const sections = document.querySelectorAll('.section-animate');
+                
+                const observerOptions = {
+                    threshold: 0.1,
+                    rootMargin: '0px 0px -100px 0px'
+                };
+                
+                const observer = new IntersectionObserver((entries, observer) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('section-visible');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, observerOptions);
+                
+                sections.forEach(section => {
+                    observer.observe(section);
+                });
+            };
+            
+            // Initialize animations
+            animateSections();
+            
+            // Floating popcorn animation in the hero section
+            const popcornElements = document.querySelectorAll('.float-animate');
+            popcornElements.forEach((el, i) => {
+                el.style.animationDelay = `${i * 0.2}s`;
+            });
+        });
+    </script>
+</body>
+</html>

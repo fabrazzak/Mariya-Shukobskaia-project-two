@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bee Central Services | Farm Partnerships & Tree Planting</title>
+    <meta name="description" content="Bee Central partners with WA farmers to create sustainable honey plantations and offers professional tree planting services. Diversify your farm income while helping bees thrive.">
+    <meta name="keywords" content="farm partnerships, honey plantations, tree planting WA, sustainable farming, agricultural diversification, Leptospermum planting, bee conservation, WA Wheatbelt farming, carbon credits">
+    
+    <!-- Favicon -->
+   <link rel="icon" href="/assets/images/favicon.png" type="image/x-icon">
+    <link rel="canonical" href="https://www.beecentralau.com/services/" />
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            light: '#fbbf24',
+                            DEFAULT: '#d97706',
+                            dark: '#92400e',
+                        },
+                        secondary: {
+                            light: '#a7f3d0',
+                            DEFAULT: '#059669',
+                            dark: '#065f46',
+                        },
+                        accent: {
+                            light: '#fde68a',
+                            DEFAULT: '#f59e0b',
+                            dark: '#b45309',
+                        },
+                        dark: {
+                            100: '#1a1a1a',
+                            200: '#1f1f1f',
+                            300: '#242424',
+                            400: '#2a2a2a',
+                            500: '#2f2f2f',
+                            600: '#343434',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Poppins"', 'sans-serif'],
+                        display: ['"Playfair Display"', 'serif'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 6s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollTrigger.min.js"></script>
+</head>
+<body class="bg-dark-100 text-gray-200 font-sans antialiased overflow-x-hidden">
+    <!-- Cookie Consent Banner -->
+    <div id="cookieConsent" class="fixed bottom-0 left-0 right-0 bg-dark-300 p-4 z-50 hidden">
+        <div class="container mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <p class="text-sm md:text-base">We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies.</p>
+            <div class="flex gap-2">
+                <button id="cookieAccept" class="px-4 py-2 bg-primary hover:bg-primary-dark rounded-md transition-colors">Accept</button>
+                <button id="cookieDecline" class="px-4 py-2 bg-dark-400 hover:bg-dark-500 rounded-md transition-colors">Decline</button>
+                <a href="/privacy/" class="px-4 py-2 text-primary hover:underline">Learn More</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 bg-dark-200/90 backdrop-blur-md z-40 border-b border-dark-400">
+        <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+            <!-- Logo -->
+           <a href="/" class="flex items-center gap-2">
+               <img src="/assets/images/logo.png" class="h-16 w-auto" alt="logo"/>
+            </a>
+            
+            <!-- Desktop Menu -->
+            <div class="hidden lg:flex items-center gap-8">
+                <a href="/" class="hover:text-primary transition-colors">Home</a>
+                <a href="/services/" class="text-primary font-medium hover:text-accent transition-colors">Services</a>
+                <a href="/products/" class="hover:text-primary transition-colors">Products</a>
+                <a href="/about/" class="hover:text-primary transition-colors">About</a>
+                <a href="/blog/" class="hover:text-primary transition-colors">Blog</a>
+                <a href="/contact/" class="hover:text-primary transition-colors">Contact</a>
+                
+                <!-- Cart Icon -->
+                <a href="/cart/" class="relative group">
+                    <i class="fas fa-shopping-cart text-xl hover:text-primary transition-colors"></i>
+                    <span id="cartCount" class="absolute -top-2 -right-2 bg-primary text-dark-100 text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">0</span>
+                </a>
+                
+                <!-- Social Links -->
+                <div class="flex gap-4 ml-4">
+                    <a href="https://www.facebook.com/BeeCentralAustralia/" target="_blank" class="hover:text-primary transition-colors"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://x.com/centralbee1" target="_blank" class="hover:text-primary transition-colors"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.instagram.com/BeeCentralAustralia/" target="_blank" class="hover:text-primary transition-colors"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.youtube.com/channel/UCIkVvpMeMr2oKn1lW7A7CQA" target="_blank" class="hover:text-primary transition-colors"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu Button -->
+            <button id="mobileMenuButton" class="lg:hidden text-2xl">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="lg:hidden hidden absolute top-full left-0 right-0 bg-dark-300 py-4 px-6 shadow-lg">
+            <div class="flex flex-col gap-4">
+                <a href="/" class="hover:text-primary transition-colors">Home</a>
+                <a href="/services/" class="text-primary font-medium">Services</a>
+                <a href="/products/" class="hover:text-primary transition-colors">Products</a>
+                <a href="/about/" class="hover:text-primary transition-colors">About</a>
+                <a href="/blog/" class="hover:text-primary transition-colors">Blog</a>
+                <a href="/contact/" class="hover:text-primary transition-colors">Contact</a>
+                
+                <div class="flex items-center justify-between pt-4 border-t border-dark-400">
+                    <a href="/cart/" class="relative group">
+                        <i class="fas fa-shopping-cart text-xl hover:text-primary transition-colors"></i>
+                        <span id="mobileCartCount" class="absolute -top-2 -right-2 bg-primary text-dark-100 text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">0</span>
+                    </a>
+                    
+                    <div class="flex gap-4">
+                        <a href="https://www.facebook.com/BeeCentralAustralia/" target="_blank" class="hover:text-primary transition-colors"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://x.com/centralbee1" target="_blank" class="hover:text-primary transition-colors"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.instagram.com/BeeCentralAustralia/" target="_blank" class="hover:text-primary transition-colors"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.youtube.com/channel/UCIkVvpMeMr2oKn1lW7A7CQA" target="_blank" class="hover:text-primary transition-colors"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 bg-gradient-to-b from-dark-200 to-dark-300 overflow-hidden">
+        <div class="absolute inset-0 opacity-10 bg-[url('/assets/images/farm-plantation.webp')] bg-repeat bg-[length:400px]"></div>
+        
+        <div class="container mx-auto px-4 text-center relative z-10">
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">
+                <span class="bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">Farm Partnerships</span>
+                <span class="block mt-2">For Sustainable Agriculture</span>
+            </h1>
+            <p class="text-lg md:text-xl max-w-3xl mx-auto mb-8">Partner with Bee Central to diversify your farm income while creating vital habitats for bees. Our innovative plantation model combines profitability with environmental stewardship.</p>
+            
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="#partnerships" class="px-6 py-3 bg-gradient-to-r from-primary to-accent rounded-md font-medium hover:opacity-90 transition-opacity shadow-lg shadow-primary/30">Learn About Partnerships</a>
+                <a href="#planting" class="px-6 py-3 border border-primary text-primary rounded-md font-medium hover:bg-primary/10 transition-colors">Tree Planting Services</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-16 bg-dark-100 relative">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                <!-- Stat 1 -->
+                <div class="bg-dark-200 rounded-xl p-6 text-center border border-dark-300">
+                    <div class="text-4xl font-display font-bold text-primary mb-2">12</div>
+                    <p class="text-sm opacity-80">Farms Fully Contracted</p>
+                </div>
+                
+                <!-- Stat 2 -->
+                <div class="bg-dark-200 rounded-xl p-6 text-center border border-dark-300">
+                    <div class="text-4xl font-display font-bold text-primary mb-2">8+</div>
+                    <p class="text-sm opacity-80">Years Experience</p>
+                </div>
+                
+                <!-- Stat 3 -->
+                <div class="bg-dark-200 rounded-xl p-6 text-center border border-dark-300">
+                    <div class="text-4xl font-display font-bold text-primary mb-2">100%</div>
+                    <p class="text-sm opacity-80">Native Plantations</p>
+                </div>
+                
+                <!-- Stat 4 -->
+                <div class="bg-dark-200 rounded-xl p-6 text-center border border-dark-300">
+                    <div class="text-4xl font-display font-bold text-primary mb-2">4x</div>
+                    <p class="text-sm opacity-80">More Potent Than Manuka</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partnerships Section -->
+    <section id="partnerships" class="py-20 bg-dark-200 relative overflow-hidden">
+        <div class="absolute -top-40 -right-40 w-80 h-80 bg-primary/10 rounded-full blur-3xl"></div>
+        
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <span class="text-primary font-medium tracking-wider">FARM PARTNERSHIPS</span>
+                <h2 class="text-3xl md:text-4xl font-display font-bold mt-2 mb-4">Farm Plantation Partnerships</h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-primary to-accent mx-auto"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
+                <div class="order-1 lg:order-2">
+                    <h3 class="text-2xl font-display font-bold mb-6">Diversify Your Farm Income</h3>
+                    <p class="mb-6">From 2010 to 2021, New Zealand's Manuka honey industry grew from an estimated value of 75 million dollars to over 1 billion. Global demand continues to grow for this incredibly versatile product made by honey bees from a particular variety of Leptospermum.</p>
+                    <p class="mb-6">But did you know that a variety of WA's own native Leptospermum creates "active" honey identified as up to four times more potent than the famous Manuka variety?</p>
+                    <p class="mb-8">Our Wheatbelt region is considered a "geographical 'hotspot' for the production of Leptospermum honey with high levels of antibacterial activity" according to Cokcetin N et al (2019): Active Australian Leptospermum Honey: New sources and their bioactivity.</p>
+                    
+                    <a href="/contact/" class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-primary to-accent rounded-md font-medium hover:opacity-90 transition-opacity shadow-lg shadow-primary/30">
+                        Enquire About Partnership
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                
+                <div class="order-2 lg:order-1 relative">
+                    <div class="aspect-[4/3] rounded-xl overflow-hidden shadow-2xl">
+                        <img src="/assets/images/farm-plantation.webp" alt="Farm Plantation Partnership" class="w-full h-full object-cover">
+                    </div>
+                    <div class="absolute -z-10 -bottom-8 -left-8 w-full h-full border-2 border-primary/20 rounded-xl"></div>
+                </div>
+            </div>
+            
+            <!-- Process Steps -->
+            <div class="mt-12">
+                <h3 class="text-2xl font-display font-bold mb-8 text-center">How Our Partnership Works</h3>
+                
+                <div class="relative">
+                    <!-- Timeline line -->
+                    <div class="hidden lg:block absolute left-1/2 top-0 bottom-0 w-1 bg-dark-400 transform -translate-x-1/2"></div>
+                    
+                    <!-- Step 1 -->
+                    <div class="relative mb-12 lg:mb-16">
+                        <div class="lg:flex lg:items-center lg:justify-between lg:gap-12">
+                            <div class="lg:w-1/2 lg:pr-12 lg:text-right">
+                                <div class="lg:max-w-md lg:ml-auto">
+                                    <div class="w-16 h-16 rounded-full bg-primary/10 border-2 border-primary flex items-center justify-center mb-4 lg:ml-auto">
+                                        <span class="text-2xl font-bold text-primary">1</span>
+                                    </div>
+                                    <h4 class="text-xl font-display font-bold mb-3">Land Assessment</h4>
+                                    <p class="opacity-80">We conduct a thorough assessment of your property to determine suitability for Leptospermum plantations, considering soil type, water availability, and existing land use.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="hidden lg:block lg:w-1/2"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 2 -->
+                    <div class="relative mb-12 lg:mb-16">
+                        <div class="lg:flex lg:items-center lg:justify-between lg:gap-12">
+                            <div class="hidden lg:block lg:w-1/2"></div>
+                            
+                            <div class="lg:w-1/2 lg:pl-12">
+                                <div class="lg:max-w-md">
+                                    <div class="w-16 h-16 rounded-full bg-primary/10 border-2 border-primary flex items-center justify-center mb-4">
+                                        <span class="text-2xl font-bold text-primary">2</span>
+                                    </div>
+                                    <h4 class="text-xl font-display font-bold mb-3">Planting</h4>
+                                    <p class="opacity-80">Our team plants genetically tested and carefully selected Leptospermum seedlings on your land during the optimal planting season (June onwards).</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 3 -->
+                    <div class="relative mb-12 lg:mb-16">
+                        <div class="lg:flex lg:items-center lg:justify-between lg:gap-12">
+                            <div class="lg:w-1/2 lg:pr-12 lg:text-right">
+                                <div class="lg:max-w-md lg:ml-auto">
+                                    <div class="w-16 h-16 rounded-full bg-primary/10 border-2 border-primary flex items-center justify-center mb-4 lg:ml-auto">
+                                        <span class="text-2xl font-bold text-primary">3</span>
+                                    </div>
+                                    <h4 class="text-xl font-display font-bold mb-3">Management</h4>
+                                    <p class="opacity-80">Bee Central helps manage the plantation as it grows and becomes established, with regular monitoring and maintenance for optimal growth.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="hidden lg:block lg:w-1/2"></div>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 4 -->
+                    <div class="relative mb-12 lg:mb-16">
+                        <div class="lg:flex lg:items-center lg:justify-between lg:gap-12">
+                            <div class="hidden lg:block lg:w-1/2"></div>
+                            
+                            <div class="lg:w-1/2 lg:pl-12">
+                                <div class="lg:max-w-md">
+                                    <div class="w-16 h-16 rounded-full bg-primary/10 border-2 border-primary flex items-center justify-center mb-4">
+                                        <span class="text-2xl font-bold text-primary">4</span>
+                                    </div>
+                                    <h4 class="text-xl font-display font-bold mb-3">Flowering & Harvest</h4>
+                                    <p class="opacity-80">After four years, the trees mature, start flowering, and produce nectar. We coordinate the harvest of the valuable honey over an eight-week flowering period using contracted beehives.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Step 5 -->
+                    <div class="relative">
+                        <div class="lg:flex lg:items-center lg:justify-between lg:gap-12">
+                            <div class="lg:w-1/2 lg:pr-12 lg:text-right">
+                                <div class="lg:max-w-md lg:ml-auto">
+                                    <div class="w-16 h-16 rounded-full bg-primary/10 border-2 border-primary flex items-center justify-center mb-4 lg:ml-auto">
+                                        <span class="text-2xl font-bold text-primary">5</span>
+                                    </div>
+                                    <h4 class="text-xl font-display font-bold mb-3">Processing & Profit</h4>
+                                    <p class="opacity-80">The honey is processed in our York facility and marketed globally. Farmers receive a share of profits from honey and derived product sales.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="hidden lg:block lg:w-1/2"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonial Section -->
+    <section class="py-20 bg-dark-300 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10  bg-repeat bg-[length:400px]"></div>
+        
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto bg-dark-400 rounded-xl p-8 md:p-12 relative overflow-hidden border border-dark-500">
+                <div class="absolute -top-20 -right-20 w-64 h-64 bg-primary/5 rounded-full"></div>
+                <div class="relative z-10">
+                    <div class="flex items-center gap-6 mb-8">
+                        <div class="w-20 h-20 rounded-full overflow-hidden border-2 border-primary">
+                            <img src="/assets/images/farmer-1.png" alt="Wayne Collins" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h3 class="font-display font-bold">Wayne Collins</h3>
+                            <p class="text-sm opacity-80">Tamma Hill Farm, York</p>
+                        </div>
+                    </div>
+                    <blockquote class="text-xl italic mb-8">
+                        "In this day and age, it's nice to diversify. It's a natural product that we find unique and would be good for our environment. However, the biggest benefits from the partnership is with the bees, they are a critical part of our farming operation."
+                    </blockquote>
+                    <div class="flex gap-1 text-primary">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Tree Planting Section -->
+    <section id="planting" class="py-20 bg-dark-100 relative overflow-hidden">
+        <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-secondary/10 rounded-full blur-3xl"></div>
+        
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <span class="text-primary font-medium tracking-wider">TREE PLANTING</span>
+                <h2 class="text-3xl md:text-4xl font-display font-bold mt-2 mb-4">Contract Tree Planting Services</h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-primary to-accent mx-auto"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
+                <div>
+                    <h3 class="text-2xl font-display font-bold mb-6">Professional Native Planting</h3>
+                    <p class="mb-6">We don't just plant honey trees in our quest to save the bees in Australia! Bee Central can also plant a wide variety of native plants to help vegetate and regenerate your land. From saltbush for stock feed to woodland windbreaks, we can help you develop a planting plan to suit your goals for your farm.</p>
+                    <p class="mb-6">We research, source, and advise on the best-suited plants for your property, determining the proper planting method and time of year for your project. And the great thing about native plantings is there's little to no maintenance once established.</p>
+                    <p class="mb-8">By replanting and regenerating your land, you may qualify for Australian Carbon Credits. Read more </p>
+                    
+                    <a href="/contact/" class="inline-flex items-center gap-2 px-6 py-3 border border-primary text-primary rounded-md font-medium hover:bg-primary/10 transition-colors">
+                        Get a Free Quote
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+                
+                <div class="relative">
+                    <div class="aspect-[4/3] rounded-xl overflow-hidden shadow-2xl">
+                        <img src="/assets/images/contact-tree-plaing.webp" alt="Tree Planting Service" class="w-full h-full object-cover">
+                    </div>
+                    <div class="absolute -z-10 -bottom-8 -right-8 w-full h-full border-2 border-primary/20 rounded-xl"></div>
+                </div>
+            </div>
+            
+            <!-- Services Offered -->
+            <div class="mt-12">
+                <h3 class="text-2xl font-display font-bold mb-8 text-center">Our Planting Services</h3>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <!-- Service 1 -->
+                    <div class="group bg-dark-200 rounded-xl p-6 hover:bg-gradient-to-br from-dark-200 to-dark-300 transition-all duration-300 hover:shadow-xl hover:shadow-primary/10 border border-dark-300 hover:border-primary/30 relative overflow-hidden">
+                        <div class="absolute -right-10 -top-10 w-32 h-32 bg-primary/5 rounded-full group-hover:opacity-100 opacity-0 transition-opacity duration-500"></div>
+                        <div class="relative z-10">
+                            <div class="w-16 h-16 bg-primary/10 rounded-lg flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
+                                <i class="fas fa-tree text-2xl text-primary"></i>
+                            </div>
+                            <h4 class="text-xl font-display font-bold mb-3">Leptospermum Plantations</h4>
+                            <p class="text-sm opacity-80">Specialized planting of WA native Leptospermum species for active honey production.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Service 2 -->
+                    <div class="group bg-dark-200 rounded-xl p-6 hover:bg-gradient-to-br from-dark-200 to-dark-300 transition-all duration-300 hover:shadow-xl hover:shadow-primary/10 border border-dark-300 hover:border-primary/30 relative overflow-hidden">
+                        <div class="absolute -right-10 -top-10 w-32 h-32 bg-primary/5 rounded-full group-hover:opacity-100 opacity-0 transition-opacity duration-500"></div>
+                        <div class="relative z-10">
+                            <div class="w-16 h-16 bg-primary/10 rounded-lg flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
+                                <i class="fas fa-leaf text-2xl text-primary"></i>
+                            </div>
+                            <h4 class="text-xl font-display font-bold mb-3">Native Revegetation</h4>
+                            <p class="text-sm opacity-80">Ecological restoration planting with locally native species to rehabilitate land.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Service 3 -->
+                    <div class="group bg-dark-200 rounded-xl p-6 hover:bg-gradient-to-br from-dark-200 to-dark-300 transition-all duration-300 hover:shadow-xl hover:shadow-primary/10 border border-dark-300 hover:border-primary/30 relative overflow-hidden">
+                        <div class="absolute -right-10 -top-10 w-32 h-32 bg-primary/5 rounded-full group-hover:opacity-100 opacity-0 transition-opacity duration-500"></div>
+                        <div class="relative z-10">
+                            <div class="w-16 h-16 bg-primary/10 rounded-lg flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
+                                <i class="fas fa-wind text-2xl text-primary"></i>
+                            </div>
+                            <h4 class="text-xl font-display font-bold mb-3">Windbreaks & Shelterbelts</h4>
+                            <p class="text-sm opacity-80">Strategic planting to protect crops, livestock and reduce soil erosion.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Service 4 -->
+                    <div class="group bg-dark-200 rounded-xl p-6 hover:bg-gradient-to-br from-dark-200 to-dark-300 transition-all duration-300 hover:shadow-xl hover:shadow-primary/10 border border-dark-300 hover:border-primary/30 relative overflow-hidden">
+                        <div class="absolute -right-10 -top-10 w-32 h-32 bg-primary/5 rounded-full group-hover:opacity-100 opacity-0 transition-opacity duration-500"></div>
+                        <div class="relative z-10">
+                            <div class="w-16 h-16 bg-primary/10 rounded-lg flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
+                                <i class="fas fa-tint text-2xl text-primary"></i>
+                            </div>
+                            <h4 class="text-xl font-display font-bold mb-3">Salinity Control</h4>
+                            <p class="text-sm opacity-80">Deep-rooted native species to help manage dryland salinity issues.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Service 5 -->
+                    <div class="group bg-dark-200 rounded-xl p-6 hover:bg-gradient-to-br from-dark-200 to-dark-300 transition-all duration-300 hover:shadow-xl hover:shadow-primary/10 border border-dark-300 hover:border-primary/30 relative overflow-hidden">
+                        <div class="absolute -right-10 -top-10 w-32 h-32 bg-primary/5 rounded-full group-hover:opacity-100 opacity-0 transition-opacity duration-500"></div>
+                        <div class="relative z-10">
+                            <div class="w-16 h-16 bg-primary/10 rounded-lg flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
+                                <i class="fas fa-paw text-2xl text-primary"></i>
+                            </div>
+                            <h4 class="text-xl font-display font-bold mb-3">Stock Fodder Plantings</h4>
+                            <p class="text-sm opacity-80">Drought-resistant native fodder species like saltbush for livestock feed.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Service 6 -->
+                    <div class="group bg-dark-200 rounded-xl p-6 hover:bg-gradient-to-br from-dark-200 to-dark-300 transition-all duration-300 hover:shadow-xl hover:shadow-primary/10 border border-dark-300 hover:border-primary/30 relative overflow-hidden">
+                        <div class="absolute -right-10 -top-10 w-32 h-32 bg-primary/5 rounded-full group-hover:opacity-100 opacity-0 transition-opacity duration-500"></div>
+                        <div class="relative z-10">
+                            <div class="w-16 h-16 bg-primary/10 rounded-lg flex items-center justify-center mb-6 group-hover:bg-primary/20 transition-colors">
+                                <i class="fas fa-seedling text-2xl text-primary"></i>
+                            </div>
+                            <h4 class="text-xl font-display font-bold mb-3">Carbon Farming</h4>
+                            <p class="text-sm opacity-80">Planting plans designed to maximize carbon sequestration potential.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+  
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-br from-dark-300 to-dark-400 relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10 bg-[url('/assets/images/honey-gift-set.webp')] bg-repeat bg-[length:400px]"></div>
+        <div class="absolute -top-40 -right-40 w-80 h-80 bg-primary/10 rounded-full blur-3xl"></div>
+        
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-3xl md:text-4xl font-display font-bold mb-6">Ready to Partner With Bee Central?</h2>
+                <p class="text-lg mb-8 max-w-2xl mx-auto">The first step is to assess the suitability of your farm with a no-obligation evaluation available to property owners anywhere within the Wheatbelt region of Western Australia.</p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="/contact/" class="px-8 py-3 z-50 bg-gradient-to-r from-primary to-accent rounded-md font-medium hover:opacity-90 transition-opacity shadow-lg shadow-primary/30">Schedule Evaluation</a>
+                    <a href="tel:+61889577036" class="px-8 z-50 py-3 border border-primary text-primary rounded-md font-medium hover:bg-primary/10 transition-colors">
+                        <i class="fas fa-phone mr-2"></i>
+                        +61 8 8957 7036
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark-300 pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+                <!-- About -->
+                <div>
+                    <a href="/" class="flex items-center gap-2">
+               <img src="/assets/images/logo.png" class="h-16 w-auto mb-4" alt="logo"/>
+            </a>
+                    <p class="text-sm opacity-80 mb-4">Building healthy Australian honey bee populations for a better future through sustainable farming partnerships and premium active honey products.</p>
+                    <div class="flex gap-4">
+                        <a href="https://www.facebook.com/BeeCentralAustralia/" target="_blank" class="w-8 h-8 rounded-full bg-dark-400 flex items-center justify-center hover:bg-primary hover:text-dark-100 transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://x.com/centralbee1" target="_blank" class="w-8 h-8 rounded-full bg-dark-400 flex items-center justify-center hover:bg-primary hover:text-dark-100 transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://www.instagram.com/BeeCentralAustralia/" target="_blank" class="w-8 h-8 rounded-full bg-dark-400 flex items-center justify-center hover:bg-primary hover:text-dark-100 transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://www.youtube.com/channel/UCIkVvpMeMr2oKn1lW7A7CQA" target="_blank" class="w-8 h-8 rounded-full bg-dark-400 flex items-center justify-center hover:bg-primary hover:text-dark-100 transition-colors">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-xl font-display font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/" class="text-sm opacity-80 hover:text-primary transition-colors">Home</a></li>
+                        <li><a href="/services/" class="text-sm opacity-80 hover:text-primary transition-colors">Services</a></li>
+                        <li><a href="/products/" class="text-sm opacity-80 hover:text-primary transition-colors">Products</a></li>
+                        <li><a href="/about/" class="text-sm opacity-80 hover:text-primary transition-colors">About Us</a></li>
+                        <li><a href="/blog/" class="text-sm opacity-80 hover:text-primary transition-colors">Blog</a></li>
+                        <li><a href="/contact/" class="text-sm opacity-80 hover:text-primary transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Contact -->
+                <div>
+                    <h3 class="text-xl font-display font-bold mb-4">Contact Us</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-map-marker-alt mt-1 text-primary"></i>
+                            <span class="text-sm opacity-80">170 Yulara Dr, Yulara NT 0872, Australia</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-phone text-primary"></i>
+                            <span class="text-sm opacity-80">+61 8 8957 7036</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-envelope text-primary"></i>
+                            <span class="text-sm opacity-80">info@beecentralau.com</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Newsletter -->
+                <div>
+                    <h3 class="text-xl font-display font-bold mb-4">Newsletter</h3>
+                    <p class="text-sm opacity-80 mb-4">Subscribe for farming opportunities, research updates, and industry news.</p>
+                    <form class="flex gap-2">
+                        <input type="email" placeholder="Your email" class="flex-1 bg-dark-400 border border-dark-500 rounded-md px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50">
+                        <button type="submit" class="px-4 py-2 bg-primary hover:bg-primary-dark rounded-md text-dark-100 text-sm font-medium transition-colors">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="border-t border-dark-400 pt-8">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                    <p class="text-sm opacity-70">© 2025 Bee Central. All rights reserved.</p>
+                    <div class="flex gap-6">
+                        <a href="/privacy/" class="text-sm opacity-70 hover:text-primary transition-colors">Privacy Policy</a>
+                        <a href="/terms/" class="text-sm opacity-70 hover:text-primary transition-colors">Terms of Service</a>
+                        <a href="/cookies/" class="text-sm opacity-70 hover:text-primary transition-colors">Cookies Policy</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            mobileMenuButton.innerHTML = mobileMenu.classList.contains('hidden') ? 
+                '<i class="fas fa-bars"></i>' : '<i class="fas fa-times"></i>';
+        });
+        
+        // Cookie Consent
+        const cookieConsent = document.getElementById('cookieConsent');
+        const cookieAccept = document.getElementById('cookieAccept');
+        const cookieDecline = document.getElementById('cookieDecline');
+        
+        if (!localStorage.getItem('cookieConsent')) {
+            setTimeout(() => {
+                cookieConsent.classList.remove('hidden');
+            }, 1000);
+        }
+        
+        cookieAccept.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'accepted');
+            cookieConsent.classList.add('hidden');
+        });
+        
+        cookieDecline.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'declined');
+            cookieConsent.classList.add('hidden');
+        });
+        
+        // Cart Functionality
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            
+            document.querySelectorAll('#cartCount, #mobileCartCount').forEach(el => {
+                el.textContent = totalItems;
+                el.classList.toggle('hidden', totalItems === 0);
+            });
+        }
+        
+        // Initialize cart count
+        updateCartCount();
+        
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Animate elements on scroll
+        gsap.utils.toArray('[data-animate]').forEach(el => {
+            const delay = el.dataset.delay || 0;
+            
+            gsap.from(el, {
+                scrollTrigger: {
+                    trigger: el,
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                },
+                opacity: 0,
+                y: 50,
+                duration: 0.8,
+                delay: parseFloat(delay),
+                ease: "power2.out"
+            });
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

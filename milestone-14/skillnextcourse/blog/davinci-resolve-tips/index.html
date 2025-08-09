@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mastering DaVinci Resolve: Essential Tips for Beginners | SkillNext Blog</title>
+    <meta name="description"
+        content="Learn essential tips for getting started with DaVinci Resolve. This comprehensive guide covers everything beginners need to know about this powerful video editing software.">
+    <meta name="keywords"
+        content="DaVinci Resolve, video editing, beginner guide, color grading, editing software, post-production">
+    <link rel="canonical" href="https://skillnextcourse.online/">
+    <link rel="icon" href="/assets/favicon.png" type="image/x-icon">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#10B981',
+                        accent: '#F59E0B',
+                        dark: {
+                            900: '#0F172A',
+                            800: '#1E293B',
+                            700: '#334155',
+                            600: '#475569',
+                            500: '#64748B',
+                        },
+                        light: '#F8FAFC',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        body {
+            background-color: #0F172A;
+            color: #F8FAFC;
+        }
+
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+            background-color: #1E293B;
+        }
+
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+
+        .blog-content p {
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .blog-content h2 {
+            font-size: 1.75rem;
+            font-weight: bold;
+            margin: 2.5rem 0 1.5rem;
+            color: white;
+        }
+
+        .blog-content h3 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 2rem 0 1.25rem;
+            color: white;
+        }
+
+        .blog-content ul, 
+        .blog-content ol {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+
+        .blog-content li {
+            margin-bottom: 0.75rem;
+        }
+
+        .blog-content blockquote {
+            border-left: 4px solid #3B82F6;
+            padding-left: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+            color: #94A3B8;
+        }
+
+        .blog-content img {
+            margin: 2rem auto;
+            border-radius: 0.5rem;
+            max-width: 100%;
+            height: auto;
+        }
+
+        .error-message {
+            color: #EF4444;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+
+        .success-message {
+            color: #10B981;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+
+        input,
+        textarea,
+        select {
+            background-color: #1E293B;
+            border-color: #334155;
+            color: #F8FAFC;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: #3B82F6;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+        }
+
+        .modal-content {
+            background-color: #1E293B;
+            border: 1px solid #334155;
+        }
+    </style>
+</head>
+
+<body class="font-sans antialiased text-gray-200 bg-gray-900">
+    <!-- Cookie Consent Popup -->
+    <div id="cookieConsent"
+        class="fixed bottom-0 left-0 right-0 bg-gray-800 shadow-lg p-4 hidden z-50 border-t border-gray-700">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between">
+            <div class="mb-4 md:mb-0 md:mr-8">
+                <p class="text-gray-300">We use cookies to enhance your experience on our website. By continuing to
+                    browse, you agree to our use of cookies.</p>
+            </div>
+            <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
+                <button id="acceptCookies"
+                    class="px-4 py-2 bg-primary text-white rounded-md hover:bg-blue-700 transition">Accept</button>
+                <button id="declineCookies"
+                    class="px-4 py-2 bg-gray-700 text-gray-200 rounded-md hover:bg-gray-600 transition">Decline</button>
+                <a href="/privacy/" class="px-4 py-2 text-primary hover:underline">Learn More</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="bg-gray-800 shadow-sm sticky top-0 z-40 border-b border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="/" class="flex items-center">
+                        <img src="/assets/logo.png" alt="SkillNext Course Logo" class="h-12 w-auto">
+                    </a>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="/" class="text-gray-400 hover:text-primary font-medium px-1 pb-1">Home</a>
+                    <a href="/courses/" class="text-gray-400 hover:text-primary font-medium px-1 pb-1">Courses</a>
+                    <a href="/blog/" class="text-primary font-medium border-b-2 border-primary px-1 pb-1">Blog</a>
+                    <a href="/about/" class="text-gray-400 hover:text-primary font-medium px-1 pb-1">About</a>
+                    <a href="/contact/" class="text-gray-400 hover:text-primary font-medium px-1 pb-1">Contact</a>
+                </nav>
+
+                <!-- Auth Buttons -->
+                <div class="hidden md:flex items-center space-x-4">
+                    <div id="userGreeting" class="hidden">
+                        <span class="text-gray-300">Hi, <span id="usernameDisplay"></span></span>
+                        <button id="logoutBtn" class="ml-2 text-primary hover:underline">Logout</button>
+                    </div>
+                    <div id="authButtons">
+                        <a href="javascript:void(0)" id="loginBtn"
+                            class="text-gray-400 hover:text-primary font-medium">Login</a>
+                        <a href="javascript:void(0)" id="registerBtn"
+                            class="ml-4 px-4 py-2 bg-primary text-white rounded-md hover:bg-blue-700 transition">Register</a>
+                    </div>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobileMenuButton" class="text-gray-400 hover:text-primary focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile menu -->
+        <div id="mobileMenu" class="mobile-menu md:hidden fixed inset-y-0 right-0 w-64 shadow-lg z-50 overflow-y-auto">
+            <div class="flex justify-end p-4">
+                <button id="closeMobileMenu" class="text-gray-400 hover:text-primary focus:outline-none">
+                    <i class="fas fa-times text-2xl"></i>
+                </button>
+            </div>
+            <nav class="px-6 py-4">
+                <div class="flex flex-col space-y-6">
+                    <a href="/" class="text-gray-400 hover:text-primary font-medium px-1 pb-1">Home</a>
+                    <a href="/courses/" class="text-gray-400 hover:text-primary font-medium px-1 pb-1">Courses</a>
+                    <a href="/blog/" class="text-primary font-medium border-b-2 border-primary px-1 pb-1">Blog</a>
+                    <a href="/about/" class="text-gray-400 hover:text-primary font-medium px-1 pb-1">About</a>
+                    <a href="/contact/" class="text-gray-400 hover:text-primary font-medium px-1 pb-1">Contact</a>
+
+                    <div class="pt-4 border-t border-gray-700">
+                        <div id="mobileUserGreeting" class="hidden mb-4">
+                            <span class="text-gray-300">Hi, <span id="mobileUsernameDisplay"></span></span>
+                            <button id="mobileLogoutBtn" class="block mt-2 text-primary hover:underline">Logout</button>
+                        </div>
+                        <div id="mobileAuthButtons">
+                            <a href="javascript:void(0)" id="mobileLoginBtn"
+                                class="block px-4 py-2 bg-primary text-white rounded-md hover:bg-blue-700 transition text-center mb-4">Login</a>
+                            <a href="javascript:void(0)" id="mobileRegisterBtn"
+                                class="block px-4 py-2 bg-primary text-white rounded-md hover:bg-blue-700 transition text-center">Register</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden">
+        <div class="modal-content rounded-lg shadow-xl max-w-md w-full p-6">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-2xl font-bold text-white">Login</h3>
+                <button id="closeLoginModal" class="text-gray-400 hover:text-gray-200">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="loginForm" class="space-y-4">
+                <div id="loginError" class="error-message hidden"></div>
+                <div>
+                    <label for="loginEmail" class="block text-sm font-medium text-gray-300">Email</label>
+                    <input type="email" id="loginEmail" required
+                        class="mt-1 block w-full border rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary">
+                </div>
+                <div>
+                    <label for="loginPassword" class="block text-sm font-medium text-gray-300">Password</label>
+                    <input type="password" id="loginPassword" required
+                        class="mt-1 block border w-full rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary">
+                </div>
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <input id="rememberMe" type="checkbox"
+                            class="h-4 w-4 border text-primary focus:ring-primary border-gray-600 rounded bg-gray-700">
+                        <label for="rememberMe" class="ml-2 block text-sm text-gray-300">Remember me</label>
+                    </div>
+                    <a href="javascript:void(0)" id="forgotPassword"
+                        class="text-sm text-primary hover:underline">Forgot password?</a>
+                </div>
+                <div>
+                    <button type="submit"
+                        class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                        Login
+                    </button>
+                </div>
+                <div class="text-center text-sm text-gray-400">
+                    Don't have an account? <a href="javascript:void(0)" id="switchToRegister"
+                        class="text-primary hover:underline">Register</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="registerModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden">
+        <div class="modal-content rounded-lg shadow-xl max-w-md w-full p-6">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-2xl font-bold text-white">Register</h3>
+                <button id="closeRegisterModal" class="text-gray-400 hover:text-gray-200">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="registerForm" class="space-y-4">
+                <div id="registerSuccess" class="success-message hidden"></div>
+                <div>
+                    <label for="registerName" class="block text-sm font-medium text-gray-300">Full Name</label>
+                    <input type="text" id="registerName" required
+                        class="mt-1 block w-full border rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary">
+                </div>
+                <div>
+                    <label for="registerEmail" class="block text-sm font-medium text-gray-300">Email</label>
+                    <input type="email" id="registerEmail" required
+                        class="mt-1 block w-full border rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary">
+                </div>
+                <div>
+                    <label for="registerPassword" class="block text-sm font-medium text-gray-300">Password</label>
+                    <input type="password" id="registerPassword" required minlength="6"
+                        class="mt-1 block w-full border rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary">
+                </div>
+                <div>
+                    <label for="registerConfirmPassword" class="block text-sm font-medium text-gray-300">Confirm
+                        Password</label>
+                    <input type="password" id="registerConfirmPassword" required minlength="6"
+                        class="mt-1 block w-full border rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary">
+                </div>
+                <div class="flex items-center">
+                    <input id="agreeTerms" type="checkbox" required
+                        class="h-4 w-4 text-primary border focus:ring-primary border-gray-600 rounded bg-gray-700">
+                    <label for="agreeTerms" class="ml-2 block text-sm text-gray-300">I agree to the <a href="/terms/"
+                            class="text-primary hover:underline">Terms of Service</a> and <a href="/privacy/"
+                            class="text-primary hover:underline">Privacy Policy</a></label>
+                </div>
+                <div>
+                    <button type="submit"
+                        class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                        Register
+                    </button>
+                </div>
+                <div class="text-center text-sm text-gray-400">
+                    Already have an account? <a href="javascript:void(0)" id="switchToLogin"
+                        class="text-primary hover:underline">Login</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="min-h-screen py-12">
+        <article class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Blog Header -->
+            <header class="mb-12">
+                <div class="flex items-center text-sm text-gray-400 mb-4">
+                    <span class="mr-4">June 10, 2025</span>
+                    <span>6 min read</span>
+                </div>
+                <h1 class="text-3xl sm:text-4xl font-bold text-white mb-6">Mastering DaVinci Resolve: Essential Tips for Beginners</h1>
+                <div class="flex items-center">
+                   <div>
+                        <p class="text-sm text-gray-400">Written by</p>
+                        <p class="font-medium text-white">Emma Wilson</p>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Featured Image -->
+            <div class="mb-12 rounded-lg overflow-hidden">
+                <img src="/assets/blog/post1.jpg" alt="DaVinci Resolve Interface" class="w-full h-auto">
+            </div>
+
+            <!-- Blog Content -->
+            <div class="blog-content text-gray-300">
+                <p class="lead">DaVinci Resolve has become one of the most powerful and popular video editing software options available today. What started as a color grading tool has evolved into a complete post-production suite that rivals industry standards like Adobe Premiere Pro and Final Cut Pro. Best of all, there's a free version that includes nearly all the features most editors will ever need.</p>
+
+                <h2>1. Understanding the Workspace</h2>
+                <p>When you first open DaVinci Resolve, the interface can seem overwhelming. The software is divided into several "pages" that represent different stages of the post-production workflow:</p>
+                
+                <ul>
+                    <li><strong>Media:</strong> Where you import and organize your footage</li>
+                    <li><strong>Cut:</strong> A simplified editing interface for quick assembly</li>
+                    <li><strong>Edit:</strong> The full-featured timeline for precise editing</li>
+                    <li><strong>Fusion:</strong> For visual effects and motion graphics</li>
+                    <li><strong>Color:</strong> DaVinci's legendary color grading tools</li>
+                    <li><strong>Fairlight:</strong> Professional audio post-production</li>
+                    <li><strong>Deliver:</strong> Where you export your final project</li>
+                </ul>
+
+                <p>As a beginner, you'll spend most of your time between the Media, Edit, and Deliver pages. Don't feel pressured to master all pages at once—focus on learning the Edit page thoroughly before moving on to more advanced features.</p>
+
+               
+
+                <blockquote>
+                    "Many beginners make the mistake of diving straight into complex features. Master the fundamentals of cutting and basic color correction first—these skills will serve you throughout your editing career." — Mark Johnson, Senior Colorist
+                </blockquote>
+
+                <h2>2. Optimizing Your Project Settings</h2>
+                <p>Before you start editing, it's crucial to set up your project correctly:</p>
+
+                <ul>
+                    <li><strong>Project Settings:</strong> Match your timeline resolution and frame rate to your primary footage</li>
+                    <li><strong>Playback Settings:</strong> Adjust for optimal performance based on your computer's specs</li>
+                    <li><strong>Proxy Mode:</strong> Enable for smoother playback with high-resolution files</li>
+                    <li><strong>Cache Settings:</strong> Configure for your storage system and workflow needs</li>
+                </ul>
+
+                <p>To access project settings, go to File > Project Settings. The most important settings are under "Master Settings" where you'll set your timeline resolution and frame rate. Getting these wrong can cause problems later in your workflow.</p>
+
+                <h3>Recommended Beginner Settings</h3>
+                <p>For those just starting out, these settings provide a good balance of quality and performance:</p>
+
+                <ul>
+                    <li>Timeline resolution: 1920x1080 (unless working with 4K footage)</li>
+                    <li>Frame rate: Match your source footage (usually 24, 25, or 30 fps)</li>
+                    <li>Playback resolution: Half or Quarter (can be changed anytime)</li>
+                    <li>Proxy mode: Quarter resolution</li>
+                    <li>Optimized media format: DNxHR LB (for Windows) or ProRes Proxy (for Mac)</li>
+                </ul>
+
+                <h2>3. Essential Editing Shortcuts</h2>
+                <p>Learning keyboard shortcuts will dramatically speed up your editing workflow. Here are the most essential ones for beginners:</p>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 my-6">
+                    <div class="bg-gray-800 p-4 rounded-lg">
+                        <p class="font-mono text-primary">I</p>
+                        <p>Set in point</p>
+                    </div>
+                    <div class="bg-gray-800 p-4 rounded-lg">
+                        <p class="font-mono text-primary">O</p>
+                        <p>Set out point</p>
+                    </div>
+                    <div class="bg-gray-800 p-4 rounded-lg">
+                        <p class="font-mono text-primary">F9</p>
+                        <p>Insert clip at playhead</p>
+                    </div>
+                    <div class="bg-gray-800 p-4 rounded-lg">
+                        <p class="font-mono text-primary">F10</p>
+                        <p>Overwrite clip at playhead</p>
+                    </div>
+                    <div class="bg-gray-800 p-4 rounded-lg">
+                        <p class="font-mono text-primary">Ctrl/Cmd+B</p>
+                        <p>Blade tool (cut clip)</p>
+                    </div>
+                    <div class="bg-gray-800 p-4 rounded-lg">
+                        <p class="font-mono text-primary">A</p>
+                        <p>Arrow/Selection tool</p>
+                    </div>
+                    <div class="bg-gray-800 p-4 rounded-lg">
+                        <p class="font-mono text-primary">Ctrl/Cmd+Z</p>
+                        <p>Undo</p>
+                    </div>
+                    <div class="bg-gray-800 p-4 rounded-lg">
+                        <p class="font-mono text-primary">Ctrl/Cmd+S</p>
+                        <p>Save project</p>
+                    </div>
+                </div>
+
+                <p>You can customize shortcuts by going to DaVinci Resolve > Keyboard Customization (Mac) or Preferences > Keyboard Customization (Windows).</p>
+
+                <h2>4. Organizing Your Media</h2>
+                <p>Proper media organization will save you hours of frustration:</p>
+
+                <ul>
+                    <li><strong>Use bins:</strong> Create folders (called "bins" in Resolve) for different types of media (interviews, b-roll, music, etc.)</li>
+                    <li><strong>Name your clips:</strong> Right-click on clips in the media pool to rename them meaningfully</li>
+                    <li><strong>Add metadata:</strong> Use the metadata editor to add keywords and notes to your clips</li>
+                    <li><strong>Color code:</strong> Right-click on clips or bins to assign colors for visual organization</li>
+                </ul>
+
+              
+                <h3>Smart Bins for Advanced Organization</h3>
+                <p>Once you're comfortable with basic organization, explore Smart Bins that automatically collect media based on criteria you set (clip type, keywords, etc.). Right-click in the Media Pool and select "New Smart Bin" to get started.</p>
+
+                <h2>5. Basic Color Correction Workflow</h2>
+                <p>DaVinci Resolve's color grading tools are industry standard. Here's a simple workflow to get started:</p>
+
+                <ol>
+                    <li><strong>Balance your shots:</strong> Use the Color Wheels to set proper exposure and white balance</li>
+                    <li><strong>Match shots:</strong> Ensure consistency between different clips in the same scene</li>
+                    <li><strong>Primary correction:</strong> Adjust contrast, saturation, and color balance</li>
+                    <li><strong>Secondary correction:</strong> Isolate and adjust specific colors or areas</li>
+                    <li><strong>Creative look:</strong> Apply your stylistic grade</li>
+                </ol>
+
+                <blockquote>
+                    "Always fix problems before making things pretty. A well-balanced image is the foundation of any good grade." — Emma Wilson, Color Grading Instructor
+                </blockquote>
+
+                <h3>Essential Color Nodes for Beginners</h3>
+                <p>The Node Editor can be intimidating, but these basic nodes will handle most correction needs:</p>
+
+                <ul>
+                    <li><strong>Serial Node:</strong> Basic correction node (added automatically)</li>
+                    <li><strong>Parallel Node:</strong> For making adjustments that don't affect the entire image</li>
+                    <li><strong>Layer Node:</strong> For combining multiple corrections</li>
+                    <li><strong>External Matte:</strong> For isolating specific areas to grade</li>
+                </ul>
+
+                <h2>6. Exporting Your Project</h2>
+                <p>The Deliver page offers numerous export options. For beginners, these presets work well:</p>
+
+                <ul>
+                    <li><strong>YouTube/Vimeo:</strong> H.264, 1920x1080, 15-25 Mbps bitrate</li>
+                    <li><strong>Master File:</strong> QuickTime, DNxHR HQ (Windows) or ProRes 422 (Mac)</li>
+                    <li><strong>Social Media:</strong> H.264, square (1080x1080) or vertical (1080x1920) formats</li>
+                </ul>
+
+                <p>Always watch your entire exported video before sharing to catch any rendering issues. Common problems include audio sync issues, dropped frames, or incorrect aspect ratios.</p>
+
+                
+
+                <h2>Next Steps in Your DaVinci Resolve Journey</h2>
+                <p>Once you've mastered these basics, consider exploring:</p>
+
+                <ul>
+                    <li><strong>Fusion:</strong> For advanced visual effects and motion graphics</li>
+                    <li><strong>Fairlight:</strong> For professional audio mixing and sweetening</li>
+                    <li><strong>Advanced Color Grading:</strong> Power windows, tracking, and qualifiers</li>
+                    <li><strong>Collaborative Workflows:</strong> Using Resolve's database system for team projects</li>
+                </ul>
+
+                <p>Remember that mastery comes with practice. Start with simple projects and gradually incorporate more advanced techniques as you become comfortable with the software.</p>
+
+                <p class="mt-8 text-gray-400">Have questions about getting started with DaVinci Resolve? Share them in the comments below!</p>
+            </div>
+
+            <!-- Back to Blog Link -->
+            <div class="mt-16">
+                <a href="/blog/" class="text-primary hover:underline font-medium flex items-center">
+                    <i class="fas fa-arrow-left mr-2"></i> Back to Blog
+                </a>
+            </div>
+        </article>
+    </main>
+
+   <!-- Footer -->
+    <footer class="bg-gray-900 text-white pt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Top Section -->
+            <div class="flex flex-col md:flex-row md:justify-between gap-8 mb-8">
+                <!-- Logo and Description -->
+                <div class="md:w-1/3 text-center md:text-left">
+                    <img src="/assets/logo.png" alt="Logo" class="h-10 mb-4 mx-auto md:mx-0">
+                    <p class="text-gray-400 text-sm">
+                        Empowering learners with skills for the digital age through expert-led courses.
+                    </p>
+                </div>
+
+                <!-- Navigation Links -->
+                <div class="md:w-2/3 grid grid-cols-2 md:grid-cols-3 gap-6 text-center md:text-left">
+                    <div>
+                        <h4 class="text-lg font-semibold mb-4">Courses</h4>
+                        <ul class="space-y-2 text-gray-400 text-sm">
+                            <li><a href="/courses/" class="hover:text-white transition">Marketing</a></li>
+                            <li><a href="/courses/" class="hover:text-white transition">Video Editing</a></li>
+                            <li><a href="/courses/" class="hover:text-white transition">Branding</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-semibold mb-4">Company</h4>
+                        <ul class="space-y-2 text-gray-400 text-sm">
+                            <li><a href="/about" class="hover:text-white transition">About Us</a></li>
+                            <li><a href="/contact" class="hover:text-white transition">Contact</a></li>
+                            <li><a href="/blog" class="hover:text-white transition">Blog</a></li>
+                        </ul>
+                    </div>
+                    <div class="hidden md:block">
+                        <h4 class="text-lg font-semibold mb-4  md:text-left">Address Info</h4>
+                        <ul class="space-y-2 text-gray-400 text-sm">
+                            <li class="flex flex-col items-center md:items-start">
+                                <a href="#" class="hover:text-white transition inline-flex items-center">
+                                    <i class="fas fa-envelope text-gray-400 mr-2"></i>
+                                    <span>info@skillnextcourse.online</span>
+                                </a>
+                            </li>
+                            <li class="flex flex-col items-center md:items-start">
+                                <a href="#" class="hover:text-white transition inline-flex items-center">
+                                    <i class="fas fa-map-marker-alt text-gray-400 mr-2"></i>
+                                    <span>490 Chem. de Vassan, Val-d'Or, QC J9P 0C1, Canada</span>
+                                </a>
+                            </li>
+                            <li class="flex flex-col items-center md:items-start">
+                                <a href="#" class="hover:text-white transition inline-flex items-center">
+                                    <i class="fas fa-phone-alt text-gray-400 mr-2"></i>
+                                    <span>+1 (819) 824-3146</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="md:hidden ">
+                        <h4 class="text-lg font-semibold mb-4 text-center">Address Info</h4>
+                        <ul class="space-y-2 text-gray-400 text-sm">
+                            <li class="flex flex-col items-start">
+                                <a href="#" class="hover:text-white transition inline-flex items-start">
+                                    <i class="fas fa-envelope text-gray-400 mr-2"></i>
+                                    <span>info@skillnextcourse.online</span>
+                                </a>
+                            </li>
+                            <li class="flex flex-col items-start">
+                                <a href="#" class="hover:text-white transition inline-flex items-start">
+                                    <i class="fas fa-map-marker-alt text-gray-400 mr-2"></i>
+                                    <span>490 Chem. de Vassan, Val-d'Or, QC J9P 0C1, Canada</span>
+                                </a>
+                            </li>
+                            <li class="flex flex-col items-start">
+                                <a href="#" class="hover:text-white transition inline-flex items-start">
+                                    <i class="fas fa-phone-alt text-gray-400 mr-2"></i>
+                                    <span>+1 (819) 824-3146</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+            </div>
+
+            <!-- Divider -->
+            <div
+                class="border-t border-gray-800 pt-6 pb-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <!-- Legal Navigation -->
+                <ul class="flex flex-wrap gap-4 text-sm text-gray-400 justify-center md:justify-start">
+                    <li><a href="/terms/" class="hover:text-white transition">Terms</a></li>
+                    <li><a href="/privacy/" class="hover:text-white transition">Privacy</a></li>
+                    <li><a href="/cookies/" class="hover:text-white transition">Cookies</a></li>
+                </ul>
+
+                <!-- Copyright -->
+                <p class="text-sm text-gray-500 text-center md:text-right">
+                    We are not an affiliate agency. All products are sold independently through our platform.
+                </p>
+            </div>
+
+            <!-- Bottom Copyright -->
+            <div class="border-t border-gray-800 pt-6 pb-8 text-center">
+                <p class="text-sm text-gray-500">
+                    &copy; 2025 SkillNext Course. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+
+    <script>
+        // Check if cookie consent has been given
+        function checkCookieConsent() {
+            const consent = localStorage.getItem('cookieConsent');
+            if (consent === null) {
+                document.getElementById('cookieConsent').classList.remove('hidden');
+            }
+        }
+
+        // Set cookie consent
+        document.getElementById('acceptCookies').addEventListener('click', function () {
+            localStorage.setItem('cookieConsent', 'accepted');
+            document.getElementById('cookieConsent').classList.add('hidden');
+        });
+
+        document.getElementById('declineCookies').addEventListener('click', function () {
+            localStorage.setItem('cookieConsent', 'declined');
+            document.getElementById('cookieConsent').classList.add('hidden');
+        });
+
+        // Mobile menu toggle
+        document.getElementById('mobileMenuButton').addEventListener('click', function () {
+            document.getElementById('mobileMenu').classList.add('open');
+        });
+
+        document.getElementById('closeMobileMenu').addEventListener('click', function () {
+            document.getElementById('mobileMenu').classList.remove('open');
+        });
+
+        // Auth functionality
+        let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        let registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
+
+        function updateAuthUI() {
+            if (currentUser) {
+                document.getElementById('userGreeting').classList.remove('hidden');
+                document.getElementById('authButtons').classList.add('hidden');
+                document.getElementById('usernameDisplay').textContent = currentUser.name;
+
+                document.getElementById('mobileUserGreeting').classList.remove('hidden');
+                document.getElementById('mobileAuthButtons').classList.add('hidden');
+                document.getElementById('mobileUsernameDisplay').textContent = currentUser.name;
+            } else {
+                document.getElementById('userGreeting').classList.add('hidden');
+                document.getElementById('authButtons').classList.remove('hidden');
+
+                document.getElementById('mobileUserGreeting').classList.add('hidden');
+                document.getElementById('mobileAuthButtons').classList.remove('hidden');
+            }
+        }
+
+        // Login/Register modals
+        document.getElementById('loginBtn').addEventListener('click', function () {
+            document.getElementById('loginModal').classList.remove('hidden');
+        });
+
+        document.getElementById('mobileLoginBtn').addEventListener('click', function () {
+            document.getElementById('mobileMenu').classList.remove('open');
+            document.getElementById('loginModal').classList.remove('hidden');
+        });
+
+        document.getElementById('closeLoginModal').addEventListener('click', function () {
+            document.getElementById('loginModal').classList.add('hidden');
+            document.getElementById('loginError').classList.add('hidden');
+        });
+
+        document.getElementById('registerBtn').addEventListener('click', function () {
+            document.getElementById('registerModal').classList.remove('hidden');
+        });
+
+        document.getElementById('mobileRegisterBtn').addEventListener('click', function () {
+            document.getElementById('mobileMenu').classList.remove('open');
+            document.getElementById('registerModal').classList.remove('hidden');
+        });
+
+        document.getElementById('closeRegisterModal').addEventListener('click', function () {
+            document.getElementById('registerModal').classList.add('hidden');
+            document.getElementById('registerSuccess').classList.add('hidden');
+        });
+
+        document.getElementById('switchToRegister').addEventListener('click', function () {
+            document.getElementById('loginModal').classList.add('hidden');
+            document.getElementById('registerModal').classList.remove('hidden');
+        });
+
+        document.getElementById('switchToLogin').addEventListener('click', function () {
+            document.getElementById('registerModal').classList.add('hidden');
+            document.getElementById('loginModal').classList.remove('hidden');
+        });
+
+        // Login form
+        document.getElementById('loginForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            const errorElement = document.getElementById('loginError');
+
+            // Check if user exists in registered users
+            const userExists = registeredUsers.some(user => user.email === email);
+            
+            if (!userExists) {
+                errorElement.textContent = "No account found with this email. Please register first.";
+                errorElement.classList.remove('hidden');
+                return;
+            }
+
+            // In a real app, you would validate password and send to backend
+            // For demo, we'll just check if the user exists in registered users
+            const user = registeredUsers.find(user => user.email === email);
+            
+            if (user) {
+                currentUser = {
+                    name: user.name,
+                    email: user.email
+                };
+
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                updateAuthUI();
+                document.getElementById('loginModal').classList.add('hidden');
+            } else {
+                errorElement.textContent = "Invalid email or password. Please try again or register.";
+                errorElement.classList.remove('hidden');
+            }
+        });
+
+        // Register form
+        document.getElementById('registerForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('registerConfirmPassword').value;
+            const successElement = document.getElementById('registerSuccess');
+
+            if (password !== confirmPassword) {
+                successElement.textContent = "Passwords don't match!";
+                successElement.classList.remove('hidden');
+                successElement.classList.remove('success-message');
+                successElement.classList.add('error-message');
+                return;
+            }
+
+            if (!document.getElementById('agreeTerms').checked) {
+                successElement.textContent = "You must agree to the terms and conditions!";
+                successElement.classList.remove('hidden');
+                successElement.classList.remove('success-message');
+                successElement.classList.add('error-message');
+                return;
+            }
+
+            // Check if user already exists
+            const userExists = registeredUsers.some(user => user.email === email);
+            if (userExists) {
+                successElement.textContent = "An account with this email already exists. Please login.";
+                successElement.classList.remove('hidden');
+                successElement.classList.remove('success-message');
+                successElement.classList.add('error-message');
+                return;
+            }
+
+            // Add new user to registered users
+            const newUser = {
+                name: name,
+                email: email,
+                password: password // In a real app, you would hash this
+            };
+
+            registeredUsers.push(newUser);
+            localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
+
+            // Set as current user
+            currentUser = newUser;
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+
+            successElement.textContent = "Registration successful! You are now logged in.";
+            successElement.classList.remove('hidden');
+            successElement.classList.remove('error-message');
+            successElement.classList.add('success-message');
+
+            // Update UI and close modal after delay
+            updateAuthUI();
+            setTimeout(() => {
+                document.getElementById('registerModal').classList.add('hidden');
+                successElement.classList.add('hidden');
+            }, 2000);
+        });
+
+        // Logout
+        document.getElementById('logoutBtn').addEventListener('click', function () {
+            currentUser = null;
+            localStorage.removeItem('currentUser');
+            updateAuthUI();
+        });
+
+        document.getElementById('mobileLogoutBtn').addEventListener('click', function () {
+            currentUser = null;
+            localStorage.removeItem('currentUser');
+            updateAuthUI();
+            document.getElementById('mobileMenu').classList.remove('open');
+        });
+
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function () {
+            checkCookieConsent();
+            updateAuthUI();
+        });
+    </script>
+</body>
+
+</html>

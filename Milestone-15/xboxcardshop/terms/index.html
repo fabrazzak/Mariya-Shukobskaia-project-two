@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+<link rel="shortcut icon" href="/images/logo.png" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Terms of Service for XboxCardShop - Read our terms and conditions for using our platform to purchase Xbox gift cards and digital content.">
+    <meta name="keywords" content="xbox terms of service, xbox shop terms, digital code purchase terms, xbox card shop conditions">
+    <meta name="author" content="XboxCardShop">
+    <title>Terms of Service - XboxCardShop</title>
+    <link rel="canonical" href="https://xboxcardshop.com/terms/" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Oxanium:wght@300;400;500;600;700;800&family=Press+Start+2P&display=swap');
+        
+        :root {
+            --primary: #107c10;
+            --secondary: #0f5e0f;
+            --accent: #00ff00;
+            --dark: #0a0a0a;
+            --light: #f8f8f8;
+        }
+        
+        body {
+            font-family: 'Oxanium', sans-serif;
+            background-color: var(--dark);
+            color: var(--light);
+            overflow-x: hidden;
+        }
+        
+        .logo-font {
+            font-family: 'Press Start 2P', cursive;
+        }
+        
+        .hero-gradient {
+            background: radial-gradient(circle at center, rgba(16,124,16,0.3) 0%, rgba(10,10,10,1) 70%);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(0,255,0,0.2);
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0,255,0,0.4);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,255,0,0.3);
+        }
+        
+        .btn-accent {
+            background: linear-gradient(135deg, var(--accent), #00cc00);
+            color: var(--dark);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-accent:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,255,0,0.5);
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--accent);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .hamburger {
+            width: 30px;
+            height: 20px;
+            position: relative;
+            transform: rotate(0deg);
+            transition: .5s ease-in-out;
+            cursor: pointer;
+        }
+        
+        .hamburger span {
+            display: block;
+            position: absolute;
+            height: 3px;
+            width: 100%;
+            background: var(--accent);
+            border-radius: 3px;
+            opacity: 1;
+            left: 0;
+            transform: rotate(0deg);
+            transition: .25s ease-in-out;
+        }
+        
+        .hamburger span:nth-child(1) {
+            top: 0px;
+        }
+        
+        .hamburger span:nth-child(2), .hamburger span:nth-child(3) {
+            top: 10px;
+        }
+        
+        .hamburger span:nth-child(4) {
+            top: 20px;
+        }
+        
+        .hamburger.open span:nth-child(1) {
+            top: 10px;
+            width: 0%;
+            left: 50%;
+        }
+        
+        .hamburger.open span:nth-child(2) {
+            transform: rotate(45deg);
+        }
+        
+        .hamburger.open span:nth-child(3) {
+            transform: rotate(-45deg);
+        }
+        
+        .hamburger.open span:nth-child(4) {
+            top: 10px;
+            width: 0%;
+            left: 50%;
+        }
+        
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+        
+        .glow-text {
+            text-shadow: 0 0 10px rgba(0,255,0,0.7);
+        }
+        
+        .xbox-animation {
+            position: relative;
+            perspective: 1000px;
+        }
+        
+        .xbox-logo {
+            transform-style: preserve-3d;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotateY(0);
+            }
+            50% {
+                transform: translateY(-20px) rotateY(10deg);
+            }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(0, 255, 0, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(0, 255, 0, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(0, 255, 0, 0);
+            }
+        }
+        
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
+        }
+        
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+        
+        /* Terms page specific styles */
+        .terms-container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 100px 20px 60px;
+        }
+        
+        .terms-container h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            color: var(--accent);
+        }
+        
+        .terms-container h2 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 2rem 0 1rem;
+            color: var(--primary);
+        }
+        
+        .terms-container h3 {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin: 1.5rem 0 0.8rem;
+        }
+        
+        .terms-container p {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+        
+        .terms-container ul {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+        
+        .terms-container li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+        
+        .last-updated {
+            font-style: italic;
+            color: #777;
+            margin-bottom: 2rem;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="bg-black/90 backdrop-blur-md border-b border-green-900/30 fixed w-full z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <!-- Logo -->
+            <div class="flex items-center">
+                 <a href="/" class="flex items-center">
+                    <img src="/images/logo.png" alt="Xbox Logo" class="h-12">
+                </a>
+            </div>
+            
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="/" class="nav-link text-white hover:text-green-400">Home</a>
+                <a href="/shop/" class="nav-link text-white hover:text-green-400">Shop</a>
+                <a href="/blog/" class="nav-link text-white hover:text-green-400">Blog</a>
+                <a href="/about/" class="nav-link text-white hover:text-green-400">About</a>
+                <a href="/contact/" class="nav-link text-white hover:text-green-400">Contact</a>
+                 
+            </nav>
+            
+            <!-- Right Side Icons -->
+            <div class="flex items-center space-x-4">
+                <a href="/cart/" class="relative text-white hover:text-green-400">
+                    <i class="fas fa-shopping-cart text-xl"></i>
+                    <span id="cart-count" class="absolute -top-2 -right-2 bg-green-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+                </a>
+                <div id="user-icon" class="hidden">
+                    <a href="/account/" class="text-white hover:text-green-400">
+                        <i class="fas fa-user text-xl"></i>
+                    </a>
+                </div>
+                <div id="login-icon">
+                    <a href="/login/" class="text-white hover:text-green-400">
+                        <i class="fas fa-sign-in-alt text-xl"></i>
+                    </a>
+                </div>
+                <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none">
+                    <div class="hamburger">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="mobile-menu fixed inset-y-0 right-0 w-64 bg-black/95 backdrop-blur-lg z-50 p-6 overflow-y-auto">
+        <div class="flex justify-between items-center mb-8">
+            <a href="/" class="logo-font text-green-400 text-xl">Xbox</a>
+            <button id="mobile-menu-close" class="text-white focus:outline-none">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+        </div>
+        <nav class="flex flex-col space-y-6">
+            <a href="/" class="text-white hover:text-green-400 text-lg">Home</a>
+            <a href="/shop/" class="text-white hover:text-green-400 text-lg">Shop</a>
+            <a href="/blog/" class="text-white hover:text-green-400 text-lg">Blog</a>
+            <a href="/about/" class="text-white hover:text-green-400 text-lg">About</a>
+            <a href="/contact/" class="text-white hover:text-green-400 text-lg">Contact</a>
+            
+            <div class="pt-4 border-t border-green-900/30">
+                <div id="mobile-login-link">
+                    <a href="/login/" class="flex items-center text-white hover:text-green-400">
+                        <i class="fas fa-sign-in-alt mr-2"></i> Login
+                    </a>
+                </div>
+                <a href="/cart/" class="flex items-center text-white hover:text-green-400 mt-4">
+                    <i class="fas fa-shopping-cart mr-2"></i> Cart (<span id="mobile-cart-count">0</span>)
+                </a>
+            </div>
+        </nav>
+        <div class="absolute bottom-6 left-6 right-6">
+            <p class="text-green-400 text-sm">We are not an affiliate agency. All products are sold independently through our platform.</p>
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <main class="flex-grow">
+        <div class="terms-container">
+            <h1>Terms of Service</h1>
+            <p class="last-updated">Last Updated: August 10, 2025</p>
+            
+            <p>Welcome to XboxCardShop! These Terms of Service ("Terms") govern your use of our website located at https://xboxcardshop.com/ (the "Site") and all related services provided by XboxCardShop ("we", "us", or "our"). By accessing or using our Site, you agree to be bound by these Terms. If you do not agree with any part of these Terms, you must not use our Site.</p>
+            
+            <h2>1. Eligibility</h2>
+            <p>To use our Site and services, you must:</p>
+            <ul>
+                <li>Be at least 18 years of age or the legal age of majority in your jurisdiction</li>
+                <li>Have the legal capacity to enter into a binding contract</li>
+                <li>Reside in a country where our services are available</li>
+                <li>Provide accurate and complete registration information</li>
+            </ul>
+            <p>By using our Site, you represent and warrant that you meet all of these eligibility requirements. If you do not meet these requirements, you must not access or use our Site.</p>
+            
+            <h2>2. Account Registration</h2>
+            <p>To access certain features of our Site, you may be required to create an account. When registering, you agree to:</p>
+            <ul>
+                <li>Provide accurate, current, and complete information</li>
+                <li>Maintain and promptly update your account information</li>
+                <li>Maintain the security of your account credentials</li>
+                <li>Be responsible for all activities that occur under your account</li>
+                <li>Notify us immediately of any unauthorized use of your account</li>
+            </ul>
+            <p>We reserve the right to suspend or terminate your account if any information provided is inaccurate, incomplete, or misleading.</p>
+            
+            <h2>3. Products and Services</h2>
+            <p>XboxCardShop provides digital Xbox gift cards, game codes, and related products ("Products"). By purchasing our Products, you acknowledge that:</p>
+            <ul>
+                <li>All sales are final - we do not offer refunds or exchanges for digital Products</li>
+                <li>Products are subject to availability and we may limit quantities</li>
+                <li>Prices are subject to change without notice</li>
+                <li>You are responsible for ensuring the Products are compatible with your system</li>
+                <li>Products may be subject to additional terms from Microsoft or game publishers</li>
+            </ul>
+            
+            <h2>4. Order Process</h2>
+            <p>When you place an order through our Site:</p>
+            <ul>
+                <li>You agree to pay the specified price plus any applicable taxes</li>
+                <li>We will send the digital code to the email address associated with your account</li>
+                <li>Delivery times may vary but are typically immediate</li>
+                <li>You are responsible for checking your spam/junk folder if you don't receive the code</li>
+                <li>We are not responsible for codes sent to incorrect email addresses provided by you</li>
+            </ul>
+            <p>All orders are subject to our acceptance. We may refuse or cancel any order for any reason, including but not limited to:</p>
+            <ul>
+                <li>Product availability</li>
+                <li>Errors in product information or pricing</li>
+                <li>Suspected fraud or unauthorized activity</li>
+                <li>Violation of these Terms</li>
+            </ul>
+            
+            <h2>5. Payment</h2>
+            <p>We accept various payment methods as displayed on our Site. By providing payment information, you represent that:</p>
+            <ul>
+                <li>You are authorized to use the payment method</li>
+                <li>The payment information is accurate and complete</li>
+            </ul>
+            <p>You agree to pay all charges incurred by your account, including applicable taxes. If your payment method fails, we may collect amounts owed using other collection mechanisms.</p>
+            
+            <h2>6. Intellectual Property</h2>
+            <p>The Site and its entire contents, features, and functionality (including all information, software, text, displays, images, video, and audio) are owned by us or our licensors and are protected by copyright, trademark, and other intellectual property laws.</p>
+            <p>You may use the Site only for personal, non-commercial purposes. No right, title, or interest in the Site is transferred to you. All trademarks, service marks, logos, and trade names are proprietary to us or our licensors.</p>
+            
+            <h2>7. User Conduct</h2>
+            <p>You agree not to:</p>
+            <ul>
+                <li>Use the Site for any unlawful purpose</li>
+                <li>Attempt to gain unauthorized access to our systems</li>
+                <li>Interfere with the proper working of the Site</li>
+                <li>Use any robot, spider, or other automatic device to access the Site</li>
+                <li>Introduce any viruses or malicious code</li>
+                <li>Engage in any fraudulent activity</li>
+                <li>Resell or redistribute our Products without authorization</li>
+            </ul>
+            
+            <h2>8. Disclaimer of Warranties</h2>
+            <p>THE SITE AND PRODUCTS ARE PROVIDED "AS IS" WITHOUT WARRANTY OF ANY KIND. TO THE MAXIMUM EXTENT PERMITTED BY LAW, WE DISCLAIM ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.</p>
+            <p>We do not warrant that the Site will be uninterrupted, secure, or error-free, or that defects will be corrected. We are not responsible for any issues arising from your use of the Products with Xbox services.</p>
+            
+            <h2>9. Limitation of Liability</h2>
+            <p>TO THE MAXIMUM EXTENT PERMITTED BY LAW, IN NO EVENT SHALL XBOXCARDSHOP BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES ARISING FROM YOUR USE OF THE SITE OR PRODUCTS.</p>
+            <p>Our total liability for any claims related to the Site or Products shall not exceed the amount you paid for the Product giving rise to the claim.</p>
+            
+            <h2>10. Indemnification</h2>
+            <p>You agree to defend, indemnify, and hold harmless XboxCardShop and its affiliates from any claims, damages, liabilities, and expenses arising from:</p>
+            <ul>
+                <li>Your use of the Site or Products</li>
+                <li>Your violation of these Terms</li>
+                <li>Your violation of any third-party rights</li>
+            </ul>
+            
+            <h2>11. Changes to Terms</h2>
+            <p>We may modify these Terms at any time. The updated version will be posted on our Site with a new "Last Updated" date. Your continued use of the Site after changes constitutes acceptance of the new Terms.</p>
+            
+            <h2>12. Governing Law</h2>
+            <p>These Terms shall be governed by the laws of the Province of Quebec, Canada, without regard to its conflict of law provisions. Any disputes shall be resolved in the courts located in Val-d'Or, Quebec.</p>
+            
+            <h2>13. Miscellaneous</h2>
+            <p>If any provision of these Terms is found to be invalid, the remaining provisions will remain in effect. Our failure to enforce any right does not waive that right. These Terms constitute the entire agreement between you and XboxCardShop regarding the Site.</p>
+            
+            <h2>14. Contact Information</h2>
+            <p>For questions about these Terms, please contact us at:</p>
+            <p>XboxCardShop<br>
+            490 Chem. de Vassan<br>
+            Val-d'Or, QC J9P 0C1<br>
+            Canada<br>
+            Phone: +1 (819) 824-3146<br>
+            Email: info@xboxcardshop.com</p>
+        </div>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="bg-black/90 border-t border-green-900/30 pt-12 pb-6">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <a href="/" class="flex items-center">
+                    <img src="/images/logo.png" alt="Xbox Logo" class="h-12 mb-4">
+                </a>
+                    <p class="text-gray-400 mb-4">
+                        Your trusted source for Xbox gift cards and digital content. Instant delivery, competitive prices.
+                    </p>
+                </div>
+                
+                <div>
+                    <h3 class="text-white font-bold text-lg mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/" class="text-gray-400 hover:text-green-400">Home</a></li>
+                        <li><a href="/shop/" class="text-gray-400 hover:text-green-400">Shop</a></li>
+                        <li><a href="/blog/" class="text-gray-400 hover:text-green-400">Blog</a></li>
+                        <li><a href="/about/" class="text-gray-400 hover:text-green-400">About Us</a></li>
+                        <li><a href="/contact/" class="text-gray-400 hover:text-green-400">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-white font-bold text-lg mb-4">Support</h3>
+                    <ul class="space-y-2">                        
+                        <li><a href="/cookies" class="text-gray-400 hover:text-green-400">Cookies Policy</a></li>
+                        <li><a href="/privacy/" class="text-gray-400 hover:text-green-400">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="text-gray-400 hover:text-green-400">Terms of Service</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-white font-bold text-lg mb-4">Contact Us</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center text-gray-400">
+                            <i class="fas fa-map-marker-alt mr-2 text-green-400"></i>
+                            490 Chem. de Vassan, Val-d'Or, QC J9P 0C1, Canada
+                        </li>
+                        <li class="flex items-center text-gray-400">
+                            <i class="fas fa-phone-alt mr-2 text-green-400"></i>
+                            +1 (819) 824-3146
+                        </li>
+                        <li class="flex items-center text-gray-400">
+                            <i class="fas fa-envelope mr-2 text-green-400"></i>
+                            info@xboxcardshop.com
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-green-900/30 pt-6 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-500 text-sm mb-4 md:mb-0">
+                    &copy; 2025 XboxCardShop. All rights reserved.
+                </p>
+                <p class="text-gray-500 text-sm">
+                    We are not an affiliate agency. All products are sold independently through our platform.
+                </p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const hamburger = document.querySelector('.hamburger');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('open');
+            hamburger.classList.toggle('open');
+        });
+
+        document.getElementById('mobile-menu-close').addEventListener('click', () => {
+            mobileMenu.classList.remove('open');
+            hamburger.classList.remove('open');
+        });
+
+        // Check login status and update UI
+        function checkLoginStatus() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            const accountNavItem = document.getElementById('account-nav-item');
+            const userIcon = document.getElementById('user-icon');
+            const loginIcon = document.getElementById('login-icon');
+            const mobileAccountLink = document.getElementById('mobile-account-link');
+            const mobileLoginLink = document.getElementById('mobile-login-link');
+            
+            if (isLoggedIn) {
+                if (accountNavItem) accountNavItem.classList.remove('hidden');
+                if (userIcon) userIcon.classList.remove('hidden');
+                if (loginIcon) loginIcon.classList.add('hidden');
+                if (mobileAccountLink) mobileAccountLink.classList.remove('hidden');
+                if (mobileLoginLink) mobileLoginLink.classList.add('hidden');
+            } else {
+                if (accountNavItem) accountNavItem.classList.add('hidden');
+                if (userIcon) userIcon.classList.add('hidden');
+                if (loginIcon) loginIcon.classList.remove('hidden');
+                if (mobileAccountLink) mobileAccountLink.classList.add('hidden');
+                if (mobileLoginLink) mobileLoginLink.classList.remove('hidden');
+            }
+        }
+
+        // Initialize cart if not exists
+        if (!localStorage.getItem('cart')) {
+            localStorage.setItem('cart', JSON.stringify([]));
+        }
+
+        // Update cart count
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart'));
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            
+            document.getElementById('cart-count').textContent = totalItems;
+            document.getElementById('mobile-cart-count').textContent = totalItems;
+        }
+
+        // Add to cart functionality
+        function addToCart(product) {
+            const cart = JSON.parse(localStorage.getItem('cart'));
+            const existingItem = cart.find(item => item.id === product.id);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push(product);
+            }
+            
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+        }
+
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            checkLoginStatus();
+            updateCartCount();
+            
+            // GSAP Animations
+            gsap.from(".logo-font", {
+                duration: 1,
+                y: -50,
+                opacity: 0,
+                ease: "power3.out"
+            });
+            
+            gsap.from(".nav-link", {
+                duration: 1,
+                y: -50,
+                opacity: 0,
+                stagger: 0.1,
+                ease: "power3.out",
+                delay: 0.3
+            });
+        });
+    </script>
+</body>
+</html>

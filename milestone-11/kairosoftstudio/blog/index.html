@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Tennis Club Story Blog - Get the latest tips, strategies, and updates for managing your tennis club effectively.">
+    <meta name="keywords" content="Tennis Club Story blog, game tips, tennis management, Kairosoft, mobile game strategies">
+    <meta name="author" content="Kairosoft Studio">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://kairosoftstudio.com/blog/">
+    
+    <title>Tennis Club Story Blog | Game Tips & Updates | Kairosoft</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/image/logo.png" type="image/x-icon">
+    
+    <!-- Remix Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4ADE80',
+                        secondary: '#22D3EE',
+                        dark: '#1E293B',
+                        light: '#F8FAFC',
+                        accent: '#F59E0B',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Poppins', 'sans-serif'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-reverse': 'float-reverse 5s ease-in-out infinite',
+                        'pulse-slow': 'pulse 5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        'float-reverse': {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(15px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        .hero-clip-path {
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+        }
+        
+        @media (max-width: 768px) {
+            .hero-clip-path {
+                clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+            }
+        }
+        
+        .blog-card:hover .blog-image {
+            transform: scale(1.05);
+        }
+        
+        .blog-card:hover .blog-title {
+            color: #4ADE80;
+        }
+        
+        .tag-chip {
+            transition: all 0.3s ease;
+        }
+        
+        .tag-chip:hover {
+            background-color: #4ADE80;
+            color: white;
+        }
+        
+        .pagination-item {
+            transition: all 0.3s ease;
+        }
+        
+        .pagination-item:hover:not(.active) {
+            background-color: #F1F5F9;
+        }
+    </style>
+</head>
+<body class="font-sans bg-slate-50 text-slate-800 antialiased overflow-x-hidden">
+    <!-- Cookies Consent Banner -->
+    <div id="cookies-banner" class="fixed bottom-0 left-0 right-0 bg-dark text-light p-4 shadow-lg z-50 hidden">
+        <div class="container mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="flex-1">
+                <p class="text-sm md:text-base">We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies. <a href="/cookies/" class="text-primary hover:underline">Learn more</a></p>
+            </div>
+            <div class="flex gap-3">
+                <button id="decline-cookies" class="px-4 py-2 bg-transparent border border-primary text-primary rounded-lg hover:bg-primary hover:text-white transition-colors">Decline</button>
+                <button id="accept-cookies" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-green-600 transition-colors">Accept</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 bg-white/90 backdrop-blur-md shadow-sm z-40">
+       <div class="container mx-auto px-4 py-1 flex items-center justify-between">
+            <a href="/" class="flex items-center gap-2">
+              <img src="/image/logo.png" alt="Tennis Club Story Logo" class="h-16 w-auto">
+                
+            </a>
+            
+            <div class="hidden lg:flex items-center gap-8">
+                <a href="/" class="text-slate-600 hover:text-primary transition-colors">Home</a>
+                <a href="/how-to-play/" class="text-slate-600 hover:text-primary transition-colors">How to Play</a>
+                <a href="/responsible-gaming/" class="text-slate-600 hover:text-primary transition-colors">Responsible Gaming</a>
+                <a href="/blog/" class="text-dark font-medium hover:text-primary transition-colors">Blog</a>
+                <a href="/contact/" class="text-slate-600 hover:text-primary transition-colors">Contact</a>
+                <a href="https://play.google.com/store/apps/details?id=net.kairosoft.android.tennis_en" class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors flex items-center gap-2">
+                    <i class="ri-google-play-fill"></i>
+                    <span>Download</span>
+                </a>
+            </div>
+            
+            <button id="mobile-menu-button" class="lg:hidden text-dark text-2xl">
+                <i class="ri-menu-line"></i>
+            </button>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="lg:hidden hidden absolute top-full left-0 right-0 bg-white shadow-lg py-4 px-6">
+            <div class="flex flex-col gap-4">
+                <a href="/" class="text-slate-600 hover:text-primary transition-colors">Home</a>
+                <a href="/how-to-play/" class="text-slate-600 hover:text-primary transition-colors">How to Play</a>
+                <a href="/responsible-gaming/" class="text-slate-600 hover:text-primary transition-colors">Responsible Gaming</a>
+                <a href="/blog/" class="text-dark font-medium hover:text-primary transition-colors">Blog</a>
+                <a href="/contact/" class="text-slate-600 hover:text-primary transition-colors">Contact</a>
+                <a href="https://play.google.com/store/apps/details?id=net.kairosoft.android.tennis_en" class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors flex items-center justify-center gap-2 mt-2">
+                    <i class="ri-google-play-fill"></i>
+                    <span>Download</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Blog Hero Section -->
+    <section class="relative hero-clip-path bg-gradient-to-br from-dark to-slate-800 text-white pt-40 pb-24 overflow-hidden">
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="max-w-4xl mx-auto text-center">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6 leading-tight">
+                    Tennis Club Story <span class="text-primary">Blog</span>
+                </h1>
+                <p class="text-lg md:text-xl mb-8 text-slate-300">
+                    Tips, strategies, and updates to help you build the ultimate tennis club
+                </p>
+                <div class="relative max-w-md mx-auto hidden">
+                    <input type="text" placeholder="Search articles..." class="w-full px-6 py-4 rounded-full bg-white/10 border border-white/20 text-white placeholder-slate-300 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                    <button class="absolute right-2 top-2 bg-primary text-white p-2 rounded-full hover:bg-green-600 transition-colors">
+                        <i class="ri-search-line"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Content Section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col lg:flex-row gap-12">
+                <!-- Main Content -->
+                <div class="lg:w-2/3">
+                    <!-- Featured Post -->
+                    <div class="mb-16">
+                        <div class="bg-slate-50 rounded-2xl overflow-hidden shadow-lg mb-6 blog-card">
+                            <a href="/blog/training-strategies/">
+                                <div class="h-80 overflow-hidden">
+                                    <img src="/image/blog/blog-training.jpg" alt="Featured Blog Post" class="w-full h-full object-cover blog-image transition-transform duration-500">
+                                </div>
+                            </a>
+                            <div class="p-8">
+                                <div class="flex flex-wrap gap-2 mb-4">
+                                    <span class="tag-chip bg-primary/10 text-primary text-sm px-3 py-1 rounded-full">Game Tips</span>
+                                    <span class="tag-chip bg-secondary/10 text-secondary text-sm px-3 py-1 rounded-full">Training</span>
+                                    <span class="tag-chip bg-accent/10 text-accent text-sm px-3 py-1 rounded-full">Featured</span>
+                                </div>
+                                <a href="/blog/training-strategies/">
+                                    <h2 class="blog-title text-3xl font-display font-bold mb-4 transition-colors">Advanced Training Strategies for Championship Players</h2>
+                                </a>
+                                <p class="text-slate-600 mb-6">Discover the most effective training regimens to develop top-tier tennis players in your club. Learn how to balance power and technique training to dominate tournaments.</p>
+                                <div class="flex items-center justify-between">
+                                    <div class="flex items-center gap-3">
+                                        
+                                        <div>
+                                            <h4 class="font-medium">Kairosoft Team</h4>
+                                            <p class="text-sm text-slate-500">May 15, 2025 • 8 min read</p>
+                                        </div>
+                                    </div>
+                                    <a href="/blog/training-strategies/" class="text-primary hover:text-green-600 flex items-center gap-2 transition-colors">
+                                        <span>Read More</span>
+                                        <i class="ri-arrow-right-line"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Blog Posts Grid -->
+                    <div class="mb-12">
+                        <h2 class="text-2xl font-display font-bold mb-8 flex items-center gap-3">
+                            <i class="ri-article-line text-primary"></i>
+                            <span>Latest Articles</span>
+                        </h2>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <!-- Blog Post 1 -->
+                            <div class="bg-slate-50 rounded-xl overflow-hidden shadow-md blog-card">
+                                <a href="/blog/sponsor-guide/">
+                                    <div class="h-48 overflow-hidden">
+                                        <img src="/image/blog/blog2.jpeg" alt="Sponsor Guide" class="w-full h-full object-cover blog-image transition-transform duration-500">
+                                    </div>
+                                </a>
+                                <div class="p-6">
+                                    <div class="flex flex-wrap gap-2 mb-3">
+                                        <span class="tag-chip bg-primary/10 text-primary text-xs px-2 py-1 rounded-full">Game Guide</span>
+                                        <span class="tag-chip bg-secondary/10 text-secondary text-xs px-2 py-1 rounded-full">Sponsors</span>
+                                    </div>
+                                    <a href="/blog/sponsor-guide/">
+                                        <h3 class="blog-title text-xl font-display font-bold mb-2 transition-colors">Maximizing Sponsor Benefits in Tennis Club Story</h3>
+                                    </a>
+                                    <p class="text-slate-600 text-sm mb-4 line-clamp-2">Learn how to attract the best sponsors and leverage their benefits to boost your club's success and facilities.</p>
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm text-slate-500">Apr 28, 2025</span>
+                                        <a href="/blog/sponsor-guide/" class="text-primary hover:text-green-600 text-sm flex items-center gap-1 transition-colors">
+                                            <span>Read</span>
+                                            <i class="ri-arrow-right-line"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Blog Post 2 -->
+                            <div class="bg-slate-50 rounded-xl overflow-hidden shadow-md blog-card">
+                                <a href="/blog/tournament-tips/">
+                                    <div class="h-48 overflow-hidden">
+                                        <img src="/image/blog/blog3.jpg" alt="Tournament Tips" class="w-full h-full object-cover blog-image transition-transform duration-500">
+                                    </div>
+                                </a>
+                                <div class="p-6">
+                                    <div class="flex flex-wrap gap-2 mb-3">
+                                        <span class="tag-chip bg-primary/10 text-primary text-xs px-2 py-1 rounded-full">Game Tips</span>
+                                        <span class="tag-chip bg-accent/10 text-accent text-xs px-2 py-1 rounded-full">Tournaments</span>
+                                    </div>
+                                    <a href="/blog/tournament-tips/">
+                                        <h3 class="blog-title text-xl font-display font-bold mb-2 transition-colors">Tournament Preparation: A Complete Guide</h3>
+                                    </a>
+                                    <p class="text-slate-600 text-sm mb-4 line-clamp-2">Everything you need to know to prepare your players and club for tournament success and championship wins.</p>
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm text-slate-500">Apr 10, 2025</span>
+                                        <a href="/blog/tournament-tips/" class="text-primary hover:text-green-600 text-sm flex items-center gap-1 transition-colors">
+                                            <span>Read</span>
+                                            <i class="ri-arrow-right-line"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Blog Post 3 -->
+                            <div class="bg-slate-50 rounded-xl overflow-hidden shadow-md blog-card">
+                                <a href="/blog/update-2.0/">
+                                    <div class="h-48 overflow-hidden">
+                                        <img src="/image/blog/blog4.webp" alt="Game Update" class="w-full h-full object-cover blog-image transition-transform duration-500">
+                                    </div>
+                                </a>
+                                <div class="p-6">
+                                    <div class="flex flex-wrap gap-2 mb-3">
+                                        <span class="tag-chip bg-secondary/10 text-secondary text-xs px-2 py-1 rounded-full">Update</span>
+                                        <span class="tag-chip bg-accent/10 text-accent text-xs px-2 py-1 rounded-full">New Features</span>
+                                    </div>
+                                    <a href="/blog/update-2.0/">
+                                        <h3 class="blog-title text-xl font-display font-bold mb-2 transition-colors">Version 2.0 Update: What's New</h3>
+                                    </a>
+                                    <p class="text-slate-600 text-sm mb-4 line-clamp-2">Explore all the new features and improvements in the latest Tennis Club Story update, including enhanced training options.</p>
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm text-slate-500">Mar 22, 2025</span>
+                                        <a href="/blog/update-2.0/" class="text-primary hover:text-green-600 text-sm flex items-center gap-1 transition-colors">
+                                            <span>Read</span>
+                                            <i class="ri-arrow-right-line"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Blog Post 4 -->
+                            <div class="bg-slate-50 rounded-xl overflow-hidden shadow-md blog-card">
+                                <a href="/blog/facility-management/">
+                                    <div class="h-48 overflow-hidden">
+                                        <img src="/image/blog/blog5.jpg" alt="Facility Management" class="w-full h-full object-cover blog-image transition-transform duration-500">
+                                    </div>
+                                </a>
+                                <div class="p-6">
+                                    <div class="flex flex-wrap gap-2 mb-3">
+                                        <span class="tag-chip bg-primary/10 text-primary text-xs px-2 py-1 rounded-full">Game Guide</span>
+                                        <span class="tag-chip bg-secondary/10 text-secondary text-xs px-2 py-1 rounded-full">Facilities</span>
+                                    </div>
+                                    <a href="/blog/facility-management/">
+                                        <h3 class="blog-title text-xl font-display font-bold mb-2 transition-colors">Optimizing Your Club Facilities for Maximum Profit</h3>
+                                    </a>
+                                    <p class="text-slate-600 text-sm mb-4 line-clamp-2">Learn how to strategically upgrade your tennis club facilities to increase revenue and player satisfaction.</p>
+                                    <div class="flex items-center justify-between">
+                                        <span class="text-sm text-slate-500">Mar 5, 2025</span>
+                                        <a href="/blog/facility-management/" class="text-primary hover:text-green-600 text-sm flex items-center gap-1 transition-colors">
+                                            <span>Read</span>
+                                            <i class="ri-arrow-right-line"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                  
+                </div>
+                
+                <!-- Sidebar -->
+                <div class="lg:w-1/3">
+                    <!-- About Widget -->
+                    <div class="bg-slate-50 rounded-xl p-6 shadow-md mb-8">
+                        <h3 class="text-xl font-display font-bold mb-4 flex items-center gap-2">
+                            <i class="ri-information-line text-primary"></i>
+                            <span>About the Blog</span>
+                        </h3>
+                        <p class="text-slate-600 mb-4">Welcome to the Tennis Club Story blog! Here you'll find tips, strategies, and updates to help you build the ultimate tennis club and lead your players to victory.</p>
+                       
+                    </div>
+                    
+                 
+                    
+                    <!-- Popular Posts Widget -->
+                    <div class="bg-slate-50 rounded-xl p-6 shadow-md mb-8">
+                        <h3 class="text-xl font-display font-bold mb-4 flex items-center gap-2">
+                            <i class="ri-fire-line text-primary"></i>
+                            <span>Popular Posts</span>
+                        </h3>
+                        <div class="space-y-4">
+                            <a href="/blog/training-strategies/" class="flex gap-3 group">
+                                <div class="flex-shrink-0 w-16 h-16 overflow-hidden rounded-lg">
+                                    <img src="/image/blog/blog-training.jpg" alt="Training Strategies" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                                </div>
+                                <div>
+                                    <h4 class="font-medium group-hover:text-primary transition-colors line-clamp-2">Advanced Training Strategies for Championship Players</h4>
+                                    <p class="text-sm text-slate-500">May 15, 2025</p>
+                                </div>
+                            </a>
+                            <a href="/blog/sponsor-guide/" class="flex gap-3 group">
+                                <div class="flex-shrink-0 w-16 h-16 overflow-hidden rounded-lg">
+                                    <img src="/image/blog/blog2.jpeg" alt="Sponsor Guide" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                                </div>
+                                <div>
+                                    <h4 class="font-medium group-hover:text-primary transition-colors line-clamp-2">Maximizing Sponsor Benefits in Tennis Club Story</h4>
+                                    <p class="text-sm text-slate-500">Apr 28, 2025</p>
+                                </div>
+                            </a>
+                            <a href="/blog/tournament-tips/" class="flex gap-3 group">
+                                <div class="flex-shrink-0 w-16 h-16 overflow-hidden rounded-lg">
+                                    <img src="/image/blog/blog3.jpg" alt="Beginner Guide" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300">
+                                </div>
+                                <div>
+                                    <h4 class="font-medium group-hover:text-primary transition-colors line-clamp-2">Tournament Preparation: A Complete Guide</h4>
+                                    <p class="text-sm text-slate-500">Feb 10, 2025</p>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    
+                  
+                </div>
+            </div>
+        </div>
+    </section>
+
+       <section class="relative py-20 bg-center bg-cover bg-no-repeat"
+        style="background-image: url('/image/hero-phone.png');">
+        <div class="absolute inset-0 bg-black/70"></div>
+        <div class="relative container mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-4xl font-display font-bold text-white mb-6">Ready to Build Your Tennis Empire?
+            </h2>
+            <p class="text-xl text-white/90 mb-8 max-w-2xl mx-auto">Download Tennis Club Story now and put these
+                strategies to the test!</p>
+            <a href="https://play.google.com/store/apps/details?id=net.kairosoft.android.tennis_en"
+                class="inline-flex items-center gap-3 bg-white text-dark hover:bg-slate-100 px-8 py-4 rounded-lg font-medium transition-colors">
+                <i class="ri-google-play-fill text-3xl"></i>
+                <div class="text-left">
+                    <div class="text-xs">Get it on</div>
+                    <div class="text-xl">Google Play</div>
+                </div>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+                <div>
+                    <a href="/" class="flex items-center gap-2 mb-6">
+                      <img src="/image/logo.png" alt="Tennis Club Story Logo" class="h-16 w-auto">
+                         
+                    </a>
+                    <p class="text-slate-400 mb-6">Build and manage your dream tennis club. Train players, attract sponsors, and win championships in this exciting simulation game.</p>
+                    
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-display font-bold mb-6">Quick Links</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/" class="text-slate-400 hover:text-primary transition-colors">Home</a></li>
+                        <li><a href="/how-to-play/" class="text-slate-400 hover:text-primary transition-colors">How to Play</a></li>
+                        <li><a href="/responsible-gaming/" class="text-slate-400 hover:text-primary transition-colors">Responsible Gaming</a></li>
+                        <li><a href="/blog/" class="text-slate-400 hover:text-primary transition-colors">Blog</a></li>
+                        <li><a href="/contact/" class="text-slate-400 hover:text-primary transition-colors">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-display font-bold mb-6">Legal</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/privacy/" class="text-slate-400 hover:text-primary transition-colors">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="text-slate-400 hover:text-primary transition-colors">Terms of Service</a></li>
+                        <li><a href="/cookies/" class="text-slate-400 hover:text-primary transition-colors">Cookies Policy</a></li>
+                        
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-display font-bold mb-6">Contact Info</h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-start gap-3">
+                            <i class="ri-map-pin-line text-primary mt-1"></i>
+                            <span class="text-slate-400">86 Maple Street, Toronto, ON M5H 2N2, Canada</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="ri-phone-line text-primary"></i>
+                            <span class="text-slate-400">+1 416-555-6105</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="ri-mail-line text-primary"></i>
+                            <span class="text-slate-400">info@kairosoftstudio.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-slate-500 text-sm">© 2025 Kairosoft Studio. All rights reserved.</p>
+                <div class="flex gap-6">
+                    <a href="https://play.google.com/store/apps/details?id=net.kairosoft.android.tennis_en" class="text-slate-500 hover:text-primary text-sm transition-colors">
+                        <i class="ri-google-play-fill mr-1"></i> Google Play
+                    </a>
+                    
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollTrigger.min.js"></script>
+    
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Cookies Banner
+        const cookiesBanner = document.getElementById('cookies-banner');
+        const acceptCookies = document.getElementById('accept-cookies');
+        const declineCookies = document.getElementById('decline-cookies');
+        
+        if (!localStorage.getItem('cookiesAccepted')) {
+            cookiesBanner.classList.remove('hidden');
+        }
+        
+        acceptCookies.addEventListener('click', () => {
+            localStorage.setItem('cookiesAccepted', 'true');
+            cookiesBanner.classList.add('hidden');
+        });
+        
+        declineCookies.addEventListener('click', () => {
+            localStorage.setItem('cookiesAccepted', 'false');
+            cookiesBanner.classList.add('hidden');
+        });
+        
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+        
+        gsap.utils.toArray(".blog-card").forEach((card, i) => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                },
+                y: 50,
+                opacity: 0,
+                duration: 0.8,
+                ease: "back.out(1)",
+                delay: i * 0.1
+            });
+        });
+        
+        gsap.from(".hero-clip-path h1", {
+            duration: 1,
+            y: 50,
+            opacity: 0,
+            ease: "power3.out"
+        });
+        
+        gsap.from(".hero-clip-path p", {
+            duration: 1,
+            y: 50,
+            opacity: 0,
+            ease: "power3.out",
+            delay: 0.3
+        });
+        
+        gsap.from(".hero-clip-path .relative", {
+            duration: 1,
+            y: 50,
+            opacity: 0,
+            ease: "power3.out",
+            delay: 0.6
+        });
+    </script>
+</body>
+</html>

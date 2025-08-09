@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Complete calendar of Harvest Block events for 2025. Discover all the special events including Farm Races, Fishing Time, Strawberry Jam, and more with dates and rewards.">
+    <meta name="keywords" content="harvest block events 2025, farm races, fishing time, strawberry jam, puzzle game events, seasonal activities, special rewards">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://harvestblockspuzzle.com/blog/events-calendar/">
+    <title>Upcoming Events Calendar for 2025 | Harvest Block Blog</title>
+    
+    <!-- Favicon -->
+   <link rel="icon" href="/assets/logo.webp" type="image/x-icon">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6CBB3C',
+                        secondary: '#FFA726',
+                        accent: '#8BC34A',
+                        dark: '#1A1A1A',
+                        light: '#F5F5F5',
+                    },
+                    fontFamily: {
+                        sans: ['"Poppins"', 'sans-serif'],
+                        display: ['"Luckiest Guy"', 'cursive'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Luckiest+Guy&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, rgba(108,187,60,0.1) 0%, rgba(255,167,38,0.1) 100%);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .neon-hover:hover {
+            box-shadow: 0 0 15px rgba(139, 195, 74, 0.7);
+            transition: all 0.3s ease;
+        }
+        .blog-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .blog-content h2 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin: 3rem 0 1.5rem;
+            color: #6CBB3C;
+        }
+        .blog-content h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 2.5rem 0 1.25rem;
+            color: #FFA726;
+        }
+        .blog-content p {
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+            font-size: 1.1rem;
+        }
+        .blog-content ul, .blog-content ol {
+            margin-bottom: 1.5rem;
+            padding-left: 2rem;
+        }
+        .blog-content li {
+            margin-bottom: 0.75rem;
+            line-height: 1.7;
+        }
+        .blog-content img {
+            border-radius: 12px;
+            margin: 2rem auto;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+        }
+        .blog-content blockquote {
+            border-left: 4px solid #6CBB3C;
+            padding-left: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+            color: #ccc;
+        }
+        .event-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            border-left: 4px solid;
+        }
+        .event-spring {
+            border-left-color: #8BC34A;
+        }
+        .event-summer {
+            border-left-color: #FFA726;
+        }
+        .event-fall {
+            border-left-color: #795548;
+        }
+        .event-winter {
+            border-left-color: #B3E5FC;
+        }
+        .event-special {
+            border-left-color: #9C27B0;
+        }
+    </style>
+</head>
+<body class="bg-dark text-light font-sans overflow-x-hidden">
+    <!-- Three.js Background Canvas -->
+    <div id="threejs-bg" class="fixed top-0 left-0 w-full h-full -z-10 opacity-30"></div>
+    
+    <!-- Cookie Consent Banner -->
+    <div id="cookieConsent" class="fixed bottom-0 left-0 right-0 bg-dark border-t border-accent hidden">
+        <div class="container mx-auto px-4 py-3 flex flex-col md:flex-row items-center justify-between">
+            <p class="text-sm mb-3 md:mb-0 md:mr-4">
+                We use cookies to enhance your experience. By continuing to visit this site, you agree to our use of cookies.
+            </p>
+            <div class="flex space-x-2">
+                <button id="acceptCookies" class="px-4 py-2 bg-primary text-white rounded-full text-sm font-medium hover:bg-opacity-90 transition">
+                    Accept
+                </button>
+                <button id="declineCookies" class="px-4 py-2 bg-transparent border border-accent text-accent rounded-full text-sm font-medium hover:bg-accent hover:bg-opacity-10 transition">
+                    Decline
+                </button>
+                <a href="/cookies/" class="px-4 py-2 text-accent text-sm font-medium hover:underline">
+                    Learn More
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Header -->
+   <header class="py-1 px-4 md:px-6 lg:px-8 fixed w-full top-0 z-50 glass-card">
+        <div class="container mx-auto flex justify-between items-center">
+               <a href="/" class="flex items-center">
+                <img src="/assets/logo.png" alt="Harvest Block Logo" class="h-16 mr-2 rounded-full">               
+            </a>
+            
+            <nav class="hidden md:flex space-x-6">
+                <a href="/" class="text-white hover:text-primary transition">Home</a>
+                <a href="/how-to-play/" class="text-white hover:text-primary transition">How to Play</a>
+                <a href="/about/" class="text-white hover:text-primary transition">About</a>
+                <a href="/blog/" class="text-white hover:text-primary transition">Blog</a>
+                 <a href="/responsible-gaming/" class="text-white hover:text-primary transition">Responsible Gaming</a>
+                <a href="/contact/" class="text-white hover:text-primary transition">Contact</a>
+            </nav>
+            
+         <div class="flex items-center space-x-4 ">
+                <a href="https://play.google.com/store/apps/details?id=com.funmatica.harvest.block.puzzle.games" 
+                   class="btn-glow hidden  px-4 py-2 bg-primary text-white rounded-full font-medium hover:bg-opacity-90 transition hidden lg:inline-block">
+                    Download Now
+                </a>
+                <button id="mobileMenuBtn" class="md:hidden text-2xl text-white ">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden absolute top-full left-0 right-0 bg-dark border-t border-accent py-4 px-6">
+            <div class="flex flex-col space-y-4">
+                <a href="/" class="text-white hover:text-primary transition">Home</a>
+                <a href="/how-to-play/" class="text-white hover:text-primary transition">How to Play</a>
+                <a href="/about/" class="text-white hover:text-primary transition">About</a>
+                <a href="/blog/" class="text-white hover:text-primary transition">Blog</a>
+                 <a href="/responsible-gaming/" class="text-white hover:text-primary transition">Responsible Gaming</a>
+                <a href="/contact/" class="text-white hover:text-primary transition">Contact</a>
+                <a href="https://play.google.com/store/apps/details?id=com.funmatica.harvest.block.puzzle.games" 
+                   class="btn-glow px-4 py-2 bg-primary text-white rounded-full font-medium text-center hover:bg-opacity-90 transition">
+                    Download Now
+                </a>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <main class="pt-32 pb-20 px-4 md:px-6 lg:px-8">
+        <article class="container mx-auto">
+            <!-- Article Header -->
+            <div class="text-center mb-16">
+                <div class="inline-block bg-purple-500 text-white text-sm px-4 py-1 rounded-full mb-4">
+                    Event Preview
+                </div>
+                <h1 class="text-3xl md:text-4xl lg:text-5xl font-display text-primary mb-4">
+                    Upcoming Events Calendar for 2025
+                </h1>
+                <div class="text-gray-400 mb-6">
+                    Published on January 5, 2025
+                </div>
+                <img src="/assets/images/blog-events.webp" alt="Harvest Block Events Calendar" class="w-full max-w-4xl mx-auto rounded-xl">
+            </div>
+            
+            <!-- Article Content -->
+            <div class="blog-content">
+                <p class="text-xl font-medium">
+                    Harvest Block's event system brings fresh challenges and special rewards throughout the year. This complete 2025 calendar reveals all the exciting events planned, including returning favorites and brand new activities. Mark your calendars and prepare for a year of farming puzzle fun!
+                </p>
+
+                <h2>Seasonal Events</h2>
+                
+                <p>
+                    Our seasonal events celebrate the changing harvests and farming activities throughout the year. These week-long events feature special mechanics and exclusive rewards.
+                </p>
+                
+                <div class="event-card event-spring">
+                    <h3>Spring Blossom Festival (March 20-27)</h3>
+                   
+                    <p><strong>Event Mechanics:</strong> 
+                        <ul>
+                            <li>Special flower blocks appear on the board</li>
+                            <li>Matching near flowers causes them to bloom</li>
+                            <li>Bloomed flowers release pollen that clears adjacent blocks</li>
+                        </ul>
+                    </p>
+                    <p><strong>Rewards:</strong> 
+                        <ul>
+                            <li>Spring-themed farm decorations</li>
+                            <li>Exclusive Bee Keeper avatar</li>
+                            <li>Bonus coins for each flower bloomed</li>
+                        </ul>
+                    </p>
+                </div>
+                
+                <div class="event-card event-summer">
+                    <h3>Summer Sunshine Celebration (June 21-28)</h3>
+                   
+                    <p><strong>Event Mechanics:</strong> 
+                        <ul>
+                            <li>Sun blocks appear that charge when adjacent to matches</li>
+                            <li>Fully charged suns explode, clearing a 3x3 area</li>
+                            <li>Special lemonade stand gives temporary power-up boosts</li>
+                        </ul>
+                    </p>
+                    <p><strong>Rewards:</strong> 
+                        <ul>
+                            <li>Summer fruit-themed block skins</li>
+                            <li>Sun Hat avatar accessory</li>
+                            <li>Double coin weekends during event</li>
+                        </ul>
+                    </p>
+                </div>
+                
+                <h2>Monthly Special Events</h2>
+                
+                <p>
+                    These recurring events offer unique gameplay twists and competitive elements.
+                </p>
+                
+                <div class="event-card event-special">
+                    <h3>Farm Races (First weekend of each month)</h3>
+                  
+                    <p><strong>Event Mechanics:</strong> 
+                        <ul>
+                            <li>Compete against other players in real-time</li>
+                            <li>Complete puzzle boards as quickly as possible</li>
+                            <li>Special speed boosts available during races</li>
+                            <li>Leaderboards with tiered rewards</li>
+                        </ul>
+                    </p>
+                    <p><strong>Rewards:</strong> 
+                        <ul>
+                            <li>Trophy decorations for your farm</li>
+                            <li>Exclusive vehicle skins for your farmer</li>
+                            <li>Bonus coins based on finishing position</li>
+                        </ul>
+                    </p>
+                </div>
+                
+                <div class="event-card event-special">
+                    <h3>Fishing Time (Third Wednesday of each month)</h3>
+                    
+                    <p><strong>Event Mechanics:</strong> 
+                        <ul>
+                            <li>Special fishing rod power-up replaces one regular power-up</li>
+                            <li>Catch fish by matching near water blocks</li>
+                            <li>Different fish species have different point values</li>
+                            <li>Rare golden fish appear occasionally</li>
+                        </ul>
+                    </p>
+                    <p><strong>Rewards:</strong> 
+                        <ul>
+                            <li>Aquarium decoration showing your catches</li>
+                            <li>Fishing gear avatars</li>
+                            <li>Bonus coins for each fish caught</li>
+                        </ul>
+                    </p>
+                </div>
+                
+                <h2>New for 2025</h2>
+                
+                <p>
+                    We're introducing several brand new events this year based on player feedback.
+                </p>
+                
+                <div class="event-card event-fall">
+                    <h3>Strawberry Jam (February 10-17)</h3>
+                   
+                    <p><strong>Event Mechanics:</strong> 
+                        <ul>
+                            <li>Special strawberry blocks appear on the board</li>
+                            <li>Collect strawberries by clearing rows containing them</li>
+                            <li>Jam meter fills as you collect strawberries</li>
+                            <li>Full jam meter triggers a board-clearing jam explosion</li>
+                        </ul>
+                    </p>
+                    <p><strong>Rewards:</strong> 
+                        <ul>
+                            <li>Strawberry-themed farm decorations</li>
+                            <li>Jam Maker title for your profile</li>
+                            <li>Special rewards at collection milestones</li>
+                        </ul>
+                    </p>
+                </div>
+                
+                <div class="event-card event-winter">
+                    <h3>Winter Market (December 15-22)</h3>
+                   
+                    <p><strong>Event Mechanics:</strong> 
+                        <ul>
+                            <li>Special holiday market stalls appear on the board edges</li>
+                            <li>Deliver matching blocks to stalls to "sell" them</li>
+                            <li>Different stalls request different colored blocks</li>
+                            <li>Complete orders to earn holiday tokens</li>
+                        </ul>
+                    </p>
+                    <p><strong>Rewards:</strong> 
+                        <ul>
+                            <li>Festive farm decorations</li>
+                            <li>Holiday-themed block skins</li>
+                            <li>Exchange tokens for special items in the event shop</li>
+                        </ul>
+                    </p>
+                </div>
+                
+                <h2>Event Participation Tips</h2>
+                
+                <p>
+                    Make the most of every event with these expert strategies:
+                </p>
+                
+                <h3>Preparation</h3>
+                <ul>
+                    <li>Check event requirements in advance and stock up on relevant power-ups</li>
+                    <li>Complete farm restorations that provide event bonuses</li>
+                    <li>Clear your schedule for time-sensitive events like Farm Races</li>
+                </ul>
+                
+                <h3>During Events</h3>
+                <ul>
+                    <li>Focus on the event mechanics rather than regular gameplay</li>
+                    <li>Watch for event-specific power-up combinations</li>
+                    <li>Check leaderboards regularly to gauge your progress</li>
+                </ul>
+                
+                <h3>Reward Maximization</h3>
+                <ul>
+                    <li>Prioritize event-specific rewards over regular coins</li>
+                    <li>Complete all event milestones even after getting the main reward</li>
+                    <li>Save event-exclusive decorations for farm areas you showcase</li>
+                </ul>
+                
+                <blockquote>
+                    "Events are the perfect time to try new strategies and push your skills. The limited-time rewards make all the effort worthwhile!"
+                    <br>- Competitive Harvest Block player
+                </blockquote>
+                
+                <h2>Full 2025 Event Calendar</h2>
+                
+                <div class="overflow-x-auto">
+                    <table class="w-full border-collapse">
+                        <thead>
+                            <tr class="bg-gray-800">
+                                <th class="p-3 text-left border-b border-gray-700">Month</th>
+                                <th class="p-3 text-left border-b border-gray-700">Event</th>
+                                <th class="p-3 text-left border-b border-gray-700">Dates</th>
+                                <th class="p-3 text-left border-b border-gray-700">Type</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="border-b border-gray-700">
+                                <td class="p-3">February</td>
+                                <td class="p-3">Strawberry Jam</td>
+                                <td class="p-3">10-17</td>
+                                <td class="p-3">New Event</td>
+                            </tr>
+                            <tr class="border-b border-gray-700">
+                                <td class="p-3">March</td>
+                                <td class="p-3">Spring Blossom Festival</td>
+                                <td class="p-3">20-27</td>
+                                <td class="p-3">Seasonal</td>
+                            </tr>
+                            <tr class="border-b border-gray-700">
+                                <td class="p-3">April</td>
+                                <td class="p-3">April Showers</td>
+                                <td class="p-3">5-12</td>
+                                <td class="p-3">Special</td>
+                            </tr>
+                            <tr class="border-b border-gray-700">
+                                <td class="p-3">June</td>
+                                <td class="p-3">Summer Sunshine Celebration</td>
+                                <td class="p-3">21-28</td>
+                                <td class="p-3">Seasonal</td>
+                            </tr>
+                            <tr class="border-b border-gray-700">
+                                <td class="p-3">September</td>
+                                <td class="p-3">Harvest Moon</td>
+                                <td class="p-3">12-19</td>
+                                <td class="p-3">Special</td>
+                            </tr>
+                            <tr class="border-b border-gray-700">
+                                <td class="p-3">December</td>
+                                <td class="p-3">Winter Market</td>
+                                <td class="p-3">15-22</td>
+                                <td class="p-3">New Event</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <p class="mt-6">
+                    <em>Note: Monthly Farm Races and Fishing Time events occur as described above. Additional mini-events may be added throughout the year.</em>
+                </p>
+                
+                <div class="mt-12 text-center">
+                    <a href="https://play.google.com/store/apps/details?id=com.funmatica.harvest.block.puzzle.games" 
+                       class="inline-block px-8 py-4 bg-primary text-white rounded-full font-bold text-lg hover:bg-opacity-90 transition">
+                        Join the Events Today
+                    </a>
+                </div>
+            </div>
+        </article>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="bg-dark border-t border-gray-800 py-12 px-4 md:px-6 lg:px-8">
+        <div class="container mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="md:col-span-2">
+                    <a href="/" class="flex items-center mb-4">
+                        <img src="/assets/logo.png" alt="Harvest Block Logo" class="h-16 rounded-full mr-2">                       
+                    </a>
+                    <p class="text-gray-400 mb-4">
+                        A unique blend of block puzzle and match-3 challenges in a vibrant farming adventure. Restore charming farm locations while solving addictive puzzles!
+                    </p>
+                   
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold text-white mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/" class="text-gray-400 hover:text-primary transition">Home</a></li>
+                        <li><a href="/how-to-play/" class="text-gray-400 hover:text-primary transition">How to Play</a></li>
+                        <li><a href="/about/" class="text-gray-400 hover:text-primary transition">About</a></li>
+                        <li><a href="/blog/" class="text-gray-400 hover:text-primary transition">Blog</a></li>
+                        <li><a href="/contact/" class="text-gray-400 hover:text-primary transition">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold text-white mb-4">Legal</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/privacy/" class="text-gray-400 hover:text-primary transition">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="text-gray-400 hover:text-primary transition">Terms of Service</a></li>
+                        <li><a href="/cookies/" class="text-gray-400 hover:text-primary transition">Cookies Policy</a></li>
+                        <li><a href="/responsible-gaming/" class="text-gray-400 hover:text-primary transition">Responsible Gaming</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500 text-sm">
+                <p>&copy; 2025 Funmatica LTD. All rights reserved.</p>
+                <p class="mt-2">Donnersbachwald 180, 8953 Donnersbachwald, Austria</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Three.js Background
+        const bgContainer = document.getElementById('threejs-bg');
+        
+        // Only initialize Three.js if container exists
+        if (bgContainer) {
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            bgContainer.appendChild(renderer.domElement);
+            
+            // Create floating cubes
+            const cubes = [];
+            const geometry = new THREE.BoxGeometry(1, 1, 1);
+            const material = new THREE.MeshBasicMaterial({ 
+                color: 0x6CBB3C,
+                transparent: true,
+                opacity: 0.2,
+                wireframe: true
+            });
+            
+            for (let i = 0; i < 10; i++) {
+                const cube = new THREE.Mesh(geometry, material);
+                cube.position.x = Math.random() * 20 - 10;
+                cube.position.y = Math.random() * 20 - 10;
+                cube.position.z = Math.random() * 20 - 10;
+                cube.rotation.x = Math.random() * Math.PI;
+                cube.rotation.y = Math.random() * Math.PI;
+                cubes.push(cube);
+                scene.add(cube);
+            }
+            
+            camera.position.z = 5;
+            
+            // Animation
+            function animate() {
+                requestAnimationFrame(animate);
+                
+                cubes.forEach(cube => {
+                    cube.rotation.x += 0.01;
+                    cube.rotation.y += 0.01;
+                });
+                
+                renderer.render(scene, camera);
+            }
+            
+            animate();
+            
+            // Handle resize
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        }
+        
+        // Cookie Consent
+        const cookieConsent = document.getElementById('cookieConsent');
+        const acceptCookies = document.getElementById('acceptCookies');
+        const declineCookies = document.getElementById('declineCookies');
+        
+        // Check if user has already made a choice
+        if (!localStorage.getItem('cookieConsent')) {
+            setTimeout(() => {
+                cookieConsent.classList.remove('hidden');
+            }, 2000);
+        }
+        
+        acceptCookies.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'accepted');
+            cookieConsent.classList.add('hidden');
+        });
+        
+        declineCookies.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'declined');
+            cookieConsent.classList.add('hidden');
+        });
+    </script>
+</body>
+</html>

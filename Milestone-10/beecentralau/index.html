@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bee Central | Growing Active Honey in WA's Wheatbelt</title>
+    <meta name="description"
+        content="Bee Central is building healthy Australian honey bee populations for a better future. We partner with WA farmers to create sustainable honey plantations and produce premium active honey products.">
+    <meta name="keywords"
+        content="active honey, WA honey, Australian honey, bee conservation, Leptospermum honey, sustainable farming, honey products, bee research, manuka honey alternative, Western Australia honey">
+
+    <!-- Favicon -->
+    <link rel="icon" href="/assets/images/favicon.png" type="image/x-icon">
+    <link rel="canonical" href="https://www.beecentralau.com/" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            light: '#fbbf24',
+                            DEFAULT: '#d97706',
+                            dark: '#92400e',
+                        },
+                        secondary: {
+                            light: '#a7f3d0',
+                            DEFAULT: '#059669',
+                            dark: '#065f46',
+                        },
+                        accent: {
+                            light: '#fde68a',
+                            DEFAULT: '#f59e0b',
+                            dark: '#b45309',
+                        },
+                        dark: {
+                            100: '#1a1a1a',
+                            200: '#1f1f1f',
+                            300: '#242424',
+                            400: '#2a2a2a',
+                            500: '#2f2f2f',
+                            600: '#343434',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Poppins"', 'sans-serif'],
+                        display: ['"Playfair Display"', 'serif'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 6s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollTrigger.min.js"></script>
+
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.min.js"></script>
+</head>
+
+<body class="bg-dark-100 text-gray-200 font-sans antialiased overflow-x-hidden">
+    <!-- Cookie Consent Banner -->
+    <div id="cookieConsent" class="fixed bottom-0 left-0 right-0 bg-dark-300 p-4 z-50 hidden">
+        <div class="container mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <p class="text-sm md:text-base">We use cookies to enhance your experience. By continuing to visit this site
+                you agree to our use of cookies.</p>
+            <div class="flex gap-2">
+                <button id="cookieAccept"
+                    class="px-4 py-2 bg-primary hover:bg-primary-dark rounded-md transition-colors">Accept</button>
+                <button id="cookieDecline"
+                    class="px-4 py-2 bg-dark-400 hover:bg-dark-500 rounded-md transition-colors">Decline</button>
+                <a href="/privacy/" class="px-4 py-2 text-primary hover:underline">Learn More</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 bg-dark-200/90 backdrop-blur-md z-40 border-b border-dark-400">
+        <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+            <!-- Logo -->
+            <a href="/" class="flex items-center gap-2">
+               <img src="/assets/images/logo.png" class="h-16 w-auto" alt="logo"/>
+            </a>
+
+            <!-- Desktop Menu -->
+            <div class="hidden lg:flex items-center gap-8">
+                <a href="/" class="text-primary font-medium hover:text-accent transition-colors">Home</a>
+                <a href="/services/" class="hover:text-primary transition-colors">Services</a>
+                <a href="/products/" class="hover:text-primary transition-colors">Products</a>
+                <a href="/about/" class="hover:text-primary transition-colors">About</a>
+                <a href="/blog/" class="hover:text-primary transition-colors">Blog</a>
+                <a href="/contact/" class="hover:text-primary transition-colors">Contact</a>
+
+                <!-- Cart Icon -->
+                <a href="/cart/" class="relative group">
+                    <i class="fas fa-shopping-cart text-xl hover:text-primary transition-colors"></i>
+                    <span id="cartCount"
+                        class="absolute -top-2 -right-2 bg-primary text-dark-100 text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">0</span>
+                </a>
+
+                <!-- Social Links -->
+                <div class="flex gap-4 ml-4">
+                    <a href="https://www.facebook.com/BeeCentralAustralia/" target="_blank"
+                        class="hover:text-primary transition-colors"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://x.com/centralbee1" target="_blank" class="hover:text-primary transition-colors"><i
+                            class="fab fa-twitter"></i></a>
+                    <a href="https://www.instagram.com/BeeCentralAustralia/" target="_blank"
+                        class="hover:text-primary transition-colors"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.youtube.com/channel/UCIkVvpMeMr2oKn1lW7A7CQA" target="_blank"
+                        class="hover:text-primary transition-colors"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button id="mobileMenuButton" class="lg:hidden text-2xl">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="lg:hidden hidden absolute top-full left-0 right-0 bg-dark-300 py-4 px-6 shadow-lg">
+            <div class="flex flex-col gap-4">
+                <a href="/" class="text-primary font-medium">Home</a>
+                <a href="/services/" class="hover:text-primary transition-colors">Services</a>
+                <a href="/products/" class="hover:text-primary transition-colors">Products</a>
+                <a href="/about/" class="hover:text-primary transition-colors">About</a>
+                <a href="/blog/" class="hover:text-primary transition-colors">Blog</a>
+                <a href="/contact/" class="hover:text-primary transition-colors">Contact</a>
+
+                <div class="flex items-center justify-between pt-4 border-t border-dark-400">
+                    <a href="/cart/" class="relative group">
+                        <i class="fas fa-shopping-cart text-xl hover:text-primary transition-colors"></i>
+                        <span id="mobileCartCount"
+                            class="absolute -top-2 -right-2 bg-primary text-dark-100 text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">0</span>
+                    </a>
+
+                    <div class="flex gap-4">
+                        <a href="https://www.facebook.com/BeeCentralAustralia/" target="_blank"
+                            class="hover:text-primary transition-colors"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://x.com/centralbee1" target="_blank"
+                            class="hover:text-primary transition-colors"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.instagram.com/BeeCentralAustralia/" target="_blank"
+                            class="hover:text-primary transition-colors"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.youtube.com/channel/UCIkVvpMeMr2oKn1lW7A7CQA" target="_blank"
+                            class="hover:text-primary transition-colors"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative md:min-h-screen flex items-center pt-24 pb-16 overflow-hidden">
+        <!-- Background Animation -->
+        <div id="honeycombCanvas" class="absolute inset-0 z-0"></div>
+
+        <div class="container mx-auto px-4 z-10">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="text-center lg:text-left">
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6">
+                        <span
+                            class="bg-clip-text text-transparent bg-gradient-to-r from-primary via-accent to-secondary">Building
+                            Healthy</span><br>
+                        <span
+                            class="bg-clip-text text-transparent bg-gradient-to-r from-secondary via-primary to-accent">Bee
+                            Populations</span>
+                    </h1>
+                    <p class="text-lg md:text-xl mb-8 max-w-2xl mx-auto lg:mx-0">Growing active honey in WA's Wheatbelt
+                        for a sustainable future. Our mission is to protect Australian honey bees while producing
+                        premium active honey products.</p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                        <a href="/products/"
+                            class="px-8 py-3 bg-gradient-to-r from-primary to-accent rounded-md font-medium hover:opacity-90 transition-opacity shadow-lg shadow-primary/30">Shop
+                            Honey</a>
+                        <a href="/services/"
+                            class="px-8 py-3 border border-primary text-primary rounded-md font-medium hover:bg-primary/10 transition-colors">Our
+                            Services</a>
+                    </div>
+                </div>
+
+                <div class="relative hidden lg:block">
+                    <div class="relative w-full aspect-square max-w-lg mx-auto">
+                        <div
+                            class="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20 rounded-full blur-2xl animate-pulse-slow">
+                        </div>
+                        <img src="/assets/images/hero-honey-jar.webp" alt="Premium Active Honey Jar"
+                            class="relative rounded-md z-10 w-full h-full object-contain animation-float">
+                        <div class="absolute -bottom-10 -left-10 w-32 h-32 bg-accent/20 rounded-full blur-xl"></div>
+                        <div class="absolute -top-10 -right-10 w-40 h-40 bg-secondary/20 rounded-full blur-xl"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce hidden md:flex">
+            <a href="#about"
+                class="block w-10 h-16 rounded-full border-2 border-primary/50 flex items-start justify-center pt-2">
+                <span class="w-2 h-2 bg-primary rounded-full animate-pulse"></span>
+            </a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-dark-200 relative overflow-hidden">
+        <div class="absolute -top-40 -right-40 w-80 h-80 bg-primary/10 rounded-full blur-3xl"></div>
+        <div class="absolute -bottom-40 -left-40 w-80 h-80 bg-secondary/10 rounded-full blur-3xl"></div>
+
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <span class="text-primary font-medium tracking-wider">ABOUT US</span>
+                <h2 class="text-3xl md:text-4xl font-display font-bold mt-2 mb-4">The Bee Central Difference</h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-primary to-accent mx-auto"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="relative">
+                    <div class="relative aspect-video rounded-xl overflow-hidden shadow-2xl">
+                        <img src="/assets/images/bee-farm.webp" alt="Bee Central Farm"
+                            class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-100/80 via-transparent to-transparent">
+                        </div>
+                        <div class="absolute bottom-6 left-6">
+                            <h3 class="text-2xl font-display font-bold">170 Yulara Dr, Yulara NT 0872</h3>
+                            <div class="flex items-center gap-2 mt-2">
+                                <i class="fas fa-phone text-primary"></i>
+                                <span>+61 8 8957 7036</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="absolute -z-10 -bottom-8 -left-8 w-full h-full border-2 border-primary/20 rounded-xl">
+                    </div>
+                </div>
+
+                <div>
+                    <p class="text-lg mb-6">Bee Central is partnering with West Australian farmers to diversify their
+                        land use from traditional crops to plant 100% native active honey bee plantations superior to
+                        those found elsewhere.</p>
+                    <p class="mb-6">With its isolation, biosecurity, and pristine natural environment, Western Australia
+                        has a rare opportunity to lead the way towards a healthy and sustainable future for bees
+                        worldwide.</p>
+
+                    <div class="grid grid-cols-2 gap-4 mb-8">
+                        <div class="bg-dark-300 p-6 rounded-lg border-l-4 border-primary">
+                            <h3 class="text-xl font-display font-bold mb-2">12</h3>
+                            <p class="text-sm opacity-80">Farms Fully Contracted</p>
+                        </div>
+                        <div class="bg-dark-300 p-6 rounded-lg border-l-4 border-secondary">
+                            <h3 class="text-xl font-display font-bold mb-2">8+</h3>
+                            <p class="text-sm opacity-80">Years of Experience</p>
+                        </div>
+                    </div>
+
+                    <a href="/about/"
+                        class="inline-flex items-center gap-2 text-primary font-medium hover:text-accent transition-colors">
+                        Learn More About Us
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="py-20 bg-dark-300 relative">
+        <div class="absolute inset-0 overflow-hidden">
+            <div
+                class="absolute top-0 left-0 w-full h-full opacity-5  bg-repeat bg-[length:400px]">
+            </div>
+        </div>
+
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <span class="text-primary font-medium tracking-wider">OUR SERVICES</span>
+                <h2 class="text-3xl md:text-4xl font-display font-bold mt-2 mb-4">Partnering With WA Farmers</h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-primary to-accent mx-auto"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Service 1 -->
+                <div
+                    class="group bg-dark-400 rounded-xl p-6 hover:bg-gradient-to-br from-dark-400 to-dark-500 transition-all duration-300 hover:shadow-xl hover:shadow-primary/10 border border-dark-400 hover:border-primary/30 relative overflow-hidden">
+                    <div
+                        class="absolute -right-10 -top-10 w-32 h-32 bg-primary/5 rounded-full group-hover:opacity-100 opacity-0 transition-opacity duration-500">
+                    </div>
+                    <div class="relative z-10">
+                        <img src="/assets/images/farm-plantation.webp" class="rounded-lg mb-6" alt="farm plantation">
+                        <h3 class="text-xl font-display font-bold mb-3">Farm Plantation Partnerships</h3>
+                        <p class="text-sm opacity-80 mb-4">Diversify your land use with our innovative plantation
+                            partnership program for sustainable honey production.</p>
+                        <a href="/services/#plantations"
+                            class="inline-flex items-center gap-1 text-primary text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+                            Learn More
+                            <i class="fas fa-arrow-right text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Service 2 -->
+                <div
+                    class="group bg-dark-400 rounded-xl p-6 hover:bg-gradient-to-br from-dark-400 to-dark-500 transition-all duration-300 hover:shadow-xl hover:shadow-primary/10 border border-dark-400 hover:border-primary/30 relative overflow-hidden">
+                    <div
+                        class="absolute -right-10 -top-10 w-32 h-32 bg-primary/5 rounded-full group-hover:opacity-100 opacity-0 transition-opacity duration-500">
+                    </div>
+                    <div class="relative z-10">
+                        <img src="/assets/images/contact-tree-plaing.webp" class="rounded-lg mb-6"
+                            alt="farm plantation">
+                        <h3 class="text-xl font-display font-bold mb-3">Contract Tree Planting</h3>
+                        <p class="text-sm opacity-80 mb-4">Professional planting services for native vegetation
+                            including Leptospermum trees for honey production.</p>
+                        <a href="/services/#planting"
+                            class="inline-flex items-center gap-1 text-primary text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+                            Learn More
+                            <i class="fas fa-arrow-right text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Service 3 -->
+                <div
+                    class="group bg-dark-400 rounded-xl p-6 hover:bg-gradient-to-br from-dark-400 to-dark-500 transition-all duration-300 hover:shadow-xl hover:shadow-primary/10 border border-dark-400 hover:border-primary/30 relative overflow-hidden">
+                    <div
+                        class="absolute -right-10 -top-10 w-32 h-32 bg-primary/5 rounded-full group-hover:opacity-100 opacity-0 transition-opacity duration-500">
+                    </div>
+                    <div class="relative z-10">
+                        <img src="/assets/images/hero-honey-jar.webp" class="rounded-lg mb-6" alt="farm plantation">
+                        <h3 class="text-xl font-display font-bold mb-3">Active Honey Sales</h3>
+                        <p class="text-sm opacity-80 mb-4">Premium WA active honey products derived from native
+                            Leptospermum trees with exceptional antibacterial properties.</p>
+                        <a href="/products/"
+                            class="inline-flex items-center gap-1 text-primary text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+                            Shop Now
+                            <i class="fas fa-arrow-right text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Service 4 -->
+                <div
+                    class="group bg-dark-400 rounded-xl p-6 hover:bg-gradient-to-br from-dark-400 to-dark-500 transition-all duration-300 hover:shadow-xl hover:shadow-primary/10 border border-dark-400 hover:border-primary/30 relative overflow-hidden">
+                    <div
+                        class="absolute -right-10 -top-10 w-32 h-32 bg-primary/5 rounded-full group-hover:opacity-100 opacity-0 transition-opacity duration-500">
+                    </div>
+                    <div class="relative z-10">
+                        <img src="/assets/images/essential-oil.webp" class="rounded-lg mb-6" alt="farm plantation">
+                        <h3 class="text-xl font-display font-bold mb-3">Essential Oil Sales</h3>
+                        <p class="text-sm opacity-80 mb-4">High-quality essential oils derived from Leptospermum foliage
+                            with antimicrobial and therapeutic properties.</p>
+                        <a href="/products/#oils"
+                            class="inline-flex items-center gap-1 text-primary text-sm font-medium opacity-0 group-hover:opacity-100 transition-opacity">
+                            Explore
+                            <i class="fas fa-arrow-right text-xs"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="py-20 bg-dark-100 relative overflow-hidden">
+        <div class="absolute -top-40 -left-40 w-80 h-80 bg-primary/10 rounded-full blur-3xl"></div>
+
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <span class="text-primary font-medium tracking-wider">OUR PRODUCTS</span>
+                <h2 class="text-3xl md:text-4xl font-display font-bold mt-2 mb-4">Premium Active Honey</h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-primary to-accent mx-auto"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Product 1 -->
+                <div
+                    class="group bg-dark-200 rounded-xl overflow-hidden shadow-lg hover:shadow-xl hover:shadow-primary/20 transition-shadow duration-300 border border-dark-300 hover:border-primary/50">
+                    <div class="relative overflow-hidden h-64">
+                        <img src="/assets/images/hero-honey-jar.webp" alt="Kauring Active Honey 250g"
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-100/70 via-transparent to-transparent">
+                        </div>
+                        <div
+                            class="absolute top-4 right-4 bg-primary text-dark-100 px-3 py-1 rounded-full text-xs font-bold">
+                            BESTSELLER</div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-xl font-display font-bold">Kauring Active Honey</h3>
+                            <span class="text-primary font-bold">$39.95</span>
+                        </div>
+                        <p class="text-sm opacity-80 mb-4">250g jar of premium WA active honey with exceptional
+                            antibacterial properties.</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-1 text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                                <span class="text-white text-xs ml-1">(42)</span>
+                            </div>
+                            <button
+                                class="add-to-cart px-4 py-2 bg-primary hover:bg-primary-dark rounded-md text-dark-100 text-sm font-medium transition-colors"
+                                data-product-id="honey-250g" data-product-name="Kauring Active Honey (250g)"
+                                data-product-price="39.95" data-product-image="/assets/images/hero-honey-jar.webp">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 2 -->
+                <div
+                    class="group bg-dark-200 rounded-xl overflow-hidden shadow-lg hover:shadow-xl hover:shadow-primary/20 transition-shadow duration-300 border border-dark-300 hover:border-primary/50">
+                    <div class="relative overflow-hidden h-64">
+                        <img src="/assets/images/farm-plantation.webp" alt="Kauring Active Honey 500g"
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-100/70 via-transparent to-transparent">
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-xl font-display font-bold">Kauring Active Honey</h3>
+                            <span class="text-primary font-bold">$69.95</span>
+                        </div>
+                        <p class="text-sm opacity-80 mb-4">500g jar of premium WA active honey with exceptional
+                            antibacterial properties.</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-1 text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="far fa-star"></i>
+                                <span class="text-white text-xs ml-1">(28)</span>
+                            </div>
+                            <button
+                                class="add-to-cart px-4 py-2 bg-primary hover:bg-primary-dark rounded-md text-dark-100 text-sm font-medium transition-colors"
+                                data-product-id="honey-500g" data-product-name="Kauring Active Honey (500g)"
+                                data-product-price="69.95" data-product-image="/assets/images/farm-plantation.webp">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product 3 -->
+                <div
+                    class="group bg-dark-200 rounded-xl overflow-hidden shadow-lg hover:shadow-xl hover:shadow-primary/20 transition-shadow duration-300 border border-dark-300 hover:border-primary/50">
+                    <div class="relative overflow-hidden h-64">
+                        <img src="/assets/images/honey-gift-set.webp" alt="Active Honey Gift Set"
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-100/70 via-transparent to-transparent">
+                        </div>
+                        <div
+                            class="absolute top-4 right-4 bg-secondary text-dark-100 px-3 py-1 rounded-full text-xs font-bold">
+                            NEW</div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-xl font-display font-bold">Active Honey Gift Set</h3>
+                            <span class="text-primary font-bold">$99.95</span>
+                        </div>
+                        <p class="text-sm opacity-80 mb-4">Premium gift set including 250g honey, honey dipper, and tea
+                            samples.</p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-1 text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <span class="text-white text-xs ml-1">(15)</span>
+                            </div>
+                            <button
+                                class="add-to-cart px-4 py-2 bg-primary hover:bg-primary-dark rounded-md text-dark-100 text-sm font-medium transition-colors"
+                                data-product-id="gift-set" data-product-name="Active Honey Gift Set"
+                                data-product-price="99.95" data-product-image="/assets/images/honey-gift-set.webp">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-12">
+                <a href="/products/"
+                    class="inline-flex items-center gap-2 px-6 py-3 border border-primary rounded-md font-medium hover:bg-primary/10 transition-colors">
+                    View All Products
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-20 bg-dark-300 relative overflow-hidden">
+        <div
+            class="absolute inset-0 opacity-10  bg-repeat bg-[length:400px]">
+        </div>
+
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <span class="text-primary font-medium tracking-wider">TESTIMONIALS</span>
+                <h2 class="text-3xl md:text-4xl font-display font-bold mt-2 mb-4">What Our Partners Say</h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-primary to-accent mx-auto"></div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="bg-dark-400 rounded-xl p-8 relative overflow-hidden border border-dark-500">
+                    <div class="absolute -top-20 -right-20 w-64 h-64 bg-primary/5 rounded-full"></div>
+                    <div class="relative z-10">
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="w-16 h-16 rounded-full overflow-hidden border-2 border-primary">
+                                <img src="/assets/images/farmer-1.png" alt="Wayne Collins"
+                                    class="w-full h-full object-cover">
+                            </div>
+                            <div>
+                                <h3 class="font-display font-bold">Wayne Collins</h3>
+                                <p class="text-sm opacity-80">Tamma Hill Farm, York</p>
+                            </div>
+                        </div>
+                        <p class="italic mb-6">"In this day and age, it's nice to diversify. It's a natural product that
+                            we find unique and would be good for our environment. However, the biggest benefits from the
+                            partnership is with the bees, they are a critical part of our farming operation."</p>
+                        <div class="flex gap-1 text-primary">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="bg-dark-400 rounded-xl p-8 relative overflow-hidden border border-dark-500">
+                    <div class="absolute -bottom-20 -left-20 w-64 h-64 bg-secondary/5 rounded-full"></div>
+                    <div class="relative z-10">
+                        <div class="flex items-center gap-4 mb-6">
+                            <div class="w-16 h-16 rounded-full overflow-hidden border-2 border-primary">
+                                <img src="/assets/images/farmer-2.webp" alt="Sarah Johnson"
+                                    class="w-full h-full object-cover">
+                            </div>
+                            <div>
+                                <h3 class="font-display font-bold">Sarah Johnson</h3>
+                                <p class="text-sm opacity-80">Wheatbelt Farm, Narrogin</p>
+                            </div>
+                        </div>
+                        <p class="italic mb-6">"Partnering with Bee Central has allowed us to diversify our income while
+                            contributing to environmental sustainability. The plantation has integrated beautifully with
+                            our existing crops and the bees have improved pollination across our entire property."</p>
+                        <div class="flex gap-1 text-primary">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Google Reviews -->
+            <div class="mt-12 bg-dark-200 rounded-xl p-6 border border-dark-400">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-4 mb-6">
+                    <div>
+                        <h3 class="text-xl font-display font-bold">Google Reviews</h3>
+                        <div class="flex items-center gap-2 mt-1">
+                            <div class="flex gap-1 text-primary">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span class="text-sm">4.7 from 28 reviews</span>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Review 1 -->
+                    <div class="bg-dark-300 p-4 rounded-lg">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-medium">Michael Brown</h4>
+                            <span class="text-xs opacity-70">2 weeks ago</span>
+                        </div>
+                        <div class="flex gap-1 text-yellow-400 mb-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p class="text-sm opacity-90">"The Kauring Active Honey is exceptional quality. Noticed real
+                            benefits for my throat and digestion. Will be buying again!"</p>
+                    </div>
+
+                    <!-- Review 2 -->
+                    <div class="bg-dark-300 p-4 rounded-lg">
+                        <div class="flex justify-between items-start mb-2">
+                            <h4 class="font-medium">Emma Wilson</h4>
+                            <span class="text-xs opacity-70">1 month ago</span>
+                        </div>
+                        <div class="flex gap-1 text-yellow-400 mb-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <p class="text-sm opacity-90">"Beautiful gift set arrived promptly. The honey tastes amazing and
+                            the packaging was lovely. Highly recommend!"</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section class="py-20 bg-dark-100 relative">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <span class="text-primary font-medium tracking-wider">LATEST NEWS</span>
+                <h2 class="text-3xl md:text-4xl font-display font-bold mt-2 mb-4">Bee Research & Updates</h2>
+                <div class="w-20 h-1 bg-gradient-to-r from-primary to-accent mx-auto"></div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Article 1 -->
+                <article
+                    class="group bg-dark-200 rounded-xl overflow-hidden shadow-lg hover:shadow-xl hover:shadow-primary/10 transition-shadow duration-300 border border-dark-300 hover:border-primary/30">
+                    <div class="relative overflow-hidden h-48">
+                        <img src="/assets/images/varroa-mite.jpg" alt="Varroa Mite Detection Confirmed in Victoria"
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-100/70 via-transparent to-transparent">
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <span class="text-primary text-sm font-medium">Industry Insights</span>
+                        <h3 class="text-xl font-display font-bold my-2 group-hover:text-primary transition-colors">
+                            Varroa Mite Detection Confirmed in Victoria</h3>
+                        <p class="text-sm opacity-80 mb-4">Varroa mites have been confirmed within Victoria. As a result
+                            of routine surveillance, a single hive has returned a positive result with a very low level
+                            of mites.</p>
+                        <a href="/blog/varroa-mite-detection/"
+                            class="inline-flex items-center gap-1 text-sm font-medium group-hover:text-primary transition-colors">
+                            Read More
+                            <i class="fas fa-arrow-right text-xs transition-transform group-hover:translate-x-1"></i>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Article 2 -->
+                <article
+                    class="group bg-dark-200 rounded-xl overflow-hidden shadow-lg hover:shadow-xl hover:shadow-primary/10 transition-shadow duration-300 border border-dark-300 hover:border-primary/30">
+                    <div class="relative overflow-hidden h-48">
+                        <img src="/assets/images/world-bee-day.png" alt="World Bee Day celebrations 2022"
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-100/70 via-transparent to-transparent">
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <span class="text-primary text-sm font-medium">In The Media</span>
+                        <h3 class="text-xl font-display font-bold my-2 group-hover:text-primary transition-colors">World
+                            Bee Day celebrations 2022</h3>
+                        <p class="text-sm opacity-80 mb-4">On May 20th, 2022 World Bee Day is celebrated around the
+                            globe. Our understanding of bees' impact on our food security has grown dramatically in
+                            recent decades.</p>
+                        <a href="/blog/world-bee-day/"
+                            class="inline-flex items-center gap-1 text-sm font-medium group-hover:text-primary transition-colors">
+                            Read More
+                            <i class="fas fa-arrow-right text-xs transition-transform group-hover:translate-x-1"></i>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Article 3 -->
+                <article
+                    class="group bg-dark-200 rounded-xl overflow-hidden shadow-lg hover:shadow-xl hover:shadow-primary/10 transition-shadow duration-300 border border-dark-300 hover:border-primary/30">
+                    <div class="relative overflow-hidden h-48">
+                        <img src="/assets/images/honey-research.webp" alt="Advancing honey bee research in Australia"
+                            class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-100/70 via-transparent to-transparent">
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <span class="text-primary text-sm font-medium">Research</span>
+                        <h3 class="text-xl font-display font-bold my-2 group-hover:text-primary transition-colors">The
+                            Honey Bee Shed Discovery Centre</h3>
+                        <p class="text-sm opacity-80 mb-4">Bee Central is actively sourcing funding to build The Bee
+                            Shed, an educational and tourist attraction to advance honey bee research in Australia.</p>
+                        <a href="/blog/bee-shed-progress/"
+                            class="inline-flex items-center gap-1 text-sm font-medium group-hover:text-primary transition-colors">
+                            Read More
+                            <i class="fas fa-arrow-right text-xs transition-transform group-hover:translate-x-1"></i>
+                        </a>
+                    </div>
+                </article>
+            </div>
+
+            <div class="text-center mt-12">
+                <a href="/blog/"
+                    class="inline-flex items-center gap-2 px-6 py-3 border border-primary rounded-md font-medium hover:bg-primary/10 transition-colors">
+                    View All Articles
+                    <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-br from-dark-300 to-dark-400 relative overflow-hidden">
+        <div
+            class="absolute inset-0 opacity-10 bg-[url('/assets/images/honey-gift-set.webp')] bg-repeat bg-[length:400px]">
+        </div>
+        <div class="absolute -top-40 -right-40 w-80 h-80 bg-primary/10 rounded-full blur-3xl"></div>
+
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-3xl md:text-4xl font-display font-bold mb-6">Ready to Partner With Bee Central?</h2>
+                <p class="text-lg mb-8 max-w-2xl mx-auto">The first step is to assess the suitability of your farm with
+                    a no-obligation evaluation available to property owners anywhere within the Wheatbelt region of
+                    Western Australia.</p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="/contact/"
+                        class="px-8 z-50 py-3 bg-gradient-to-r from-primary to-accent rounded-md font-medium hover:opacity-90 transition-opacity shadow-lg shadow-primary/30">Schedule
+                        Evaluation</a>
+                    <a href="tel:+61889577036"
+                        class="px-8 z-50 py-3 border border-primary text-primary rounded-md font-medium hover:bg-primary/10 transition-colors">
+                        <i class="fas fa-phone mr-2"></i>
+                        +61 8 8957 7036
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Footer -->
+    <footer class="bg-dark-300 pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+                <!-- About -->
+                <div>
+                    <a href="/" class="flex items-center gap-2">
+               <img src="/assets/images/logo.png" class="h-16 w-auto mb-4" alt="logo"/>
+            </a>
+                    <p class="text-sm opacity-80 mb-4">Building healthy Australian honey bee populations for a better
+                        future through sustainable farming partnerships and premium active honey products.</p>
+                    <div class="flex gap-4">
+                        <a href="https://www.facebook.com/BeeCentralAustralia/" target="_blank"
+                            class="w-8 h-8 rounded-full bg-dark-400 flex items-center justify-center hover:bg-primary hover:text-dark-100 transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://x.com/centralbee1" target="_blank"
+                            class="w-8 h-8 rounded-full bg-dark-400 flex items-center justify-center hover:bg-primary hover:text-dark-100 transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://www.instagram.com/BeeCentralAustralia/" target="_blank"
+                            class="w-8 h-8 rounded-full bg-dark-400 flex items-center justify-center hover:bg-primary hover:text-dark-100 transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://www.youtube.com/channel/UCIkVvpMeMr2oKn1lW7A7CQA" target="_blank"
+                            class="w-8 h-8 rounded-full bg-dark-400 flex items-center justify-center hover:bg-primary hover:text-dark-100 transition-colors">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-xl font-display font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/" class="text-sm opacity-80 hover:text-primary transition-colors">Home</a></li>
+                        <li><a href="/services/"
+                                class="text-sm opacity-80 hover:text-primary transition-colors">Services</a></li>
+                        <li><a href="/products/"
+                                class="text-sm opacity-80 hover:text-primary transition-colors">Products</a></li>
+                        <li><a href="/about/" class="text-sm opacity-80 hover:text-primary transition-colors">About
+                                Us</a></li>
+                        <li><a href="/blog/" class="text-sm opacity-80 hover:text-primary transition-colors">Blog</a>
+                        </li>
+                        <li><a href="/contact/"
+                                class="text-sm opacity-80 hover:text-primary transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact -->
+                <div>
+                    <h3 class="text-xl font-display font-bold mb-4">Contact Us</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-map-marker-alt mt-1 text-primary"></i>
+                            <span class="text-sm opacity-80">170 Yulara Dr, Yulara NT 0872, Australia</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-phone text-primary"></i>
+                            <span class="text-sm opacity-80">+61 8 8957 7036</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-envelope text-primary"></i>
+                            <span class="text-sm opacity-80">info@beecentralau.com</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Newsletter -->
+                <div>
+                    <h3 class="text-xl font-display font-bold mb-4">Newsletter</h3>
+                    <p class="text-sm opacity-80 mb-4">Subscribe to our newsletter for the latest updates on bee
+                        research, farming opportunities, and product releases.</p>
+                    <form class="flex gap-2">
+                        <input type="email" placeholder="Your email"
+                            class="flex-1 bg-dark-400 border border-dark-500 rounded-md px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50">
+                        <button type="submit"
+                            class="px-4 py-2 bg-primary hover:bg-primary-dark rounded-md text-dark-100 text-sm font-medium transition-colors">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+
+            <div class="border-t border-dark-400 pt-8">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                    <p class="text-sm opacity-70">© 2025 Bee Central. All rights reserved.</p>
+                    <div class="flex gap-6">
+                        <a href="/privacy/" class="text-sm opacity-70 hover:text-primary transition-colors">Privacy
+                            Policy</a>
+                        <a href="/terms/" class="text-sm opacity-70 hover:text-primary transition-colors">Terms of
+                            Service</a>
+                        <a href="/cookies/" class="text-sm opacity-70 hover:text-primary transition-colors">Cookies
+                            Policy</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            mobileMenuButton.innerHTML = mobileMenu.classList.contains('hidden') ?
+                '<i class="fas fa-bars"></i>' : '<i class="fas fa-times"></i>';
+        });
+
+        // Cookie Consent
+        const cookieConsent = document.getElementById('cookieConsent');
+        const cookieAccept = document.getElementById('cookieAccept');
+        const cookieDecline = document.getElementById('cookieDecline');
+
+        if (!localStorage.getItem('cookieConsent')) {
+            setTimeout(() => {
+                cookieConsent.classList.remove('hidden');
+            }, 1000);
+        }
+
+        cookieAccept.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'accepted');
+            cookieConsent.classList.add('hidden');
+        });
+
+        cookieDecline.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'declined');
+            cookieConsent.classList.add('hidden');
+        });
+
+        // Cart Functionality
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+
+            document.querySelectorAll('#cartCount, #mobileCartCount').forEach(el => {
+                el.textContent = totalItems;
+                el.classList.toggle('hidden', totalItems === 0);
+            });
+        }
+
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', function () {
+                const product = {
+                    id: this.dataset.productId,
+                    name: this.dataset.productName,
+                    price: parseFloat(this.dataset.productPrice),
+                    image: this.dataset.productImage, // Store the image path
+                    quantity: 1
+                };
+
+                let cart = JSON.parse(localStorage.getItem('cart')) || [];
+                const existingItem = cart.find(item => item.id === product.id);
+
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    cart.push(product);
+                }
+
+                localStorage.setItem('cart', JSON.stringify(cart));
+                updateCartCount();
+
+                // Add to cart animation
+                const btnRect = this.getBoundingClientRect();
+                const cartIcon = document.querySelector('a[href="/cart/"]');
+                const cartRect = cartIcon.getBoundingClientRect();
+
+                const flyingItem = document.createElement('div');
+                flyingItem.className = 'fixed w-4 h-4 bg-primary rounded-full pointer-events-none z-50';
+                flyingItem.style.left = `${btnRect.left + btnRect.width / 2 - 8}px`;
+                flyingItem.style.top = `${btnRect.top}px`;
+                document.body.appendChild(flyingItem);
+
+                gsap.to(flyingItem, {
+                    x: cartRect.left - btnRect.left + btnRect.width / 2,
+                    y: cartRect.top - btnRect.top,
+                    scale: 0.5,
+                    duration: 0.8,
+                    ease: "power2.out",
+                    onComplete: () => {
+                        document.body.removeChild(flyingItem);
+
+                        // Cart icon bounce effect
+                        gsap.to(cartIcon, {
+                            scale: 1.2,
+                            duration: 0.2,
+                            yoyo: true,
+                            repeat: 1,
+                            ease: "power2.out"
+                        });
+                    }
+                });
+            });
+        });
+        // Initialize cart count
+        updateCartCount();
+
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Animate elements on scroll
+        gsap.utils.toArray('.animation-float').forEach(el => {
+            gsap.to(el, {
+                y: 20,
+                duration: 3,
+                repeat: -1,
+                yoyo: true,
+                ease: "sine.inOut"
+            });
+        });
+
+        gsap.utils.toArray('[data-animate]').forEach(el => {
+            const delay = el.dataset.delay || 0;
+
+            gsap.from(el, {
+                scrollTrigger: {
+                    trigger: el,
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                },
+                opacity: 0,
+                y: 50,
+                duration: 0.8,
+                delay: parseFloat(delay),
+                ease: "power2.out"
+            });
+        });
+
+        // Honeycomb Background Animation (Three.js)
+        const honeycombCanvas = document.getElementById('honeycombCanvas');
+
+        if (honeycombCanvas) {
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({
+                alpha: true,
+                antialias: true
+            });
+
+            renderer.setSize(honeycombCanvas.offsetWidth, honeycombCanvas.offsetHeight);
+            honeycombCanvas.appendChild(renderer.domElement);
+
+            // Create hexagon geometry
+            const hexGeometry = new THREE.CylinderGeometry(0.5, 0.5, 0.1, 6);
+
+            // Create multiple hexagons
+            const hexagons = [];
+            const hexCount = 30;
+
+            for (let i = 0; i < hexCount; i++) {
+                const hexagon = new THREE.Mesh(
+                    hexGeometry,
+                    new THREE.MeshBasicMaterial({
+                        color: 0xf59e0b,
+                        transparent: true,
+                        opacity: 0.1
+                    })
+                );
+
+                // Position hexagons randomly
+                hexagon.position.x = (Math.random() - 0.5) * 20;
+                hexagon.position.y = (Math.random() - 0.5) * 20;
+                hexagon.position.z = (Math.random() - 0.5) * 10;
+
+                // Random rotation
+                hexagon.rotation.z = Math.random() * Math.PI;
+
+                // Random scale
+                const scale = 0.5 + Math.random() * 1.5;
+                hexagon.scale.set(scale, scale, scale);
+
+                scene.add(hexagon);
+                hexagons.push(hexagon);
+            }
+
+            camera.position.z = 5;
+
+            // Animation
+            function animate() {
+                requestAnimationFrame(animate);
+
+                // Rotate hexagons
+                hexagons.forEach(hexagon => {
+                    hexagon.rotation.z += 0.001;
+                    hexagon.position.y -= 0.005;
+
+                    // Reset position if off screen
+                    if (hexagon.position.y < -10) {
+                        hexagon.position.y = 10;
+                        hexagon.position.x = (Math.random() - 0.5) * 20;
+                    }
+                });
+
+                renderer.render(scene, camera);
+            }
+
+            animate();
+
+            // Handle resize
+            window.addEventListener('resize', () => {
+                camera.aspect = honeycombCanvas.offsetWidth / honeycombCanvas.offsetHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(honeycombCanvas.offsetWidth, honeycombCanvas.offsetHeight);
+            });
+        }
+    </script>
+</body>
+
+</html>

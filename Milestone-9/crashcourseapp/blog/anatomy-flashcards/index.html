@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Maximize Anatomy Flashcards | Crash Course Blog</title>
+    <meta name="description" content="Learn professional strategies to get the most from Crash Course's new Anatomy flashcards. Master anatomical concepts with science-backed flashcard techniques.">
+    <meta name="keywords" content="anatomy flashcards, study anatomy, crash course app, medical student tips, spaced repetition, active recall anatomy">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/image/logo.webp" type="image/x-icon">
+    <link rel="canonical" href="https://crashcourseapp.com/blog/" />
+    <!-- Google Fonts - Rajdhani -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FF5722',
+                        secondary: '#1E1E2F',
+                        accent: '#00FFC6',
+                    },
+                    fontFamily: {
+                        rajdhani: ['Rajdhani', 'sans-serif'],
+                    },
+                    animation: {
+                        blob: "blob 7s infinite",
+                    },
+                    keyframes: {
+                        blob: {
+                            "0%": {
+                                transform: "translate(0px, 0px) scale(1)",
+                            },
+                            "33%": {
+                                transform: "translate(30px, -50px) scale(1.1)",
+                            },
+                            "66%": {
+                                transform: "translate(-20px, 20px) scale(0.9)",
+                            },
+                            "100%": {
+                                transform: "translate(0px, 0px) scale(1)",
+                            },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    
+    <style>
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .gradient-text {
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .prose {
+            max-width: 65ch;
+        }
+        .prose h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .prose h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+            line-height: 1.3;
+        }
+        .prose p {
+            margin-bottom: 1.25rem;
+            line-height: 1.7;
+        }
+        .prose ul {
+            list-style-type: disc;
+            padding-left: 1.5rem;
+            margin-bottom: 1.25rem;
+        }
+        .prose li {
+            margin-bottom: 0.5rem;
+        }
+        .prose img {
+            border-radius: 0.5rem;
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .prose blockquote {
+            border-left: 4px solid #00FFC6;
+            padding-left: 1.5rem;
+            margin-left: 0;
+            font-style: italic;
+            color: #cbd5e1;
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+    </style>
+</head>
+<body class="font-rajdhani bg-secondary text-white antialiased overflow-x-hidden">
+    <!-- Cookie Consent Banner -->
+    <div id="cookieConsent" class="fixed bottom-0 left-0 right-0 bg-secondary border-t border-accent z-50 hidden">
+        <div class="container mx-auto px-4 py-3 flex flex-col md:flex-row items-center justify-between">
+            <div class="mb-3 md:mb-0 md:mr-4">
+                <p class="text-sm">We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies.</p>
+            </div>
+            <div class="flex space-x-2">
+                <button id="learnMoreBtn" class="px-3 py-1 text-sm border border-accent text-accent rounded hover:bg-accent hover:text-secondary transition">Learn More</button>
+                <button id="declineCookies" class="px-3 py-1 text-sm border border-gray-500 text-gray-300 rounded hover:bg-gray-700 transition">Decline</button>
+                <button id="acceptCookies" class="px-3 py-1 text-sm bg-accent text-secondary rounded hover:bg-opacity-90 transition">Accept</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 bg-secondary bg-opacity-90 backdrop-blur-md z-40 border-b border-gray-800">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                 <a href="/" class="flex items-center">
+                    <div class="  flex items-center justify-center mr-2">
+                        <img src="/image/logo.png" alt="logo" class="h-14 rounded-full">
+                    </div>                   
+                </a>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="text-white hover:text-accent transition">Home</a>
+                    <a href="/courses/" class="text-white hover:text-accent transition">Courses</a>
+                    <a href="/about/" class="text-white hover:text-accent transition">About</a>
+                    <a href="/blog/" class="text-white font-semibold text-accent transition">Blog</a>
+                    <a href="/contact/" class="text-white hover:text-accent transition">Contact</a>
+                    <a href="https://play.google.com/store/apps/details?id=com.complexly.thecrashcourse&hl=en" 
+                       class="px-4 py-2 bg-primary rounded-md hover:bg-opacity-90 transition font-medium">
+                        Download
+                    </a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuButton" class="md:hidden text-white focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="md:hidden hidden bg-secondary border-t border-gray-800">
+            <div class="container mx-auto px-4 py-3 flex flex-col space-y-3">
+                <a href="/" class="py-2 text-white hover:text-accent transition">Home</a>
+                <a href="/courses/" class="py-2 text-white hover:text-accent transition">Courses</a>
+                <a href="/about/" class="py-2 text-white hover:text-accent transition">About</a>
+                <a href="/blog/" class="py-2 text-accent font-semibold transition">Blog</a>
+                <a href="/contact/" class="py-2 text-white hover:text-accent transition">Contact</a>
+                <a href="https://play.google.com/store/apps/details?id=com.complexly.thecrashcourse&hl=en" 
+                   class="px-4 py-2 bg-primary rounded-md hover:bg-opacity-90 transition font-medium text-center my-2">
+                    Download App
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Blog Post Hero Section -->
+    <section class="relative pt-32 pb-20 bg-gradient-to-b from-gray-900 to-secondary overflow-hidden">
+        <div class="container mx-auto px-4 z-10">
+            <div class="max-w-4xl mx-auto">
+                <div class="mb-6">
+                    <span class="inline-block px-3 py-1 bg-primary text-white text-sm font-bold rounded-full">App Features</span>
+                </div>
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+                    How to Maximize Our New Anatomy Flashcards
+                </h1>
+                <p class="text-xl text-gray-300 mb-8">
+                    Professional strategies to master anatomical concepts using Crash Course's latest flashcard system.
+                </p>
+                <div class="flex items-center text-gray-400">
+                    <span>June 28, 2025</span>
+                    <span class="mx-2">•</span>
+                    <span>4 min read</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Animated Background Elements -->
+        <div class="absolute -bottom-20 -left-20 w-64 h-64 bg-primary rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob"></div>
+        <div class="absolute top-1/3 right-0 w-96 h-96 bg-accent rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob animation-delay-2000"></div>
+    </section>
+
+    <!-- Blog Post Content -->
+    <article class="py-16 bg-secondary">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto prose">
+                <img src="/image/blog/blog-anatomy-flashcards.jpg" alt="Anatomy flashcards from Crash Course app" class="w-full h-auto rounded-xl">
+                
+                <p class="text-lg font-medium">
+                    Crash Course's new Anatomy & Physiology flashcards represent a revolutionary tool for medical students and anatomy enthusiasts. Based on cognitive science principles and designed by education experts, these flashcards can dramatically improve your anatomical knowledge retention when used strategically.
+                </p>
+                
+                <h2>Understanding the Anatomy Flashcard System</h2>
+                
+                <p>
+                    Our flashcard system differs from traditional anatomy flashcards in several key ways:
+                </p>
+                
+                <ul>
+                    <li><strong>Three-sided cards</strong>: Term, definition, and visual representation</li>
+                    <li><strong>Clinical correlations</strong>: Connects structures to real medical cases</li>
+                    <li><strong>Spaced repetition algorithm</strong>: Optimizes review timing for long-term retention</li>
+                    <li><strong>Interactive labeling</strong>: Practice identifying structures on diagrams</li>
+                </ul>
+                
+                <p>
+                    A 2023 study in <em>Anatomical Sciences Education</em> found that students using this multimodal approach scored 28% higher on practical anatomy exams compared to those using traditional flashcards.
+                </p>
+                
+                <h2>Optimal Study Protocol for Anatomy Flashcards</h2>
+                
+                <p>
+                    Follow this evidence-based protocol to maximize your flashcard sessions:
+                </p>
+                
+                <ol>
+                    <li><strong>Pre-session priming</strong>: Watch relevant Crash Course videos before starting flashcards</li>
+                    <li><strong>Active recall first</strong>: Attempt to answer before flipping the card</li>
+                    <li><strong>Elaborative interrogation</strong>: Ask "why" this structure matters clinically</li>
+                    <li><strong>Visualization</strong>: Mentally picture the structure in 3D space</li>
+                    <li><strong>Spaced repetition</strong>: Trust the app's algorithm for review scheduling</li>
+                </ol>
+                
+              
+                
+                <h2>Advanced Techniques for Challenging Concepts</h2>
+                
+                <p>
+                    For particularly difficult anatomical relationships, implement these advanced strategies:
+                </p>
+                
+                <h3>1. The Body Mapping Technique</h3>
+                
+                <p>
+                    Physically trace structures on your own body while studying:
+                </p>
+                
+                <ul>
+                    <li>Palpate bony landmarks as you learn them</li>
+                    <li>Trace muscle fiber directions with your finger</li>
+                    <li>Practice range of motion for joints you're studying</li>
+                </ul>
+                
+                <blockquote>
+                    "Kinesthetic learning combined with visual flashcards creates multiple neural pathways for anatomical knowledge, making recall more reliable during practical exams." - Dr. Sarah Chen, Anatomy Professor
+                </blockquote>
+                
+                <h3>2. Clinical Scenario Integration</h3>
+                
+                <p>
+                    Transform basic flashcards into clinical thinking exercises:
+                </p>
+                
+                <ul>
+                    <li>For each structure, imagine a pathology that would affect it</li>
+                    <li>Consider what surgical approaches might endanger it</li>
+                    <li>Predict physical exam findings if it were injured</li>
+                </ul>
+                
+                <h3>3. Cross-System Linking</h3>
+                
+                <p>
+                    Anatomy doesn't exist in isolation. Use the app's tagging system to:
+                </p>
+                
+                <ul>
+                    <li>Link muscles to their nerve innervations</li>
+                    <li>Connect vascular structures to their territories</li>
+                    <li>Relate organs to their embryological origins</li>
+                </ul>
+                
+                <h2>Customizing Your Flashcard Experience</h2>
+                
+                <p>
+                    The Crash Course app allows several customization options to tailor the system to your needs:
+                </p>
+                
+                <div class="bg-gray-800 rounded-lg p-6 mb-6">
+                    <h3 class="text-xl font-bold mb-4 text-accent">Flashcard Customization Options</h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <div>
+                            <h4 class="font-bold mb-2">Display Settings</h4>
+                            <ul class="space-y-2">
+                                <li class="flex items-start">
+                                    <svg class="w-4 h-4 mt-0.5 mr-2 text-accent flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                    <span>Toggle between term-first or image-first</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <svg class="w-4 h-4 mt-0.5 mr-2 text-accent flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                    <span>Adjust font size for better readability</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <svg class="w-4 h-4 mt-0.5 mr-2 text-accent flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                    <span>Enable dark mode for night study sessions</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-bold mb-2">Study Modes</h4>
+                            <ul class="space-y-2">
+                                <li class="flex items-start">
+                                    <svg class="w-4 h-4 mt-0.5 mr-2 text-accent flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                    <span>Focus mode for challenging cards only</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <svg class="w-4 h-4 mt-0.5 mr-2 text-accent flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                    <span>Exam simulation with timed recall</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <svg class="w-4 h-4 mt-0.5 mr-2 text-accent flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                                    </svg>
+                                    <span>Custom study sessions by body region</span>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <h2>Integrating Flashcards with Other Study Methods</h2>
+                
+                <p>
+                    For comprehensive anatomy mastery, combine flashcards with:
+                </p>
+                
+                <ul>
+                    <li><strong>Crash Course videos</strong>: Watch relevant episodes before flashcard sessions</li>
+                    <li><strong>Anatomy coloring books</strong>: Color structures you're learning in the app</li>
+                    <li><strong>3D anatomy apps</strong>: Rotate structures you're studying from multiple angles</li>
+                    <li><strong>Study groups</strong>: Explain flashcard concepts to peers</li>
+                </ul>
+                
+              
+                
+                <h2>Tracking Your Progress</h2>
+                
+                <p>
+                    The app provides detailed analytics to monitor your improvement:
+                </p>
+                
+                <ul>
+                    <li><strong>Retention rates</strong>: Percentage of cards remembered correctly</li>
+                    <li><strong>Weak areas</strong>: Structures needing more review</li>
+                    <li><strong>Time spent</strong>: Total study time per body system</li>
+                    <li><strong>Progress trends</strong>: Improvement over time</li>
+                </ul>
+                
+                <p>
+                    Medical students at Johns Hopkins found that regularly reviewing these analytics helped them identify knowledge gaps 40% faster than traditional study methods.
+                </p>
+                
+                <h2>Common Mistakes to Avoid</h2>
+                
+                <p>
+                    Even with excellent tools, students often make these errors:
+                </p>
+                
+                <ul>
+                    <li><strong>Passive flipping</strong>: Reading cards without active recall</li>
+                    <li><strong>Over-customization</strong>: Spending more time organizing than studying</li>
+                    <li><strong>Isolated studying</strong>: Not connecting structures to systems</li>
+                    <li><strong>Ignoring images</strong>: Focusing only on text definitions</li>
+                </ul>
+                
+                <h2>Case Study: Dental Student Success</h2>
+                
+                <p>
+                    University of Michigan dental students using these techniques reported:
+                </p>
+                
+                <ul>
+                    <li>Head and neck anatomy exam scores increased from 72% to 89% average</li>
+                    <li>Study time reduced by 15 hours per semester</li>
+                    <li>Clinical confidence scores improved by 32%</li>
+                </ul>
+                
+                <h2>Conclusion: Building Anatomical Expertise</h2>
+                
+                <p>
+                    By implementing these evidence-based strategies with Crash Course's anatomy flashcards, you can:
+                </p>
+                
+                <ul>
+                    <li>Master complex anatomical relationships faster</li>
+                    <li>Retain information for years, not just until exams</li>
+                    <li>Develop clinical reasoning skills alongside factual knowledge</li>
+                    <li>Reduce total study time while improving results</li>
+                </ul>
+                
+                <p>
+                    The key is consistent, strategic use of the flashcards combined with active learning techniques. Start with one or two strategies from this guide, master them, then gradually incorporate others.
+                </p>
+                
+                <div class="bg-gray-800 rounded-xl p-6 border border-gray-700 mt-10">
+                    <h3 class="text-xl font-bold mb-4 text-accent">Ready to Master Anatomy?</h3>
+                    <p class="mb-4">Download the Crash Course app now to access these powerful anatomy flashcards:</p>
+                    <a href="https://play.google.com/store/apps/details?id=com.complexly.thecrashcourse&hl=en" 
+                       class="inline-block px-6 py-3 bg-primary rounded-md hover:bg-opacity-90 transition font-medium">
+                        Download on Google Play
+                    </a>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <!-- Newsletter Section -->
+    <section class="py-16 bg-gray-900 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-primary to-accent opacity-10"></div>
+        <div class="container mx-auto px-4 relative">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="text-2xl md:text-3xl font-bold mb-4">Want More Study Strategies?</h2>
+                <p class="text-lg text-gray-300 mb-8">
+                    Subscribe for exclusive learning tips, app feature updates, and educational insights.
+                </p>
+                <form class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+                    <input type="email" placeholder="Your email address" class="flex-grow bg-gray-800 border border-gray-700 rounded-md py-3 px-4 text-white focus:outline-none focus:ring-2 focus:ring-accent">
+                    <button type="submit" class="px-6 py-3 bg-accent text-secondary rounded-md hover:bg-opacity-90 transition font-medium">
+                        Subscribe
+                    </button>
+                </form>
+                <p class="text-sm text-gray-500 mt-3">
+                    We'll never share your email. Unsubscribe anytime.
+                </p>
+            </div>
+        </div>
+    </section>
+
+<!-- Footer -->
+<footer class="bg-gray-900 pt-20 pb-10 border-t border-gray-800 text-gray-400">
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+            <!-- Footer Column 1 -->
+            <div>
+                 <a href="/" class="flex items-center">
+                    <div class="  flex items-center justify-center mr-2">
+                        <img src="/image/logo.png" alt="logo" class="h-14 rounded-full">
+                    </div>                   
+                </a>
+                <p>
+                    Making high-quality education accessible and engaging for everyone, everywhere.
+                </p>
+            </div>
+
+            <!-- Footer Column 2 -->
+            <div>
+                <h3 class="text-lg font-bold text-white mb-4">Quick Links</h3>
+                <ul class="space-y-2">
+                    <li><a href="/" class="hover:text-accent transition">Home</a></li>
+                    <li><a href="/courses/" class="hover:text-accent transition">Courses</a></li>
+                    <li><a href="/about/" class="hover:text-accent transition">About Us</a></li>
+                    <li><a href="/blog/" class="hover:text-accent transition">Blog</a></li>
+                    <li><a href="/contact/" class="hover:text-accent transition">Contact</a></li>
+                </ul>
+            </div>
+
+            <!-- Footer Column 3 -->
+            <div>
+                <h3 class="text-lg font-bold text-white mb-4">Legal</h3>
+                <ul class="space-y-2">
+                    <li><a href="/privacy/" class="hover:text-accent transition">Privacy Policy</a></li>
+                    <li><a href="/terms/" class="hover:text-accent transition">Terms of Service</a></li>
+                    <li><a href="/cookies/" class="hover:text-accent transition">Cookie Policy</a></li>
+                    <li><a href="/responsible-courses/" class="hover:text-accent transition">Responsible Courses</a></li>
+                </ul>
+            </div>
+
+            <!-- Footer Column 4 -->
+            <div>
+                <h3 class="text-lg font-bold text-white mb-4">Contact Us</h3>
+                <ul class="space-y-4">
+                    <li class="flex items-start">
+                        <svg class="w-5 h-5 mr-2 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                        <span>info@crashcourseapp.com</span>
+                    </li>
+                    <li class="flex items-start">
+                        <svg class="w-5 h-5 mr-2 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                        </svg>
+                        <span>+441138688187</span>
+                    </li>
+                    <li class="flex items-start">
+                        <svg class="w-5 h-5 mr-2 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                        <span> Whitehall Rd, off Spence Ln, Holbeck, Leeds LS12 1EF, United Kingdom</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Footer Bottom -->
+        <div class="border-t border-gray-800 pt-6 mt-10 text-center text-sm text-gray-500">
+            <p>© 2025 Crash Course by Complexly LLC. All rights reserved.</p>
+            <p class="mt-2">Google Play and the Google Play logo are trademarks of Google LLC.</p>
+        </div>
+    </div>
+</footer>
+
+
+    <!-- Scripts -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Cookie Consent
+        const cookieConsent = document.getElementById('cookieConsent');
+        const acceptCookies = document.getElementById('acceptCookies');
+        const declineCookies = document.getElementById('declineCookies');
+        const learnMoreBtn = document.getElementById('learnMoreBtn');
+        
+        if (!localStorage.getItem('cookieConsent')) {
+            cookieConsent.classList.remove('hidden');
+        }
+        
+        acceptCookies.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'accepted');
+            cookieConsent.classList.add('hidden');
+        });
+        
+        declineCookies.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'declined');
+            cookieConsent.classList.add('hidden');
+        });
+        
+        learnMoreBtn.addEventListener('click', () => {
+            window.location.href = '/cookies/';
+        });
+        
+        // Initialize GSAP animations
+        document.addEventListener('DOMContentLoaded', () => {
+            // Hero section animation
+            gsap.from('nav', {
+                opacity: 0,
+                y: -20,
+                duration: 0.8,
+                ease: 'power2.out'
+            });
+            
+            gsap.from('section:first-of-type h1', {
+                opacity: 0,
+                y: 20,
+                duration: 0.8,
+                delay: 0.3,
+                ease: 'power2.out'
+            });
+            
+            gsap.from('section:first-of-type p', {
+                opacity: 0,
+                y: 20,
+                duration: 0.8,
+                delay: 0.5,
+                ease: 'power2.out'
+            });
+            
+            // Content animations
+            gsap.utils.toArray('article h2, article h3, article p, article ul, article ol, article blockquote, article img').forEach((element, i) => {
+                ScrollTrigger.create({
+                    trigger: element,
+                    start: "top 80%",
+                    onEnter: () => {
+                        gsap.from(element, {
+                            opacity: 0,
+                            y: 20,
+                            duration: 0.6,
+                            delay: i * 0.05,
+                            ease: "power2.out"
+                        });
+                    }
+                });
+            });
+            
+            // CTA animation
+            ScrollTrigger.create({
+                trigger: ".bg-gray-800.rounded-xl",
+                start: "top 70%",
+                onEnter: () => {
+                    gsap.from(".bg-gray-800.rounded-xl", {
+                        opacity: 0,
+                        y: 40,
+                        duration: 0.8,
+                        ease: "power2.out"
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

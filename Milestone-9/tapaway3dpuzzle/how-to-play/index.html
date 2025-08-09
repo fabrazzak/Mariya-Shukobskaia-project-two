@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<link rel="shortcut icon" href="/assets/images/logo.webp" type="image/x-icon">
+<link rel="canonical" href="https://tapaway3dpuzzle.com/how-to-play/" />
+
+    <meta charset="UTF-8">
+    <meta name="description" content="Tap Away 3D Puzzle: Train your brain with immersive 3D puzzles! Solve spatial challenges, unlock stunning worlds, and sharpen your mind. Free download!">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How to Play Tap Away 3D | Futuristic Puzzle Guide</title>
+    
+    <!-- Tailwind with custom config -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        cosmic: '#0f0e17',
+                        nebula: '#6246ea',
+                        starlight: '#eebbc3',
+                        void: '#010101',
+                        quantum: '#7f5af0'
+                    },
+                    fontFamily: {
+                        sans: ['"Space Grotesk"', 'sans-serif'],
+                        display: ['"Bai Jamjuree"', 'sans-serif']
+                    },
+                    animation: {
+                        'float': 'float 8s ease-in-out infinite',
+                        'pulse-glow': 'pulse-glow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'text-gradient': 'text-gradient 6s ease infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-5%)' }
+                        },
+                        'pulse-glow': {
+                            '0%, 100%': { 'box-shadow': '0 0 0 0 rgba(126, 58, 242, 0.7)' },
+                            '70%': { 'box-shadow': '0 0 0 20px rgba(126, 58, 242, 0)' }
+                        },
+                        'text-gradient': {
+                            '0%, 100%': { 'background-position': '0% 50%' },
+                            '50%': { 'background-position': '100% 50%' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Three.js Import -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/gsap.min.js"></script>
+    
+    <style>
+        :root {
+            --text-primary: rgba(255, 255, 255, 0.92);
+            --text-secondary: rgba(255, 255, 255, 0.6);
+        }
+        
+        html {
+            background-color: #010101;
+            color: var(--text-primary);
+            scroll-behavior: smooth;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, #7f5af0 0%, #eebbc3 50%, #6246ea 100%);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: text-gradient 6s ease infinite;
+        }
+        
+        .glass-effect {
+            background: rgba(15, 14, 23, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        
+        .grid-pattern {
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        
+        .step-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+        }
+        
+        .step-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(126, 58, 242, 0.25);
+        }
+        
+        .step-number {
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #7f5af0 0%, #6246ea 100%);
+            color: white;
+            font-weight: bold;
+            font-size: 1.25rem;
+            position: relative;
+            z-index: 1;
+            padding: 15px;
+        }
+        
+        .step-number::after {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #7f5af0 0%, #eebbc3 50%, #6246ea 100%);
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            
+        }
+        
+        .step-card:hover .step-number::after {
+            opacity: 1;
+        }
+        
+        .interactive-cube {
+            transform-style: preserve-3d;
+            transition: transform 0.8s cubic-bezier(0.65, 0, 0.35, 1);
+        }
+        
+        .controls-icon {
+            transition: all 0.3s ease;
+        }
+        
+        .controls-icon:hover {
+            transform: scale(1.2) rotate(10deg);
+            filter: drop-shadow(0 0 8px rgba(126, 58, 242, 0.6));
+        }
+    </style>
+</head>
+<body class="font-sans antialiased overflow-x-hidden grid-pattern">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 glass-effect py-4 px-6">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+           <a href="/" class="flex items-center group">
+                <img src="/assets/images/logo.png" class=" h-16 rounded-full mr-2" alt="logo"/>                
+            </a>
+            
+            <div class="hidden md:flex space-x-8">
+                <a href="/" class="text-starlight hover:text-white transition-all duration-300 relative group">
+                    Home
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-nebula group-hover:w-full transition-all duration-300"></span>
+                </a>
+                <a href="/how-to-play/" class="text-white transition-all duration-300 relative group">
+                    How to Play
+                    <span class="absolute bottom-0 left-0 w-full h-0.5 bg-nebula"></span>
+                </a>
+                <a href="/responsible-gaming/" class="text-starlight hover:text-white transition-all duration-300 relative group">
+                    Responsible Gaming
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-nebula group-hover:w-full transition-all duration-300"></span>
+                </a>
+                <a href="/blog/" class="text-starlight hover:text-white transition-all duration-300 relative group">
+                    Blog
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-nebula group-hover:w-full transition-all duration-300"></span>
+                </a>
+                <a href="/contact/" class="text-starlight hover:text-white transition-all duration-300 relative group">
+                    Contact
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-nebula group-hover:w-full transition-all duration-300"></span>
+                </a>
+            </div>
+            
+            <button id="mobile-menu-button" class="md:hidden text-starlight">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+        </div>
+    </nav>
+    
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="fixed inset-0 z-40 bg-void/95 backdrop-blur-lg flex items-center justify-center hidden">
+        <div class="text-center">
+            <ul class="space-y-8 text-2xl">
+                <li><a href="/" class="text-starlight hover:text-white transition">Home</a></li>
+                <li><a href="/how-to-play/" class="text-white transition">How to Play</a></li>
+                <li><a href="/responsible-gaming/" class="text-starlight hover:text-white transition">Responsible Gaming</a></li>
+                <li><a href="/blog/" class="text-starlight hover:text-white transition">Blog</a></li>
+                <li><a href="/contact/" class="text-starlight hover:text-white transition">Contact</a></li>
+            </ul>
+        </div>
+        <button id="close-mobile-menu" class="absolute top-8 right-8 text-starlight">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="pt-32 pb-20 px-6 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto text-center">
+            <h1 class="text-4xl md:text-6xl font-display font-bold mb-6 leading-tight">
+                Master <span class="gradient-text">Tap Away 3D</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-starlight max-w-3xl mx-auto">
+                Unlock the secrets of our spatial puzzle game with this advanced gameplay guide
+            </p>
+            
+            <div class="mt-16 flex justify-center">
+                <div id="tutorial-cube" class="w-64 h-64 md:w-80 md:h-80 relative">
+                    <!-- 3D Cube will be rendered here by Three.js -->
+                </div>
+            </div>
+        </div>
+        
+        <!-- Floating abstract shapes -->
+        <div class="absolute top-1/4 left-10 w-40 h-40 rounded-full bg-nebula/10 blur-xl -z-10 animate-float"></div>
+        <div class="absolute bottom-1/4 right-20 w-60 h-60 rounded-full bg-starlight/10 blur-xl -z-10 animate-float animation-delay-2000"></div>
+    </section>
+
+    <!-- Game Basics -->
+    <section class="py-20 px-6 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-5xl font-display font-bold mb-6">
+                    <span class="gradient-text">Core</span> Mechanics
+                </h2>
+                <p class="text-xl text-starlight max-w-3xl mx-auto">
+                    Understand the fundamental principles that govern the Tap Away 3D universe
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+                <!-- Step 1 -->
+                <div class="step-card glass-effect rounded-2xl p-8">
+                    <div class="flex items-start">
+                        <div class="step-number mr-6">1</div>
+                        <div>
+                            <h3 class="text-2xl font-bold mb-4">Spatial Awareness</h3>
+                            <p class="text-starlight">
+                                The game presents a 3D cube structure with interconnected blocks. Your objective is to clear all blocks by tapping them in the correct sequence. Each block exists in three-dimensional space and may support other blocks.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Step 2 -->
+                <div class="step-card glass-effect rounded-2xl p-8">
+                    <div class="flex items-start">
+                        <div class="step-number mr-6">2</div>
+                        <div>
+                            <h3 class="text-2xl font-bold mb-4">Block Removal Logic</h3>
+                            <p class="text-starlight">
+                                A block can only be removed if it's not supporting any other blocks above it. The game uses realistic physics - if you remove a supporting block, any blocks above it will collapse if they have no other support.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Step 3 -->
+                <div class="step-card glass-effect rounded-2xl p-8">
+                    <div class="flex items-start">
+                        <div class="step-number mr-6">3</div>
+                        <div>
+                            <h3 class="text-2xl font-bold mb-4">Strategic Sequencing</h3>
+                            <p class="text-starlight">
+                                Success requires analyzing the entire structure to determine the optimal removal sequence. Look for blocks that are only supporting one other block first - these often form the beginning of your solution path.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Step 4 -->
+                <div class="step-card glass-effect rounded-2xl p-8">
+                    <div class="flex items-start">
+                        <div class="step-number mr-6">4</div>
+                        <div>
+                            <h3 class="text-2xl font-bold mb-4">Level Completion</h3>
+                            <p class="text-starlight">
+                                The level is complete when all blocks have been successfully removed. Some levels may have bonus objectives like completing within a certain number of moves or time limit for additional rewards.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Controls Section -->
+    <section class="py-20 px-6 bg-gradient-to-b from-void to-cosmic">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-5xl font-display font-bold mb-6">
+                    <span class="gradient-text">Advanced</span> Controls
+                </h2>
+                <p class="text-xl text-starlight max-w-3xl mx-auto">
+                    Master the intuitive yet powerful control scheme designed for precision gameplay
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
+                <div class="flex flex-col items-center text-center">
+                    <div class=" flex items-center justify-center mb-6 group-hover:rotate-[15deg] transition-transform duration-500">
+                        <img src="/assets/images/cognitive.png" class="object-cover rounded-xl " alt="cognitive"/>
+                    </div>
+                    <h3 class="font-bold mb-2">Tap</h3>
+                    <p class="text-sm text-starlight">
+                        Select and remove eligible blocks
+                    </p>
+                </div>
+                
+                <div class="flex flex-col items-center text-center">
+                     <div class=" flex items-center justify-center mb-6 group-hover:rotate-[15deg] transition-transform duration-500">
+                        <img src="/assets/images/neon-drenched.png" class="object-cover rounded-xl " alt="cognitive"/>
+                    </div>
+                    <h3 class="font-bold mb-2">Swipe</h3>
+                    <p class="text-sm text-starlight">
+                        Rotate the 3D cube in any direction
+                    </p>
+                </div>
+                
+                <div class="flex flex-col items-center text-center">
+                     <div class=" flex items-center justify-center mb-6 group-hover:rotate-[15deg] transition-transform duration-500">
+                        <img src="/assets/images/quantum.png" class="object-cover rounded-xl " alt="cognitive"/>
+                    </div>
+                    <h3 class="font-bold mb-2">Pinch</h3>
+                    <p class="text-sm text-starlight">
+                        Zoom in/out for detailed inspection
+                    </p>
+                </div>
+                
+                <div class="flex flex-col items-center text-center">
+                     <div class=" flex items-center justify-center mb-6 group-hover:rotate-[15deg] transition-transform duration-500">
+                        <img src="/assets/images/power-up.png" class="object-cover rounded-xl " alt="cognitive"/>
+                    </div>
+                    <h3 class="font-bold mb-2">Power-Ups</h3>
+                    <p class="text-sm text-starlight">
+                        Activate special abilities when available
+                    </p>
+                </div>
+            </div>
+            
+            <div class="mt-20 glass-effect rounded-2xl overflow-hidden">
+                <div class="grid grid-cols-1 md:grid-cols-2">
+                    <div class="p-8 md:p-12 flex flex-col  justify-center">
+                        <h3 class="text-2xl font-bold mb-4">Gesture Customization</h3>
+                        <p class="text-starlight mb-6">
+                            Tailor the control sensitivity to your preference in the settings menu. Adjust:
+                        </p>
+                        <ul class="space-y-3 text-starlight">
+                            <li class="flex items-start">
+                                <span class="text-nebula mr-2">◉</span>
+                                <span>Rotation speed and inertia</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-nebula mr-2">◉</span>
+                                <span>Zoom sensitivity</span>
+                            </li>
+                            <li class="flex items-start">
+                                <span class="text-nebula mr-2">◉</span>
+                                <span>Touch detection threshold</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="bg-nebula/10 flex items-center justify-center p-8">
+                         <div class=" flex items-center justify-center mb-6 group-hover:rotate-[15deg] transition-transform duration-500">
+                        <img src="/assets/images/quantum.png" class="object-cover rounded-xl " alt="cognitive"/>
+                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Strategy Guide -->
+    <section class="py-20 px-6 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-5xl font-display font-bold mb-6">
+                    <span class="gradient-text">Quantum</span> Strategies
+                </h2>
+                <p class="text-xl text-starlight max-w-3xl mx-auto">
+                    Professional techniques used by top-ranked players worldwide
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
+                <div class="glass-effect rounded-2xl p-8">
+                    <h3 class="text-2xl font-bold mb-4">The Top-Down Approach</h3>
+                    <p class="text-starlight mb-6">
+                        Start by identifying and removing blocks at the highest points of the structure. These are often the least supported and provide a clear starting point. Rotate the cube to view from multiple angles to confirm a block's position in the hierarchy.
+                    </p>
+                    <div class="h-px bg-gradient-to-r from-nebula/0 via-nebula to-nebula/0 my-6"></div>
+                    <div class="flex items-center">
+                        
+                        <p class="text-sm text-starlight">
+                            <span class="font-bold text-white">Pro Tip:</span> Use the "Highlight Unsafe" option in settings to visually identify blocks that would cause collapses if removed.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="glass-effect rounded-2xl p-8">
+                    <h3 class="text-2xl font-bold mb-4">The Structural Analysis Method</h3>
+                    <p class="text-starlight mb-6">
+                        Mentally deconstruct the puzzle into smaller sub-sections or "clusters". Solve each cluster individually before addressing how they connect. This is particularly effective for levels with multiple distinct towers or complex geometries.
+                    </p>
+                    <div class="h-px bg-gradient-to-r from-nebula/0 via-nebula to-nebula/0 my-6"></div>
+                    <div class="flex items-center">
+                        
+                        <p class="text-sm text-starlight">
+                            <span class="font-bold text-white">Advanced:</span> The game often places "keystone" blocks that, when removed, allow multiple clusters to be solved simultaneously.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="glass-effect rounded-2xl p-8">
+                    <h3 class="text-2xl font-bold mb-4">The Temporal Strategy</h3>
+                    <p class="text-starlight mb-6">
+                        In timed levels, prioritize speed over perfection. Remove blocks quickly even if it causes minor collapses - sometimes sacrificing a few blocks to access deeper layers is more time-efficient than finding the "perfect" solution.
+                    </p>
+                    <div class="h-px bg-gradient-to-r from-nebula/0 via-nebula to-nebula/0 my-6"></div>
+                    <div class="flex items-center">
+                        
+                        <p class="text-sm text-starlight">
+                            <span class="font-bold text-white">Note:</span> This approach works best after you've mastered the basic mechanics through regular levels.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="glass-effect rounded-2xl p-8">
+                    <h3 class="text-2xl font-bold mb-4">The Power-Up Optimization</h3>
+                    <p class="text-starlight mb-6">
+                        Save your power-ups for when they provide maximum value. For example, use "Multi-Tap" when you identify a sequence of 3+ removable blocks, or "Time Freeze" when you're about to execute a complex series of moves in a timed level.
+                    </p>
+                    <div class="h-px bg-gradient-to-r from-nebula/0 via-nebula to-nebula/0 my-6"></div>
+                    <div class="flex items-center">
+                       
+                        <p class="text-sm text-starlight">
+                            <span class="font-bold text-white">Secret:</span> Some power-ups have hidden combo effects when used in sequence.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive Tutorial -->
+    <section class="py-20 px-6 bg-gradient-to-b from-cosmic to-void">
+        <div class="max-w-7xl mx-auto">
+            <div class="glass-effect rounded-3xl overflow-hidden">
+                <div class="grid grid-cols-1 md:grid-cols-2">
+                    <div class="p-8 md:p-12">
+                        <h2 class="text-3xl md:text-4xl font-display font-bold mb-6">
+                            <span class="gradient-text">Interactive</span> Tutorial
+                        </h2>
+                        <p class="text-starlight mb-8">
+                            Practice the core mechanics in this guided tutorial. Follow the instructions below and interact with the 3D cube to complete each lesson.
+                        </p>
+                        
+                        <div class="space-y-6">
+                            <div class="flex items-start">
+                                <div class="w-10 h-10 rounded-full bg-nebula/20 flex items-center justify-center mr-4 mt-1">
+                                    <span class="text-nebula">1</span>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold mb-2">Basic Rotation</h3>
+                                    <p class="text-starlight text-sm">
+                                        Swipe in any direction to rotate the cube and view it from different angles.
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="w-10 h-10 rounded-full bg-nebula/20 flex items-center justify-center mr-4 mt-1">
+                                    <span class="text-nebula">2</span>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold mb-2">Block Selection</h3>
+                                    <p class="text-starlight text-sm">
+                                        Tap on any green-highlighted block to remove it from the structure.
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="w-10 h-10 rounded-full bg-nebula/20 flex items-center justify-center mr-4 mt-1">
+                                    <span class="text-nebula">3</span>
+                                </div>
+                                <div>
+                                    <h3 class="font-bold mb-2">Strategic Removal</h3>
+                                    <p class="text-starlight text-sm">
+                                        Identify and remove blocks that aren't supporting others to progress.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button id="reset-tutorial" class="mt-8 px-6 py-3 hidden rounded-full border border-nebula text-nebula hover:bg-nebula/10 transition">
+                            Reset Tutorial
+                        </button>
+                    </div>
+                    <div class="bg-void/50 flex items-center justify-center p-8 min-h-96">
+                        <div id="interactive-tutorial" class="w-full h-full">
+                            <!-- Interactive tutorial cube will be rendered here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pro Tips -->
+    <section class="py-20 px-6 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-5xl font-display font-bold mb-6">
+                    <span class="gradient-text">Neural</span> Enhancements
+                </h2>
+                <p class="text-xl text-starlight max-w-3xl mx-auto">
+                    Cognitive techniques to elevate your puzzle-solving performance
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <div class="glass-effect rounded-2xl p-8">
+                     <div class=" flex items-center justify-center mb-6 group-hover:rotate-[15deg] transition-transform duration-500">
+                        <img src="/assets/images/cognitive.png" class="object-cover rounded-xl " alt="cognitive"/>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Mental Rotation Training</h3>
+                    <p class="text-starlight">
+                        Practice visualizing the cube from different angles without rotating it. This builds your spatial reasoning skills and helps you plan moves faster.
+                    </p>
+                </div>
+                
+                <div class="glass-effect rounded-2xl p-8">
+                   <div class=" flex items-center justify-center mb-6 group-hover:rotate-[15deg] transition-transform duration-500">
+                        <img src="/assets/images/neon-drenched.png" class="object-cover rounded-xl " alt="cognitive"/>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Pattern Recognition</h3>
+                    <p class="text-starlight">
+                        The game uses recurring structural patterns. Train yourself to recognize common support configurations to speed up your analysis.
+                    </p>
+                </div>
+                
+                <div class="glass-effect rounded-2xl p-8">
+                    <div class=" flex items-center justify-center mb-6 group-hover:rotate-[15deg] transition-transform duration-500">
+                        <img src="/assets/images/quantum.png" class="object-cover rounded-xl " alt="cognitive"/>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4">Cognitive Load Management</h3>
+                    <p class="text-starlight">
+                        Break complex puzzles into smaller mental chunks. Solve one section completely before moving to the next to avoid overwhelm.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-28 px-6 relative overflow-hidden bg-gradient-to-r from-nebula/10 to-quantum/10">
+        <div class="max-w-4xl mx-auto text-center relative z-10">
+            <h2 class="text-4xl md:text-6xl font-display font-bold mb-8">
+                Ready to <span class="gradient-text">Dominate</span> the Cube?
+            </h2>
+            <p class="text-xl text-starlight mb-12 max-w-3xl mx-auto">
+                Download Tap Away 3D now and put these strategies to the ultimate test.
+            </p>
+            <a href="https://play.google.com/store/apps/details?id=com.towelie.tapAway" class="inline-block px-10 py-5 rounded-full bg-gradient-to-r from-nebula to-quantum text-white font-bold text-lg hover:shadow-2xl hover:shadow-nebula/30 transition-all transform hover:scale-105">
+                Download Now - It's Free
+            </a>
+        </div>
+        
+        <!-- Floating abstract shapes -->
+        <div class="absolute top-0 left-0 w-full h-full overflow-hidden -z-10">
+            <div class="absolute top-1/4 left-1/4 w-60 h-60 rounded-full bg-nebula/10 blur-3xl animate-float"></div>
+            <div class="absolute bottom-1/4 right-1/4 w-80 h-80 rounded-full bg-starlight/10 blur-3xl animate-float animation-delay-3000"></div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-cosmic border-t border-cosmic/50 py-16 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+                <div>
+                       <a href="/" class="flex items-center group pb-4">
+                <img src="/assets/images/logo.png" class="h-16 rounded-full mr-2" alt="logo"/>                
+            </a>
+                    <p class="text-starlight">
+                        The future of 3D puzzle gaming. Challenge your mind with our immersive spatial puzzles.
+                    </p>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-6 text-white">Navigation</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/" class="text-starlight hover:text-white transition">Home</a></li>
+                        <li><a href="/how-to-play/" class="text-white transition">How to Play</a></li>
+                        <li><a href="/responsible-gaming/" class="text-starlight hover:text-white transition">Responsible Gaming</a></li>
+                        <li><a href="/blog/" class="text-starlight hover:text-white transition">Blog</a></li>
+                        <li><a href="/contact/" class="text-starlight hover:text-white transition">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-6 text-white">Legal</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/privacy/" class="text-starlight hover:text-white transition">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="text-starlight hover:text-white transition">Terms of Service</a></li>
+                        <li><a href="/cookies/" class="text-starlight hover:text-white transition">Cookies Policy</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-6 text-white">Contact</h3>
+                    <address class="not-italic text-starlight">
+                        <p class="mb-3">Office Park, Barnfield Way</p>
+                        <p class="mb-3">5A Millennium, Preston</p>
+                        <p class="mb-3">PR2 5DB, United Kingdom</p>
+                        <p class="mb-3">+44 1704 567557</p>
+                        <p>info@tapaway3dpuzzle.com</p>
+                    </address>
+                </div>
+            </div>
+            
+            <div class="border-t border-starlight/10 mt-16 pt-8 text-center text-starlight/50">
+                <p>&copy; 2025 Kusya Games. All rights reserved. Tap Away 3D Puzzle is a trademark of Kusya Games.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            document.getElementById('mobile-menu').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        document.getElementById('close-mobile-menu').addEventListener('click', function() {
+            document.getElementById('mobile-menu').classList.add('hidden');
+            document.body.style.overflow = '';
+        });
+        
+        // Initialize tutorial cube
+        const initTutorialCube = () => {
+            const container = document.getElementById('tutorial-cube');
+            if (!container) return;
+            
+            // Set dimensions based on container
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+            
+            // Create scene
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            
+            renderer.setSize(width, height);
+            container.appendChild(renderer.domElement);
+            
+            // Create cube with different colored faces
+            const geometry = new THREE.BoxGeometry(3, 3, 3);
+            const materials = [
+                new THREE.MeshBasicMaterial({ color: 0x7f5af0, transparent: true, opacity: 0.8 }), // right
+                new THREE.MeshBasicMaterial({ color: 0x6246ea, transparent: true, opacity: 0.8 }),  // left
+                new THREE.MeshBasicMaterial({ color: 0xeebbc3, transparent: true, opacity: 0.8 }),  // top
+                new THREE.MeshBasicMaterial({ color: 0x2cb67d, transparent: true, opacity: 0.8 }),  // bottom
+                new THREE.MeshBasicMaterial({ color: 0x7f5af0, transparent: true, opacity: 0.8 }),  // front
+                new THREE.MeshBasicMaterial({ color: 0x6246ea, transparent: true, opacity: 0.8 })   // back
+            ];
+            
+            const cube = new THREE.Mesh(geometry, materials);
+            scene.add(cube);
+            
+            // Add lights
+            const ambientLight = new THREE.AmbientLight(0x404040);
+            scene.add(ambientLight);
+            
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            directionalLight.position.set(1, 1, 1);
+            scene.add(directionalLight);
+            
+            // Camera position
+            camera.position.z = 5;
+            
+            // Auto-rotation
+            const animate = () => {
+                requestAnimationFrame(animate);
+                
+                cube.rotation.x += 0.005;
+                cube.rotation.y += 0.01;
+                
+                renderer.render(scene, camera);
+            };
+            
+            // Handle window resize
+            const handleResize = () => {
+                camera.aspect = container.clientWidth / container.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(container.clientWidth, container.clientHeight);
+            };
+            
+            window.addEventListener('resize', handleResize);
+            
+            // Start animation
+            animate();
+        };
+        
+        // Initialize interactive tutorial cube
+        const initInteractiveTutorial = () => {
+            const container = document.getElementById('interactive-tutorial');
+            if (!container) return;
+            
+            // Set dimensions based on container
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+            
+            // Create scene
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            
+            renderer.setSize(width, height);
+            container.appendChild(renderer.domElement);
+            
+            // Create a more complex structure for the tutorial
+            const group = new THREE.Group();
+            
+            // Create a base platform
+            const baseGeometry = new THREE.BoxGeometry(4, 0.5, 4);
+            const baseMaterial = new THREE.MeshPhongMaterial({ color: 0x333333 });
+            const base = new THREE.Mesh(baseGeometry, baseMaterial);
+            base.position.y = -2;
+            group.add(base);
+            
+            // Create removable blocks
+            const blockMaterial = new THREE.MeshPhongMaterial({ 
+                color: 0x7f5af0,
+                transparent: true,
+                opacity: 0.9
+            });
+            
+            const blocks = [];
+            const positions = [
+                { x: -1, y: -0.75, z: 0 },
+                { x: 0, y: -0.75, z: 0 },
+                { x: 1, y: -0.75, z: 0 },
+                { x: 0, y: 0.75, z: 0 }
+            ];
+            
+            positions.forEach((pos, i) => {
+                const geometry = new THREE.BoxGeometry(0.8, 0.8, 0.8);
+                const block = new THREE.Mesh(geometry, blockMaterial.clone());
+                block.position.set(pos.x, pos.y, pos.z);
+                block.userData = { removable: i !== 3 }; // Top block shouldn't be removable first
+                group.add(block);
+                blocks.push(block);
+            });
+            
+            scene.add(group);
+            
+            // Add lights
+            const ambientLight = new THREE.AmbientLight(0x404040);
+            scene.add(ambientLight);
+            
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.8);
+            directionalLight.position.set(1, 1, 1);
+            scene.add(directionalLight);
+            
+            // Camera position
+            camera.position.z = 5;
+            camera.position.y = 1;
+            
+            // Interaction variables
+            let isDragging = false;
+            let previousMousePosition = { x: 0, y: 0 };
+            const raycaster = new THREE.Raycaster();
+            const mouse = new THREE.Vector2();
+            
+            // Mouse event handlers
+            container.addEventListener('mousedown', (e) => {
+                isDragging = true;
+                previousMousePosition = { 
+                    x: e.clientX, 
+                    y: e.clientY 
+                };
+                
+                // Check for block selection
+                mouse.x = (e.clientX / width) * 2 - 1;
+                mouse.y = - (e.clientY / height) * 2 + 1;
+                
+                raycaster.setFromCamera(mouse, camera);
+                const intersects = raycaster.intersectObjects(blocks);
+                
+                if (intersects.length > 0) {
+                    const block = intersects[0].object;
+                    if (block.userData.removable) {
+                        // Highlight the block
+                        block.material.color.set(0x2cb67d);
+                        
+                        // Remove after short delay
+                        setTimeout(() => {
+                            group.remove(block);
+                            blocks.splice(blocks.indexOf(block), 1);
+                            
+                            // Make top block removable now
+                            if (blocks.length === 3) {
+                                blocks[2].userData.removable = true;
+                                blocks[2].material.color.set(0x7f5af0);
+                            }
+                        }, 200);
+                    } else {
+                        // Flash red to indicate can't remove
+                        const originalColor = block.material.color.getHex();
+                        block.material.color.set(0xff0000);
+                        setTimeout(() => {
+                            block.material.color.setHex(originalColor);
+                        }, 200);
+                    }
+                }
+            });
+            
+            container.addEventListener('mouseup', () => {
+                isDragging = false;
+            });
+            
+            container.addEventListener('mousemove', (e) => {
+                if (isDragging) {
+                    const deltaMove = {
+                        x: e.clientX - previousMousePosition.x,
+                        y: e.clientY - previousMousePosition.y
+                    };
+                    
+                    group.rotation.y += deltaMove.x * 0.01;
+                    group.rotation.x += deltaMove.y * 0.01;
+                }
+                
+                previousMousePosition = { 
+                    x: e.clientX, 
+                    y: e.clientY 
+                };
+            });
+            
+            // Touch event handlers for mobile
+            container.addEventListener('touchstart', (e) => {
+                isDragging = true;
+                previousMousePosition = { 
+                    x: e.touches[0].clientX, 
+                    y: e.touches[0].clientY 
+                };
+                
+                // Check for block selection
+                mouse.x = (e.touches[0].clientX / width) * 2 - 1;
+                mouse.y = - (e.touches[0].clientY / height) * 2 + 1;
+                
+                raycaster.setFromCamera(mouse, camera);
+                const intersects = raycaster.intersectObjects(blocks);
+                
+                if (intersects.length > 0) {
+                    const block = intersects[0].object;
+                    if (block.userData.removable) {
+                        // Highlight the block
+                        block.material.color.set(0x2cb67d);
+                        
+                        // Remove after short delay
+                        setTimeout(() => {
+                            group.remove(block);
+                            blocks.splice(blocks.indexOf(block), 1);
+                            
+                            // Make top block removable now
+                            if (blocks.length === 3) {
+                                blocks[2].userData.removable = true;
+                                blocks[2].material.color.set(0x7f5af0);
+                            }
+                        }, 200);
+                    } else {
+                        // Flash red to indicate can't remove
+                        const originalColor = block.material.color.getHex();
+                        block.material.color.set(0xff0000);
+                        setTimeout(() => {
+                            block.material.color.setHex(originalColor);
+                        }, 200);
+                    }
+                }
+                
+                e.preventDefault();
+            });
+            
+            container.addEventListener('touchend', () => {
+                isDragging = false;
+            });
+            
+            container.addEventListener('touchmove', (e) => {
+                if (isDragging) {
+                    const deltaMove = {
+                        x: e.touches[0].clientX - previousMousePosition.x,
+                        y: e.touches[0].clientY - previousMousePosition.y
+                    };
+                    
+                    group.rotation.y += deltaMove.x * 0.01;
+                    group.rotation.x += deltaMove.y * 0.01;
+                    
+                    previousMousePosition = { 
+                        x: e.touches[0].clientX, 
+                        y: e.touches[0].clientY 
+                    };
+                }
+                e.preventDefault();
+            });
+            
+            // Reset tutorial
+            document.getElementById('reset-tutorial').addEventListener('click', function() {
+                // Remove all blocks
+                while (blocks.length > 0) {
+                    const block = blocks.pop();
+                    group.remove(block);
+                }
+                
+                // Recreate blocks
+                positions.forEach((pos, i) => {
+                    const geometry = new THREE.BoxGeometry(0.8, 0.8, 0.8);
+                    const block = new THREE.Mesh(geometry, blockMaterial.clone());
+                    block.position.set(pos.x, pos.y, pos.z);
+                    block.userData = { removable: i !== 3 }; // Top block shouldn't be removable first
+                    group.add(block);
+                    blocks.push(block);
+                });
+                
+                // Reset rotation
+                group.rotation.set(0, 0, 0);
+            });
+            
+            // Animation loop
+            const animate = () => {
+                requestAnimationFrame(animate);
+                renderer.render(scene, camera);
+            };
+            
+            // Handle window resize
+            const handleResize = () => {
+                camera.aspect = container.clientWidth / container.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(container.clientWidth, container.clientHeight);
+            };
+            
+            window.addEventListener('resize', handleResize);
+            
+            // Start animation
+            animate();
+        };
+        
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            initTutorialCube();
+            initInteractiveTutorial();
+            
+            // Animate step cards on scroll
+            gsap.utils.toArray('.step-card').forEach((card, i) => {
+                gsap.from(card, {
+                    scrollTrigger: {
+                        trigger: card,
+                        start: "top 80%",
+                        toggleActions: "play none none none"
+                    },
+                    y: 50,
+                    opacity: 0,
+                    duration: 0.8,
+                    delay: i * 0.1,
+                    ease: "power2.out"
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | GearTrade Sleep Systems</title>
+    <meta name="description" content="Learn about GearTrade Sleep Systems - Canadian specialists in ultralight sleep systems for backpackers since 2012. Our story, mission, and team.">
+    <meta name="keywords" content="GearTrade about us, Canadian outdoor gear company, ultralight sleep specialists, backpacking gear history, Jesse and Michelle Hebenton">
+    
+    <!-- Favicon -->
+<link rel="icon" href="/assets/logo.avif" type="image/x-icon">
+    <link rel="canonical" href="https://www.geartradesleepsys.com/about/" />
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            DEFAULT: '#3a5a78',
+                            light: '#4a6a88',
+                            dark: '#2a4a68'
+                        },
+                        dark: {
+                            DEFAULT: '#121212',
+                            100: '#1e1e1e',
+                            200: '#2a2a2a',
+                            300: '#363636',
+                            400: '#424242',
+                            500: '#4e4e4e',
+                            600: '#5a5a5a',
+                        },
+                        accent: '#f59e0b',
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        .about-gradient {
+            background: linear-gradient(135deg, rgba(18, 18, 18, 0.644) 0%, rgba(18, 18, 18, 0.527) 100%);
+        }
+        .cart-badge {
+            top: -0.5rem;
+            right: -0.5rem;
+        }
+        .cookies-banner {
+            bottom: -100%;
+            transition: bottom 0.3s ease-in-out;
+        }
+        .cookies-banner.show {
+            bottom: 0;
+        }
+        .dark-card {
+            background-color: #1e1e1e;
+            border: 1px solid #2a2a2a;
+        }
+        .timeline-item:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: 1.25rem;
+            top: 2.5rem;
+            height: calc(100% - 2.5rem);
+            width: 2px;
+            background-color: #2a2a2a;
+        }
+        .team-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body class="font-sans antialiased bg-dark-100 text-gray-300">
+    <!-- Cookies Banner -->
+    <div id="cookiesBanner" class="cookies-banner fixed left-0 right-0 bg-dark-200 shadow-lg p-4 md:p-6 z-50 border-t border-dark-300">
+        <div class="container mx-auto flex flex-col md:flex-row items-center justify-between">
+            <div class="mb-4 md:mb-0 md:mr-8">
+                <h3 class="text-lg font-semibold mb-1 text-white">We Value Your Privacy</h3>
+                <p class="text-sm text-gray-400">We use cookies to enhance your browsing experience and analyze our traffic. By clicking "Accept", you consent to our use of cookies.</p>
+            </div>
+            <div class="flex flex-col sm:flex-row gap-2">
+                <button id="acceptCookies" class="px-4 py-2 bg-accent text-dark-100 rounded-md hover:bg-opacity-90 transition">Accept</button>
+                <button id="declineCookies" class="px-4 py-2 bg-dark-300 text-gray-300 rounded-md hover:bg-dark-400 transition">Decline</button>
+                <a href="/privacy/" class="px-4 py-2 text-accent hover:underline text-sm">Learn More</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="bg-dark-200 shadow-sm sticky top-0 z-40 border-b border-dark-300">
+        <div class="container mx-auto px-4">
+            <!-- Top Bar -->
+            <div class="flex items-center justify-between py-4">
+                <!-- Logo -->
+                <a href="/" class="flex items-center">
+                   <img src="/assets/logo.avif" alt="GearTrade Sleep Systems" class="w-32">
+                </a>
+                
+                <!-- Navigation Icons -->
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <a href="/cart/" class="p-2 text-gray-400 hover:text-white relative">
+                            <i class="fas fa-shopping-cart text-lg"></i>
+                            <span id="cartCount" class="cart-badge absolute bg-accent text-dark-100 text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center hidden">0</span>
+                        </a>
+                    </div>
+                    <button id="mobileMenuButton" class="p-2 text-gray-400 hover:text-white md:hidden">
+                        <i class="fas fa-bars text-lg"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Main Navigation -->
+            <nav class="hidden md:block border-t border-dark-300">
+                <ul class="flex space-x-8 py-3">
+                    <li><a href="/" class="text-gray-400 hover:text-white transition">Home</a></li>
+                    <li><a href="/shop/" class="text-gray-400 hover:text-white transition">Shop</a></li>
+                    <li><a href="/blog/" class="text-gray-400 hover:text-white transition">Blog</a></li>
+                    <li><a href="/about/" class="text-white font-medium border-b-2 border-accent pb-3">About Us</a></li>
+                    <li><a href="/contact/" class="text-gray-400 hover:text-white transition">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-dark-200 border-t border-dark-300 absolute w-full left-0 z-50 shadow-lg">
+            <div class="container mx-auto px-4 py-3">
+                <ul class="space-y-2">
+                    <li><a href="/" class="block py-2 text-gray-400 hover:text-white transition">Home</a></li>
+                    <li><a href="/shop/" class="block py-2 text-gray-400 hover:text-white transition">Shop</a></li>
+                    <li><a href="/blog/" class="block py-2 text-gray-400 hover:text-white transition">Blog</a></li>
+                    <li><a href="/about/" class="block py-2 text-white font-medium">About Us</a></li>
+                    <li><a href="/contact/" class="block py-2 text-gray-400 hover:text-white transition">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative text-white overflow-hidden">
+        <img src="/assets/blog-down-care.webp" alt="Mountain landscape with camping gear" class="w-full h-full object-cover absolute inset-0">
+        <div class="about-gradient absolute inset-0"></div>
+        <div class="container mx-auto px-4 py-32 relative z-10">
+            <div class="max-w-2xl mx-auto text-center animate-fade-in">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">Our Story</h1>
+                <p class="text-xl text-gray-300">Canadian specialists in ultralight sleep systems for backpackers since 2012</p>
+            </div>
+        </div>
+    </section>
+
+   <section class="py-12 bg-dark-200">
+  <div class="container mx-auto px-4">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-3xl font-bold mb-8 text-white text-center">Our Story: The GearTrade Journey</h2>
+
+      <div class="prose prose-invert max-w-none text-gray-300">
+        <p>GearTrade began in 2012 in Okotoks, Alberta, founded by a passionate outdoor adventurer who saw a need for a specialized outdoor gear marketplace. From humble beginnings in a basement, the idea grew into a trusted name in ultralight sleep systems across North America.</p>
+        <p>In 2018, Jesse and Michelle Hebenton took over with fresh ideas and industry expertise. Jesse’s background in Eco Tourism and Outdoor Leadership, paired with Michelle’s business skills, has helped GearTrade thrive.</p>
+        <p>Despite our growth, we continue to offer personal touches — handwritten notes, expert advice, and genuine care for our customers' outdoor adventures.</p>
+      </div>
+
+      <!-- Timeline -->
+      <div class="mt-12 space-y-10">
+        <h3 class="text-2xl font-bold mb-6 text-white text-center">Key Milestones</h3>
+        
+        <div class="relative border-l-2 border-accent pl-6">
+          <!-- Timeline Item -->
+          <div class="mb-10 flex items-start gap-4">
+            <div class="text-accent mt-1">
+              <i class="fas fa-home fa-lg"></i>
+            </div>
+            <div>
+              <h4 class="text-xl font-semibold text-white mb-1">2012 – The Beginning</h4>
+              <p class="text-gray-400">Started in a basement in Okotoks, Alberta, offering a handful of quality outdoor products.</p>
+            </div>
+          </div>
+
+          <!-- Timeline Item -->
+          <div class="mb-10 flex items-start gap-4">
+            <div class="text-accent mt-1">
+              <i class="fas fa-warehouse fa-lg"></i>
+            </div>
+            <div>
+              <h4 class="text-xl font-semibold text-white mb-1">2015 – First Warehouse</h4>
+              <p class="text-gray-400">Moved to a warehouse to accommodate our expanding product line and customer base.</p>
+            </div>
+          </div>
+
+          <!-- Timeline Item -->
+          <div class="mb-10 flex items-start gap-4">
+            <div class="text-accent mt-1">
+              <i class="fas fa-handshake fa-lg"></i>
+            </div>
+            <div>
+              <h4 class="text-xl font-semibold text-white mb-1">2018 – New Ownership</h4>
+              <p class="text-gray-400">Jesse and Michelle Hebenton brought fresh leadership, transforming the company with a clear vision and customer focus.</p>
+            </div>
+          </div>
+
+          <!-- Timeline Item -->
+          <div class="mb-10 flex items-start gap-4">
+            <div class="text-accent mt-1">
+              <i class="fas fa-store fa-lg"></i>
+            </div>
+            <div>
+              <h4 class="text-xl font-semibold text-white mb-1">2020 – Retail Store Opens</h4>
+              <p class="text-gray-400">Opened our first physical store in downtown Okotoks for local customers and explorers.</p>
+            </div>
+          </div>
+
+          <!-- Timeline Item -->
+          <div class="flex items-start gap-4">
+            <div class="text-accent mt-1">
+              <i class="fas fa-expand fa-lg"></i>
+            </div>
+            <div>
+              <h4 class="text-xl font-semibold text-white mb-1">2024 – Nationwide Expansion</h4>
+              <p class="text-gray-400">Expanded shipping across Canada, with a strong focus on ultralight sleep gear and high-performance products.</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+
+    <!-- Our Values -->
+    <section class="py-12 bg-dark-200">
+        <div class="container mx-auto px-4">
+            <h2 class="text-3xl font-bold mb-12 text-white text-center">Our Values</h2>
+            
+            <div class="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <!-- Value 1 -->
+                <div class="dark-card p-6 rounded-xl text-center">
+                    <div class="w-16 h-16 bg-accent bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-mountain text-accent text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3 text-white">Expertise</h3>
+                    <p class="text-gray-400">We test all our products in real backcountry conditions and share honest, experience-based recommendations.</p>
+                </div>
+                
+                <!-- Value 2 -->
+                <div class="dark-card p-6 rounded-xl text-center">
+                    <div class="w-16 h-16 bg-accent bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-heart text-accent text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3 text-white">Customer Care</h3>
+                    <p class="text-gray-400">Every customer gets personalized attention. We're happy to spend time ensuring you get the right gear.</p>
+                </div>
+                
+                <!-- Value 3 -->
+                <div class="dark-card p-6 rounded-xl text-center">
+                    <div class="w-16 h-16 bg-accent bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-leaf text-accent text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold mb-3 text-white">Sustainability</h3>
+                    <p class="text-gray-400">We prioritize durable, repairable gear that lasts, reducing waste in outdoor recreation.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Visit Us -->
+    
+
+    <!-- Newsletter -->
+    <section class="py-12 bg-dark-300 text-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="text-3xl font-bold mb-4">Join Our Community</h2>
+                <p class="text-lg text-gray-300 mb-8">Subscribe for gear tips, adventure stories, and exclusive offers.</p>
+                <form class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+                    <input type="email" placeholder="Your email address" class="flex-1 px-4 py-3 bg-dark-200 border border-dark-400 text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent placeholder-gray-400">
+                    <button type="submit" class="px-6 py-3 bg-accent text-dark-100 font-medium rounded-lg hover:bg-opacity-90 transition">Subscribe</button>
+                </form>
+                <p class="text-sm mt-4 text-gray-400">We respect your privacy. Unsubscribe at any time.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark-200 text-gray-400 pt-12 pb-6 border-t border-dark-300">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <!-- About -->
+                <div>
+                    <h3 class="text-white text-lg font-semibold mb-4">About GearTrade</h3>
+                    <p class="mb-4">Canadian specialists in ultralight sleep systems for backpackers and outdoor enthusiasts since 2012.</p>
+                    <div class="flex space-x-4">
+                        <a href="https://www.facebook.com/Geartrade.ca/" class="text-gray-400 hover:text-white transition">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.instagram.com/geartrade.ca/" class="text-gray-400 hover:text-white transition">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-white text-lg font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/shop/" class="hover:text-white transition">Shop All</a></li>
+                        <li><a href="/blog/" class="hover:text-white transition">Blog</a></li>
+                        <li><a href="/about/" class="hover:text-white transition">About Us</a></li>
+                        <li><a href="/contact/" class="hover:text-white transition">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Customer Service -->
+                <div>
+                    <h3 class="text-white text-lg font-semibold mb-4">Customer Service</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/cookies/" class="hover:text-white transition">Cookies</a></li>
+                        <li><a href="/privacy/" class="hover:text-white transition">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="hover:text-white transition">Terms of Service</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Contact Info -->
+                <div>
+                    <h3 class="text-white text-lg font-semibold mb-4">Contact Info</h3>
+                    <address class="not-italic">
+                        <p class="mb-2"><i class="fas fa-map-marker-alt mr-2"></i> 999 Canada Pl, Vancouver, BC</p>
+                        <p class="mb-2"><i class="fas fa-phone-alt mr-2"></i> +1 (604) 775-7200</p>
+                        <p class="mb-2"><i class="fas fa-envelope mr-2"></i> info@geartradesleepsys.com</p>
+                        <p><i class="fas fa-clock mr-2"></i> Mon-Fri: 9am-5pm PT</p>
+                    </address>
+                </div>
+            </div>
+            
+            <!-- Copyright -->
+            <div class="border-t border-dark-300 pt-6 text-center text-sm">
+                <p>&copy; 2025 GearTrade Sleep Systems. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Cart Functionality
+        const cartCount = document.getElementById('cartCount');
+        
+        // Initialize cart from localStorage
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        
+        // Update cart count display
+        function updateCartCount() {
+            const count = cart.reduce((total, item) => total + item.quantity, 0);
+            if (count > 0) {
+                cartCount.textContent = count;
+                cartCount.classList.remove('hidden');
+            } else {
+                cartCount.classList.add('hidden');
+            }
+        }
+        
+        // Cookies Banner
+        const cookiesBanner = document.getElementById('cookiesBanner');
+        const acceptCookies = document.getElementById('acceptCookies');
+        const declineCookies = document.getElementById('declineCookies');
+        
+        // Check if cookies preference is already set
+        if (!localStorage.getItem('cookiesAccepted')) {
+            setTimeout(() => {
+                cookiesBanner.classList.add('show');
+            }, 1000);
+        }
+        
+        acceptCookies.addEventListener('click', () => {
+            localStorage.setItem('cookiesAccepted', 'true');
+            cookiesBanner.classList.remove('show');
+        });
+        
+        declineCookies.addEventListener('click', () => {
+            localStorage.setItem('cookiesAccepted', 'false');
+            cookiesBanner.classList.remove('show');
+        });
+        
+        // Initialize cart count display
+        updateCartCount();
+    </script>
+</body>
+</html>

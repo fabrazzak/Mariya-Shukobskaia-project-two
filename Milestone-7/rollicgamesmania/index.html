@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Rollic Games Mania - Experience the ultimate pressure washing adventure with Pressure Washing Run and other exciting mobile games.">
+    <meta name="keywords" content="Rollic Games, mobile games, pressure washing game, Android games, casual games, gaming apps">
+    <meta name="author" content="Rollic Games">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://rollicgamesmania.com/">
+    
+    <title>Rollic Games Mania | Exciting Mobile Games</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/image/logo.webp" type="image/x-icon">
+    
+    <!-- Google Fonts - Rajdhani -->
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        rajdhani: ['Rajdhani', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#00ffff',
+                        secondary: '#8e05c2',
+                        accent: '#ff0066',
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <style>
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background-color: #0f0f1a;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, #00ffff, #8e05c2, #ff0066);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .hero-bg {
+            background: radial-gradient(circle at 30% 50%, rgba(142, 5, 194, 0.2) 0%, rgba(0, 0, 0, 0) 50%),
+                        radial-gradient(circle at 70% 30%, rgba(0, 255, 255, 0.2) 0%, rgba(0, 0, 0, 0) 50%),
+                        radial-gradient(circle at 50% 80%, rgba(255, 0, 102, 0.2) 0%, rgba(0, 0, 0, 0) 50%);
+        }
+        
+        .parallax-bg {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        
+        .game-card {
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+        
+        .game-card:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 25px 50px -12px rgba(0, 255, 255, 0.3);
+        }
+        
+        .blob {
+            position: absolute;
+            filter: blur(60px);
+            border-radius: 50%;
+            z-index: -1;
+        }
+        
+        .blob-1 {
+            width: 500px;
+            height: 500px;
+            background: rgba(0, 255, 255, 0.2);
+            top: -200px;
+            left: -200px;
+        }
+        
+        .blob-2 {
+            width: 400px;
+            height: 400px;
+            background: rgba(142, 5, 194, 0.2);
+            bottom: -150px;
+            right: -100px;
+        }
+        
+        .blob-3 {
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 0, 102, 0.2);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .threejs-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.3;
+        }
+    </style>
+</head>
+<body class="font-rajdhani">
+    <!-- Cookie Consent Banner -->
+    <div id="cookie-banner" class="fixed bottom-0 left-0 right-0 bg-gray-900 text-white p-4 z-50 hidden">
+        <div class="container mx-auto flex flex-col md:flex-row items-center justify-between">
+            <div class="mb-4 md:mb-0 md:mr-4">
+                <p class="text-sm">We use cookies to enhance your experience. By continuing to visit this site, you agree to our use of cookies.</p>
+            </div>
+            <div class="flex space-x-3">
+                <button id="cookie-decline" class="px-4 py-2 text-sm border border-accent text-accent rounded-md hover:bg-accent hover:text-white transition-colors">Decline</button>
+                <button id="cookie-accept" class="px-4 py-2 text-sm bg-accent text-white rounded-md hover:bg-opacity-90 transition-colors">Accept</button>
+                <a href="/cookies/" class="px-4 py-2 text-sm border border-primary text-primary rounded-md hover:bg-primary hover:text-gray-900 transition-colors">Learn More</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-40 bg-gray-900 bg-opacity-90 backdrop-blur-md border-b border-gray-800">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <a href="/" class="flex items-center gap-3">
+                        <img src="/image/logo.png" alt="logo" class="rounded-full md:h-14 h-10 ">                         
+                    </a>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="text-white hover:text-primary transition-colors">Home</a>
+                    <a href="/games/" class="text-white hover:text-primary transition-colors">Games</a>
+                    <a href="/about/" class="text-white hover:text-primary transition-colors">About</a>
+                    <a href="/blog/" class="text-white hover:text-primary transition-colors">Blog</a>
+                    <a href="/responsible-gaming/" class="text-white hover:text-primary transition-colors">Responsible Gaming</a>
+                    <a href="/contact/" class="text-white hover:text-primary transition-colors">Contact</a>
+                </div>
+                
+                <div class="flex items-center space-x-4 lg:block md:hidden">
+                    <a href="https://play.google.com/store/apps/details?id=com.wixot.pressurewashing&hl=en" class="hidden md:block px-4 py-2 bg-primary text-gray-900 font-semibold rounded-md hover:bg-opacity-90 transition-colors">Download Now</a>
+                    <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-gray-900">
+            <div class="container mx-auto px-6 py-4 flex flex-col space-y-4">
+                <a href="/" class="text-white hover:text-primary transition-colors">Home</a>
+                <a href="/games/" class="text-white hover:text-primary transition-colors">Games</a>
+                <a href="/about/" class="text-white hover:text-primary transition-colors">About</a>
+                <a href="/blog/" class="text-white hover:text-primary transition-colors">Blog</a>
+                <a href="/contact/" class="text-white hover:text-primary transition-colors">Contact</a>
+                <a href="https://play.google.com/store/apps/details?id=com.wixot.pressurewashing&hl=en" class="px-4 py-2 bg-primary text-gray-900 font-semibold rounded-md hover:bg-opacity-90 transition-colors text-center">Download Now</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center overflow-hidden hero-bg pt-20">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        
+        <div class="threejs-container" id="threejs-canvas"></div>
+        
+        <div class="container mx-auto px-6 py-20 z-10">
+            <div class="flex flex-col lg:flex-row items-center">
+                <div class="lg:w-1/2 mb-12 lg:mb-0">
+                    <h1 class="text-4xl md:text-6xl font-bold mb-6">
+                        <span class="gradient-text">Pressure Washing Run</span>
+                        <br>The Ultimate Cleaning Adventure
+                    </h1>
+                    <p class="text-lg text-gray-300 mb-8">Experience the satisfaction of cleaning like never before. Blast away dirt, upgrade your gear, and compete with players worldwide in this addictive pressure washing simulator.</p>
+                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                        <a href="https://play.google.com/store/apps/details?id=com.wixot.pressurewashing&hl=en" class="px-8 py-4 bg-primary text-gray-900 font-bold rounded-lg hover:bg-opacity-90 transition-colors text-center">Download Now</a>
+                        <a href="#features" class="px-8 py-4 border border-primary text-primary font-bold rounded-lg hover:bg-primary hover:text-gray-900 transition-colors text-center">Explore Features</a>
+                    </div>
+                </div>
+                <div class="lg:w-1/2 flex justify-center">
+                    <div class="relative w-full max-w-md">
+                        <img src="/image/pressure-wasing.png" alt="Pressure Washing Run Game Screenshot" class="w-full h-auto md:h-[500px] object-cover rounded-xl shadow-2xl transform rotate-3 animate-float">
+                        <div class="absolute -bottom-6 -right-6 bg-secondary p-4 rounded-lg shadow-lg">
+                            <div class="flex items-center">
+                                <div class="text-yellow-400 mr-2">
+                                    ★★★★☆
+                                </div>
+                                <div class="text-white font-bold">3.8</div>
+                            </div>
+                            <div class="text-white text-sm">1M+ Downloads</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Game Stats Section -->
+    <section class="py-16 bg-gray-900">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <div class="p-6 rounded-lg bg-gray-800 transform transition-all hover:scale-105">
+                    <div class="text-4xl font-bold text-primary mb-2">1M+</div>
+                    <div class="text-gray-300">Downloads</div>
+                </div>
+                <div class="p-6 rounded-lg bg-gray-800 transform transition-all hover:scale-105">
+                    <div class="text-4xl font-bold text-secondary mb-2">22K+</div>
+                    <div class="text-gray-300">Reviews</div>
+                </div>
+                <div class="p-6 rounded-lg bg-gray-800 transform transition-all hover:scale-105">
+                    <div class="text-4xl font-bold text-accent mb-2">100+</div>
+                    <div class="text-gray-300">Levels</div>
+                </div>
+                <div class="p-6 rounded-lg bg-gray-800 transform transition-all hover:scale-105">
+                    <div class="text-4xl font-bold text-primary mb-2">4.5★</div>
+                    <div class="text-gray-300">Average Rating</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 bg-gray-900">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Why Players Love <span class="gradient-text">Pressure Washing Run</span></h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Discover the features that make our game stand out from the crowd</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="p-8 rounded-xl bg-gray-800 border border-gray-700 hover:border-primary transition-all transform hover:-translate-y-2">
+                    <div class="w-16 h-16 bg-primary bg-opacity-10 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Satisfying Gameplay</h3>
+                    <p class="text-gray-400">Experience the joy of cleaning with the pressure washer and watching dirt disappear in real-time with realistic physics.</p>
+                </div>
+                
+                <div class="p-8 rounded-xl bg-gray-800 border border-gray-700 hover:border-secondary transition-all transform hover:-translate-y-2">
+                    <div class="w-16 h-16 bg-secondary bg-opacity-10 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Upgrade System</h3>
+                    <p class="text-gray-400">Unlock new tools and abilities to clean more effectively. Upgrade your pressure washer for maximum power.</p>
+                </div>
+                
+                <div class="p-8 rounded-xl bg-gray-800 border border-gray-700 hover:border-accent transition-all transform hover:-translate-y-2">
+                    <div class="w-16 h-16 bg-accent bg-opacity-10 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">ASMR Experience</h3>
+                    <p class="text-gray-400">The soothing sound of water pressure washing adds to the fun and creates a relaxing gaming experience.</p>
+                </div>
+                
+                <div class="p-8 rounded-xl bg-gray-800 border border-gray-700 hover:border-primary transition-all transform hover:-translate-y-2">
+                    <div class="w-16 h-16 bg-primary bg-opacity-10 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Global Leaderboards</h3>
+                    <p class="text-gray-400">Compete with players around the world for the top spot in cleaning efficiency and speed.</p>
+                </div>
+                
+                <div class="p-8 rounded-xl bg-gray-800 border border-gray-700 hover:border-secondary transition-all transform hover:-translate-y-2">
+                    <div class="w-16 h-16 bg-secondary bg-opacity-10 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Diverse Levels</h3>
+                    <p class="text-gray-400">From roads to walls, each level offers new cleaning challenges with increasing difficulty.</p>
+                </div>
+                
+                <div class="p-8 rounded-xl bg-gray-800 border border-gray-700 hover:border-accent transition-all transform hover:-translate-y-2">
+                    <div class="w-16 h-16 bg-accent bg-opacity-10 rounded-lg flex items-center justify-center mb-6">
+                        <svg class="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Free to Play</h3>
+                    <p class="text-gray-400">Enjoy the core game for free with optional in-app purchases for cosmetic upgrades.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   <section class="py-20 bg-gray-900">
+  <div class="container mx-auto px-6">
+    <div class="text-center mb-12">
+      <h2 class="text-3xl md:text-4xl font-bold mb-4">See It In <span class="gradient-text">Action</span></h2>
+      <p class="text-gray-400 max-w-2xl mx-auto">Watch the trailer to see the satisfying gameplay mechanics</p>
+    </div>
+
+    <!-- Video Container -->
+    <div class="relative w-full md:w-[700px] max-w-4xl mx-auto rounded-xl overflow-hidden shadow-2xl">
+      <video
+        class="w-full h-auto"
+        autoplay
+        loop
+        muted
+        playsinline
+      >
+        <source src="https://play-games.googleusercontent.com/vp/mp4/1280x720/3ibybcklURQ.mp4" type="video/mp4" />
+        Your browser does not support the video tag.
+      </video>
+    </div>
+  </div>
+</section>
+
+
+    <!-- Testimonials Section -->
+    <section class="py-20 bg-gray-900">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">What <span class="gradient-text">Players Say</span></h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Don't just take our word for it - hear from our community</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="p-8 rounded-xl bg-gray-800 border border-gray-700">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-primary bg-opacity-10 flex items-center justify-center text-primary font-bold mr-4">
+                            <img src="/image/John D.jpeg" alt="john" class="rounded-full w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-bold">John D.</h4>
+                            <div class="flex text-yellow-400">
+                                ★★★★★
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 italic">"This game is so satisfying! The cleaning mechanics are incredibly realistic and the progression system keeps me coming back for more."</p>
+                </div>
+                
+                <div class="p-8 rounded-xl bg-gray-800 border border-gray-700">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-secondary bg-opacity-10 flex items-center justify-center text-secondary font-bold mr-4">
+                             <img src="/image/sarah-m.jpeg" alt="Sarah" class="rounded-full w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-bold">Sarah M.</h4>
+                            <div class="flex text-yellow-400">
+                                ★★★★☆
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 italic">"I love how relaxing this game is after a long day. The ASMR sounds are perfect and the graphics are surprisingly good for a mobile game."</p>
+                </div>
+                
+                <div class="p-8 rounded-xl bg-gray-800 border border-gray-700">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full bg-accent bg-opacity-10 flex items-center justify-center text-accent font-bold mr-4">
+                             <img src="/image/Alex R.jpeg" alt="Alex" class="rounded-full w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-bold">Alex R.</h4>
+                            <div class="flex text-yellow-400">
+                                ★★★★★
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 italic">"The upgrade system is really well done. I feel like I'm constantly working towards something new. Highly recommend for casual gamers!"</p>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="https://play.google.com/store/apps/details?id=com.wixot.pressurewashing" class="inline-flex items-center px-6 py-3 border border-primary text-primary font-bold rounded-lg hover:bg-primary hover:text-gray-900 transition-colors">
+                    Read More Reviews
+                    <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Screenshots Section -->
+    <section class="py-20 bg-gray-900">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Game <span class="gradient-text">Screenshots</span></h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Take a look at the stunning visuals and satisfying cleaning action</p>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                <div class="overflow-hidden rounded-lg cursor-pointer transform transition-all hover:scale-105">
+                    <img src="/image/image1.webp" alt="Game Screenshot 1" class="w-full h-full md:h-[400px] object-cover">
+                </div>
+                <div class="overflow-hidden rounded-lg cursor-pointer transform transition-all hover:scale-105">
+                    <img src="/image/image2.webp" alt="Game Screenshot 2" class="w-full h-full md:h-[400px] object-cover">
+                </div>
+                <div class="overflow-hidden rounded-lg cursor-pointer transform transition-all hover:scale-105">
+                    <img src="/image/image3.webp" alt="Game Screenshot 3" class="w-full h-full md:h-[400px] object-cover">
+                </div>
+                <div class="overflow-hidden rounded-lg cursor-pointer transform transition-all hover:scale-105">
+                    <img src="/image/image4.webp" alt="Game Screenshot 4" class="w-full h-full md:h-[400px] object-cover">
+                </div>
+                <div class="overflow-hidden rounded-lg cursor-pointer transform transition-all hover:scale-105">
+                    <img src="/image/image5.webp" alt="Game Screenshot 5" class="w-full h-full md:h-[400px] object-cover">
+                </div>
+                <div class="overflow-hidden rounded-lg cursor-pointer transform transition-all hover:scale-105">
+                    <img src="/image/image6.webp" alt="Game Screenshot 6" class="w-full h-full md:h-[400px] object-cover">
+                </div>
+                <div class="overflow-hidden rounded-lg cursor-pointer transform transition-all hover:scale-105">
+                    <img src="/image/image1.webp" alt="Game Screenshot 7" class="w-full h-full md:h-[400px] object-cover">
+                </div>
+                <div class="overflow-hidden rounded-lg cursor-pointer transform transition-all hover:scale-105">
+                    <img src="/image/image2.webp" alt="Game Screenshot 8" class="w-full h-full md:h-[400px] object-cover">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Download CTA Section -->
+    <section class="py-20 bg-gradient-to-br from-gray-900 to-gray-800">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-3xl md:text-5xl font-bold mb-6">Ready to Start <span class="gradient-text">Cleaning?</span></h2>
+            <p class="text-xl text-gray-300 max-w-2xl mx-auto mb-10">Join millions of players worldwide in the most satisfying pressure washing experience on mobile!</p>
+            
+            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+                <a href="https://play.google.com/store/apps/details?id=com.wixot.pressurewashing&hl=en" class="px-8 py-4 bg-primary text-gray-900 font-bold rounded-lg hover:bg-opacity-90 transition-colors flex items-center justify-center">
+                    <svg class="w-6 h-6 mr-2" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/>
+                    </svg>
+                    Download on Google Play
+                </a>
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Preview Section -->
+    <section class="py-20 bg-gray-900">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Latest <span class="gradient-text">News</span></h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Stay updated with the latest game updates, tips, and announcements</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <a href="/blog/new-levels-update/" class="group">
+                    <div class="h-64 overflow-hidden rounded-t-lg">
+                        <img src="/image/blog1.webp" alt="New Levels Update" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="p-6 bg-gray-800 rounded-b-lg border border-gray-700 border-t-0 group-hover:border-primary transition-colors">
+                        <div class="text-sm text-primary mb-2">Update • July 3, 2025</div>
+                        <h3 class="text-xl font-bold mb-2 group-hover:text-primary transition-colors">New Levels Added in Latest Update</h3>
+                        <p class="text-gray-400">Discover the 10 challenging new levels added to Pressure Washing Run in our latest content update.</p>
+                    </div>
+                </a>
+                
+                <a href="/blog/cleaning-tips/" class="group">
+                    <div class="h-64 overflow-hidden rounded-t-lg">
+                        <img src="/image/background.png" alt="Cleaning Tips" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="p-6 bg-gray-800 rounded-b-lg border border-gray-700 border-t-0 group-hover:border-secondary transition-colors">
+                        <div class="text-sm text-secondary mb-2">Tips • June 25, 2025</div>
+                        <h3 class="text-xl font-bold mb-2 group-hover:text-secondary transition-colors">Pro Cleaning Tips for High Scores</h3>
+                        <p class="text-gray-400">Learn the strategies top players use to maximize their cleaning efficiency and climb the leaderboards.</p>
+                    </div>
+                </a>
+                
+                <a href="/blog/upgrade-guide/" class="group">
+                    <div class="h-64 overflow-hidden rounded-t-lg">
+                        <img src="/image/PathGuide.jpg" alt="Upgrade Guide" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="p-6 bg-gray-800 rounded-b-lg border border-gray-700 border-t-0 group-hover:border-accent transition-colors">
+                        <div class="text-sm text-accent mb-2">Guide • June 18, 2025</div>
+                        <h3 class="text-xl font-bold mb-2 group-hover:text-accent transition-colors">Ultimate Upgrade Path Guide</h3>
+                        <p class="text-gray-400">Which upgrades should you prioritize? Our comprehensive guide helps you make the best choices.</p>
+                    </div>
+                </a>
+                
+                <a href="/blog/community-spotlight/" class="group">
+                    <div class="h-64 overflow-hidden rounded-t-lg">
+                        <img src="/image/CreativePlayers.jpeg" alt="Community Spotlight" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="p-6 bg-gray-800 rounded-b-lg border border-gray-700 border-t-0 group-hover:border-primary transition-colors">
+                        <div class="text-sm text-primary mb-2">Community • June 10, 2025</div>
+                        <h3 class="text-xl font-bold mb-2 group-hover:text-primary transition-colors">Community Spotlight: Top Players</h3>
+                        <p class="text-gray-400">Meet the players dominating our global leaderboards and learn their secrets to success.</p>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="/blog/" class="inline-flex items-center px-6 py-3 border border-primary text-primary font-bold rounded-lg hover:bg-primary hover:text-gray-900 transition-colors">
+                    View All Articles
+                    <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="py-20 bg-gray-900">
+        <div class="container mx-auto px-6 max-w-4xl">
+            <div class="bg-gradient-to-r from-gray-800 to-gray-900 rounded-xl p-8 md:p-12 border border-gray-700">
+                <div class="text-center mb-8">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">Stay <span class="gradient-text">Updated</span></h2>
+                    <p class="text-gray-400">Subscribe to our newsletter for the latest game updates, tips, and exclusive content.</p>
+                </div>
+                
+                <form class="flex flex-col sm:flex-row gap-4">
+                    <input type="email" placeholder="Your email address" class="flex-grow px-6 py-4 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent text-white placeholder-gray-400">
+                    <button type="submit" class="px-8 py-4 bg-primary text-gray-900 font-bold rounded-lg hover:bg-opacity-90 transition-colors">Subscribe</button>
+                </form>
+                
+                <p class="text-xs text-gray-500 mt-4 text-center">We respect your privacy. Unsubscribe at any time.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 border-t border-gray-800">
+        <div class="container mx-auto px-6 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+                <div>
+                   <a href="/" class="flex items-center gap-3">
+                        <img src="/image/logo.png" alt="logo" class="rounded-full md:h-14 h-10 ">                         
+                    </a>
+
+                    
+                    <p class="text-gray-400 mb-6">Creating satisfying and engaging mobile gaming experiences for players worldwide.</p>
+                   
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-6">Quick Links</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/games/" class="text-gray-400 hover:text-primary transition-colors">Our Games</a></li>
+                        <li><a href="/about/" class="text-gray-400 hover:text-primary transition-colors">About Us</a></li>
+                        <li><a href="/blog/" class="text-gray-400 hover:text-primary transition-colors">Blog</a></li>
+                        <li><a href="/responsible-gaming/" class="text-gray-400 hover:text-primary transition-colors">Responsible Gaming</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-6">Support</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/contact/" class="text-gray-400 hover:text-primary transition-colors">Contact Us</a></li>
+                        
+                        <li><a href="/privacy/" class="text-gray-400 hover:text-primary transition-colors">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="text-gray-400 hover:text-primary transition-colors">Terms of Service</a></li>
+                        <li><a href="/cookies/" class="text-gray-400 hover:text-primary transition-colors">Cookie Policy</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-6">Contact Info</h3>
+                    <ul class="space-y-3 text-gray-400">
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 mr-3 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                            <span>Flat 9B, Block D80 Maida Vale Residences Visnezade Road, Kensington London, W8 5AA United Kingdom</span>
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 mr-3 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                            </svg>
+                            <span>+90 212 243 32 43</span>
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 mr-3 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                            </svg>
+                            <span>info@rollicgamesmania.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-500 text-sm mb-4 md:mb-0">© 2025 Rollic Games. All rights reserved.</p>
+                <div class="flex space-x-6">
+                    <a href="#" class="text-gray-500 hover:text-primary transition-colors text-sm">Privacy Policy</a>
+                    <a href="#" class="text-gray-500 hover:text-primary transition-colors text-sm">Terms of Service</a>
+                    <a href="#" class="text-gray-500 hover:text-primary transition-colors text-sm">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+      
+        
+        // Cookie Banner
+        const cookieBanner = document.getElementById('cookie-banner');
+        const cookieAccept = document.getElementById('cookie-accept');
+        const cookieDecline = document.getElementById('cookie-decline');
+        
+        if (!localStorage.getItem('cookiesAccepted')) {
+            cookieBanner.classList.remove('hidden');
+        }
+        
+        cookieAccept.addEventListener('click', () => {
+            localStorage.setItem('cookiesAccepted', 'true');
+            cookieBanner.classList.add('hidden');
+        });
+        
+        cookieDecline.addEventListener('click', () => {
+            localStorage.setItem('cookiesAccepted', 'false');
+            cookieBanner.classList.add('hidden');
+        });
+        
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+        
+        gsap.from('.hero-bg h1', {
+            duration: 1,
+            y: 50,
+            opacity: 0,
+            ease: 'power3.out'
+        });
+        
+        gsap.from('.hero-bg p', {
+            duration: 1,
+            y: 50,
+            opacity: 0,
+            delay: 0.3,
+            ease: 'power3.out'
+        });
+        
+        gsap.from('.hero-bg a', {
+            duration: 1,
+            y: 50,
+            opacity: 0,
+            delay: 0.6,
+            ease: 'power3.out',
+            stagger: 0.1
+        });
+        
+        gsap.from('.hero-bg img', {
+            duration: 1,
+            x: 50,
+            opacity: 0,
+            delay: 0.9,
+            ease: 'power3.out'
+        });
+        
+        gsap.utils.toArray('section').forEach(section => {
+            gsap.from(section, {
+                scrollTrigger: {
+                    trigger: section,
+                    start: 'top 80%',
+                    toggleActions: 'play none none none'
+                },
+                opacity: 0,
+                y: 50,
+                duration: 1,
+                ease: 'power3.out'
+            });
+        });
+        
+        // Three.js Background
+        const threejsContainer = document.getElementById('threejs-canvas');
+        
+        if (threejsContainer) {
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(threejsContainer.offsetWidth, threejsContainer.offsetHeight);
+            threejsContainer.appendChild(renderer.domElement);
+            
+            // Create particles
+            const particlesGeometry = new THREE.BufferGeometry();
+            const particleCount = 1000;
+            
+            const posArray = new Float32Array(particleCount * 3);
+            
+            for (let i = 0; i < particleCount * 3; i++) {
+                posArray[i] = (Math.random() - 0.5) * 10;
+            }
+            
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+            
+            const particlesMaterial = new THREE.PointsMaterial({
+                size: 0.02,
+                color: 0x00ffff,
+                transparent: true,
+                opacity: 0.8,
+                blending: THREE.AdditiveBlending
+            });
+            
+            const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+            scene.add(particlesMesh);
+            
+            camera.position.z = 3;
+            
+            // Animation
+            function animate() {
+                requestAnimationFrame(animate);
+                
+                particlesMesh.rotation.x += 0.0005;
+                particlesMesh.rotation.y += 0.0005;
+                
+                renderer.render(scene, camera);
+            }
+            
+            animate();
+            
+            // Handle resize
+            window.addEventListener('resize', () => {
+                camera.aspect = threejsContainer.offsetWidth / threejsContainer.offsetHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(threejsContainer.offsetWidth, threejsContainer.offsetHeight);
+            });
+        }
+    </script>
+</body>
+</html>

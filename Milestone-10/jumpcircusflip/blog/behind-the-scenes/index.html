@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Exclusive look at how Jump Circus was developed - from initial concept to final product. Learn about the design process, challenges, and creative decisions behind the game">
+    <meta name="keywords" content="Jump Circus development, game design process, circus game creation, mobile game behind the scenes, Games Vessel studio">
+    <meta name="author" content="Games Vessel">
+    <link rel="canonical" href="https://jumpcircusflip.com/blog/behind-the-scenes/" />
+    
+    <title>Behind the Scenes: Creating Jump Circus | Jump Circus Blog</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/image/logo.webp" type="image/x-icon">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2B2D42',
+                        secondary: '#F1FA8C',
+                        accent: '#FF7E5F',
+                    },
+                    fontFamily: {
+                        fredoka: ['Fredoka', 'sans-serif'],
+                    },
+                    animation: {
+                        'float': 'float 3s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            font-family: 'Fredoka', sans-serif;
+            overflow-x: hidden;
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, #2B2D42 0%, #27130e 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .content-block {
+            margin-bottom: 2rem;
+        }
+        
+        .content-block img {
+            border-radius: 12px;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            margin: 1.5rem auto;
+        }
+        
+        .content-block h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #2B2D42;
+            margin: 2rem 0 1rem;
+        }
+        
+        .content-block h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #2B2D42;
+            margin: 1.5rem 0 0.75rem;
+        }
+        
+        .content-block p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #4a5568;
+            margin-bottom: 1.25rem;
+        }
+        
+        .content-block ul, .content-block ol {
+            margin-bottom: 1.25rem;
+            padding-left: 1.5rem;
+        }
+        
+        .content-block li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+        
+        .dev-phase {
+            background-color: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border-top: 4px solid #F1FA8C;
+        }
+        
+        .phase-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 32px;
+            height: 32px;
+            background-color: #2B2D42;
+            color: white;
+            border-radius: 50%;
+            font-weight: bold;
+            margin-right: 12px;
+        }
+        
+        .team-member {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .team-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-right: 1rem;
+            border: 3px solid #F1FA8C;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md shadow-sm">
+        <div class="container mx-auto px-4 py-2 flex justify-between items-center">
+            <div class="flex items-center">
+                <a href="/" class="flex items-center">
+                    <img src="/image/logo.png" alt="Jump Circus logo" class="w-full h-14 ">
+                </a>
+            </div>
+            
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="/" class="text-gray-600 hover:text-primary transition">Home</a>
+                <a href="/how-to-play/" class="text-gray-600 hover:text-primary transition">How to Play</a>
+                <a href="/about/" class="text-gray-600 hover:text-primary transition">About</a>
+                <a href="/blog/" class="text-primary font-medium hover:text-accent transition">Blog</a>
+                <a href="/responsible-gaming/" class="text-gray-600 hover:text-primary transition">Responsible Gaming</a>
+                <a href="/contact/" class="text-gray-600 hover:text-primary transition">Contact</a>
+            </nav>
+            
+            <div class="flex items-center space-x-4">
+                <a href="https://play.google.com/store/apps/details?id=com.gamesvessel.flip.jump.circus.game.free" class="hidden md:block bg-primary text-white px-6 py-2 rounded-full font-medium hover:bg-opacity-90 transition hover:shadow-lg">
+                    Download Now
+                </a>
+                <button id="mobile-menu-button" class="md:hidden text-primary">
+                    <i class="ri-menu-3-line text-2xl"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-white py-4 px-4 shadow-lg">
+            <div class="flex flex-col space-y-4">
+                <a href="/" class="text-gray-600">Home</a>
+                <a href="/how-to-play/" class="text-gray-600">How to Play</a>
+                <a href="/about/" class="text-gray-600">About</a>
+                <a href="/blog/" class="text-primary font-medium">Blog</a>
+                <a href="/responsible-gaming/" class="text-gray-600">Responsible Gaming</a>
+                <a href="/contact/" class="text-gray-600">Contact</a>
+                <a href="https://play.google.com/store/apps/details?id=com.gamesvessel.flip.jump.circus.game.free" class="bg-primary text-white px-6 py-2 rounded-full font-medium text-center">
+                    Download
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Article Header -->
+    <section class="bg-gradient-to-r from-primary to-accent text-white py-20">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
+                <span class="inline-block bg-white text-primary px-4 py-1 rounded-full text-sm font-medium mb-4">Development</span>
+                <h1 class="text-4xl md:text-5xl font-bold mb-6">Behind the Scenes: Creating Jump Circus</h1>
+                <div class="flex items-center text-gray-200">
+                    <span class="mr-4">June 10, 2025</span>
+                    <span>8 min read</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Article Content -->
+    <article class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto content-block">
+                <img src="/image/behind-the-scenes.jpg" alt="Jump Circus development team at work" class="w-full h-auto">
+                
+                <p class="text-xl font-medium">Ever wondered how your favorite circus-themed mobile game came to life? In this exclusive behind-the-scenes look, we'll take you through the 18-month journey of creating Jump Circus - from initial sketches to the polished game you know and love today.</p>
+                
+                <h2>The Birth of an Idea</h2>
+                
+                <p>Our creative director, Marcus Wei, first conceived the concept during a visit to an actual circus. "I was watching the acrobats perform these incredible flips and jumps," Marcus recalls, "and it struck me how perfect those movements would be for a mobile game - simple to understand but hard to master."</p>
+                
+                <p>The core design pillars were established early:</p>
+                
+                <ul>
+                    <li><strong>Accessible:</strong> One-tap controls anyone could learn</li>
+                    <li><strong>Challenging:</strong> Deep mechanics for skilled players</li>
+                    <li><strong>Charming:</strong> Vibrant visuals that make you smile</li>
+                    <li><strong>Addictive:</strong> "Just one more try" gameplay</li>
+                </ul>
+                
+              
+                
+                <h2>Development Phases</h2>
+                
+                <div class="dev-phase">
+                    <h3 class="flex items-center">
+                        <span class="phase-number">1</span>
+                        <span>Prototyping (3 months)</span>
+                    </h3>
+                    <p>Our small team of 5 built over 20 physical prototypes using paper cutouts and basic digital mockups. This phase focused entirely on nailing the core jumping mechanic.</p>
+                    <p>Key challenges:</p>
+                    <ul>
+                        <li>Finding the perfect jump arc physics</li>
+                        <li>Balancing difficulty curves</li>
+                        <li>Creating satisfying "weight" to movements</li>
+                    </ul>
+                    <p>We went through 47 iterations of the jump mechanic before settling on the final version.</p>
+                </div>
+                
+                <div class="dev-phase">
+                    <h3 class="flex items-center">
+                        <span class="phase-number">2</span>
+                        <span>Art Direction (4 months)</span>
+                    </h3>
+                    <p>Lead artist Sofia Rodriguez explored multiple visual styles before landing on the colorful carnival aesthetic:</p>
+                    <div class="grid grid-cols-2 md:grid-cols-3 gap-4 my-4">
+                        
+                    </div>
+                    <p>The clown character went through 32 design iterations before we arrived at the final adorable version players know today.</p>
+                </div>
+                
+                <div class="dev-phase">
+                    <h3 class="flex items-center">
+                        <span class="phase-number">3</span>
+                        <span>Level Design (6 months)</span>
+                    </h3>
+                    <p>Our level designers created over 200 potential levels before selecting the 75 that shipped with the initial release. Each level was playtested at least 50 times.</p>
+                    <p>Level design principles:</p>
+                    <ul>
+                        <li>Introduce mechanics gradually</li>
+                        <li>Provide visual hints for solutions</li>
+                        <li>Balance challenge and fairness</li>
+                        <li>Create memorable "wow" moments</li>
+                    </ul>
+                 
+                </div>
+                
+                <div class="dev-phase">
+                    <h3 class="flex items-center">
+                        <span class="phase-number">4</span>
+                        <span>Polish & Optimization (5 months)</span>
+                    </h3>
+                    <p>The final phase focused on refining the experience across 50+ device types and implementing player feedback from beta tests.</p>
+                    <p>Polish tasks included:</p>
+                    <ul>
+                        <li>Adding subtle screen shake on landings</li>
+                        <li>Fine-tuning sound effects</li>
+                        <li>Optimizing performance for low-end devices</li>
+                        <li>Implementing the tutorial system</li>
+                    </ul>
+                    <p>We reduced loading times by 65% during this phase through careful optimization.</p>
+                </div>
+                
+                <h2>Meet the Core Team</h2>
+                
+                <p>Jump Circus was created by a dedicated team of 12 developers, artists, and designers. Here are some key contributors:</p>
+                
+                <div class="team-member">
+                  
+                    <div>
+                        <h4 class="font-bold">Marcus Wei</h4>
+                        <p class="text-gray-600">Creative Director</p>
+                        <p class="text-sm">"I wanted to create a game that felt joyful to play, even when you fail."</p>
+                    </div>
+                </div>
+                
+                <div class="team-member">
+                  
+                    <div>
+                        <h4 class="font-bold">Sofia Rodriguez</h4>
+                        <p class="text-gray-600">Lead Artist</p>
+                        <p class="text-sm">"The clown's design went through so many iterations - we wanted him to be cute but not childish."</p>
+                    </div>
+                </div>
+                
+                <div class="team-member">
+                   
+                    <div>
+                        <h4 class="font-bold">Raj Patel</h4>
+                        <p class="text-gray-600">Lead Programmer</p>
+                        <p class="text-sm">"The jump physics took months to perfect - it needed to feel weighty but responsive."</p>
+                    </div>
+                </div>
+                
+                <h2>Technical Challenges</h2>
+                
+                <p>Developing Jump Circus presented several unique technical hurdles:</p>
+                
+                <h3>Physics Precision</h3>
+                
+                <p>Creating jump mechanics that felt precise yet forgiving required a custom physics system. We blended traditional platformer physics with arcade-style responsiveness to achieve the perfect feel.</p>
+                
+                <h3>Cross-Device Performance</h3>
+                
+                <p>Ensuring smooth performance across hundreds of Android devices meant:</p>
+                
+                <ul>
+                    <li>Implementing dynamic resolution scaling</li>
+                    <li>Creating multiple quality presets</li>
+                    <li>Optimizing particle effects</li>
+                    <li>Streaming assets efficiently</li>
+                </ul>
+                
+               
+                
+                <h3>Input Responsiveness</h3>
+                
+                <p>Mobile touch controls needed to feel instantaneous. We achieved sub-50ms response times through:</p>
+                
+                <ul>
+                    <li>Custom input buffering system</li>
+                    <li>Reduced touch latency</li>
+                    <li>Predictive animation blending</li>
+                </ul>
+                
+                <h2>Design Decisions That Shaped the Game</h2>
+                
+                <div class="grid md:grid-cols-2 gap-6 mb-8">
+                    <div class="bg-gray-50 p-6 rounded-xl">
+                        <h4 class="font-bold text-primary mb-2">The No-Button Approach</h4>
+                        <p>Early prototypes had virtual buttons, but playtesters found them awkward. Switching to tap-anywhere controls made the game instantly more accessible.</p>
+                    </div>
+                    <div class="bg-gray-50 p-6 rounded-xl">
+                        <h4 class="font-bold text-primary mb-2">Limited Lives System</h4>
+                        <p>We initially had unlimited retries, but this reduced tension. The current life system creates just enough pressure to make successes rewarding.</p>
+                    </div>
+                    <div class="bg-gray-50 p-6 rounded-xl">
+                        <h4 class="font-bold text-primary mb-2">Color Coding</h4>
+                        <p>Obstacles flash red when dangerous - a simple visual cue that emerged from playtesters struggling to identify threats.</p>
+                    </div>
+                    <div class="bg-gray-50 p-6 rounded-xl">
+                        <h4 class="font-bold text-primary mb-2">Checkpoint Placement</h4>
+                        <p>After observing players, we spaced checkpoints based on average skill level - close enough to prevent frustration but far enough to maintain challenge.</p>
+                    </div>
+                </div>
+                
+                <h2>Lessons Learned</h2>
+                
+                <p>Looking back, several key insights emerged from developing Jump Circus:</p>
+                
+                <ul>
+                    <li><strong>Simplicity is hard:</strong> Making controls easy to learn but hard to master took countless iterations</li>
+                    <li><strong>Polish matters:</strong> Small details like screen shake and sound effects dramatically improved feel</li>
+                    <li><strong>Testing is crucial:</strong> Every design assumption was validated through playtesting</li>
+                    <li><strong>Constraints breed creativity:</strong> Mobile limitations led to innovative solutions</li>
+                </ul>
+                
+             
+                
+                <h2>What's Next?</h2>
+                
+                <p>Based on player feedback, we're already working on exciting new features:</p>
+                
+                <ul>
+                    <li>Multiplayer race mode (coming Fall 2025)</li>
+                    <li>Custom clown customization options</li>
+                    <li>User-generated content tools</li>
+                    <li>More environmental themes</li>
+                </ul>
+                
+                <div class="bg-gray-50 p-6 rounded-xl mt-8">
+                    <h3 class="text-xl font-bold text-primary mb-4">Development Timeline at a Glance</h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <span class="bg-primary text-white rounded-full px-3 py-1 text-sm font-medium mr-3">2019</span>
+                            <div>
+                                <p class="font-medium">Concept Development</p>
+                                <p class="text-sm text-gray-600">Initial sketches and prototypes</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="bg-primary text-white rounded-full px-3 py-1 text-sm font-medium mr-3">2020 Q1</span>
+                            <div>
+                                <p class="font-medium">Core Mechanics</p>
+                                <p class="text-sm text-gray-600">Jump physics finalized</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="bg-primary text-white rounded-full px-3 py-1 text-sm font-medium mr-3">2020 Q3</span>
+                            <div>
+                                <p class="font-medium">Art Direction</p>
+                                <p class="text-sm text-gray-600">Visual style locked in</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="bg-primary text-white rounded-full px-3 py-1 text-sm font-medium mr-3">2021 Q1</span>
+                            <div>
+                                <p class="font-medium">Beta Testing</p>
+                                <p class="text-sm text-gray-600">500+ testers provided feedback</p>
+                            </div>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="bg-primary text-white rounded-full px-3 py-1 text-sm font-medium mr-3">2021 Q3</span>
+                            <div>
+                                <p class="font-medium">Launch</p>
+                                <p class="text-sm text-gray-600">Game released worldwide</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <!-- CTA Section -->
+    <section class="py-16 bg-primary text-white">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl font-bold mb-6">Experience the Results of Our Hard Work!</h2>
+            <p class="text-xl opacity-90 max-w-2xl mx-auto mb-8">Download Jump Circus and see how 18 months of development created this addictive arcade experience</p>
+            <a href="https://play.google.com/store/apps/details?id=com.gamesvessel.flip.jump.circus.game.free" class="inline-block bg-white text-primary px-8 py-3 rounded-full font-bold hover:bg-opacity-90 transition hover:shadow-lg text-lg">
+                Download on Google Play
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <div>
+                    <a href="/" class="flex items-center">
+                        <img src="/image/logo-white.png" alt="Jump Circus logo" class=" h-16 mb-4">
+                    </a>
+                    <p class="text-gray-400 mb-6">The most addictive arcade game of 2025. Jump, flip and have fun with your cute clown companion!</p>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-6">Quick Links</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/" class="text-gray-400 hover:text-white transition">Home</a></li>
+                        <li><a href="/how-to-play/" class="text-gray-400 hover:text-white transition">How to Play</a></li>
+                        <li><a href="/about/" class="text-gray-400 hover:text-white transition">About</a></li>
+                        <li><a href="/blog/" class="text-primary font-medium hover:text-accent transition">Blog</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-6">Legal</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/privacy/" class="text-gray-400 hover:text-white transition">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="text-gray-400 hover:text-white transition">Terms of Service</a></li>
+                        <li><a href="/cookies/" class="text-gray-400 hover:text-white transition">Cookies Policy</a></li>
+                        <li><a href="/responsible-gaming/" class="text-gray-400 hover:text-white transition">Responsible Gaming</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-6">Contact Us</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="ri-map-pin-line text-gray-400 mt-1 mr-3"></i>
+                            <span class="text-gray-400">123 Whitehall Rd, Toronto, ON M5V 2L7, Canada</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="ri-phone-line text-gray-400 mr-3"></i>
+                            <span class="text-gray-400">+1 416-555-1187</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="ri-mail-line text-gray-400 mr-3"></i>
+                            <span class="text-gray-400">info@jumpcircusflip.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-500 text-sm mb-4 md:mb-0">© 2025 Games Vessel. All rights reserved.</p>
+                <div class="flex space-x-6">
+                    <a href="/privacy/" class="text-gray-500 hover:text-white transition text-sm">Privacy</a>
+                    <a href="/terms/" class="text-gray-500 hover:text-white transition text-sm">Terms</a>
+                    <a href="/cookies/" class="text-gray-500 hover:text-white transition text-sm">Cookies</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+   <!-- Cookies Consent -->
+<div id="cookies-consent" class="hidden fixed bottom-0 left-0 right-0 bg-gray-800 text-white p-6 md:p-6 px-4 shadow-lg z-50">
+    <div class="container mx-auto flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0">
+        
+        <!-- Consent Text -->
+        <div class="md:mr-8 text-sm text-gray-300">
+            <p>
+                We use cookies to enhance your experience. By clicking "Accept", you agree to our use of cookies. 
+                You can customize your preferences or learn more about how we use cookies.
+            </p>
+        </div>
+
+        <!-- Buttons -->
+        <div class="flex flex-col sm:flex-row w-full sm:w-auto space-y-3 sm:space-y-0 sm:space-x-4">
+            <button id="cookies-accept"
+                class="bg-primary text-white px-6 py-2 rounded-full font-medium hover:bg-opacity-90 transition w-full sm:w-auto text-center">
+                Accept
+            </button>
+
+            <button id="cookies-decline"
+                class="border border-gray-600 text-white px-6 py-2 rounded-full font-medium hover:bg-gray-700 transition w-full sm:w-auto text-center">
+                Decline
+            </button>
+
+            <a href="/cookies/"
+                class="border border-gray-600 text-white px-6 py-2 rounded-full font-medium hover:bg-gray-700 transition w-full sm:w-auto text-center">
+                Cookies
+            </a>
+        </div>
+    </div>
+</div>
+
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    
+    <script>
+        // Mobile Menu Toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+
+        if (!localStorage.getItem('cookiesPreferences')) {
+            document.getElementById('cookies-consent').classList.remove('hidden');
+        }
+        
+        document.getElementById('cookies-accept').addEventListener('click', function() {
+            localStorage.setItem('cookiesPreferences', 'all');
+            document.getElementById('cookies-consent').classList.add('hidden');
+            // Here you would typically load all cookies/analytics scripts
+        });
+        
+        document.getElementById('cookies-decline').addEventListener('click', function() {
+            localStorage.setItem('cookiesPreferences', 'none');
+            document.getElementById('cookies-consent').classList.add('hidden');
+            // Here you would typically block all non-essential cookies
+        });
+        // GSAP Animations for content blocks
+        gsap.registerPlugin(ScrollTrigger);
+        
+        gsap.utils.toArray(".content-block h2, .content-block h3, .content-block p, .content-block ul, .content-block ol, .content-block img, .dev-phase").forEach((element, i) => {
+            gsap.from(element, {
+                scrollTrigger: {
+                    trigger: element,
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                },
+                y: 30,
+                opacity: 0,
+                duration: 0.8,
+                delay: i * 0.05,
+                ease: "power2.out"
+            });
+        });
+    </script>
+</body>
+</html>

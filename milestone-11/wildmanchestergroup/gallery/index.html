@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery | Wild Manchester Group | Wilderness Adventures</title>
+    <meta name="description" content="Explore stunning images from our wild camping and foraging adventures in Manchester's beautiful wilderness areas.">
+    <meta name="keywords" content="wild camping photos, Manchester nature gallery, foraging adventure pictures, wilderness experience images, outdoor activity photos">
+    
+    <!-- Favicon -->
+   <link rel="icon" href="/assets/logo.png" type="image/x-icon">
+    <link rel="canonical" href="https://wildmanchestergroup.com/gallery/" />
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            200: '#bbf7d0',
+                            300: '#86efac',
+                            400: '#4ade80',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                        },
+                        dark: {
+                            900: '#0a0a0a',
+                            800: '#1a1a1a',
+                            700: '#2a2a2a',
+                            600: '#3a3a3a',
+                            500: '#4a4a4a',
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-reverse': 'float-reverse 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 8s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        'float-reverse': {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollTrigger.min.js"></script>
+    
+    <!-- Lightbox CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightgallery-js/1.4.0/css/lightgallery.min.css">
+    
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            background-color: #0a0a0a;
+            color: #f8fafc;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        .gradient-text {
+            background: linear-gradient(90deg, #4ade80, #3b82f6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, rgba(20, 83, 45, 0.2), rgba(30, 64, 175, 0.2));
+        }
+        .parallax-bg {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+        }
+        .card-hover:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+        .glow-hover:hover {
+            filter: drop-shadow(0 0 8px rgba(74, 222, 128, 0.7));
+        }
+        .text-stroke {
+            -webkit-text-stroke: 1px #f8fafc;
+            color: transparent;
+        }
+        .noise-bg::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: -1;
+        }
+        .gallery-item {
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+        .gallery-item:hover {
+            transform: scale(1.03);
+        }
+        .gallery-item img {
+            transition: transform 0.5s ease;
+        }
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+        .gallery-category.active {
+            background-color: #166534;
+            color: white;
+        }
+    </style>
+</head>
+<body class="noise-bg">
+    <!-- Cookie Consent Banner -->
+    <div id="cookieConsent" class="fixed bottom-0 left-0 right-0 bg-dark-800 p-4 shadow-lg z-50 hidden">
+        <div class="container mx-auto flex flex-col md:flex-row items-center justify-between">
+            <p class="text-sm text-gray-300 mb-4 md:mb-0 md:mr-4">
+                We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies.
+                <a href="/privacy/" class="text-primary-400 hover:underline">Learn more</a>
+            </p>
+            <div class="flex space-x-3">
+                <button id="acceptCookies" class="px-4 py-2 bg-primary-600 hover:bg-primary-700 rounded-md text-sm font-medium transition-colors">
+                    Accept
+                </button>
+                <button id="declineCookies" class="px-4 py-2 bg-dark-700 hover:bg-dark-600 rounded-md text-sm font-medium transition-colors">
+                    Decline
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-40 bg-dark-900/80 backdrop-blur-md border-b border-dark-700">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="/" class="flex items-center space-x-2 glow-hover">
+                       <img src="/assets/logo.png" class="h-16" alt="logo" />
+                    </a>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="text-gray-300 hover:text-primary-400 transition-colors">Home</a>
+                    <a href="/about/" class="text-gray-300 hover:text-primary-400 transition-colors">About</a>
+                     <a href="/blog/" class="text-gray-300 hover:text-primary-400 transition-colors">Blog</a>
+                    <a href="/camping/" class="text-gray-300  hover:text-primary-400 transition-colors ">Camping</a>
+                    <a href="/contact/" class="text-gray-300 hover:text-primary-400 transition-colors">Contact</a>
+                   <a href="/gallery/" class="block  py-2 text-sm text-white hover:text-primary-400 ">Gallery</a>
+                </div>
+
+                <!-- CTA and Mobile Menu Button -->
+                <div class="flex items-center space-x-4">
+                    <a href="/contact/" class="hidden md:block px-4 py-2 bg-primary-600 hover:bg-primary-700 rounded-md text-sm font-medium transition-colors">
+                        Book Adventure
+                    </a>
+                    <button id="mobileMenuButton" class="md:hidden text-gray-300 hover:text-white focus:outline-none">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="md:hidden hidden bg-dark-800 border-t border-dark-700">
+            <div class="container mx-auto px-6 py-4 flex flex-col space-y-4">
+                <a href="/" class="text-gray-300 hover:text-primary-400 transition-colors">Home</a>
+                <a href="/about/" class="text-gray-300 hover:text-primary-400 transition-colors">About</a>
+                 <a href="/blog/" class="text-gray-300 hover:text-primary-400 transition-colors">Blog</a>
+                    <a href="/camping/" class="text-gray-300  hover:text-primary-400 transition-colors ">Camping</a>
+                <a href="/contact/" class="text-gray-300 hover:text-primary-400 transition-colors">Contact</a>
+                <a href="/gallery/" class="text-white hover:text-primary-400 transition-colors">Gallery</a>
+                
+                
+                <a href="/contact/" class="mt-2 px-4 py-2 bg-primary-600 hover:bg-primary-700 rounded-md text-sm font-medium text-center transition-colors">
+                    Book Adventure
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-dark-900/70 via-dark-900/30 to-dark-900/70 z-10"></div>
+        <div class="absolute inset-0 bg-[url('/assets/foragin-camping.jpg')] bg-cover bg-center opacity-20"></div>
+        
+        <div class="container mx-auto px-6 relative z-20">
+            <div class="max-w-4xl mx-auto text-center">
+                <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+                    <span class="gradient-text">Wilderness</span> Through <span class="text-stroke">Our Lens</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-300 mb-10 max-w-3xl mx-auto">
+                    Explore stunning moments from our wild camping and foraging adventures in Manchester's beautiful wilderness.
+                </p>
+                <div class="flex justify-center">
+                    <a href="#gallery-grid" class="px-8 py-4 bg-primary-600 hover:bg-primary-700 rounded-lg text-lg font-semibold transition-colors shadow-lg transform hover:scale-105 duration-300">
+                        View Gallery
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Categories -->
+    <section class="py-12 bg-dark-800/50 sticky top-16 z-30 border-b border-dark-700">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-wrap justify-center gap-3">
+                <button class="gallery-category px-4 py-2 rounded-full bg-dark-700 hover:bg-dark-600 text-gray-300 transition-colors active" data-category="all">
+                    All Photos
+                </button>
+                <button class="gallery-category px-4 py-2 rounded-full bg-dark-700 hover:bg-dark-600 text-gray-300 transition-colors" data-category="camping">
+                    Wild Camping
+                </button>
+                <button class="gallery-category px-4 py-2 rounded-full bg-dark-700 hover:bg-dark-600 text-gray-300 transition-colors" data-category="foraging">
+                    Foraging
+                </button>
+                <button class="gallery-category px-4 py-2 rounded-full bg-dark-700 hover:bg-dark-600 text-gray-300 transition-colors" data-category="wildlife">
+                    Wildlife
+                </button>
+                <button class="gallery-category px-4 py-2 rounded-full bg-dark-700 hover:bg-dark-600 text-gray-300 transition-colors" data-category="landscapes">
+                    Landscapes
+                </button>
+                <button class="gallery-category px-4 py-2 rounded-full bg-dark-700 hover:bg-dark-600 text-gray-300 transition-colors" data-category="people">
+                    Our Adventurers
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Grid -->
+    <section id="gallery-grid" class="py-20 relative overflow-hidden">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 lightgallery">
+                <!-- Gallery Item 1 -->
+                <a href="/assets/gallery/camping1.jpg" class="gallery-item group rounded-xl overflow-hidden border border-dark-700" data-category="camping" data-sub-html="<h4>Sunset Camp Setup</h4><p>Participants setting up camp as the sun sets over the Peak District</p>">
+                    <div class="relative aspect-square overflow-hidden">
+                        <img src="/assets/gallery/camping1.jpg" alt="Sunset camp setup" class="w-full h-full object-cover group-hover:opacity-90 transition-opacity">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-900/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                            <div>
+                                <h3 class="text-white font-semibold">Sunset Camp Setup</h3>
+                                <p class="text-gray-300 text-sm">Peak District</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- Gallery Item 2 -->
+                <a href="/assets/gallery/foraging1.jpg" class="gallery-item group rounded-xl overflow-hidden border border-dark-700" data-category="foraging" data-sub-html="<h4>Wild Garlic Harvest</h4><p>Guide demonstrating how to identify and harvest wild garlic sustainably</p>">
+                    <div class="relative aspect-square overflow-hidden">
+                        <img src="/assets/gallery/foraging1.jpg" alt="Wild garlic harvest" class="w-full h-full object-cover group-hover:opacity-90 transition-opacity">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-900/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                            <div>
+                                <h3 class="text-white font-semibold">Wild Garlic Harvest</h3>
+                                <p class="text-gray-300 text-sm">Manchester Woodlands</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- Gallery Item 3 -->
+                <a href="/assets/gallery/wildlife1.webp" class="gallery-item group rounded-xl overflow-hidden border border-dark-700" data-category="wildlife" data-sub-html="<h4>Red Fox Sighting</h4><p>One of our trail cameras captured this beautiful fox at dawn</p>">
+                    <div class="relative aspect-square overflow-hidden">
+                        <img src="/assets/gallery/wildlife1.webp" alt="Red fox sighting" class="w-full h-full object-cover group-hover:opacity-90 transition-opacity">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-900/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                            <div>
+                                <h3 class="text-white font-semibold">Red Fox Sighting</h3>
+                                <p class="text-gray-300 text-sm">Dawn in the Wilderness</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- Gallery Item 4 -->
+                <a href="/assets/gallery/landscape1.jpeg" class="gallery-item group rounded-xl overflow-hidden border border-dark-700" data-category="landscapes" data-sub-html="<h4>Morning Mist</h4><p>The magical morning mist over the camping valley</p>">
+                    <div class="relative aspect-square overflow-hidden">
+                        <img src="/assets/gallery/landscape1.jpeg" alt="Morning mist in valley" class="w-full h-full object-cover group-hover:opacity-90 transition-opacity">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-900/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                            <div>
+                                <h3 class="text-white font-semibold">Morning Mist</h3>
+                                <p class="text-gray-300 text-sm">Camping Valley</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- Gallery Item 5 -->
+                <a href="/assets/gallery/people1.avif" class="gallery-item group rounded-xl overflow-hidden border border-dark-700" data-category="people" data-sub-html="<h4>Campfire Stories</h4><p>Participants sharing stories around the campfire on a beginner's trip</p>">
+                    <div class="relative aspect-square overflow-hidden">
+                        <img src="/assets/gallery/people1.avif" alt="Campfire stories" class="w-full h-full object-cover group-hover:opacity-90 transition-opacity">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-900/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                            <div>
+                                <h3 class="text-white font-semibold">Campfire Stories</h3>
+                                <p class="text-gray-300 text-sm">Beginner's Trip</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- Gallery Item 6 -->
+                <a href="/assets/gallery/camping2.jpeg" class="gallery-item group rounded-xl overflow-hidden border border-dark-700" data-category="camping" data-sub-html="<h4>Morning Brew</h4><p>Preparing the first coffee of the day in the wilderness</p>">
+                    <div class="relative aspect-square overflow-hidden">
+                        <img src="/assets/gallery/camping2.jpeg" alt="Morning coffee preparation" class="w-full h-full object-cover group-hover:opacity-90 transition-opacity">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-900/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                            <div>
+                                <h3 class="text-white font-semibold">Morning Brew</h3>
+                                <p class="text-gray-300 text-sm">Wilderness Coffee</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- Gallery Item 7 -->
+                <a href="/assets/gallery/foraging2.jpg" class="gallery-item group rounded-xl overflow-hidden border border-dark-700" data-category="foraging" data-sub-html="<h4>Mushroom Identification</h4><p>Teaching participants how to safely identify edible mushrooms</p>">
+                    <div class="relative aspect-square overflow-hidden">
+                        <img src="/assets/gallery/foraging2.jpg" alt="Mushroom identification" class="w-full h-full object-cover group-hover:opacity-90 transition-opacity">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-900/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                            <div>
+                                <h3 class="text-white font-semibold">Mushroom Identification</h3>
+                                <p class="text-gray-300 text-sm">Autumn Foraging</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- Gallery Item 8 -->
+                <a href="/assets/gallery/wildlife2.avif" class="gallery-item group rounded-xl overflow-hidden border border-dark-700" data-category="wildlife" data-sub-html="<h4>Owl Sighting</h4><p>Rare sighting of a barn owl during one of our night walks</p>">
+                    <div class="relative aspect-square overflow-hidden">
+                        <img src="/assets/gallery/wildlife2.avif" alt="Owl sighting" class="w-full h-full object-cover group-hover:opacity-90 transition-opacity">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-900/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+                            <div>
+                                <h3 class="text-white font-semibold">Owl Sighting</h3>
+                                <p class="text-gray-300 text-sm">Night Walk</p>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                
+               
+            </div>
+            
+           
+        </div>
+    </section>
+
+    <!-- Photo of the Month -->
+    <section class="py-20 bg-dark-800/50 relative overflow-hidden">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col lg:flex-row items-center gap-12">
+                <div class="lg:w-1/2">
+                    <div class="relative rounded-2xl overflow-hidden shadow-2xl border border-dark-700">
+                        <img src="/assets/gallery/featured-photo.jpeg" alt="Featured photo of the month" class="w-full h-auto object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-900/80 via-transparent to-transparent flex items-end p-6">
+                            <div>
+                                <span class="bg-primary-600 text-white text-xs font-semibold px-3 py-1 rounded-full mb-2 inline-block">Photo of the Month</span>
+                                <h3 class="text-white text-xl font-semibold">Midnight Canoe Adventure</h3>
+                                <p class="text-gray-300 text-sm">Full moon paddle on Lake District</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:w-1/2">
+                    <h2 class="text-4xl font-bold mb-6">
+                        <span class="gradient-text">Featured Photo</span> of the Month
+                    </h2>
+                    <p class="text-xl text-gray-400 mb-8">
+                        Each month we highlight an exceptional photo taken during one of our adventures. This month's selection captures the magic of our full moon canoe experience in the Lake District.
+                    </p>
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 mt-1">
+                                <div class="w-10 h-10 rounded-full bg-primary-900/30 flex items-center justify-center">
+                                    <i class="fas fa-camera text-primary-400"></i>
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="text-xl font-semibold mb-2">Photo Details</h3>
+                                <p class="text-gray-400">
+                                    Taken by participant Sarah K. during our June full moon adventure. Canon EOS R5, 30s exposure.
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 mt-1">
+                                <div class="w-10 h-10 rounded-full bg-primary-900/30 flex items-center justify-center">
+                                    <i class="fas fa-calendar-alt text-primary-400"></i>
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="text-xl font-semibold mb-2">The Experience</h3>
+                                <p class="text-gray-400">
+                                    Our full moon canoe trips run monthly from May to September. Paddle under the stars with our expert guides.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 gradient-bg relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-primary-500/30 blur-3xl animate-float"></div>
+            <div class="absolute bottom-1/3 right-1/4 w-64 h-64 rounded-full bg-blue-500/30 blur-3xl animate-float-reverse"></div>
+        </div>
+        <div class="container mx-auto px-6 relative">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">
+                    Ready for Your <span class="gradient-text">Wilderness</span> Adventure?
+                </h2>
+                <p class="text-xl text-gray-300 mb-10 max-w-3xl mx-auto">
+                    See yourself in our next gallery! Book your wild camping or foraging experience today.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="/contact/" class="px-8 py-4 bg-white hover:bg-gray-100 text-dark-900 rounded-lg text-lg font-semibold transition-colors shadow-lg transform hover:scale-105 duration-300">
+                        Book Your Adventure
+                    </a>
+                    <a href="/gallery/" class="px-8 py-4 bg-dark-800 hover:bg-dark-700 rounded-lg text-lg font-semibold transition-colors shadow-lg transform hover:scale-105 duration-300">
+                        View More Photos
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark-900 border-t border-dark-800 pt-20 pb-10">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+                <div>
+                   <a href="/" class="flex items-center space-x-2 glow-hover">
+                       <img src="/assets/logo.png" class="h-16 mb-6" alt="logo" />
+                    </a>
+                    <p class="text-gray-400 mb-6">
+                        Reconnecting people with nature through wild camping adventures, foraging experiences, and wilderness survival training in Manchester.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="https://www.facebook.com/Wildmanc.nature" target="_blank" class="w-10 h-10 rounded-full bg-dark-800 hover:bg-dark-700 flex items-center justify-center text-gray-400 hover:text-primary-400 transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.instagram.com/wild.manchester/" target="_blank" class="w-10 h-10 rounded-full bg-dark-800 hover:bg-dark-700 flex items-center justify-center text-gray-400 hover:text-primary-400 transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://x.com/ManchesterWild" target="_blank" class="w-10 h-10 rounded-full bg-dark-800 hover:bg-dark-700 flex items-center justify-center text-gray-400 hover:text-primary-400 transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://www.youtube.com/channel/UCGXyESNY94ItxqJOdyszYgQ" target="_blank" class="w-10 h-10 rounded-full bg-dark-800 hover:bg-dark-700 flex items-center justify-center text-gray-400 hover:text-primary-400 transition-colors">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-6">Quick Links</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/" class="text-gray-400 hover:text-primary-400 transition-colors">Home</a></li>
+                        <li><a href="/about/" class="text-gray-400 hover:text-primary-400 transition-colors">About Us</a></li>
+                        <li><a href="/blog/" class="text-gray-400 hover:text-primary-400 transition-colors">Blog</a></li>
+                        <li><a href="/gallery/" class="text-gray-400 hover:text-primary-400 transition-colors">Gallery</a></li>
+                        <li><a href="/contact/" class="text-gray-400 hover:text-primary-400 transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-6">Experiences</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/camping/" class="text-gray-400 hover:text-primary-400 transition-colors">Beginner Camping</a></li>
+                        <li><a href="/camping/" class="text-gray-400 hover:text-primary-400 transition-colors">Foraging Adventures</a></li>
+                        <li><a href="/camping/" class="text-gray-400 hover:text-primary-400 transition-colors">Survival Training</a></li>
+                        <li><a href="/camping/" class="text-gray-400 hover:text-primary-400 transition-colors">Family Camping</a></li>
+                        <li><a href="/camping/" class="text-gray-400 hover:text-primary-400 transition-colors">Wildlife Photography</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-6">Legal</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/privacy/" class="text-gray-400 hover:text-primary-400 transition-colors">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="text-gray-400 hover:text-primary-400 transition-colors">Terms of Service</a></li>
+                        <li><a href="/cookies/" class="text-gray-400 hover:text-primary-400 transition-colors">Cookies Policy</a></li>
+                        <li><a href="/faq/" class="text-gray-400 hover:text-primary-400 transition-colors">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-dark-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-500 text-sm mb-4 md:mb-0">
+                    &copy; 2025 Wild Manchester Group. All rights reserved.
+                </p>
+              <div class="flex space-x-6">
+                    <a href="/privacy/" class="text-gray-500 hover:text-gray-400 text-sm transition-colors">Privacy
+                                Policy</a>
+                    <a href="/terms/" class="text-gray-500 hover:text-gray-400 text-sm transition-colors">Terms of
+                                Service</a>
+                    <a href="/cookies/" class="text-gray-500 hover:text-gray-400 text-sm transition-colors">Cookies
+                                Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="fixed bottom-8 right-8 w-12 h-12 rounded-full bg-primary-600 hover:bg-primary-700 text-white shadow-lg flex items-center justify-center transition-opacity duration-300 opacity-0 invisible">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Lightbox JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightgallery-js/1.4.0/js/lightgallery.min.js"></script>
+    
+    <!-- Scripts -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Back to Top Button
+        const backToTopButton = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.remove('opacity-0', 'invisible');
+                backToTopButton.classList.add('opacity-100', 'visible');
+            } else {
+                backToTopButton.classList.remove('opacity-100', 'visible');
+                backToTopButton.classList.add('opacity-0', 'invisible');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Cookie Consent
+        const cookieConsent = document.getElementById('cookieConsent');
+        const acceptCookies = document.getElementById('acceptCookies');
+        const declineCookies = document.getElementById('declineCookies');
+        
+        if (!localStorage.getItem('cookieConsent')) {
+            setTimeout(() => {
+                cookieConsent.classList.remove('hidden');
+            }, 2000);
+        }
+        
+        acceptCookies.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'accepted');
+            cookieConsent.classList.add('hidden');
+        });
+        
+        declineCookies.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'declined');
+            cookieConsent.classList.add('hidden');
+        });
+
+        // Gallery Filter
+        const galleryCategories = document.querySelectorAll('.gallery-category');
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        
+        galleryCategories.forEach(category => {
+            category.addEventListener('click', () => {
+                // Update active category
+                galleryCategories.forEach(c => c.classList.remove('active'));
+                category.classList.add('active');
+                
+                const filter = category.dataset.category;
+                
+                // Filter items
+                galleryItems.forEach(item => {
+                    if (filter === 'all' || item.dataset.category === filter) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Load More Button
+       
+        
+       
+
+        // Initialize LightGallery
+        lightGallery(document.querySelector('.lightgallery'), {
+            selector: '.gallery-item',
+            download: false,
+            counter: false,
+            getCaptionFromTitleOrAlt: false
+        });
+
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Animate gallery items on scroll
+        gsap.utils.toArray('.gallery-item').forEach((item, i) => {
+            gsap.from(item, {
+                scrollTrigger: {
+                    trigger: item,
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                },
+                y: 50,
+                opacity: 0,
+                duration: 0.8,
+                delay: i * 0.1,
+                ease: "power3.out"
+            });
+        });
+        
+        // Hero text animation
+        gsap.from("section.relative h1 span", {
+            duration: 1.5,
+            y: 50,
+            opacity: 0,
+            stagger: 0.2,
+            ease: "power3.out"
+        });
+        
+        gsap.from("section.relative p", {
+            duration: 1.5,
+            y: 50,
+            opacity: 0,
+            delay: 0.5,
+            ease: "power3.out"
+        });
+        
+        gsap.from("section.relative .flex a", {
+            duration: 1.5,
+            y: 50,
+            opacity: 0,
+            delay: 0.8,
+            ease: "power3.out"
+        });
+    </script>
+</body>
+</html>

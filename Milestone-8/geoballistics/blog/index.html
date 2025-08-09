@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeoBallistics Blog | Precision Shooting Articles & News</title>
+    <meta name="description" content="Read the latest articles, tutorials, and news about ballistics, precision shooting, and GeoBallistics app updates.">
+    <meta name="keywords" content="ballistics blog, precision shooting articles, long range shooting tips, GeoBallistics news">
+    <link rel="canonical" href="https://geoballistics.app/blog/">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/image/logo.webp" type="image/x-icon">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Roboto:wght@300;400;500&family=Orbitron:wght@500&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2A2E35',
+                        secondary: '#4B5320',
+                        accent: '#FFB400',
+                    },
+                    fontFamily: {
+                        heading: ['Rajdhani', 'sans-serif'],
+                        body: ['Roboto', 'sans-serif'],
+                        tactical: ['Orbitron', 'sans-serif'],
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+</head>
+<body class="bg-primary text-gray-200 font-body antialiased">
+    <!-- Cookie Consent Banner -->
+    <div id="cookieConsent" class="fixed bottom-0 left-0 right-0 bg-primary border-t border-secondary hidden z-50">
+        <div class="container mx-auto px-4 py-3 flex flex-col md:flex-row items-center justify-between">
+            <p class="mb-3 md:mb-0 md:mr-4">We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies.</p>
+            <div class="flex space-x-3">
+                <button id="cookieDecline" class="px-4 py-2 border border-secondary hover:bg-secondary transition-colors">Decline</button>
+                <button id="cookieAccept" class="px-4 py-2 bg-accent text-primary font-heading font-semibold hover:bg-yellow-500 transition-colors">Accept</button>
+                <a href="/cookies/" class="px-4 py-2 border border-accent text-accent hover:bg-opacity-10 hover:bg-accent transition-colors">Learn More</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 bg-primary bg-opacity-90 backdrop-blur-sm z-40 border-b border-secondary">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <a href="/" class="flex items-center space-x-2">
+                    <div class="w-10 h-10  rounded-sm flex items-center justify-center">
+                           <img src="/image/logo.webp" alt="GeoBallistics Logo" class="rounded-full">
+                    </div>
+                    <span class="text-xl font-heading font-bold tracking-tight">GEO<span class="text-accent">BALLISTICS</span></span>
+                </a>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="hover:text-accent transition-colors font-heading">Home</a>
+                  <a href="/games/" class="block px-3 py-2 hover:text-accent transition-colors font-heading">Games</a>
+                    <a href="/about/" class="hover:text-accent transition-colors font-heading">About</a>
+                    <a href="/blog/" class="text-accent font-heading font-medium">Blog</a>
+                    <a href="/contact/" class="hover:text-accent transition-colors font-heading">Contact</a>
+                    <a href="https://play.google.com/store/apps/details?id=com.geoballistics.ballisticsarc" target="_blank" class="bg-accent text-primary px-4 py-2 rounded-sm font-heading font-semibold hover:bg-yellow-500 transition-colors">Download App</a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuButton" class="md:hidden text-gray-300 hover:text-accent focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-primary border-t border-secondary">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="/" class="block px-3 py-2 hover:text-accent transition-colors font-heading">Home</a>
+              <a href="/games/" class="block px-3 py-2 hover:text-accent transition-colors font-heading">Games</a>
+                <a href="/about/" class="block px-3 py-2 hover:text-accent transition-colors font-heading">About</a>
+                <a href="/blog/" class="block px-3 py-2 text-accent font-heading">Blog</a>
+                <a href="/contact/" class="block px-3 py-2 hover:text-accent transition-colors font-heading">Contact</a>
+                <a href="https://play.google.com/store/apps/details?id=com.geoballistics.ballisticsarc" target="_blank" class="block px-3 py-2 bg-accent text-primary rounded-sm text-center font-heading font-semibold">Download App</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 overflow-hidden">
+        <!-- Animated Background Elements -->
+        <div class="absolute top-0 left-0 w-full h-full opacity-10">
+            <div class="absolute top-1/4 left-1/4 w-32 h-32 bg-accent rounded-full filter blur-xl animate-pulse-slow"></div>
+            <div class="absolute top-3/4 right-1/4 w-24 h-24 bg-accent rounded-full filter blur-xl animate-pulse-slow animation-delay-2000"></div>
+        </div>
+        
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="max-w-3xl mx-auto text-center">
+                <h1 class="text-4xl md:text-5xl font-heading font-bold mb-6">
+                    <span class="text-accent">GEOBALLISTICS</span> BLOG
+                </h1>
+                <p class="text-xl text-gray-300 mb-8">Precision shooting insights, ballistics tutorials, and the latest GeoBallistics news.</p>
+                
+                
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Content -->
+    <section class="py-16 bg-gray-900 relative">
+        <div class="container mx-auto px-4">
+            <!-- Featured Post -->
+            <div class="mb-20">
+                <h2 class="text-2xl font-heading font-semibold mb-6 flex items-center">
+                    <span class="w-4 h-4 bg-accent mr-3"></span>
+                    FEATURED ARTICLE
+                </h2>
+                
+                <article class="bg-primary border border-secondary rounded-sm overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                    <a href="/blog/understanding-3dof-ballistics/" class="block md:flex">
+                        <div class="md:w-1/2 h-64 md:h-auto overflow-hidden">
+                            <img src="/image/blog1.png" alt="Understanding 3DOF Ballistics" class="w-full h-[400px] object-cover hover:scale-105 transition-transform duration-500">
+                        </div>
+                        <div class="md:w-1/2 p-8">
+                            <div class="flex items-center mb-4">
+                                <span class="text-sm text-accent font-heading">BALLISTICS</span>
+                                <span class="mx-3 text-gray-500">•</span>
+                                <span class="text-sm text-gray-500">June 15, 2025</span>
+                            </div>
+                            <h3 class="text-2xl font-heading font-bold mb-4">Understanding 3DOF Ballistics Calculations</h3>
+                            <p class="text-gray-400 mb-6">Learn how 3 Degree of Freedom solvers improve long-range shooting accuracy compared to traditional methods. This comprehensive guide explains the physics behind 3DOF calculations and how GeoBallistics implements them in your pocket.</p>
+                            <div class="flex items-center text-accent font-heading font-medium">
+                                <span>Read Article</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                </svg>
+                            </div>
+                        </div>
+                    </a>
+                </article>
+            </div>
+            
+            <!-- Blog Grid -->
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Blog Post 1 -->
+                <article class="bg-primary border border-secondary rounded-sm overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                    <a href="/blog/weather-effects-on-ballistics/">
+                        <div class="h-48 overflow-hidden">
+                            <img src="/image/blog2.webp" alt="Weather Effects on Ballistics" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center mb-3">
+                                <span class="text-xs text-accent font-heading">TECHNICAL</span>
+                                <span class="mx-2 text-gray-500">•</span>
+                                <span class="text-xs text-gray-500">May 28, 2025</span>
+                            </div>
+                            <h3 class="text-xl font-heading font-semibold mb-3">How Weather Affects Your Bullet's Path</h3>
+                            <p class="text-gray-400 mb-4">Explore the impact of temperature, humidity, and pressure on bullet trajectory and how to compensate using GeoBallistics' weather integration features.</p>
+                            <div class="flex items-center text-sm text-gray-500">
+                                <span>Read More</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                </svg>
+                            </div>
+                        </div>
+                    </a>
+                </article>
+                
+                <!-- Blog Post 2 -->
+                <article class="bg-primary border border-secondary rounded-sm overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                    <a href="/blog/range-card-strategies/">
+                        <div class="h-48 overflow-hidden">
+                            <img src="/image/blog3.jpg" alt="Range Card Strategies" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center mb-3">
+                                <span class="text-xs text-accent font-heading">TACTICAL</span>
+                                <span class="mx-2 text-gray-500">•</span>
+                                <span class="text-xs text-gray-500">May 12, 2025</span>
+                            </div>
+                            <h3 class="text-xl font-heading font-semibold mb-3">Creating Effective Range Cards</h3>
+                            <p class="text-gray-400 mb-4">Step-by-step guide to building comprehensive range cards for competition and hunting scenarios using GeoBallistics' Map Mode.</p>
+                            <div class="flex items-center text-sm text-gray-500">
+                                <span>Read More</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                </svg>
+                            </div>
+                        </div>
+                    </a>
+                </article>
+                
+                <!-- Blog Post 3 -->
+                <article class="bg-primary border border-secondary rounded-sm overflow-hidden hover:shadow-lg transition-shadow duration-300">
+                    <a href="/blog/geoballistics-v6-update/">
+                        <div class="h-48 overflow-hidden">
+                            <img src="/image/blog4.jpg" alt="GeoBallistics V6 Update" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                        </div>
+                        <div class="p-6">
+                            <div class="flex items-center mb-3">
+                                <span class="text-xs text-accent font-heading">NEWS</span>
+                                <span class="mx-2 text-gray-500">•</span>
+                                <span class="text-xs text-gray-500">April 30, 2025</span>
+                            </div>
+                            <h3 class="text-xl font-heading font-semibold mb-3">What's New in GeoBallistics V6</h3>
+                            <p class="text-gray-400 mb-4">Discover the latest features and improvements in our biggest update yet, including the new HDZ calculator and enhanced hardware integration.</p>
+                            <div class="flex items-center text-sm text-gray-500">
+                                <span>Read More</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                                </svg>
+                            </div>
+                        </div>
+                    </a>
+                </article>
+                
+               
+                
+            </div>
+            
+           
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="py-20 bg-primary relative overflow-hidden">
+        <!-- Diagonal background pattern -->
+        <div class="absolute inset-0 bg-diagonal-pattern opacity-5 z-0"></div>
+        
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="max-w-4xl mx-auto text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-heading font-bold mb-4">
+                    BROWSE BY <span class="text-accent">CATEGORY</span>
+                </h2>
+                <p class="max-w-2xl mx-auto text-gray-400">Find articles that match your interests and skill level.</p>
+            </div>
+            
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="bg-gray-900 border border-secondary rounded-sm p-6 text-center hover:border-accent transition-colors group">
+                    <div class="w-16 h-16 bg-accent bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-opacity-20 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-heading font-semibold mb-2">Technical</h3>
+                    <p class="text-sm text-gray-400">In-depth ballistics theory and calculations</p>
+                </div>
+                
+                <div class="bg-gray-900 border border-secondary rounded-sm p-6 text-center hover:border-accent transition-colors group">
+                    <div class="w-16 h-16 bg-accent bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-opacity-20 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 8V4m0 0h4M4 4l5 5m11-1V4m0 0h-4m4 0l-5 5M4 16v4m0 0h4m-4 0l5-5m11 5l-5-5m5 5v-4m0 4h-4" />
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-heading font-semibold mb-2">Tactical</h3>
+                    <p class="text-sm text-gray-400">Field techniques and practical applications</p>
+                </div>
+                
+                <div class="bg-gray-900 border border-secondary rounded-sm p-6 text-center hover:border-accent transition-colors group">
+                    <div class="w-16 h-16 bg-accent bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-opacity-20 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-heading font-semibold mb-2">Competition</h3>
+                    <p class="text-sm text-gray-400">Match preparation and precision shooting sports</p>
+                </div>
+                
+                <div  class="bg-gray-900 border border-secondary rounded-sm p-6 text-center hover:border-accent transition-colors group">
+                    <div class="w-16 h-16 bg-accent bg-opacity-10 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-opacity-20 transition-colors">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-lg font-heading font-semibold mb-2">News</h3>
+                    <p class="text-sm text-gray-400">Updates and announcements about GeoBallistics</p>
+                </div >
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="py-20 bg-gray-900 relative overflow-hidden">
+        <!-- Decorative elements -->
+        <div class="absolute top-0 right-0 w-64 h-64 bg-accent opacity-10 rounded-full transform translate-x-32 -translate-y-32"></div>
+        <div class="absolute bottom-0 left-0 w-96 h-96 bg-accent opacity-5 rounded-full transform -translate-x-64 translate-y-64"></div>
+        
+        <div class="container mx-auto px-4 relative">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="text-3xl md:text-4xl font-heading font-bold mb-6">
+                    STAY <span class="text-accent">UPDATED</span>
+                </h2>
+                <p class="text-xl text-gray-300 mb-8">Subscribe to our newsletter for the latest articles, tips, and GeoBallistics updates.</p>
+                
+                <form class="flex flex-col sm:flex-row gap-4 max-w-xl mx-auto">
+                    <input type="email" placeholder="Your email address" class="flex-grow px-6 py-3 bg-gray-800 border border-gray-700 rounded-sm focus:ring-2 focus:ring-accent focus:border-accent outline-none transition-colors">
+                    <button type="submit" class="px-6 py-3 bg-accent text-primary rounded-sm font-heading font-semibold hover:bg-yellow-500 transition-colors whitespace-nowrap">
+                        Subscribe
+                    </button>
+                </form>
+                
+                <p class="text-sm text-gray-500 mt-4">We respect your privacy. Unsubscribe at any time.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8 mb-12">
+                <!-- About -->
+                <div>
+                    <h3 class="text-lg font-heading font-semibold text-white mb-4">About GeoBallistics</h3>
+                    <p class="mb-4">The most advanced mobile ballistics solution featuring 3DOF calculations, range cards, and hardware integration for precision shooting.</p>
+                  
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-lg font-heading font-semibold text-white mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/games/" class="hover:text-accent transition-colors">Games</a></li>
+                        <li><a href="/about/" class="hover:text-accent transition-colors">About Us</a></li>
+                        <li><a href="/blog/" class="hover:text-accent transition-colors">Blog</a></li>
+                        <li><a href="/contact/" class="hover:text-accent transition-colors">Contact</a></li>
+                        <li><a href="https://play.google.com/store/apps/details?id=com.geoballistics.ballisticsarc" target="_blank" class="hover:text-accent transition-colors">Download</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Support -->
+                <div>
+                    <h3 class="text-lg font-heading font-semibold text-white mb-4">Support</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/privacy/" class="hover:text-accent transition-colors">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="hover:text-accent transition-colors">Terms of Service</a></li>
+                        <li><a href="/cookies/" class="hover:text-accent transition-colors">Cookies Policy</a></li>
+                     
+                    </ul>
+                </div>
+                
+                <!-- Contact -->
+                <div>
+                    <h3 class="text-lg font-heading font-semibold text-white mb-4">Contact Us</h3>
+                    <address class="not-italic">
+                        <div class="mb-2">Sheltered Wings, Inc.</div>
+                        <div class="mb-2">1 Vortex Dr</div>
+                        <div class="mb-2">Barneveld, WI 53507</div>
+                        <div class="mb-2">United States</div>
+                        <div class="mb-2">Phone: <a href="tel:+16086022295" class="hover:text-accent transition-colors">+1 608-602-2295</a></div>
+                        <div class="mb-2">Email: <a href="mailto:info@geoballistics.app" class="hover:text-accent transition-colors">info@geoballistics.app</a></div>
+                    </address>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8 text-sm text-center">
+                <p>&copy; 2025 GeoBallistics by Sheltered Wings, Inc. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Cookie Consent
+        const cookieConsent = document.getElementById('cookieConsent');
+        const cookieAccept = document.getElementById('cookieAccept');
+        const cookieDecline = document.getElementById('cookieDecline');
+        
+        if (!localStorage.getItem('cookieConsent')) {
+            cookieConsent.classList.remove('hidden');
+        }
+        
+        cookieAccept.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'accepted');
+            cookieConsent.classList.add('hidden');
+        });
+        
+        cookieDecline.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'declined');
+            cookieConsent.classList.add('hidden');
+        });
+        
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Animate blog posts on scroll
+        gsap.utils.toArray('article').forEach((article, i) => {
+            gsap.from(article, {
+                scrollTrigger: {
+                    trigger: article,
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                },
+                opacity: 0,
+                y: 50,
+                duration: 0.8,
+                delay: i * 0.1
+            });
+        });
+        
+        // Animate categories
+        gsap.from(".bg-diagonal-pattern + .container .grid a", {
+            scrollTrigger: {
+                trigger: ".bg-diagonal-pattern + .container",
+                start: "top 80%",
+                toggleActions: "play none none none"
+            },
+            opacity: 0,
+            y: 30,
+            duration: 0.8,
+            stagger: 0.1
+        });
+    </script>
+</body>
+</html>

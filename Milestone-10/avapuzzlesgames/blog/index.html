@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Word Game Wonders Blog - Get the latest tips, tricks and updates about our crossword puzzle game.">
+    <meta name="keywords" content="word game blog, crossword tips, puzzle strategies, word wonders updates, game news">
+    <meta name="author" content="A.V.A - puzzles games">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://avapuzzlesgames.com/blog/" />
+    <title>Blog | Word Game Wonders: Crossword</title>
+    <link rel="icon" href="/images/favicon.webp" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollTrigger.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            overflow-x: hidden;
+            background-color: #0f172a;
+            color: #f8fafc;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, #38bdf8, #8b5cf6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, rgba(56, 189, 248, 0.1), rgba(139, 92, 246, 0.1));
+        }
+        
+        .card-hover-effect {
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+        }
+        
+        .card-hover-effect:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        
+        .floating-icon {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        
+        .floating-icon:nth-child(2n) {
+            animation-name: float-reverse;
+        }
+        
+        @keyframes float-reverse {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(20px); }
+        }
+        
+        .floating-icon:nth-child(3n) {
+            animation-duration: 7s;
+        }
+        
+        .floating-icon:nth-child(4n) {
+            animation-duration: 5s;
+        }
+        
+        .blog-content p {
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+            color: #e2e8f0;
+        }
+        
+        .blog-content h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-top: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: #ffffff;
+        }
+        
+        .blog-content h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 1.25rem;
+            color: #ffffff;
+        }
+        
+        .blog-content ul, .blog-content ol {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+        
+        .blog-content li {
+            margin-bottom: 0.5rem;
+            color: #e2e8f0;
+        }
+        
+        .blog-content a {
+            color: #38bdf8;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        .blog-content a:hover {
+            color: #7dd3fc;
+        }
+        
+        .blog-content blockquote {
+            border-left: 4px solid #38bdf8;
+            padding-left: 1.5rem;
+            margin: 2rem 0;
+            color: #94a3b8;
+            font-style: italic;
+        }
+
+        /* Fix for image scaling */
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+
+        /* Ensure proper spacing for mobile menu */
+        @media (max-width: 767px) {
+            nav {
+                padding: 0.5rem 1rem;
+            }
+            #mobile-menu {
+                padding: 1rem;
+            }
+        }
+
+        /* Fix for cookie consent on mobile */
+        #cookie-consent {
+            padding: 1rem;
+        }
+        #cookie-consent .container {
+            padding: 0;
+        }
+
+        /* Ensure proper text contrast */
+        .text-gray-400 {
+            color: #9ca3af;
+        }
+        .text-gray-500 {
+            color: #6b7280;
+        }
+
+        /* Fix for card heights */
+        .flex-col {
+            display: flex;
+            flex-direction: column;
+        }
+        .h-full {
+            height: 100%;
+        }
+        .flex-grow {
+            flex-grow: 1;
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <!-- Cookie Consent Popup -->
+    <div id="cookie-consent" class="fixed bottom-0 left-0 right-0 bg-gray-800 text-white p-4 shadow-lg z-50 hidden">
+        <div class="container mx-auto flex flex-col md:flex-row items-center justify-between">
+            <div class="mb-4 md:mb-0 md:mr-4">
+                <p class="text-sm">We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies.</p>
+            </div>
+            <div class="flex flex-wrap gap-2">
+                <button id="cookie-accept" class="px-4 py-2 bg-blue-600 hover:bg-blue-700 rounded-lg text-sm font-medium transition-colors">Accept</button>
+                <button id="cookie-decline" class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg text-sm font-medium transition-colors">Decline</button>
+                <a href="/cookies/" class="px-4 py-2 bg-transparent hover:bg-gray-700 rounded-lg text-sm font-medium transition-colors border border-gray-600">Learn More</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-40 bg-gray-900/80 backdrop-blur-md border-b border-gray-800">
+        <div class="container mx-auto px-6 py-2">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <a href="/" class="flex items-center space-x-2">
+                        <img src="/images/logo.png" alt="Word Game Wonders Logo" class="h-16 w-auto">                        
+                    </a>
+                </div>
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="/" class="text-gray-400 hover:text-blue-400 transition-colors">Home</a>
+                    <a href="/how-to-play/" class="text-gray-400 hover:text-blue-400 transition-colors">How to Play</a>
+                    <a href="/responsible-gaming/" class="text-gray-400 hover:text-blue-400 transition-colors">Responsible Gaming</a>
+                    <a href="/blog/" class="text-white hover:text-blue-400 transition-colors font-medium">Blog</a>
+                    <a href="/contact/" class="text-gray-400 hover:text-blue-400 transition-colors">Contact</a>
+                </div>
+                <div class="flex items-center space-x-2 sm:space-x-4">
+                    <a href="https://play.google.com/store/apps/details?id=com.smartgames.word.puzzle.block.crush.wonders" class="hidden md:block px-3 sm:px-4 py-1 sm:py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-medium hover:opacity-90 transition-opacity text-sm sm:text-base">Download Now</a>
+                    <button id="mobile-menu-button" class="md:hidden text-gray-400 hover:text-white focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-gray-900 border-t border-gray-800">
+            <div class="container mx-auto px-4 py-3 flex flex-col space-y-3">
+                <a href="/" class="text-gray-400 hover:text-blue-400 transition-colors py-2">Home</a>
+                <a href="/how-to-play/" class="text-gray-400 hover:text-blue-400 transition-colors py-2">How to Play</a>
+                <a href="/responsible-gaming/" class="text-gray-400 hover:text-blue-400 transition-colors py-2">Responsible Gaming</a>
+                <a href="/blog/" class="text-white hover:text-blue-400 transition-colors font-medium py-2">Blog</a>
+                <a href="/contact/" class="text-gray-400 hover:text-blue-400 transition-colors py-2">Contact</a>
+                <a href="https://play.google.com/store/apps/details?id=com.smartgames.word.puzzle.block.crush.wonders" class="px-4 py-2 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-medium hover:opacity-90 transition-opacity text-center mt-2">Download Now</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-24 pb-16 md:pt-32 md:pb-20 overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-br from-gray-900 to-gray-800 opacity-90"></div>
+        <div class="container mx-auto px-4 sm:px-6 relative z-10">
+            <div class="text-center max-w-4xl mx-auto">
+                <h1 class="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6">
+                    <span class="gradient-text">Word Game Wonders</span> Blog
+                </h1>
+                <p class="text-lg sm:text-xl text-gray-300">
+                    Get the latest tips, tricks, and updates about our addictive crossword puzzle game
+                </p>
+            </div>
+        </div>
+        <div class="floating-icon absolute top-1/4 left-1/4 text-blue-400 text-3xl sm:text-4xl opacity-20">
+            <i class="fas fa-square"></i>
+        </div>
+        <div class="floating-icon absolute top-1/3 right-1/4 text-purple-400 text-2xl sm:text-3xl opacity-20">
+            <i class="fas fa-circle"></i>
+        </div>
+        <div class="floating-icon absolute bottom-1/4 left-1/3 text-yellow-400 text-4xl sm:text-5xl opacity-20">
+            <i class="fas fa-star"></i>
+        </div>
+    </section>
+
+    <!-- Featured Blog Post -->
+    <section class="py-10 sm:py-12 bg-gray-900/50 relative overflow-hidden">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="mb-8 sm:mb-10">
+                <h2 class="text-2xl sm:text-3xl font-bold">
+                    <span class="gradient-text">Featured Post</span>
+                </h2>
+            </div>
+            <div class="bg-gray-800 rounded-xl sm:rounded-2xl overflow-hidden border border-gray-700/50">
+                <div class="flex flex-col lg:flex-row">
+                    <div class="lg:w-1/2 relative overflow-hidden">
+                        <img src="/images/blog-featured.webp" alt="Featured Blog Post" class="w-full h-full object-cover min-h-[300px] sm:min-h-[400px]">
+                        <div class="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-transparent to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 p-4 sm:p-6">
+                            <span class="bg-blue-600 text-white px-3 py-1 rounded-full text-xs sm:text-sm font-medium">Tips & Tricks</span>
+                        </div>
+                    </div>
+                    <div class="lg:w-1/2 p-6 sm:p-8">
+                        <div class="flex items-center text-gray-500 text-xs sm:text-sm mb-3 sm:mb-4">
+                            <i class="far fa-calendar-alt mr-2"></i>
+                            <span>June 15, 2025</span>
+                            <span class="mx-2">•</span>
+                            <i class="far fa-clock mr-2"></i>
+                            <span>7 min read</span>
+                        </div>
+                        <h3 class="text-xl sm:text-2xl md:text-3xl font-bold mb-3 sm:mb-4">How to Improve Your Vocabulary with Word Games</h3>
+                        <div class="blog-content mb-4 sm:mb-6">
+                            <p class="text-gray-400">Discover effective strategies to expand your vocabulary while having fun with word puzzles. Learn how Word Game Wonders can help you learn new words effortlessly.</p>
+                            <p class="text-gray-400 mt-3">Word games aren't just entertaining—they're powerful tools for vocabulary building. Our crossword puzzle game is designed to challenge your word knowledge while introducing you to new terms in a fun, engaging way.</p>
+                            <p class="text-gray-400 mt-3">In this article, we'll explore proven techniques to maximize your vocabulary growth while playing Word Game Wonders: Crossword.</p>
+                        </div>
+                        <a href="/blog/improve-vocabulary/" class="inline-flex items-center text-blue-400 hover:text-blue-300 transition-colors font-medium text-sm sm:text-base">
+                            <span>Read Full Article</span>
+                            <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Recent Blog Posts -->
+    <section class="py-10 sm:py-12 bg-gray-900 relative overflow-hidden">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="mb-8 sm:mb-10">
+                <h2 class="text-2xl sm:text-3xl font-bold">
+                    <span class="gradient-text">Recent Posts</span>
+                </h2>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                <!-- Blog Post 1 -->
+                <a href="/blog/new-update/" class="group block h-full">
+                    <div class="bg-gray-800 rounded-lg sm:rounded-xl overflow-hidden card-hover-effect border border-gray-700/50 h-full flex flex-col">
+                        <div class="relative overflow-hidden h-48">
+                            <img src="/images/blog2.webp" alt="Game Update" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent"></div>
+                            <div class="absolute top-3 right-3 sm:top-4 sm:right-4 bg-purple-600 text-white px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium">Update</div>
+                        </div>
+                        <div class="p-4 sm:p-6 flex-grow">
+                            <div class="flex items-center text-gray-500 text-xs sm:text-sm mb-2 sm:mb-3">
+                                <i class="far fa-calendar-alt mr-2"></i>
+                                <span>June 5, 2025</span>
+                            </div>
+                            <h3 class="text-lg sm:text-xl font-bold mb-2 sm:mb-3 group-hover:text-purple-400 transition-colors">New Update: 200 Additional Levels Added</h3>
+                            <p class="text-gray-400 mb-3 sm:mb-4 text-sm sm:text-base">Exciting news! We've added 200 new challenging levels to keep your brain engaged and entertained.</p>
+                            <div class="flex items-center text-gray-500 text-xs sm:text-sm">
+                                <i class="far fa-clock mr-2"></i>
+                                <span>3 min read</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- Blog Post 2 -->
+                <a href="/blog/bonus-words/" class="group block h-full">
+                    <div class="bg-gray-800 rounded-lg sm:rounded-xl overflow-hidden card-hover-effect border border-gray-700/50 h-full flex flex-col">
+                        <div class="relative overflow-hidden h-48">
+                            <img src="/images/blog3.png" alt="Bonus Words" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent"></div>
+                            <div class="absolute top-3 right-3 sm:top-4 sm:right-4 bg-yellow-600 text-white px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium">Gameplay</div>
+                        </div>
+                        <div class="p-4 sm:p-6 flex-grow">
+                            <div class="flex items-center text-gray-500 text-xs sm:text-sm mb-2 sm:mb-3">
+                                <i class="far fa-calendar-alt mr-2"></i>
+                                <span>May 22, 2025</span>
+                            </div>
+                            <h3 class="text-lg sm:text-xl font-bold mb-2 sm:mb-3 group-hover:text-yellow-400 transition-colors">Mastering Bonus Words for Extra Coins</h3>
+                            <p class="text-gray-400 mb-3 sm:mb-4 text-sm sm:text-base">Learn how to find those elusive bonus words to maximize your coin earnings and unlock special features.</p>
+                            <div class="flex items-center text-gray-500 text-xs sm:text-sm">
+                                <i class="far fa-clock mr-2"></i>
+                                <span>7 min read</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- Blog Post 3 -->
+                <a href="/blog/theme-guide/" class="group block h-full">
+                    <div class="bg-gray-800 rounded-lg sm:rounded-xl overflow-hidden card-hover-effect border border-gray-700/50 h-full flex flex-col">
+                        <div class="relative overflow-hidden h-48">
+                            <img src="/images/blog4.jpg" alt="Theme Guide" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div class="absolute inset-0 bg-gradient-to-t from-gray-900/80 to-transparent"></div>
+                            <div class="absolute top-3 right-3 sm:top-4 sm:right-4 bg-pink-600 text-white px-2 sm:px-3 py-1 rounded-full text-xs sm:text-sm font-medium">Guide</div>
+                        </div>
+                        <div class="p-4 sm:p-6 flex-grow">
+                            <div class="flex items-center text-gray-500 text-xs sm:text-sm mb-2 sm:mb-3">
+                                <i class="far fa-calendar-alt mr-2"></i>
+                                <span>May 10, 2025</span>
+                            </div>
+                            <h3 class="text-lg sm:text-xl font-bold mb-2 sm:mb-3 group-hover:text-pink-400 transition-colors">Unlocking All Themes: A Complete Guide</h3>
+                            <p class="text-gray-400 mb-3 sm:mb-4 text-sm sm:text-base">Find out how to unlock all the beautiful background themes in the game and customize your experience.</p>
+                            <div class="flex items-center text-gray-500 text-xs sm:text-sm">
+                                <i class="far fa-clock mr-2"></i>
+                                <span>4 min read</span>
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="text-center mt-10 sm:mt-12">
+                <a href="/" class="inline-flex items-center px-5 sm:px-6 py-2 sm:py-3 bg-gray-800 hover:bg-gray-700 text-white rounded-lg font-medium transition-colors">
+                    <i class="fas fa-arrow-left mr-2"></i>
+                    <span>Back to Home</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="py-12 sm:py-16 bg-gray-900/50 relative overflow-hidden">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="max-w-4xl mx-auto bg-gray-800 rounded-xl sm:rounded-2xl p-6 sm:p-8 md:p-10 lg:p-12 border border-gray-700/50">
+                <div class="text-center mb-6 sm:mb-8">
+                    <h2 class="text-2xl sm:text-3xl font-bold mb-3 sm:mb-4">
+                        <span class="gradient-text">Stay Updated</span>
+                    </h2>
+                    <p class="text-gray-400 max-w-2xl mx-auto text-sm sm:text-base">
+                        Subscribe to our newsletter to receive the latest game updates, tips, and exclusive content.
+                    </p>
+                </div>
+                <form class="max-w-md mx-auto">
+                    <div class="flex flex-col sm:flex-row gap-3">
+                        <input type="email" placeholder="Your email address" class="flex-grow px-4 py-2 sm:py-3 bg-gray-700 border border-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-white text-sm sm:text-base">
+                        <button type="submit" class="px-5 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-lg font-medium hover:opacity-90 transition-opacity text-sm sm:text-base">
+                            Subscribe
+                        </button>
+                    </div>
+                    <p class="text-gray-500 text-xs mt-2 text-center">
+                        We respect your privacy. Unsubscribe at any time.
+                    </p>
+                </form>
+            </div>
+        </div>
+        <div class="floating-icon absolute top-1/4 left-1/4 text-blue-400 text-3xl sm:text-4xl opacity-10">
+            <i class="fas fa-envelope"></i>
+        </div>
+        <div class="floating-icon absolute bottom-1/4 right-1/4 text-purple-400 text-2xl sm:text-3xl opacity-10">
+            <i class="fas fa-paper-plane"></i>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 border-t border-gray-800">
+        <div class="container mx-auto px-4 sm:px-6 py-10 sm:py-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10">
+                <div>
+                    <div class="flex items-center space-x-2 mb-4 sm:mb-6">
+                        <img src="/images/logo.png" alt="Word Game Wonders Logo" class="h-8 w-auto">
+                        <span class="text-xl font-bold gradient-text">Word Wonders</span>
+                    </div>
+                    <p class="text-gray-400 mb-4 text-sm sm:text-base">
+                        The most addictive word puzzle game with beautiful graphics and thousands of challenging levels.
+                    </p>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-4 sm:mb-6">Quick Links</h3>
+                    <ul class="space-y-2 sm:space-y-3">
+                        <li><a href="/" class="text-gray-400 hover:text-blue-400 transition-colors text-sm sm:text-base">Home</a></li>
+                        <li><a href="/how-to-play/" class="text-gray-400 hover:text-blue-400 transition-colors text-sm sm:text-base">How to Play</a></li>
+                        <li><a href="/responsible-gaming/" class="text-gray-400 hover:text-blue-400 transition-colors text-sm sm:text-base">Responsible Gaming</a></li>
+                        <li><a href="/blog/" class="text-gray-400 hover:text-blue-400 transition-colors text-sm sm:text-base">Blog</a></li>
+                        <li><a href="/contact/" class="text-gray-400 hover:text-blue-400 transition-colors text-sm sm:text-base">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-4 sm:mb-6">Legal</h3>
+                    <ul class="space-y-2 sm:space-y-3">
+                        <li><a href="/privacy/" class="text-gray-400 hover:text-blue-400 transition-colors text-sm sm:text-base">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="text-gray-400 hover:text-blue-400 transition-colors text-sm sm:text-base">Terms of Service</a></li>
+                        <li><a href="/cookies/" class="text-gray-400 hover:text-blue-400 transition-colors text-sm sm:text-base">Cookies Policy</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold mb-4 sm:mb-6">Contact Us</h3>
+                    <ul class="space-y-2 sm:space-y-3 text-gray-400">
+                        <li class="flex items-start space-x-2 sm:space-x-3">
+                            <i class="fas fa-map-marker-alt mt-1 text-blue-400 text-sm sm:text-base"></i>
+                            <span class="text-sm sm:text-base">36 St Andrews Gardens, Toronto, ON M4W 2E1, Canada</span>
+                        </li>
+                        <li class="flex items-center space-x-2 sm:space-x-3">
+                            <i class="fas fa-phone text-blue-400 text-sm sm:text-base"></i>
+                            <span class="text-sm sm:text-base">+1 647-997-7626</span>
+                        </li>
+                        <li class="flex items-center space-x-2 sm:space-x-3">
+                            <i class="fas fa-envelope text-blue-400 text-sm sm:text-base"></i>
+                            <span class="text-sm sm:text-base">info@avapuzzlesgames.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 mt-8 sm:mt-10 pt-6 sm:pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-500 mb-4 md:mb-0 text-xs sm:text-sm">
+                    © 2025 A.V.A - puzzles games. All rights reserved.
+                </p>
+                <div class="flex space-x-4 sm:space-x-6">
+                    <a href="/privacy/" class="text-gray-500 hover:text-blue-400 transition-colors text-xs sm:text-sm">Privacy Policy</a>
+                    <a href="/terms/" class="text-gray-500 hover:text-blue-400 transition-colors text-xs sm:text-sm">Terms of Service</a>
+                    <a href="/cookies/" class="text-gray-500 hover:text-blue-400 transition-colors text-xs sm:text-sm">Cookies</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // GSAP Animations
+            gsap.registerPlugin(ScrollTrigger);
+
+            // Animate hero elements
+            gsap.from(".gradient-text", {
+                duration: 1.5,
+                opacity: 0,
+                y: 50,
+                stagger: 0.2,
+                ease: "power3.out"
+            });
+
+            // Animate featured post
+            gsap.from(".bg-gray-800", {
+                scrollTrigger: {
+                    trigger: ".bg-gray-800",
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                },
+                opacity: 0,
+                y: 50,
+                duration: 1,
+                ease: "power2.out"
+            });
+
+            // Animate recent posts
+            gsap.utils.toArray(".group").forEach((item, i) => {
+                gsap.from(item, {
+                    scrollTrigger: {
+                        trigger: item,
+                        start: "top 80%",
+                        toggleActions: "play none none none"
+                    },
+                    opacity: 0,
+                    y: 50,
+                    duration: 0.6,
+                    delay: i * 0.15,
+                    ease: "power2.out"
+                });
+            });
+
+            // Animate newsletter section
+            gsap.from(".max-w-4xl", {
+                scrollTrigger: {
+                    trigger: ".max-w-4xl",
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                },
+                opacity: 0,
+                y: 50,
+                duration: 0.8,
+                ease: "power2.out"
+            });
+
+            // Mobile menu toggle
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            if (mobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', function() {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+
+            // Cookie consent
+            const cookieConsent = document.getElementById('cookie-consent');
+            const cookieAccept = document.getElementById('cookie-accept');
+            const cookieDecline = document.getElementById('cookie-decline');
+            
+            if (!localStorage.getItem('cookieConsent')) {
+                setTimeout(() => {
+                    cookieConsent.classList.remove('hidden');
+                }, 1000);
+            }
+            
+            if (cookieAccept) {
+                cookieAccept.addEventListener('click', function() {
+                    localStorage.setItem('cookieConsent', 'accepted');
+                    cookieConsent.classList.add('hidden');
+                });
+            }
+            
+            if (cookieDecline) {
+                cookieDecline.addEventListener('click', function() {
+                    localStorage.setItem('cookieConsent', 'declined');
+                    cookieConsent.classList.add('hidden');
+                });
+            }
+        });
+    </script>
+</body>
+</html>

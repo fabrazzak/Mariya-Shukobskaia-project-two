@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="FI Daily Rewards promotes responsible gaming. Learn about healthy gaming habits, setting limits, and getting help if needed.">
+    <meta name="keywords" content="responsible gaming, gaming addiction, healthy gaming habits, gaming limits, FI Daily Rewards">
+    <meta name="author" content="Max OP Games">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://fidailyrewardsapp.com/responsible-gaming/" />
+    <title>Responsible Gaming | FI Daily Rewards App</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/assets/logo.webp" type="image/x-icon">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6d28d9',
+                        secondary: '#10b981',
+                        dark: '#0B0B0B',
+                        darker: '#050505',
+                        accent: '#f59e0b',
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #0B0B0B;
+            color: #f3f4f6;
+            overflow-x: hidden;
+        }
+        
+        .font-orbitron {
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, #6d28d9, #10b981, #f59e0b);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .glass-card {
+            background: rgba(15, 15, 15, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .btn-glow {
+            box-shadow: 0 0 15px rgba(109, 40, 217, 0.5);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-glow:hover {
+            box-shadow: 0 0 25px rgba(109, 40, 217, 0.8);
+            transform: translateY(-2px);
+        }
+        
+        .magnetic {
+            transition: transform 0.2s ease;
+        }
+        
+        .magnetic:hover {
+            transform: scale(1.05);
+        }
+        
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+        
+        .content-wrapper {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .nav-link::after {
+            content: '';
+            display: block;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #6d28d9, #10b981);
+            transition: width 0.3s;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .warning-card {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .warning-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, rgba(239, 68, 68, 0.1), rgba(239, 68, 68, 0.05));
+            z-index: -1;
+        }
+        
+        .warning-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: #ef4444;
+        }
+        
+        .sign-item {
+            position: relative;
+            padding-left: 2rem;
+        }
+        
+        .sign-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            width: 1rem;
+            height: 1rem;
+            border-radius: 50%;
+            background-color: #ef4444;
+        }
+        
+        .resource-card {
+            transition: all 0.3s ease;
+        }
+        
+        .resource-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+    <!-- Three.js Background -->
+    <div id="particles-js"></div>
+    
+    <!-- Cookie Consent Popup -->
+    <div id="cookieConsent" class="fixed bottom-0 left-0 right-0 bg-dark border-t border-gray-800 p-4 hidden z-50">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <p class="text-gray-300 text-sm md:text-base">We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies.</p>
+            <div class="flex gap-3">
+                <button id="acceptCookies" class="px-4 py-2 bg-primary rounded-md text-white hover:bg-purple-700 transition">Accept</button>
+                <button id="declineCookies" class="px-4 py-2 bg-gray-700 rounded-md text-white hover:bg-gray-600 transition">Decline</button>
+                <a href="/cookies/" class="px-4 py-2 text-accent hover:underline">Learn More</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Navigation -->
+    <nav class="glass-card fixed w-full z-40 border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                     <a href="/" class="flex-shrink-0 flex items-center">
+                        <img src="/assets/logo.png" alt="FI Daily Rewards Logo" class="h-16 w-auto ">                       
+                    </a>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-6">
+                        <a href="/" class="nav-link text-gray-300 hover:text-white px-3 py-2 text-sm font-medium">Home</a>
+                        <a href="/how-to-play/" class="nav-link text-gray-300 hover:text-white px-3 py-2 text-sm font-medium">How to Play</a>
+                        <a href="/responsible-gaming/" class="nav-link text-white px-3 py-2 text-sm font-medium">Responsible Gaming</a>
+                        <a href="/blog/" class="nav-link text-gray-300 hover:text-white px-3 py-2 text-sm font-medium">Blog</a>
+                        <a href="/contact/" class="nav-link text-gray-300 hover:text-white px-3 py-2 text-sm font-medium">Contact</a>
+                    </div>
+                </div>
+                <div class="hidden xl:block">
+                    <a href="https://play.google.com/store/apps/details?id=com.firewards.freespinslink" target="_blank" class="btn-glow ml-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-purple-700">
+                        <i class="fab fa-google-play mr-2"></i> Download Now
+                    </a>
+                </div>
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-button" class="text-gray-300 hover:text-white focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-darker border-t border-gray-800">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="/" class="block px-3 py-2 text-gray-300 hover:text-white text-base font-medium">Home</a>
+                <a href="/how-to-play/" class="block px-3 py-2 text-gray-300 hover:text-white text-base font-medium">How to Play</a>
+                <a href="/responsible-gaming/" class="block px-3 py-2 text-white text-base font-medium">Responsible Gaming</a>
+                <a href="/blog/" class="block px-3 py-2 text-gray-300 hover:text-white text-base font-medium">Blog</a>
+                <a href="/contact/" class="block px-3 py-2 text-gray-300 hover:text-white text-base font-medium">Contact</a>
+                <a href="https://play.google.com/store/apps/details?id=com.firewards.freespinslink" target="_blank" class="block px-3 py-2 text-white bg-primary rounded-md text-base font-medium">
+                    <i class="fab fa-google-play mr-2"></i> Download Now
+                </a>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="relative pt-24 pb-12 md:pt-32 md:pb-16 overflow-hidden content-wrapper">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h1 class="text-4xl md:text-5xl font-bold mb-6 font-orbitron">
+                    <span class="gradient-text">Responsible Gaming</span>
+                    <span class="block text-white mt-2">Play Smart, Play Safe</span>
+                </h1>
+                <p class="text-lg text-gray-300 mb-8 max-w-3xl mx-auto">
+                    At FI Daily Rewards, we believe gaming should be fun and enjoyable. Learn how to maintain healthy gaming habits and recognize when it might be time to take a break.
+                </p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Warning Signs Section -->
+    <section class="py-16 content-wrapper">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="warning-card glass-card p-6 rounded-xl mb-12">
+                <div class="flex items-start">
+                    <div class="flex-shrink-0 text-red-500 text-2xl mr-4">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold text-white mb-2">Important Notice</h3>
+                        <p class="text-gray-400">
+                            While most people play games for fun without negative consequences, for some individuals gaming can become problematic. This page provides information to help you assess your gaming habits and find help if needed.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold font-orbitron gradient-text">Warning Signs of Problematic Gaming</h2>
+                <p class="mt-4 text-gray-300">
+                    Be aware of these signs that may indicate gaming is becoming a problem:
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="glass-card p-6 rounded-xl">
+                    <h3 class="text-lg font-semibold text-white mb-4">Behavioral Signs</h3>
+                    <ul class="space-y-3 text-gray-400">
+                        <li class="sign-item">Spending increasing amounts of time gaming</li>
+                        <li class="sign-item">Difficulty stopping or controlling gaming sessions</li>
+                        <li class="sign-item">Neglecting work, school, or family responsibilities</li>
+                        <li class="sign-item">Losing interest in other hobbies or activities</li>
+                        <li class="sign-item">Continuing to play despite negative consequences</li>
+                    </ul>
+                </div>
+                
+                <div class="glass-card p-6 rounded-xl">
+                    <h3 class="text-lg font-semibold text-white mb-4">Emotional Signs</h3>
+                    <ul class="space-y-3 text-gray-400">
+                        <li class="sign-item">Feeling restless or irritable when not gaming</li>
+                        <li class="sign-item">Using gaming to escape problems or relieve stress</li>
+                        <li class="sign-item">Lying to family or friends about gaming time</li>
+                        <li class="sign-item">Feeling guilty or defensive about gaming habits</li>
+                        <li class="sign-item">Experiencing mood swings related to gaming</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="glass-card p-6 rounded-xl mt-8">
+                <div class="flex items-start">
+                    <div class="flex-shrink-0 text-accent text-2xl mr-4">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold text-white mb-2">Self-Assessment Questions</h3>
+                        <p class="text-gray-400 mb-4">
+                            Ask yourself these questions to evaluate your gaming habits:
+                        </p>
+                        <ul class="space-y-3 text-gray-400">
+                            <li class="flex items-start">
+                                <i class="fas fa-circle text-xs mt-2 mr-2 text-accent"></i>
+                                <span>Do I think about gaming even when I'm not playing?</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-circle text-xs mt-2 mr-2 text-accent"></i>
+                                <span>Have I tried unsuccessfully to cut back on gaming?</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-circle text-xs mt-2 mr-2 text-accent"></i>
+                                <span>Has gaming caused problems in my relationships?</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-circle text-xs mt-2 mr-2 text-accent"></i>
+                                <span>Do I feel the need to play for increasing amounts of time?</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-circle text-xs mt-2 mr-2 text-accent"></i>
+                                <span>Have I neglected personal hygiene or health due to gaming?</span>
+                            </li>
+                        </ul>
+                        <p class="mt-4 text-gray-400 text-sm">
+                            If you answered "yes" to several of these questions, you may want to evaluate your gaming habits more carefully.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Healthy Habits Section -->
+    <section class="py-16 bg-gradient-to-b from-dark to-darker content-wrapper">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold font-orbitron gradient-text">Healthy Gaming Habits</h2>
+                <p class="mt-4 text-gray-300">
+                    Follow these tips to maintain a balanced approach to gaming:
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="glass-card p-6 rounded-xl text-center">
+                    <div class="w-16 h-16 bg-purple-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-clock text-2xl text-purple-400"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-white mb-2">Set Time Limits</h3>
+                    <p class="text-gray-400">
+                        Decide in advance how long you'll play and set a timer. Take regular breaks every 30-60 minutes.
+                    </p>
+                </div>
+                
+                <div class="glass-card p-6 rounded-xl text-center">
+                    <div class="w-16 h-16 bg-emerald-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-calendar-alt text-2xl text-emerald-400"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-white mb-2">Schedule Gaming</h3>
+                    <p class="text-gray-400">
+                        Make gaming part of a balanced schedule that includes other activities and responsibilities.
+                    </p>
+                </div>
+                
+                <div class="glass-card p-6 rounded-xl text-center">
+                    <div class="w-16 h-16 bg-yellow-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-utensils text-2xl text-yellow-400"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-white mb-2">Avoid Gaming During Meals</h3>
+                    <p class="text-gray-400">
+                        Keep mealtimes screen-free to maintain healthy eating habits and social connections.
+                    </p>
+                </div>
+                
+                <div class="glass-card p-6 rounded-xl text-center">
+                    <div class="w-16 h-16 bg-blue-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-bed text-2xl text-blue-400"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-white mb-2">Prioritize Sleep</h3>
+                    <p class="text-gray-400">
+                        Stop gaming at least 1 hour before bedtime to ensure quality sleep.
+                    </p>
+                </div>
+                
+                <div class="glass-card p-6 rounded-xl text-center">
+                    <div class="w-16 h-16 bg-red-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-running text-2xl text-red-400"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-white mb-2">Stay Active</h3>
+                    <p class="text-gray-400">
+                        Balance screen time with physical activity to maintain overall health.
+                    </p>
+                </div>
+                
+                <div class="glass-card p-6 rounded-xl text-center">
+                    <div class="w-16 h-16 bg-indigo-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                        <i class="fas fa-users text-2xl text-indigo-400"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-white mb-2">Maintain Social Connections</h3>
+                    <p class="text-gray-400">
+                        Ensure gaming doesn't replace face-to-face interactions with friends and family.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="glass-card p-6 rounded-xl mt-8">
+                <div class="flex items-start">
+                    <div class="flex-shrink-0 text-secondary text-2xl mr-4">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-semibold text-white mb-2">Parental Guidance</h3>
+                        <p class="text-gray-400">
+                            For parents concerned about their child's gaming habits:
+                        </p>
+                        <ul class="mt-3 space-y-2 text-gray-400">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-secondary mt-1 mr-2"></i>
+                                <span>Set clear rules about when and how long children can play</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-secondary mt-1 mr-2"></i>
+                                <span>Use parental controls to manage play time and content</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-secondary mt-1 mr-2"></i>
+                                <span>Encourage a variety of activities beyond gaming</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-secondary mt-1 mr-2"></i>
+                                <span>Monitor for signs of problematic gaming behavior</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-secondary mt-1 mr-2"></i>
+                                <span>Play games together to understand their appeal</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+  
+
+
+    <!-- Help Resources Section -->
+<section class="py-16 content-wrapper">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="text-center mb-12">
+            <h2 class="text-3xl font-bold font-orbitron gradient-text">Need Help? We're Here for You</h2>
+            <p class="mt-4 text-gray-300">
+                If you're facing gambling-related challenges, connect with trusted organizations offering free and confidential help.
+            </p>
+        </div>
+        
+        <div class="space-y-6">
+            <!-- BeGambleAware Card -->
+            <div class="glass-card p-6 rounded-xl border border-gray-700">
+               <img alt="logo-img" src="/assets/adiction_begambleaware.svg" class="mb-4" />
+                <p class="text-gray-400 mb-4">
+                    National gambling support service. Get free and confidential help via phone, live chat, or forums - available 24/7 for anyone facing gambling problems.
+                </p>
+                <a href="https://www.gambleaware.org/" target="_blank" class="inline-flex items-center px-4 py-2 bg-primary rounded-md text-white hover:bg-purple-700 transition">
+                    Visit BeGambleAware
+                    <i class="fas fa-external-link-alt ml-2"></i>
+                </a>
+            </div>
+            
+            <!-- GamCare Card -->
+            <div class="glass-card p-6 rounded-xl border border-gray-700">
+               <img alt="logo-img" src="/assets/adiction_gamecare.svg" class="mb-4" />
+                <p class="text-gray-400 mb-4">
+                    UK's leading gambling support charity, offering expert advice, support, and treatment for anyone affected by gambling harm - through phone, chat, or counseling.
+                </p>
+                <a href="https://www.gamcare.org.uk/" target="_blank" class="inline-flex items-center px-4 py-2 bg-primary rounded-md text-white hover:bg-purple-700 transition">
+                    Visit GamCare
+                    <i class="fas fa-external-link-alt ml-2"></i>
+                </a>
+            </div>
+        </div>
+        
+        
+    </div>
+</section>
+    
+    <!-- CTA Section -->
+    <section class="py-16 bg-gradient-to-b from-darker to-dark content-wrapper">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-bold font-orbitron gradient-text mb-6">Game Responsibly</h2>
+            <p class="text-xl text-gray-300 max-w-2xl mx-auto mb-8">
+                Remember, games should be fun and enhance your life, not control it. Play smart, play safe.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="/" class="magnetic inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary hover:bg-purple-700 md:py-4 md:text-lg md:px-10">
+                    <i class="fas fa-home mr-2"></i> Back to Home
+                </a>
+                <a href="/contact/" class="magnetic inline-flex items-center justify-center px-8 py-3 border border-accent text-base font-medium rounded-md text-accent bg-transparent hover:bg-opacity-10 hover:bg-accent md:py-4 md:text-lg md:px-10">
+                    <i class="fas fa-envelope mr-2"></i> Contact Support
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="bg-darker border-t border-gray-800 pt-12 pb-8 content-wrapper">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="md:col-span-2">
+                     <a href="/" class="flex-shrink-0 flex items-center">
+                        <img src="/assets/logo.png" alt="FI Daily Rewards Logo" class="h-16 w-auto ">                       
+                    </a>
+                    <p class="mt-4 text-gray-400 max-w-md">
+                        The ultimate companion app for Family Island players. Get daily free energy, rubies and other rewards to enhance your gaming experience.
+                    </p>
+                    
+                </div>
+                
+                <div>
+                    <h3 class="text-sm font-semibold text-white tracking-wider uppercase">Quick Links</h3>
+                    <div class="mt-4 space-y-4">
+                        <a href="/" class="text-base text-gray-400 hover:text-white block">Home</a>
+                        <a href="/how-to-play/" class="text-base text-gray-400 hover:text-white block">How to Play</a>
+                        <a href="/responsible-gaming/" class="text-base text-gray-400 hover:text-white block">Responsible Gaming</a>
+                        <a href="/blog/" class="text-base text-gray-400 hover:text-white block">Blog</a>
+                        <a href="/contact/" class="text-base text-gray-400 hover:text-white block">Contact</a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-sm font-semibold text-white tracking-wider uppercase">Legal</h3>
+                    <div class="mt-4 space-y-4">
+                        <a href="/privacy/" class="text-base text-gray-400 hover:text-white block">Privacy Policy</a>
+                        <a href="/terms/" class="text-base text-gray-400 hover:text-white block">Terms of Service</a>
+                        <a href="/cookies/" class="text-base text-gray-400 hover:text-white block">Cookies Policy</a>
+                        <a href="https://play.google.com/store/apps/details?id=com.firewards.freespinslink" target="_blank" class="text-base text-gray-400 hover:text-white block">Google Play</a>
+                    </div>
+                </div>
+            </div>
+            
+           <div class="mt-12 pt-8 border-t border-gray-800 flex flex-col md:flex-row md:justify-between md:items-center">
+                <p class="text-gray-400 text-sm">
+                    &copy; 2025 Max OP Games. All rights reserved.
+                </p>
+                <div class="mt-4 md:mt-0 flex flex-col md:flex-row md:space-x-6">
+                    <a href="mailto:info@fidailyrewardsapp.com" class="text-gray-400 hover:text-white text-sm">
+                        <i class="fas fa-envelope md:mr-1"></i> info@fidailyrewardsapp.com
+                    </a>
+                    <a href="tel:+441612226105" class="text-gray-400 hover:text-white text-sm">
+                        <i class="fas fa-phone md:mr-1"></i> +44 161 222 6105
+                    </a>
+                    <span class="text-gray-400 text-sm">
+                        <i class="fas fa-map-marker-alt md:mr-1"></i> Manchester, UK
+                    </span>
+                </div>
+            </div>
+            
+            
+            <div class="mt-8 text-center text-xs text-gray-500">
+                <p>Disclaimer: This app is not affiliated with or endorsed by any game developers or publishers. All reward links are publicly available and shared for informational purposes only.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+        
+        // Cookie consent
+        document.addEventListener('DOMContentLoaded', function() {
+            const cookieConsent = document.getElementById('cookieConsent');
+            const acceptCookies = document.getElementById('acceptCookies');
+            const declineCookies = document.getElementById('declineCookies');
+            
+            if (!localStorage.getItem('cookieConsent')) {
+                cookieConsent.classList.remove('hidden');
+            }
+            
+            acceptCookies.addEventListener('click', function() {
+                localStorage.setItem('cookieConsent', 'accepted');
+                cookieConsent.classList.add('hidden');
+            });
+            
+            declineCookies.addEventListener('click', function() {
+                localStorage.setItem('cookieConsent', 'declined');
+                cookieConsent.classList.add('hidden');
+            });
+        });
+        
+        // Magnetic button effect
+        document.querySelectorAll('.magnetic').forEach(button => {
+            button.addEventListener('mousemove', function(e) {
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const angleX = (x - centerX) / 10;
+                const angleY = (y - centerY) / 10;
+                
+                this.style.transform = `perspective(1000px) rotateX(${angleY}deg) rotateY(${-angleX}deg) scale(1.05)`;
+            });
+            
+            button.addEventListener('mouseleave', function() {
+                this.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
+            });
+        });
+        
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+        
+        gsap.from(".gradient-text", {
+            duration: 1.5,
+            opacity: 0,
+            y: 50,
+            ease: "power3.out",
+            stagger: 0.2
+        });
+        
+        gsap.utils.toArray(".glass-card").forEach((card, i) => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                },
+                opacity: 0,
+                y: 50,
+                duration: 0.8,
+                ease: "power2.out",
+                delay: i * 0.1
+            });
+        });
+        
+        // Three.js Particle Background
+        particlesJS("particles-js", {
+            "particles": {
+                "number": {
+                    "value": 80,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": ["#6d28d9", "#10b981", "#f59e0b"]
+                },
+                "shape": {
+                    "type": "circle",
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000000"
+                    },
+                    "polygon": {
+                        "nb_sides": 5
+                    }
+                },
+                "opacity": {
+                    "value": 0.5,
+                    "random": false,
+                    "anim": {
+                        "enable": false,
+                        "speed": 1,
+                        "opacity_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 3,
+                    "random": true,
+                    "anim": {
+                        "enable": false,
+                        "speed": 40,
+                        "size_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#6d28d9",
+                    "opacity": 0.2,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 2,
+                    "direction": "none",
+                    "random": false,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                    "attract": {
+                        "enable": false,
+                        "rotateX": 600,
+                        "rotateY": 1200
+                    }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "grab"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {
+                        "distance": 140,
+                        "line_linked": {
+                            "opacity": 0.5
+                        }
+                    },
+                    "bubble": {
+                        "distance": 400,
+                        "size": 40,
+                        "duration": 2,
+                        "opacity": 8,
+                        "speed": 3
+                    },
+                    "repulse": {
+                        "distance": 200,
+                        "duration": 0.4
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    },
+                    "remove": {
+                        "particles_nb": 2
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+    </script>
+</body>
+</html>

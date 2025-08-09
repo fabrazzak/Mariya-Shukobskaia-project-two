@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>How Weather Affects Your Bullet's Path | GeoBallistics Blog</title>
+    <meta name="description" content="Comprehensive analysis of how temperature, humidity, and pressure impact bullet trajectory and how GeoBallistics' weather integration helps compensate.">
+    <meta name="keywords" content="ballistics weather effects, temperature on bullet trajectory, humidity ballistics, pressure altitude shooting, GeoBallistics weather integration">
+    <link rel="canonical" href="https://geoballistics.app/blog/weather-effects-on-ballistics/">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/image/logo.webp" type="image/x-icon">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Roboto:wght@300;400;500&family=Orbitron:wght@500&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2A2E35',
+                        secondary: '#4B5320',
+                        accent: '#FFB400',
+                    },
+                    fontFamily: {
+                        heading: ['Rajdhani', 'sans-serif'],
+                        body: ['Roboto', 'sans-serif'],
+                        tactical: ['Orbitron', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+</head>
+<body class="bg-primary text-gray-200 font-body antialiased">
+    <!-- Cookie Consent Banner -->
+    <div id="cookieConsent" class="fixed bottom-0 left-0 right-0 bg-primary border-t border-secondary hidden z-50">
+        <div class="container mx-auto px-4 py-3 flex flex-col md:flex-row items-center justify-between">
+            <p class="mb-3 md:mb-0 md:mr-4">We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies.</p>
+            <div class="flex space-x-3">
+                <button id="cookieDecline" class="px-4 py-2 border border-secondary hover:bg-secondary transition-colors">Decline</button>
+                <button id="cookieAccept" class="px-4 py-2 bg-accent text-primary font-heading font-semibold hover:bg-yellow-500 transition-colors">Accept</button>
+                <a href="/cookies/" class="px-4 py-2 border border-accent text-accent hover:bg-opacity-10 hover:bg-accent transition-colors">Learn More</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 bg-primary bg-opacity-90 backdrop-blur-sm z-40 border-b border-secondary">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <a href="/" class="flex items-center space-x-2">
+                    <div class="w-10 h-10 rounded-sm flex items-center justify-center">
+                        <img src="/image/logo.webp" alt="GeoBallistics Logo" class="rounded-full">
+                    </div>
+                    <span class="text-xl font-heading font-bold tracking-tight">GEO<span class="text-accent">BALLISTICS</span></span>
+                </a>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="hover:text-accent transition-colors font-heading">Home</a>
+                    <a href="/games/" class="block px-3 py-2 hover:text-accent transition-colors font-heading">Games</a>
+                    <a href="/about/" class="hover:text-accent transition-colors font-heading">About</a>
+                    <a href="/blog/" class="text-accent font-heading font-medium">Blog</a>
+                    <a href="/contact/" class="hover:text-accent transition-colors font-heading">Contact</a>
+                    <a href="https://play.google.com/store/apps/details?id=com.geoballistics.ballisticsarc" target="_blank" class="bg-accent text-primary px-4 py-2 rounded-sm font-heading font-semibold hover:bg-yellow-500 transition-colors">Download App</a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuButton" class="md:hidden text-gray-300 hover:text-accent focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-primary border-t border-secondary">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="/" class="block px-3 py-2 hover:text-accent transition-colors font-heading">Home</a>
+                <a href="/games/" class="block px-3 py-2 hover:text-accent transition-colors font-heading">Games</a>
+                <a href="/about/" class="block px-3 py-2 hover:text-accent transition-colors font-heading">About</a>
+                <a href="/blog/" class="block px-3 py-2 text-accent font-heading">Blog</a>
+                <a href="/contact/" class="block px-3 py-2 hover:text-accent transition-colors font-heading">Contact</a>
+                <a href="https://play.google.com/store/apps/details?id=com.geoballistics.ballisticsarc" target="_blank" class="block px-3 py-2 bg-accent text-primary rounded-sm text-center font-heading font-semibold">Download App</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Blog Header -->
+    <section class="pt-32 pb-20 bg-gray-900 relative overflow-hidden">
+        <!-- Animated Background Elements -->
+        <div class="absolute top-0 left-0 w-full h-full opacity-10">
+            <div class="absolute top-1/4 left-1/4 w-32 h-32 bg-accent rounded-full filter blur-xl animate-pulse"></div>
+            <div class="absolute top-3/4 right-1/4 w-24 h-24 bg-accent rounded-full filter blur-xl animate-pulse animation-delay-2000"></div>
+        </div>
+        
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="max-w-4xl mx-auto">
+                <div class="flex items-center mb-6">
+                    <a href="/blog/" class="text-accent hover:underline font-heading">← Back to Blog</a>
+                </div>
+                
+                <div class="flex items-center mb-6">
+                    <span class="text-sm text-accent font-heading">TECHNICAL</span>
+                    <span class="mx-3 text-gray-500">•</span>
+                    <span class="text-sm text-gray-500">May 28, 2025</span>
+                </div>
+                
+                <h1 class="text-4xl md:text-5xl font-heading font-bold mb-8 leading-tight">
+                    How Weather Affects Your Bullet's Path
+                </h1>
+                
+                <div class="flex items-center">
+                    <div class="w-12 h-12 rounded-full bg-gray-700 flex items-center justify-center mr-4">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                        </svg>
+                    </div>
+                    <div>
+                        <div class="text-sm font-heading">GeoBallistics Team</div>
+                        <div class="text-xs text-gray-500">12 min read</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Content -->
+    <article class="py-16 bg-primary relative">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto">
+                <!-- Featured Image -->
+                <div class="mb-12 rounded-sm overflow-hidden">
+                    <img src="/image/blog2.webp" alt="Weather effects on bullet trajectory" class="w-full h-auto object-cover">
+                </div>
+                
+                <!-- Content -->
+                <div class="prose prose-invert max-w-none">
+                    <p class="lead text-xl text-gray-300 mb-8">
+                        Weather conditions significantly impact bullet trajectory, often more than shooters realize. A 10°F temperature change or 20% humidity shift can alter your point of impact by several inches at 500 yards. This guide explores how atmospheric variables affect your shots and how GeoBallistics' advanced weather integration helps you compensate in real-time.
+                    </p>
+                    
+                    <h2 class="text-3xl font-heading font-bold mb-6 mt-12 text-accent">The Four Key Atmospheric Variables</h2>
+                    
+                    <p>When calculating ballistic solutions, four primary weather factors must be considered:</p>
+                    
+                    <div class="grid md:grid-cols-2 gap-6 my-8">
+                        <div class="bg-gray-900 p-4 rounded-sm border border-secondary">
+                            <h4 class="font-heading font-semibold mb-2 text-accent">1. Temperature</h4>
+                            <p>Affects air density, powder burn rate, and barrel harmonics. Rule of thumb: 1°F change ≈ 1 MOA at 1000yds.</p>
+                        </div>
+                        <div class="bg-gray-900 p-4 rounded-sm border border-secondary">
+                            <h4 class="font-heading font-semibold mb-2 text-accent">2. Barometric Pressure</h4>
+                            <p>Higher pressure increases air density. 1 inHg change ≈ 0.5 MOA at 1000yds.</p>
+                        </div>
+                        <div class="bg-gray-900 p-4 rounded-sm border border-secondary">
+                            <h4 class="font-heading font-semibold mb-2 text-accent">3. Humidity</h4>
+                            <p>Counterintuitively, higher humidity decreases air density (water molecules displace heavier nitrogen/oxygen).</p>
+                        </div>
+                        <div class="bg-gray-900 p-4 rounded-sm border border-secondary">
+                            <h4 class="font-heading font-semibold mb-2 text-accent">4. Altitude</h4>
+                            <p>Thinner air at higher elevations reduces drag. ~500ft elevation ≈ 0.1 mil difference at 1000yds.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="my-8 p-6 bg-gray-900 border-l-4 border-accent rounded-sm">
+                        <h3 class="font-heading font-bold text-lg mb-2">Pro Tip:</h3>
+                        <p>GeoBallistics automatically calculates station pressure (corrected for altitude) when connected to WeatherFlow or Kestrel devices, eliminating manual conversion errors.</p>
+                    </div>
+                    
+                    <h2 class="text-3xl font-heading font-bold mb-6 mt-12 text-accent">Temperature Effects: Beyond Air Density</h2>
+                    
+                    <p>While most shooters understand temperature affects air density (colder = denser air = more drag), it actually influences bullet flight in three distinct ways:</p>
+                    
+                    <h3 class="text-2xl font-heading font-semibold mt-8 mb-4">1. Air Density Changes</h3>
+                    <p>The Ideal Gas Law (PV=nRT) shows that colder air is denser, creating more drag. This effect is non-linear:</p>
+                    
+                    <div class="overflow-x-auto my-6">
+                        <table class="min-w-full border border-secondary">
+                            <thead>
+                                <tr class="bg-gray-900">
+                                    <th class="px-4 py-3 text-left font-heading border-b border-secondary">Temp Change</th>
+                                    <th class="px-4 py-3 text-left font-heading border-b border-secondary">Effect at 500yds</th>
+                                    <th class="px-4 py-3 text-left font-heading border-b border-secondary">Effect at 1000yds</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b border-secondary">
+                                    <td class="px-4 py-3">+20°F</td>
+                                    <td class="px-4 py-3">+0.2 mil</td>
+                                    <td class="px-4 py-3">+0.9 mil</td>
+                                </tr>
+                                <tr class="border-b border-secondary">
+                                    <td class="px-4 py-3">-20°F</td>
+                                    <td class="px-4 py-3">-0.25 mil</td>
+                                    <td class="px-4 py-3">-1.1 mil</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <h3 class="text-2xl font-heading font-semibold mt-8 mb-4">2. Powder Temperature Sensitivity</h3>
+                    <p>Colder powder burns slower, reducing muzzle velocity. Modern temp-stable powders mitigate but don't eliminate this effect:</p>
+                    <ul>
+                        <li>Standard powders: ~1.5-2 fps/°F velocity change</li>
+                        <li>Temp-stable powders: ~0.5-1 fps/°F</li>
+                    </ul>
+                    
+                    <h3 class="text-2xl font-heading font-semibold mt-8 mb-4">3. Barrel Harmonic Shifts</h3>
+                    <p>Metal contracts in cold, changing barrel vibration patterns. This can alter point of impact independent of trajectory changes.</p>
+                    
+                    <figure class="my-12">
+                       
+                        <figcaption class="text-center mt-2 text-sm text-gray-500">Comparative effects of temperature changes on .308 Winchester at 800 yards</figcaption>
+                    </figure>
+                    
+                    <h2 class="text-3xl font-heading font-bold mb-6 mt-12 text-accent">Pressure & Altitude: The Hidden Variables</h2>
+                    
+                    <p>Barometric pressure and altitude are often misunderstood or mismeasured by shooters:</p>
+                    
+                    <h3 class="text-2xl font-heading font-semibold mt-8 mb-4">Station Pressure vs. Barometric Pressure</h3>
+                    <p>Weather reports give sea-level adjusted pressure, but bullets experience local station pressure. GeoBallistics automatically:</p>
+                    <ul>
+                        <li>Converts reported pressure using your GPS altitude</li>
+                        <li>Or uses direct station pressure from connected devices</li>
+                    </ul>
+                    
+                    <h3 class="text-2xl font-heading font-semibold mt-8 mb-4">The Density Altitude Concept</h3>
+                    <p>Density altitude combines temperature, pressure, and humidity into a single equivalent altitude. Key points:</p>
+                    <ul>
+                        <li>Hot, humid, low-pressure days act like higher altitude</li>
+                        <li>Cold, dry, high-pressure days act like lower altitude</li>
+                        <li>GeoBallistics PRO calculates density altitude in real-time</li>
+                    </ul>
+                    
+                    <div class="my-8 p-6 bg-gray-900 border-l-4 border-accent rounded-sm">
+                        <h3 class="font-heading font-bold text-lg mb-2">Field Observation:</h3>
+                        <p>At 1000 yards, a 2000ft density altitude increase (e.g., from 70°F to 90°F at sea level) reduces drop by approximately 0.3 mils for .308 Winchester.</p>
+                    </div>
+                    
+                    <h2 class="text-3xl font-heading font-bold mb-6 mt-12 text-accent">Humidity: The Counterintuitive Factor</h2>
+                    
+                    <p>Unlike most substances, water vapor is less dense than dry air (H₂O molecular weight = 18 vs. N₂ = 28 and O₂ = 32). Therefore:</p>
+                    
+                    <div class="grid md:grid-cols-2 gap-6 my-8">
+                        <div class="bg-gray-900 p-6 rounded-sm border border-secondary">
+                            <h4 class="font-heading font-semibold mb-3 text-accent">High Humidity</h4>
+                            <ul>
+                                <li>Water molecules displace heavier nitrogen/oxygen</li>
+                                <li>Air becomes less dense</li>
+                                <li>Bullet experiences less drag</li>
+                                <li>Point of impact rises slightly</li>
+                            </ul>
+                        </div>
+                        <div class="bg-gray-900 p-6 rounded-sm border border-secondary">
+                            <h4 class="font-heading font-semibold mb-3 text-accent">Low Humidity</h4>
+                            <ul>
+                                <li>More nitrogen/oxygen molecules present</li>
+                                <li>Air becomes more dense</li>
+                                <li>Bullet experiences more drag</li>
+                                <li>Point of impact drops slightly</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <p>While humidity's effect is smaller than temperature or pressure, it becomes significant beyond 600 yards. A 50% humidity change ≈ 0.1 mil at 1000yds.</p>
+                    
+                    <h2 class="text-3xl font-heading font-bold mb-6 mt-12 text-accent">GeoBallistics Weather Integration</h2>
+                    
+                    <p>GeoBallistics offers three levels of weather integration to ensure accurate solutions:</p>
+                    
+                    <h3 class="text-2xl font-heading font-semibold mt-8 mb-4">1. Manual Entry</h3>
+                    <p>Basic mode where you input temperature, pressure, and humidity manually. Least accurate but works without hardware.</p>
+                    
+                    <h3 class="text-2xl font-heading font-semibold mt-8 mb-4">2. Online Weather Stations</h3>
+                    <p>App automatically pulls data from nearby weather stations using your GPS location. Provides good baseline data but can't account for microclimates.</p>
+                    
+                    <h3 class="text-2xl font-heading font-semibold mt-8 mb-4">3. Hardware Integration (PRO Feature)</h3>
+                    <p>Gold standard connection to WeatherFlow or Kestrel devices providing:</p>
+                    <ul>
+                        <li>Real-time station pressure (no altitude conversion needed)</li>
+                        <li>Precision temperature/humidity at firing point</li>
+                        <li>Wind measurements at multiple ranges</li>
+                        <li>Continuous updates as conditions change</li>
+                    </ul>
+                    
+                    <figure class="my-12">
+                       
+                        <figcaption class="text-center mt-2 text-sm text-gray-500">GeoBallistics integrated with Kestrel 5700 Elite weather meter</figcaption>
+                    </figure>
+                    
+                    <h2 class="text-3xl font-heading font-bold mb-6 mt-12 text-accent">Practical Compensation Strategies</h2>
+                    
+                    <p>When you can't access real-time weather data, these field techniques help:</p>
+                    
+                    <h3 class="text-2xl font-heading font-semibold mt-8 mb-4">1. The 1% Rule</h3>
+                    <p>For every 10°F change from your zero conditions, expect ~1% change in elevation at long range.</p>
+                    
+                    <h3 class="text-2xl font-heading font-semibold mt-8 mb-4">2. Morning vs. Afternoon Shift</h3>
+                    <p>If zeroed at 70°F morning, anticipate shooting lower in 90°F afternoon by ~0.2 mils at 800yds.</p>
+                    
+                    <h3 class="text-2xl font-heading font-semibold mt-8 mb-4">3. Seasonal Dope Book</h3>
+                    <p>Maintain separate data cards for summer/winter conditions with pre-calculated adjustments.</p>
+                    
+                    <h2 class="text-3xl font-heading font-bold mb-6 mt-12 text-accent">Conclusion</h2>
+                    
+                    <p>Weather's impact on ballistics is complex but manageable with proper understanding and tools. GeoBallistics simplifies the process by:</p>
+                    
+                    <ul>
+                        <li>Automatically calculating density altitude effects</li>
+                        <li>Integrating with precision weather hardware</li>
+                        <li>Adjusting solutions in real-time as conditions change</li>
+                        <li>Providing historical weather data for practice sessions</li>
+                    </ul>
+                    
+                    <p class="mt-6">For maximum accuracy in variable conditions, upgrade to GeoBallistics PRO to unlock full weather hardware integration and advanced atmospheric compensation features.</p>
+                    
+                    <div class="mt-12 text-center">
+                        <a href="https://play.google.com/store/apps/details?id=com.geoballistics.ballisticsarc" target="_blank" class="inline-block bg-accent text-primary px-8 py-4 rounded-sm font-heading font-semibold hover:bg-yellow-500 transition-colors text-lg">
+                            Upgrade to GeoBallistics PRO
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8 mb-12">
+                <!-- About -->
+                <div>
+                    <h3 class="text-lg font-heading font-semibold text-white mb-4">About GeoBallistics</h3>
+                    <p class="mb-4">The most advanced mobile ballistics solution featuring 3DOF calculations, range cards, and hardware integration for precision shooting.</p>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-lg font-heading font-semibold text-white mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/games/" class="hover:text-accent transition-colors">Games</a></li>
+                        <li><a href="/about/" class="hover:text-accent transition-colors">About Us</a></li>
+                        <li><a href="/blog/" class="hover:text-accent transition-colors">Blog</a></li>
+                        <li><a href="/contact/" class="hover:text-accent transition-colors">Contact</a></li>
+                        <li><a href="https://play.google.com/store/apps/details?id=com.geoballistics.ballisticsarc" target="_blank" class="hover:text-accent transition-colors">Download</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Support -->
+                <div>
+                    <h3 class="text-lg font-heading font-semibold text-white mb-4">Support</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/privacy/" class="hover:text-accent transition-colors">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="hover:text-accent transition-colors">Terms of Service</a></li>
+                        <li><a href="/cookies/" class="hover:text-accent transition-colors">Cookies Policy</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Contact -->
+                <div>
+                    <h3 class="text-lg font-heading font-semibold text-white mb-4">Contact Us</h3>
+                    <address class="not-italic">
+                        <div class="mb-2">Sheltered Wings, Inc.</div>
+                        <div class="mb-2">1 Vortex Dr</div>
+                        <div class="mb-2">Barneveld, WI 53507</div>
+                        <div class="mb-2">United States</div>
+                        <div class="mb-2">Phone: <a href="tel:+16086022295" class="hover:text-accent transition-colors">+1 608-602-2295</a></div>
+                        <div class="mb-2">Email: <a href="mailto:info@geoballistics.app" class="hover:text-accent transition-colors">info@geoballistics.app</a></div>
+                    </address>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8 text-sm text-center">
+                <p>&copy; 2025 GeoBallistics by Sheltered Wings, Inc. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Cookie Consent
+        const cookieConsent = document.getElementById('cookieConsent');
+        const cookieAccept = document.getElementById('cookieAccept');
+        const cookieDecline = document.getElementById('cookieDecline');
+        
+        if (!localStorage.getItem('cookieConsent')) {
+            cookieConsent.classList.remove('hidden');
+        }
+        
+        cookieAccept.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'accepted');
+            cookieConsent.classList.add('hidden');
+        });
+        
+        cookieDecline.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'declined');
+            cookieConsent.classList.add('hidden');
+        });
+        
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Animate content on scroll
+        gsap.utils.toArray('.prose h2, .prose h3, .prose p, .prose ul, .prose figure').forEach((element, i) => {
+            gsap.from(element, {
+                scrollTrigger: {
+                    trigger: element,
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                },
+                opacity: 0,
+                y: 30,
+                duration: 0.8,
+                delay: i * 0.05
+            });
+        });
+    </script>
+</body>
+</html>

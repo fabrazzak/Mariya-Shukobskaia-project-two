@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head> 
+ <link rel="icon" href="/asset/favicon.png" type="image/png" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Everybody's RPG: Reboot Blog - Latest news, updates, and strategy guides for the popular idle fantasy RPG game."
+    />
+    <meta
+      name="keywords"
+      content="idle RPG blog, game updates, strategy guides, hero tips, Everybody's RPG news"
+    />
+    <meta name="author" content="Nomad Game Studio" />
+    <link rel="canonical" href="https://nomadgamerpg.com/blog/" />
+    <title>Blog | Everybody's RPG: Reboot</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      :root {
+        --primary: #6a35ff;
+        --secondary: #ff6b35;
+        --dark: #1a1a2e;
+        --light: #f8f9fa;
+        --accent: #35ff6b;
+        --text: #333;
+        --text-light: #f8f9fa;
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      }
+
+      body {
+        background-color: #f5f5f5;
+        color: var(--text);
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
+
+      /* Header Styles */
+      header {
+        background: linear-gradient(135deg, var(--dark), var(--primary));
+        color: var(--text-light);
+        padding: 1rem 5%;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .logo img {
+        height: 60px;
+        width: auto;
+      }
+
+      .logo h1 {
+        font-size: 1.5rem;
+        font-weight: 700;
+        background: linear-gradient(to right, var(--accent), var(--secondary));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+
+      nav ul {
+        display: flex;
+        list-style: none;
+        gap: 2rem;
+      }
+
+      nav a {
+        color: var(--text-light);
+        text-decoration: none;
+        font-weight: 500;
+        transition: color 0.3s;
+        position: relative;
+      }
+
+      nav a:hover {
+        color: var(--accent);
+      }
+
+      nav a::after {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 2px;
+        bottom: -5px;
+        left: 0;
+        background-color: var(--accent);
+        transition: width 0.3s;
+      }
+
+      nav a:hover::after {
+        width: 100%;
+      }
+
+      .mobile-menu-btn {
+        display: none;
+        background: none;
+        border: none;
+        color: var(--text-light);
+        font-size: 1.5rem;
+        cursor: pointer;
+      }
+
+      /* Blog Hero */
+      .blog-hero {
+        background: linear-gradient(
+            rgba(26, 26, 46, 0.8),
+            rgba(26, 26, 46, 0.8)
+          ),
+          url("../asset/hero.jpg") no-repeat center center/cover;
+        height: 50vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 5%;
+        margin-top: 70px;
+        color: var(--text-light);
+        text-align: center;
+      }
+
+      .blog-hero-content {
+        max-width: 800px;
+      }
+
+      .blog-hero h1 {
+        font-size: 3.5rem;
+        margin-bottom: 1rem;
+        line-height: 1.2;
+      }
+
+      .blog-hero p {
+        font-size: 1.3rem;
+        opacity: 0.9;
+      }
+
+      /* Blog Content */
+      .blog-container {
+        max-width: 1200px;
+        margin: 3rem auto;
+        padding: 0 5%;
+        display: grid;
+        grid-template-columns: 1fr 300px;
+        gap: 3rem;
+      }
+
+      /* Main Blog Posts */
+      .blog-posts {
+        display: grid;
+        gap: 3rem;
+      }
+
+      .blog-post {
+        background-color: white;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+
+      .blog-post:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+      }
+
+      .post-image {
+        height: 250px;
+        overflow: hidden;
+      }
+
+      .post-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s;
+      }
+
+      .blog-post:hover .post-image img {
+        transform: scale(1.05);
+      }
+
+      .post-content {
+        padding: 2rem;
+      }
+
+      .post-meta {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        margin-bottom: 1rem;
+        color: #666;
+        font-size: 0.9rem;
+      }
+
+      .post-meta i {
+        color: var(--primary);
+      }
+
+      .post-meta span {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .post-tag {
+        display: inline-block;
+        background-color: var(--primary);
+        color: white;
+        padding: 0.3rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        margin-right: 0.5rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .post-title {
+        font-size: 1.8rem;
+        margin-bottom: 1rem;
+        color: var(--dark);
+      }
+
+      .post-excerpt {
+        margin-bottom: 1.5rem;
+        color: #555;
+      }
+
+      .read-more {
+        display: inline-block;
+        color: var(--primary);
+        font-weight: 600;
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+
+      .read-more:hover {
+        color: var(--secondary);
+      }
+
+      .read-more i {
+        transition: transform 0.3s;
+      }
+
+      .read-more:hover i {
+        transform: translateX(5px);
+      }
+
+      /* Blog Sidebar */
+      .blog-sidebar {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+      }
+
+      .sidebar-widget {
+        background-color: white;
+        border-radius: 10px;
+        padding: 1.5rem;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      }
+
+      .widget-title {
+        font-size: 1.3rem;
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.8rem;
+        border-bottom: 2px solid #eee;
+        color: var(--dark);
+        position: relative;
+      }
+
+      .widget-title::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: -2px;
+        width: 50px;
+        height: 2px;
+        background-color: var(--primary);
+      }
+
+      .search-form {
+        display: flex;
+        margin-bottom: 1.5rem;
+      }
+
+      .search-input {
+        flex: 1;
+        padding: 0.8rem;
+        border: 1px solid #ddd;
+        border-radius: 5px 0 0 5px;
+        font-size: 1rem;
+      }
+
+      .search-button {
+        background-color: var(--primary);
+        color: white;
+        border: none;
+        padding: 0 1.2rem;
+        border-radius: 0 5px 5px 0;
+        cursor: pointer;
+        transition: background-color 0.3s;
+      }
+
+      .search-button:hover {
+        background-color: #5a2de6;
+      }
+
+      .categories-list {
+        list-style: none;
+      }
+
+      .categories-list li {
+        margin-bottom: 0.8rem;
+      }
+
+      .categories-list a {
+        color: #555;
+        text-decoration: none;
+        transition: color 0.3s;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .categories-list a:hover {
+        color: var(--primary);
+      }
+
+      .categories-list a span {
+        background-color: #f0f0f0;
+        padding: 0.2rem 0.6rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+      }
+
+      .popular-posts {
+        list-style: none;
+      }
+
+      .popular-post {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 1.2rem;
+        padding-bottom: 1.2rem;
+        border-bottom: 1px solid #eee;
+      }
+
+      .popular-post:last-child {
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: none;
+      }
+
+      .popular-post-image {
+        width: 80px;
+        height: 80px;
+        border-radius: 5px;
+        overflow: hidden;
+        flex-shrink: 0;
+      }
+
+      .popular-post-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .popular-post-content h4 {
+        font-size: 1rem;
+        margin-bottom: 0.5rem;
+      }
+
+      .popular-post-content h4 a {
+        color: var(--dark);
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+
+      .popular-post-content h4 a:hover {
+        color: var(--primary);
+      }
+
+      .popular-post-date {
+        font-size: 0.8rem;
+        color: #777;
+      }
+
+      .tags-container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+      }
+
+      .tag {
+        display: inline-block;
+        background-color: #f0f0f0;
+        color: #555;
+        padding: 0.4rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        text-decoration: none;
+        transition: all 0.3s;
+      }
+
+      .tag:hover {
+        background-color: var(--primary);
+        color: white;
+      }
+
+      /* Pagination */
+      .pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 3rem;
+      }
+
+      .pagination-list {
+        display: flex;
+        list-style: none;
+        gap: 0.5rem;
+      }
+
+      .pagination-item a,
+      .pagination-item span {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-weight: 600;
+      }
+
+      .pagination-item a {
+        background-color: white;
+        color: var(--dark);
+        transition: all 0.3s;
+      }
+
+      .pagination-item a:hover {
+        background-color: var(--primary);
+        color: white;
+      }
+
+      .pagination-item .current {
+        background-color: var(--primary);
+        color: white;
+      }
+
+      /* Newsletter */
+      .newsletter-form {
+        margin-top: 1.5rem;
+      }
+
+      .newsletter-input {
+        width: 100%;
+        padding: 0.8rem;
+        margin-bottom: 1rem;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 1rem;
+      }
+
+      .newsletter-button {
+        width: 100%;
+        background-color: var(--primary);
+        color: white;
+        border: none;
+        padding: 0.8rem;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: background-color 0.3s;
+      }
+
+      .newsletter-button:hover {
+        background-color: #5a2de6;
+      }
+
+      /* Footer */
+      footer {
+        background-color: var(--dark);
+        color: var(--text-light);
+        padding: 3rem 5% 1rem;
+      }
+
+      .footer-content {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+        margin-bottom: 2rem;
+      }
+
+      .footer-column h3 {
+        font-size: 1.2rem;
+        margin-bottom: 1.5rem;
+        position: relative;
+        padding-bottom: 10px;
+      }
+
+      .footer-column h3::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 50px;
+        height: 2px;
+        background-color: var(--accent);
+      }
+
+      .footer-column ul {
+        list-style: none;
+      }
+
+      .footer-column ul li {
+        margin-bottom: 0.8rem;
+      }
+
+      .footer-column a {
+        color: #ccc;
+        text-decoration: none;
+        transition: color 0.3s;
+      }
+
+      .footer-column a:hover {
+        color: var(--accent);
+      }
+
+      .social-links {
+        display: flex;
+        gap: 1rem;
+        margin-top: 1rem;
+      }
+
+      .social-links a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 40px;
+        height: 40px;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-radius: 50%;
+        color: white;
+        transition: all 0.3s;
+      }
+
+      .social-links a:hover {
+        background-color: var(--accent);
+        transform: translateY(-3px);
+      }
+
+      .footer-bottom {
+        text-align: center;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        color: #aaa;
+        font-size: 0.9rem;
+      }
+
+      /* Responsive Design */
+      @media (max-width: 992px) {
+        nav ul {
+          gap: 1.5rem;
+        }
+
+        .blog-hero h1 {
+          font-size: 2.8rem;
+        }
+
+        .blog-container {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .mobile-menu-btn {
+          display: block;
+        }
+
+        nav {
+          position: fixed;
+          top: 70px;
+          left: -100%;
+          width: 80%;
+          height: calc(100vh - 70px);
+          background-color: var(--dark);
+          flex-direction: column;
+          padding: 2rem;
+          transition: left 0.3s;
+          z-index: 999;
+        }
+
+        nav.active {
+          left: 0;
+        }
+
+        nav ul {
+          flex-direction: column;
+          gap: 1.5rem;
+        }
+
+        .blog-hero h1 {
+          font-size: 2.2rem;
+        }
+
+        .blog-hero p {
+          font-size: 1.1rem;
+        }
+
+        .post-title {
+          font-size: 1.5rem;
+        }
+      }
+
+      @media (max-width: 576px) {
+        .blog-hero h1 {
+          font-size: 2rem;
+        }
+
+        .post-meta {
+          flex-direction: column;
+          align-items: flex-start;
+          gap: 0.5rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+     <a href="/" class="logo" style="text-decoration: none;">
+      <img style="border-radius: 6px" src="/asset/logo.webp" alt="Everybody's RPG: Reboot Logo" />
+      <h1>Nomad Game RPG</h1>
+    </a>
+
+      <button class="mobile-menu-btn" id="mobileMenuBtn">
+        <i class="fas fa-bars"></i>
+      </button>
+
+      <nav id="mainNav">
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/how-to-play/">How to Play</a></li>
+          <li><a href="/blog/">Blog</a></li>
+          <li><a href="/contact/">Contact</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <!-- Blog Hero -->
+    <section class="blog-hero">
+      <div class="blog-hero-content">
+        <h1>Everybody's RPG: Reboot Blog</h1>
+        <p>
+          Latest news, updates, and strategy guides for your favorite idle RPG
+        </p>
+      </div>
+    </section>
+
+    <!-- Blog Content -->
+    <div class="blog-container">
+      <main class="blog-posts">
+        <!-- Blog Post 1 -->
+        <article class="blog-post">
+          <div class="post-image">
+            <img
+              src="../asset/unnamed5.webp"
+              alt="New Hero Update: Valkyrie Queen"
+            />
+          </div>
+          <div class="post-content">
+            <div class="post-meta">
+              <span><i class="far fa-calendar"></i> June 15, 2025</span>
+              <span><i class="far fa-user"></i> By Admin</span>
+              <span><i class="far fa-comment"></i> 12 Comments</span>
+            </div>
+            <div>
+              <span class="post-tag">Update</span>
+              <span class="post-tag">Heroes</span>
+            </div>
+            <h2 class="post-title">
+              New Hero Update: Valkyrie Queen Joins the Battle
+            </h2>
+            <p class="post-excerpt">
+              The latest update brings the powerful Valkyrie Queen to
+              Everybody's RPG: Reboot. Learn about her abilities, synergies, and
+              how to maximize her potential in your team compositions.
+            </p>
+            <a href="/blog/post1/" class="read-more"
+              >Read More <i class="fas fa-arrow-right"></i
+            ></a>
+          </div>
+        </article>
+
+        <!-- Blog Post 2 -->
+        <article class="blog-post">
+          <div class="post-image">
+            <img
+              src="../asset/unnamed.webp"
+              alt="Season 3 Battle Pass Rewards"
+            />
+          </div>
+          <div class="post-content">
+            <div class="post-meta">
+              <span><i class="far fa-calendar"></i> June 5, 2025</span>
+              <span><i class="far fa-user"></i> By Game Master</span>
+              <span><i class="far fa-comment"></i> 24 Comments</span>
+            </div>
+            <div>
+              <span class="post-tag">Event</span>
+              <span class="post-tag">Rewards</span>
+            </div>
+            <h2 class="post-title">
+              Season 3 Battle Pass: Exclusive Rewards and Challenges
+            </h2>
+            <p class="post-excerpt">
+              Season 3 is here with exciting new rewards! Discover all the
+              exclusive skins, heroes, and resources you can earn in this
+              season's Battle Pass.
+            </p>
+            <a href="/blog/post2/" class="read-more"
+              >Read More <i class="fas fa-arrow-right"></i
+            ></a>
+          </div>
+        </article>
+
+        <!-- Blog Post 3 -->
+        <article class="blog-post">
+          <div class="post-image">
+            <img src="../asset/unnamed4.webp" alt="Top Team Compositions" />
+          </div>
+          <div class="post-content">
+            <div class="post-meta">
+              <span><i class="far fa-calendar"></i> May 28, 2025</span>
+              <span><i class="far fa-user"></i> By Strategy Expert</span>
+              <span><i class="far fa-comment"></i> 36 Comments</span>
+            </div>
+            <div>
+              <span class="post-tag">Guide</span>
+              <span class="post-tag">Strategy</span>
+            </div>
+            <h2 class="post-title">
+              Top 5 Team Compositions for Late Game Progression
+            </h2>
+            <p class="post-excerpt">
+              Struggling with late game content? Check out these powerful team
+              compositions that will help you push through the toughest stages.
+            </p>
+            <a href="/blog/post3/" class="read-more"
+              >Read More <i class="fas fa-arrow-right"></i
+            ></a>
+          </div>
+        </article>
+
+        <!-- Blog Post 4 -->
+        <article class="blog-post">
+          <div class="post-image">
+            <img src="/asset/unnamed2.webp" alt="Mining Optimization Guide" />
+          </div>
+          <div class="post-content">
+            <div class="post-meta">
+              <span><i class="far fa-calendar"></i> May 15, 2025</span>
+              <span><i class="far fa-user"></i> By Gold Miner</span>
+              <span><i class="far fa-comment"></i> 18 Comments</span>
+            </div>
+            <div>
+              <span class="post-tag">Guide</span>
+              <span class="post-tag">Resources</span>
+            </div>
+            <h2 class="post-title">
+              Mining Optimization: Maximize Your Offline Rewards
+            </h2>
+            <p class="post-excerpt">
+              Learn how to optimize your mining setup to get the most resources
+              while you're offline. Essential tips for all players!
+            </p>
+            <a href="/blog/post4/" class="read-more"
+              >Read More <i class="fas fa-arrow-right"></i
+            ></a>
+          </div>
+        </article>
+
+        
+      </main>
+
+      <!-- Blog Sidebar -->
+      <aside class="blog-sidebar">
+        <!-- Search Widget -->
+        <div class="sidebar-widget">
+          <h3 class="widget-title">Search</h3>
+          <form class="search-form">
+            <input
+              type="text"
+              class="search-input"
+              placeholder="Search articles..."
+            />
+            <button type="submit" class="search-button">
+              <i class="fas fa-search"></i>
+            </button>
+          </form>
+        </div>
+
+   
+       
+
+        <!-- Newsletter Widget -->
+        <div class="sidebar-widget">
+          <h3 class="widget-title">Newsletter</h3>
+          <p>
+            Subscribe to get the latest news and updates directly to your inbox.
+          </p>
+          <form class="newsletter-form">
+            <input
+              type="email"
+              class="newsletter-input"
+              placeholder="Your email address"
+              required
+            />
+            <button type="submit" class="newsletter-button">Subscribe</button>
+          </form>
+        </div>
+      </aside>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-content">
+        <div class="footer-column">
+          <h3>Everybody's RPG: Reboot</h3>
+          <p>
+            Recruit legendary heroes and conquer endless stages in this exciting
+            idle fantasy RPG adventure!
+          </p>   
+
+    <a
+      href="https://play.google.com/store/apps/details?id=com.nomadgames.dungeonmaster&pli=1"
+      style="display: inline-block; margin-top: 20px;"
+    >
+      <img
+        src="/asset/googleplay.png"
+        alt="Get it on Google Play"
+        style="width: 200px; max-width: 100%; height: auto; margin-right: 15px;"
+      />
+    </a> 
+    <a
+      href="https://apps.apple.com/us/app/everybodys-rpg/id1353701442"
+      style="display: inline-block;"
+    >
+      <img
+        src="/asset/btn_app_store.png"
+        alt="Get it on Google Play"
+        style="width: 200px; max-width: 100%; height: auto;"
+      />
+    </a>
+        </div>
+
+        <div class="footer-column">
+          <h3>Quick Links</h3>
+          <ul>
+            <li><a href="/">Home</a></li>
+            <li><a href="/how-to-play/">How to Play</a></li>
+            <li><a href="/blog/">Blog</a></li>
+            <li><a href="/contact/">Contact</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h3>Legal</h3>
+          <ul>
+            <li><a href="/privacy/">Privacy Policy</a></li>
+            <li><a href="/terms/">Terms of Service</a></li>
+            <li><a href="/cookies/">Cookies Policy</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-column">
+          <h3>Contact Us</h3>
+          <ul>
+            <li><i class="fas fa-map-marker-alt"></i>  1219ho, 18 Woldecupbuk-ro 5na-gil,
+Mapo-gu, Seoul 04002,
+South Korea</li>
+            <li><i class="fas fa-envelope"></i> nomadgamesdev@gmail.com</li>
+           
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>&copy; 2025 Nomad Game Studio. All Rights Reserved.</p>
+      </div>
+    </footer>
+
+    <script>
+      // Mobile Menu Toggle
+      document
+        .getElementById("mobileMenuBtn")
+        .addEventListener("click", function () {
+          document.getElementById("mainNav").classList.toggle("active");
+        });
+
+      // Smooth scrolling for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+        anchor.addEventListener("click", function (e) {
+          e.preventDefault();
+
+          document.querySelector(this.getAttribute("href")).scrollIntoView({
+            behavior: "smooth",
+          });
+        });
+      });
+
+      // Newsletter Form Submission
+      document.querySelectorAll(".newsletter-form").forEach((form) => {
+        form.addEventListener("submit", function (e) {
+          e.preventDefault();
+          const email = this.querySelector(".newsletter-input").value;
+
+          // Here you would typically send the email to your server
+          // For demo purposes, we'll just show an alert
+          alert(
+            `Thank you for subscribing with ${email}! You'll receive our latest updates soon.`
+          );
+          this.querySelector(".newsletter-input").value = "";
+        });
+      });
+
+      // Search Form Submission
+      document
+        .querySelector(".search-form")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          const query = this.querySelector(".search-input").value;
+
+          // Here you would typically redirect to search results
+          // For demo purposes, we'll just show an alert
+          alert(
+            `Searching for: ${query}\nThis would redirect to search results in a real implementation.`
+          );
+        });
+
+      // Cookie Consent Banner (same as home page)
+      function checkCookieConsent() {
+        if (!localStorage.getItem("cookieConsent")) {
+          const cookieBanner = document.createElement("div");
+          cookieBanner.style.position = "fixed";
+          cookieBanner.style.bottom = "0";
+          cookieBanner.style.left = "0";
+          cookieBanner.style.right = "0";
+          cookieBanner.style.backgroundColor = "var(--dark)";
+          cookieBanner.style.color = "white";
+          cookieBanner.style.padding = "1rem";
+          cookieBanner.style.zIndex = "1000";
+          cookieBanner.style.display = "flex";
+          cookieBanner.style.justifyContent = "space-between";
+          cookieBanner.style.alignItems = "center";
+          cookieBanner.style.flexWrap = "wrap";
+
+          cookieBanner.innerHTML = `
+                    <div style="max-width: 800px; margin-right: 1rem;">
+                        <p>We use cookies to enhance your experience on our website. By continuing to browse, you agree to our use of cookies. Learn more in our <a href="/cookies/" style="color: var(--accent);">Cookies Policy</a>.</p>
+                    </div>
+                    <button id="acceptCookies" style="background-color: var(--accent); color: white; border: none; padding: 0.5rem 1rem; border-radius: 4px; cursor: pointer; white-space: nowrap;">Accept Cookies</button>
+                `;
+
+          document.body.appendChild(cookieBanner);
+
+          document
+            .getElementById("acceptCookies")
+            .addEventListener("click", function () {
+              localStorage.setItem("cookieConsent", "true");
+              cookieBanner.style.display = "none";
+            });
+        }
+      }
+
+      // Initialize when DOM is loaded
+      document.addEventListener("DOMContentLoaded", function () {
+        checkCookieConsent();
+      });
+    </script>
+  </body>
+</html>

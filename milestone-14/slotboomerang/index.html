@@ -1,0 +1,1478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slotboomerang | Premium  Social Casino Experience</title>
+     <link rel="shortcut icon" href="/images/favicon.png" type="image/x-icon" >
+    <meta name="description" content=" Slotboomerang offers premium social casino games for entertainment only. Play exciting slots and table games with virtual coins - no real money involved.">
+    <meta name="keywords" content="social casino, free slots, casino games, virtual coins, slot games, free to play, online slots">
+    <link rel="canonical" href="https://Slotboomerang.com/" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FFD700',
+                        secondary: '#C0A062',
+                        dark: '#0F0F0F',
+                        accent: '#B8860B',
+                    },
+                    fontFamily: {
+                        'sans': ['"Exo 2"', 'sans-serif'],
+                        'display': ['"Bebas Neue"', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Exo+2:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Exo 2', sans-serif;
+            background-color: #0F0F0F;
+            color: white;
+            overflow-x: hidden;
+        }
+        
+        .hero-bg {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1596838132731-3301c3fd4317?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        
+        .champions-bg {
+            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('/images/champions-bg.webp');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        
+        .games-bg {
+            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('/images/games-bg.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        
+        .testimonials-bg {
+            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('https://images.unsplash.com/photo-1596838132731-3301c3fd4317?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        
+        .hamburger-menu {
+            width: 30px;
+            height: 20px;
+            position: relative;
+            cursor: pointer;
+            display: inline-block;
+        }
+        
+        .hamburger-menu span {
+            background-color: #FFD700;
+            position: absolute;
+            border-radius: 2px;
+            transition: .3s cubic-bezier(.8, .5, .2, 1.4);
+            width: 100%;
+            height: 3px;
+        }
+        
+        .hamburger-menu span:nth-child(1) {
+            top: 0;
+            left: 0;
+        }
+        
+        .hamburger-menu span:nth-child(2) {
+            top: 8px;
+            left: 0;
+            opacity: 1;
+        }
+        
+        .hamburger-menu span:nth-child(3) {
+            bottom: 0;
+            left: 0;
+        }
+        
+        .hamburger-menu.open span:nth-child(1) {
+            transform: rotate(45deg);
+            top: 8px;
+        }
+        
+        .hamburger-menu.open span:nth-child(2) {
+            opacity: 0;
+        }
+        
+        .hamburger-menu.open span:nth-child(3) {
+            transform: rotate(-45deg);
+            top: 8px;
+        }
+        
+        .nav-menu {
+            clip-path: circle(0% at 100% 0);
+            transition: all 0.8s cubic-bezier(0.86, 0, 0.07, 1);
+        }
+        
+        .nav-menu.open {
+            clip-path: circle(150% at 100% 0);
+        }
+        
+        .game-card {
+            transform-style: preserve-3d;
+            transition: all 0.5s ease;
+        }
+        
+        .game-card:hover {
+            transform: translateY(-10px) scale(1.03);
+        }
+        
+        .particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+        
+        .glow-text {
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.7);
+        }
+        
+        .glow-box {
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+        }
+        
+        .border-gold {
+            border-image: linear-gradient(to right, #FFD700, #B8860B, #FFD700) 1;
+        }
+        
+        .scroll-down {
+            position: absolute;
+            bottom: -80px;
+            left: 50%;
+            transform: translateX(-50%);
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0) translateX(-50%);
+            }
+            40% {
+                transform: translateY(-20px) translateX(-50%);
+            }
+            60% {
+                transform: translateY(-10px) translateX(-50%);
+            }
+        }
+        
+        .floating {
+            animation: floating 3s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.7);
+            }
+            70% {
+                transform: scale(1.05);
+                box-shadow: 0 0 0 10px rgba(255, 215, 0, 0);
+            }
+            100% {
+                transform: scale(1);
+                box-shadow: 0 0 0 0 rgba(255, 215, 0, 0);
+            }
+        }
+        
+        .game-lock {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .game-card:hover .game-lock {
+            opacity: 1;
+        }
+        
+        .lock-icon {
+            font-size: 2rem;
+            color: #FFD700;
+            margin-bottom: 1rem;
+        }
+        
+        .user-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: #1a1a1a;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            border: 1px solid #B8860B;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .dropdown-content a {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s;
+        }
+        
+        .dropdown-content a:hover {
+            background-color: #333;
+        }
+        
+        .user-dropdown:hover .dropdown-content {
+            display: block;
+        }
+        
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: #FFD700;
+            color: #0F0F0F;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body class="relative">
+    <!-- Age Verification Modal -->
+    <div id="ageVerificationModal" class="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center px-4">
+        <div class="bg-dark border border-accent rounded-lg p-8 max-w-md w-full text-center glow-box">
+            <h2 class="text-3xl font-bold mb-4 text-primary font-display tracking-wide">AGE VERIFICATION REQUIRED</h2>
+            <p class="mb-6">You must be 18 years or older to access this social casino platform. Please confirm your age to continue and enjoy our premium gaming experience.</p>
+            <p class="text-sm text-gray-400 mb-8">Important: This platform is for entertainment only. No real money gambling is involved.</p>
+            <div class="flex flex-col space-y-4">
+                <button id="confirmAge" class="bg-primary hover:bg-accent text-dark font-bold py-3 px-6 rounded transition duration-300 transform hover:scale-105">
+                    I AM 18 OR OLDER
+                </button>
+                <button id="denyAge" class="border border-primary text-primary hover:bg-primary hover:text-dark font-bold py-3 px-6 rounded transition duration-300">
+                    I AM UNDER 18
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="registerModal" class="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center px-4 hidden">
+        <div class="bg-dark border border-accent rounded-lg p-8 max-w-md w-full text-center glow-box">
+            <h2 class="text-3xl font-bold mb-6 text-primary font-display">REGISTER TO PLAY</h2>
+            <p class="mb-6">Create an account to unlock all premium games and features.</p>
+            
+            <form id="registerForm" class="text-left">
+                <div class="mb-4">
+                    <label class="block text-gray-300 mb-2">Username</label>
+                    <input type="text" id="registerUsername" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-primary" required>
+                </div>
+                <div class="mb-4">
+                    <label class="block text-gray-300 mb-2">Email</label>
+                    <input type="email" id="registerEmail" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-primary" required>
+                </div>
+                <div class="mb-6">
+                    <label class="block text-gray-300 mb-2">Password</label>
+                    <input type="password" id="registerPassword" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-primary" required>
+                </div>
+                <button type="submit" class="w-full bg-primary hover:bg-accent text-dark font-bold py-3 px-6 rounded transition duration-300 mb-4">
+                    REGISTER NOW
+                </button>
+                <p class="text-sm text-gray-400">Already have an account? <a href="/login/" class="text-primary hover:underline">Login here</a></p>
+            </form>
+            
+            <button id="closeRegisterModal" class="absolute top-4 right-4 text-gray-400 hover:text-primary">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center px-4 hidden">
+        <div class="bg-dark border border-accent rounded-lg p-8 max-w-md w-full text-center glow-box">
+            <h2 class="text-3xl font-bold mb-6 text-primary font-display">LOGIN TO PLAY</h2>
+            <p class="mb-6">Sign in to access your account and continue your gaming journey.</p>
+            
+            <form id="loginForm" class="text-left">
+                <div class="mb-4">
+                    <label class="block text-gray-300 mb-2">Username or Email</label>
+                    <input type="text" id="loginUsername" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-primary" required>
+                </div>
+                <div class="mb-6">
+                    <label class="block text-gray-300 mb-2">Password</label>
+                    <input type="password" id="loginPassword" class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-2 text-white focus:outline-none focus:border-primary" required>
+                </div>
+                <div id="loginError" class="text-red-500 text-sm mb-4 hidden">Invalid credentials. Please try again or register.</div>
+                <button type="submit" class="w-full bg-primary hover:bg-accent text-dark font-bold py-3 px-6 rounded transition duration-300 mb-4">
+                    LOGIN
+                </button>
+                <p class="text-sm text-gray-400">Don't have an account? <a href="/register/" class="text-primary hover:underline">Register here</a></p>
+            </form>
+            
+            <button id="closeLoginModal" class="absolute top-4 right-4 text-gray-400 hover:text-primary">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+    </div>
+
+    <!-- Game Modal -->
+    <div id="gameModal" class="fixed inset-0 bg-black bg-opacity-90 z-50 flex items-center justify-center p-4 hidden">
+        <div class="relative w-full max-w-6xl h-[80vh]">
+            <button id="closeGameModal" class="absolute -top-12 right-0 text-primary text-2xl hover:text-accent transition duration-200">
+                <i class="fas fa-times"></i>
+            </button>
+            <iframe id="gameIframe" class="w-full h-full border border-accent rounded-lg" frameborder="0" allowfullscreen></iframe>
+        </div>
+    </div>
+
+    <!-- Cookies Consent -->
+    <div id="cookiesConsent" class="fixed bottom-0 left-0 right-0 bg-dark border-t border-accent p-4 z-40 hidden">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between">
+            <div class="mb-4 md:mb-0 md:mr-8">
+                <p class="text-sm">We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies.</p>
+            </div>
+            <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2">
+                <button id="acceptCookies" class="bg-primary hover:bg-accent text-dark font-bold py-2 px-4 rounded text-sm transition duration-200">
+                    Accept
+                </button>
+                <button id="declineCookies" class="border border-primary text-primary hover:bg-primary hover:text-dark font-bold py-2 px-4 rounded text-sm transition duration-200">
+                    Decline
+                </button>
+                <a href="/privacy/" class="bg-transparent hover:bg-gray-800 text-primary font-bold py-2 px-4 rounded text-sm transition duration-200">
+                    Learn More
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <header class="fixed w-full z-30 bg-dark bg-opacity-90 backdrop-filter backdrop-blur-sm border-b border-accent">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center py-4">
+                <div class="flex items-center">
+                    <a href="/" class="text-2xl font-bold text-primary font-display">
+                        <img src="/images/logo.png" alt=" Slotboomerang Logo" class="h-12">
+                    </a>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="text-primary hover:text-accent transition duration-200 font-medium">Home</a>
+                    <a href="/games/" class="text-white hover:text-primary transition duration-200 font-medium">Games</a>
+                    <a href="/about/" class="text-white hover:text-primary transition duration-200 font-medium">About</a>
+                    <a href="/responsible-gaming/" class="text-white hover:text-primary transition duration-200 font-medium">Responsible Gaming</a>
+                    <a href="/contact/" class="text-white hover:text-primary transition duration-200 font-medium">Contact</a>
+                    
+                    <div id="authButtons" class="flex items-center space-x-4 ml-6">
+                        <a href="/login/" id="loginButton" class="text-white hover:text-primary transition duration-200 font-medium">Login</a>
+                        <a href="/register/" id="registerButton" class="bg-primary hover:bg-accent text-dark font-bold py-2 px-6 rounded-full transition duration-300 transform hover:scale-105">
+                            Register
+                        </a>
+                    </div>
+                    
+                    <div id="userProfile" class="flex items-center space-x-4 ml-6 hidden">
+                        <div class="user-dropdown">
+                            <div class="flex items-center cursor-pointer">
+                                <div class="user-avatar" id="userAvatar">A</div>
+                                <span class="text-white font-medium" id="usernameDisplay">Alex</span>
+                                <span class="text-primary ml-2">•</span>
+                                <span class="text-primary ml-2" id="userCoins">5,000 Coins</span>
+                                <i class="fas fa-chevron-down text-primary ml-2 text-sm"></i>
+                            </div>
+                            <div class="dropdown-content">                               
+                                <a href="javascript:void(0)" id="logoutButton">Logout</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="md:hidden">
+                    <div id="hamburger" class="hamburger-menu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="mobileMenu" class="nav-menu absolute top-full left-0 w-full bg-dark bg-opacity-95 backdrop-filter backdrop-blur-sm border-b border-accent overflow-hidden">
+            <div class="max-w-7xl mx-auto px-4 py-6 flex flex-col space-y-6 justify-center items-center">
+                <a href="/" class="text-primary text-lg font-medium">Home</a>
+                <a href="/games/" class="text-white text-lg font-medium">Games</a>
+                <a href="/about/" class="text-white text-lg font-medium">About</a>
+                <a href="/responsible-gaming/" class="text-white text-lg font-medium">Responsible Gaming</a>
+                <a href="/contact/" class="text-white text-lg font-medium">Contact</a>
+                
+                <div id="mobileAuthButtons" class="pt-4 border-t border-gray-700">
+                    <a href="javascript:void(0)" id="mobileLoginButton" class="block text-white text-lg font-medium mb-4 border-2 border-primary rounded-full px-4 py-2 text-center">Login</a> 
+                    <a href="javascript:void(0)" id="mobileRegisterButton" class="inline-block bg-primary hover:bg-accent text-dark font-bold py-3 px-8 rounded-full transition duration-300 transform hover:scale-105 w-full text-center">
+                        Register
+                    </a>
+                </div>
+                
+                <div id="mobileUserProfile" class="pt-4 border-t border-gray-700 hidden">
+                    <div class="flex items-center mb-4">
+                        <div class="user-avatar mr-4" id="mobileUserAvatar">A</div>
+                        <div>
+                            <div class="text-white font-medium" id="mobileUsernameDisplay">Alex</div>
+                            <div class="text-primary text-sm" id="mobileUserCoins">5,000 Coins</div>
+                        </div>
+                    </div>
+                    <div class="space-y-3">                       
+                        <a href="javascript:void(0)" id="mobileLogoutButton" class="block text-white hover:text-primary transition duration-200">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-bg min-h-screen flex items-center justify-center pt-20 pb-32 relative overflow-hidden">
+        <div id="particles-js" class="particles-js"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10">
+            <h1 class="text-5xl md:text-7xl font-bold mb-6 text-primary font-display tracking-wide glow-text">REEL CHAMPIONS</h1>
+            <h2 class="text-2xl md:text-3xl font-medium mb-8 text-white">YOUR PATH TO GLORY</h2>
+            
+            <div class="max-w-3xl mx-auto mb-12">
+                <p class="text-lg md:text-xl text-gray-300 mb-8">Experience the thrill of premium casino games without the risk. Join our social casino platform and enjoy the excitement with virtual coins.</p>
+                
+                <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+                    <a href="javascript:void(0)" id="heroRegisterButton" class="bg-primary hover:bg-accent text-dark font-bold py-4 px-8 rounded-full text-lg  hover:scale-105 pulse">
+                        REGISTER NOW - GET 5,000 POINTS
+                    </a>
+                    <a href="/games/" class="border-2 border-primary text-primary hover:bg-primary hover:text-dark font-bold py-4 px-8 rounded-full text-lg ">
+                        PLAY FREE GAMES
+                    </a>
+                </div>
+            </div>
+            
+            <div class="mt-16 flex justify-center">
+                <div class="text-center">
+                    <p class="text-sm text-gray-400 mb-2">LIMITED-TIME OFFER</p>
+                    <div class="flex items-center justify-center space-x-4">
+                        <div class="bg-accent text-dark font-bold py-2 px-4 rounded-lg">
+                            <span class="text-xl">50</span> <span class="text-sm">FREE SPINS</span>
+                        </div>
+                        <div class="text-primary font-medium">+</div>
+                        <div class="bg-accent text-dark font-bold py-2 px-4 rounded-lg">
+                            <span class="text-xl">5,000</span> <span class="text-sm">COINS</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="scroll-down hidden md:block">
+                <i class="fas fa-chevron-down text-primary text-2xl animate-bounce"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- Champions Armory Section -->
+    <section class="champions-bg py-20 relative" id="champions-armory">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4 text-primary font-display tracking-wide">THE CHAMPIONS' ARMOURY</h2>
+                <div class="w-24 h-1 bg-primary mx-auto mb-6"></div>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">Unlock exclusive features and bonuses as you progress through our champion tiers.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-dark bg-opacity-70 border border-accent rounded-lg p-8 text-center transform transition duration-500 hover:scale-105 hover:glow-box">
+                    <div class="text-primary text-5xl mb-6">
+                        <i class="fas fa-medal"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-white">Daily Rewards</h3>
+                    <p class="text-gray-300">Log in daily to claim your free coins and climb the leaderboard.</p>
+                </div>
+                
+                <div class="bg-dark bg-opacity-70 border border-accent rounded-lg p-8 text-center transform transition duration-500 hover:scale-105 hover:glow-box">
+                    <div class="text-primary text-5xl mb-6">
+                        <i class="fas fa-gem"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-white">VIP Program</h3>
+                    <p class="text-gray-300">Exclusive bonuses and perks for our most loyal champions.</p>
+                </div>
+                
+                <div class="bg-dark bg-opacity-70 border border-accent rounded-lg p-8 text-center transform transition duration-500 hover:scale-105 hover:glow-box">
+                    <div class="text-primary text-5xl mb-6">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4 text-white">Tournaments</h3>
+                    <p class="text-gray-300">Compete against others for glory and massive coin prizes.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Games Section -->
+    <section class="games-bg py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4 text-primary font-display tracking-wide">CHAMPIONS CALL</h2>
+                <div class="w-24 h-1 bg-primary mx-auto mb-6"></div>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">Answer the call and try your luck with our most popular games.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Game 1 (Free to play) -->
+                <div class="game-card bg-dark bg-opacity-70 border border-accent rounded-lg overflow-hidden relative">
+                    <div class="relative overflow-hidden h-48 w-full">
+                        <img src="/images/Featured_Games/game1.avif" class="h-48 w-full object-cover" alt="2Wild2Die Boosted Slot Game">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 p-4">
+                            <h3 class="text-xl font-bold text-white">2Wild2Die Boosted</h3>
+                            <p class="text-sm text-gray-300">Hacksaw Gaming</p>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <button class="play-game w-full bg-primary hover:bg-accent text-dark font-bold py-3 px-6 rounded transition duration-300" data-game="https://d2q0k52vlk25jc.cloudfront.net/launcher/static-launcher-gamdom.html?gameid=1551&channel=desktop&language=en&currency=USD&partner=gamdom_prod&mode=demo&token=&lobbyurl=http%3A%2F%2Fgamdom.com/casino">
+                            PLAY NOW
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Game 2 (Free to play) -->
+                <div class="game-card bg-dark bg-opacity-70 border border-accent rounded-lg overflow-hidden relative">
+                    <div class="relative overflow-hidden h-48">
+                        <img src="/images/Featured_Games/game2.avif" alt="Hand of Anubis Boosted Slot Game" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
+                        <div class="absolute bottom-0 left-0 p-4">
+                            <h3 class="text-xl font-bold text-white">Hand of Anubis Boosted</h3>
+                            <p class="text-sm text-gray-300">Hacksaw Gaming</p>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <button class="play-game w-full bg-primary hover:bg-accent text-dark font-bold py-3 px-6 rounded transition duration-300" data-game="https://d2q0k52vlk25jc.cloudfront.net/launcher/static-launcher-gamdom.html?gameid=1549&channel=desktop&language=en&currency=USD&partner=gamdom_prod&mode=demo&token=&lobbyurl=http%3A%2F%2Fgamdom.com/casino">
+                            PLAY NOW
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Game 3 (Requires registration) -->
+                <div class="game-card bg-dark bg-opacity-70 border border-accent rounded-lg overflow-hidden relative">
+                    <div class="relative overflow-hidden h-48">
+                        <img src="/images/Featured_Games/game3.avif" alt="Duel at Dawn Boosted Slot Game" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
+                        <div class="game-lock">
+                            <i class="fas fa-lock lock-icon"></i>
+                            <p class="text-white font-medium">Register to unlock</p>
+                        </div>
+                        <div class="absolute bottom-0 left-0 p-4">
+                            <h3 class="text-xl font-bold text-white">Duel at Dawn Boosted</h3>
+                            <p class="text-sm text-gray-300">Hacksaw Gaming</p>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <button class="play-game w-full bg-gray-700 text-gray-400 font-bold py-3 px-6 rounded transition duration-300" data-game="https://d2q0k52vlk25jc.cloudfront.net/launcher/static-launcher-gamdom.html?gameid=1838&channel=desktop&language=en&currency=USD&partner=gamdom_prod&mode=demo&token=&lobbyurl=http%3A%2F%2Fgamdom.com/casino">
+                            <i class="fas fa-lock mr-2"></i> REGISTER TO PLAY
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Game 4 (Requires registration) -->
+                <div class="game-card bg-dark bg-opacity-70 border border-accent rounded-lg overflow-hidden relative">
+                    <div class="relative overflow-hidden h-48">
+                        <img src="/images/Featured_Games/game4.avif" alt="Time Spinners Slot Game" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
+                        <div class="game-lock">
+                            <i class="fas fa-lock lock-icon"></i>
+                            <p class="text-white font-medium">Register to unlock</p>
+                        </div>
+                        <div class="absolute bottom-0 left-0 p-4">
+                            <h3 class="text-xl font-bold text-white">Time Spinners</h3>
+                            <p class="text-sm text-gray-300">Hacksaw Gaming</p>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <button class="play-game w-full bg-gray-700 text-gray-400 font-bold py-3 px-6 rounded transition duration-300" data-game="https://d2q0k52vlk25jc.cloudfront.net/launcher/static-launcher.html?gameid=1181&channel=desktop&language=en&currency=USD&partner=gamdom_prod&mode=demo&token=&lobbyurl=http%3A%2F%2Fgamdom.com/casino">
+                            <i class="fas fa-lock mr-2"></i> REGISTER TO PLAY
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Game 5 (Requires registration) -->
+                <div class="game-card bg-dark bg-opacity-70 border border-accent rounded-lg overflow-hidden relative">
+                    <div class="relative overflow-hidden h-48">
+                        <img src="/images/Featured_Games/game5.avif" alt="Book of Time Slot Game" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
+                        <div class="game-lock">
+                            <i class="fas fa-lock lock-icon"></i>
+                            <p class="text-white font-medium">Register to unlock</p>
+                        </div>
+                        <div class="absolute bottom-0 left-0 p-4">
+                            <h3 class="text-xl font-bold text-white">Book of Time</h3>
+                            <p class="text-sm text-gray-300">Hacksaw Gaming</p>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <button class="play-game w-full bg-gray-700 text-gray-400 font-bold py-3 px-6 rounded transition duration-300" data-game="https://d2q0k52vlk25jc.cloudfront.net/launcher/static-launcher.html?gameid=1213&channel=desktop&language=en&currency=USD&partner=gamdom_prod&mode=demo&token=&lobbyurl=http%3A%2F%2Fgamdom.com/casino">
+                            <i class="fas fa-lock mr-2"></i> REGISTER TO PLAY
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Game 6 (Requires registration) -->
+                <div class="game-card bg-dark bg-opacity-70 border border-accent rounded-lg overflow-hidden relative">
+                    <div class="relative overflow-hidden h-48">
+                        <img src="/images/Featured_Games/game6.png" alt="Temple Of Torment Slot Game" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
+                        <div class="game-lock">
+                            <i class="fas fa-lock lock-icon"></i>
+                            <p class="text-white font-medium">Register to unlock</p>
+                        </div>
+                        <div class="absolute bottom-0 left-0 p-4">
+                            <h3 class="text-xl font-bold text-white">Temple Of Torment</h3>
+                            <p class="text-sm text-gray-300">Hacksaw Gaming</p>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <button class="play-game w-full bg-gray-700 text-gray-400 font-bold py-3 px-6 rounded transition duration-300" data-game="https://d2q0k52vlk25jc.cloudfront.net/launcher/static-launcher.html?gameid=1237&channel=desktop&language=en&currency=USD&partner=gamdom_prod&mode=demo&token=&lobbyurl=http%3A%2F%2Fgamdom.com/casino">
+                            <i class="fas fa-lock mr-2"></i> REGISTER TO PLAY
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="/games/" class="inline-block border-2 border-primary text-primary hover:bg-primary hover:text-dark font-bold py-3 px-8 rounded-full text-lg transition duration-300">
+                    VIEW ALL GAMES
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials-bg py-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4 text-primary font-display tracking-wide">TALES FROM THE ARENA</h2>
+                <div class="w-24 h-1 bg-primary mx-auto mb-6"></div>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">What our champions say about their  Slotboomerang experience.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-dark bg-opacity-70 border border-accent rounded-lg p-8">
+                    <div class="flex items-center mb-4">
+                        <div class="text-primary text-2xl mr-4">
+                            <i class="fas fa-quote-left"></i>
+                        </div>
+                        <div class="text-gray-300 italic">
+                            "The most exciting social casino I've tried. The games are fantastic and the community is great!"
+                        </div>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 rounded-full bg-accent flex items-center justify-center text-dark font-bold mr-4">JD</div>
+                        <div>
+                            <h4 class="font-bold text-white">John D.</h4>
+                            <p class="text-sm text-gray-400">Diamond Tier</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-dark bg-opacity-70 border border-accent rounded-lg p-8">
+                    <div class="flex items-center mb-4">
+                        <div class="text-primary text-2xl mr-4">
+                            <i class="fas fa-quote-left"></i>
+                        </div>
+                        <div class="text-gray-300 italic">
+                            "I love the daily rewards system. It keeps me coming back and the games are so much fun!"
+                        </div>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 rounded-full bg-accent flex items-center justify-center text-dark font-bold mr-4">SM</div>
+                        <div>
+                            <h4 class="font-bold text-white">Sarah M.</h4>
+                            <p class="text-sm text-gray-400">Gold Tier</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-dark bg-opacity-70 border border-accent rounded-lg p-8">
+                    <div class="flex items-center mb-4">
+                        <div class="text-primary text-2xl mr-4">
+                            <i class="fas fa-quote-left"></i>
+                        </div>
+                        <div class="text-gray-300 italic">
+                            "The tournaments are incredibly fun. I've made some great friends while competing for the top spots!"
+                        </div>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 rounded-full bg-accent flex items-center justify-center text-dark font-bold mr-4">AR</div>
+                        <div>
+                            <h4 class="font-bold text-white">Alex R.</h4>
+                            <p class="text-sm text-gray-400">Platinum Tier</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="bg-gradient-to-r from-dark to-gray-900 py-20 border-t border-b border-accent">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6 text-primary font-display tracking-wide">JOIN THE CHAMPIONS' ARENA TODAY</h2>
+            <p class="text-xl text-gray-300 max-w-3xl mx-auto mb-8">Register now and claim your 5,000 free coins to start your journey to glory!</p>
+            
+            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+                <a href="javascript:void(0)" id="ctaRegisterButton" class="bg-primary hover:bg-accent text-dark font-bold py-4 px-8 rounded-full text-lg transition duration-300 transform hover:scale-105">
+                    REGISTER NOW
+                </a>
+                <a href="/games/" class="border-2 border-primary text-primary hover:bg-primary hover:text-dark font-bold py-4 px-8 rounded-full text-lg transition duration-300">
+                    PLAY FREE GAMES
+                </a>
+            </div>
+        </div>
+    </section>
+<!-- Leaderboard Section -->
+<section class="bg-dark py-20">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Heading -->
+    <div class="text-center mb-16">
+      <h2 class="text-4xl md:text-5xl font-bold mb-4 text-primary font-display tracking-wide">
+        HALL OF CHAMPIONS
+      </h2>
+      <div class="w-24 h-1 bg-primary mx-auto mb-6"></div>
+      <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+        Our top players this week. Will you be next?
+      </p>
+    </div>
+
+    <!-- Leaderboard Table / Cards -->
+    <div class="bg-dark bg-opacity-70 border border-accent rounded-lg overflow-hidden">
+      <!-- Desktop Header -->
+      <div class="hidden md:grid grid-cols-12 bg-accent text-dark font-bold py-4 px-6">
+        <div class="col-span-1 text-center">#</div>
+        <div class="col-span-6">PLAYER</div>
+        <div class="col-span-3 text-center">TIER</div>
+        <div class="col-span-2 text-center">COINS</div>
+      </div>
+
+      <!-- Players -->
+      <div class="divide-y divide-gray-700">
+
+        <!-- Player Item -->
+        <div class="grid md:grid-cols-12 items-center py-6 px-6 hover:bg-gray-800 transition duration-200">
+          <!-- Rank -->
+          <div class="md:col-span-1 text-center text-primary font-bold text-lg md:text-base">1</div>
+
+          <!-- Player Name + Avatar (Avatar above name on mobile; inline on md+) -->
+          <div class="md:col-span-6 flex flex-col md:flex-row items-center md:items-center text-center md:text-left mt-2 md:mt-0">
+            <div class="flex-shrink-0">
+              <img
+                src="/images/avatar/1.jpg"
+                alt="ChampionRoyale avatar"
+                class="mx-auto md:mx-0 w-14 h-14 md:w-10 md:h-10 rounded-full object-cover border-2 border-primary"
+                loading="lazy"
+              />
+            </div>
+            <div class="mt-3 md:mt-0 md:ml-4">
+              <span class="block font-medium text-white">ChampionRoyale</span>
+              <!-- Optional small subtitle -->
+              <!-- <span class="text-sm text-gray-400">USA</span> -->
+            </div>
+          </div>
+
+          <!-- Tier -->
+          <div class="md:col-span-3 text-center mt-4 md:mt-0">
+            <span class="bg-primary text-dark px-3 py-1 rounded-full text-sm font-bold">DIAMOND</span>
+          </div>
+
+          <!-- Coins -->
+          <div class="md:col-span-2 text-center font-bold text-primary mt-4 md:mt-0">
+            1,245,678
+          </div>
+        </div>
+
+        <!-- Player 2 -->
+        <div class="grid md:grid-cols-12 items-center py-6 px-6 hover:bg-gray-800 transition duration-200">
+          <div class="md:col-span-1 text-center text-primary font-bold">2</div>
+
+          <div class="md:col-span-6 flex flex-col md:flex-row items-center md:items-center text-center md:text-left mt-2 md:mt-0">
+            <div class="flex-shrink-0">
+              <img
+                src="/images/avatar/2.jpg"
+                alt="LuckySpin avatar"
+                class="mx-auto md:mx-0 w-14 h-14 md:w-10 md:h-10 rounded-full object-cover border-2 border-secondary"
+                loading="lazy"
+              />
+            </div>
+            <div class="mt-3 md:mt-0 md:ml-4">
+              <span class="block font-medium text-white">LuckySpin</span>
+            </div>
+          </div>
+
+          <div class="md:col-span-3 text-center mt-4 md:mt-0">
+            <span class="bg-secondary text-dark px-3 py-1 rounded-full text-sm font-bold">PLATINUM</span>
+          </div>
+
+          <div class="md:col-span-2 text-center font-bold text-primary mt-4 md:mt-0">
+            987,654
+          </div>
+        </div>
+
+        <!-- Player 3 -->
+        <div class="grid md:grid-cols-12 items-center py-6 px-6 hover:bg-gray-800 transition duration-200">
+          <div class="md:col-span-1 text-center text-primary font-bold">3</div>
+
+          <div class="md:col-span-6 flex flex-col md:flex-row items-center md:items-center text-center md:text-left mt-2 md:mt-0">
+            <div class="flex-shrink-0">
+              <img
+                src="/images/avatar/3.jpg"
+                alt="JackpotWizard avatar"
+                class="mx-auto md:mx-0 w-14 h-14 md:w-10 md:h-10 rounded-full object-cover border-2 border-secondary"
+                loading="lazy"
+              />
+            </div>
+            <div class="mt-3 md:mt-0 md:ml-4">
+              <span class="block font-medium text-white">JackpotWizard</span>
+            </div>
+          </div>
+
+          <div class="md:col-span-3 text-center mt-4 md:mt-0">
+            <span class="bg-secondary text-dark px-3 py-1 rounded-full text-sm font-bold">PLATINUM</span>
+          </div>
+
+          <div class="md:col-span-2 text-center font-bold text-primary mt-4 md:mt-0">
+            876,543
+          </div>
+        </div>
+
+        <!-- Player 4 -->
+        <div class="grid md:grid-cols-12 items-center py-6 px-6 hover:bg-gray-800 transition duration-200">
+          <div class="md:col-span-1 text-center text-primary font-bold">4</div>
+
+          <div class="md:col-span-6 flex flex-col md:flex-row items-center md:items-center text-center md:text-left mt-2 md:mt-0">
+            <div class="flex-shrink-0">
+              <img
+                src="/images/avatar/4.jpg"
+                alt="ReelSlayer avatar"
+                class="mx-auto md:mx-0 w-14 h-14 md:w-10 md:h-10 rounded-full object-cover border-2 border-yellow-600"
+                loading="lazy"
+              />
+            </div>
+            <div class="mt-3 md:mt-0 md:ml-4">
+              <span class="block font-medium text-white">ReelSlayer</span>
+            </div>
+          </div>
+
+          <div class="md:col-span-3 text-center mt-4 md:mt-0">
+            <span class="bg-yellow-600 text-dark px-3 py-1 rounded-full text-sm font-bold">GOLD</span>
+          </div>
+
+          <div class="md:col-span-2 text-center font-bold text-primary mt-4 md:mt-0">
+            765,432
+          </div>
+        </div>
+
+        <!-- Player 5 -->
+        <div class="grid md:grid-cols-12 items-center py-6 px-6 hover:bg-gray-800 transition duration-200">
+          <div class="md:col-span-1 text-center text-primary font-bold">5</div>
+
+          <div class="md:col-span-6 flex flex-col md:flex-row items-center md:items-center text-center md:text-left mt-2 md:mt-0">
+            <div class="flex-shrink-0">
+              <img
+                src="/images/avatar/4.jpg"
+                alt="WildCard avatar"
+                class="mx-auto md:mx-0 w-14 h-14 md:w-10 md:h-10 rounded-full object-cover border-2 border-yellow-600"
+                loading="lazy"
+              />
+            </div>
+            <div class="mt-3 md:mt-0 md:ml-4">
+              <span class="block font-medium text-white">WildCard</span>
+            </div>
+          </div>
+
+          <div class="md:col-span-3 text-center mt-4 md:mt-0">
+            <span class="bg-yellow-600 text-dark px-3 py-1 rounded-full text-sm font-bold">GOLD</span>
+          </div>
+
+          <div class="md:col-span-2 text-center font-bold text-primary mt-4 md:mt-0">
+            654,321
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="text-center mt-8">
+      <a href="javascript:void(0)" id="leaderboardRegisterButton"
+         class="inline-block text-primary hover:text-accent font-medium transition duration-200">
+        Join now and climb the leaderboard <i class="fas fa-arrow-right ml-2"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+
+
+    <!-- Responsible Gaming Section -->
+    <section class="bg-gray-900 py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-dark bg-opacity-70 border border-accent rounded-lg p-8">
+                <h3 class="text-2xl font-bold mb-6 text-primary text-center">Responsible Gaming Commitment</h3>
+                <p class="text-gray-300 mb-6 text-center"> Slotboomerang is committed to promoting responsible gaming practices. We provide comprehensive tools and resources to help players maintain control over their gaming habits and ensure a safe, enjoyable experience for all users.</p>
+                
+                <div class="text-center text-sm text-gray-400 mb-6">
+                    <p><strong>Important Notice:</strong> This is a social casino platform for entertainment only. No real money gambling or payouts are involved. All coins are virtual and have no monetary value.</p>
+                </div>
+                
+                <div class="flex flex-wrap justify-center gap-4">
+                    <a href="https://www.gamcare.org.uk/" class="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded transition duration-200">GamCare</a>
+                    <a href="https://www.begambleaware.org/" class="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded transition duration-200">GambleAware</a>
+                    <a href="/responsible-gaming/" class="bg-gray-800 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded transition duration-200">Responsible Gaming Policy</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark border-t border-accent">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                     <a href="/" class="text-2xl font-bold text-primary font-display">
+                        <img src="/images/logo.png" alt=" Slotboomerang Logo" class="h-12 mb-4">
+                    </a>
+                   <p class="text-gray-400 mb-4">Premium social casino experience with the best virtual slot games and tournaments.</p>
+                    <p class="text-gray-400 mb-4"> No real money gambling or payouts are involved. All coins are virtual and have no monetary value.</p>
+                                       
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold text-white mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/" class="text-gray-400 hover:text-primary transition duration-200">Home</a></li>
+                        <li><a href="/games/" class="text-gray-400 hover:text-primary transition duration-200">Games</a></li>
+                        <li><a href="/about/" class="text-gray-400 hover:text-primary transition duration-200">About Us</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold text-white mb-4">Information</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/responsible-gaming/" class="text-gray-400 hover:text-primary transition duration-200">Responsible Gaming</a></li>
+                        <li><a href="/privacy/" class="text-gray-400 hover:text-primary transition duration-200">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="text-gray-400 hover:text-primary transition duration-200">Terms of Service</a></li>
+                        <li><a href="/cookies/" class="text-gray-400 hover:text-primary transition duration-200">Cookies Policy</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold text-white mb-4">Contact Us</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt text-primary mt-1 mr-3"></i>
+                            <span class="text-gray-400">Vestre Ringvei 5, 1831 Askim, Norway</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone-alt text-primary mr-3"></i>
+                            <span class="text-gray-400">+4740696111</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope text-primary mr-3"></i>
+                            <span class="text-gray-400">info@Slotboomerang.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8">
+                <div class="flex flex-col  items-center">
+                    
+                    <p class="text-gray-500 text-sm text-center ">
+                        18+ Only | Social Casino Platform | No Real Money Gambling<br>
+                        This website operates as a social casino platform for entertainment purposes only. No real money gambling, betting, or wagering is involved. Virtual coins and winnings have no cash value and cannot be exchanged for real money, prizes, or any monetary compensation. Success in social casino games does not guarantee future success at real money gambling activities.
+                    </p>
+                    <p class="text-gray-500 text-sm mb-4 md:mb-0 text-center mt-6  ">
+                        &copy; 2025  Slotboomerang . All rights reserved.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if user is logged in (from localStorage)
+            const userData = JSON.parse(localStorage.getItem('userData'));
+            const isLoggedIn = userData && userData.isLoggedIn;
+            
+            // Age Verification
+            const ageVerificationModal = document.getElementById('ageVerificationModal');
+            const confirmAgeBtn = document.getElementById('confirmAge');
+            const denyAgeBtn = document.getElementById('denyAge');
+            
+            // Check if age is already verified
+            if (!localStorage.getItem('ageVerified')) {
+                ageVerificationModal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            } else {
+                ageVerificationModal.classList.add('hidden');
+            }
+            
+            confirmAgeBtn.addEventListener('click', function() {
+                localStorage.setItem('ageVerified', 'true');
+                ageVerificationModal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            });
+            
+            denyAgeBtn.addEventListener('click', function() {
+                window.location.href = 'https://www.google.com/';
+            });
+            
+            // Register Modal
+            const registerModal = document.getElementById('registerModal');
+            const registerForm = document.getElementById('registerForm');
+            const closeRegisterModal = document.getElementById('closeRegisterModal');
+            
+            // Login Modal
+            const loginModal = document.getElementById('loginModal');
+            const loginForm = document.getElementById('loginForm');
+            const closeLoginModal = document.getElementById('closeLoginModal');
+            const loginError = document.getElementById('loginError');
+            
+            // Game Modal
+            const gameModal = document.getElementById('gameModal');
+            const gameIframe = document.getElementById('gameIframe');
+            const closeGameModal = document.getElementById('closeGameModal');
+            const playGameButtons = document.querySelectorAll('.play-game');
+            
+            // Auth buttons
+            const loginButton = document.getElementById('loginButton');
+            const registerButton = document.getElementById('registerButton');
+            const mobileLoginButton = document.getElementById('mobileLoginButton');
+            const mobileRegisterButton = document.getElementById('mobileRegisterButton');
+            const heroRegisterButton = document.getElementById('heroRegisterButton');
+            const ctaRegisterButton = document.getElementById('ctaRegisterButton');
+            const leaderboardRegisterButton = document.getElementById('leaderboardRegisterButton');
+            
+            // User profile elements
+            const authButtons = document.getElementById('authButtons');
+            const userProfile = document.getElementById('userProfile');
+            const usernameDisplay = document.getElementById('usernameDisplay');
+            const userCoins = document.getElementById('userCoins');
+            const userAvatar = document.getElementById('userAvatar');
+            const mobileAuthButtons = document.getElementById('mobileAuthButtons');
+            const mobileUserProfile = document.getElementById('mobileUserProfile');
+            const mobileUsernameDisplay = document.getElementById('mobileUsernameDisplay');
+            const mobileUserCoins = document.getElementById('mobileUserCoins');
+            const mobileUserAvatar = document.getElementById('mobileUserAvatar');
+            const logoutButton = document.getElementById('logoutButton');
+            const mobileLogoutButton = document.getElementById('mobileLogoutButton');
+            
+            // Initialize UI based on login state
+            function updateAuthUI() {
+                if (isLoggedIn) {
+                    // Show user profile
+                    authButtons.classList.add('hidden');
+                    userProfile.classList.remove('hidden');
+                    mobileAuthButtons.classList.add('hidden');
+                    mobileUserProfile.classList.remove('hidden');
+                    
+                    // Set user data
+                    usernameDisplay.textContent = userData.username;
+                    mobileUsernameDisplay.textContent = userData.username;
+                    userCoins.textContent = '5,000 Coins';
+                    mobileUserCoins.textContent = '5,000 Coins';
+                    userAvatar.textContent = userData.username.charAt(0).toUpperCase();
+                    mobileUserAvatar.textContent = userData.username.charAt(0).toUpperCase();
+                    
+                    // Update game buttons to show unlocked state
+                    document.querySelectorAll('.play-game[data-requires-login="true"]').forEach(button => {
+                        button.innerHTML = 'PLAY NOW';
+                        button.classList.remove('bg-gray-700', 'text-gray-400');
+                        button.classList.add('bg-primary', 'hover:bg-accent', 'text-dark');
+                    });
+                    
+                    // Remove lock overlays
+                    document.querySelectorAll('.game-lock').forEach(lock => {
+                        lock.style.display = 'none';
+                    });
+                } else {
+                    // Show auth buttons
+                    authButtons.classList.remove('hidden');
+                    userProfile.classList.add('hidden');
+                    mobileAuthButtons.classList.remove('hidden');
+                    mobileUserProfile.classList.add('hidden');
+                    
+                    // Update game buttons to show locked state for games requiring login
+                    document.querySelectorAll('.play-game[data-requires-login="true"]').forEach(button => {
+                        button.innerHTML = '<i class="fas fa-lock mr-2"></i> REGISTER TO PLAY';
+                        button.classList.add('bg-gray-700', 'text-gray-400');
+                        button.classList.remove('bg-primary', 'hover:bg-accent', 'text-dark');
+                    });
+                    
+                    // Show lock overlays
+                    document.querySelectorAll('.game-lock').forEach(lock => {
+                        lock.style.display = 'flex';
+                    });
+                }
+            }
+            
+            // Initialize UI
+            updateAuthUI();
+            
+            // Register button handlers
+            [registerButton, mobileRegisterButton, heroRegisterButton, ctaRegisterButton, leaderboardRegisterButton].forEach(button => {
+                button.addEventListener('click', function() {
+                    registerModal.classList.remove('hidden');
+                    document.body.style.overflow = 'hidden';
+                });
+            });
+            
+            // Login button handlers
+            [loginButton, mobileLoginButton].forEach(button => {
+                button.addEventListener('click', function() {
+                    loginModal.classList.remove('hidden');
+                    document.body.style.overflow = 'hidden';
+                });
+            });
+            
+            // Logout button handlers
+            [logoutButton, mobileLogoutButton].forEach(button => {
+                button.addEventListener('click', function() {
+                    localStorage.removeItem('userData');
+                    window.location.reload();
+                });
+            });
+            
+            // Register form submission
+            registerForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const username = document.getElementById('registerUsername').value;
+                const email = document.getElementById('registerEmail').value;
+                const password = document.getElementById('registerPassword').value;
+                
+                // Save user data to localStorage
+                const userData = {
+                    username: username,
+                    email: email,
+                    password: password, // Note: In a real app, never store passwords in localStorage
+                    isLoggedIn: true,
+                    coins: 5000
+                };
+                
+                localStorage.setItem('userData', JSON.stringify(userData));
+                
+                // Close modal and update UI
+                registerModal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+                window.location.reload();
+            });
+            
+            // Login form submission
+            loginForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const usernameOrEmail = document.getElementById('loginUsername').value;
+                const password = document.getElementById('loginPassword').value;
+                
+                // Get stored user data
+                const storedUserData = JSON.parse(localStorage.getItem('userData'));
+                
+                // Check credentials
+                if (storedUserData && 
+                    (usernameOrEmail === storedUserData.username || usernameOrEmail === storedUserData.email) && 
+                    password === storedUserData.password) {
+                    
+                    // Update login status
+                    storedUserData.isLoggedIn = true;
+                    localStorage.setItem('userData', JSON.stringify(storedUserData));
+                    
+                    // Close modal and update UI
+                    loginModal.classList.add('hidden');
+                    document.body.style.overflow = 'auto';
+                    window.location.reload();
+                } else {
+                    // Show error
+                    loginError.classList.remove('hidden');
+                }
+            });
+            
+            // Close modals
+            closeRegisterModal.addEventListener('click', function() {
+                registerModal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            });
+            
+            closeLoginModal.addEventListener('click', function() {
+                loginModal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            });
+            
+            // Game play buttons
+            playGameButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const requiresLogin = this.getAttribute('data-requires-login') === 'true';
+                    const gameUrl = this.getAttribute('data-game');
+                    
+                    if (requiresLogin && !isLoggedIn) {
+                        registerModal.classList.remove('hidden');
+                        document.body.style.overflow = 'hidden';
+                    } else {
+                        gameIframe.src = gameUrl;
+                        gameModal.classList.remove('hidden');
+                        document.body.style.overflow = 'hidden';
+                    }
+                });
+            });
+            
+            closeGameModal.addEventListener('click', function() {
+                gameModal.classList.add('hidden');
+                gameIframe.src = '';
+                document.body.style.overflow = 'auto';
+            });
+            
+            // Close modals when clicking outside
+            [gameModal, registerModal, loginModal].forEach(modal => {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        this.classList.add('hidden');
+                        if (this === gameModal) {
+                            gameIframe.src = '';
+                        }
+                        document.body.style.overflow = 'auto';
+                    }
+                });
+            });
+            
+            // Cookies Consent
+            const cookiesConsent = document.getElementById('cookiesConsent');
+            const acceptCookies = document.getElementById('acceptCookies');
+            const declineCookies = document.getElementById('declineCookies');
+            
+            if (!localStorage.getItem('cookiesAccepted')) {
+                cookiesConsent.classList.remove('hidden');
+            }
+            
+            acceptCookies.addEventListener('click', function() {
+                localStorage.setItem('cookiesAccepted', 'true');
+                cookiesConsent.classList.add('hidden');
+            });
+            
+            declineCookies.addEventListener('click', function() {
+                localStorage.setItem('cookiesAccepted', 'false');
+                cookiesConsent.classList.add('hidden');
+            });
+            
+            // Mobile Menu
+            const hamburger = document.getElementById('hamburger');
+            const mobileMenu = document.getElementById('mobileMenu');
+            
+            hamburger.addEventListener('click', function() {
+                this.classList.toggle('open');
+                mobileMenu.classList.toggle('open');
+            });
+            
+            // GSAP Animations
+            gsap.registerPlugin(ScrollTrigger);
+            
+            // Hero text animation
+            gsap.from('.hero-bg h1', {
+                duration: 1,
+                y: 50,
+                opacity: 0,
+                ease: "power3.out"
+            });
+            
+            gsap.from('.hero-bg h2', {
+                duration: 1,
+                y: 50,
+                opacity: 0,
+                delay: 0.3,
+                ease: "power3.out"
+            });
+            
+            gsap.from('.hero-bg p', {
+                duration: 1,
+                y: 50,
+                opacity: 0,
+                delay: 0.6,
+                ease: "power3.out"
+            });
+            
+            gsap.from('.hero-bg a', {
+                duration: 1,
+                y: 50,
+                opacity: 0,
+                delay: 0.9,
+                ease: "power3.out",
+                stagger: 0.2
+            });
+            
+            // Section animations
+            gsap.utils.toArray('section').forEach(section => {
+                gsap.from(section, {
+                    scrollTrigger: {
+                        trigger: section,
+                        start: "top 80%",
+                        toggleActions: "play none none none"
+                    },
+                    opacity: 0,
+                    y: 50,
+                    duration: 1
+                });
+            });
+            
+            // Particles.js
+            particlesJS('particles-js', {
+                "particles": {
+                    "number": {
+                        "value": 80,
+                        "density": {
+                            "enable": true,
+                            "value_area": 800
+                        }
+                    },
+                    "color": {
+                        "value": "#FFD700"
+                    },
+                    "shape": {
+                        "type": "circle",
+                        "stroke": {
+                            "width": 0,
+                            "color": "#000000"
+                        },
+                        "polygon": {
+                            "nb_sides": 5
+                        }
+                    },
+                    "opacity": {
+                        "value": 0.5,
+                        "random": false,
+                        "anim": {
+                            "enable": false,
+                            "speed": 1,
+                            "opacity_min": 0.1,
+                            "sync": false
+                        }
+                    },
+                    "size": {
+                        "value": 3,
+                        "random": true,
+                        "anim": {
+                            "enable": false,
+                            "speed": 40,
+                            "size_min": 0.1,
+                            "sync": false
+                        }
+                    },
+                    "line_linked": {
+                        "enable": true,
+                        "distance": 150,
+                        "color": "#C0A062",
+                        "opacity": 0.4,
+                        "width": 1
+                    },
+                    "move": {
+                        "enable": true,
+                        "speed": 2,
+                        "direction": "none",
+                        "random": false,
+                        "straight": false,
+                        "out_mode": "out",
+                        "bounce": false,
+                        "attract": {
+                            "enable": false,
+                            "rotateX": 600,
+                            "rotateY": 1200
+                        }
+                    }
+                },
+                "interactivity": {
+                    "detect_on": "canvas",
+                    "events": {
+                        "onhover": {
+                            "enable": true,
+                            "mode": "grab"
+                        },
+                        "onclick": {
+                            "enable": true,
+                            "mode": "push"
+                        },
+                        "resize": true
+                    },
+                    "modes": {
+                        "grab": {
+                            "distance": 140,
+                            "line_linked": {
+                                "opacity": 1
+                            }
+                        },
+                        "bubble": {
+                            "distance": 400,
+                            "size": 40,
+                            "duration": 2,
+                            "opacity": 8,
+                            "speed": 3
+                        },
+                        "repulse": {
+                            "distance": 200,
+                            "duration": 0.4
+                        },
+                        "push": {
+                            "particles_nb": 4
+                        },
+                        "remove": {
+                            "particles_nb": 2
+                        }
+                    }
+                },
+                "retina_detect": true
+            });
+            
+            // Scroll to sections
+            document.querySelector('.scroll-down').addEventListener('click', function(e) {
+                e.preventDefault();
+                document.querySelector('#champions-armory').scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

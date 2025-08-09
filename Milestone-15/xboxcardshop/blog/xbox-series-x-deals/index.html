@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+<link rel="shortcut icon" href="/images/logo.png" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Discover how Xbox Cloud Gaming is revolutionizing the way we play games on any device, anywhere.">
+    <meta name="keywords" content="xbox cloud gaming, xcloud, game streaming, xbox game pass ultimate, play anywhere">
+    <meta name="author" content="XboxCardShop">
+    <title>Xbox Cloud Gaming: The Future of Play | XboxCardShop</title>
+    <link rel="canonical" href="https://xboxcardshop.com/" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Oxanium:wght@300;400;500;600;700;800&family=Press+Start+2P&display=swap');
+        
+        :root {
+            --primary: #107c10;
+            --secondary: #0f5e0f;
+            --accent: #00ff00;
+            --dark: #0a0a0a;
+            --light: #f8f8f8;
+        }
+        
+        body {
+            font-family: 'Oxanium', sans-serif;
+            background-color: var(--dark);
+            color: var(--light);
+            overflow-x: hidden;
+        }
+        
+        .logo-font {
+            font-family: 'Press Start 2P', cursive;
+        }
+        
+        .hero-gradient {
+            background: radial-gradient(circle at center, rgba(16,124,16,0.3) 0%, rgba(10,10,10,1) 70%);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(0,255,0,0.2);
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 25px rgba(0,255,0,0.4);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,255,0,0.3);
+        }
+        
+        .btn-accent {
+            background: linear-gradient(135deg, var(--accent), #00cc00);
+            color: var(--dark);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-accent:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,255,0,0.5);
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--accent);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .hamburger {
+            width: 30px;
+            height: 20px;
+            position: relative;
+            transform: rotate(0deg);
+            transition: .5s ease-in-out;
+            cursor: pointer;
+        }
+        
+        .hamburger span {
+            display: block;
+            position: absolute;
+            height: 3px;
+            width: 100%;
+            background: var(--accent);
+            border-radius: 3px;
+            opacity: 1;
+            left: 0;
+            transform: rotate(0deg);
+            transition: .25s ease-in-out;
+        }
+        
+        .hamburger span:nth-child(1) {
+            top: 0px;
+        }
+        
+        .hamburger span:nth-child(2), .hamburger span:nth-child(3) {
+            top: 10px;
+        }
+        
+        .hamburger span:nth-child(4) {
+            top: 20px;
+        }
+        
+        .hamburger.open span:nth-child(1) {
+            top: 10px;
+            width: 0%;
+            left: 50%;
+        }
+        
+        .hamburger.open span:nth-child(2) {
+            transform: rotate(45deg);
+        }
+        
+        .hamburger.open span:nth-child(3) {
+            transform: rotate(-45deg);
+        }
+        
+        .hamburger.open span:nth-child(4) {
+            top: 10px;
+            width: 0%;
+            left: 50%;
+        }
+        
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+        
+        .glow-text {
+            text-shadow: 0 0 10px rgba(0,255,0,0.7);
+        }
+        
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
+        }
+        
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+        
+        .blog-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            margin: 20px 0;
+            border: 1px solid rgba(0,255,0,0.2);
+        }
+        
+        .blog-content h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin: 1.5rem 0 1rem;
+            color: var(--accent);
+        }
+        
+        .blog-content h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 1.25rem 0 0.75rem;
+            color: white;
+        }
+        
+        .blog-content p {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+            color: #d1d5db;
+        }
+        
+        .blog-content ul, .blog-content ol {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+        
+        .blog-content li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .blog-content a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+        
+        .blog-content a:hover {
+            text-decoration: underline;
+        }
+        
+        .blog-header-image {
+            height: 400px;
+            width: 100%;
+            object-fit: cover;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            border: 2px solid rgba(16,124,16,0.5);
+        }
+        
+        .blog-meta {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            color: #9ca3af;
+        }
+        
+        .blog-meta span {
+            margin-right: 1rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .blog-meta i {
+            margin-right: 0.5rem;
+            color: var(--accent);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="bg-black/90 backdrop-blur-md border-b border-green-900/30 fixed w-full z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <!-- Logo -->
+            <div class="flex items-center">
+                 <a href="/" class="flex items-center">
+                    <img src="/images/logo.png" alt="Xbox Logo" class="h-12">
+                </a>
+            </div>
+            
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="/" class="nav-link text-white hover:text-green-400">Home</a>
+                <a href="/shop/" class="nav-link text-white hover:text-green-400">Shop</a>
+                <a href="/blog/" class="nav-link text-white hover:text-green-400">Blog</a>
+                <a href="/about/" class="nav-link text-white hover:text-green-400">About</a>
+                <a href="/contact/" class="nav-link text-white hover:text-green-400">Contact</a>
+                 
+            </nav>
+            
+            <!-- Right Side Icons -->
+            <div class="flex items-center space-x-4">
+                <a href="/cart/" class="relative text-white hover:text-green-400">
+                    <i class="fas fa-shopping-cart text-xl"></i>
+                    <span id="cart-count" class="absolute -top-2 -right-2 bg-green-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+                </a>
+                <div id="user-icon" class="hidden">
+                    <a href="/account/" class="text-white hover:text-green-400">
+                        <i class="fas fa-user text-xl"></i>
+                    </a>
+                </div>
+                <div id="login-icon">
+                    <a href="/login/" class="text-white hover:text-green-400">
+                        <i class="fas fa-sign-in-alt text-xl"></i>
+                    </a>
+                </div>
+                <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none">
+                    <div class="hamburger">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="mobile-menu fixed inset-y-0 right-0 w-64 bg-black/95 backdrop-blur-lg z-50 p-6 overflow-y-auto">
+        <div class="flex justify-between items-center mb-8">
+            <a href="/" class="logo-font text-green-400 text-xl">Xbox</a>
+            <button id="mobile-menu-close" class="text-white focus:outline-none">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+        </div>
+        <nav class="flex flex-col space-y-6">
+            <a href="/" class="text-white hover:text-green-400 text-lg">Home</a>
+            <a href="/shop/" class="text-white hover:text-green-400 text-lg">Shop</a>
+            <a href="/blog/" class="text-white hover:text-green-400 text-lg">Blog</a>
+            <a href="/about/" class="text-white hover:text-green-400 text-lg">About</a>
+            <a href="/contact/" class="text-white hover:text-green-400 text-lg">Contact</a>
+            
+            <div class="pt-4 border-t border-green-900/30">
+                <div id="mobile-login-link">
+                    <a href="/login/" class="flex items-center text-white hover:text-green-400">
+                        <i class="fas fa-sign-in-alt mr-2"></i> Login
+                    </a>
+                </div>
+                <a href="/cart/" class="flex items-center text-white hover:text-green-400 mt-4">
+                    <i class="fas fa-shopping-cart mr-2"></i> Cart (<span id="mobile-cart-count">0</span>)
+                </a>
+            </div>
+        </nav>
+        <div class="absolute bottom-6 left-6 right-6">
+            <p class="text-green-400 text-sm">We are not an affiliate agency. All products are sold independently through our platform.</p>
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <main class="flex-grow pt-32 pb-16">
+        <article class="container mx-auto px-4 max-w-4xl">
+            <!-- Blog Header -->
+            <header class="mb-12">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4 text-white">
+                    Xbox Cloud Gaming: The Future of Play
+                </h1>
+                <div class="blog-meta">
+                    <span><i class="fas fa-calendar-alt"></i> July 20, 2025</span>
+                    <span><i class="fas fa-clock"></i> 10 min read</span>
+                    <span><i class="fas fa-tag"></i> Xbox, Cloud Gaming</span>
+                </div>
+                <img src="/images/blog/xbox-series-x-deals.jpg" 
+                     alt="Xbox Cloud Gaming" 
+                     class="blog-header-image">
+            </header>
+            
+            <!-- Blog Content -->
+            <div class="blog-content">
+                <p>Xbox Cloud Gaming (formerly known as xCloud) is revolutionizing the way we play games by removing hardware barriers and making high-quality gaming experiences accessible on virtually any device. As part of Xbox Game Pass Ultimate, this streaming technology allows you to play console-quality games on smartphones, tablets, PCs, and even smart TVs without needing expensive hardware. In this comprehensive guide, we'll explore everything you need to know about this game-changing technology.</p>
+                
+                <h2>What is Xbox Cloud Gaming?</h2>
+                
+                <p>Xbox Cloud Gaming is Microsoft's game streaming service that lets you play Xbox games without downloading them to a console or PC. The games run on powerful servers in Microsoft data centers, with the video and audio streamed to your device while your inputs are sent back to the servers.</p>
+                
+                <p>Key features include:</p>
+                
+                <ul>
+                    <li><strong>No Downloads Required:</strong> Play games instantly without waiting for installations</li>
+                    <li><strong>Cross-Platform Play:</strong> Continue your progress across devices</li>
+                    <li><strong>Extensive Library:</strong> Hundreds of games available to stream</li>
+                    <li><strong>Progressive Enhancements:</strong> 1080p resolution at 60fps with plans for 4K streaming</li>
+                    <li><strong>Touch Controls:</strong> Many games support touchscreen controls on mobile</li>
+                </ul>
+                
+                
+                
+                <h2>Supported Devices and Requirements</h2>
+                
+                <h3>Compatible Devices</h3>
+                
+                <p>Xbox Cloud Gaming works on a wide range of devices:</p>
+                
+                <ul>
+                    <li><strong>Android Phones/Tablets:</strong> Via Xbox Game Pass app (Android 6.0 or later)</li>
+                    <li><strong>iPhone/iPad:</strong> Through Safari browser at xbox.com/play</li>
+                    <li><strong>Windows PCs:</strong> Via Microsoft Edge, Chrome, or Safari browsers</li>
+                    <li><strong>Mac:</strong> Through Safari or Chrome browsers</li>
+                    <li><strong>Smart TVs:</strong> Select Samsung Smart TVs have native app support</li>
+                    <li><strong>Xbox Consoles:</strong> Stream games without installing them</li>
+                </ul>
+                
+                <h3>Internet Requirements</h3>
+                
+                <p>For optimal performance, Microsoft recommends:</p>
+                
+                <ul>
+                    <li><strong>Minimum:</strong> 10 Mbps down (5GHz WiFi or mobile data)</li>
+                    <li><strong>Recommended:</strong> 20 Mbps down on 5GHz WiFi</li>
+                    <li><strong>Best Experience:</strong> Wired Ethernet connection with 50+ Mbps</li>
+                    <li><strong>Data Usage:</strong> Approximately 2.4GB per hour at 1080p</li>
+                </ul>
+                
+                <h2>Getting Started with Cloud Gaming</h2>
+                
+                <h3>1. Subscribe to Game Pass Ultimate</h3>
+                
+                <p>Cloud gaming is included with an Xbox Game Pass Ultimate subscription ($14.99/month). This also gives you access to:</p>
+                
+                <ul>
+                    <li>Hundreds of downloadable games on console and PC</li>
+                    <li>EA Play membership</li>
+                    <li>Xbox Live Gold for online multiplayer</li>
+                    <li>Exclusive member discounts</li>
+                </ul>
+                
+                <h3>2. Set Up Your Controller</h3>
+                
+                <p>While some games support touch controls, for the best experience you'll want to use a compatible controller:</p>
+                
+                <ul>
+                    <li><strong>Xbox Wireless Controller:</strong> Connects via Bluetooth to mobile devices</li>
+                    <li><strong>DualShock 4:</strong> Works with Android and iOS devices</li>
+                    <li><strong>Razer Kishi:</strong> Mobile gamepad that attaches to your phone</li>
+                    <li><strong>Backbone One:</strong> Another excellent mobile controller option</li>
+                </ul>
+                
+                
+                
+                <h3>3. Launch and Play</h3>
+                
+                <p>The process varies slightly by device:</p>
+                
+                <ul>
+                    <li><strong>Android:</strong> Open Xbox Game Pass app, select game, and play</li>
+                    <li><strong>iOS:</strong> Visit xbox.com/play in Safari, add to home screen as web app</li>
+                    <li><strong>PC/Mac:</strong> Visit xbox.com/play in supported browser</li>
+                    <li><strong>Samsung TVs:</strong> Open the Xbox Game Pass app</li>
+                </ul>
+                
+                <h2>Best Games for Cloud Gaming</h2>
+                
+                <p>While hundreds of games are available, these are particularly well-suited for streaming:</p>
+                
+                <h3>1. Halo Infinite</h3>
+                
+                <p>The flagship Xbox shooter plays surprisingly well over cloud, with responsive controls that make competitive multiplayer viable.</p>
+                
+                <h3>2. Forza Horizon 5</h3>
+                
+                <p>Microsoft's streaming tech handles this visually stunning racing game remarkably well, with minimal latency.</p>
+                
+                <h3>3. Minecraft Dungeons</h3>
+                
+                <p>The action-RPG's simpler controls make it perfect for touchscreen play on mobile devices.</p>
+                
+                <h3>4. Psychonauts 2</h3>
+                
+                <p>This platformer's forgiving timing works well with the slight input delay inherent to streaming.</p>
+                
+                <h3>5. Sea of Thieves</h3>
+                
+                <p>Sail the high seas with friends, even on devices that couldn't normally run this demanding game.</p>
+                
+               
+                
+                <h2>Advanced Tips for Better Performance</h2>
+                
+                <h3>1. Optimize Your Network</h3>
+                
+                <p>For the best streaming quality:</p>
+                
+                <ul>
+                    <li>Use 5GHz WiFi whenever possible</li>
+                    <li>Position yourself close to your router</li>
+                    <li>Prioritize your streaming device in router QoS settings</li>
+                    <li>Consider a mesh network for whole-home coverage</li>
+                </ul>
+                
+                <h3>2. Adjust Streaming Settings</h3>
+                
+                <p>In the Xbox Game Pass app settings, you can:</p>
+                
+                <ul>
+                    <li>Enable "Allow higher data usage" for better quality</li>
+                    <li>Toggle between performance and visual quality modes</li>
+                    <li>Check your network statistics to identify issues</li>
+                </ul>
+                
+                <h3>3. Use a Wired Connection</h3>
+                
+                <p>For stationary devices like PCs, use an Ethernet connection:</p>
+                
+                <ul>
+                    <li>More stable than WiFi with lower latency</li>
+                    <li>Consistent bandwidth without interference</li>
+                    <li>USB Ethernet adapters work well for devices without built-in ports</li>
+                </ul>
+                
+                <h2>The Future of Xbox Cloud Gaming</h2>
+                
+                <p>Microsoft continues to invest heavily in cloud gaming technology, with several exciting developments on the horizon:</p>
+                
+                <h3>1. 4K Streaming</h3>
+                
+                <p>Microsoft has announced plans to bring 4K resolution streaming to Xbox Cloud Gaming, matching the visual fidelity of local console play.</p>
+                
+                <h3>2. Keyboard and Mouse Support</h3>
+                
+                <p>Expanding beyond controller input will make more PC-centric games viable on cloud platforms.</p>
+                
+                <h3>3. Expanded Device Support</h3>
+                
+                <p>Expect native apps for more smart TVs and streaming devices beyond the current Samsung partnership.</p>
+                
+                <h3>4. Dedicated Streaming Devices</h3>
+                
+                <p>Rumors suggest Microsoft may release an inexpensive streaming stick or dongle to make cloud gaming even more accessible.</p>
+                
+                <h3>5. Improved Latency</h3>
+                
+                <p>New compression algorithms and expanded server locations will continue to reduce input lag.</p>
+                
+                
+                
+                <h2>Is Cloud Gaming Right for You?</h2>
+                
+                <p>Xbox Cloud Gaming offers incredible convenience but has some limitations to consider:</p>
+                
+                <h3>Best For:</h3>
+                
+                <ul>
+                    <li>Gamers who want to play anywhere without being tied to a console</li>
+                    <li>Those with limited storage space on their devices</li>
+                    <li>Players who want to try games before downloading them</li>
+                    <li>Anyone who wants access to Xbox games without buying the hardware</li>
+                </ul>
+                
+                <h3>Limitations:</h3>
+                
+                <ul>
+                    <li>Requires a stable, high-speed internet connection</li>
+                    <li>Some latency-sensitive games (like competitive shooters) may feel slightly delayed</li>
+                    <li>Visual quality isn't quite as sharp as native 4K on Xbox Series X</li>
+                    <li>Data usage can be high for those with capped internet plans</li>
+                </ul>
+                
+                <h2>Final Thoughts</h2>
+                
+                <p>Xbox Cloud Gaming represents a significant leap forward in making high-quality gaming experiences more accessible than ever before. While it may not completely replace traditional console gaming for hardcore enthusiasts, it provides an incredibly valuable option for playing when away from your console or for those who don't want to invest in expensive hardware.</p>
+                
+                <p>As internet infrastructure continues to improve globally and Microsoft enhances its streaming technology, cloud gaming will only become more compelling. For Game Pass Ultimate subscribers, it's an incredible bonus feature that genuinely expands when, where, and how you can enjoy your favorite games.</p>
+                
+                <p>Whether you're commuting, traveling, or just want to play in a different room without moving your console, Xbox Cloud Gaming makes it possible to take your Xbox experience with you wherever you go.</p>
+                
+                <div class="mt-12 bg-gray-900/50 rounded-xl p-6 border border-green-600/30">
+                    <h3 class="text-xl font-bold text-white mb-4">Ready to Experience Cloud Gaming?</h3>
+                    <p class="text-gray-300 mb-4">Get Xbox Game Pass Ultimate with instant access to cloud gaming. Purchase your subscription code now and receive it via email immediately!</p>
+                   
+                </div>
+            </div>
+        </article>
+        
+        <!-- Newsletter -->
+        <section class="py-16 bg-gradient-to-b from-black to-green-900/10 mt-12">
+            <div class="container mx-auto px-4">
+                <div class="max-w-2xl mx-auto bg-gray-900/50 rounded-xl p-8 md:p-12 border border-green-600/30 text-center">
+                    <h2 class="text-3xl font-bold mb-4 text-white">
+                        Get Exclusive <span class="text-green-400">Deals</span>
+                    </h2>
+                    <p class="text-gray-400 mb-6">
+                        Subscribe to our newsletter and be the first to know about new products, special offers, and Xbox news.
+                    </p>
+                    <form class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+                        <input type="email" placeholder="Your email address" class="flex-grow bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-green-500">
+                        <button type="submit" class="btn-accent font-bold py-3 px-6 rounded-lg whitespace-nowrap">
+                            Subscribe
+                        </button>
+                    </form>
+                    <p class="text-gray-500 text-xs mt-4">
+                        We respect your privacy. Unsubscribe at any time.
+                    </p>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="bg-black/90 border-t border-green-900/30 pt-12 pb-6">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <a href="/" class="flex items-center">
+                    <img src="/images/logo.png" alt="Xbox Logo" class="h-12 mb-4">
+                </a>
+                    <p class="text-gray-400 mb-4">
+                        Your trusted source for Xbox gift cards and digital content. Instant delivery, competitive prices.
+                    </p>
+                </div>
+                
+                <div>
+                    <h3 class="text-white font-bold text-lg mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/" class="text-gray-400 hover:text-green-400">Home</a></li>
+                        <li><a href="/shop/" class="text-gray-400 hover:text-green-400">Shop</a></li>
+                        <li><a href="/blog/" class="text-gray-400 hover:text-green-400">Blog</a></li>
+                        <li><a href="/about/" class="text-gray-400 hover:text-green-400">About Us</a></li>
+                        <li><a href="/contact/" class="text-gray-400 hover:text-green-400">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-white font-bold text-lg mb-4">Support</h3>
+                    <ul class="space-y-2">                        
+                        <li><a href="/cookies" class="text-gray-400 hover:text-green-400">Cookies Policy</a></li>
+                        <li><a href="/privacy/" class="text-gray-400 hover:text-green-400">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="text-gray-400 hover:text-green-400">Terms of Service</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-white font-bold text-lg mb-4">Contact Us</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center text-gray-400">
+                            <i class="fas fa-map-marker-alt mr-2 text-green-400"></i>
+                            490 Chem. de Vassan, Val-d'Or, QC J9P 0C1, Canada
+                        </li>
+                        <li class="flex items-center text-gray-400">
+                            <i class="fas fa-phone-alt mr-2 text-green-400"></i>
+                            +1 (819) 824-3146
+                        </li>
+                        <li class="flex items-center text-gray-400">
+                            <i class="fas fa-envelope mr-2 text-green-400"></i>
+                            info@xboxcardshop.com
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-green-900/30 pt-6 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-500 text-sm mb-4 md:mb-0">
+                    &copy; 2025 XboxCardShop. All rights reserved.
+                </p>
+                <p class="text-gray-500 text-sm">
+                    We are not an affiliate agency. All products are sold independently through our platform.
+                </p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const hamburger = document.querySelector('.hamburger');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('open');
+            hamburger.classList.toggle('open');
+        });
+
+        document.getElementById('mobile-menu-close').addEventListener('click', () => {
+            mobileMenu.classList.remove('open');
+            hamburger.classList.remove('open');
+        });
+
+        // Check login status and update UI
+        function checkLoginStatus() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            const accountNavItem = document.getElementById('account-nav-item');
+            const userIcon = document.getElementById('user-icon');
+            const loginIcon = document.getElementById('login-icon');
+            const mobileAccountLink = document.getElementById('mobile-account-link');
+            const mobileLoginLink = document.getElementById('mobile-login-link');
+            
+            if (isLoggedIn) {
+                if (accountNavItem) accountNavItem.classList.remove('hidden');
+                if (userIcon) userIcon.classList.remove('hidden');
+                if (loginIcon) loginIcon.classList.add('hidden');
+                if (mobileAccountLink) mobileAccountLink.classList.remove('hidden');
+                if (mobileLoginLink) mobileLoginLink.classList.add('hidden');
+            } else {
+                if (accountNavItem) accountNavItem.classList.add('hidden');
+                if (userIcon) userIcon.classList.add('hidden');
+                if (loginIcon) loginIcon.classList.remove('hidden');
+                if (mobileAccountLink) mobileAccountLink.classList.add('hidden');
+                if (mobileLoginLink) mobileLoginLink.classList.remove('hidden');
+            }
+        }
+
+        // Initialize cart if not exists
+        if (!localStorage.getItem('cart')) {
+            localStorage.setItem('cart', JSON.stringify([]));
+        }
+
+        // Update cart count
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart'));
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            
+            document.getElementById('cart-count').textContent = totalItems;
+            document.getElementById('mobile-cart-count').textContent = totalItems;
+        }
+
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            checkLoginStatus();
+            updateCartCount();
+            
+            // GSAP Animations
+            gsap.from(".logo-font", {
+                duration: 1,
+                y: -50,
+                opacity: 0,
+                ease: "power3.out"
+            });
+            
+            gsap.from(".nav-link", {
+                duration: 1,
+                y: -50,
+                opacity: 0,
+                stagger: 0.1,
+                ease: "power3.out",
+                delay: 0.3
+            });
+            
+            gsap.from("h1", {
+                duration: 1,
+                y: 50,
+                opacity: 0,
+                ease: "power3.out",
+                delay: 0.5
+            });
+            
+            gsap.from(".blog-header-image", {
+                duration: 1,
+                scale: 0.9,
+                opacity: 0,
+                ease: "power3.out",
+                delay: 0.7
+            });
+            
+            gsap.from(".blog-content h2", {
+                duration: 0.8,
+                x: -20,
+                opacity: 0,
+                stagger: 0.1,
+                ease: "power3.out",
+                scrollTrigger: {
+                    trigger: ".blog-content",
+                    start: "top 60%"
+                }
+            });
+        });
+    </script>
+</body>
+</html>

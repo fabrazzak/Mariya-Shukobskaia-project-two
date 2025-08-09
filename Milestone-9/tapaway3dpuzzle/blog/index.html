@@ -1,0 +1,713 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+<link rel="shortcut icon" href="/assets/images/logo.webp" type="image/x-icon">
+<link rel="canonical" href="https://tapaway3dpuzzle.com/blog/" />
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <meta name="description" content="Tap Away 3D Puzzle: Train your brain with immersive 3D puzzles! Solve spatial challenges, unlock stunning worlds, and sharpen your mind. Free download!">
+    <meta name="keywords" content="3D puzzle game, brain game, mobile game, puzzle strategy, Tap Away blog">
+    <title>Blog | Tap Away 3D Puzzle - Game News & Tips</title>
+    
+    <!-- Tailwind with custom config -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        cosmic: '#0f0e17',
+                        nebula: '#6246ea',
+                        starlight: '#eebbc3',
+                        void: '#010101',
+                        quantum: '#7f5af0'
+                    },
+                    fontFamily: {
+                        sans: ['"Space Grotesk"', 'sans-serif'],
+                        display: ['"Bai Jamjuree"', 'sans-serif']
+                    },
+                    animation: {
+                        'float': 'float 8s ease-in-out infinite',
+                        'pulse-glow': 'pulse-glow 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'text-gradient': 'text-gradient 6s ease infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-5%)' }
+                        },
+                        'pulse-glow': {
+                            '0%, 100%': { 'box-shadow': '0 0 0 0 rgba(126, 58, 242, 0.7)' },
+                            '70%': { 'box-shadow': '0 0 0 20px rgba(126, 58, 242, 0)' }
+                        },
+                        'text-gradient': {
+                            '0%, 100%': { 'background-position': '0% 50%' },
+                            '50%': { 'background-position': '100% 50%' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bai+Jamjuree:wght@600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Three.js Import -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.10.4/ScrollTrigger.min.js"></script>
+    
+    <style>
+        :root {
+            --text-primary: rgba(255, 255, 255, 0.92);
+            --text-secondary: rgba(255, 255, 255, 0.6);
+        }
+        
+        html {
+            background-color: #010101;
+            color: var(--text-primary);
+            scroll-behavior: smooth;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, #7f5af0 0%, #eebbc3 50%, #6246ea 100%);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: text-gradient 6s ease infinite;
+        }
+        
+        .glass-effect {
+            background: rgba(15, 14, 23, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        
+        .grid-pattern {
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        
+        .holographic-effect {
+            background: linear-gradient(135deg, rgba(126, 58, 242, 0.15) 0%, rgba(126, 58, 242, 0) 50%, rgba(126, 58, 242, 0.15) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .holographic-effect::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(126, 58, 242, 0) 0%,
+                rgba(126, 58, 242, 0) 35%,
+                rgba(126, 58, 242, 0.1) 45%,
+                rgba(126, 58, 242, 0) 55%,
+                rgba(126, 58, 242, 0) 100%
+            );
+            transform: rotate(30deg);
+            animation: shine 6s infinite;
+        }
+        
+        @keyframes shine {
+            0% { transform: translateX(-100%) rotate(30deg); }
+            20% { transform: translateX(100%) rotate(30deg); }
+            100% { transform: translateX(100%) rotate(30deg); }
+        }
+        
+        .blog-card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .blog-card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(98, 70, 234, 0.1), 0 10px 10px -5px rgba(98, 70, 234, 0.04);
+        }
+        
+        .featured-post {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .featured-post::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, rgba(1, 1, 1, 0.1) 0%, rgba(1, 1, 1, 0.8) 100%);
+        }
+        
+        .post-tag {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .post-tag::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, #7f5af0, #6246ea);
+            z-index: -1;
+            transform: scaleX(0);
+            transform-origin: right;
+            transition: transform 0.3s ease;
+        }
+        
+        .post-tag:hover::before {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+        
+        .article-content p {
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+        
+        .article-content h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 2rem 0 1rem;
+            color: #eebbc3;
+        }
+        
+        .article-content ul {
+            list-style-type: disc;
+            padding-left: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .article-content a {
+            color: #7f5af0;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased overflow-x-hidden grid-pattern">
+    <!-- 3D Background Canvas -->
+    <div id="threejs-bg" class="fixed inset-0 -z-10 opacity-40"></div>
+    
+    <!-- Particle Overlay -->
+    <div id="particles-js" class="fixed inset-0 -z-20"></div>
+    
+    <!-- Radial Gradient -->
+    <div class="fixed inset-0 -z-30 bg-radial-gradient from-nebula/10 to-void pointer-events-none"></div>
+    
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-50 glass-effect py-4 px-6">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+           <a href="/" class="flex items-center group">
+                <img src="/assets/images/logo.png" class=" h-16 rounded-full mr-2" alt="logo"/>                
+            </a>
+            
+            <div class="hidden md:flex space-x-8">
+                <a href="/" class="text-starlight hover:text-white transition-all duration-300 relative group">
+                    Home
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-nebula group-hover:w-full transition-all duration-300"></span>
+                </a>
+                <a href="/how-to-play/" class="text-starlight hover:text-white transition-all duration-300 relative group">
+                    How to Play
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-nebula group-hover:w-full transition-all duration-300"></span>
+                </a>
+                <a href="/responsible-gaming/" class="text-starlight hover:text-white transition-all duration-300 relative group">
+                    Responsible Gaming
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-nebula group-hover:w-full transition-all duration-300"></span>
+                </a>
+                <a href="/blog/" class="text-nebula hover:text-white transition-all duration-300 relative group">
+                    Blog
+                    <span class="absolute bottom-0 left-0 w-full h-0.5 bg-nebula"></span>
+                </a>
+                <a href="/contact/" class="text-starlight hover:text-white transition-all duration-300 relative group">
+                    Contact
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-nebula group-hover:w-full transition-all duration-300"></span>
+                </a>
+            </div>
+            
+            <button id="mobile-menu-button" class="md:hidden text-starlight">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+                </svg>
+            </button>
+        </div>
+    </nav>
+    
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="fixed inset-0 z-40 bg-void/95 backdrop-blur-lg flex items-center justify-center hidden">
+        <div class="text-center">
+            <ul class="space-y-8 text-2xl">
+                <li><a href="/" class="text-starlight hover:text-white transition">Home</a></li>
+                <li><a href="/how-to-play/" class="text-starlight hover:text-white transition">How to Play</a></li>
+                <li><a href="/responsible-gaming/" class="text-starlight hover:text-white transition">Responsible Gaming</a></li>
+                <li><a href="/blog/" class="text-nebula hover:text-white transition">Blog</a></li>
+                <li><a href="/contact/" class="text-starlight hover:text-white transition">Contact</a></li>
+            </ul>
+        </div>
+        <button id="close-mobile-menu" class="absolute top-8 right-8 text-starlight">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+        </button>
+    </div>
+    
+    <!-- Blog Header -->
+    <header class="relative pt-32 pb-20 px-6">
+        <div class="max-w-7xl mx-auto text-center relative z-10">
+            <h1 class="text-5xl md:text-7xl font-display font-bold mb-6">
+                <span class="gradient-text">Tap Away</span> Blog
+            </h1>
+            <p class="text-xl md:text-2xl text-starlight max-w-3xl mx-auto">
+                Discover the latest news, game updates, strategy guides, and behind-the-scenes insights
+            </p>
+        </div>
+        
+        <!-- Floating abstract shapes -->
+        <div class="absolute top-1/4 left-10 w-40 h-40 rounded-full bg-nebula/10 blur-xl -z-10 animate-float"></div>
+        <div class="absolute bottom-1/4 right-20 w-60 h-60 rounded-full bg-starlight/10 blur-xl -z-10 animate-float animation-delay-2000"></div>
+    </header>
+    
+    <!-- Featured Post -->
+    <section class="px-6 pb-20 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="glass-effect rounded-3xl overflow-hidden featured-post">
+                <div class="grid grid-cols-1 lg:grid-cols-2">
+                    <div class="relative h-64 lg:h-auto">
+                        <img src="/assets/images/featured-blog-post.jpg" alt="Featured Blog Post" class="w-full h-full object-cover">
+                    </div>
+                    
+                    <div class="p-10 lg:p-16 relative z-10">
+                        <div class="flex items-center space-x-4 mb-6">
+                            <span class="px-3 py-1 rounded-full text-xs font-bold bg-nebula/10 text-nebula">FEATURED</span>
+                            <span class="text-starlight/80 text-sm">June 15, 2025</span>
+                        </div>
+                        
+                        <h2 class="text-3xl md:text-4xl font-display font-bold mb-6">
+                            <a href="/blog/mastering-advanced-levels/" class="hover:text-starlight transition">Mastering Advanced Levels: Pro Strategies for Tap Away 3D</a>
+                        </h2>
+                        
+                        <p class="text-starlight mb-8">
+                            Discover expert techniques to conquer the most challenging levels in Tap Away 3D. Learn how to analyze cube structures, predict block movements, and utilize power-ups effectively to become a puzzle master.
+                        </p>                      
+                       
+                        
+                        <a href="/blog/mastering-advanced-levels/" class="inline-flex items-center text-nebula hover:text-white group transition">
+                            <span class="mr-2">Read Full Article</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 group-hover:translate-x-1 transition-transform" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Blog Posts Grid -->
+    <section class="px-6 pb-28 relative">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-display font-bold mb-6">
+                    Latest <span class="gradient-text">Articles</span>
+                </h2>
+                <p class="text-starlight max-w-2xl mx-auto">
+                    Explore our collection of game guides, developer insights, and community highlights
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Blog Post 1 -->
+                <article class="glass-effect rounded-2xl overflow-hidden blog-card-hover">
+                    <a href="/blog/behind-the-scenes-development/" class="block">
+                        <div class="h-64 overflow-hidden">
+                            <img src="/assets/images/cognitive.png" alt="Behind the Scenes Development" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                        </div>
+                        
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="text-starlight/80 text-sm">May 28, 2025</span>
+                                <span class="px-2 py-1 rounded text-xs font-bold bg-nebula/10 text-nebula">DEVELOPMENT</span>
+                            </div>
+                            
+                            <h3 class="text-xl font-bold mb-4 hover:text-starlight transition">
+                                Behind the Scenes: The Making of Tap Away 3D
+                            </h3>
+                            
+                            <p class="text-starlight mb-4 line-clamp-2">
+                                Take an exclusive look at how our team designed the unique 3D puzzle mechanics and the challenges we faced in creating the perfect balance between difficulty and fun.
+                            </p>
+                            
+                            <div class="flex items-center text-nebula hover:text-white transition">
+                                <span class="text-sm font-medium mr-2">Read More</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                        </div>
+                    </a>
+                </article>
+                
+                <!-- Blog Post 2 -->
+                <article class="glass-effect rounded-2xl overflow-hidden blog-card-hover">
+                    <a href="/blog/new-update-powerups/" class="block">
+                        <div class="h-48 overflow-hidden">
+                            <img src="/assets/images/blog-post-2.jpg" alt="New Power-Ups Update" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                        </div>
+                        
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="text-starlight/80 text-sm">April 15, 2025</span>
+                                <span class="px-2 py-1 rounded text-xs font-bold bg-nebula/10 text-nebula">UPDATE</span>
+                            </div>
+                            
+                            <h3 class="text-xl font-bold mb-4 hover:text-starlight transition">
+                                Version 3.0: Introducing Quantum Power-Ups
+                            </h3>
+                            
+                            <p class="text-starlight mb-4 line-clamp-2">
+                                Our latest update brings revolutionary new power-ups that change how you solve puzzles. Learn about the gravity inversion and temporal rewind abilities in this detailed breakdown.
+                            </p>
+                            
+                            <div class="flex items-center text-nebula hover:text-white transition">
+                                <span class="text-sm font-medium mr-2">Read More</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                        </div>
+                    </a>
+                </article>
+                
+                <!-- Blog Post 3 -->
+                <article class="glass-effect rounded-2xl overflow-hidden blog-card-hover">
+                    <a href="/blog/community-spotlight/" class="block">
+                        <div class="h-48 overflow-hidden">
+                            <img src="/assets/images/blog-post-3.jpg" alt="Community Spotlight" class="w-full h-full object-cover hover:scale-105 transition-transform duration-500">
+                        </div>
+                        
+                        <div class="p-6">
+                            <div class="flex items-center justify-between mb-4">
+                                <span class="text-starlight/80 text-sm">March 3, 2025</span>
+                                <span class="px-2 py-1 rounded text-xs font-bold bg-nebula/10 text-nebula">COMMUNITY</span>
+                            </div>
+                            
+                            <h3 class="text-xl font-bold mb-4 hover:text-starlight transition">
+                                Community Spotlight: Meet Our Top Players
+                            </h3>
+                            
+                            <p class="text-starlight mb-4 line-clamp-2">
+                                We interviewed three of our most dedicated players to learn their strategies, favorite levels, and what keeps them coming back to Tap Away 3D day after day.
+                            </p>
+                            
+                            <div class="flex items-center text-nebula hover:text-white transition">
+                                <span class="text-sm font-medium mr-2">Read More</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                </svg>
+                            </div>
+                        </div>
+                    </a>
+                </article>
+            </div>
+            
+           
+        </div>
+        
+        <!-- Floating abstract shapes -->
+        <div class="absolute top-1/4 left-10 w-40 h-40 rounded-full bg-nebula/10 blur-xl -z-10 animate-float animation-delay-1000"></div>
+        <div class="absolute bottom-1/4 right-20 w-60 h-60 rounded-full bg-starlight/10 blur-xl -z-10 animate-float animation-delay-3000"></div>
+    </section>
+    
+    <!-- Newsletter -->
+    <section class="px-6 pb-28 relative">
+        <div class="max-w-4xl mx-auto glass-effect rounded-3xl p-10 md:p-16 text-center">
+            <div class="max-w-2xl mx-auto">
+                <h2 class="text-3xl md:text-4xl font-display font-bold mb-6">
+                    Stay <span class="gradient-text">Updated</span>
+                </h2>
+                <p class="text-starlight mb-8">
+                    Subscribe to our newsletter for exclusive content, early access to updates, and special offers
+                </p>
+                
+                <form class="flex flex-col sm:flex-row gap-4">
+                    <input type="email" placeholder="Your email address" class="flex-grow px-6 py-4 rounded-full bg-void/50 border border-starlight/20 focus:border-nebula focus:ring-nebula text-white placeholder-starlight/50 outline-none transition">
+                    <button type="submit" class="px-8 py-4 rounded-full bg-gradient-to-r from-nebula to-quantum text-white font-bold hover:shadow-xl hover:shadow-nebula/30 transition-all transform hover:-translate-y-1">
+                        Subscribe
+                    </button>
+                </form>
+                
+                <p class="text-xs text-starlight/50 mt-4">
+                    We respect your privacy. Unsubscribe at any time.
+                </p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="bg-cosmic border-t border-cosmic/50 py-16 px-6">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+                <div>
+                       <a href="/" class="flex items-center group pb-4">
+                <img src="/assets/images/logo.png" class="h-16 rounded-full mr-2" alt="logo"/>                
+            </a>
+                    <p class="text-starlight">
+                        The future of 3D puzzle gaming. Challenge your mind with our immersive spatial puzzles.
+                    </p>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-6 text-white">Navigation</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/" class="text-starlight hover:text-white transition">Home</a></li>
+                        <li><a href="/how-to-play/" class="text-starlight hover:text-white transition">How to Play</a></li>
+                        <li><a href="/responsible-gaming/" class="text-starlight hover:text-white transition">Responsible Gaming</a></li>
+                        <li><a href="/blog/" class="text-nebula hover:text-white transition">Blog</a></li>
+                        <li><a href="/contact/" class="text-starlight hover:text-white transition">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-6 text-white">Legal</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/privacy/" class="text-starlight hover:text-white transition">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="text-starlight hover:text-white transition">Terms of Service</a></li>
+                        <li><a href="/cookies/" class="text-starlight hover:text-white transition">Cookies Policy</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-6 text-white">Contact</h3>
+                    <address class="not-italic text-starlight">
+                        <p class="mb-3">Office Park, Barnfield Way</p>
+                        <p class="mb-3">5A Millennium, Preston</p>
+                        <p class="mb-3">PR2 5DB, United Kingdom</p>
+                        <p class="mb-3">+44 1704 567557</p>
+                        <p>info@tapaway3dpuzzle.com</p>
+                    </address>
+                </div>
+            </div>
+            
+            <div class="border-t border-starlight/10 mt-16 pt-8 text-center text-starlight/50">
+                <p>&copy; 2025 Kusya Games. All rights reserved. Tap Away 3D Puzzle is a trademark of Kusya Games.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Cookie Consent -->
+    <div id="cookie-consent" class="fixed bottom-6 left-6 right-6 max-w-4xl mx-auto glass-effect rounded-2xl p-6 shadow-xl z-50 hidden">
+        <div class="flex flex-col md:items-center justify-center text-center">
+            <div class="mb-4 md:mb-0 md:mr-6">
+                <h4 class="font-bold mb-2">We Value Your Privacy</h4>
+                <p class="text-sm text-starlight">
+                    We use cookies to enhance your experience. By continuing, you agree to our use of cookies.
+                </p>
+            </div>
+            <div class="flex space-x-3 pt-4">
+                <button id="accept-cookies" class="px-4 py-2 rounded-full bg-nebula text-white text-sm font-bold hover:bg-quantum transition">
+                    Accept
+                </button>
+                <button id="decline-cookies" class="px-4 py-2 rounded-full border border-starlight/30 text-starlight text-sm font-bold hover:bg-starlight/10 transition">
+                    Decline
+                </button>
+                <a href="/cookies/" class="px-4 py-2 rounded-full text-nebula text-sm font-bold hover:underline">
+                    Learn More
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Scripts -->
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            document.getElementById('mobile-menu').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        document.getElementById('close-mobile-menu').addEventListener('click', function() {
+            document.getElementById('mobile-menu').classList.add('hidden');
+            document.body.style.overflow = '';
+        });
+        
+        // Cookie consent
+        if (!localStorage.getItem('cookieConsent')) {
+            setTimeout(() => {
+                document.getElementById('cookie-consent').classList.remove('hidden');
+            }, 2000);
+        }
+        
+        document.getElementById('accept-cookies').addEventListener('click', function() {
+            localStorage.setItem('cookieConsent', 'accepted');
+            document.getElementById('cookie-consent').classList.add('hidden');
+        });
+        
+        document.getElementById('decline-cookies').addEventListener('click', function() {
+            localStorage.setItem('cookieConsent', 'declined');
+            document.getElementById('cookie-consent').classList.add('hidden');
+        });
+        
+        // GSAP animations
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Animate elements on scroll
+        gsap.utils.toArray('.glass-effect').forEach((element, i) => {
+            gsap.from(element, {
+                scrollTrigger: {
+                    trigger: element,
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                },
+                y: 50,
+                opacity: 0,
+                duration: 0.8,
+                delay: i * 0.1,
+                ease: "power2.out"
+            });
+        });
+        
+        // Animate blog cards individually
+        gsap.utils.toArray('.blog-card-hover').forEach((card, i) => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top 85%",
+                    toggleActions: "play none none none"
+                },
+                y: 30,
+                opacity: 0,
+                duration: 0.6,
+                delay: i * 0.15,
+                ease: "back.out(1.2)"
+            });
+        });
+    </script>
+    
+    <!-- Three.js Background -->
+    <script>
+        // Initialize Three.js scene
+        const initThreeJS = () => {
+            const container = document.getElementById('threejs-bg');
+            if (!container) return;
+            
+            // Scene setup
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            container.appendChild(renderer.domElement);
+            
+            // Create floating geometry
+            const geometries = [];
+            const geometryTypes = [
+                new THREE.IcosahedronGeometry(1, 0),
+                new THREE.OctahedronGeometry(1, 0),
+                new THREE.TetrahedronGeometry(1, 0),
+                new THREE.DodecahedronGeometry(1, 0)
+            ];
+            
+            // Create 20 random floating shapes
+            for (let i = 0; i < 20; i++) {
+                const geometryType = geometryTypes[Math.floor(Math.random() * geometryTypes.length)];
+                const geometry = geometryType.clone();
+                const material = new THREE.MeshPhongMaterial({
+                    color: new THREE.Color(
+                        Math.random() * 0.2 + 0.6,
+                        Math.random() * 0.2 + 0.2,
+                        Math.random() * 0.2 + 0.7
+                    ),
+                    transparent: true,
+                    opacity: 0.15,
+                    shininess: 100,
+                    wireframe: true
+                });
+                
+                const mesh = new THREE.Mesh(geometry, material);
+                
+                // Random position and scale
+                mesh.position.x = Math.random() * 20 - 10;
+                mesh.position.y = Math.random() * 20 - 10;
+                mesh.position.z = Math.random() * 10 - 20;
+                
+                const scale = 2 + Math.random() * 3;
+                mesh.scale.set(scale, scale, scale);
+                
+                // Store original positions for animation
+                mesh.userData = {
+                    originalX: mesh.position.x,
+                    originalY: mesh.position.y,
+                    speedX: Math.random() * 0.02 - 0.01,
+                    speedY: Math.random() * 0.02 - 0.01,
+                    rotationSpeedX: Math.random() * 0.01,
+                    rotationSpeedY: Math.random() * 0.01
+                };
+                
+                scene.add(mesh);
+                geometries.push(mesh);
+            }
+            
+            // Add lights
+            const ambientLight = new THREE.AmbientLight(0x404040);
+            scene.add(ambientLight);
+            
+            const directionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
+            directionalLight.position.set(1, 1, 1);
+            scene.add(directionalLight);
+            
+            // Camera position
+            camera.position.z = 5;
+            
+            // Animation loop
+            const animate = () => {
+                requestAnimationFrame(animate);
+                
+                // Animate geometries
+                geometries.forEach(geometry => {
+                    geometry.rotation.x += geometry.userData.rotationSpeedX;
+                    geometry.rotation.y += geometry.userData.rotationSpeedY;
+                    
+                    // Float in gentle patterns
+                    geometry.position.x = geometry.userData.originalX + Math.sin(Date.now() * 0.001) * 3;
+                    geometry.position.y = geometry.userData.originalY + Math.cos(Date.now() * 0.001) * 2;
+                });
+                
+                renderer.render(scene, camera);
+            };
+            
+            // Handle window resize
+            const handleResize = () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            };
+            
+            window.addEventListener('resize', handleResize);
+            
+            // Start animation
+            animate();
+        };
+        
+        // Initialize when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            initThreeJS();
+        });
+    </script>
+</body>
+</html>

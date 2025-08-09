@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+ <link rel="canonical" href="https://canadaleague.com/">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fortnite Coaching | Canada League</title>
+    <meta name="description"
+        content="Master Fortnite with professional coaching from Canada League. Improve your building, editing, and game sense with our expert coaches.">
+    <link rel="shortcut icon" href="/images/logo.png" type="image/x-icon">
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FF4D4D',
+                        secondary: '#3B82F6',
+                        dark: '#0F172A',
+                        light: '#F8FAFC',
+                        accent: '#F59E0B',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        gaming: ['"Press Start 2P"', 'cursive'],
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Press+Start+2P&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+</head>
+
+<body class="bg-dark text-light font-sans overflow-x-hidden">
+    <!-- Cookie Consent Banner -->
+    <div id="cookie-banner" class="fixed bottom-0 left-0 right-0 bg-dark border-t border-gray-800 p-4 z-50 hidden">
+        <div class="container mx-auto flex flex-col md:flex-row items-center justify-between">
+            <div class="mb-4 md:mb-0 md:mr-4">
+                <p class="text-sm">We use cookies to enhance your experience. By continuing to visit this site you agree
+                    to your use of cookies.</p>
+            </div>
+            <div class="flex flex-col sm:flex-row gap-2">
+                <button id="accept-cookies"
+                    class="bg-primary hover:bg-opacity-90 text-white px-4 py-2 rounded-md text-sm font-medium transition-all">
+                    Accept All
+                </button>
+                <button id="decline-cookies"
+                    class="bg-gray-700 hover:bg-gray-600 text-white px-4 py-2 rounded-md text-sm font-medium transition-all">
+                    Decline
+                </button>
+                <a href="/cookie-policy"
+                    class="bg-transparent hover:bg-gray-800 text-white px-4 py-2 rounded-md text-sm font-medium transition-all border border-gray-600 text-center">
+                    Learn More
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="bg-dark bg-opacity-90 backdrop-blur-md border-b border-gray-800 fixed w-full z-40">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center">
+                    <a href="/" class="flex items-center">
+                        <img src="/images/logo.png" alt="Canada League Logo" class="h-14 rounded-md mr-3">
+                    </a>
+                </div>
+
+                <div class="hidden lg:flex items-center space-x-8">
+                    <a href="/" class="text-light hover:text-primary transition-colors">Home</a>
+                    <a href="/#games" class="text-light hover:text-primary transition-colors">Games</a>
+                    <a href="/#coaches" class="text-light hover:text-primary transition-colors">Coaches</a>
+                    <a href="/#testimonials" class="text-light hover:text-primary transition-colors">Testimonials</a>
+                    <a href="/#pricing" class="text-light hover:text-primary transition-colors">Pricing</a>
+                </div>
+
+                <div class="flex items-center space-x-4">
+                    <div id="user-display" class="hidden items-center">
+                        <span id="username" class="mr-2 text-sm"></span>
+                        <button id="logout-btn" class="text-gray-400 hover:text-primary transition-colors text-sm">
+                            <i class="fas fa-sign-out-alt"></i>
+                        </button>
+                    </div>
+
+                    <button id="login-btn"
+                        class="bg-primary hover:bg-opacity-90 text-white px-4 py-2 rounded-md text-sm font-medium transition-all">
+                        Login / Register
+                    </button>
+
+                    <button id="mobile-menu-btn" class="lg:hidden text-gray-400 hover:text-white focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="lg:hidden hidden bg-dark border-t border-gray-800">
+            <div class="container mx-auto px-4 py-3 flex flex-col space-y-3">
+                <a href="/" class="text-light hover:text-primary transition-colors py-2">Home</a>
+                <a href="/#games" class="text-light hover:text-primary transition-colors py-2">Games</a>
+                <a href="/#coaches" class="text-light hover:text-primary transition-colors py-2">Coaches</a>
+                <a href="/#testimonials" class="text-light hover:text-primary transition-colors py-2">Testimonials</a>
+                <a href="/#pricing" class="text-light hover:text-primary transition-colors py-2">Pricing</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Game Banner Section -->
+    <section class="relative pt-32 pb-20 md:pb-32 overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-t from-dark to-transparent z-10"></div>
+        <div class="absolute inset-0 bg-black opacity-50"></div>
+        <img src="/images/fortnite.jpeg" alt="Fortnite" class="absolute inset-0 w-full h-full object-cover">
+        
+        <div class="container mx-auto px-4 relative z-20">
+            <div class="max-w-3xl">
+                <div class="flex items-center mb-4">
+                     <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                        Fortnite Coaching
+                    </h1>
+                </div>
+                <p class="text-xl text-gray-300 mb-8">
+                    Dominate the Battle Royale with expert building, editing, and game sense training from our professional Fortnite coaches.
+                </p>
+                <div class="flex flex-wrap gap-4">
+                    <a href="#coaches"
+                        class="bg-primary hover:bg-opacity-90 text-white px-6 py-3 rounded-md font-medium transition-all">
+                        View Coaches
+                    </a>
+                    <a href="#why-choose-us"
+                        class="bg-transparent hover:bg-gray-800 text-white px-6 py-3 rounded-md font-medium transition-all border border-gray-600">
+                        Why Fortnite?
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Why Fortnite Section -->
+    <section id="why-choose-us" class="py-16 bg-gray-900 bg-opacity-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Why Choose Fortnite Coaching?</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Build your skills to become a champion with personalized training from top players</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+                <div class="bg-gray-800 p-6 rounded-xl border border-gray-700">
+                    <div class="w-12 h-12 bg-primary bg-opacity-20 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-cubes text-primary text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Building & Editing</h3>
+                    <p class="text-gray-300">Master advanced building techniques, quick edits, and defensive strategies to outbuild opponents.</p>
+                </div>
+                
+                <div class="bg-gray-800 p-6 rounded-xl border border-gray-700">
+                    <div class="w-12 h-12 bg-primary bg-opacity-20 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-bullseye text-primary text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Aim & Weapon Mastery</h3>
+                    <p class="text-gray-300">Improve your aim, weapon selection, and loadout optimization for all combat scenarios.</p>
+                </div>
+                
+                <div class="bg-gray-800 p-6 rounded-xl border border-gray-700">
+                    <div class="w-12 h-12 bg-primary bg-opacity-20 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-chess text-primary text-xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2">Game Sense & Positioning</h3>
+                    <p class="text-gray-300">Develop superior game sense, rotation strategies, and end-game decision making.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fortnite Coaches Section -->
+    <section id="coaches" class="py-16">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Fortnite Professional Coaches</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Learn from the best Fortnite players and coaches</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Coach 1 -->
+                <div class="bg-gray-800 rounded-xl overflow-hidden border border-gray-700 hover:shadow-lg transition-all duration-300 coach-card">
+                    <div class="relative">
+                        <img src="/images/tyler-coach.jpg" alt="Coach Tyler" class="w-full h-64 object-cover">
+                        <div class="absolute top-4 right-4 bg-accent text-white text-xs font-bold px-2 py-1 rounded-full">
+                            Fortnite
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <h3 class="text-xl font-bold">Tyler "BuilderPro" Brown</h3>
+                                <p class="text-gray-400 text-sm">Pro Fortnite Player</p>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <span class="ml-1 font-medium">4.7</span>
+                            </div>
+                        </div>
+
+                        <p class="text-gray-300 text-sm mb-4">Competitive Fortnite player with multiple cash cup wins. Specializes in building, editing, and end-game strategies.</p>
+
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="bg-gray-700 text-gray-300 text-xs px-2 py-1 rounded">Building</span>
+                            <span class="bg-gray-700 text-gray-300 text-xs px-2 py-1 rounded">Editing</span>
+                            <span class="bg-gray-700 text-gray-300 text-xs px-2 py-1 rounded">Game Sense</span>
+                        </div>
+
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <span class="text-primary font-bold">$23/hr</span>
+                                <span class="text-gray-400 text-sm ml-1">Starting from</span>
+                            </div>
+                            <button class="book-now-btn bg-primary hover:bg-opacity-90 text-white px-4 py-2 rounded-md text-sm font-medium transition-all" data-coach="Tyler Brown">
+                                Book Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Coach 2 -->
+                <div class="bg-gray-800 rounded-xl overflow-hidden border border-gray-700 hover:shadow-lg transition-all duration-300 coach-card">
+                    <div class="relative">
+                        <img src="/images/sarah-coacha.jpg" alt="Coach Sarah" class="w-full h-64 object-cover">
+                        <div class="absolute top-4 right-4 bg-accent text-white text-xs font-bold px-2 py-1 rounded-full">
+                            Fortnite
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <h3 class="text-xl font-bold">Sarah "AimQueen" Johnson</h3>
+                                <p class="text-gray-400 text-sm">Aim Specialist</p>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <span class="ml-1 font-medium">4.9</span>
+                            </div>
+                        </div>
+
+                        <p class="text-gray-300 text-sm mb-4">Focuses exclusively on aim improvement with scientific training methods. 5+ years coaching experience.</p>
+
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="bg-gray-700 text-gray-300 text-xs px-2 py-1 rounded">Aim Training</span>
+                            <span class="bg-gray-700 text-gray-300 text-xs px-2 py-1 rounded">Flick Shots</span>
+                            <span class="bg-gray-700 text-gray-300 text-xs px-2 py-1 rounded">Tracking</span>
+                        </div>
+
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <span class="text-primary font-bold">$25/hr</span>
+                                <span class="text-gray-400 text-sm ml-1">Starting from</span>
+                            </div>
+                            <button class="book-now-btn bg-primary hover:bg-opacity-90 text-white px-4 py-2 rounded-md text-sm font-medium transition-all" data-coach="Sarah Johnson">
+                                Book Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Coach 3 -->
+                <div class="bg-gray-800 rounded-xl overflow-hidden border border-gray-700 hover:shadow-lg transition-all duration-300 coach-card">
+                    <div class="relative">
+                        <img src="/images/marcus-coach.jpg" alt="Coach Marcus" class="w-full h-64 object-cover">
+                        <div class="absolute top-4 right-4 bg-accent text-white text-xs font-bold px-2 py-1 rounded-full">
+                            Fortnite
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <h3 class="text-xl font-bold">Marcus "EndGame" Wilson</h3>
+                                <p class="text-gray-400 text-sm">Tournament Specialist</p>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <span class="ml-1 font-medium">4.8</span>
+                            </div>
+                        </div>
+
+                        <p class="text-gray-300 text-sm mb-4">Specializes in tournament preparation, end-game scenarios, and competitive meta strategies.</p>
+
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="bg-gray-700 text-gray-300 text-xs px-2 py-1 rounded">Tournaments</span>
+                            <span class="bg-gray-700 text-gray-300 text-xs px-2 py-1 rounded">End-Game</span>
+                            <span class="bg-gray-700 text-gray-300 text-xs px-2 py-1 rounded">Meta Strategies</span>
+                        </div>
+
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <span class="text-primary font-bold">$28/hr</span>
+                                <span class="text-gray-400 text-sm ml-1">Starting from</span>
+                            </div>
+                            <button class="book-now-btn bg-primary hover:bg-opacity-90 text-white px-4 py-2 rounded-md text-sm font-medium transition-all" data-coach="Marcus Wilson">
+                                Book Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Coach 4 -->
+                <div class="bg-gray-800 rounded-xl overflow-hidden border border-gray-700 hover:shadow-lg transition-all duration-300 coach-card">
+                    <div class="relative">
+                        <img src="/images/jessica-coach.webp" alt="Coach Jessica" class="w-full h-64 object-cover">
+                        <div class="absolute top-4 right-4 bg-accent text-white text-xs font-bold px-2 py-1 rounded-full">
+                            Fortnite
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <h3 class="text-xl font-bold">Jessica "EditQueen" Martinez</h3>
+                                <p class="text-gray-400 text-sm">Editing Specialist</p>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <span class="ml-1 font-medium">4.9</span>
+                            </div>
+                        </div>
+
+                        <p class="text-gray-300 text-sm mb-4">Focuses on advanced editing techniques, piece control, and creative edit courses to improve mechanics.</p>
+
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="bg-gray-700 text-gray-300 text-xs px-2 py-1 rounded">Editing</span>
+                            <span class="bg-gray-700 text-gray-300 text-xs px-2 py-1 rounded">Piece Control</span>
+                            <span class="bg-gray-700 text-gray-300 text-xs px-2 py-1 rounded">Creative Drills</span>
+                        </div>
+
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <span class="text-primary font-bold">$26/hr</span>
+                                <span class="text-gray-400 text-sm ml-1">Starting from</span>
+                            </div>
+                            <button class="book-now-btn bg-primary hover:bg-opacity-90 text-white px-4 py-2 rounded-md text-sm font-medium transition-all" data-coach="Jessica Martinez">
+                                Book Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Coach 5 -->
+                <div class="bg-gray-800 rounded-xl overflow-hidden border border-gray-700 hover:shadow-lg transition-all duration-300 coach-card">
+                    <div class="relative">
+                        <img src="/images/kevin-coach.webp" alt="Coach Kevin" class="w-full h-64 object-cover">
+                        <div class="absolute top-4 right-4 bg-accent text-white text-xs font-bold px-2 py-1 rounded-full">
+                            Fortnite
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <h3 class="text-xl font-bold">Kevin "ZoneMaster" Lee</h3>
+                                <p class="text-gray-400 text-sm">Rotation Specialist</p>
+                            </div>
+                            <div class="flex items-center">
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <span class="ml-1 font-medium">4.7</span>
+                            </div>
+                        </div>
+
+                        <p class="text-gray-300 text-sm mb-4">Specializes in zone rotations, loot paths, and macro decision making for consistent placements.</p>
+
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="bg-gray-700 text-gray-300 text-xs px-2 py-1 rounded">Rotations</span>
+                            <span class="bg-gray-700 text-gray-300 text-xs px-2 py-1 rounded">Positioning</span>
+                            <span class="bg-gray-700 text-gray-300 text-xs px-2 py-1 rounded">Macro Play</span>
+                        </div>
+
+                        <div class="flex justify-between items-center">
+                            <div>
+                                <span class="text-primary font-bold">$22/hr</span>
+                                <span class="text-gray-400 text-sm ml-1">Starting from</span>
+                            </div>
+                            <button class="book-now-btn bg-primary hover:bg-opacity-90 text-white px-4 py-2 rounded-md text-sm font-medium transition-all" data-coach="Kevin Lee">
+                                Book Now
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fortnite Testimonials -->
+    <section class="py-16 bg-gray-900 bg-opacity-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Fortnite Success Stories</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">What our students say about their Fortnite coaching experience</p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="bg-gray-800 rounded-xl p-6 border border-gray-700 testimonial-card">
+                    <div class="flex items-center mb-4">
+                        <img src="https://randomuser.me/api/portraits/men/22.jpg" alt="Ryan" class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-bold">Ryan Thompson</h4>
+                            <div class="flex">
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4">"Tyler's building drills helped me go from average to winning my first Arena match in just two weeks!"</p>
+                    <div class="flex items-center text-sm text-gray-400">
+                        <i class="fas fa-gamepad mr-2"></i>
+                        <span>Fortnite</span>
+                    </div>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="bg-gray-800 rounded-xl p-6 border border-gray-700 testimonial-card">
+                    <div class="flex items-center mb-4">
+                        <img src="https://randomuser.me/api/portraits/women/35.jpg" alt="Sophia" class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-bold">Sophia Chen</h4>
+                            <div class="flex">
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4">"Sarah's aim training regimen improved my accuracy by 30% and helped me qualify for my first cash cup!"</p>
+                    <div class="flex items-center text-sm text-gray-400">
+                        <i class="fas fa-gamepad mr-2"></i>
+                        <span>Fortnite</span>
+                    </div>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="bg-gray-800 rounded-xl p-6 border border-gray-700 testimonial-card">
+                    <div class="flex items-center mb-4">
+                        <img src="https://randomuser.me/api/portraits/men/41.jpg" alt="David" class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-bold">David Kim</h4>
+                            <div class="flex">
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4">"Marcus's end-game strategies helped our team consistently place top 10 in tournaments."</p>
+                    <div class="flex items-center text-sm text-gray-400">
+                        <i class="fas fa-gamepad mr-2"></i>
+                        <span>Fortnite</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fortnite Video Section -->
+    <section class="py-16">
+        <div class="container mx-auto px-4">
+            <div class="bg-gray-800 rounded-xl overflow-hidden border border-gray-700">
+                <div class="relative w-full" style="padding-top: 56.25%">
+                    <iframe class="absolute top-0 left-0 w-full h-full" 
+                        src="https://www.youtube.com/embed/WJW-bzXZM8M?autoplay=1&mute=1&loop=1&playlist=WJW-bzXZM8M"
+                        frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                        allowfullscreen></iframe>
+                </div>
+                <div class="p-6">
+                    <h3 class="text-xl font-bold mb-2">Fortnite Coaching Session Highlights</h3>
+                    <p class="text-gray-300">See how our coaching sessions transform players' building and editing skills</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 bg-gradient-to-r from-dark to-gray-900">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready to Improve Your Fortnite Skills?</h2>
+            <p class="text-xl text-gray-300 max-w-3xl mx-auto mb-8">Book a session with one of our professional coaches today and start dominating the Battle Royale.</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#coaches"
+                    class="bg-primary hover:bg-opacity-90 text-white px-8 py-4 rounded-md font-medium transition-all text-lg">
+                    View Fortnite Coaches
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 border-t border-gray-800 py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div>
+                   <a href="/" class="flex items-center">
+                        <img src="/images/logo.png" alt="Canada League Logo" class="h-14 mb-4 mr-3">
+                    </a>
+                    <p class="text-gray-400 mb-4">Premium gaming coaching platform to help you reach your full potential.</p>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/" class="text-gray-400 hover:text-primary transition-colors">Home</a></li>
+                        <li><a href="/#games" class="text-gray-400 hover:text-primary transition-colors">Games</a></li>
+                        <li><a href="/#coaches" class="text-gray-400 hover:text-primary transition-colors">Coaches</a></li>
+                        <li><a href="/#pricing" class="text-gray-400 hover:text-primary transition-colors">Pricing</a></li>
+                        <li><a href="/#testimonials" class="text-gray-400 hover:text-primary transition-colors">Testimonials</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Legal</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/terms" class="text-gray-400 hover:text-primary transition-colors">Terms & Conditions</a></li>
+                        <li><a href="/privacy" class="text-gray-400 hover:text-primary transition-colors">Privacy Policy</a></li>
+                        <li><a href="/cookies" class="text-gray-400 hover:text-primary transition-colors">Cookie Policy</a></li>
+                        <li><a href="/refunds" class="text-gray-400 hover:text-primary transition-colors">Refund Policy</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Contact Us</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-center">
+                            <i class="fas fa-map-marker-alt mr-2 text-primary"></i>
+                            <span>801 6 St SW, Calgary, AB T2P 3V8, Canada</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone-alt mr-2 text-primary"></i>
+                            <span>+1 (877) 977-2262</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-2 text-primary"></i>
+                            <span>info@canadaleague.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-500 text-sm">
+                <p>© 2025 Canada League. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login/Register Modal -->
+    <div id="auth-modal" class="fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center hidden">
+        <div class="bg-gray-800 rounded-xl max-w-md w-full mx-4 border border-gray-700 relative">
+            <button id="close-auth-modal" class="absolute top-4 right-4 text-gray-400 hover:text-white">
+                <i class="fas fa-times"></i>
+            </button>
+
+            <div class="p-8">
+                <h2 class="text-2xl font-bold mb-6 text-center">Welcome to Canada League</h2>
+
+                <div class="flex border-b border-gray-700 mb-6">
+                    <button id="login-tab" class="flex-1 py-2 font-medium border-b-2 border-primary text-primary">Login</button>
+                    <button id="register-tab" class="flex-1 py-2 font-medium text-gray-400 hover:text-white">Register</button>
+                </div>
+
+                <!-- Login Form -->
+                <div id="login-form">
+                    <div class="mb-4">
+                        <label for="login-email" class="block text-sm font-medium mb-2">Email</label>
+                        <input type="email" id="login-email" class="w-full bg-gray-700 border border-gray-600 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary" placeholder="your@email.com">
+                    </div>
+                    <div class="mb-6">
+                        <label for="login-password" class="block text-sm font-medium mb-2">Password</label>
+                        <input type="password" id="login-password" class="w-full bg-gray-700 border border-gray-600 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary" placeholder="••••••••">
+                    </div>
+                    <button id="login-submit" class="w-full bg-primary hover:bg-opacity-90 text-white py-2 px-4 rounded-md font-medium mb-4">
+                        Login
+                    </button>
+                    <div class="text-center text-sm text-gray-400">
+                        <a href="#" class="hover:text-primary">Forgot password?</a>
+                    </div>
+                </div>
+
+                <!-- Register Form -->
+                <div id="register-form" class="hidden">
+                    <div class="mb-4">
+                        <label for="register-name" class="block text-sm font-medium mb-2">Full Name</label>
+                        <input type="text" id="register-name" class="w-full bg-gray-700 border border-gray-600 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary" placeholder="John Doe">
+                    </div>
+                    <div class="mb-4">
+                        <label for="register-email" class="block text-sm font-medium mb-2">Email</label>
+                        <input type="email" id="register-email" class="w-full bg-gray-700 border border-gray-600 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary" placeholder="your@email.com">
+                    </div>
+                    <div class="mb-6">
+                        <label for="register-password" class="block text-sm font-medium mb-2">Password</label>
+                        <input type="password" id="register-password" class="w-full bg-gray-700 border border-gray-600 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary" placeholder="••••••••">
+                    </div>
+                    <button id="register-submit" class="w-full bg-primary hover:bg-opacity-90 text-white py-2 px-4 rounded-md font-medium">
+                        Create Account
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Booking Modal -->
+    <div id="booking-modal" class="fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center hidden">
+        <div class="bg-gray-800 rounded-xl max-w-md w-full mx-4 border border-gray-700 relative">
+            <button id="close-booking-modal" class="absolute top-4 right-4 text-gray-400 hover:text-white">
+                <i class="fas fa-times"></i>
+            </button>
+
+            <div class="p-8">
+                <h2 class="text-2xl font-bold mb-2">Book Coaching Session</h2>
+                <p class="text-gray-400 mb-6">with <span id="coach-name" class="text-primary"></span></p>
+
+                <form id="booking-form">
+                    <div class="mb-4">
+                        <label for="booking-name" class="block text-sm font-medium mb-2">Your Name</label>
+                        <input type="text" id="booking-name" class="w-full bg-gray-700 border border-gray-600 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="booking-email" class="block text-sm font-medium mb-2">Email</label>
+                        <input type="email" id="booking-email" class="w-full bg-gray-700 border border-gray-600 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="booking-phone" class="block text-sm font-medium mb-2">Phone Number</label>
+                        <input type="tel" id="booking-phone" class="w-full bg-gray-700 border border-gray-600 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary" required>
+                    </div>
+                    <div class="mb-4">
+                        <label for="booking-date" class="block text-sm font-medium mb-2">Session Date</label>
+                        <select id="booking-date" class="w-full bg-gray-700 border border-gray-600 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary" required>
+                            <option value="">Select a date</option>
+                            <option value="2025-07-25">Tue, Jul 25 - 3:00 PM (Available)</option>
+                            <option value="2025-07-26">Wed, Jul 26 - 5:00 PM (Available)</option>
+                            <option value="2025-07-27">Thu, Jul 27 - 2:00 PM (Available)</option>
+                            <option value="2025-07-28">Fri, Jul 28 - 4:00 PM (Available)</option>
+                            <option value="2025-07-29">Sat, Jul 29 - 1:00 PM (Available)</option>
+                            <option value="2025-07-30" disabled>Sun, Jul 30 - Fully Booked</option>
+                            <option value="2025-07-31" disabled>Mon, Jul 31 - Fully Booked</option>
+                        </select>
+                    </div>
+                    <div class="mb-6">
+                        <label for="booking-comments" class="block text-sm font-medium mb-2">Comments (Optional)</label>
+                        <textarea id="booking-comments" rows="3" class="w-full bg-gray-700 border border-gray-600 rounded-md px-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary"></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-primary hover:bg-opacity-90 text-white py-2 px-4 rounded-md font-medium">
+                        Confirm Booking
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Booking Confirmation Modal -->
+    <div id="confirmation-modal" class="fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center hidden">
+        <div class="bg-gray-800 rounded-xl max-w-md w-full mx-4 border border-gray-700 p-8 text-center">
+            <div class="w-16 h-16 bg-green-500 bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-check text-green-400 text-2xl"></i>
+            </div>
+            <h2 class="text-2xl font-bold mb-2">Booking Confirmed!</h2>
+            <p class="text-gray-400 mb-6">We'll get back to you ASAP via email to finalize your session details.</p>
+            <button id="close-confirmation-modal" class="bg-primary hover:bg-opacity-90 text-white py-2 px-6 rounded-md font-medium">
+                Close
+            </button>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Auth Modal
+        const loginBtn = document.getElementById('login-btn');
+        const authModal = document.getElementById('auth-modal');
+        const closeAuthModal = document.getElementById('close-auth-modal');
+        const loginTab = document.getElementById('login-tab');
+        const registerTab = document.getElementById('register-tab');
+        const loginForm = document.getElementById('login-form');
+        const registerForm = document.getElementById('register-form');
+
+        loginBtn.addEventListener('click', () => {
+            authModal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+        });
+
+        closeAuthModal.addEventListener('click', () => {
+            authModal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        });
+
+        loginTab.addEventListener('click', () => {
+            loginTab.classList.add('border-b-2', 'border-primary', 'text-primary');
+            loginTab.classList.remove('text-gray-400');
+            registerTab.classList.remove('border-b-2', 'border-primary', 'text-primary');
+            registerTab.classList.add('text-gray-400');
+            loginForm.classList.remove('hidden');
+            registerForm.classList.add('hidden');
+        });
+
+        registerTab.addEventListener('click', () => {
+            registerTab.classList.add('border-b-2', 'border-primary', 'text-primary');
+            registerTab.classList.remove('text-gray-400');
+            loginTab.classList.remove('border-b-2', 'border-primary', 'text-primary');
+            loginTab.classList.add('text-gray-400');
+            registerForm.classList.remove('hidden');
+            loginForm.classList.add('hidden');
+        });
+
+        // User Authentication (simulated)
+        const loginSubmit = document.getElementById('login-submit');
+        const registerSubmit = document.getElementById('register-submit');
+        const userDisplay = document.getElementById('user-display');
+        const usernameSpan = document.getElementById('username');
+        const logoutBtn = document.getElementById('logout-btn');
+
+        loginSubmit.addEventListener('click', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            if (email && password) {
+                // Simulate login
+                const name = email.split('@')[0];
+                usernameSpan.textContent = name;
+                userDisplay.classList.remove('hidden');
+                loginBtn.classList.add('hidden');
+                authModal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+
+                // Store in localStorage to persist across page reloads
+                localStorage.setItem('loggedInUser', name);
+
+                // Show success message
+               
+            } else {
+                
+            }
+        });
+
+        registerSubmit.addEventListener('click', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('register-name').value;
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+
+            if (name && email && password) {
+                // Simulate registration and login
+                usernameSpan.textContent = name;
+                userDisplay.classList.remove('hidden');
+                loginBtn.classList.add('hidden');
+                authModal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+
+                // Store in localStorage to persist across page reloads
+                localStorage.setItem('loggedInUser', name);
+
+                // Show success message
+               
+            } else {
+               
+            }
+        });
+
+        logoutBtn.addEventListener('click', () => {
+            userDisplay.classList.add('hidden');
+            loginBtn.classList.remove('hidden');
+            localStorage.removeItem('loggedInUser');
+            
+        });
+
+        // Check for logged in user on page load
+        if (localStorage.getItem('loggedInUser')) {
+            usernameSpan.textContent = localStorage.getItem('loggedInUser');
+            userDisplay.classList.remove('hidden');
+            loginBtn.classList.add('hidden');
+        }
+
+        // Booking Modal
+        const bookNowBtns = document.querySelectorAll('.book-now-btn');
+        const bookingModal = document.getElementById('booking-modal');
+        const closeBookingModal = document.getElementById('close-booking-modal');
+        const coachNameSpan = document.getElementById('coach-name');
+        const bookingForm = document.getElementById('booking-form');
+        const confirmationModal = document.getElementById('confirmation-modal');
+        const closeConfirmationModal = document.getElementById('close-confirmation-modal');
+
+        bookNowBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                if (localStorage.getItem('loggedInUser')) {
+                    // User is logged in, show booking form
+                    coachNameSpan.textContent = btn.getAttribute('data-coach');
+                    bookingModal.classList.remove('hidden');
+                    document.body.style.overflow = 'hidden';
+
+                    // Pre-fill name if logged in
+                    document.getElementById('booking-name').value = localStorage.getItem('loggedInUser');
+                } else {
+                    // User is not logged in, show auth modal
+                    authModal.classList.remove('hidden');
+                    document.body.style.overflow = 'hidden';
+                }
+            });
+        });
+
+        closeBookingModal.addEventListener('click', () => {
+            bookingModal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        });
+
+        bookingForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            // Get form values
+            const name = document.getElementById('booking-name').value;
+            const email = document.getElementById('booking-email').value;
+            const phone = document.getElementById('booking-phone').value;
+            const date = document.getElementById('booking-date').value;
+            const comments = document.getElementById('booking-comments').value;
+            const coach = coachNameSpan.textContent;
+
+            // In a real app, you would send this data to your backend
+            console.log('Booking submitted:', {
+                coach,
+                name,
+                email,
+                phone,
+                date,
+                comments
+            });
+
+            // Show confirmation
+            bookingModal.classList.add('hidden');
+            confirmationModal.classList.remove('hidden');
+
+            // Reset form
+            bookingForm.reset();
+        });
+
+        closeConfirmationModal.addEventListener('click', () => {
+            confirmationModal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        });
+
+        // Cookie Consent
+        const cookieBanner = document.getElementById('cookie-banner');
+        const acceptCookies = document.getElementById('accept-cookies');
+        const declineCookies = document.getElementById('decline-cookies');
+
+        if (!localStorage.getItem('cookiesAccepted')) {
+            setTimeout(() => {
+                cookieBanner.classList.remove('hidden');
+            }, 2000);
+        }
+
+        acceptCookies.addEventListener('click', () => {
+            localStorage.setItem('cookiesAccepted', 'true');
+            cookieBanner.classList.add('hidden');
+        });
+
+        declineCookies.addEventListener('click', () => {
+            localStorage.setItem('cookiesAccepted', 'false');
+            cookieBanner.classList.add('hidden');
+        });
+
+        // GSAP Animations
+        document.addEventListener('DOMContentLoaded', () => {
+            gsap.registerPlugin(ScrollTrigger);
+
+            // Banner animation
+            gsap.from('.relative.z-20 h1, .relative.z-20 p, .relative.z-20 .flex', {
+                duration: 1,
+                y: 50,
+                opacity: 0,
+                stagger: 0.2,
+                ease: 'power3.out',
+                delay: 0.3
+            });
+
+            // Why Fortnite section animation
+            gsap.utils.toArray('#why-choose-us .bg-gray-800').forEach((card, i) => {
+                gsap.from(card, {
+                    scrollTrigger: {
+                        trigger: card,
+                        start: 'top 80%',
+                        toggleActions: 'play none none none'
+                    },
+                    duration: 0.6,
+                    y: 50,
+                    opacity: 0,
+                    delay: i * 0.1,
+                    ease: 'power2.out'
+                });
+            });
+
+            // Coaches animation
+            gsap.utils.toArray('.coach-card').forEach((card, i) => {
+                gsap.from(card, {
+                    scrollTrigger: {
+                        trigger: card,
+                        start: 'top 80%',
+                        toggleActions: 'play none none none'
+                    },
+                    duration: 0.6,
+                    y: 50,
+                    opacity: 0,
+                    delay: i * 0.1,
+                    ease: 'power2.out'
+                });
+            });
+
+            // Testimonials animation
+            gsap.from('.testimonial-card', {
+                scrollTrigger: {
+                    trigger: '#testimonials',
+                    start: 'top 80%',
+                    toggleActions: 'play none none none'
+                },
+                duration: 0.8,
+                y: 50,
+                opacity: 0,
+                stagger: 0.2,
+                ease: 'power2.out'
+            });
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Tennis Club Story - Build and manage your dream tennis club. Train players, attract sponsors, and win championships in this exciting simulation game.">
+    <meta name="keywords" content="Tennis Club Story, Kairosoft, tennis game, sports simulation, mobile game, Android game, sports management">
+    <meta name="author" content="Kairosoft Studio">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://kairosoftstudio.com/">
+    
+    <title>Tennis Club Story | Build Your Tennis Empire | Kairosoft</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/image/logo.png" type="image/x-icon">
+    
+    <!-- Remix Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4ADE80',
+                        secondary: '#22D3EE',
+                        dark: '#1E293B',
+                        light: '#F8FAFC',
+                        accent: '#F59E0B',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Poppins', 'sans-serif'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-reverse': 'float-reverse 5s ease-in-out infinite',
+                        'pulse-slow': 'pulse 5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        'float-reverse': {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(15px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        .hero-clip-path {
+            clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%);
+        }
+        
+        @media (max-width: 768px) {
+            .hero-clip-path {
+                clip-path: polygon(0 0, 100% 0, 100% 90%, 0 100%);
+            }
+        }
+        
+        .particles-js-canvas-el {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+        
+        .threejs-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="font-sans bg-slate-50 text-slate-800 antialiased overflow-x-hidden">
+    <!-- Cookies Consent Banner -->
+    <div id="cookies-banner" class="fixed bottom-0 left-0 right-0 bg-dark text-light p-4 shadow-lg z-50 hidden">
+        <div class="container mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="flex-1">
+                <p class="text-sm md:text-base">We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies. <a href="/cookies/" class="text-primary hover:underline">Learn more</a></p>
+            </div>
+            <div class="flex gap-3">
+                <button id="decline-cookies" class="px-4 py-2 bg-transparent border border-primary text-primary rounded-lg hover:bg-primary hover:text-white transition-colors">Decline</button>
+                <button id="accept-cookies" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-green-600 transition-colors">Accept</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 bg-white/90 backdrop-blur-md shadow-sm z-40">
+        <div class="container mx-auto px-4 py-1 flex items-center justify-between">
+            <a href="/" class="flex items-center gap-2">
+                <img src="/image/logo.png" alt="Tennis Club Story Logo" class="h-16 w-auto">                
+            </a>
+            
+            <div class="hidden lg:flex items-center gap-8">
+                <a href="/" class="text-dark font-medium hover:text-primary transition-colors">Home</a>
+                <a href="/how-to-play/" class="text-slate-600 hover:text-primary transition-colors">How to Play</a>
+                <a href="/responsible-gaming/" class="text-slate-600 hover:text-primary transition-colors">Responsible Gaming</a>
+                <a href="/blog/" class="text-slate-600 hover:text-primary transition-colors">Blog</a>
+                <a href="/contact/" class="text-slate-600 hover:text-primary transition-colors">Contact</a>
+                <a href="https://play.google.com/store/apps/details?id=net.kairosoft.android.tennis_en" class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors flex items-center gap-2">
+                    <i class="ri-google-play-fill"></i>
+                    <span>Download</span>
+                </a>
+            </div>
+            
+            <button id="mobile-menu-button" class="lg:hidden text-dark text-2xl">
+                <i class="ri-menu-line"></i>
+            </button>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="lg:hidden hidden absolute top-full left-0 right-0 bg-white shadow-lg py-4 px-6">
+            <div class="flex flex-col gap-4">
+                <a href="/" class="text-dark font-medium hover:text-primary transition-colors">Home</a>
+                <a href="/how-to-play/" class="text-slate-600 hover:text-primary transition-colors">How to Play</a>
+                <a href="/responsible-gaming/" class="text-slate-600 hover:text-primary transition-colors">Responsible Gaming</a>
+                <a href="/blog/" class="text-slate-600 hover:text-primary transition-colors">Blog</a>
+                <a href="/contact/" class="text-slate-600 hover:text-primary transition-colors">Contact</a>
+                <a href="https://play.google.com/store/apps/details?id=net.kairosoft.android.tennis_en" class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-colors flex items-center justify-center gap-2 mt-2">
+                    <i class="ri-google-play-fill"></i>
+                    <span>Download</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative hero-clip-path bg-gradient-to-br from-dark to-slate-800 text-white md:min-h-screen flex justify-center items-center pt-40 pb-32 overflow-hidden">
+        <div id="particles-js" class="particles-js-canvas-el"></div>
+        <div id="threejs-container" class="threejs-container"></div>
+        
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="flex flex-col lg:flex-row items-center gap-12">
+                <div class="lg:w-1/2 text-center lg:text-left">
+                    <h1 class="text-4xl md:text-5xl lg:text-6xl font-display font-bold mb-6 leading-tight">
+                        Build Your <span class="text-primary">Tennis Empire</span>
+                    </h1>
+                    <p class="text-lg md:text-xl mb-8 text-slate-300 max-w-2xl">
+                        Train champions, attract sponsors, and lead your club to glory in this immersive tennis management simulation from Kairosoft.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
+                        <a href="https://play.google.com/store/apps/details?id=net.kairosoft.android.tennis_en" class="bg-primary hover:bg-green-600 text-white px-6 py-4 rounded-lg font-medium transition-colors flex items-center justify-center gap-3">
+                            <i class="ri-google-play-fill text-2xl"></i>
+                            <div class="text-left">
+                                <div class="text-xs">Get it on</div>
+                                <div class="text-lg">Google Play</div>
+                            </div>
+                        </a>
+                        <a href="#features" class="bg-white/10 hover:bg-white/20 border border-white/20 text-white px-6 py-4 rounded-lg font-medium transition-colors flex items-center justify-center gap-3">
+                            <i class="ri-information-line text-2xl"></i>
+                            <span>Learn More</span>
+                        </a>
+                    </div>
+                    
+                    <div class="mt-10 flex flex-wrap justify-center lg:justify-start gap-6">
+                        <div class="flex items-center gap-2">
+                            <div class="text-3xl text-accent">
+                                <i class="ri-star-s-fill"></i>
+                                <i class="ri-star-s-fill"></i>
+                                <i class="ri-star-s-fill"></i>
+                                <i class="ri-star-s-fill"></i>
+                                <i class="ri-star-s-fill"></i>
+                            </div>
+                            <span class="font-medium">4.8/5</span>
+                        </div>
+                        <div class="flex items-center gap-2">
+                            <i class="ri-download-2-line text-2xl text-accent"></i>
+                            <span class="font-medium">10,000+ Downloads</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lg:w-1/2 relative mt-10 lg:mt-0">
+                    <div class="relative max-w-md mx-auto">
+                        <img src="/image/hero-phone.png" alt="Tennis Club Story on Mobile" class="w-full h-auto animation-float rounded-lg z-10 relative">
+                        <div class="absolute -z-10 w-full h-full bg-primary/20 rounded-3xl -bottom-6 -right-6"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-display font-bold mb-4">Game <span class="text-primary">Features</span></h2>
+                <p class="text-lg text-slate-600 max-w-2xl mx-auto">Discover what makes Tennis Club Story the ultimate tennis management experience</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-slate-50 rounded-xl p-6 hover:shadow-lg transition-all">
+                    <div class="w-14 h-14 bg-primary/10 text-primary rounded-lg flex items-center justify-center text-2xl mb-4">
+                        <i class="ri-trophy-line"></i>
+                    </div>
+                    <h3 class="text-xl font-display font-bold mb-3">Championship Management</h3>
+                    <p class="text-slate-600">Lead your players through singles, doubles, and team competitions to win the Grand Slam and fill your trophy case.</p>
+                </div>
+                
+                <div class="bg-slate-50 rounded-xl p-6 hover:shadow-lg transition-all">
+                    <div class="w-14 h-14 bg-secondary/10 text-secondary rounded-lg flex items-center justify-center text-2xl mb-4">
+                        <i class="ri-hand-coin-line"></i>
+                    </div>
+                    <h3 class="text-xl font-display font-bold mb-3">Sponsor System</h3>
+                    <p class="text-slate-600">Attract sponsors who fund your athletes with big bucks and provide top-notch gear, items, and facilities.</p>
+                </div>
+                
+                <div class="bg-slate-50 rounded-xl p-6 hover:shadow-lg transition-all">
+                    <div class="w-14 h-14 bg-accent/10 text-accent rounded-lg flex items-center justify-center text-2xl mb-4">
+                        <i class="ri-user-settings-line"></i>
+                    </div>
+                    <h3 class="text-xl font-display font-bold mb-3">Custom Training</h3>
+                    <p class="text-slate-600">Customize training menus to focus on power or technique, molding players as you please for competitions and fame.</p>
+                </div>
+                
+                <div class="bg-slate-50 rounded-xl p-6 hover:shadow-lg transition-all">
+                    <div class="w-14 h-14 bg-primary/10 text-primary rounded-lg flex items-center justify-center text-2xl mb-4">
+                        <i class="ri-community-line"></i>
+                    </div>
+                    <h3 class="text-xl font-display font-bold mb-3">Club Events</h3>
+                    <p class="text-slate-600">Host barbecues, training camps, and other fun events to boost motivation and attract more customers.</p>
+                </div>
+                
+                <div class="bg-slate-50 rounded-xl p-6 hover:shadow-lg transition-all">
+                    <div class="w-14 h-14 bg-secondary/10 text-secondary rounded-lg flex items-center justify-center text-2xl mb-4">
+                        <i class="ri-building-2-line"></i>
+                    </div>
+                    <h3 class="text-xl font-display font-bold mb-3">Facility Upgrades</h3>
+                    <p class="text-slate-600">Some sponsors might even build you a hot springs spa or restaurant to enhance your club's prestige.</p>
+                </div>
+                
+                <div class="bg-slate-50 rounded-xl p-6 hover:shadow-lg transition-all">
+                    <div class="w-14 h-14 bg-accent/10 text-accent rounded-lg flex items-center justify-center text-2xl mb-4">
+                        <i class="ri-gamepad-line"></i>
+                    </div>
+                    <h3 class="text-xl font-display font-bold mb-3">Addictive Gameplay</h3>
+                    <p class="text-slate-600">Classic Kairosoft simulation gameplay that's easy to learn but hard to put down as you build your tennis empire.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Screenshots Section -->
+    <section class="py-20 bg-slate-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-display font-bold mb-4">Game <span class="text-primary">Screenshots</span></h2>
+                <p class="text-lg text-slate-600 max-w-2xl mx-auto">Take a look at the vibrant world of Tennis Club Story</p>
+            </div>
+            
+            <div class="relative">
+                <div class="swiper-container overflow-hidden">
+                    <div class="flex gap-6 pb-10">
+                        <div class="flex-shrink-0 w-4/5 sm:w-2/3 md:w-1/2 lg:w-1/5">
+                            <div class="rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+                                <img src="/image/host-events.png" alt="Tennis Club Story Gameplay" class="w-full h-auto">
+                            </div>
+                        </div>
+                        <div class="flex-shrink-0 w-4/5 sm:w-2/3 md:w-1/2 lg:w-1/5">
+                            <div class="rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+                                <img src="/image/sign-sponsors.png" alt="Tennis Club Management" class="w-full h-auto">
+                            </div>
+                        </div>
+                        <div class="flex-shrink-0 w-4/5 sm:w-2/3 md:w-1/2 lg:w-1/5">
+                            <div class="rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+                                <img src="/image/rain-players.png" alt="Tennis Tournament" class="w-full h-auto">
+                            </div>
+                        </div>
+                        <div class="flex-shrink-0 w-4/5 sm:w-2/3 md:w-1/2 lg:w-1/5">
+                            <div class="rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+                                <img src="/image/win-trophies.png" alt="Player Training" class="w-full h-auto">
+                            </div>
+                        </div>
+                        <div class="flex-shrink-0 w-4/5 sm:w-2/3 md:w-1/2 lg:w-1/5">
+                            <div class="rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+                                <img src="/image/host-events.png" alt="Tennis Club Story Gameplay" class="w-full h-auto">
+                            </div>
+                        </div>
+                        <div class="flex-shrink-0 w-4/5 sm:w-2/3 md:w-1/2 lg:w-1/5">
+                            <div class="rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+                                <img src="/image/sign-sponsors.png" alt="Tennis Club Management" class="w-full h-auto">
+                            </div>
+                        </div>
+                        <div class="flex-shrink-0 w-4/5 sm:w-2/3 md:w-1/2 lg:w-1/5">
+                            <div class="rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+                                <img src="/image/rain-players.png" alt="Tennis Tournament" class="w-full h-auto">
+                            </div>
+                        </div>
+                        <div class="flex-shrink-0 w-4/5 sm:w-2/3 md:w-1/2 lg:w-1/5">
+                            <div class="rounded-xl overflow-hidden shadow-lg hover:shadow-xl transition-shadow">
+                                <img src="/image/win-trophies.png" alt="Player Training" class="w-full h-auto">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button class="screenshot-prev absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 bg-white text-dark w-12 h-12 rounded-full shadow-md flex items-center justify-center hover:bg-primary hover:text-white transition-colors z-10">
+                    <i class="ri-arrow-left-s-line text-2xl"></i>
+                </button>
+                <button class="screenshot-next absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 bg-white text-dark w-12 h-12 rounded-full shadow-md flex items-center justify-center hover:bg-primary hover:text-white transition-colors z-10">
+                    <i class="ri-arrow-right-s-line text-2xl"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-20 bg-gradient-to-br from-dark to-slate-800 text-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-display font-bold mb-4">Player <span class="text-primary">Reviews</span></h2>
+                <p class="text-lg text-slate-300 max-w-2xl mx-auto">What our players say about Tennis Club Story</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white/10 rounded-xl p-6 backdrop-blur-sm border border-white/10">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="text-2xl text-accent">
+                            <i class="ri-star-s-fill"></i>
+                            <i class="ri-star-s-fill"></i>
+                            <i class="ri-star-s-fill"></i>
+                            <i class="ri-star-s-fill"></i>
+                            <i class="ri-star-s-fill"></i>
+                        </div>
+                        <span class="font-medium">5/5</span>
+                    </div>
+                    <p class="text-slate-300 mb-4">"Absolutely addictive! I've spent hours managing my tennis club, training players, and competing in tournaments. The sponsor system adds so much depth to the gameplay."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10  rounded-full flex items-center justify-center text-primary">
+                            <img src="/image/Reviews/alex-l.jpg" alt="Alex T" class="rounded-full">
+                        </div>
+                        <div>
+                            <h4 class="font-medium">Alex T.</h4>
+                            <p class="text-sm text-slate-400">Verified Player</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white/10 rounded-xl p-6 backdrop-blur-sm border border-white/10">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="text-2xl text-accent">
+                            <i class="ri-star-s-fill"></i>
+                            <i class="ri-star-s-fill"></i>
+                            <i class="ri-star-s-fill"></i>
+                            <i class="ri-star-s-fill"></i>
+                            <i class="ri-star-half-fill"></i>
+                        </div>
+                        <span class="font-medium">4.5/5</span>
+                    </div>
+                    <p class="text-slate-300 mb-4">"Classic Kairosoft charm with tennis! Love how you can customize training and see your players improve. The events keep things fresh and engaging."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10  rounded-full flex items-center justify-center text-primary">
+                              <img src="/image/Reviews/sarah-m.jpg" alt="Alex T" class="rounded-full">
+                        </div>
+                        <div>
+                            <h4 class="font-medium">Sarah K.</h4>
+                            <p class="text-sm text-slate-400">Verified Player</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white/10 rounded-xl p-6 backdrop-blur-sm border border-white/10">
+                    <div class="flex items-center gap-3 mb-4">
+                        <div class="text-2xl text-accent">
+                            <i class="ri-star-s-fill"></i>
+                            <i class="ri-star-s-fill"></i>
+                            <i class="ri-star-s-fill"></i>
+                            <i class="ri-star-s-fill"></i>
+                            <i class="ri-star-line"></i>
+                        </div>
+                        <span class="font-medium">4/5</span>
+                    </div>
+                    <p class="text-slate-300 mb-4">"Great tennis management sim! The tournaments are exciting and the progression feels rewarding. Would love to see more customization options in future updates."</p>
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10  rounded-full flex items-center justify-center text-primary">
+                              <img src="/image/Reviews/john-d.jpg" alt="Alex T" class="rounded-full">
+                        </div>
+                        <div>
+                            <h4 class="font-medium">Jamie L.</h4>
+                            <p class="text-sm text-slate-400">Verified Player</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+          
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="bg-gradient-to-r from-primary to-secondary rounded-2xl p-8 md:p-12 text-white overflow-hidden relative">
+                <div class="absolute -right-20 -top-20 w-64 h-64 bg-white/10 rounded-full"></div>
+                <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-white/10 rounded-full"></div>
+                <div class="relative z-10">
+                    <div class="flex flex-col lg:flex-row items-center justify-between gap-8">
+                        <div class="lg:w-2/3">
+                            <h2 class="text-3xl md:text-4xl font-display font-bold mb-4">Ready to Build Your Tennis Club?</h2>
+                            <p class="text-lg text-white/90 mb-6">Download Tennis Club Story now and start your journey to tennis management greatness!</p>
+                            <div class="flex flex-col sm:flex-row gap-4">
+                                <a href="https://play.google.com/store/apps/details?id=net.kairosoft.android.tennis_en" class="bg-white text-dark hover:bg-slate-100 px-6 py-4 rounded-lg font-medium transition-colors flex items-center justify-center gap-3">
+                                    <i class="ri-google-play-fill text-2xl"></i>
+                                    <div class="text-left">
+                                        <div class="text-xs">Get it on</div>
+                                        <div class="text-lg">Google Play</div>
+                                    </div>
+                                </a>
+                                <a href="/how-to-play/" class="bg-transparent border border-white text-white hover:bg-white/10 px-6 py-4 rounded-lg font-medium transition-colors flex items-center justify-center gap-3">
+                                    <i class="ri-information-line text-2xl"></i>
+                                    <span>How to Play</span>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="lg:w-1/3 flex justify-center">
+                            <img src="/image/tennis-gameplay-1.png" alt="Download Now" class="w-auto h-auto rounded-xl animation-float">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Preview Section -->
+    <section class="py-20 bg-slate-50">
+        <div class="container mx-auto px-4">
+            <div class="flex items-center justify-between mb-12">
+                <div>
+                    <h2 class="text-3xl md:text-4xl font-display font-bold mb-2">Latest <span class="text-primary">News</span></h2>
+                    <p class="text-slate-600">Tips, updates, and tennis management strategies</p>
+                </div>
+                <a href="/blog/" class="hidden md:inline-flex items-center gap-2 text-primary hover:text-green-600 font-medium transition-colors">
+                    <span>View All</span>
+                    <i class="ri-arrow-right-line"></i>
+                </a>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <a href="/blog/training-strategies/" class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-all group">
+                    <div class="h-48 overflow-hidden">
+                        <img src="/image/blog/blog1.jpg" alt="Training Strategies" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center gap-2 text-sm text-slate-500 mb-2">
+                            <span>Game Tips</span>
+                            <span>•</span>
+                            <span>May 15, 2025</span>
+                        </div>
+                        <h3 class="text-xl font-display font-bold mb-2 group-hover:text-primary transition-colors">Top Training Strategies for Winning Players</h3>
+                        <p class="text-slate-600 line-clamp-2">Learn how to balance power and technique training to create the ultimate tennis champions in your club.</p>
+                    </div>
+                </a>
+                
+                <a href="/blog/sponsor-guide/" class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-all group">
+                    <div class="h-48 overflow-hidden">
+                        <img src="/image/blog/blog2.jpeg" alt="Sponsor Guide" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center gap-2 text-sm text-slate-500 mb-2">
+                            <span>Game Guide</span>
+                            <span>•</span>
+                            <span>April 28, 2025</span>
+                        </div>
+                        <h3 class="text-xl font-display font-bold mb-2 group-hover:text-primary transition-colors">Maximizing Sponsor Benefits in Tennis Club Story</h3>
+                        <p class="text-slate-600 line-clamp-2">Discover how to attract the best sponsors and leverage their benefits to boost your club's success.</p>
+                    </div>
+                </a>
+                
+                <a href="/blog/tournament-tips/" class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-all group">
+                    <div class="h-48 overflow-hidden">
+                        <img src="/image/blog/blog3.jpg" alt="Tournament Tips" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center gap-2 text-sm text-slate-500 mb-2">
+                            <span>Game Tips</span>
+                            <span>•</span>
+                            <span>April 10, 2025</span>
+                        </div>
+                        <h3 class="text-xl font-display font-bold mb-2 group-hover:text-primary transition-colors">Tournament Preparation: A Complete Guide</h3>
+                        <p class="text-slate-600 line-clamp-2">Everything you need to know to prepare your players and club for tournament success.</p>
+                    </div>
+                </a>
+                
+                <a href="/blog/update-2.0/" class="bg-white rounded-xl overflow-hidden shadow-md hover:shadow-lg transition-all group">
+                    <div class="h-48 overflow-hidden">
+                        <img src="/image/blog/blog4.webp" alt="Game Update" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center gap-2 text-sm text-slate-500 mb-2">
+                            <span>Update</span>
+                            <span>•</span>
+                            <span>March 22, 2025</span>
+                        </div>
+                        <h3 class="text-xl font-display font-bold mb-2 group-hover:text-primary transition-colors">Version 2.0 Update: What's New</h3>
+                        <p class="text-slate-600 line-clamp-2">Explore all the new features and improvements in the latest Tennis Club Story update.</p>
+                    </div>
+                </a>
+            </div>
+            
+            <div class="text-center mt-10 md:hidden">
+                <a href="/blog/" class="inline-flex items-center gap-2 text-primary hover:text-green-600 font-medium transition-colors">
+                    <span>View All Posts</span>
+                    <i class="ri-arrow-right-line"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+                <div>
+                    <a href="/" class="flex items-center gap-2 mb-6">
+                        <img src="/image/logo.png" alt="Tennis Club Story Logo" class="h-16 w-auto">
+                         
+                    </a>
+                    <p class="text-slate-400 mb-6">Build and manage your dream tennis club. Train players, attract sponsors, and win championships in this exciting simulation game.</p>
+                   
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-display font-bold mb-6">Quick Links</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/" class="text-slate-400 hover:text-primary transition-colors">Home</a></li>
+                        <li><a href="/how-to-play/" class="text-slate-400 hover:text-primary transition-colors">How to Play</a></li>
+                        <li><a href="/responsible-gaming/" class="text-slate-400 hover:text-primary transition-colors">Responsible Gaming</a></li>
+                        <li><a href="/blog/" class="text-slate-400 hover:text-primary transition-colors">Blog</a></li>
+                        <li><a href="/contact/" class="text-slate-400 hover:text-primary transition-colors">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-display font-bold mb-6">Legal</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/privacy/" class="text-slate-400 hover:text-primary transition-colors">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="text-slate-400 hover:text-primary transition-colors">Terms of Service</a></li>
+                        <li><a href="/cookies/" class="text-slate-400 hover:text-primary transition-colors">Cookies Policy</a></li>
+                       
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-display font-bold mb-6">Contact Info</h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-start gap-3">
+                            <i class="ri-map-pin-line text-primary mt-1"></i>
+                            <span class="text-slate-400">86 Maple Street, Toronto, ON M5H 2N2, Canada</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="ri-phone-line text-primary"></i>
+                            <span class="text-slate-400">+1 416-555-6105</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="ri-mail-line text-primary"></i>
+                            <span class="text-slate-400">info@kairosoftstudio.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-slate-800 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <p class="text-slate-500 text-sm">© 2025 Kairosoft Studio. All rights reserved.</p>
+                <div class="flex gap-6">
+                    <a href="https://play.google.com/store/apps/details?id=net.kairosoft.android.tennis_en" class="text-slate-500 hover:text-primary text-sm transition-colors">
+                        <i class="ri-google-play-fill mr-1"></i> Google Play
+                    </a>
+                    
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Cookies Banner
+        const cookiesBanner = document.getElementById('cookies-banner');
+        const acceptCookies = document.getElementById('accept-cookies');
+        const declineCookies = document.getElementById('decline-cookies');
+        
+        if (!localStorage.getItem('cookiesAccepted')) {
+            cookiesBanner.classList.remove('hidden');
+        }
+        
+        acceptCookies.addEventListener('click', () => {
+            localStorage.setItem('cookiesAccepted', 'true');
+            cookiesBanner.classList.add('hidden');
+        });
+        
+        declineCookies.addEventListener('click', () => {
+            localStorage.setItem('cookiesAccepted', 'false');
+            cookiesBanner.classList.add('hidden');
+        });
+        
+        // Screenshot Carousel Navigation
+        const screenshotPrev = document.querySelector('.screenshot-prev');
+        const screenshotNext = document.querySelector('.screenshot-next');
+        const screenshotContainer = document.querySelector('.swiper-container');
+        
+        screenshotNext.addEventListener('click', () => {
+            screenshotContainer.scrollBy({ left: 300, behavior: 'smooth' });
+        });
+        
+        screenshotPrev.addEventListener('click', () => {
+            screenshotContainer.scrollBy({ left: -300, behavior: 'smooth' });
+        });
+        
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+        
+        gsap.from(".hero-clip-path h1", {
+            duration: 1,
+            y: 50,
+            opacity: 0,
+            ease: "power3.out"
+        });
+        
+        gsap.from(".hero-clip-path p", {
+            duration: 1,
+            y: 50,
+            opacity: 0,
+            ease: "power3.out",
+            delay: 0.3
+        });
+        
+        gsap.from(".hero-clip-path a", {
+            duration: 1,
+            y: 50,
+            opacity: 0,
+            ease: "power3.out",
+            delay: 0.6,
+            stagger: 0.2
+        });
+        
+        gsap.utils.toArray(".feature-card").forEach(card => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                },
+                y: 50,
+                opacity: 0,
+                duration: 0.8,
+                ease: "back.out(1)"
+            });
+        });
+        
+        // Three.js Animation
+        const threeContainer = document.getElementById('threejs-container');
+        
+        if (threeContainer) {
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(threeContainer.offsetWidth, threeContainer.offsetHeight);
+            renderer.setPixelRatio(window.devicePixelRatio);
+            threeContainer.appendChild(renderer.domElement);
+            
+            // Create floating tennis balls
+            const geometry = new THREE.SphereGeometry(0.5, 32, 32);
+            const material = new THREE.MeshBasicMaterial({ 
+                color: 0x4ADE80,
+                transparent: true,
+                opacity: 0.2
+            });
+            
+            const balls = [];
+            const ballCount = 8;
+            
+            for (let i = 0; i < ballCount; i++) {
+                const ball = new THREE.Mesh(geometry, material.clone());
+                ball.position.x = (Math.random() - 0.5) * 20;
+                ball.position.y = (Math.random() - 0.5) * 10;
+                ball.position.z = Math.random() * -10;
+                ball.userData = {
+                    speedX: (Math.random() - 0.5) * 0.02,
+                    speedY: (Math.random() - 0.5) * 0.02,
+                    speedZ: (Math.random() - 0.5) * 0.02
+                };
+                scene.add(ball);
+                balls.push(ball);
+            }
+            
+            camera.position.z = 5;
+            
+            function animate() {
+                requestAnimationFrame(animate);
+                
+                balls.forEach(ball => {
+                    ball.position.x += ball.userData.speedX;
+                    ball.position.y += ball.userData.speedY;
+                    ball.position.z += ball.userData.speedZ;
+                    
+                    // Bounce off boundaries
+                    if (Math.abs(ball.position.x) > 10) ball.userData.speedX *= -1;
+                    if (Math.abs(ball.position.y) > 5) ball.userData.speedY *= -1;
+                    if (ball.position.z < -10 || ball.position.z > 0) ball.userData.speedZ *= -1;
+                    
+                    // Rotate
+                    ball.rotation.x += 0.01;
+                    ball.rotation.y += 0.01;
+                });
+                
+                renderer.render(scene, camera);
+            }
+            
+            animate();
+            
+            window.addEventListener('resize', () => {
+                camera.aspect = threeContainer.offsetWidth / threeContainer.offsetHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(threeContainer.offsetWidth, threeContainer.offsetHeight);
+            });
+        }
+        
+        // Particles.js Configuration
+        if (document.getElementById('particles-js')) {
+            particlesJS('particles-js', {
+                "particles": {
+                    "number": {
+                        "value": 80,
+                        "density": {
+                            "enable": true,
+                            "value_area": 800
+                        }
+                    },
+                    "color": {
+                        "value": "#4ADE80"
+                    },
+                    "shape": {
+                        "type": "circle",
+                        "stroke": {
+                            "width": 0,
+                            "color": "#000000"
+                        },
+                        "polygon": {
+                            "nb_sides": 5
+                        }
+                    },
+                    "opacity": {
+                        "value": 0.3,
+                        "random": false,
+                        "anim": {
+                            "enable": false,
+                            "speed": 1,
+                            "opacity_min": 0.1,
+                            "sync": false
+                        }
+                    },
+                    "size": {
+                        "value": 3,
+                        "random": true,
+                        "anim": {
+                            "enable": false,
+                            "speed": 40,
+                            "size_min": 0.1,
+                            "sync": false
+                        }
+                    },
+                    "line_linked": {
+                        "enable": true,
+                        "distance": 150,
+                        "color": "#4ADE80",
+                        "opacity": 0.2,
+                        "width": 1
+                    },
+                    "move": {
+                        "enable": true,
+                        "speed": 2,
+                        "direction": "none",
+                        "random": false,
+                        "straight": false,
+                        "out_mode": "out",
+                        "bounce": false,
+                        "attract": {
+                            "enable": false,
+                            "rotateX": 600,
+                            "rotateY": 1200
+                        }
+                    }
+                },
+                "interactivity": {
+                    "detect_on": "canvas",
+                    "events": {
+                        "onhover": {
+                            "enable": true,
+                            "mode": "grab"
+                        },
+                        "onclick": {
+                            "enable": true,
+                            "mode": "push"
+                        },
+                        "resize": true
+                    },
+                    "modes": {
+                        "grab": {
+                            "distance": 140,
+                            "line_linked": {
+                                "opacity": 1
+                            }
+                        },
+                        "bubble": {
+                            "distance": 400,
+                            "size": 40,
+                            "duration": 2,
+                            "opacity": 8,
+                            "speed": 3
+                        },
+                        "repulse": {
+                            "distance": 200,
+                            "duration": 0.4
+                        },
+                        "push": {
+                            "particles_nb": 4
+                        },
+                        "remove": {
+                            "particles_nb": 2
+                        }
+                    }
+                },
+                "retina_detect": true
+            });
+        }
+    </script>
+</body>
+</html>

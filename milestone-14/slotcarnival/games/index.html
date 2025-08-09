@@ -1,0 +1,972 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+ <link rel="shortcut icon" href="/images/logo.png" type="image/x-icon">
+ <link rel="canonical" href="https://slotcarnival.org/games/" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Casino Games | Slot Carnival</title>
+    <meta name="description" content="Explore 100+ premium social casino games at Slot Carnival. Play slots, table games and more for fun with no real money involved.">
+    <meta name="keywords" content="social casino games, free slots, play for fun, online casino games, slot machines, virtual casino">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap');
+        
+        :root {
+            --primary: #ff5e14;
+            --secondary: #0f172a;
+            --accent: #f59e0b;
+            --dark: #0f172a;
+            --light: #f8fafc;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+        }
+        
+        .parallax-bg {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, rgba(15,23,42,0.95) 0%, rgba(15,23,42,0.7) 100%);
+        }
+        
+        .game-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .hamburger-menu {
+            width: 30px;
+            height: 20px;
+            position: relative;
+            transform: rotate(0deg);
+            transition: .5s ease-in-out;
+            cursor: pointer;
+        }
+        
+        .hamburger-menu span {
+            display: block;
+            position: absolute;
+            height: 3px;
+            width: 100%;
+            background: var(--primary);
+            border-radius: 3px;
+            opacity: 1;
+            left: 0;
+            transform: rotate(0deg);
+            transition: .25s ease-in-out;
+        }
+        
+        .hamburger-menu span:nth-child(1) {
+            top: 0px;
+        }
+        
+        .hamburger-menu span:nth-child(2), .hamburger-menu span:nth-child(3) {
+            top: 10px;
+        }
+        
+        .hamburger-menu span:nth-child(4) {
+            top: 20px;
+        }
+        
+        .hamburger-menu.open span:nth-child(1) {
+            top: 10px;
+            width: 0%;
+            left: 50%;
+        }
+        
+        .hamburger-menu.open span:nth-child(2) {
+            transform: rotate(45deg);
+        }
+        
+        .hamburger-menu.open span:nth-child(3) {
+            transform: rotate(-45deg);
+        }
+        
+        .hamburger-menu.open span:nth-child(4) {
+            top: 10px;
+            width: 0%;
+            left: 50%;
+        }
+        
+        .dropdown-menu {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .game-modal {
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .game-modal.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .filter-btn.active {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .age-verification {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .cookies-consent {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: var(--secondary);
+            z-index: 100;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .cookies-consent.show {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="relative">
+    <!-- Age Verification Modal -->
+    <div id="ageVerification" class="age-verification" style="display: none;">
+        <div class="max-w-2xl mx-4 p-8 bg-slate-800 rounded-xl shadow-2xl text-center">
+            <h2 class="text-3xl font-bold text-orange-500 mb-6">AGE VERIFICATION REQUIRED</h2>
+            <p class="text-lg mb-8">You must be 18 years or older to access this social casino platform. Please confirm your age to continue and enjoy our premium gaming experience.</p>
+            
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button id="confirmAge" class="px-8 py-3 bg-orange-600 hover:bg-orange-700 text-white font-bold rounded-lg transition duration-300 transform hover:scale-105">
+                    I am 18 or older
+                </button>
+                <button id="denyAge" class="px-8 py-3 bg-slate-600 hover:bg-slate-700 text-white font-bold rounded-lg transition duration-300">
+                    I am under 18
+                </button>
+            </div>
+            
+            <p class="text-sm mt-8 text-slate-400">Important: This platform is for entertainment only. No real money gambling is involved.</p>
+        </div>
+    </div>
+
+    <!-- Cookies Consent -->
+    <div id="cookiesConsent" class="cookies-consent p-4 border-t border-slate-700">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="flex-1">
+                <p class="text-sm">We use cookies to enhance your experience on our platform. By continuing to browse, you agree to our use of cookies. Learn more in our <a href="/privacy/" class="text-orange-500 hover:underline">Privacy Policy</a>.</p>
+            </div>
+            <div class="flex gap-2">
+                <button id="acceptCookies" class="px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white text-sm font-medium rounded transition duration-300">
+                    Accept
+                </button>
+                <button id="declineCookies" class="px-4 py-2 bg-slate-600 hover:bg-slate-700 text-white text-sm font-medium rounded transition duration-300">
+                    Decline
+                </button>
+                <a href="/privacy/" class="px-4 py-2 text-orange-500 hover:underline text-sm font-medium">
+                    Learn More
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="fixed w-full bg-slate-900/90 backdrop-blur-md z-50 border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center">
+                  <a href="/" class="text-2xl font-bold text-orange-500">
+                        <img src="/images/logo.png" alt="Slot Carnival Logo" class="h-12">                        
+                    </a>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="text-white hover:text-orange-500 font-medium transition duration-300">Home</a>
+                    <a href="/games/" class="text-orange-500 font-medium transition duration-300">Games</a>
+                    <a href="/about/" class="text-white hover:text-orange-500 font-medium transition duration-300">About</a>
+                    <a href="/responsible-gaming/" class="text-white hover:text-orange-500 font-medium transition duration-300">Responsible Gaming</a>
+                    <a href="/contact/" class="text-white hover:text-orange-500 font-medium transition duration-300">Contact</a>
+                    
+                    <!-- Login/Register or User Profile -->
+                    <div id="authButtons" class="flex items-center space-x-4">
+                        <a href="/login/" class="px-4 py-2 text-white hover:text-orange-500 font-medium transition duration-300 ">Login</a>
+                        <a href="/register/" class="px-6 py-2 bg-orange-600 hover:bg-orange-700 text-white font-medium rounded-lg transition duration-300 transform hover:scale-105">
+                            Register
+                        </a>
+                    </div>
+                    
+                    <div id="userProfile" class="hidden items-center space-x-2 dropdown relative">
+                        <div class="flex items-center space-x-2 cursor-pointer">
+                            <div class="w-8 h-8 rounded-full bg-orange-600 flex items-center justify-center text-white font-bold" id="profileInitial">U</div>
+                            <span class="text-white font-medium" id="usernameDisplay">Username</span>
+                            <span class="text-orange-500 font-bold">•</span>
+                            <span class="text-yellow-400 font-bold"><span id="userCoins">0</span> Coins</span>
+                        </div>
+                        <div class="dropdown-menu absolute right-0 mt-2 w-48 bg-slate-800 rounded-md shadow-lg py-1 z-50 border border-slate-700">
+                             
+                            <a href="javascript:void(0)" id="logoutBtn" class="block px-4 py-2 text-sm text-white hover:bg-slate-700">Logout</a>
+                        </div>
+                    </div>
+                </nav>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobileMenuButton" class="hamburger-menu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="md:hidden hidden bg-slate-900 border-t border-slate-800">
+              <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 flex flex-col justify-center items-center">
+                <a href="/" class="block px-3 py-2 text-white hover:text-orange-500 font-medium">Home</a>
+                <a href="/games/" class="block px-3 py-2 text-orange-500 font-medium">Games</a>
+                <a href="/about/" class="block px-3 py-2 text-white hover:text-orange-500 font-medium">About</a>
+                <a href="/responsible-gaming/" class="block px-3 py-2 text-white hover:text-orange-500 font-medium">Responsible Gaming</a>
+                <a href="/contact/" class="block px-3 py-2 text-white hover:text-orange-500 font-medium">Contact</a>
+                
+                <div id="mobileAuthButtons" class="pt-4 border-t border-slate-800">
+                    <a href="/login/" class="block px-3 py-2 text-white hover:text-orange-500 font-medium border border-orange-600 text-center rounded-full">Login</a>
+                    <a href="/register/" class="block px-3 py-2 mt-2 bg-orange-600 hover:bg-orange-700 text-white font-medium rounded-lg text-center">
+                        Register
+                    </a>
+                </div>
+                
+                <div id="mobileUserProfile" class="hidden pt-4 border-t border-slate-800">
+                    <div class="flex items-center px-3 py-2">
+                        <div class="w-8 h-8 rounded-full bg-orange-600 flex items-center justify-center text-white font-bold mr-3" id="mobileProfileInitial">U</div>
+                        <div>
+                            <div class="text-white font-medium" id="mobileUsernameDisplay">Username</div>
+                            <div class="text-yellow-400 text-sm"><span id="mobileUserCoins">0</span> Coins</div>
+                        </div>
+                    </div>
+                     
+                    <a href="javascript:void(0)" id="mobileLogoutBtn" class="block px-3 py-2 text-white hover:text-orange-500 font-medium">Logout</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 overflow-hidden">
+        <div class="absolute inset-0 bg-[url('/images/hero-bg.webp')] bg-cover bg-center parallax-bg"></div>
+        <div class="absolute inset-0 hero-gradient"></div>
+        
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6 text-white text-center">
+                <span class="text-orange-500">PREMIUM</span> GAMES COLLECTION
+            </h1>
+            <p class="text-xl md:text-2xl mb-6 text-slate-300 max-w-3xl  mx-auto text-center">Discover 100+ thrilling casino games from top providers. Play for fun with no real money involved.</p>
+            
+            <div class="flex flex-wrap gap-3 mb-8 hidden">
+                <button class="filter-btn px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-full transition duration-300 active" data-filter="all">
+                    All Games
+                </button>
+                <button class="filter-btn px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-full transition duration-300" data-filter="hacksaw">
+                    Hacksaw Gaming
+                </button>
+                <button class="filter-btn px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-full transition duration-300" data-filter="pragmatic">
+                    Pragmatic Play
+                </button>
+                <button class="filter-btn px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-full transition duration-300" data-filter="nolimit">
+                    Nolimit City
+                </button>
+                <button class="filter-btn px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-full transition duration-300" data-filter="evolution">
+                    Evolution Gaming
+                </button>
+                <button class="filter-btn px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded-full transition duration-300" data-filter="petersons">
+                    Peter & Sons
+                </button>
+            </div>
+            
+            <div class="relative w-full max-w-md text-center mx-auto mb-8">
+                <input type="text" id="gameSearch" placeholder="Search games..." class="w-full px-4 py-3 bg-slate-800/70 backdrop-blur-sm border border-slate-700 rounded-lg text-white focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-transparent">
+                <i class="fas fa-search absolute right-4 top-3.5 text-slate-400"></i>
+            </div>
+        </div>
+    </section>
+
+    <!-- Games Section -->
+    <section class="py-12 bg-slate-900/50 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6" id="gamesContainer">
+                <!-- Game 1 - Playable without registration -->
+                <div class="game-card bg-slate-800 rounded-xl overflow-hidden border border-slate-700 transition duration-300 hover:shadow-xl" data-provider="hacksaw" data-name="octo attack">
+                    <div class="relative overflow-hidden h-48">
+                        <img src="/images/games/octo.avif" alt="Octo Attack Slot Game" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
+                            <button class="play-game-btn px-6 py-3 bg-orange-600 hover:bg-orange-700 text-white font-bold rounded-lg transition duration-300 transform hover:scale-105" data-game-id="octo-attack" data-iframe-src="https://d3le5997hik6o.cloudfront.net/1584/1.28.6/index.html?language=en&channel=desktop&gameid=1584&mode=2&token=demo&lobbyurl=http%253A%252F%252Fgamdom.com%2Fcasino&currency=USD&partner=gamdom_prod&env=https://d3le5997hik6o.cloudfront.net/demo/api&realmoneyenv=https://d3le5997hik6o.cloudfront.net/api&alwaysredirect=true">
+                                PLAY NOW
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-xl font-bold text-white mb-1">Octo Attack</h3>
+                        <p class="text-slate-400 text-sm mb-3">Hacksaw Gaming</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-yellow-400 font-bold">942 Coins</span>
+                            <span class="text-green-400 text-sm"><i class="fas fa-unlock mr-1"></i> Free Play</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Game 2 - Playable without registration -->
+                <div class="game-card bg-slate-800 rounded-xl overflow-hidden border border-slate-700 transition duration-300 hover:shadow-xl" data-provider="hacksaw" data-name="phoenix duelreels">
+                    <div class="relative overflow-hidden h-48">
+                        <img src="/images/games/phoenix.avif" alt="Phoenix DuelReels Slot Game" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
+                            <button class="play-game-btn px-6 py-3 bg-orange-600 hover:bg-orange-700 text-white font-bold rounded-lg transition duration-300 transform hover:scale-105" data-game-id="phoenix-duelreels" data-iframe-src="https://d3le5997hik6o.cloudfront.net/1675/1.37.0/index.html?language=en&channel=desktop&gameid=1675&mode=2&token=demo&lobbyurl=http%253A%252F%252Fgamdom.com%2Fcasino&currency=USD&partner=gamdom_prod&env=https://d3le5997hik6o.cloudfront.net/demo/api&realmoneyenv=https://d3le5997hik6o.cloudfront.net/api&alwaysredirect=true">
+                                PLAY NOW
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-xl font-bold text-white mb-1">Phoenix DuelReels</h3>
+                        <p class="text-slate-400 text-sm mb-3">Hacksaw Gaming</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-yellow-400 font-bold">926 Coins</span>
+                            <span class="text-green-400 text-sm"><i class="fas fa-unlock mr-1"></i> Free Play</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Game 3 - Requires registration -->
+                <div class="game-card bg-slate-800 rounded-xl overflow-hidden border border-slate-700 transition duration-300 hover:shadow-xl" data-provider="hacksaw" data-name="cursed crypt">
+                    <div class="relative overflow-hidden h-48">
+                        <img src="/images/games/cursed.avif" alt="Cursed Crypt Slot Game" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
+                            <button class="play-game-btn px-6 py-3 bg-slate-600 hover:bg-slate-700 text-white font-bold rounded-lg transition duration-300" data-game-id="cursed-crypt" data-requires-login="true" data-iframe-src="https://d3le5997hik6o.cloudfront.net/1434/1.28.5/index.html?language=en&channel=desktop&gameid=1434&mode=2&token=demo&lobbyurl=http%253A%252F%252Fgamdom.com%2Fcasino&currency=USD&partner=gamdom_prod&env=https://d3le5997hik6o.cloudfront.net/demo/api&realmoneyenv=https://d3le5997hik6o.cloudfront.net/api&alwaysredirect=true">
+                                <i class="fas fa-lock mr-2"></i> LOGIN TO PLAY
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-xl font-bold text-white mb-1">Cursed Crypt</h3>
+                        <p class="text-slate-400 text-sm mb-3">Hacksaw Gaming</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-yellow-400 font-bold">905 Coins</span>
+                            <span class="text-orange-400 text-sm"><i class="fas fa-lock mr-1"></i> Registration Required</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Game 4 - Requires registration -->
+                <div class="game-card bg-slate-800 rounded-xl overflow-hidden border border-slate-700 transition duration-300 hover:shadow-xl" data-provider="hacksaw" data-name="divine drop">
+                    <div class="relative overflow-hidden h-48">
+                        <img src="/images/games/divine.avif" alt="Divine Drop Slot Game" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
+                            <button class="play-game-btn px-6 py-3 bg-slate-600 hover:bg-slate-700 text-white font-bold rounded-lg transition duration-300" data-game-id="divine-drop" data-requires-login="true" data-iframe-src="https://d3le5997hik6o.cloudfront.net/1490/1.24.1/index.html?language=en&channel=desktop&gameid=1490&mode=2&token=demo&lobbyurl=http%253A%252F%252Fgamdom.com%2Fcasino&currency=USD&partner=gamdom_prod&env=https://d3le5997hik6o.cloudfront.net/demo/api&realmoneyenv=https://d3le5997hik6o.cloudfront.net/api&alwaysredirect=true">
+                                <i class="fas fa-lock mr-2"></i> LOGIN TO PLAY
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-xl font-bold text-white mb-1">Divine Drop</h3>
+                        <p class="text-slate-400 text-sm mb-3">Hacksaw Gaming</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-yellow-400 font-bold">900 Coins</span>
+                            <span class="text-orange-400 text-sm"><i class="fas fa-lock mr-1"></i> Registration Required</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Game 5 - Requires registration -->
+                <div class="game-card bg-slate-800 rounded-xl overflow-hidden border border-slate-700 transition duration-300 hover:shadow-xl" data-provider="hacksaw" data-name="warrior ways">
+                    <div class="relative overflow-hidden h-48">
+                        <img src="/images/games/warrior.avif" alt="Warrior Ways Slot Game" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
+                            <button class="play-game-btn px-6 py-3 bg-slate-600 hover:bg-slate-700 text-white font-bold rounded-lg transition duration-300" data-game-id="warrior-ways" data-requires-login="true" data-iframe-src="https://d3le5997hik6o.cloudfront.net/1131/1.34.2/index.html?language=en&channel=desktop&gameid=1131&mode=2&token=demo&lobbyurl=http%253A%252F%252Fgamdom.com%2Fcasino&currency=USD&partner=gamdom_prod&env=https://d3le5997hik6o.cloudfront.net/demo/api&realmoneyenv=https://d3le5997hik6o.cloudfront.net/api&alwaysredirect=true">
+                                <i class="fas fa-lock mr-2"></i> LOGIN TO PLAY
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-xl font-bold text-white mb-1">Warrior Ways</h3>
+                        <p class="text-slate-400 text-sm mb-3">Hacksaw Gaming</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-yellow-400 font-bold">895 Coins</span>
+                            <span class="text-orange-400 text-sm"><i class="fas fa-lock mr-1"></i> Registration Required</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Game 6 - Requires registration -->
+                <div class="game-card bg-slate-800 rounded-xl overflow-hidden border border-slate-700 transition duration-300 hover:shadow-xl" data-provider="hacksaw" data-name="benny the beer">
+                    <div class="relative overflow-hidden h-48">
+                        <img src="/images/games/benny.avif" alt="Benny the Beer Slot Game" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
+                            <button class="play-game-btn px-6 py-3 bg-slate-600 hover:bg-slate-700 text-white font-bold rounded-lg transition duration-300" data-game-id="benny-beer" data-requires-login="true" data-iframe-src="https://d3le5997hik6o.cloudfront.net/1356/1.26.0/index.html?language=en&channel=desktop&gameid=1356&mode=2&token=demo&lobbyurl=http%253A%252F%252Fgamdom.com%2Fcasino&currency=USD&partner=gamdom_prod&env=https://d3le5997hik6o.cloudfront.net/demo/api&realmoneyenv=https://d3le5997hik6o.cloudfront.net/api&alwaysredirect=true">
+                                <i class="fas fa-lock mr-2"></i> LOGIN TO PLAY
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-xl font-bold text-white mb-1">Benny the Beer</h3>
+                        <p class="text-slate-400 text-sm mb-3">Hacksaw Gaming</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-yellow-400 font-bold">891 Coins</span>
+                            <span class="text-orange-400 text-sm"><i class="fas fa-lock mr-1"></i> Registration Required</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Game 7 - Requires registration -->
+                <div class="game-card bg-slate-800 rounded-xl overflow-hidden border border-slate-700 transition duration-300 hover:shadow-xl" data-provider="hacksaw" data-name="pray for three">
+                    <div class="relative overflow-hidden h-48">
+                        <img src="/images/games/pray.avif" alt="Pray for Three Slot Game" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
+                            <button class="play-game-btn px-6 py-3 bg-slate-600 hover:bg-slate-700 text-white font-bold rounded-lg transition duration-300" data-game-id="pray-three" data-requires-login="true" data-iframe-src="https://d3le5997hik6o.cloudfront.net/1736/1.46.4/index.html?language=en&channel=desktop&gameid=1736&mode=2&token=demo&lobbyurl=http%253A%252F%252Fgamdom.com%2Fcasino&currency=USD&partner=gamdom_prod&env=https://d3le5997hik6o.cloudfront.net/demo/api&realmoneyenv=https://d3le5997hik6o.cloudfront.net/api&alwaysredirect=true">
+                                <i class="fas fa-lock mr-2"></i> LOGIN TO PLAY
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-xl font-bold text-white mb-1">Pray for Three</h3>
+                        <p class="text-slate-400 text-sm mb-3">Hacksaw Gaming</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-yellow-400 font-bold">887 Coins</span>
+                            <span class="text-orange-400 text-sm"><i class="fas fa-lock mr-1"></i> Registration Required</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Game 8 - Requires registration -->
+                <div class="game-card bg-slate-800 rounded-xl overflow-hidden border border-slate-700 transition duration-300 hover:shadow-xl" data-provider="hacksaw" data-name="marlin masters">
+                    <div class="relative overflow-hidden h-48">
+                        <img src="/images/games/marlin.avif" alt="Marlin Masters Slot Game" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
+                            <button class="play-game-btn px-6 py-3 bg-slate-600 hover:bg-slate-700 text-white font-bold rounded-lg transition duration-300" data-game-id="marlin-masters" data-requires-login="true" data-iframe-src="https://d3le5997hik6o.cloudfront.net/1681/1.26.0/index.html?language=en&channel=desktop&gameid=1681&mode=2&token=demo&lobbyurl=http%253A%252F%252Fgamdom.com%2Fcasino&currency=USD&partner=gamdom_prod&env=https://d3le5997hik6o.cloudfront.net/demo/api&realmoneyenv=https://d3le5997hik6o.cloudfront.net/api&alwaysredirect=true">
+                                <i class="fas fa-lock mr-2"></i> LOGIN TO PLAY
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-xl font-bold text-white mb-1">Marlin Masters</h3>
+                        <p class="text-slate-400 text-sm mb-3">Hacksaw Gaming</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-yellow-400 font-bold">862 Coins</span>
+                            <span class="text-orange-400 text-sm"><i class="fas fa-lock mr-1"></i> Registration Required</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Game 9 - Requires registration -->
+                <div class="game-card bg-slate-800 rounded-xl overflow-hidden border border-slate-700 transition duration-300 hover:shadow-xl" data-provider="hacksaw" data-name="eye of the panda">
+                    <div class="relative overflow-hidden h-48">
+                        <img src="/images/games/eye.avif" alt="Eye of the Panda Slot Game" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
+                            <button class="play-game-btn px-6 py-3 bg-slate-600 hover:bg-slate-700 text-white font-bold rounded-lg transition duration-300" data-game-id="eye-panda" data-requires-login="true" data-iframe-src="https://d3le5997hik6o.cloudfront.net/1344/1.16.4/index.html?language=en&channel=desktop&gameid=1344&mode=2&token=demo&lobbyurl=http%253A%252F%252Fgamdom.com%2Fcasino&currency=USD&partner=gamdom_prod&env=https://d3le5997hik6o.cloudfront.net/demo/api&realmoneyenv=https://d3le5997hik6o.cloudfront.net/api&alwaysredirect=true">
+                                <i class="fas fa-lock mr-2"></i> LOGIN TO PLAY
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-xl font-bold text-white mb-1">Eye of the Panda</h3>
+                        <p class="text-slate-400 text-sm mb-3">Hacksaw Gaming</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-yellow-400 font-bold">857 Coins</span>
+                            <span class="text-orange-400 text-sm"><i class="fas fa-lock mr-1"></i> Registration Required</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Game 10 - Requires registration -->
+                <div class="game-card bg-slate-800 rounded-xl overflow-hidden border border-slate-700 transition duration-300 hover:shadow-xl" data-provider="hacksaw" data-name="tai the toad">
+                    <div class="relative overflow-hidden h-48">
+                        <img src="/images/games/tai.avif" alt="Tai the Toad Slot Game" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
+                            <button class="play-game-btn px-6 py-3 bg-slate-600 hover:bg-slate-700 text-white font-bold rounded-lg transition duration-300" data-game-id="tai-toad" data-requires-login="true" data-iframe-src="https://d3le5997hik6o.cloudfront.net/1478/1.23.5/index.html?language=en&channel=desktop&gameid=1478&mode=2&token=demo&lobbyurl=http%253A%252F%252Fgamdom.com%2Fcasino&currency=USD&partner=gamdom_prod&env=https://d3le5997hik6o.cloudfront.net/demo/api&realmoneyenv=https://d3le5997hik6o.cloudfront.net/api&alwaysredirect=true">
+                                <i class="fas fa-lock mr-2"></i> LOGIN TO PLAY
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-xl font-bold text-white mb-1">Tai the Toad</h3>
+                        <p class="text-slate-400 text-sm mb-3">Hacksaw Gaming</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-yellow-400 font-bold">836 Coins</span>
+                            <span class="text-orange-400 text-sm"><i class="fas fa-lock mr-1"></i> Registration Required</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Game 11 - Requires registration -->
+                <div class="game-card bg-slate-800 rounded-xl overflow-hidden border border-slate-700 transition duration-300 hover:shadow-xl" data-provider="hacksaw" data-name="rise of ymir">
+                    <div class="relative overflow-hidden h-48">
+                        <img src="/images/games/rise.avif" alt="Rise of Ymir Slot Game" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
+                            <button class="play-game-btn px-6 py-3 bg-slate-600 hover:bg-slate-700 text-white font-bold rounded-lg transition duration-300" data-game-id="rise-ymir" data-requires-login="true" data-iframe-src="https://d3le5997hik6o.cloudfront.net/1616/1.27.6/index.html?language=en&channel=desktop&gameid=1616&mode=2&token=demo&lobbyurl=http%253A%252F%252Fgamdom.com%2Fcasino&currency=USD&partner=gamdom_prod&env=https://d3le5997hik6o.cloudfront.net/demo/api&realmoneyenv=https://d3le5997hik6o.cloudfront.net/api&alwaysredirect=true">
+                                <i class="fas fa-lock mr-2"></i> LOGIN TO PLAY
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-xl font-bold text-white mb-1">Rise of Ymir</h3>
+                        <p class="text-slate-400 text-sm mb-3">Hacksaw Gaming</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-yellow-400 font-bold">825 Coins</span>
+                            <span class="text-orange-400 text-sm"><i class="fas fa-lock mr-1"></i> Registration Required</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Game 12 - Requires registration -->
+                <div class="game-card bg-slate-800 rounded-xl overflow-hidden border border-slate-700 transition duration-300 hover:shadow-xl" data-provider="hacksaw" data-name="vending machine">
+                    <div class="relative overflow-hidden h-48">
+                        <img src="/images/games/vending.avif" alt="Vending Machine Slot Game" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-black/30 flex items-center justify-center">
+                            <button class="play-game-btn px-6 py-3 bg-slate-600 hover:bg-slate-700 text-white font-bold rounded-lg transition duration-300" data-game-id="vending-machine" data-requires-login="true" data-iframe-src="https://d3le5997hik6o.cloudfront.net/1340/1.14.1/index.html?language=en&channel=desktop&gameid=1340&mode=2&token=demo&lobbyurl=http%253A%252F%252Fgamdom.com%2Fcasino&currency=USD&partner=gamdom_prod&env=https://d3le5997hik6o.cloudfront.net/demo/api&realmoneyenv=https://d3le5997hik6o.cloudfront.net/api&alwaysredirect=true">
+                                <i class="fas fa-lock mr-2"></i> LOGIN TO PLAY
+                            </button>
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <h3 class="text-xl font-bold text-white mb-1">Vending Machine</h3>
+                        <p class="text-slate-400 text-sm mb-3">Hacksaw Gaming</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-yellow-400 font-bold">825 Coins</span>
+                            <span class="text-orange-400 text-sm"><i class="fas fa-lock mr-1"></i> Registration Required</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+           
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 bg-gradient-to-r from-orange-600 to-orange-800 relative overflow-hidden">
+        <div class="absolute inset-0 bg-[url('/images/hero-bg.webp')] bg-cover bg-center parallax-bg opacity-20"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative text-center">
+            <h2 class="text-3xl md:text-5xl font-bold mb-6 text-white uppercase">READY TO <span class="text-slate-900">PLAY</span>?</h2>
+            <p class="text-xl text-white mb-10 max-w-3xl mx-auto">Register now to unlock all premium games and get 5,000 free coins!</p>
+            
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="/register/" class="px-8 py-4 bg-white hover:bg-slate-100 text-orange-600 font-bold rounded-lg text-lg transition duration-300 transform hover:scale-105 shadow-lg">
+                    Register Now
+                </a>
+                <a href="/login/" class="px-8 py-4 bg-transparent border-2 border-white hover:bg-white/10 text-white font-bold rounded-lg text-lg transition duration-300 transform hover:scale-105">
+                    Login
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Responsible Gaming Section -->
+    <section class="bg-slate-900 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div class="md:col-span-1">
+                    <h3 class="text-xl font-bold text-white mb-4">Responsible Gaming Commitment</h3>
+                </div>
+                <div class="md:col-span-3">
+                    <p class="text-slate-300 mb-4">Slot Carnival is committed to promoting responsible gaming practices. We provide comprehensive tools and resources to help players maintain control over their gaming habits and ensure a safe, enjoyable experience for all users.</p>
+                    <p class="text-orange-400 font-medium mb-4">Important Notice: This is a social casino platform for entertainment only. No real money gambling or payouts are involved. All coins are virtual and have no monetary value.</p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="https://www.gamcare.org.uk/" target="_blank" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded transition duration-300">GamCare</a>
+                        <a href="https://www.begambleaware.org/" target="_blank" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded transition duration-300">GambleAware</a>
+                        <a href="/responsible-gaming/" class="px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white rounded transition duration-300">Responsible Gaming Policy</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+ <footer class="bg-slate-900 border-t border-slate-800 pt-12 pb-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                   <a href="/" class="text-2xl font-bold text-orange-500">
+                        <img src="/images/logo.png" alt="Slot Carnival Logo" class="h-12 mb-4">                        
+                    </a>
+                    <p class="text-slate-400 mb-4">The ultimate social casino experience with premium games, generous bonuses, and a vibrant community.</p>
+                      <p class="text-slate-400 mb-4">No real money gambling or payouts are involved. </p> 
+                </div>
+                
+                <div >
+                    <h3 class="text-lg font-bold text-white mb-4 text-center md:text-left ">Quick Links</h3>
+                    <ul class="space-y-2 flex flex-col items-center md:items-start">
+                        <li><a href="/" class="text-slate-400 hover:text-orange-500 transition duration-300">Home</a></li>
+                        <li><a href="/games/" class="text-slate-400 hover:text-orange-500 transition duration-300">Games</a></li>
+                        <li><a href="/about/" class="text-slate-400 hover:text-orange-500 transition duration-300">About Us</a></li>
+                        <li><a href="/contact/" class="text-slate-400 hover:text-orange-500 transition duration-300">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-4 text-center md:text-left ">Legal</h3>
+                    <ul class="space-y-2 flex flex-col items-center md:items-start">
+                        <li><a href="/privacy/" class="text-slate-400 hover:text-orange-500 transition duration-300">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="text-slate-400 hover:text-orange-500 transition duration-300">Terms of Service</a></li>
+                        <li><a href="/cookies/" class="text-slate-400 hover:text-orange-500 transition duration-300">Cookies Policy</a></li>
+                        <li><a href="/responsible-gaming/" class="text-slate-400 hover:text-orange-500 transition duration-300">Responsible Gaming</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-4 text-center md:text-left">Contact Us</h3>
+                    <ul class="space-y-2 text-slate-400 flex flex-col items-center md:items-start">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-3 text-orange-500 hidden md:block"></i>
+                            <span>Vestre Ringvei 5, 1831 Askim, Norway</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone-alt mr-3 text-orange-500 hidden md:block"></i>
+                            <span>+4740696111</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-3 text-orange-500 hidden md:block"></i>
+                            <span>info@slotcarnival.org</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-slate-800 pt-6">
+                <div class="flex flex-col md:flex-row md:justify-between justify-center items-center text-center">
+                    <p class="text-slate-500 text-sm mb-4 md:mb-0">© 2025 Slot Carnival. All rights reserved.</p>
+                    <p class="text-orange-500 text-sm font-medium">18+ Only | Social Casino Platform | No Real Money Gambling</p>
+                </div>
+                <p class="text-slate-600 text-xs mt-4 text-center md:text-left">This website operates as a social casino platform for entertainment purposes only. No real money gambling, betting, or wagering is involved. Virtual coins and winnings have no cash value and cannot be exchanged for real money, prizes, or any monetary compensation. Success in social casino games does not guarantee future success at real money gambling activities.</p>
+            </div>
+        </div>
+    </footer>
+    <!-- Game Modal -->
+    <div id="gameModal" class="game-modal fixed inset-0 bg-black/90 z-[999] flex items-center justify-center p-4">
+        <div class="relative w-full max-w-6xl h-[80vh] bg-slate-900 rounded-xl overflow-hidden border border-slate-700">
+            <button id="closeGameModal" class="absolute top-4 right-4 z-10 w-10 h-10 bg-slate-800 hover:bg-slate-700 rounded-full flex items-center justify-center text-white text-xl transition duration-300">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="w-full h-full">
+                <iframe id="gameIframe" class="w-full h-full" frameborder="0" allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Required Modal -->
+    <div id="loginRequiredModal" class="game-modal fixed inset-0 bg-black/90 z-[999] flex items-center justify-center p-4">
+        <div class="relative w-full max-w-md bg-slate-800 rounded-xl overflow-hidden border border-slate-700 p-8 text-center">
+            <button id="closeLoginRequiredModal" class="absolute top-4 right-4 z-10 w-10 h-10 bg-slate-700 hover:bg-slate-600 rounded-full flex items-center justify-center text-white text-xl transition duration-300">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center text-white text-2xl mb-6 mx-auto">
+                <i class="fas fa-lock"></i>
+            </div>
+            <h3 class="text-2xl font-bold text-white mb-4">Login Required</h3>
+            <p class="text-slate-300 mb-6">You need to register or login to play this premium game. Join now to unlock all features!</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="/login/" class="px-6 py-3 bg-slate-700 hover:bg-slate-600 text-white font-medium rounded-lg transition duration-300">
+                    Login
+                </a>
+                <a href="/register/" class="px-6 py-3 bg-orange-600 hover:bg-orange-700 text-white font-medium rounded-lg transition duration-300">
+                    Register Now
+                </a>
+            </div>
+        </div>
+    </div>
+
+   <script>
+    // Initialize the page
+    document.addEventListener('DOMContentLoaded', function() {
+        // Check age verification in localStorage
+        const ageVerified = localStorage.getItem('ageVerified') === 'true';
+        
+        if (!ageVerified) {
+            document.getElementById('ageVerification').style.display = 'flex';
+            document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+        }
+        
+        // Check cookies consent
+        if (localStorage.getItem('cookiesAccepted') !== null) {
+            document.getElementById('cookiesConsent').classList.remove('show');
+        } else {
+            setTimeout(() => {
+                document.getElementById('cookiesConsent').classList.add('show');
+            }, 2000);
+        }
+        
+        // Check if user is logged in
+        checkLoginStatus();
+        
+        // Initialize other event listeners
+        initEventListeners();
+    });
+    
+    // Check login status and update UI
+    function checkLoginStatus() {
+        const userData = localStorage.getItem('currentUser');
+        if (userData) {
+            const user = JSON.parse(userData);
+            updateUserProfile(user);
+            updateGameButtons(); // Update game buttons when page loads if user is logged in
+        }
+    }
+    
+    // Update user profile in header
+    function updateUserProfile(user) {
+        // Desktop header
+        document.getElementById('authButtons').classList.add('hidden');
+        document.getElementById('userProfile').classList.remove('hidden');
+        document.getElementById('usernameDisplay').textContent = user.username;
+        document.getElementById('userCoins').textContent = user.coins.toLocaleString();
+        document.getElementById('profileInitial').textContent = user.username.charAt(0).toUpperCase();
+        
+        // Mobile header
+        document.getElementById('mobileAuthButtons').classList.add('hidden');
+        document.getElementById('mobileUserProfile').classList.remove('hidden');
+        document.getElementById('mobileUsernameDisplay').textContent = user.username;
+        document.getElementById('mobileUserCoins').textContent = user.coins.toLocaleString();
+        document.getElementById('mobileProfileInitial').textContent = user.username.charAt(0).toUpperCase();
+        
+        // Update all game buttons
+        updateGameButtons();
+    }
+    
+    // Update game buttons based on login status
+    function updateGameButtons() {
+        const playButtons = document.querySelectorAll('.play-game-btn[data-requires-login="true"]');
+        const userData = localStorage.getItem('currentUser');
+        
+        playButtons.forEach(button => {
+            if (userData) {
+                // User is logged in - change to PLAY NOW
+                button.innerHTML = 'PLAY NOW';
+                button.classList.remove('bg-slate-600');
+                button.classList.add('bg-orange-600', 'hover:bg-orange-700', 'transform', 'hover:scale-105');
+                button.removeAttribute('data-requires-login');
+                
+                // Update the lock icon to unlock
+                const parentCard = button.closest('.game-card');
+                const lockElement = parentCard.querySelector('.text-orange-400');
+                if (lockElement) {
+                    lockElement.innerHTML = '<i class="fas fa-unlock mr-1"></i> Free Play';
+                    lockElement.classList.remove('text-orange-400');
+                    lockElement.classList.add('text-green-400');
+                }
+            } else {
+                // User is not logged in - change to LOGIN TO PLAY
+                button.innerHTML = '<i class="fas fa-lock mr-2"></i> LOGIN TO PLAY';
+                button.classList.remove('bg-orange-600', 'hover:bg-orange-700', 'transform', 'hover:scale-105');
+                button.classList.add('bg-slate-600');
+                button.setAttribute('data-requires-login', 'true');
+                
+                // Update the unlock icon to lock
+                const parentCard = button.closest('.game-card');
+                const lockElement = parentCard.querySelector('.text-green-400');
+                if (lockElement) {
+                    lockElement.innerHTML = '<i class="fas fa-lock mr-1"></i> Registration Required';
+                    lockElement.classList.remove('text-green-400');
+                    lockElement.classList.add('text-orange-400');
+                }
+            }
+        });
+    }
+    
+    // Initialize all event listeners
+    function initEventListeners() {
+        // Age verification buttons
+        document.getElementById('confirmAge').addEventListener('click', function() {
+            localStorage.setItem('ageVerified', 'true');
+            document.getElementById('ageVerification').style.display = 'none';
+            document.body.style.overflow = 'auto'; // Re-enable scrolling
+        });
+        
+        document.getElementById('denyAge').addEventListener('click', function() {
+            // Redirect to a safe site if user is underage
+            window.location.href = 'https://www.google.com/';
+        });
+        
+        // Cookies consent buttons
+        document.getElementById('acceptCookies').addEventListener('click', function() {
+            localStorage.setItem('cookiesAccepted', 'true');
+            document.getElementById('cookiesConsent').classList.remove('show');
+        });
+        
+        document.getElementById('declineCookies').addEventListener('click', function() {
+            localStorage.setItem('cookiesAccepted', 'false');
+            document.getElementById('cookiesConsent').classList.remove('show');
+        });
+        
+        // Mobile menu toggle
+        document.getElementById('mobileMenuButton').addEventListener('click', function() {
+            this.classList.toggle('open');
+            document.getElementById('mobileMenu').classList.toggle('hidden');
+        });
+        
+        // Game modal functionality
+        const playGameButtons = document.querySelectorAll('.play-game-btn');
+        const gameModal = document.getElementById('gameModal');
+        const gameIframe = document.getElementById('gameIframe');
+        const closeGameModal = document.getElementById('closeGameModal');
+        const loginRequiredModal = document.getElementById('loginRequiredModal');
+        const closeLoginRequiredModal = document.getElementById('closeLoginRequiredModal');
+        
+        playGameButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const requiresLogin = this.getAttribute('data-requires-login') === 'true';
+                const userData = localStorage.getItem('currentUser');
+                
+                if (requiresLogin && !userData) {
+                    loginRequiredModal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                } else {
+                    const iframeSrc = this.getAttribute('data-iframe-src');
+                    gameIframe.src = iframeSrc;
+                    gameModal.classList.add('active');
+                    document.body.style.overflow = 'hidden';
+                }
+            });
+        });
+        
+        closeGameModal.addEventListener('click', function() {
+            gameModal.classList.remove('active');
+            gameIframe.src = '';
+            document.body.style.overflow = 'auto';
+        });
+        
+        closeLoginRequiredModal.addEventListener('click', function() {
+            loginRequiredModal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+        
+        // Logout functionality
+        document.getElementById('logoutBtn').addEventListener('click', logoutUser);
+        document.getElementById('mobileLogoutBtn').addEventListener('click', logoutUser);
+        
+        // Game filtering
+        const filterButtons = document.querySelectorAll('.filter-btn');
+        const gameCards = document.querySelectorAll('.game-card');
+        
+        filterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Update active state
+                filterButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                
+                const filter = this.getAttribute('data-filter');
+                
+                gameCards.forEach(card => {
+                    if (filter === 'all' || card.getAttribute('data-provider') === filter) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+        
+        // Game search
+        const gameSearch = document.getElementById('gameSearch');
+        
+        gameSearch.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            
+            gameCards.forEach(card => {
+                const gameName = card.getAttribute('data-name').toLowerCase();
+                
+                if (gameName.includes(searchTerm)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+        
+        // Load more games
+        document.getElementById('loadMoreGames').addEventListener('click', function() {
+            // In a real implementation, this would fetch more games from an API
+            // For demo purposes, we'll just show an alert
+           
+        });
+    }
+    
+    // Logout user
+    function logoutUser() {
+        localStorage.removeItem('currentUser');
+        // Update game buttons to show login required
+        updateGameButtons();
+        // Reload the page to update the UI
+        window.location.reload();
+    }
+    
+    // GSAP Animations
+    gsap.registerPlugin(ScrollTrigger);
+    
+    // Header animation
+    gsap.from('header', { 
+        opacity: 0, 
+        y: -20, 
+        duration: 0.8, 
+        ease: "power2.out" 
+    });
+    
+    // Hero section animations
+    gsap.from('.hero-gradient h1, .hero-gradient p, .hero-gradient .flex', { 
+        opacity: 0, 
+        y: 30, 
+        duration: 0.8, 
+        stagger: 0.1, 
+        delay: 0.3, 
+        ease: "power2.out" 
+    });
+    
+    // Game card animations
+    gsap.utils.toArray('.game-card').forEach((card, i) => {
+        gsap.from(card, {
+            scrollTrigger: {
+                trigger: card,
+                start: "top 80%",
+                toggleActions: "play none none none"
+            },
+            opacity: 0,
+            y: 30,
+            duration: 0.6,
+            delay: i * 0.1,
+            ease: "power2.out"
+        });
+    });
+</script>
+</body>
+</html>

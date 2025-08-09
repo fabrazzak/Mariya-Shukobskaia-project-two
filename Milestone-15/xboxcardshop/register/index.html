@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+<link rel="shortcut icon" href="/images/logo.png" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Register for an account at XboxCardShop">
+    <meta name="keywords" content="xbox register, xbox account, xbox sign up">
+    <meta name="author" content="XboxCardShop">
+    <title>Register - XboxCardShop</title>
+    <link rel="canonical" href="https://xboxcardshop.com/register/" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Oxanium:wght@300;400;500;600;700;800&family=Press+Start+2P&display=swap');
+        
+        :root {
+            --primary: #107c10;
+            --secondary: #0f5e0f;
+            --accent: #00ff00;
+            --dark: #0a0a0a;
+            --light: #f8f8f8;
+        }
+        
+        body {
+            font-family: 'Oxanium', sans-serif;
+            background-color: var(--dark);
+            color: var(--light);
+            overflow-x: hidden;
+        }
+        
+        .logo-font {
+            font-family: 'Press Start 2P', cursive;
+        }
+        
+        .hero-gradient {
+            background: radial-gradient(circle at center, rgba(16,124,16,0.3) 0%, rgba(10,10,10,1) 70%);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(0,255,0,0.2);
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,255,0,0.4);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,255,0,0.3);
+        }
+        
+        .btn-accent {
+            background: linear-gradient(135deg, var(--accent), #00cc00);
+            color: var(--dark);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-accent:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,255,0,0.5);
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--accent);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .hamburger {
+            width: 30px;
+            height: 20px;
+            position: relative;
+            transform: rotate(0deg);
+            transition: .5s ease-in-out;
+            cursor: pointer;
+        }
+        
+        .hamburger span {
+            display: block;
+            position: absolute;
+            height: 3px;
+            width: 100%;
+            background: var(--accent);
+            border-radius: 3px;
+            opacity: 1;
+            left: 0;
+            transform: rotate(0deg);
+            transition: .25s ease-in-out;
+        }
+        
+        .hamburger span:nth-child(1) {
+            top: 0px;
+        }
+        
+        .hamburger span:nth-child(2), .hamburger span:nth-child(3) {
+            top: 10px;
+        }
+        
+        .hamburger span:nth-child(4) {
+            top: 20px;
+        }
+        
+        .hamburger.open span:nth-child(1) {
+            top: 10px;
+            width: 0%;
+            left: 50%;
+        }
+        
+        .hamburger.open span:nth-child(2) {
+            transform: rotate(45deg);
+        }
+        
+        .hamburger.open span:nth-child(3) {
+            transform: rotate(-45deg);
+        }
+        
+        .hamburger.open span:nth-child(4) {
+            top: 10px;
+            width: 0%;
+            left: 50%;
+        }
+        
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
+        }
+        
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+        
+        .form-input {
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .form-input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(0, 255, 0, 0.2);
+        }
+        
+        .confirmation-box {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(0, 255, 0, 0.3);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(0, 255, 0, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(0, 255, 0, 0);
+            }
+        }
+        
+        .confirmation-popup {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        
+        .confirmation-popup.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        
+        .confirmation-content {
+            background-color: var(--dark);
+            border: 2px solid var(--accent);
+            border-radius: 1rem;
+            padding: 2rem;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            position: relative;
+            transform: translateY(20px);
+            transition: transform 0.3s ease;
+        }
+        
+        .confirmation-popup.active .confirmation-content {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="bg-black/90 backdrop-blur-md border-b border-green-900/30 fixed w-full z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <!-- Logo -->
+            <div class="flex items-center">
+                 <a href="/" class="flex items-center">
+                    <img src="/images/logo.png" alt="Xbox Logo" class="h-12">
+                </a>
+            </div>
+            
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="/" class="nav-link text-white hover:text-green-400">Home</a>
+                <a href="/shop/" class="nav-link text-white hover:text-green-400">Shop</a>
+                <a href="/blog/" class="nav-link text-white hover:text-green-400">Blog</a>
+                <a href="/about/" class="nav-link text-white hover:text-green-400">About</a>
+                <a href="/contact/" class="nav-link text-white hover:text-green-400">Contact</a>
+                 
+            </nav>
+            
+            <!-- Right Side Icons -->
+            <div class="flex items-center space-x-4">
+                <a href="/cart/" class="relative text-white hover:text-green-400">
+                    <i class="fas fa-shopping-cart text-xl"></i>
+                    <span id="cart-count" class="absolute -top-2 -right-2 bg-green-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+                </a>
+                <div id="user-icon" class="hidden">
+                    <a href="/account/" class="text-white hover:text-green-400">
+                        <i class="fas fa-user text-xl"></i>
+                    </a>
+                </div>
+                <div id="login-icon">
+                    <a href="/login/" class="text-white hover:text-green-400">
+                        <i class="fas fa-sign-in-alt text-xl"></i>
+                    </a>
+                </div>
+                <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none">
+                    <div class="hamburger">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="mobile-menu fixed inset-y-0 right-0 w-64 bg-black/95 backdrop-blur-lg z-50 p-6 overflow-y-auto">
+        <div class="flex justify-between items-center mb-8">
+            <a href="/" class="logo-font text-green-400 text-xl">Xbox</a>
+            <button id="mobile-menu-close" class="text-white focus:outline-none">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+        </div>
+        <nav class="flex flex-col space-y-6">
+            <a href="/" class="text-white hover:text-green-400 text-lg">Home</a>
+            <a href="/shop/" class="text-white hover:text-green-400 text-lg">Shop</a>
+            <a href="/blog/" class="text-white hover:text-green-400 text-lg">Blog</a>
+            <a href="/about/" class="text-white hover:text-green-400 text-lg">About</a>
+            <a href="/contact/" class="text-white hover:text-green-400 text-lg">Contact</a>
+            
+            <div class="pt-4 border-t border-green-900/30">
+                <div id="mobile-login-link">
+                    <a href="/login/" class="flex items-center text-white hover:text-green-400">
+                        <i class="fas fa-sign-in-alt mr-2"></i> Login
+                    </a>
+                </div>
+                <a href="/cart/" class="flex items-center text-white hover:text-green-400 mt-4">
+                    <i class="fas fa-shopping-cart mr-2"></i> Cart (<span id="mobile-cart-count">0</span>)
+                </a>
+            </div>
+        </nav>
+        <div class="absolute bottom-6 left-6 right-6">
+            <p class="text-green-400 text-sm">We are not an affiliate agency. All products are sold independently through our platform.</p>
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <main class="flex-grow pt-32 pb-16">
+        <div class="container mx-auto px-4">
+            <div class="max-w-2xl mx-auto">
+                <!-- Check if there's an order parameter in the URL -->
+                
+                
+                <div class="bg-gray-900/50 rounded-xl p-8 border border-gray-800">
+                    <h2 class="text-2xl font-bold text-white mb-6 text-center">
+                        Create Your Account
+                    </h2>
+                    <p class="text-gray-400 mb-6 text-center">
+                        Register now to track your orders and get exclusive offers.
+                    </p>
+                    
+                    <form id="register-form" class="space-y-4">
+                        <div>
+                            <label for="reg-email" class="block text-gray-400 mb-2">Email Address</label>
+                            <input type="email" id="reg-email" class="w-full form-input rounded-lg px-4 py-3 text-white" required>
+                        </div>
+                        
+                        <div>
+                            <label for="reg-password" class="block text-gray-400 mb-2">Password</label>
+                            <input type="password" id="reg-password" class="w-full form-input rounded-lg px-4 py-3 text-white" required minlength="8">
+                        </div>
+                        
+                        <div>
+                            <label for="reg-confirm-password" class="block text-gray-400 mb-2">Confirm Password</label>
+                            <input type="password" id="reg-confirm-password" class="w-full form-input rounded-lg px-4 py-3 text-white" required minlength="8">
+                        </div>
+                        
+                        <div class="flex items-center">
+                            <input type="checkbox" id="reg-terms" class="form-checkbox h-5 w-5 text-green-400 rounded focus:ring-green-400" required>
+                            <label for="reg-terms" class="ml-2 text-gray-400 text-sm">
+                                I agree to the <a href="/terms/" class="text-green-400 hover:underline">Terms of Service</a> and <a href="/privacy/" class="text-green-400 hover:underline">Privacy Policy</a>
+                            </label>
+                        </div>
+                        
+                        <button type="submit" class="w-full btn-accent font-bold py-3 px-6 rounded-lg">
+                            Create Account
+                        </button>
+                    </form>
+                    
+                    <div class="mt-6 text-center">
+                        <p class="text-gray-400">
+                            Already have an account? <a href="/login/" class="text-green-400 hover:underline">Sign in</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Confirmation Popup -->
+    <div id="confirmation-popup" class="confirmation-popup ">
+        <div class="confirmation-content">
+            <div class="w-20 h-20 bg-green-600/20 rounded-full flex items-center justify-center mx-auto mb-6 border-2 border-green-600/50">
+                <i class="fas fa-check text-green-400 text-3xl"></i>
+            </div>
+            <h2 class="text-2xl md:text-3xl font-bold text-white mb-4">Order Confirmed!</h2>
+            <p class="text-gray-300 mb-6">
+                A confirmation code has been sent to your email.
+            </p>
+            <div class="bg-gray-800/50 rounded-lg p-4 mb-6">
+                <p id="confirmation-code" class="text-green-400 font-mono text-lg"></p>
+            </div>
+            <p class="text-gray-400 text-sm mb-6">
+                Thank you for your purchase! Your order is being processed and you'll receive your digital codes shortly.
+            </p>
+            <button id="close-confirmation" class="btn-primary text-white font-bold py-2 px-6 rounded-lg">
+                Continue to Account
+            </button>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer class="bg-black/90 border-t border-green-900/30 pt-12 pb-6">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <a href="/" class="flex items-center">
+                    <img src="/images/logo.png" alt="Xbox Logo" class="h-12 mb-4">
+                </a>
+                    <p class="text-gray-400 mb-4">
+                        Your trusted source for Xbox gift cards and digital content. Instant delivery, competitive prices.
+                    </p>
+                </div>
+                
+                <div>
+                    <h3 class="text-white font-bold text-lg mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/" class="text-gray-400 hover:text-green-400">Home</a></li>
+                        <li><a href="/shop/" class="text-gray-400 hover:text-green-400">Shop</a></li>
+                        <li><a href="/blog/" class="text-gray-400 hover:text-green-400">Blog</a></li>
+                        <li><a href="/about/" class="text-gray-400 hover:text-green-400">About Us</a></li>
+                        <li><a href="/contact/" class="text-gray-400 hover:text-green-400">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-white font-bold text-lg mb-4">Support</h3>
+                    <ul class="space-y-2">                        
+                        <li><a href="/cookies" class="text-gray-400 hover:text-green-400">Cookies Policy</a></li>
+                        <li><a href="/privacy/" class="text-gray-400 hover:text-green-400">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="text-gray-400 hover:text-green-400">Terms of Service</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-white font-bold text-lg mb-4">Contact Us</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center text-gray-400">
+                            <i class="fas fa-map-marker-alt mr-2 text-green-400"></i>
+                            490 Chem. de Vassan, Val-d'Or, QC J9P 0C1, Canada
+                        </li>
+                        <li class="flex items-center text-gray-400">
+                            <i class="fas fa-phone-alt mr-2 text-green-400"></i>
+                            +1 (819) 824-3146
+                        </li>
+                        <li class="flex items-center text-gray-400">
+                            <i class="fas fa-envelope mr-2 text-green-400"></i>
+                            info@xboxcardshop.com
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-green-900/30 pt-6 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-500 text-sm mb-4 md:mb-0">
+                    &copy; 2025 XboxCardShop. All rights reserved.
+                </p>
+                <p class="text-gray-500 text-sm">
+                    We are not an affiliate agency. All products are sold independently through our platform.
+                </p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const hamburger = document.querySelector('.hamburger');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('open');
+            hamburger.classList.toggle('open');
+        });
+
+        document.getElementById('mobile-menu-close').addEventListener('click', () => {
+            mobileMenu.classList.remove('open');
+            hamburger.classList.remove('open');
+        });
+
+        // Check login status and update UI
+        function checkLoginStatus() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            const accountNavItem = document.getElementById('account-nav-item');
+            const userIcon = document.getElementById('user-icon');
+            const loginIcon = document.getElementById('login-icon');
+            const mobileAccountLink = document.getElementById('mobile-account-link');
+            const mobileLoginLink = document.getElementById('mobile-login-link');
+            
+            if (isLoggedIn) {
+                if (accountNavItem) accountNavItem.classList.remove('hidden');
+                if (userIcon) userIcon.classList.remove('hidden');
+                if (loginIcon) loginIcon.classList.add('hidden');
+                if (mobileAccountLink) mobileAccountLink.classList.remove('hidden');
+                if (mobileLoginLink) mobileLoginLink.classList.add('hidden');
+            } else {
+                if (accountNavItem) accountNavItem.classList.add('hidden');
+                if (userIcon) userIcon.classList.add('hidden');
+                if (loginIcon) loginIcon.classList.remove('hidden');
+                if (mobileAccountLink) mobileAccountLink.classList.add('hidden');
+                if (mobileLoginLink) mobileLoginLink.classList.remove('hidden');
+            }
+        }
+
+        // Check if we have an order parameter in the URL
+        function checkForOrderConfirmation() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const orderParam = urlParams.get('order');
+            
+            if (orderParam) {
+                try {
+                    const order = JSON.parse(decodeURIComponent(orderParam));
+                    document.getElementById('reg-email').value = order.customer.email;
+                    
+                    // Show the order confirmation section
+                    document.getElementById('order-confirmation').classList.remove('hidden');
+                    
+                    // Store the order in localStorage
+                    localStorage.setItem('pendingOrder', orderParam);
+                } catch (e) {
+                    console.error('Error parsing order:', e);
+                }
+            }
+        }
+
+        // Show confirmation popup
+        function showConfirmationPopup() {
+            const confirmationCode = `XBOX-${Math.floor(100000 + Math.random() * 900000)}`;
+            document.getElementById('confirmation-code').textContent = confirmationCode;
+            
+            const popup = document.getElementById('confirmation-popup');
+            popup.classList.add('active');
+            
+            // Store the confirmation code in localStorage
+            const user = JSON.parse(localStorage.getItem('user') || {});
+            user.confirmationCode = confirmationCode;
+            localStorage.setItem('user', JSON.stringify(user));
+        }
+
+        // Register form submission
+        document.getElementById('register-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const email = document.getElementById('reg-email').value;
+            const password = document.getElementById('reg-password').value;
+            const confirmPassword = document.getElementById('reg-confirm-password').value;
+            
+            if (password !== confirmPassword) {
+                alert('Passwords do not match!');
+                return;
+            }
+            
+            // Save user to localStorage
+            const user = {
+                email: email,
+                password: password, // Note: In a real app, never store passwords in localStorage
+                joined: new Date().toISOString(),
+                orders: []
+            };
+            
+            // Check if there's a pending order
+            const pendingOrder = localStorage.getItem('pendingOrder');
+            if (pendingOrder) {
+                try {
+                    const order = JSON.parse(decodeURIComponent(pendingOrder));
+                    user.orders.push(order);
+                    localStorage.removeItem('pendingOrder');
+                } catch (e) {
+                    console.error('Error parsing pending order:', e);
+                }
+            }
+            
+            localStorage.setItem('user', JSON.stringify(user));
+            localStorage.setItem('isLoggedIn', 'true');
+            
+            // Update UI
+            checkLoginStatus();
+            
+            // Show confirmation popup
+            showConfirmationPopup();
+        });
+
+        // Close confirmation popup and redirect to account page
+        document.getElementById('close-confirmation').addEventListener('click', function() {
+            document.getElementById('confirmation-popup').classList.remove('active');
+            window.location.href = '/account/';
+        });
+
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            checkLoginStatus();
+            checkForOrderConfirmation();
+            
+            // Update cart count
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            document.getElementById('cart-count').textContent = totalItems;
+            document.getElementById('mobile-cart-count').textContent = totalItems;
+            
+            // GSAP Animations
+            gsap.from(".logo-font", {
+                duration: 1,
+                y: -50,
+                opacity: 0,
+                ease: "power3.out"
+            });
+            
+            gsap.from(".nav-link", {
+                duration: 1,
+                y: -50,
+                opacity: 0,
+                stagger: 0.1,
+                ease: "power3.out",
+                delay: 0.3
+            });
+        });
+    </script>
+</body>
+</html>

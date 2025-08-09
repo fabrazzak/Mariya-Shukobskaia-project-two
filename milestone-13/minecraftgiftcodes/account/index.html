@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Account | Minecraft Gift Codes</title>
+    <meta name="description" content="View your Minecraft Gift Codes account details, order history, and preferences.">
+    <meta name="keywords" content="minecraft account, minecraft orders, minecraft profile">
+    <link rel="canonical" href="https://minecraftgiftcodes.com/account/">
+
+    <!-- Favicon -->
+    <link rel="icon" href="/assets/favicon.png" type="image/x-icon">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            DEFAULT: '#4CAF50',
+                            light: '#81C784',
+                            dark: '#388E3C'
+                        },
+                        secondary: {
+                            DEFAULT: '#FF9800',
+                            light: '#FFB74D',
+                            dark: '#F57C00'
+                        },
+                        dark: {
+                            DEFAULT: '#121212',
+                            light: '#1E1E1E',
+                            lighter: '#2D2D2D'
+                        }
+                    },
+                    animation: {
+                        'float': 'float 3s ease-in-out infinite',
+                        'float-reverse': 'float-reverse 3s ease-in-out infinite',
+                        'pulse-slow': 'pulse 5s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' }
+                        },
+                        'float-reverse': {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(10px)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap');
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #121212;
+            color: #f5f5f5;
+            overflow-x: hidden;
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #4CAF50, #8BC34A, #FF9800);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(139, 195, 74, 0.1), rgba(255, 152, 0, 0.1));
+        }
+
+        /* Form Elements */
+        .form-label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #f5f5f5;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: #1E1E1E;
+            border: 1px solid #2D2D2D;
+            border-radius: 0.375rem;
+            color: #f5f5f5;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: #4CAF50;
+        }
+
+        /* Unique Hamburger Menu */
+        .hamburger {
+            width: 30px;
+            height: 20px;
+            position: relative;
+            transform: rotate(0deg);
+            transition: .5s ease-in-out;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            display: block;
+            position: absolute;
+            height: 3px;
+            width: 100%;
+            background: #4CAF50;
+            border-radius: 3px;
+            opacity: 1;
+            left: 0;
+            transform: rotate(0deg);
+            transition: .25s ease-in-out;
+        }
+
+        .hamburger span:nth-child(1) {
+            top: 0px;
+            transform-origin: left center;
+        }
+
+        .hamburger span:nth-child(2) {
+            top: 10px;
+            transform-origin: left center;
+        }
+
+        .hamburger span:nth-child(3) {
+            top: 20px;
+            transform-origin: left center;
+        }
+
+        .hamburger.open span:nth-child(1) {
+            transform: rotate(45deg);
+            top: -3px;
+            left: 5px;
+        }
+
+        .hamburger.open span:nth-child(2) {
+            width: 0%;
+            opacity: 0;
+        }
+
+        .hamburger.open span:nth-child(3) {
+            transform: rotate(-45deg);
+            top: 19px;
+            left: 5px;
+        }
+
+        .mobile-menu {
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+
+        .mobile-menu.open {
+            max-height: 1000px;
+            opacity: 1;
+        }
+
+        /* Particle canvas */
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1E1E1E;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #4CAF50;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #388E3C;
+        }
+
+        /* Account card styles */
+        .account-card {
+            background: linear-gradient(135deg, #1E1E1E, #2D2D2D);
+            border-radius: 10px;
+            border: 1px solid #2D2D2D;
+        }
+
+        .order-item {
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .order-item:hover {
+            border-left-color: #4CAF50;
+            background-color: rgba(76, 175, 80, 0.05);
+        }
+
+        .tab-button {
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+
+        .tab-button.active {
+            border-bottom-color: #4CAF50;
+            color: #4CAF50;
+        }
+        
+        .status-badge {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .status-processing {
+            background-color: rgba(255, 152, 0, 0.1);
+            color: #FF9800;
+        }
+        
+        .status-completed {
+            background-color: rgba(76, 175, 80, 0.1);
+            color: #4CAF50;
+        }
+    </style>
+</head>
+
+<body class="antialiased">
+    <!-- Navigation -->
+    <header class="fixed w-full z-40 bg-dark shadow-md">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="/" class="flex items-center">
+                        <img src="/assets/logo.png" alt="Minecraft Gift Codes" class="h-12 mr-2">
+                    </a>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="text-white hover:text-primary transition">Home</a>
+                    <a href="/shop/" class="text-white hover:text-primary transition">Shop</a>
+                    <a href="/about/" class="text-white hover:text-primary transition">About</a>
+                    <a href="/blog/" class="text-white hover:text-primary transition">Blog</a>
+                    <a href="/contact/" class="text-white hover:text-primary transition">Contact</a>
+                    <div class="flex items-center space-x-4 ml-4">
+                        <a href="/cart/" class="relative text-white hover:text-primary transition">
+                            <i class="fas fa-shopping-cart text-xl"></i>
+                            <span id="cart-count"
+                                class="absolute -top-2 -right-2 bg-secondary text-dark text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                        </a>
+                        <a href="/account/" class="px-4 py-2 bg-primary rounded hover:bg-primary-dark transition">
+                            <i class="fas fa-user"></i>
+                        </a>
+                    </div>
+                </nav>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center space-x-4">
+                    <a href="/cart/" class="relative text-white hover:text-primary transition">
+                        <i class="fas fa-shopping-cart text-xl"></i>
+                        <span id="mobile-cart-count"
+                            class="absolute -top-2 -right-2 bg-secondary text-dark text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                    </a>
+                    <button id="menu-toggle" class="hamburger focus:outline-none">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="mobile-menu md:hidden bg-dark-light rounded-lg mt-2">
+                <div class="px-4 py-3 space-y-4">
+                    <a href="/" class="block text-white hover:text-primary transition">Home</a>
+                    <a href="/shop/" class="block text-white hover:text-primary transition">Shop</a>
+                    <a href="/about/" class="block text-white hover:text-primary transition">About</a>
+                    <a href="/blog/" class="block text-white hover:text-primary transition">Blog</a>
+                     <a href="/contact/" class="block text-white hover:text-primary transition pb-4">Contact</a>
+                    <a href="/account/"
+                        class="block px-4 py-2 bg-primary text-center rounded hover:bg-primary-dark transition">My
+                        Account</a>
+                    <div class="pt-4 border-t border-gray-700">
+                        <p class="text-xs text-gray-400">We are not an affiliate agency. All products are sold
+                            independently through our platform.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="relative pt-24 pb-16 min-h-screen">
+        <div id="particles-js"></div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="flex flex-col lg:flex-row gap-8">
+                <!-- Left Column - Account Navigation -->
+                <div class="lg:w-1/4">
+                    <div class="account-card p-6 mb-6">
+                        <div class="flex items-center mb-6">
+                            <div
+                                class="w-16 h-16 rounded-full bg-primary flex items-center justify-center text-2xl font-bold mr-4">
+                                <span id="account-avatar">U</span>
+                            </div>
+                            <div>
+                                <h2 id="account-username" class="text-xl font-bold">Username</h2>
+                                <p id="account-email" class="text-gray-400 text-sm">user@example.com</p>
+                            </div>
+                        </div>
+                        <div class="border-t border-gray-700 pt-4">
+                            <button id="logout-btn"
+                                class="w-full py-2 text-left text-gray-400 hover:text-primary transition">
+                                <i class="fas fa-sign-out-alt mr-2"></i> Log Out
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="account-card p-6">
+                        <h3 class="text-lg font-bold mb-4">Account</h3>
+                        <nav class="space-y-2">
+                            <button class="tab-button w-full text-left py-2 active" data-tab="dashboard">
+                                <i class="fas fa-tachometer-alt mr-2"></i> Dashboard
+                            </button>
+                            <button class="tab-button w-full text-left py-2" data-tab="orders">
+                                <i class="fas fa-shopping-bag mr-2"></i> My Orders
+                            </button>
+                            <button class="tab-button w-full text-left py-2" data-tab="settings">
+                                <i class="fas fa-cog mr-2"></i> Account Settings
+                            </button>
+                        </nav>
+                    </div>
+                </div>
+
+                <!-- Right Column - Account Content -->
+                <div class="lg:w-3/4">
+                    <!-- Dashboard Tab -->
+                    <div id="dashboard-tab" class="tab-content">
+                        <div class="account-card p-6 mb-6">
+                            <h2 class="text-2xl font-bold mb-6">Dashboard</h2>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                                <div class="bg-dark-lighter p-4 rounded-lg">
+                                    <h3 class="text-gray-400 text-sm mb-2">Total Orders</h3>
+                                    <p id="total-orders" class="text-2xl font-bold">0</p>
+                                </div>
+                                <div class="bg-dark-lighter p-4 rounded-lg">
+                                    <h3 class="text-gray-400 text-sm mb-2">Account Created</h3>
+                                    <p id="account-created" class="text-2xl font-bold">-</p>
+                                </div>
+                                <div class="bg-dark-lighter p-4 rounded-lg">
+                                    <h3 class="text-gray-400 text-sm mb-2">Last Order</h3>
+                                    <p id="last-order" class="text-2xl font-bold">-</p>
+                                </div>
+                            </div>
+                            <h3 class="text-lg font-bold mb-4">Recent Orders</h3>
+                            <div id="recent-orders" class="space-y-4">
+                                <p class="text-gray-400">You haven't placed any orders yet.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Orders Tab -->
+                    <div id="orders-tab" class="tab-content hidden">
+                        <div class="account-card p-6">
+                            <h2 class="text-2xl font-bold mb-6">My Orders</h2>
+                            <div id="orders-list" class="space-y-4">
+                                <p class="text-gray-400">You haven't placed any orders yet.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Settings Tab -->
+                    <div id="settings-tab" class="tab-content hidden">
+                        <div class="account-card p-6">
+                            <h2 class="text-2xl font-bold mb-6">Account Settings</h2>
+                            <form id="account-form" class="space-y-6">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div class="form-group">
+                                        <label for="first-name" class="form-label">First Name</label>
+                                        <input type="text" id="first-name" class="form-input">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="last-name" class="form-label">Last Name</label>
+                                        <input type="text" id="last-name" class="form-input">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="display-name" class="form-label">Display Name</label>
+                                    <input type="text" id="display-name" class="form-input">
+                                    <p class="text-gray-400 text-sm mt-1">This will be how your name will be displayed
+                                        in the account section and in reviews.</p>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email" class="form-label">Email Address</label>
+                                    <input type="email" id="email" class="form-input" disabled>
+                                </div>
+                                <div class="border-t border-gray-700 pt-6">
+                                    <h3 class="text-lg font-bold mb-4">Password Change</h3>
+                                    <div class="form-group">
+                                        <label for="current-password" class="form-label">Current Password (leave blank
+                                            to leave unchanged)</label>
+                                        <input type="password" id="current-password" class="form-input">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="new-password" class="form-label">New Password (leave blank to leave
+                                            unchanged)</label>
+                                        <input type="password" id="new-password" class="form-input">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="confirm-password" class="form-label">Confirm New Password</label>
+                                        <input type="password" id="confirm-password" class="form-input">
+                                    </div>
+                                </div>
+                                <button type="submit"
+                                    class="px-6 py-3 bg-primary rounded hover:bg-primary-dark transition">
+                                    Save Changes
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark pt-12 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <!-- Column 1 -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4 flex items-center">
+                        <img src="/assets/logo.png" alt="Minecraft Gift Codes" class="h-12 mr-2">
+                    </h3>
+                    <p class="text-gray-400 mb-4">Your trusted source for authentic Minecraft digital products and gift
+                        codes.</p>
+                </div>
+
+                <!-- Column 2 -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Shop</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/shop/" class="text-gray-400 hover:text-primary transition">Gift Cards</a></li>
+                        <li><a href="/shop/" class="text-gray-400 hover:text-primary transition">Mods</a></li>
+                        <li><a href="/shop/" class="text-gray-400 hover:text-primary transition">Bundles</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 3 -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Quick Link</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/contact/" class="text-gray-400 hover:text-primary transition">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 4 -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Legal</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/privacy/" class="text-gray-400 hover:text-primary transition">Privacy Policy</a>
+                        </li>
+                        <li><a href="/terms/" class="text-gray-400 hover:text-primary transition">Terms of Service</a>
+                        </li>
+                        <li><a href="/cookies/" class="text-gray-400 hover:text-primary transition">Cookie Policy</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pt-8 border-t border-gray-800">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-500 text-sm mb-4 md:mb-0">
+                        &copy; 2025 MinecraftGiftCodes.com. All rights reserved.
+                    </p>
+                    <p class="text-gray-500 text-sm">
+                        We are not an affiliate agency. All products are sold independently through our platform.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Particles.js -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+    <script>
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('open');
+            mobileMenu.classList.toggle('open');
+        });
+
+        // Cart functionality
+        function updateCartCount() {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
+            document.getElementById('cart-count').textContent = cartCount;
+            document.getElementById('mobile-cart-count').textContent = cartCount;
+            return cart;
+        }
+
+        // Tab switching
+        function setupTabs() {
+            const tabButtons = document.querySelectorAll('.tab-button');
+
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function () {
+                    // Remove active class from all buttons
+                    tabButtons.forEach(btn => btn.classList.remove('active'));
+
+                    // Add active class to clicked button
+                    this.classList.add('active');
+
+                    // Hide all tab contents
+                    document.querySelectorAll('.tab-content').forEach(tab => {
+                        tab.classList.add('hidden');
+                    });
+
+                    // Show selected tab content
+                    const tabId = this.getAttribute('data-tab') + '-tab';
+                    document.getElementById(tabId).classList.remove('hidden');
+                });
+            });
+        }
+
+        // Load user data
+        function loadUserData() {
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+
+            if (!currentUser) {
+                window.location.href = '/login/';
+                return;
+            }
+
+            const user = users.find(u => u.email === currentUser.email);
+
+            if (!user) {
+                window.location.href = '/login/';
+                return;
+            }
+
+            // Display basic user info
+            document.getElementById('account-username').textContent = user.username;
+            document.getElementById('account-email').textContent = user.email;
+            document.getElementById('account-avatar').textContent = user.username.charAt(0).toUpperCase();
+            document.getElementById('email').value = user.email;
+            document.getElementById('display-name').value = user.username;
+
+            // Set first and last name if they exist
+            if (user.firstName) {
+                document.getElementById('first-name').value = user.firstName;
+            }
+            if (user.lastName) {
+                document.getElementById('last-name').value = user.lastName;
+            }
+
+            // Format account creation date
+            if (user.createdAt) {
+                const createdDate = new Date(user.createdAt);
+                document.getElementById('account-created').textContent = createdDate.toLocaleDateString();
+            }
+
+            // Display order history
+            if (user.orderHistory && user.orderHistory.length > 0) {
+                document.getElementById('total-orders').textContent = user.orderHistory.length;
+
+                // Sort orders by date (newest first)
+                const sortedOrders = [...user.orderHistory].sort((a, b) => {
+                    return new Date(b.orderDate) - new Date(a.orderDate);
+                });
+
+                // Display last order date
+                const lastOrderDate = new Date(sortedOrders[0].orderDate);
+                document.getElementById('last-order').textContent = lastOrderDate.toLocaleDateString();
+
+                // Display recent orders (dashboard)
+                const recentOrdersContainer = document.getElementById('recent-orders');
+                recentOrdersContainer.innerHTML = '';
+
+                const recentOrders = sortedOrders.slice(0, 3);
+                recentOrders.forEach(order => {
+                    const orderDate = new Date(order.orderDate);
+                    const orderElement = document.createElement('div');
+                    orderElement.className = 'order-item bg-dark-lighter p-4 rounded-lg';
+                    
+                    // Calculate total
+                    const subtotal = order.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                    const tax = subtotal * 0.1; // 10% tax
+                    const total = subtotal + tax;
+                    
+                    // Status badge
+                    const status = order.status || 'Processing';
+                    const statusClass = status === 'Processing' ? 'status-processing' : 'status-completed';
+                    
+                    orderElement.innerHTML = `
+                        <div class="flex justify-between items-start mb-2">
+                            <div>
+                                <h4 class="font-bold">Order #${order.orderId || orderDate.getTime().toString().slice(-6)}</h4>
+                                <p class="text-sm text-gray-400">${orderDate.toLocaleDateString()}</p>
+                            </div>
+                            <div class="flex flex-col items-end">
+                                <span class="font-bold">$${total.toFixed(2)}</span>
+                                <span class="status-badge ${statusClass} mt-1">${status}</span>
+                            </div>
+                        </div>
+                        <div class="text-sm text-gray-400">
+                            ${order.cart.length} item(s) • ${order.payment.method === 'cash-on-delivery' ? 'Cash on Delivery' : 'Paid'}
+                        </div>
+                    `;
+                    recentOrdersContainer.appendChild(orderElement);
+                });
+
+                // Display all orders (orders tab)
+                const ordersListContainer = document.getElementById('orders-list');
+                ordersListContainer.innerHTML = '';
+
+                sortedOrders.forEach(order => {
+                    const orderDate = new Date(order.orderDate);
+                    const orderElement = document.createElement('div');
+                    orderElement.className = 'order-item bg-dark-lighter p-4 rounded-lg';
+
+                    // Calculate total
+                    const subtotal = order.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                    const tax = subtotal * 0.1; // 10% tax
+                    const total = subtotal + tax;
+                    
+                    // Status badge
+                    const status = order.status || 'Processing';
+                    const statusClass = status === 'Processing' ? 'status-processing' : 'status-completed';
+
+                    orderElement.innerHTML = `
+                        <div class="flex justify-between items-start mb-4">
+                            <div>
+                                <h4 class="font-bold">Order #${order.orderId || orderDate.getTime().toString().slice(-6)}</h4>
+                                <p class="text-sm text-gray-400">${orderDate.toLocaleDateString()}</p>
+                            </div>
+                            <div class="flex flex-col items-end">
+                                <span class="font-bold">$${total.toFixed(2)}</span>
+                                <span class="status-badge ${statusClass} mt-1">${status}</span>
+                            </div>
+                        </div>
+                        <div class="mb-4">
+                            <h5 class="text-sm font-bold mb-2">Items:</h5>
+                            <div class="space-y-2">
+                                ${order.cart.map(item => `
+                                    <div class="flex justify-between text-sm">
+                                        <span>${item.name} × ${item.quantity}</span>
+                                        <span>$${(item.price * item.quantity).toFixed(2)}</span>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
+                            <div>
+                                <h5 class="font-bold mb-1">Payment Method</h5>
+                                <p class="text-gray-400">${order.payment.method === 'cash-on-delivery' ? 'Cash on Delivery' : 'Credit Card'}</p>
+                            </div>
+                            <div>
+                                <h5 class="font-bold mb-1">Delivery Address</h5>
+                                <p class="text-gray-400">
+                                    ${order.delivery.address}<br>
+                                    ${order.delivery.address2 ? order.delivery.address2 + '<br>' : ''}
+                                    ${order.delivery.city || ''} ${order.delivery.state}, ${order.delivery.zip}<br>
+                                    ${order.delivery.country}
+                                </p>
+                            </div>
+                            <div>
+                                <h5 class="font-bold mb-1">Contact</h5>
+                                <p class="text-gray-400">
+                                    ${order.contact.firstName} ${order.contact.lastName}<br>
+                                    ${order.contact.email}<br>
+                                    ${order.contact.phone}
+                                </p>
+                            </div>
+                        </div>
+                    `;
+                    ordersListContainer.appendChild(orderElement);
+                });
+            } else {
+                document.getElementById('total-orders').textContent = '0';
+                document.getElementById('last-order').textContent = 'None';
+            }
+        }
+
+        // Logout functionality
+        document.getElementById('logout-btn').addEventListener('click', function () {
+            localStorage.removeItem('currentUser');
+            window.location.href = '/login/';
+        });
+
+        // Account form submission
+        document.getElementById('account-form').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+
+            if (!currentUser) {
+                window.location.href = '/login/';
+                return;
+            }
+
+            const userIndex = users.findIndex(u => u.email === currentUser.email);
+
+            if (userIndex === -1) {
+                window.location.href = '/login/';
+                return;
+            }
+
+            // Update user data
+            const newPassword = document.getElementById('new-password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+
+            if (newPassword && newPassword !== confirmPassword) {
+                alert('New passwords do not match!');
+                return;
+            }
+
+            // In a real app, you would verify current password before allowing changes
+            // and hash the new password before storing
+
+            users[userIndex].username = document.getElementById('display-name').value;
+            users[userIndex].firstName = document.getElementById('first-name').value;
+            users[userIndex].lastName = document.getElementById('last-name').value;
+
+            if (newPassword) {
+                users[userIndex].password = newPassword; // Note: Hash this in production
+            }
+
+            // Save updated user data
+            localStorage.setItem('users', JSON.stringify(users));
+            localStorage.setItem('currentUser', JSON.stringify({
+                email: currentUser.email,
+                username: users[userIndex].username
+            }));
+
+            // Update displayed username
+            document.getElementById('account-username').textContent = users[userIndex].username;
+            document.getElementById('account-avatar').textContent = users[userIndex].username.charAt(0).toUpperCase();
+
+            alert('Account information updated successfully!');
+
+            // Clear password fields
+            document.getElementById('current-password').value = '';
+            document.getElementById('new-password').value = '';
+            document.getElementById('confirm-password').value = '';
+        });
+
+        // Initialize
+        updateCartCount();
+        setupTabs();
+        loadUserData();
+
+        // Particles.js initialization
+        document.addEventListener('DOMContentLoaded', function () {
+            if (document.getElementById('particles-js')) {
+                particlesJS('particles-js', {
+                    "particles": {
+                        "number": {
+                            "value": 80,
+                            "density": {
+                                "enable": true,
+                                "value_area": 800
+                            }
+                        },
+                        "color": {
+                            "value": "#4CAF50"
+                        },
+                        "shape": {
+                            "type": "circle",
+                            "stroke": {
+                                "width": 0,
+                                "color": "#000000"
+                            },
+                            "polygon": {
+                                "nb_sides": 5
+                            }
+                        },
+                        "opacity": {
+                            "value": 0.5,
+                            "random": false,
+                            "anim": {
+                                "enable": false,
+                                "speed": 1,
+                                "opacity_min": 0.1,
+                                "sync": false
+                            }
+                        },
+                        "size": {
+                            "value": 3,
+                            "random": true,
+                            "anim": {
+                                "enable": false,
+                                "speed": 40,
+                                "size_min": 0.1,
+                                "sync": false
+                            }
+                        },
+                        "line_linked": {
+                            "enable": true,
+                            "distance": 150,
+                            "color": "#4CAF50",
+                            "opacity": 0.4,
+                            "width": 1
+                        },
+                        "move": {
+                            "enable": true,
+                            "speed": 2,
+                            "direction": "none",
+                            "random": false,
+                            "straight": false,
+                            "out_mode": "out",
+                            "bounce": false,
+                            "attract": {
+                                "enable": false,
+                                "rotateX": 600,
+                                "rotateY": 1200
+                            }
+                        }
+                    },
+                    "interactivity": {
+                        "detect_on": "canvas",
+                        "events": {
+                            "onhover": {
+                                "enable": true,
+                                "mode": "grab"
+                            },
+                            "onclick": {
+                                "enable": true,
+                                "mode": "push"
+                            },
+                            "resize": true
+                        },
+                        "modes": {
+                            "grab": {
+                                "distance": 140,
+                                "line_linked": {
+                                    "opacity": 1
+                                }
+                            },
+                            "bubble": {
+                                "distance": 400,
+                                "size": 40,
+                                "duration": 2,
+                                "opacity": 8,
+                                "speed": 3
+                            },
+                            "repulse": {
+                                "distance": 200,
+                                "duration": 0.4
+                            },
+                            "push": {
+                                "particles_nb": 4
+                            },
+                            "remove": {
+                                "particles_nb": 2
+                            }
+                        }
+                    },
+                    "retina_detect": true
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>

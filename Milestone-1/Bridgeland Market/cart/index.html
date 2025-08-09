@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Your shopping cart at Bridgeland Market Gifts - Review and checkout your selected items.">
+    <meta name="keywords" content="Calgary gifts, gift baskets Calgary, shopping cart, checkout, artisanal cheese, floral arrangements">
+    <meta name="author" content="Bridgeland Market Gifts">
+    <link rel="canonical" href="https://bridgelandmarketgifts.com/cart/">
+    <title>Your Cart | Bridgeland Market Gifts | Calgary</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+     <link rel="icon" type="image/png" href="/assets/favicon.png">
+    <style>
+        /* Cart Page Specific Styles */
+        .cart-hero {
+            background-color: #f8f5f2;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .cart-hero h1 {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .cart-hero p {
+            font-size: 1.1rem;
+            color: var(--dark-gray);
+        }
+
+        .cart-section {
+            padding: 4rem 0;
+        }
+
+        .cart-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .cart-items {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .cart-summary {
+            width: 350px;
+            background-color: #f9f9f9;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .cart-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .cart-table th {
+            text-align: left;
+            padding: 15px 10px;
+            border-bottom: 2px solid var(--light-gray);
+            font-weight: 500;
+        }
+
+        .cart-table td {
+            padding: 20px 10px;
+            border-bottom: 1px solid var(--light-gray);
+            vertical-align: middle;
+        }
+
+        .cart-item-img {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 4px;
+        }
+
+        .cart-item-name {
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .cart-item-price {
+            color: var(--primary-color);
+            font-weight: 500;
+        }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+        }
+
+        .quantity-btn {
+            width: 30px;
+            height: 30px;
+            background-color: var(--light-gray);
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .quantity-input {
+            width: 50px;
+            height: 30px;
+            text-align: center;
+            margin: 0 5px;
+            border: 1px solid var(--light-gray);
+            border-radius: 4px;
+        }
+
+        .remove-item {
+            color: var(--danger);
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+        }
+
+        .cart-summary h3 {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .summary-total {
+            font-weight: 600;
+            font-size: 1.2rem;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid var(--light-gray);
+        }
+
+        .cart-actions {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .empty-cart {
+            text-align: center;
+            padding: 50px 0;
+        }
+
+        .empty-cart i {
+            font-size: 3rem;
+            color: var(--light-gray);
+            margin-bottom: 20px;
+        }
+
+        .empty-cart h3 {
+            margin-bottom: 15px;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .cart-container {
+                flex-direction: column;
+            }
+
+            .cart-summary {
+                width: 100%;
+            }
+
+            .cart-table th {
+                display: none;
+            }
+
+            .cart-table tr {
+                display: block;
+                margin-bottom: 20px;
+                border-bottom: 1px solid var(--light-gray);
+            }
+
+            .cart-table td {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 10px 0;
+                border: none;
+            }
+
+            .cart-table td::before {
+                content: attr(data-label);
+                font-weight: 500;
+                margin-right: 20px;
+            }
+
+            .cart-item-img {
+                width: 60px;
+                height: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Cookies Consent Popup -->
+    <div id="cookieConsent" class="cookie-consent">
+        <div class="cookie-content">
+            <p>We use cookies to enhance your experience on our website. By continuing to browse, you agree to our use of cookies.</p>
+            <div class="cookie-buttons">
+                <button id="acceptCookies" class="btn btn-primary">Accept</button>
+                <button id="declineCookies" class="btn btn-secondary">Decline</button>
+                <a href="/cookies/" class="cookie-link">Learn More</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header Section -->
+    <header class="header">
+        <div class="header-top">
+            <div class="container">
+                <div class="header-contact">
+                    <span><i class="fas fa-phone-alt"></i> (403) 555-0123</span>
+                    <span><i class="fas fa-map-marker-alt"></i> 110 1 Ave NE, Calgary, AB</span>
+                </div>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/bridgelandmarket/" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://x.com/bridgelandmrkt" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.instagram.com/bridgelandmarket/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="header-main">
+            <div class="container">
+                <div class="logo">
+                    <a href="/">
+                        <img src="/assets/logo.png" alt="Bridgeland Market Gifts" width="220" height="80">
+                    </a>
+                </div>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/shop/">Shop</a></li>
+                        <li><a href="/about/">About</a></li>
+                        <li><a href="/blog/">Blog</a></li>
+                        <li><a href="/contact/">Contact</a></li>
+                        <li class="cart-icon"><a href="/cart/"><i class="fas fa-shopping-basket"></i> <span id="cartCount">0</span></a></li>
+                    </ul>
+                </nav>
+                <button class="mobile-menu-toggle" aria-label="Toggle navigation">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Cart Hero Section -->
+    <section class="cart-hero">
+        <div class="container">
+            <h1>Your Shopping Cart</h1>
+            <p>Review your items before checkout</p>
+        </div>
+    </section>
+
+    <!-- Cart Section -->
+    <section class="cart-section">
+        <div class="container">
+            <div id="cartContent">
+                <!-- Cart content will be loaded dynamically here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter-content">
+                <div class="newsletter-text">
+                    <h3>Join Our Community</h3>
+                    <p>Subscribe to our newsletter for exclusive offers, seasonal updates, and gift ideas straight to your inbox.</p>
+                </div>
+                <form class="newsletter-form" id="newsletterForm">
+                    <input type="email" placeholder="Your email address" required>
+                    <button type="submit" class="btn btn-primary bg-black">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col footer-about">
+                    <div class="footer-logo">
+                        <img src="assets/logo-white.png" alt="Bridgeland Market Gifts" width="180" height="65">
+                    </div>
+                    <p>Bridgeland Market Gifts is Calgary's premier destination for handcrafted gift baskets, artisanal cheeses, and beautiful floral arrangements.</p>
+                    <div class="footer-social">
+                        <a href="https://www.facebook.com/bridgelandmarket/" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://x.com/bridgelandmrkt" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.instagram.com/bridgelandmarket/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/shop/">Shop</a></li>
+                        <li><a href="/about/">About Us</a></li>
+                        <li><a href="/blog/">Blog</a></li>
+                        <li><a href="/contact/">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col footer-links">
+                    <h4>Customer Service</h4>
+                    <ul>
+                        <li><a href="/contact/">Contact Us</a></li>
+                     
+                        <li><a href="/privacy/">Privacy Policy</a></li>
+                        <li><a href="/terms/">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col footer-contact">
+                    <h4>Contact Us</h4>
+                    <address>
+                        <p><i class="fas fa-map-marker-alt"></i> 110 1 Ave NE, Calgary, AB T2E 0A6</p>
+                        <p><i class="fas fa-phone-alt"></i> (403) 555-0123</p>
+                        <p><i class="fas fa-envelope"></i> info@bridgelandmarketgifts.com</p>
+                    </address>
+                    <div class="payment-methods">
+                        <i class="fab fa-cc-visa"></i>
+                        <i class="fab fa-cc-mastercard"></i>
+                        <i class="fab fa-cc-amex"></i>
+                        <i class="fab fa-cc-paypal"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="copyright">
+                    <p>&copy; 2025 Bridgeland Market Gifts. All rights reserved.</p>
+                </div>
+                <div class="footer-legal">
+                    <a href="/privacy/">Privacy Policy</a>
+                    <a href="/terms/">Terms of Service</a>
+                    <a href="/cookies/">Cookies Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Initialize cart if it doesn't exist
+        if (!localStorage.getItem('cart')) {
+            localStorage.setItem('cart', JSON.stringify([]));
+        }
+        
+        // Load cart content
+        loadCart();
+        
+        // Update cart count display
+        updateCartCount();
+        
+        // Check cookies consent
+        if (!localStorage.getItem('cookiesAccepted')) {
+            document.getElementById('cookieConsent').style.display = 'block';
+        }
+    });
+    
+    // Cookies consent
+    document.getElementById('acceptCookies')?.addEventListener('click', function() {
+        localStorage.setItem('cookiesAccepted', 'true');
+        document.getElementById('cookieConsent').style.display = 'none';
+    });
+    
+    document.getElementById('declineCookies')?.addEventListener('click', function() {
+        document.getElementById('cookieConsent').style.display = 'none';
+    });
+    
+    // Function to update cart count display
+    function updateCartCount() {
+        const cart = JSON.parse(localStorage.getItem('cart'));
+        const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+        document.getElementById('cartCount').textContent = totalItems;
+    }
+    
+    // Function to load cart content
+    function loadCart() {
+        const cart = JSON.parse(localStorage.getItem('cart'));
+        const cartContent = document.getElementById('cartContent');
+        
+        if (cart.length === 0) {
+            // Show empty cart message
+            cartContent.innerHTML = `
+                <div class="empty-cart">
+                    <i class="fas fa-shopping-basket"></i>
+                    <h3>Your cart is empty</h3>
+                    <p>Looks like you haven't added any items to your cart yet.</p>
+                    <a href="/shop/" class="btn btn-primary">Continue Shopping</a>
+                </div>
+            `;
+            return;
+        }
+        
+        // Calculate subtotal
+        const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+        const tax = subtotal * 0.05; // 5% tax
+        const total = subtotal + tax;
+        
+        // Generate cart items HTML
+        let cartItemsHTML = '';
+        cart.forEach(item => {
+            cartItemsHTML += `
+                <tr>
+                    <td>
+                        <img src="${item.image}" alt="${item.name}" class="cart-item-img">
+                    </td>
+                    <td>
+                        <div class="cart-item-name">${item.name}</div>
+                        <div class="cart-item-price">$${item.price.toFixed(2)}</div>
+                    </td>
+                    <td>
+                        <div class="quantity-control">
+                            <button class="quantity-btn decrease" data-id="${item.id}">-</button>
+                            <input type="number" class="quantity-input" value="${item.quantity}" min="1" data-id="${item.id}">
+                            <button class="quantity-btn increase" data-id="${item.id}">+</button>
+                        </div>
+                    </td>
+                    <td class="text-right">$${(item.price * item.quantity).toFixed(2)}</td>
+                    <td class="text-center">
+                        <button class="remove-item" data-id="${item.id}">
+                            <i class="fas fa-trash-alt"></i>
+                        </button>
+                    </td>
+                </tr>
+            `;
+        });
+        
+        // Generate full cart HTML
+        cartContent.innerHTML = `
+            <div class="cart-container">
+                <div class="cart-items">
+                    <div class="table-responsive">
+                        <table class="cart-table">
+                            <thead>
+                                <tr>
+                                    <th>Product</th>
+                                    <th></th>
+                                    <th>Quantity</th>
+                                    <th>Total</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                ${cartItemsHTML}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="cart-actions">
+                        <a href="/shop/" class="btn btn-secondary">
+                            <i class="fas fa-arrow-left"></i> Continue Shopping
+                        </a>
+                        <button class="btn btn-secondary" id="updateCart">
+                            <i class="fas fa-sync-alt"></i> Update Cart
+                        </button>
+                    </div>
+                </div>
+                <div class="cart-summary">
+                    <h3>Order Summary</h3>
+                    <div class="summary-row">
+                        <span>Subtotal</span>
+                        <span>$${subtotal.toFixed(2)}</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Shipping</span>
+                        <span>Free</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Tax (5%)</span>
+                        <span>$${tax.toFixed(2)}</span>
+                    </div>
+                    <div class="summary-row summary-total">
+                        <span>Total</span>
+                        <span>$${total.toFixed(2)}</span>
+                    </div>
+                    <a href="/checkout/" class="btn btn-primary btn-block">
+                        Proceed to Checkout <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+            </div>
+        `;
+        
+        // Add event listeners to quantity controls
+        document.querySelectorAll('.quantity-btn.increase').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const productId = this.getAttribute('data-id');
+                updateQuantity(productId, 1);
+            });
+        });
+        
+        document.querySelectorAll('.quantity-btn.decrease').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const productId = this.getAttribute('data-id');
+                updateQuantity(productId, -1);
+            });
+        });
+        
+        document.querySelectorAll('.quantity-input').forEach(input => {
+            input.addEventListener('change', function() {
+                const productId = this.getAttribute('data-id');
+                const newQuantity = parseInt(this.value);
+                if (newQuantity > 0) {
+                    updateCartItemQuantity(productId, newQuantity);
+                } else {
+                    this.value = 1;
+                }
+            });
+        });
+        
+        // Add event listener to remove buttons
+        document.querySelectorAll('.remove-item').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const productId = this.getAttribute('data-id');
+                removeFromCart(productId);
+            });
+        });
+        
+        // Add event listener to update cart button
+        document.getElementById('updateCart')?.addEventListener('click', function() {
+            loadCart(); // Refresh the cart
+        });
+    }
+    
+    // Function to update quantity
+    function updateQuantity(productId, change) {
+        const cart = JSON.parse(localStorage.getItem('cart'));
+        const itemIndex = cart.findIndex(item => item.id === productId);
+        
+        if (itemIndex !== -1) {
+            const newQuantity = cart[itemIndex].quantity + change;
+            
+            if (newQuantity < 1) {
+                removeFromCart(productId);
+            } else {
+                cart[itemIndex].quantity = newQuantity;
+                localStorage.setItem('cart', JSON.stringify(cart));
+                updateCartCount();
+                
+                // Update the input field
+                const input = document.querySelector(`.quantity-input[data-id="${productId}"]`);
+                if (input) {
+                    input.value = newQuantity;
+                }
+            }
+        }
+    }
+    
+    // Function to update cart item quantity directly
+    function updateCartItemQuantity(productId, newQuantity) {
+        const cart = JSON.parse(localStorage.getItem('cart'));
+        const itemIndex = cart.findIndex(item => item.id === productId);
+        
+        if (itemIndex !== -1) {
+            cart[itemIndex].quantity = newQuantity;
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+        }
+    }
+    
+    // Function to remove item from cart
+    function removeFromCart(productId) {
+        let cart = JSON.parse(localStorage.getItem('cart'));
+        cart = cart.filter(item => item.id !== productId);
+        localStorage.setItem('cart', JSON.stringify(cart));
+        updateCartCount();
+        loadCart(); // Reload the cart display
+    }
+    </script>
+</body>
+</html>

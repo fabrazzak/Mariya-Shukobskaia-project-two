@@ -1,0 +1,1004 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wild Manchester Group | Reconnecting to Nature Together</title>
+    <meta name="description"
+        content="Wild Manchester Group offers wild camping adventures and nature experiences in Manchester. Reconnect with nature through our guided tours, foraging experiences, and wilderness camping.">
+    <meta name="keywords"
+        content="wild camping Manchester, nature adventures, foraging Manchester, wilderness experiences, outdoor activities, camping UK, nature therapy, outdoor survival, Manchester nature, eco-tourism">
+
+    <!-- Favicon -->
+   <link rel="icon" href="/assets/logo.png" type="image/x-icon">
+    <meta http-equiv="Permissions-Policy" content="unload=(none)">
+    <link rel="canonical" href="https://wildmanchestergroup.com/" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            200: '#bbf7d0',
+                            300: '#86efac',
+                            400: '#4ade80',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                        },
+                        dark: {
+                            900: '#0a0a0a',
+                            800: '#1a1a1a',
+                            700: '#2a2a2a',
+                            600: '#3a3a3a',
+                            500: '#4a4a4a',
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-reverse': 'float-reverse 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 8s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        'float-reverse': {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollTrigger.min.js"></script>
+
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #0a0a0a;
+            color: #f8fafc;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #4ade80, #3b82f6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, rgba(20, 83, 45, 0.2), rgba(30, 64, 175, 0.2));
+        }
+
+        .parallax-bg {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .card-hover {
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .glow-hover:hover {
+            filter: drop-shadow(0 0 8px rgba(74, 222, 128, 0.7));
+        }
+
+        .text-stroke {
+            -webkit-text-stroke: 1px #f8fafc;
+            color: transparent;
+        }
+
+        .noise-bg::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: -1;
+        }
+    </style>
+</head>
+
+<body class="noise-bg">
+    <!-- Cookie Consent Banner -->
+    <div id="cookieConsent" class="fixed bottom-0 left-0 right-0 bg-dark-800 p-4 shadow-lg z-50 hidden">
+        <div class="container mx-auto flex flex-col md:flex-row items-center justify-between">
+            <p class="text-sm text-gray-300 mb-4 md:mb-0 md:mr-4">
+                We use cookies to enhance your experience. By continuing to visit this site you agree to our use of
+                cookies.
+                <a href="/privacy/" class="text-primary-400 hover:underline">Learn more</a>
+            </p>
+            <div class="flex space-x-3">
+                <button id="acceptCookies"
+                    class="px-4 py-2 bg-primary-600 hover:bg-primary-700 rounded-md text-sm font-medium transition-colors">
+                    Accept
+                </button>
+                <button id="declineCookies"
+                    class="px-4 py-2 bg-dark-700 hover:bg-dark-600 rounded-md text-sm font-medium transition-colors">
+                    Decline
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-40 bg-dark-900/80 backdrop-blur-md border-b border-dark-700">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="/" class="flex items-center space-x-2 glow-hover">
+                       <img src="/assets/logo.png" class="h-16" alt="logo" />
+                    </a>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="text-white hover:text-primary-400 transition-colors font-medium">Home</a>
+                    <a href="/about/" class="text-gray-300 hover:text-primary-400 transition-colors">About</a>
+                     <a href="/blog/" class="text-gray-300 hover:text-primary-400 transition-colors">Blog</a>
+                    <a href="/camping/" class="text-gray-300  hover:text-primary-400 transition-colors ">Camping</a>
+                    <a href="/contact/" class="text-gray-300 hover:text-primary-400 transition-colors">Contact</a>                  
+                      <a href="/gallery/" class="text-gray-300 hover:text-primary-400 transition-color ">Gallery</a>
+                    
+                </div>
+
+                <!-- CTA and Mobile Menu Button -->
+                <div class="flex items-center space-x-4">
+                    <a href="/contact/"
+                        class="hidden md:block px-4 py-2 bg-primary-600 hover:bg-primary-700 rounded-md text-sm font-medium transition-colors">
+                        Book Adventure
+                    </a>
+                    <button id="mobileMenuButton" class="md:hidden text-gray-300 hover:text-white focus:outline-none">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="md:hidden hidden bg-dark-800 border-t border-dark-700">
+            <div class="container mx-auto px-6 py-4 flex flex-col space-y-4">
+                <a href="/" class="text-white hover:text-primary-400 transition-colors">Home</a>
+                <a href="/about/" class="text-gray-300 hover:text-primary-400 transition-colors">About</a>
+                 <a href="/blog/" class="text-gray-300 hover:text-primary-400 transition-colors">Blog</a>
+                    <a href="/camping/" class="text-gray-300  hover:text-primary-400 transition-colors ">Camping</a>
+                <a href="/contact/" class="text-gray-300 hover:text-primary-400 transition-colors">Contact</a>
+                <a href="/gallery/" class="text-gray-300 hover:text-primary-400 transition-colors">Gallery</a>
+                
+                
+                <a href="/contact/"
+                    class="mt-2 px-4 py-2 bg-primary-600 hover:bg-primary-700 rounded-md text-sm font-medium text-center transition-colors">
+                    Book Adventure
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative md:h-screen flex items-center justify-center overflow-hidden pt-32">
+        <!-- Three.js Background -->
+        <div id="threejsBg" class="absolute top-0 left-0 w-full h-full z-0"></div>
+
+        <!-- Gradient Overlay -->
+        <div class="absolute inset-0 bg-gradient-to-b from-dark-900/70 via-dark-900/30 to-dark-900/70 z-10"></div>
+
+        <div class="container mx-auto px-6 relative z-20">
+            <div class="max-w-4xl mx-auto text-center">
+                <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+                    <span class="gradient-text">Reconnect</span> With Nature in <span
+                        class="text-stroke">Manchester</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-300 mb-10 max-w-3xl mx-auto">
+                    Experience the wild side of Manchester with our guided camping adventures, foraging tours, and
+                    nature immersion experiences.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="/contact/"
+                        class="px-8 py-4 bg-primary-600 hover:bg-primary-700 rounded-lg text-lg font-semibold transition-colors shadow-lg transform hover:scale-105 duration-300">
+                        Book Your Adventure
+                    </a>
+                    <a href="#explore"
+                        class="px-8 py-4 bg-dark-700 hover:bg-dark-600 rounded-lg text-lg font-semibold transition-colors shadow-lg transform hover:scale-105 duration-300">
+                        Explore More
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scrolling Indicator -->
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20 animate-bounce hidden md:block">
+            <a href="#explore"
+                class="block w-10 h-10 rounded-full border-2 border-gray-400 flex items-center justify-center text-gray-400 hover:text-white hover:border-white transition-colors">
+                <i class="fas fa-chevron-down"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="explore" class="py-20 relative overflow-hidden">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4">
+                    <span class="gradient-text">Wild Camping</span> Experiences
+                </h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                    Discover the thrill of wild camping with our carefully curated experiences designed for all skill
+                    levels.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="bg-dark-800 rounded-xl p-8 card-hover gradient-bg border border-dark-700">
+                    <img src="/assets/wild-camping.webp" class="rounded-lg mb-6 h-64 w-full object-cover"
+                        alt="wild camping" />
+                    <h3 class="text-2xl font-bold mb-3">Beginner Wild Camping</h3>
+                    <p class="text-gray-400 mb-4">
+                        Perfect for first-timers, our beginner camping trips provide all the essentials while still
+                        offering an authentic wild experience.
+                    </p>
+                    <ul class="space-y-2 mb-6">
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-primary-400 mr-2"></i>
+                            <span>Guided by experienced instructors</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-primary-400 mr-2"></i>
+                            <span>All equipment provided</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-primary-400 mr-2"></i>
+                            <span>Safe, legal camping locations</span>
+                        </li>
+                    </ul>
+
+                </div>
+
+                <!-- Feature 2 -->
+                <div class="bg-dark-800 rounded-xl p-8 card-hover gradient-bg border border-dark-700">
+                    <img src="/assets/foragin-camping.jpg" class="rounded-lg mb-6 h-64 w-full object-cover"
+                        alt="wild camping" />
+                    <h3 class="text-2xl font-bold mb-3">Foraging Adventures</h3>
+                    <p class="text-gray-400 mb-4">
+                        Learn to identify, harvest, and prepare wild edibles with our expert foragers. Discover nature's
+                        pantry in Manchester's wilderness.
+                    </p>
+                    <ul class="space-y-2 mb-6">
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-primary-400 mr-2"></i>
+                            <span>Seasonal foraging experiences</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-primary-400 mr-2"></i>
+                            <span>Cooking with wild ingredients</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-primary-400 mr-2"></i>
+                            <span>Sustainable harvesting practices</span>
+                        </li>
+                    </ul>
+
+                </div>
+
+                <!-- Feature 3 -->
+                <div class="bg-dark-800 rounded-xl p-8 card-hover gradient-bg border border-dark-700">
+                    <img src="/assets/advanced-survival.jpg" class="rounded-lg mb-6 h-64 w-full object-cover"
+                        alt="wild camping" />
+                    <h3 class="text-2xl font-bold mb-3">Advanced Survival</h3>
+                    <p class="text-gray-400 mb-4">
+                        Test your skills with our advanced survival courses. Fire-making, shelter-building, navigation
+                        and more in challenging environments.
+                    </p>
+                    <ul class="space-y-2 mb-6">
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-primary-400 mr-2"></i>
+                            <span>3-day intensive survival training</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-primary-400 mr-2"></i>
+                            <span>Minimal equipment challenges</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-primary-400 mr-2"></i>
+                            <span>Expert instruction from survivalists</span>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Floating elements -->
+        <div class="absolute top-1/4 left-10 w-8 h-8 rounded-full bg-primary-500/20 blur-md animate-pulse-slow"></div>
+        <div class="absolute bottom-1/3 right-20 w-12 h-12 rounded-full bg-blue-500/20 blur-md animate-pulse-slow">
+        </div>
+    </section>
+
+    <!-- Video Showcase Section -->
+    <section class="py-20 bg-dark-800/50 relative overflow-hidden">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col lg:flex-row items-center gap-12">
+
+                <!-- Video Embed -->
+                <div class="lg:w-1/2">
+                    <div
+                        class="relative rounded-2xl overflow-hidden shadow-2xl transform hover:scale-[1.01] transition duration-500">
+                        <div class="aspect-w-16 aspect-h-9 bg-dark-700">
+                            <iframe width="750" height="415"
+                                src="https://www.youtube.com/embed/U9fRryL2fVo?si=EsiIoanwQh3TPPyn"
+                                title="YouTube video player" frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+                            </iframe>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Text Content -->
+                <div class="lg:w-1/2">
+                    <h2 class="text-4xl font-bold mb-6">
+                        Discover the <span class="gradient-text">Wilderness</span> Like Never Before
+                    </h2>
+                    <p class="text-xl text-gray-400 mb-8">
+                        Join us as we take a first-time camper on a journey through the wilds of Manchester. Disconnect
+                        from the digital world and reconnect with what truly matters — nature.
+                    </p>
+
+                    <!-- Feature List -->
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-primary-400 mt-1"></i>
+                            <p class="ml-3 text-gray-300">
+                                <strong>Authentic moments:</strong> 100% real, unscripted experiences.
+                            </p>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-primary-400 mt-1"></i>
+                            <p class="ml-3 text-gray-300">
+                                <strong>Practical tips:</strong> Learn how to thrive in the wilderness.
+                            </p>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-primary-400 mt-1"></i>
+                            <p class="ml-3 text-gray-300">
+                                <strong>Emotional stories:</strong> Witness nature’s impact on the human spirit.
+                            </p>
+                        </li>
+                    </ul>
+
+                    <!-- CTA Buttons -->
+                    <div class="mt-8 flex flex-wrap gap-4">
+                        <a href="https://www.youtube.com/channel/UCGXyESNY94ItxqJOdyszYgQ" target="_blank"
+                            class="px-6 py-3 bg-red-600 hover:bg-red-700 text-white rounded-lg font-medium flex items-center">
+                            <i class="fab fa-youtube mr-2"></i> Visit YouTube Channel
+                        </a>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Testimonials Section -->
+    <section class="py-20 relative overflow-hidden">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4">
+                    What Our <span class="gradient-text">Adventurers</span> Say
+                </h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                    Don't just take our word for it - hear from those who've experienced the wild with us.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="bg-dark-800 rounded-xl p-8 border border-dark-700 relative overflow-hidden">
+                    <div class="absolute -top-10 -right-10 w-32 h-32 rounded-full bg-primary-500/10 blur-3xl"></div>
+                    <div class="flex items-center mb-6">
+
+                        <div>
+                            <h4 class="font-bold">Sarah J.</h4>
+                            <div class="flex text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 italic mb-6">
+                        "As a complete beginner, I was nervous about wild camping, but the guides made me feel
+                        completely safe. Waking up to birdsong by the river was magical - I haven't felt that peaceful
+                        in years!"
+                    </p>
+                    <div class="text-sm text-gray-500">
+                        <i class="fas fa-calendar-alt mr-2"></i> Beginner Camping - June 2025
+                    </div>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="bg-dark-800 rounded-xl p-8 border border-dark-700 relative overflow-hidden">
+                    <div class="absolute -bottom-10 -left-10 w-32 h-32 rounded-full bg-blue-500/10 blur-3xl"></div>
+                    <div class="flex items-center mb-6">
+
+                        <div>
+                            <h4 class="font-bold">Mark T.</h4>
+                            <div class="flex text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 italic mb-6">
+                        "The foraging course opened my eyes to the abundance of food growing wild around Manchester.
+                        I've since incorporated wild garlic and nettles into my weekly meals - delicious and free!"
+                    </p>
+                    <div class="text-sm text-gray-500">
+                        <i class="fas fa-calendar-alt mr-2"></i> Foraging Adventure - April 2025
+                    </div>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="bg-dark-800 rounded-xl p-8 border border-dark-700 relative overflow-hidden">
+                    <div class="absolute -top-10 -left-10 w-32 h-32 rounded-full bg-purple-500/10 blur-3xl"></div>
+                    <div class="flex items-center mb-6">
+
+                        <div>
+                            <h4 class="font-bold">Emily & James</h4>
+                            <div class="flex text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 italic mb-6">
+                        "We took our two kids (8 & 10) on a family camping trip and it was the best weekend we've had in
+                        years. No screens, just exploring, fishing and storytelling by the fire. We'll be back!"
+                    </p>
+                    <div class="text-sm text-gray-500">
+                        <i class="fas fa-calendar-alt mr-2"></i> Family Camping - August 2025
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </section>
+
+    <!-- Blog Preview Section -->
+    <section class="py-20 bg-dark-800/50 relative overflow-hidden">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-16">
+                <div>
+                    <h2 class="text-4xl md:text-5xl font-bold mb-4">
+                        Latest <span class="gradient-text">Wilderness</span> Insights
+                    </h2>
+                    <p class="text-xl text-gray-400">
+                        Learn from our adventures and prepare for your own.
+                    </p>
+                </div>
+                <a href="/blog/"
+                    class="mt-6 md:mt-0 px-6 py-3 bg-dark-700 hover:bg-dark-600 rounded-lg font-medium flex items-center">
+                    View All Articles <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Blog Post 1 -->
+                <a href="/blog/essential-wild-camping-gear/" class="group">
+                    <div
+                        class="bg-dark-800 rounded-xl overflow-hidden border border-dark-700 h-full flex flex-col card-hover">
+                        <div class="relative overflow-hidden h-48">
+                            <img src="/assets/blog1.webp" alt="Essential Wild Camping Gear"
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-t from-dark-900/80 via-transparent to-transparent">
+                            </div>
+                        </div>
+                        <div class="p-6 flex-grow">
+                            <div class="flex items-center text-sm text-gray-500 mb-3">
+                                <span>Camping Tips</span>
+                                <span class="mx-2">•</span>
+                                <span>5 min read</span>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3 group-hover:text-primary-400 transition-colors">Essential
+                                Gear for Your First Wild Camping Trip</h3>
+                            <p class="text-gray-400 mb-4">
+                                Pack smart with our checklist of must-have items for a comfortable and safe wilderness
+                                experience.
+                            </p>
+                        </div>
+                        <div class="px-6 pb-6">
+                            <div class="text-primary-400 font-medium group-hover:underline">Read More</div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Blog Post 2 -->
+                <a href="/blog/foraging-guide-manchester/" class="group">
+                    <div
+                        class="bg-dark-800 rounded-xl overflow-hidden border border-dark-700 h-full flex flex-col card-hover">
+                        <div class="relative overflow-hidden h-48">
+                            <img src="/assets/blog2.jpg" alt="Foraging Guide Manchester"
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-t from-dark-900/80 via-transparent to-transparent">
+                            </div>
+                        </div>
+                        <div class="p-6 flex-grow">
+                            <div class="flex items-center text-sm text-gray-500 mb-3">
+                                <span>Foraging</span>
+                                <span class="mx-2">•</span>
+                                <span>8 min read</span>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3 group-hover:text-primary-400 transition-colors">Seasonal
+                                Foraging Guide: Manchester's Wild Edibles</h3>
+                            <p class="text-gray-400 mb-4">
+                                Discover what nature's pantry offers throughout the year in Manchester's forests and
+                                fields.
+                            </p>
+                        </div>
+                        <div class="px-6 pb-6">
+                            <div class="text-primary-400 font-medium group-hover:underline">Read More</div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Blog Post 3 -->
+                <a href="/blog/fire-starting-techniques/" class="group">
+                    <div
+                        class="bg-dark-800 rounded-xl overflow-hidden border border-dark-700 h-full flex flex-col card-hover">
+                        <div class="relative overflow-hidden h-48">
+                            <img src="/assets/blog3.jpg" alt="Fire Starting Techniques"
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-t from-dark-900/80 via-transparent to-transparent">
+                            </div>
+                        </div>
+                        <div class="p-6 flex-grow">
+                            <div class="flex items-center text-sm text-gray-500 mb-3">
+                                <span>Survival Skills</span>
+                                <span class="mx-2">•</span>
+                                <span>6 min read</span>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3 group-hover:text-primary-400 transition-colors">5 Reliable
+                                Fire-Starting Techniques for Wet Conditions</h3>
+                            <p class="text-gray-400 mb-4">
+                                Because let's face it - it rains a lot in the UK. Master these methods to stay warm and
+                                dry.
+                            </p>
+                        </div>
+                        <div class="px-6 pb-6">
+                            <div class="text-primary-400 font-medium group-hover:underline">Read More</div>
+                        </div>
+                    </div>
+                </a>
+
+                <!-- Blog Post 4 -->
+                <a href="/blog/nature-mental-health/" class="group">
+                    <div
+                        class="bg-dark-800 rounded-xl overflow-hidden border border-dark-700 h-full flex flex-col card-hover">
+                        <div class="relative overflow-hidden h-48">
+                            <img src="/assets/blog4.jpg" alt="Nature and Mental Health"
+                                class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                            <div
+                                class="absolute inset-0 bg-gradient-to-t from-dark-900/80 via-transparent to-transparent">
+                            </div>
+                        </div>
+                        <div class="p-6 flex-grow">
+                            <div class="flex items-center text-sm text-gray-500 mb-3">
+                                <span>Wellbeing</span>
+                                <span class="mx-2">•</span>
+                                <span>10 min read</span>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3 group-hover:text-primary-400 transition-colors">The
+                                Science Behind Nature's Healing Power</h3>
+                            <p class="text-gray-400 mb-4">
+                                How spending time in wilderness reduces stress and improves mental health, backed by
+                                research.
+                            </p>
+                        </div>
+                        <div class="px-6 pb-6">
+                            <div class="text-primary-400 font-medium group-hover:underline">Read More</div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 relative overflow-hidden bg-[url('/assets/advanced-survival.jpg')] bg-cover bg-center">
+        <div class="absolute inset-0 bg-gradient-to-b from-dark-900/80 to-dark-900/90 z-0"></div>
+
+        <!-- Floating blurred shapes -->
+        <div class="absolute inset-0 opacity-10 z-0">
+            <div class="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-primary-500/30 blur-3xl animate-float">
+            </div>
+            <div
+                class="absolute bottom-1/3 right-1/4 w-64 h-64 rounded-full bg-blue-500/30 blur-3xl animate-float-reverse">
+            </div>
+        </div>
+
+        <!-- Main content -->
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">
+                    Ready for Your <span class="gradient-text">Wild Adventure</span>?
+                </h2>
+                <p class="text-xl text-gray-300 mb-10 max-w-3xl mx-auto">
+                    Whether you're a seasoned outdoors enthusiast or a complete beginner, we have the perfect experience
+                    to help you reconnect with nature.
+                </p>
+                <div class="flex flex-col z-50 sm:flex-row justify-center gap-4 relative">
+                    <a href="/contact/"
+                        class="px-8 py-4 bg-white hover:bg-gray-100 text-dark-900 rounded-lg text-lg font-semibold  shadow-lg  hover:scale-105 ">
+                        Book Your Trip Now
+                    </a>
+                    <a href="tel:+441412222254"
+                        class="px-8 py-4 bg-dark-800 hover:bg-dark-700 rounded-lg text-lg font-semibold  shadow-lg  hover:scale-105 flex items-center justify-center">
+                        <i class="fas fa-phone mr-2"></i> Call Us
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Location Section -->
+    <section class="py-20 relative">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col lg:flex-row items-center gap-12">
+                <div class="lg:w-1/2">
+                    <h2 class="text-4xl font-bold mb-6">
+                        Find Us in <span class="gradient-text">Glasgow</span>
+                    </h2>
+                    <p class="text-xl text-gray-400 mb-8">
+                        Our base camp is conveniently located in the heart of Glasgow, with easy access to Manchester's
+                        most beautiful wilderness areas.
+                    </p>
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 mt-1 text-primary-400">
+                                <i class="fas fa-map-marker-alt text-2xl"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="text-xl font-semibold mb-1">Address</h3>
+                                <p class="text-gray-400">22 Renfield Ln, Glasgow G2 5AR, United Kingdom</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 mt-1 text-primary-400">
+                                <i class="fas fa-clock text-2xl"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="text-xl font-semibold mb-1">Opening Hours</h3>
+                                <p class="text-gray-400">Monday - Friday: 9am - 6pm</p>
+                                <p class="text-gray-400">Saturday: 10am - 4pm</p>
+                                <p class="text-gray-400">Sunday: Closed</p>
+                            </div>
+                        </div>
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 mt-1 text-primary-400">
+                                <i class="fas fa-envelope text-2xl"></i>
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="text-xl font-semibold mb-1">Contact</h3>
+                                <p class="text-gray-400">info@wildmanchestergroup.com</p>
+                                <p class="text-gray-400">+441412222254</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:w-1/2 h-96 rounded-2xl overflow-hidden shadow-2xl border border-dark-700">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2238.219498654196!2d-4.256222683824656!3d55.86089398059762!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4888469f3c1a7f0d%3A0x7a5e8f3a3a5e3b1!2s22%20Renfield%20Ln%2C%20Glasgow%20G2%205AR%2C%20UK!5e0!3m2!1sen!2sus!4v1620000000000!5m2!1sen!2sus"
+                        width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark-900 border-t border-dark-800 pt-20 pb-10">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+                <div>
+                   <a href="/" class="flex items-center space-x-2 glow-hover">
+                       <img src="/assets/logo.png" class="h-16 mb-6" alt="logo" />
+                    </a>
+                    <p class="text-gray-400 mb-6">
+                        Reconnecting people with nature through wild camping adventures, foraging experiences, and
+                        wilderness survival training in Manchester.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="https://www.facebook.com/Wildmanc.nature" target="_blank"
+                            class="w-10 h-10 rounded-full bg-dark-800 hover:bg-dark-700 flex items-center justify-center text-gray-400 hover:text-primary-400 transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.instagram.com/wild.manchester/" target="_blank"
+                            class="w-10 h-10 rounded-full bg-dark-800 hover:bg-dark-700 flex items-center justify-center text-gray-400 hover:text-primary-400 transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://x.com/ManchesterWild" target="_blank"
+                            class="w-10 h-10 rounded-full bg-dark-800 hover:bg-dark-700 flex items-center justify-center text-gray-400 hover:text-primary-400 transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://www.youtube.com/channel/UCGXyESNY94ItxqJOdyszYgQ" target="_blank"
+                            class="w-10 h-10 rounded-full bg-dark-800 hover:bg-dark-700 flex items-center justify-center text-gray-400 hover:text-primary-400 transition-colors">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold mb-6">Quick Links</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/" class="text-gray-400 hover:text-primary-400 transition-colors">Home</a></li>
+                        <li><a href="/about/" class="text-gray-400 hover:text-primary-400 transition-colors">About
+                                Us</a></li>
+                        <li><a href="/blog/" class="text-gray-400 hover:text-primary-400 transition-colors">Blog</a>
+                        </li>
+                        <li><a href="/gallery/"
+                                class="text-gray-400 hover:text-primary-400 transition-colors">Gallery</a></li>
+                        <li><a href="/contact/"
+                                class="text-gray-400 hover:text-primary-400 transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold mb-6">Experiences</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/camping/"
+                                class="text-gray-400 hover:text-primary-400 transition-colors">Beginner Camping</a></li>
+                        <li><a href="/camping/" class="text-gray-400 hover:text-primary-400 transition-colors">Foraging
+                                Adventures</a></li>
+                        <li><a href="/camping/" class="text-gray-400 hover:text-primary-400 transition-colors">Survival
+                                Training</a></li>
+                        <li><a href="/camping/"
+                                class="text-gray-400 hover:text-primary-400 transition-colors">Family Camping</a></li>
+                        <li><a href="/camping/"
+                                class="text-gray-400 hover:text-primary-400 transition-colors">Wildlife Photography</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold mb-6">Legal</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/privacy/" class="text-gray-400 hover:text-primary-400 transition-colors">Privacy
+                                Policy</a></li>
+                        <li><a href="/terms/" class="text-gray-400 hover:text-primary-400 transition-colors">Terms of
+                                Service</a></li>
+                        <li><a href="/cookies/" class="text-gray-400 hover:text-primary-400 transition-colors">Cookies
+                                Policy</a></li>
+                        <li><a href="/faq/" class="text-gray-400 hover:text-primary-400 transition-colors">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-dark-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-500 text-sm mb-4 md:mb-0">
+                    &copy; 2025 Wild Manchester Group. All rights reserved.
+                </p>
+                <div class="flex space-x-6">
+                    <a href="/privacy/" class="text-gray-500 hover:text-gray-400 text-sm transition-colors">Privacy
+                                Policy</a>
+                    <a href="/terms/" class="text-gray-500 hover:text-gray-400 text-sm transition-colors">Terms of
+                                Service</a>
+                    <a href="/cookies/" class="text-gray-500 hover:text-gray-400 text-sm transition-colors">Cookies
+                                Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop"
+        class="fixed bottom-8 right-8 w-12 h-12 rounded-full bg-primary-600 hover:bg-primary-700 text-white shadow-lg flex items-center justify-center transition-opacity duration-300 opacity-0 invisible">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Back to Top Button
+        const backToTopButton = document.getElementById('backToTop');
+
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.remove('opacity-0', 'invisible');
+                backToTopButton.classList.add('opacity-100', 'visible');
+            } else {
+                backToTopButton.classList.remove('opacity-100', 'visible');
+                backToTopButton.classList.add('opacity-0', 'invisible');
+            }
+        });
+
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Cookie Consent
+        const cookieConsent = document.getElementById('cookieConsent');
+        const acceptCookies = document.getElementById('acceptCookies');
+        const declineCookies = document.getElementById('declineCookies');
+
+        if (!localStorage.getItem('cookieConsent')) {
+            setTimeout(() => {
+                cookieConsent.classList.remove('hidden');
+            }, 2000);
+        }
+
+        acceptCookies.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'accepted');
+            cookieConsent.classList.add('hidden');
+        });
+
+        declineCookies.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'declined');
+            cookieConsent.classList.add('hidden');
+        });
+
+        // Three.js Background for Hero Section
+        const threejsBg = document.getElementById('threejsBg');
+
+        if (threejsBg) {
+            // Scene setup
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(threejsBg.offsetWidth, threejsBg.offsetHeight);
+            threejsBg.appendChild(renderer.domElement);
+
+            // Particles
+            const particlesGeometry = new THREE.BufferGeometry();
+            const particleCount = 1000;
+
+            const posArray = new Float32Array(particleCount * 3);
+
+            for (let i = 0; i < particleCount * 3; i++) {
+                posArray[i] = (Math.random() - 0.5) * 10;
+            }
+
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+
+            const particlesMaterial = new THREE.PointsMaterial({
+                size: 0.02,
+                color: 0x4ade80,
+                transparent: true,
+                opacity: 0.8,
+                blending: THREE.AdditiveBlending
+            });
+
+            const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+            scene.add(particlesMesh);
+
+            camera.position.z = 3;
+
+            // Animation
+            function animate() {
+                requestAnimationFrame(animate);
+
+                particlesMesh.rotation.x += 0.0005;
+                particlesMesh.rotation.y += 0.0005;
+
+                renderer.render(scene, camera);
+            }
+
+            animate();
+
+            // Handle resize
+            window.addEventListener('resize', () => {
+                camera.aspect = threejsBg.offsetWidth / threejsBg.offsetHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(threejsBg.offsetWidth, threejsBg.offsetHeight);
+            });
+        }
+
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Animate elements on scroll
+        gsap.utils.toArray('.card-hover').forEach(card => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                },
+                y: 50,
+                opacity: 0,
+                duration: 1,
+                ease: "power3.out"
+            });
+        });
+
+        // Hero text animation
+        gsap.from("section.relative h1 span", {
+            duration: 1.5,
+            y: 50,
+            opacity: 0,
+            stagger: 0.2,
+            ease: "power3.out"
+        });
+
+        gsap.from("section.relative p", {
+            duration: 1.5,
+            y: 50,
+            opacity: 0,
+            delay: 0.5,
+            ease: "power3.out"
+        });
+
+        gsap.from("section.relative .flex a", {
+            duration: 1.5,
+            y: 50,
+            opacity: 0,
+            delay: 0.8,
+            stagger: 0.1,
+            ease: "power3.out"
+        });
+    </script>
+</body>
+
+</html>

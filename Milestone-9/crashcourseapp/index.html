@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crash Course - Free Educational App for Fun Learning</title>
+    <meta name="description"
+        content="Crash Course app brings free, high-quality educational videos, flashcards and quizzes to your mobile device. Join our community of 10M+ learners worldwide.">
+    <meta name="keywords"
+        content="educational app, learning app, crash course, free education, online courses, science videos, humanities courses, flashcards, quizzes">
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="canonical" href="https://crashcourseapp.com/" />
+
+    <!-- Tailwind CSS (if not already included) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Favicon -->
+    <link rel="icon" href="/image/logo.webp" type="image/x-icon">
+
+    <!-- Google Fonts - Rajdhani -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FF5722',
+                        secondary: '#1E1E2F',
+                        accent: '#00FFC6',
+                    },
+                    fontFamily: {
+                        rajdhani: ['Rajdhani', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+
+<body class="font-rajdhani bg-secondary text-white antialiased overflow-x-hidden">
+    <!-- Cookie Consent Banner -->
+    <div id="cookieConsent" class="fixed bottom-0 left-0 right-0 bg-secondary border-t border-accent z-50 hidden">
+        <div class="container mx-auto px-4 py-3 flex flex-col md:flex-row items-center justify-between">
+            <div class="mb-3 md:mb-0 md:mr-4">
+                <p class="text-sm">We use cookies to enhance your experience. By continuing to visit this site you agree
+                    to our use of cookies.</p>
+            </div>
+            <div class="flex space-x-2">
+                <button id="learnMoreBtn"
+                    class="px-3 py-1 text-sm border border-accent text-accent rounded hover:bg-accent hover:text-secondary transition">Learn
+                    More</button>
+                <button id="declineCookies"
+                    class="px-3 py-1 text-sm border border-gray-500 text-gray-300 rounded hover:bg-gray-700 transition">Decline</button>
+                <button id="acceptCookies"
+                    class="px-3 py-1 text-sm bg-accent text-secondary rounded hover:bg-opacity-90 transition">Accept</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 bg-secondary bg-opacity-90 backdrop-blur-md z-40 border-b border-gray-800">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <a href="/" class="flex items-center">
+                    <div class="  flex items-center justify-center mr-2">
+                        <img src="/image/logo.png" alt="logo" class="h-14 rounded-full">
+                    </div>                   
+                </a>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="text-white hover:text-accent transition">Home</a>
+                    <a href="/courses/" class="text-white hover:text-accent transition">Courses</a>
+                    <a href="/about/" class="text-white hover:text-accent transition">About</a>
+                    <a href="/blog/" class="text-white hover:text-accent transition">Blog</a>
+                    <a href="/responsible-courses/" class="text-white hover:text-accent transition ">Responsible Courses</a>
+                    <a href="/contact/" class="text-white hover:text-accent transition">Contact</a>
+                    <a href="https://play.google.com/store/apps/details?id=com.complexly.thecrashcourse&hl=en"
+                        class="px-4 py-2 bg-primary rounded-md hover:bg-opacity-90 transition font-medium">
+                        Download
+                    </a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuButton" class="md:hidden text-white focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="md:hidden hidden bg-secondary border-t border-gray-800">
+            <div class="container mx-auto px-4 py-3 flex flex-col space-y-3">
+                <a href="/" class="py-2 text-white hover:text-accent transition">Home</a>
+                <a href="/courses/" class="py-2 text-white hover:text-accent transition">Courses</a>
+                <a href="/about/" class="py-2 text-white hover:text-accent transition">About</a>
+                <a href="/blog/" class="py-2 text-white hover:text-accent transition">Blog</a>
+                <a href="/responsible-courses/" class="py-2 ">Responsible Courses</a>
+                <a href="/contact/" class="py-2 text-white hover:text-accent transition">Contact</a>
+                <a href="https://play.google.com/store/apps/details?id=com.complexly.thecrashcourse&hl=en"
+                    class="px-4 py-2 bg-primary rounded-md hover:bg-opacity-90 transition font-medium text-center my-2">
+                    Download App
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative md:h-screen py-32 flex items-center justify-center overflow-hidden ">
+        <!-- Three.js Background -->
+        <div id="threejsBackground" class="absolute inset-0 z-0"></div>
+
+        <div class="container mx-auto px-4 z-10">
+            <div class="flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 mb-10 md:mb-0">
+                    <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+                        Learning Made <span class="text-accent">Fun</span> & <span class="text-primary">Engaging</span>
+                    </h1>
+                    <p class="text-lg md:text-xl mb-8 text-gray-300">
+                        Join our community of 10 million+ learners with free, high-quality educational content across
+                        science, humanities, and more.
+                    </p>
+                    <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
+                        <a href="https://play.google.com/store/apps/details?id=com.complexly.thecrashcourse&hl=en"
+                            class="px-8 py-3 bg-primary rounded-md hover:bg-opacity-90 transition font-medium text-center">
+                            Download Now
+                        </a>
+                        <a href="#features"
+                            class="px-8 py-3 border border-accent text-accent rounded-md hover:bg-accent hover:text-secondary transition font-medium text-center">
+                            Explore Courses
+                        </a>
+                    </div>
+                </div>
+                <div class="md:w-1/2 flex justify-center">
+                    <div class="relative w-full max-w-md">
+                        <div
+                            class="absolute -top-10 -left-10 w-32 h-32 bg-accent rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob">
+                        </div>
+                        <div
+                            class="absolute -bottom-10 -right-10 w-32 h-32 bg-primary rounded-full mix-blend-multiply filter blur-xl opacity-70 animate-blob animation-delay-2000">
+                        </div>
+                        <div
+                            class="absolute top-0 right-0 w-32 h-32 bg-white rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-blob animation-delay-4000">
+                        </div>
+                        <div class="relative">
+                            <img src="/image/app-screenshot.png" alt="Crash Course App Screenshot"
+                                class="rounded-lg shadow-2xl border-4 border-white transform rotate-3 hover:rotate-0 transition-transform duration-300">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll Down Indicator -->
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-10 animate-bounce">
+            <a href="#features" class="block">
+                <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                </svg>
+            </a>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="py-20 bg-gradient-to-b from-secondary to-gray-900 relative overflow-hidden">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Why Choose <span class="text-accent">Crash Course</span>
+                </h2>
+                <p class="text-lg text-gray-300 max-w-3xl mx-auto">
+                    We make high-quality education accessible, engaging, and fun for everyone.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div
+                    class="bg-gray-800 bg-opacity-50 rounded-xl p-6 border border-gray-700 hover:border-accent transition transform hover:-translate-y-2">
+                    <div class="w-14 h-14 bg-primary bg-opacity-20 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z">
+                            </path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Free Quality Education</h3>
+                    <p class="text-gray-300">
+                        Access thousands of high-quality educational videos completely free, covering subjects from
+                        anatomy to world history.
+                    </p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div
+                    class="bg-gray-800 bg-opacity-50 rounded-xl p-6 border border-gray-700 hover:border-accent transition transform hover:-translate-y-2">
+                    <div class="w-14 h-14 bg-accent bg-opacity-20 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z">
+                            </path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Interactive Learning</h3>
+                    <p class="text-gray-300">
+                        Reinforce your knowledge with flashcards and quizzes designed to complement each video lesson.
+                    </p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div
+                    class="bg-gray-800 bg-opacity-50 rounded-xl p-6 border border-gray-700 hover:border-accent transition transform hover:-translate-y-2">
+                    <div class="w-14 h-14 bg-primary bg-opacity-20 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z">
+                            </path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Global Community</h3>
+                    <p class="text-gray-300">
+                        Join over 10 million learners worldwide who believe education should be engaging, thoughtful,
+                        and fun.
+                    </p>
+                </div>
+
+                <!-- Feature 4 -->
+                <div
+                    class="bg-gray-800 bg-opacity-50 rounded-xl p-6 border border-gray-700 hover:border-accent transition transform hover:-translate-y-2">
+                    <div class="w-14 h-14 bg-accent bg-opacity-20 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z">
+                            </path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Diverse Subjects</h3>
+                    <p class="text-gray-300">
+                        Explore courses ranging from Anatomy & Physiology to Organic Chemistry and beyond.
+                    </p>
+                </div>
+
+                <!-- Feature 5 -->
+                <div
+                    class="bg-gray-800 bg-opacity-50 rounded-xl p-6 border border-gray-700 hover:border-accent transition transform hover:-translate-y-2">
+                    <div class="w-14 h-14 bg-primary bg-opacity-20 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-8 h-8 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4">
+                            </path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Regular Updates</h3>
+                    <p class="text-gray-300">
+                        We continually add new content and features to enhance your learning experience.
+                    </p>
+                </div>
+
+                <!-- Feature 6 -->
+                <div
+                    class="bg-gray-800 bg-opacity-50 rounded-xl p-6 border border-gray-700 hover:border-accent transition transform hover:-translate-y-2">
+                    <div class="w-14 h-14 bg-accent bg-opacity-20 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2">
+                            </path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Mobile Optimized</h3>
+                    <p class="text-gray-300">
+                        Learn on the go with our app optimized for all Android devices.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Animated Background Elements -->
+        <div
+            class="absolute -bottom-20 -left-20 w-64 h-64 bg-primary rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob">
+        </div>
+        <div
+            class="absolute top-1/3 right-0 w-96 h-96 bg-accent rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob animation-delay-4000">
+        </div>
+    </section>
+
+    <!-- Popular Courses Section -->
+    <section class="py-20 bg-gray-900 relative overflow-hidden">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Popular <span class="text-primary">Courses</span></h2>
+                <p class="text-lg text-gray-300 max-w-3xl mx-auto">
+                    Explore our most popular educational series with supplemental learning materials.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8">
+                <!-- Course 1 -->
+                <div class="course-card bg-gray-800 rounded-xl overflow-hidden border border-gray-700 hover:border-accent transition transform hover:-translate-y-2"
+                    data-categories="science">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="/image/game1.png" alt="Anatomy & Physiology Course"
+                            class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
+                        <div class="absolute bottom-4 left-4">
+                            <span class="bg-primary text-white text-xs font-bold px-2 py-1 rounded">Science</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Crash Course</h3>
+                        <p class="text-gray-300 mb-4">At Crash Course, we believe that high-quality educational content
+                            should be available to everyone for free. We produce courses that accompany high school and
+                            college-level classes ranging from the humanities to the sciences</p>
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center">
+                                <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path
+                                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                                    </path>
+                                </svg>
+                                <span class="ml-1 text-sm">4.8 (1.2K reviews)</span>
+                            </div>
+                            <span class="text-sm text-accent">47 Episodes</span>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6">
+                        <a href="https://play.google.com/store/apps/details?id=com.complexly.thecrashcourse"
+                            class="block w-full py-2 text-center bg-accent text-secondary rounded-md hover:bg-opacity-90 transition font-medium">
+                            View Course
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Course 2 - Chemistry -->
+                <div class="course-card bg-gray-800 rounded-xl overflow-hidden border border-gray-700 hover:border-accent transition transform hover:-translate-y-2"
+                    data-categories="science">
+                    <div class="relative h-48 overflow-hidden">
+                        <img src="/image/game2.png" alt="Chemistry Course" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
+                        <div class="absolute bottom-4 left-4">
+                            <span class="bg-primary text-white text-xs font-bold px-2 py-1 rounded">Science</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">Simplilearn: Online Learning</h3>
+                        <p class="text-gray-300 mb-4">About this app
+                            Elevate your career with Simplilearn, the online learning app that can help you achieve your
+                            career goals! With an extensive range of over 400 certificate courses to choose from and a
+                            team of 2000+ expert trainers,</p>
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center">
+                                <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path
+                                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                                    </path>
+                                </svg>
+                                <span class="ml-1 text-sm">4.7 (980 reviews)</span>
+                            </div>
+                            <span class="text-sm text-accent">46 Episodes</span>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6">
+                        <a href="https://play.google.com/store/apps/details?id=com.complexly.thecrashcourse"
+                            class="block w-full py-2 text-center bg-accent text-secondary rounded-md hover:bg-opacity-90 transition font-medium">
+                            View Course
+                        </a>
+                    </div>
+                </div>
+
+
+            </div>
+            <div class="text-center mt-12">
+                <a href="/courses/"
+                    class="px-8 py-3 border border-accent text-accent rounded-md hover:bg-accent hover:text-secondary transition font-medium inline-flex items-center">
+                    View All Courses
+                    <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                    </svg>
+                </a>
+            </div>
+    </section>
+    <section class="py-20 bg-gray-900 text-white">
+        <div class="max-w-5xl mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-4xl font-bold mb-4">
+                    App <span class="text-yellow-400">Experience</span>
+                </h2>
+                <p class="text-lg text-gray-300 max-w-2xl mx-auto">
+                    Discover the intuitive interface and powerful features of the Crash Course app.
+                </p>
+            </div>
+
+            <!-- Swiper -->
+            <div class="swiper mySwiper">
+                <div class="swiper-wrapper">
+                    <!-- Slide 1 -->
+                    <div class="swiper-slide">
+                        <img src="/image/app-screenshot.png" alt="Screen 1"
+                            class="rounded-2xl border-2 border-white mx-auto h-[500px] object-cover" />
+                    </div>
+
+                    <!-- Slide 2 -->
+                    <div class="swiper-slide">
+                        <img src="/image/app-screen-2.png" alt="Screen 2"
+                            class="rounded-2xl border-2 border-white mx-auto h-[500px] object-cover" />
+                    </div>
+
+                    <!-- Slide 3 -->
+                    <div class="swiper-slide">
+                        <img src="/image/app-screen-3.png" alt="Screen 3"
+                            class="rounded-2xl border-2 border-white mx-auto h-[500px] object-cover" />
+                    </div>
+
+                    <!-- Slide 4 -->
+                    <div class="swiper-slide">
+                        <img src="/image/world-history-course.png" alt="Screen 4"
+                            class="rounded-2xl border-2 border-white mx-auto h-[500px] object-cover" />
+                    </div>
+                </div>
+
+                <!-- Pagination -->
+                <div class="swiper-pagination mt-6"></div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Testimonials Section -->
+    <section class="py-20 bg-gray-900 relative overflow-hidden">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">What Our <span class="text-primary">Learners</span> Say
+                </h2>
+                <p class="text-lg text-gray-300 max-w-3xl mx-auto">
+                    Join thousands of students who have transformed their learning with Crash Course.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="bg-gray-800 rounded-xl p-6 border border-gray-700 transform hover:scale-105 transition">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full overflow-hidden mr-4">
+                            <img src="/image/Testimonials/user-1.jpg" alt="User testimonial"
+                                class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-bold">Sarah Johnson</h4>
+                            <div class="flex">
+                                <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path
+                                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                                    </path>
+                                </svg>
+                                <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path
+                                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                                    </path>
+                                </svg>
+                                <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path
+                                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                                    </path>
+                                </svg>
+                                <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path
+                                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                                    </path>
+                                </svg>
+                                <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path
+                                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                                    </path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 italic">
+                        "Crash Course helped me ace my anatomy exams! The videos break down complex topics into
+                        digestible chunks, and the flashcards are perfect for quick review."
+                    </p>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="bg-gray-800 rounded-xl p-6 border border-gray-700 transform hover:scale-105 transition">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full overflow-hidden mr-4">
+                            <img src="/image/Testimonials/user-2.avif" alt="User testimonial"
+                                class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-bold">Michael Chen</h4>
+                            <div class="flex">
+                                <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path
+                                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                                    </path>
+                                </svg>
+                                <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path
+                                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                                    </path>
+                                </svg>
+                                <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path
+                                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                                    </path>
+                                </svg>
+                                <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path
+                                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                                    </path>
+                                </svg>
+                                <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path
+                                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                                    </path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 italic">
+                        "As a visual learner, the chemistry videos have been a game-changer for me. The animations make
+                        abstract concepts so much clearer than textbooks alone."
+                    </p>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="bg-gray-800 rounded-xl p-6 border border-gray-700 transform hover:scale-105 transition">
+                    <div class="flex items-center mb-4">
+                        <div class="w-12 h-12 rounded-full overflow-hidden mr-4">
+                            <img src="/image/Testimonials/user-3.webp" alt="User testimonial"
+                                class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-bold">Emma Rodriguez</h4>
+                            <div class="flex">
+                                <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path
+                                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                                    </path>
+                                </svg>
+                                <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path
+                                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                                    </path>
+                                </svg>
+                                <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path
+                                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                                    </path>
+                                </svg>
+                                <svg class="w-4 h-4 text-yellow-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path
+                                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                                    </path>
+                                </svg>
+                                <svg class="w-4 h-4 text-gray-400" fill="currentColor" viewBox="0 0 20 20">
+                                    <path
+                                        d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z">
+                                    </path>
+                                </svg>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 italic">
+                        "I use Crash Course to supplement my homeschool curriculum. My kids love the engaging hosts and
+                        retain so much more than from traditional lessons."
+                    </p>
+                </div>
+            </div>
+
+
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="py-20 bg-secondary relative overflow-hidden">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <!-- Stat 1 -->
+                <div class="stat-item">
+                    <div class="text-4xl md:text-5xl font-bold text-accent mb-2" data-count="10">0</div>
+                    <div class="text-lg text-gray-300">Million Subscribers</div>
+                </div>
+
+                <!-- Stat 2 -->
+                <div class="stat-item">
+                    <div class="text-4xl md:text-5xl font-bold text-primary mb-2" data-count="100">0</div>
+                    <div class="text-lg text-gray-300">Thousand Downloads</div>
+                </div>
+
+                <!-- Stat 3 -->
+                <div class="stat-item">
+                    <div class="text-4xl md:text-5xl font-bold text-accent mb-2" data-count="40">0</div>
+                    <div class="text-lg text-gray-300">Courses Available</div>
+                </div>
+
+                <!-- Stat 4 -->
+                <div class="stat-item">
+                    <div class="text-4xl md:text-5xl font-bold text-primary mb-2" data-count="4.1">0</div>
+                    <div class="text-lg text-gray-300">Star Rating</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-[url('/image/cta-bg.png')] bg-cover bg-center relative overflow-hidden">
+        <!-- Black overlay -->
+        <div class="absolute inset-0 bg-black opacity-60"></div>
+
+        <!-- Content -->
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="text-center max-w-3xl mx-auto text-white">
+                <h2 class="text-3xl md:text-4xl font-bold mb-6">
+                    Ready to Transform Your Learning Experience?
+                </h2>
+                <p class="text-lg mb-8">
+                    Download the Crash Course app today and join millions of learners worldwide who are making education
+                    fun and accessible.
+                </p>
+                <a href="https://play.google.com/store/apps/details?id=com.complexly.thecrashcourse&hl=en"
+                    class="px-8 py-3 bg-white text-secondary rounded-md hover:bg-opacity-90 transition font-medium inline-flex items-center">
+                    Download Now - It's Free
+                    <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Blog Preview Section -->
+    <section class="py-20 bg-gray-900 relative overflow-hidden">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Latest <span class="text-accent">Articles</span></h2>
+                <p class="text-lg text-gray-300 max-w-3xl mx-auto">
+                    Discover tips, insights, and educational resources from our blog.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Blog Post 1 -->
+                <div
+                    class="bg-gray-800 rounded-xl overflow-hidden border border-gray-700 hover:border-accent transition transform hover:-translate-y-2">
+                    <a href="/blog/effective-study-techniques/">
+                        <div class="relative h-48 overflow-hidden">
+                            <img src="/image/blog/blog-study-techniques.jpg" alt="Effective Study Techniques"
+                                class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
+                        </div>
+                    </a>
+                    <div class="p-6">
+                        <span class="text-sm text-accent">Learning Tips</span>
+                        <h3 class="text-xl font-bold mb-2 mt-1">
+                            <a href="/blog/effective-study-techniques/" class="hover:text-accent transition">5 Effective
+                                Study Techniques Backed by Science</a>
+                        </h3>
+                        <p class="text-gray-300 mb-4">Discover research-proven methods to enhance your learning and
+                            retention using the Crash Course app.</p>
+                        <div class="flex items-center text-sm text-gray-400">
+                            <span>July 5, 2025</span>
+                            <span class="mx-2">•</span>
+                            <span>5 min read</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Blog Post 2 -->
+                <div
+                    class="bg-gray-800 rounded-xl overflow-hidden border border-gray-700 hover:border-accent transition transform hover:-translate-y-2">
+                    <a href="/blog/anatomy-flashcards/">
+                        <div class="relative h-48 overflow-hidden">
+                            <img src="/image/blog/blog-anatomy-flashcards.jpg" alt="Anatomy Flashcards"
+                                class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
+                        </div>
+                    </a>
+                    <div class="p-6">
+                        <span class="text-sm text-primary">App Features</span>
+                        <h3 class="text-xl font-bold mb-2 mt-1">
+                            <a href="/blog/anatomy-flashcards/" class="hover:text-primary transition">How to Maximize
+                                Our New Anatomy Flashcards</a>
+                        </h3>
+                        <p class="text-gray-300 mb-4">Learn how to get the most out of our latest flashcard feature for
+                            the Anatomy & Physiology course.</p>
+                        <div class="flex items-center text-sm text-gray-400">
+                            <span>June 28, 2025</span>
+                            <span class="mx-2">•</span>
+                            <span>4 min read</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Blog Post 3 -->
+                <div
+                    class="bg-gray-800 rounded-xl overflow-hidden border border-gray-700 hover:border-accent transition transform hover:-translate-y-2">
+                    <a href="/blog/chemistry-experiments/">
+                        <div class="relative h-48 overflow-hidden">
+                            <img src="/image/blog/blog-chemistry-experiments.png" alt="Chemistry Experiments"
+                                class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
+                        </div>
+                    </a>
+                    <div class="p-6">
+                        <span class="text-sm text-accent">Science</span>
+                        <h3 class="text-xl font-bold mb-2 mt-1">
+                            <a href="/blog/chemistry-experiments/" class="hover:text-accent transition">10 Safe
+                                Chemistry Experiments You Can Do at Home</a>
+                        </h3>
+                        <p class="text-gray-300 mb-4">Complement your Crash Course Chemistry learning with these fun,
+                            safe experiments using household items.</p>
+                        <div class="flex items-center text-sm text-gray-400">
+                            <span>June 15, 2025</span>
+                            <span class="mx-2">•</span>
+                            <span>7 min read</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-12">
+                <a href="/blog/"
+                    class="px-8 py-3 border border-accent text-accent rounded-md hover:bg-accent hover:text-secondary transition font-medium inline-flex items-center">
+                    View All Articles
+                    <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M14 5l7 7m0 0l-7 7m7-7H3"></path>
+                    </svg>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-20 bg-secondary relative overflow-hidden">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Frequently Asked <span
+                        class="text-primary">Questions</span></h2>
+                <p class="text-lg text-gray-300 max-w-3xl mx-auto">
+                    Find answers to common questions about the Crash Course app.
+                </p>
+            </div>
+
+            <div class="max-w-3xl mx-auto">
+                <!-- FAQ Item 1 -->
+                <div class="faq-item mb-4 border-b border-gray-700 pb-4">
+                    <button class="faq-question flex justify-between items-center w-full text-left focus:outline-none">
+                        <h3 class="text-lg font-medium">Is the Crash Course app really free?</h3>
+                        <svg class="w-5 h-5 text-accent transform transition-transform duration-300" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg>
+                    </button>
+                    <div class="faq-answer mt-2 text-gray-300 hidden">
+                        <p>Yes! All of our educational content is completely free to access. We believe high-quality
+                            education should be available to everyone without cost barriers. The app does offer optional
+                            in-app purchases for users who want to support our mission.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 2 -->
+                <div class="faq-item mb-4 border-b border-gray-700 pb-4">
+                    <button class="faq-question flex justify-between items-center w-full text-left focus:outline-none">
+                        <h3 class="text-lg font-medium">What subjects are available in the app?</h3>
+                        <svg class="w-5 h-5 text-accent transform transition-transform duration-300" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg>
+                    </button>
+                    <div class="faq-answer mt-2 text-gray-300 hidden">
+                        <p>We offer courses across both science and humanities disciplines. Currently, you'll find
+                            complete series for Anatomy & Physiology, Chemistry, Organic Chemistry, and World History,
+                            with flashcards available for the science courses. We're continually adding new content
+                            based on user demand.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 3 -->
+                <div class="faq-item mb-4 border-b border-gray-700 pb-4">
+                    <button class="faq-question flex justify-between items-center w-full text-left focus:outline-none">
+                        <h3 class="text-lg font-medium">Do I need an internet connection to use the app?</h3>
+                        <svg class="w-5 h-5 text-accent transform transition-transform duration-300" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg>
+                    </button>
+                    <div class="faq-answer mt-2 text-gray-300 hidden">
+                        <p>You'll need an internet connection to stream videos, but downloaded videos and all
+                            flashcards/quizzes are available offline. This makes the app perfect for learning on the go,
+                            even without consistent internet access.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 4 -->
+                <div class="faq-item mb-4 border-b border-gray-700 pb-4">
+                    <button class="faq-question flex justify-between items-center w-full text-left focus:outline-none">
+                        <h3 class="text-lg font-medium">Is the app suitable for all age groups?</h3>
+                        <svg class="w-5 h-5 text-accent transform transition-transform duration-300" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg>
+                    </button>
+                    <div class="faq-answer mt-2 text-gray-300 hidden">
+                        <p>Our content is primarily designed for high school and college-level learners, but motivated
+                            middle school students and adult learners will also find it valuable. The app is rated for
+                            ages 3+ as it contains no inappropriate content.</p>
+                    </div>
+                </div>
+
+                <!-- FAQ Item 5 -->
+                <div class="faq-item mb-4">
+                    <button class="faq-question flex justify-between items-center w-full text-left focus:outline-none">
+                        <h3 class="text-lg font-medium">How often is new content added?</h3>
+                        <svg class="w-5 h-5 text-accent transform transition-transform duration-300" fill="none"
+                            stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7">
+                            </path>
+                        </svg>
+                    </button>
+                    <div class="faq-answer mt-2 text-gray-300 hidden">
+                        <p>We release new video content weekly on our YouTube channel, which is immediately available in
+                            the app. Flashcard decks for new courses are added quarterly, with updates to existing decks
+                            happening continuously based on user feedback.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   <!-- Footer -->
+<footer class="bg-gray-900 pt-20 pb-10 border-t border-gray-800 text-gray-400">
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+            <!-- Footer Column 1 -->
+            <div>
+                 <a href="/" class="flex items-center">
+                    <div class="  flex items-center justify-center mr-2">
+                        <img src="/image/logo.png" alt="logo" class="h-14 rounded-full">
+                    </div>                   
+                </a>
+                <p>
+                    Making high-quality education accessible and engaging for everyone, everywhere.
+                </p>
+            </div>
+
+            <!-- Footer Column 2 -->
+            <div>
+                <h3 class="text-lg font-bold text-white mb-4">Quick Links</h3>
+                <ul class="space-y-2">
+                    <li><a href="/" class="hover:text-accent transition">Home</a></li>
+                    <li><a href="/courses/" class="hover:text-accent transition">Courses</a></li>
+                    <li><a href="/about/" class="hover:text-accent transition">About Us</a></li>
+                    <li><a href="/blog/" class="hover:text-accent transition">Blog</a></li>
+                    <li><a href="/contact/" class="hover:text-accent transition">Contact</a></li>
+                </ul>
+            </div>
+
+            <!-- Footer Column 3 -->
+            <div>
+                <h3 class="text-lg font-bold text-white mb-4">Legal</h3>
+                <ul class="space-y-2">
+                    <li><a href="/privacy/" class="hover:text-accent transition">Privacy Policy</a></li>
+                    <li><a href="/terms/" class="hover:text-accent transition">Terms of Service</a></li>
+                    <li><a href="/cookies/" class="hover:text-accent transition">Cookie Policy</a></li>
+                    <li><a href="/responsible-courses/" class="hover:text-accent transition">Responsible Courses</a></li>
+                </ul>
+            </div>
+
+            <!-- Footer Column 4 -->
+            <div>
+                <h3 class="text-lg font-bold text-white mb-4">Contact Us</h3>
+                <ul class="space-y-4">
+                    <li class="flex items-start">
+                        <svg class="w-5 h-5 mr-2 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                        <span>info@crashcourseapp.com</span>
+                    </li>
+                    <li class="flex items-start">
+                        <svg class="w-5 h-5 mr-2 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                        </svg>
+                        <span>+441138688187</span>
+                    </li>
+                    <li class="flex items-start">
+                        <svg class="w-5 h-5 mr-2 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                        <span> Whitehall Rd, off Spence Ln, Holbeck, Leeds LS12 1EF, United Kingdom</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Footer Bottom -->
+        <div class="border-t border-gray-800 pt-6 mt-10 text-center text-sm text-gray-500">
+            <p>© 2025 Crash Course by Complexly LLC. All rights reserved.</p>
+            <p class="mt-2">Google Play and the Google Play logo are trademarks of Google LLC.</p>
+        </div>
+    </div>
+</footer>
+
+    <!-- Scripts -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Cookie Consent
+        const cookieConsent = document.getElementById('cookieConsent');
+        const acceptCookies = document.getElementById('acceptCookies');
+        const declineCookies = document.getElementById('declineCookies');
+        const learnMoreBtn = document.getElementById('learnMoreBtn');
+
+        if (!localStorage.getItem('cookieConsent')) {
+            cookieConsent.classList.remove('hidden');
+        }
+
+        acceptCookies.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'accepted');
+            cookieConsent.classList.add('hidden');
+        });
+
+        declineCookies.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'declined');
+            cookieConsent.classList.add('hidden');
+        });
+
+        learnMoreBtn.addEventListener('click', () => {
+            window.location.href = '/cookies/';
+        });
+
+        // FAQ Accordion
+        const faqQuestions = document.querySelectorAll('.faq-question');
+
+        faqQuestions.forEach(question => {
+            question.addEventListener('click', () => {
+                const answer = question.parentElement.querySelector('.faq-answer');
+                const icon = question.querySelector('svg');
+
+                answer.classList.toggle('hidden');
+                icon.classList.toggle('rotate-180');
+            });
+        });
+
+        // Animate stats counting
+        const statItems = document.querySelectorAll('.stat-item');
+
+        function animateStats() {
+            statItems.forEach(item => {
+                const numberElement = item.querySelector('[data-count]');
+                const target = parseInt(numberElement.getAttribute('data-count'));
+                const duration = 2000; // Animation duration in ms
+                const step = target / (duration / 16); // 60fps
+                let current = 0;
+
+                const counter = setInterval(() => {
+                    current += step;
+                    if (current >= target) {
+                        clearInterval(counter);
+                        current = target;
+                    }
+
+                    if (target % 1 === 0) {
+                        numberElement.textContent = Math.floor(current);
+                    } else {
+                        numberElement.textContent = current.toFixed(1);
+                    }
+                }, 16);
+            });
+        }
+
+        // Initialize Three.js background
+        function initThreeJS() {
+            const container = document.getElementById('threejsBackground');
+            if (!container) return;
+
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+
+            renderer.setSize(width, height);
+            renderer.setClearColor(0x000000, 0);
+            container.appendChild(renderer.domElement);
+
+            // Create particles
+            const particlesGeometry = new THREE.BufferGeometry();
+            const particleCount = 1000;
+
+            const posArray = new Float32Array(particleCount * 3);
+
+            for (let i = 0; i < particleCount * 3; i++) {
+                posArray[i] = (Math.random() - 0.5) * 10;
+            }
+
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+
+            const particlesMaterial = new THREE.PointsMaterial({
+                size: 0.02,
+                color: 0x00FFC6,
+                transparent: true,
+                opacity: 0.8,
+                blending: THREE.AdditiveBlending
+            });
+
+            const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+            scene.add(particlesMesh);
+
+            camera.position.z = 3;
+
+            // Animation
+            function animate() {
+                requestAnimationFrame(animate);
+
+                particlesMesh.rotation.x += 0.0005;
+                particlesMesh.rotation.y += 0.0005;
+
+                renderer.render(scene, camera);
+            }
+
+            animate();
+
+            // Handle resize
+            window.addEventListener('resize', () => {
+                const width = container.clientWidth;
+                const height = container.clientHeight;
+
+                camera.aspect = width / height;
+                camera.updateProjectionMatrix();
+                renderer.setSize(width, height);
+            });
+        }
+
+        // Initialize GSAP animations
+        function initGSAPAnimations() {
+            // Hero section animation
+            gsap.from('nav', {
+                opacity: 0,
+                y: -20,
+                duration: 0.8,
+                ease: 'power2.out'
+            });
+
+            gsap.from('.hero-content h1', {
+                opacity: 0,
+                y: 20,
+                duration: 0.8,
+                delay: 0.3,
+                ease: 'power2.out'
+            });
+
+            gsap.from('.hero-content p', {
+                opacity: 0,
+                y: 20,
+                duration: 0.8,
+                delay: 0.5,
+                ease: 'power2.out'
+            });
+
+            gsap.from('.hero-content .flex', {
+                opacity: 0,
+                y: 20,
+                duration: 0.8,
+                delay: 0.7,
+                ease: 'power2.out'
+            });
+
+            gsap.from('.hero-image', {
+                opacity: 0,
+                scale: 0.9,
+                duration: 1,
+                delay: 0.9,
+                ease: 'elastic.out(1, 0.5)'
+            });
+
+            // Scroll animations
+            gsap.utils.toArray('.course-card, .feature-item').forEach(item => {
+                ScrollTrigger.create({
+                    trigger: item,
+                    start: 'top 80%',
+                    onEnter: () => {
+                        gsap.to(item, {
+                            opacity: 1,
+                            y: 0,
+                            duration: 0.8,
+                            ease: 'power2.out'
+                        });
+                    }
+                });
+            });
+        }
+
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            initThreeJS();
+            initGSAPAnimations();
+
+            // Animate stats when they come into view
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        animateStats();
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, { threshold: 0.5 });
+
+            document.querySelectorAll('.stat-item').forEach(item => {
+                observer.observe(item);
+            });
+        });
+    </script>
+
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+    <!-- Swiper Init -->
+    <script>
+        const swiper = new Swiper(".mySwiper", {
+            slidesPerView: 1,
+            spaceBetween: 20,
+            loop: true,
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: false,
+            },
+            breakpoints: {
+                640: {
+                    slidesPerView: 1,
+                },
+                768: {
+                    slidesPerView: 2,
+                },
+                1024: {
+                    slidesPerView: 3,
+                },
+            },
+        });
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,886 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cash VIP Spin - Vegas Style Slot Machine Game</title>
+    <meta name="description" content="Play Cash VIP Spin - the ultimate Vegas-style slot machine game with 120+ slots, huge jackpots, and daily bonuses. Get your 12,000,000 welcome bonus now!">
+    <meta name="keywords" content="slot machine, Vegas slots, free slots, casino game, social casino, jackpot, free coins, slot games, VIP slots">
+    <link rel="canonical" href="https://cashvipspin.com/" />
+    <link rel="icon" href="/image/logo.webp" type="image/x-icon">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4DA8DA',
+                        secondary: '#80D8C3',
+                        accent: '#FFD66B',
+                    },
+                    animation: {
+                        'spin-slow': 'spin 3s linear infinite',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-reverse': 'float-reverse 5s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        'float-reverse': {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(20px)' },
+                        },
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Framer Motion -->
+    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: #ffffff;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+    .video-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    object-fit: cover;
+    transform: scale(1.3) translateY(-5%);   
+  
+}
+        
+        .content-overlay {
+            background: rgba(0, 0, 0, 0.6);
+            position: relative;
+            min-height: 100vh;
+        }
+        
+        .slot-reel {
+            transform-style: preserve-3d;
+            animation: spin-reel 3s infinite linear;
+        }
+        
+        @keyframes spin-reel {
+            0% { transform: rotateY(0deg); }
+            100% { transform: rotateY(360deg); }
+        }
+        
+        .coin-spin {
+            animation: coin-spin 5s infinite ease-in-out;
+        }
+        
+        @keyframes coin-spin {
+            0% { transform: rotateY(0deg) scale(1); }
+            50% { transform: rotateY(180deg) scale(1.1); }
+            100% { transform: rotateY(360deg) scale(1); }
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+            transform: perspective(1000px) rotateY(0deg);
+        }
+        
+        .card-hover:hover {
+            transform: perspective(1000px) rotateY(10deg) translateY(-10px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+        
+        .btn-hover {
+            transition: all 0.3s ease;
+            transform: translateY(0);
+        }
+        
+        .btn-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+        
+        .cookie-banner {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            z-index: 999;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+        }
+    </style>
+</head>
+<body>
+    <!-- Video Background -->
+    <video autoplay muted loop class="video-background">
+        <source src="https://play-games.googleusercontent.com/vp/mp4/1280x720/swpJWjQzMiQ.mp4" type="video/mp4">
+    </video>
+    
+    <!-- Content Overlay -->
+    <div class="content-overlay">
+        <!-- Cookie Banner -->
+        <div id="cookieBanner" class="cookie-banner p-6 hidden">
+            <div class="container mx-auto flex flex-col md:flex-row items-center justify-between">
+                <div class="mb-4 md:mb-0 md:mr-8">
+                    <p class="text-white text-sm">We use cookies to enhance your experience. By continuing to visit this site, you agree to our use of cookies. <a href="/privacy/" class="text-accent font-medium">Learn more</a></p>
+                </div>
+                <div class="flex space-x-3">
+                    <button id="declineCookies" class="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition duration-300 text-sm font-medium">Decline</button>
+                    <button id="acceptCookies" class="px-4 py-2 bg-accent text-gray-900 rounded-lg hover:bg-yellow-500 transition duration-300 text-sm font-medium">Accept</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <nav class="bg-black bg-opacity-70 shadow-md sticky top-0 z-50 backdrop-filter backdrop-blur-sm">
+            <div class="container mx-auto px-4 py-3">
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center space-x-2">
+                        <img src="/image/logo.webp" alt="Cash VIP Spin Logo" class="h-10 w-auto rounded-full">
+                        <span class="text-xl font-bold text-white">Cash VIP Spin</span>
+                    </div>
+                    
+                    <div class="hidden md:flex items-center space-x-6">
+                        <a href="/" class="text-white font-medium hover:text-accent transition">Home</a>
+                        <a href="/how-to-play/" class="text-gray-300 hover:text-white transition">How to Play</a>
+                        <a href="/responsible-gaming/" class="text-gray-300 hover:text-white transition">Responsible Gaming</a>
+                        <a href="/contact/" class="text-gray-300 hover:text-white transition">Contact</a>
+                    </div>
+                    
+                    <div class="flex items-center space-x-4 md:hidden lg:flex">
+                        <a href="https://play.google.com/store/apps/details?id=com.bagelcode.slots3&hl=en_US" class="bg-accent hover:bg-yellow-500 text-gray-900 px-4 py-2 rounded-lg font-medium transition duration-300 hidden md:inline-block btn-hover">
+                            Download Now
+                        </a>
+                        <button id="mobileMenuButton" class="md:hidden text-white focus:outline-none">
+                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Mobile Menu -->
+                <div id="mobileMenu" class="md:hidden h-screen  hidden mt-12 pb-4 flex   ">
+                    <div class="flex flex-col space-y-5">
+                        <a href="/" class="text-white font-medium">Home</a>
+                        <a href="/how-to-play/" class="text-gray-300">How to Play</a>
+                        <a href="/responsible-gaming/" class="text-gray-300">Responsible Gaming</a>
+                        <a href="/contact/" class="text-gray-300">Contact</a>
+                        <a href="https://play.google.com/store/apps/details?id=com.bagelcode.slots3&hl=en_US" class="bg-accent text-gray-900 px-4 py-2 rounded-lg font-medium text-center btn-hover">
+                            Download Now
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section class="md:min-h-screen flex items-center justify-center  py-20">
+            <div class="container mx-auto px-4 text-center">
+               <div class="flex flex-col items-center">
+                 <motion.h1 
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8 }}
+                    class="md:text-5xl text-4xl md:text-6xl font-bold text-white mb-6 leading-tight"
+                >
+                    Spin & Win <span class="text-accent">Big</span> with<br>Cash VIP Spin
+                </motion.h1>
+
+                <motion.p 
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.2 }}
+                    class="text-xl md:text-2xl text-gray-200 mb-10 max-w-3xl mx-auto"
+                >
+                    Join millions of players enjoying 120+ Vegas-style slots with huge jackpots and daily bonuses!
+                </motion.p>
+               </div>
+                
+                
+                <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, delay: 0.4 }}
+                    class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6"
+                >
+                    <a href="https://play.google.com/store/apps/details?id=com.bagelcode.slots3&hl=en_US" class="bg-accent hover:bg-yellow-500 text-gray-900 font-bold px-8 py-4 rounded-full text-lg transition duration-300 shadow-2xl btn-hover">
+                        <i class="fas fa-download mr-2"></i> Download Now - Get 12M Coins!
+                    </a>
+                </motion.div>
+                
+                <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 0.8, delay: 0.6 }}
+                    class="mt-16 flex justify-center"
+                >
+                    <div class="flex items-center space-x-4 text-white bg-black bg-opacity-50 px-6 py-3 rounded-full">
+                        <div class="flex">
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star text-yellow-400"></i>
+                            <i class="fas fa-star-half-alt text-yellow-400"></i>
+                        </div>
+                        <span>4.7 (97.9K reviews)</span>
+                        <span class="hidden md:inline">•</span>
+                        <span class="hidden md:inline">1M+ Downloads</span>
+                    </div>
+                </motion.div>
+                
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.8, delay: 0.8 }}
+                    class="mt-20"
+                >
+                    <div class="relative mx-auto max-w-2xl hidden lg:block">
+                        <div class="absolute -top-10 -left-10 w-20 h-20 bg-accent rounded-full flex items-center justify-center text-gray-900 font-bold text-xl shadow-lg animate-float">
+                            +12M
+                        </div>
+                        <div class="absolute -bottom-10 -right-10 w-24 h-24 bg-primary rounded-full flex items-center justify-center text-white font-bold text-2xl shadow-lg animate-float-reverse">
+                            JACKPOT
+                        </div>
+                       
+                    </div>
+                </motion.div>
+            </div>
+        </section>
+
+        <!-- Welcome Bonus Section -->
+        <section class="py-20 bg-black bg-opacity-70">
+            <div class="container mx-auto px-4">
+                <div class="flex flex-col lg:flex-row items-center">
+                    <motion.div 
+                        initial={{ opacity: 0, x: -50 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.6 }}
+                        viewport={{ once: true }}
+                        class="lg:w-1/2 mb-12 lg:mb-0 relative"
+                    >
+                        <div class="relative max-w-md mx-auto">
+                            <img src="/image/Bonus.webp" alt="Welcome Bonus" class="rounded-xl shadow-2xl w-full">
+                            <div class="hidden lg:block absolute -top-8 -right-8 bg-accent text-gray-900 font-bold px-8 py-4 rounded-full transform rotate-12 shadow-lg text-xl">
+                                +12,000,000
+                            </div>
+                            <div class="hidden lg:block absolute -bottom-8 -left-8 bg-primary text-white font-bold px-6 py-3 rounded-full shadow-lg">
+                                FREE COINS
+                            </div>
+                        </div>
+                    </motion.div>
+                    
+                    <motion.div 
+                        initial={{ opacity: 0, x: 50 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ duration: 0.6 }}
+                        viewport={{ once: true }}
+                        class="lg:w-1/2 lg:pl-12"
+                    >
+                        <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">
+                            Claim Your <span class="text-accent">Massive Welcome Bonus</span> Now!
+                        </h2>
+                        <p class="text-lg text-gray-300 mb-8">
+                            New players get a whopping 12,000,000 free coins just for downloading Cash VIP Spin! That's enough to start playing all your favorite slot machines right away with plenty to spare.
+                        </p>
+                        <ul class="space-y-4 mb-10">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-secondary text-2xl mt-1 mr-4"></i>
+                                <div>
+                                    <h4 class="text-xl font-bold text-white mb-1">Instant 12,000,000 Free Coins</h4>
+                                    <p class="text-gray-300">Start playing immediately with your welcome bonus</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-secondary text-2xl mt-1 mr-4"></i>
+                                <div>
+                                    <h4 class="text-xl font-bold text-white mb-1">Bonus Every 20 Minutes</h4>
+                                    <p class="text-gray-300">Keep the coins flowing with regular bonuses</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-secondary text-2xl mt-1 mr-4"></i>
+                                <div>
+                                    <h4 class="text-xl font-bold text-white mb-1">Daily 80M Jackpot Spin</h4>
+                                    <p class="text-gray-300">Chance to win massive jackpots every day</p>
+                                </div>
+                            </li>
+                        </ul>
+                        <a href="https://play.google.com/store/apps/details?id=com.bagelcode.slots3&hl=en_US" class="inline-block bg-accent hover:bg-yellow-500 text-gray-900 font-bold px-8 py-4 rounded-full text-lg transition duration-300 shadow-xl btn-hover">
+                            Claim Your Bonus Now
+                        </a>
+                    </motion.div>
+                </div>
+            </div>
+        </section>
+
+      <!-- How to Play Section -->
+<section class="py-20 bg-black bg-opacity-70">
+    <div class="container mx-auto px-4">
+        <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            viewport={{ once: true }}
+            class="text-center mb-16"
+        >
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
+                How to <span class="text-secondary">Play & Win</span>
+            </h2>
+            <p class="text-xl text-gray-300 max-w-2xl mx-auto">
+                Learn how to get started and maximize your winnings in Cash VIP Spin
+            </p>
+        </motion.div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 mt-12">
+            <!-- Step 1 -->
+            <motion.div 
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5 }}
+                viewport={{ once: true }}
+                class="flex"
+            >
+                <div class="mr-6 flex-shrink-0">
+                    <div class="bg-primary bg-opacity-20 w-16 h-16 rounded-full flex items-center justify-center">
+                        <span class="text-2xl font-bold text-primary">1</span>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-white mb-3">Download & Claim Your Bonus</h3>
+                    <p class="text-gray-300 mb-4">
+                        Install Cash VIP Spin from Google Play and open the app to instantly receive your 12,000,000 welcome bonus coins.
+                    </p>
+                    <div class="bg-gray-900 bg-opacity-50 p-4 rounded-lg border-l-4 border-accent">
+                        <p class="text-gray-300 italic">
+                            <i class="fas fa-lightbulb text-accent mr-2"></i>
+                            Connect with Facebook for an extra 1,000,000 coins!
+                        </p>
+                    </div>
+                </div>
+            </motion.div>
+            
+            <!-- Step 2 -->
+            <motion.div 
+                initial={{ opacity: 0, x: 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+                viewport={{ once: true }}
+                class="flex"
+            >
+                <div class="mr-6 flex-shrink-0">
+                    <div class="bg-secondary bg-opacity-20 w-16 h-16 rounded-full flex items-center justify-center">
+                        <span class="text-2xl font-bold text-secondary">2</span>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-white mb-3">Choose Your Slot Machine</h3>
+                    <p class="text-gray-300 mb-4">
+                        Browse our collection of 120+ Vegas-style slots and select your favorite game. Each slot has unique features and jackpots.
+                    </p>
+                    <div class="flex flex-wrap gap-2">
+                        <span class="bg-gray-800 px-3 py-1 rounded-full text-sm text-gray-300">Classic Slots</span>
+                        <span class="bg-gray-800 px-3 py-1 rounded-full text-sm text-gray-300">Video Slots</span>
+                        <span class="bg-gray-800 px-3 py-1 rounded-full text-sm text-gray-300">Progressive Jackpots</span>
+                    </div>
+                </div>
+            </motion.div>
+            
+            <!-- Step 3 -->
+            <motion.div 
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                viewport={{ once: true }}
+                class="flex"
+            >
+                <div class="mr-6 flex-shrink-0">
+                    <div class="bg-accent bg-opacity-20 w-16 h-16 rounded-full flex items-center justify-center">
+                        <span class="text-2xl font-bold text-accent">3</span>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-white mb-3">Set Your Bet & Spin</h3>
+                    <p class="text-gray-300 mb-4">
+                        Adjust your bet amount using the +/- buttons, then hit the SPIN button to start playing. Match symbols to win!
+                    </p>
+                    <div class="bg-gray-900 bg-opacity-50 p-4 rounded-lg">
+                        <div class="flex items-center text-gray-300">
+                            <i class="fas fa-info-circle text-primary mr-2"></i>
+                            <p>Higher bets increase potential payouts but use coins faster</p>
+                        </div>
+                    </div>
+                </div>
+            </motion.div>
+            
+            <!-- Step 4 -->
+            <motion.div 
+                initial={{ opacity: 0, x: 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5, delay: 0.3 }}
+                viewport={{ once: true }}
+                class="flex"
+            >
+                <div class="mr-6 flex-shrink-0">
+                    <div class="bg-primary bg-opacity-20 w-16 h-16 rounded-full flex items-center justify-center">
+                        <span class="text-2xl font-bold text-primary">4</span>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-white mb-3">Trigger Bonus Features</h3>
+                    <p class="text-gray-300 mb-4">
+                        Look for special symbols that activate free spins, multipliers, and bonus rounds for bigger wins.
+                    </p>
+                    <div class="grid grid-cols-3 gap-3">
+                        <div class="text-center">
+                            <div class="bg-gray-800 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-2">
+                                <i class="fas fa-star text-yellow-400"></i>
+                            </div>
+                            <p class="text-xs text-gray-300">Wild Symbols</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="bg-gray-800 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-2">
+                                <i class="fas fa-bolt text-accent"></i>
+                            </div>
+                            <p class="text-xs text-gray-300">Scatters</p>
+                        </div>
+                        <div class="text-center">
+                            <div class="bg-gray-800 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-2">
+                                <i class="fas fa-gem text-primary"></i>
+                            </div>
+                            <p class="text-xs text-gray-300">Bonus Symbols</p>
+                        </div>
+                    </div>
+                </div>
+            </motion.div>
+            
+            <!-- Step 5 -->
+            <motion.div 
+                initial={{ opacity: 0, x: -30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5, delay: 0.4 }}
+                viewport={{ once: true }}
+                class="flex"
+            >
+                <div class="mr-6 flex-shrink-0">
+                    <div class="bg-secondary bg-opacity-20 w-16 h-16 rounded-full flex items-center justify-center">
+                        <span class="text-2xl font-bold text-secondary">5</span>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-white mb-3">Collect Daily Rewards</h3>
+                    <p class="text-gray-300 mb-4">
+                        Return daily to spin the bonus wheel, collect your VIP rewards, and participate in tournaments for massive prizes.
+                    </p>
+                    <ul class="text-gray-300 space-y-2">
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-secondary mr-2"></i>
+                            <span>Free coins every 20 minutes</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-secondary mr-2"></i>
+                            <span>Daily spin for 80M jackpot</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check-circle text-secondary mr-2"></i>
+                            <span>VIP level-up bonuses</span>
+                        </li>
+                    </ul>
+                </div>
+            </motion.div>
+            
+            <!-- Step 6 -->
+            <motion.div 
+                initial={{ opacity: 0, x: 30 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.5, delay: 0.5 }}
+                viewport={{ once: true }}
+                class="flex"
+            >
+                <div class="mr-6 flex-shrink-0">
+                    <div class="bg-accent bg-opacity-20 w-16 h-16 rounded-full flex items-center justify-center">
+                        <span class="text-2xl font-bold text-accent">6</span>
+                    </div>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-white mb-3">Join a Club & Play Socially</h3>
+                    <p class="text-gray-300 mb-4">
+                        Team up with friends or join a club to share gifts, compete in tournaments, and earn social bonuses together.
+                    </p>
+                    <a href="https://play.google.com/store/apps/details?id=com.bagelcode.slots3&hl=en_US" class="inline-flex items-center bg-accent hover:bg-yellow-500 text-gray-900 px-4 py-2 rounded-lg font-medium transition">
+                        <i class="fab fa-facebook mr-2"></i> Connect with Friends
+                    </a>
+                </div>
+            </motion.div>
+        </div>
+        
+        <div class="mt-16 text-center">
+            <motion.div
+                initial={{ scale: 0.9 }}
+                whileInView={{ scale: 1 }}
+                transition={{ duration: 0.5 }}
+                viewport={{ once: true }}
+            >
+                <div class="inline-block max-w-2xl bg-gray-900 bg-opacity-50 p-6 rounded-xl border border-gray-800">
+                    <h3 class="text-xl font-bold text-white mb-3">Pro Tip: Manage Your Coins Wisely</h3>
+                    <p class="text-gray-300 mb-4">
+                        Start with smaller bets to extend your playtime and learn each game's features. As you accumulate more coins from bonuses, gradually increase your bets for bigger potential wins!
+                    </p>
+                    <div class="flex justify-center">
+                        <div class="flex items-center bg-black bg-opacity-70 px-4 py-2 rounded-full">
+                            <i class="fas fa-coins text-accent mr-2"></i>
+                            <span class="text-white">Bonus every 20 minutes!</span>
+                        </div>
+                    </div>
+                </div>
+            </motion.div>
+        </div>
+    </div>
+</section>
+
+        <!-- Features Section -->
+        <section class="py-20 bg-black bg-opacity-70">
+            <div class="container mx-auto px-4">
+                <motion.div 
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6 }}
+                    viewport={{ once: true }}
+                    class="text-center mb-16"
+                >
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
+                        Why Players <span class="text-secondary">Love</span> Cash VIP Spin
+                    </h2>
+                    <p class="text-xl text-gray-300 max-w-2xl mx-auto">
+                        Discover what makes our social casino experience truly special and keeps players coming back.
+                    </p>
+                </motion.div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mt-12">
+                    <!-- Feature 1 -->
+                    <motion.div 
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.4, delay: 0.1 }}
+                        viewport={{ once: true }}
+                        whileHover={{ y: -10 }}
+                        class="bg-gray-900 bg-opacity-70 p-8 rounded-xl shadow-lg border border-gray-800 text-center"
+                    >
+                        <div class="w-20 h-20 bg-primary bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i class="fas fa-gem text-3xl text-primary"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-4">VIP Program</h3>
+                        <p class="text-gray-300">Exclusive bonuses, higher coin rewards, and special privileges as you level up in our VIP program.</p>
+                    </motion.div>
+                    
+                    <!-- Feature 2 -->
+                    <motion.div 
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.4, delay: 0.2 }}
+                        viewport={{ once: true }}
+                        whileHover={{ y: -10 }}
+                        class="bg-gray-900 bg-opacity-70 p-8 rounded-xl shadow-lg border border-gray-800 text-center"
+                    >
+                        <div class="w-20 h-20 bg-secondary bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i class="fas fa-users text-3xl text-secondary"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-4">Social Clubs</h3>
+                        <p class="text-gray-300">Join clubs, make friends, and win together with shared bonuses and gifts in our community.</p>
+                    </motion.div>
+                    
+                    <!-- Feature 3 -->
+                    <motion.div 
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.4, delay: 0.3 }}
+                        viewport={{ once: true }}
+                        whileHover={{ y: -10 }}
+                        class="bg-gray-900 bg-opacity-70 p-8 rounded-xl shadow-lg border border-gray-800 text-center"
+                    >
+                        <div class="w-20 h-20 bg-accent bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i class="fas fa-trophy text-3xl text-accent"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-4">Tournaments</h3>
+                        <p class="text-gray-300">Compete for phenomenal prizes in our regular VIP slots tournaments with massive rewards.</p>
+                    </motion.div>
+                    
+                    <!-- Feature 4 -->
+                    <motion.div 
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.4, delay: 0.4 }}
+                        viewport={{ once: true }}
+                        whileHover={{ y: -10 }}
+                        class="bg-gray-900 bg-opacity-70 p-8 rounded-xl shadow-lg border border-gray-800 text-center"
+                    >
+                        <div class="w-20 h-20 bg-primary bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i class="fas fa-plus-circle text-3xl text-primary"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-4">Weekly Updates</h3>
+                        <p class="text-gray-300">New slot machines and features added every week to keep the fun fresh and exciting.</p>
+                    </motion.div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials Section -->
+        <section class="py-20 bg-black bg-opacity-80">
+            <div class="container mx-auto px-4">
+                <motion.div 
+                    initial={{ opacity: 0, y: 30 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6 }}
+                    viewport={{ once: true }}
+                    class="text-center mb-16"
+                >
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">
+                        What Our <span class="text-secondary">Players Say</span>
+                    </h2>
+                    <p class="text-xl text-gray-300 max-w-2xl mx-auto">
+                        Join over 1 million players who enjoy our Vegas-style slot machines daily.
+                    </p>
+                </motion.div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
+                    <!-- Testimonial 1 -->
+                    <motion.div 
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.4, delay: 0.1 }}
+                        viewport={{ once: true }}
+                        whileHover={{ y: -10 }}
+                        class="bg-gray-900 bg-opacity-70 p-8 rounded-xl shadow-lg border border-gray-800"
+                    >
+                        <div class="flex items-center mb-6">
+                            <div class="flex mr-4">
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                            </div>
+                            <span class="text-sm text-gray-400">2 weeks ago</span>
+                        </div>
+                        <p class="text-gray-300 mb-6">"I've tried many slot apps, but Cash VIP Spin is by far the best! The graphics are amazing and I love the daily bonuses. Hit my first 10M jackpot last week!"</p>
+                        <div class="flex items-center">
+                            <img src="/image/Sarah J.jpeg" alt="User" class="w-12 h-12 rounded-full mr-4 border-2 border-accent object-cover">
+                            <div>
+                                <h4 class="font-bold text-white">Sarah J.</h4>
+                                <span class="text-sm text-gray-400">Level 45 VIP</span>
+                            </div>
+                        </div>
+                    </motion.div>
+                    
+                    <!-- Testimonial 2 -->
+                    <motion.div 
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.4, delay: 0.2 }}
+                        viewport={{ once: true }}
+                        whileHover={{ y: -10 }}
+                        class="bg-gray-900 bg-opacity-70 p-8 rounded-xl shadow-lg border border-gray-800"
+                    >
+                        <div class="flex items-center mb-6">
+                            <div class="flex mr-4">
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star-half-alt text-yellow-400"></i>
+                            </div>
+                            <span class="text-sm text-gray-400">1 month ago</span>
+                        </div>
+                        <p class="text-gray-300 mb-6">"The variety of slots is incredible. New games every week keep it fresh. My favorite is Fireball Frenzy - the bonus rounds are so exciting!"</p>
+                        <div class="flex items-center">
+                            <img src="/image/Mike T.jpeg" alt="User" class="w-12 h-12 rounded-full mr-4 border-2 border-primary object-cover">
+                            <div>
+                                <h4 class="font-bold text-white">Mike T.</h4>
+                                <span class="text-sm text-gray-400">Level 32 VIP</span>
+                            </div>
+                        </div>
+                    </motion.div>
+                    
+                    <!-- Testimonial 3 -->
+                    <motion.div 
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.4, delay: 0.3 }}
+                        viewport={{ once: true }}
+                        whileHover={{ y: -10 }}
+                        class="bg-gray-900 bg-opacity-70 p-8 rounded-xl shadow-lg border border-gray-800"
+                    >
+                        <div class="flex items-center mb-6">
+                            <div class="flex mr-4">
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                                <i class="fas fa-star text-yellow-400"></i>
+                            </div>
+                            <span class="text-sm text-gray-400">3 days ago</span>
+                        </div>
+                        <p class="text-gray-300 mb-6">"The social aspect makes this game stand out. My club members are awesome and we help each other win more. The daily wheel is my favorite feature!"</p>
+                        <div class="flex items-center">
+                            <img src="/image/Lisa M.jpeg" alt="User" class="w-12 h-12 rounded-full mr-4 border-2 border-secondary object-cover">
+                            <div>
+                                <h4 class="font-bold text-white">Lisa M.</h4>
+                                <span class="text-sm text-gray-400">Level 28 VIP</span>
+                            </div>
+                        </div>
+                    </motion.div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Final CTA Section -->
+        <section class="py-20 bg-black/50">
+            <div class="container mx-auto px-4 text-center">
+                <motion.div 
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.6 }}
+                    viewport={{ once: true }}
+                    class="max-w-4xl mx-auto"
+                >
+                    <div class="mb-10 inline-block bg-black bg-opacity-30 px-6 py-3 rounded-full">
+                        <span class="text-white font-bold">LIMITED TIME OFFER</span>
+                    </div>
+                    <h2 class="text-4xl md:text-5xl font-bold text-white mb-6">
+                        Download Now & Get <span class="text-accent">12,000,000 FREE COINS</span>
+                    </h2>
+                    <p class="text-xl text-white mb-10 max-w-2xl mx-auto">
+                        Join over 1 million players enjoying the ultimate Vegas slots experience!
+                    </p>
+                    <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+                        <a href="https://play.google.com/store/apps/details?id=com.bagelcode.slots3&hl=en_US" class="bg-accent hover:bg-yellow-500 text-gray-900 font-bold px-8 py-4 rounded-full text-lg transition duration-300 shadow-2xl btn-hover">
+                            <i class="fab fa-google-play mr-2"></i> Download on Google Play
+                        </a>
+                    </div>
+                    <div class="mt-10">
+                        <img src="/image/coins.jpeg" alt="Coins" class="w-16 rounded-full h-auto mx-auto animate-float">
+                    </div>
+                </motion.div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="bg-black bg-opacity-90 pt-16 pb-8">
+            <div class="container mx-auto px-4">
+                <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+                    <div>
+                        <div class="flex items-center space-x-2 mb-6">
+                            <img src="/image/logo.webp" alt="Cash VIP Spin Logo" class="h-8 w-auto rounded-full">
+                            <span class="text-xl font-bold text-white">Cash VIP Spin</span>
+                        </div>
+                        <p class="text-gray-400 mb-6">The ultimate Vegas-style slot machine experience with huge jackpots and daily bonuses.</p>
+                       
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-lg font-bold text-white mb-6">Quick Links</h3>
+                        <ul class="space-y-3">
+                            <li><a href="/" class="text-gray-400 hover:text-white transition">Home</a></li>
+                            <li><a href="/how-to-play/" class="text-gray-400 hover:text-white transition">How to Play</a></li>
+                            <li><a href="/responsible-gaming/" class="text-gray-400 hover:text-white transition">Responsible Gaming</a></li>
+                            <li><a href="/contact/" class="text-gray-400 hover:text-white transition">Contact Us</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-lg font-bold text-white mb-6">Legal</h3>
+                        <ul class="space-y-3">
+                            <li><a href="/privacy/" class="text-gray-400 hover:text-white transition">Privacy Policy</a></li>
+                            <li><a href="/terms/" class="text-gray-400 hover:text-white transition">Terms of Service</a></li>
+                            <li><a href="/cookies/" class="text-gray-400 hover:text-white transition">Cookies Policy</a></li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-lg font-bold text-white mb-6">Contact</h3>
+                        <ul class="space-y-4 text-gray-400">
+                            <li class="flex items-start">
+                                <i class="fas fa-envelope mt-1 mr-4 text-primary"></i>
+                                <span>apps@cashvipspin.com</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-phone-alt mt-1 mr-4 text-primary"></i>
+                                <span>+82 10-9284-8372</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-map-marker-alt mt-1 mr-4 text-primary"></i>
+                                <span>328 Teheran-ro, Gangnam-gu, Seoul, South Korea</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="border-t border-gray-800 pt-8">
+                    <p class="text-gray-500 text-sm text-center">
+                        © 2025 ARK Casino by Murka Games. All rights reserved. | 18+ Only | Play Responsibly | *Powered by Intel® technology
+                    </p>
+                    <p class="text-gray-600 text-xs text-center mt-4 max-w-3xl mx-auto">
+                        This game is intended for an adult audience and does not offer "real money gambling". Practice or success at social gaming does not imply future success at "real money gambling". Use of this application is governed by Murka's Terms of Service. Collection and use of personal data are subject to Murka's Privacy Policy.
+                    </p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Cookie Banner
+        const cookieBanner = document.getElementById('cookieBanner');
+        const acceptCookies = document.getElementById('acceptCookies');
+        const declineCookies = document.getElementById('declineCookies');
+        
+        // Check if cookie consent was given
+        if (!localStorage.getItem('cookieConsent')) {
+            setTimeout(() => {
+                cookieBanner.classList.remove('hidden');
+            }, 2000);
+        }
+        
+        // Handle accept cookies
+        acceptCookies.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'accepted');
+            cookieBanner.classList.add('hidden');
+        });
+        
+        // Handle decline cookies
+        declineCookies.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'declined');
+            cookieBanner.classList.add('hidden');
+        });
+        
+        // Initialize animations
+        document.addEventListener('DOMContentLoaded', () => {
+            // Any additional animation initializations can go here
+        });
+    </script>
+</body>
+</html>

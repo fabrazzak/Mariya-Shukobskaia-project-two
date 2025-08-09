@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+<link rel="shortcut icon" href="/images/logo.png" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Your XboxCardShop account dashboard">
+    <meta name="keywords" content="xbox account, xbox dashboard, xbox orders">
+    <meta name="author" content="XboxCardShop">
+    <title>My Account - XboxCardShop</title>
+    <link rel="canonical" href="https://xboxcardshop.com/account/" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Oxanium:wght@300;400;500;600;700;800&family=Press+Start+2P&display=swap');
+        
+        :root {
+            --primary: #107c10;
+            --secondary: #0f5e0f;
+            --accent: #00ff00;
+            --dark: #0a0a0a;
+            --light: #f8f8f8;
+        }
+        
+        body {
+            font-family: 'Oxanium', sans-serif;
+            background-color: var(--dark);
+            color: var(--light);
+            overflow-x: hidden;
+        }
+        
+        .logo-font {
+            font-family: 'Press Start 2P', cursive;
+        }
+        
+        .hero-gradient {
+            background: radial-gradient(circle at center, rgba(16,124,16,0.3) 0%, rgba(10,10,10,1) 70%);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+            box-shadow: 0 0 15px rgba(0,255,0,0.2);
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,255,0,0.4);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,255,0,0.3);
+        }
+        
+        .btn-accent {
+            background: linear-gradient(135deg, var(--accent), #00cc00);
+            color: var(--dark);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-accent:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,255,0,0.5);
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: var(--accent);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .hamburger {
+            width: 30px;
+            height: 20px;
+            position: relative;
+            transform: rotate(0deg);
+            transition: .5s ease-in-out;
+            cursor: pointer;
+        }
+        
+        .hamburger span {
+            display: block;
+            position: absolute;
+            height: 3px;
+            width: 100%;
+            background: var(--accent);
+            border-radius: 3px;
+            opacity: 1;
+            left: 0;
+            transform: rotate(0deg);
+            transition: .25s ease-in-out;
+        }
+        
+        .hamburger span:nth-child(1) {
+            top: 0px;
+        }
+        
+        .hamburger span:nth-child(2), .hamburger span:nth-child(3) {
+            top: 10px;
+        }
+        
+        .hamburger span:nth-child(4) {
+            top: 20px;
+        }
+        
+        .hamburger.open span:nth-child(1) {
+            top: 10px;
+            width: 0%;
+            left: 50%;
+        }
+        
+        .hamburger.open span:nth-child(2) {
+            transform: rotate(45deg);
+        }
+        
+        .hamburger.open span:nth-child(3) {
+            transform: rotate(-45deg);
+        }
+        
+        .hamburger.open span:nth-child(4) {
+            top: 10px;
+            width: 0%;
+            left: 50%;
+        }
+        
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.5s cubic-bezier(0.77,0.2,0.05,1.0);
+        }
+        
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+        
+        .account-card {
+            background: linear-gradient(135deg, rgba(16,124,16,0.1), rgba(10,10,10,0.8));
+            border: 1px solid rgba(16,124,16,0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .account-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0,255,0,0.2);
+        }
+        
+        .order-item {
+            border-left: 3px solid var(--accent);
+            transition: all 0.3s ease;
+        }
+        
+        .order-item:hover {
+            background-color: rgba(16,124,16,0.1);
+        }
+        
+        .status-badge {
+            font-size: 0.75rem;
+            padding: 0.25rem 0.5rem;
+            border-radius: 1rem;
+        }
+        
+        .status-processing {
+            background-color: rgba(255,193,7,0.1);
+            color: #ffc107;
+            border: 1px solid rgba(255,193,7,0.3);
+        }
+        
+        .status-completed {
+            background-color: rgba(40,167,69,0.1);
+            color: #28a745;
+            border: 1px solid rgba(40,167,69,0.3);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="bg-black/90 backdrop-blur-md border-b border-green-900/30 fixed w-full z-50">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <!-- Logo -->
+            <div class="flex items-center">
+                 <a href="/" class="flex items-center">
+                    <img src="/images/logo.png" alt="Xbox Logo" class="h-12">
+                </a>
+            </div>
+            
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="/" class="nav-link text-white hover:text-green-400">Home</a>
+                <a href="/shop/" class="nav-link text-white hover:text-green-400">Shop</a>
+                <a href="/blog/" class="nav-link text-white hover:text-green-400">Blog</a>
+                <a href="/about/" class="nav-link text-white hover:text-green-400">About</a>
+                <a href="/contact/" class="nav-link text-white hover:text-green-400">Contact</a>
+                 
+            </nav>
+            
+            <!-- Right Side Icons -->
+            <div class="flex items-center space-x-4">
+                <a href="/cart/" class="relative text-white hover:text-green-400">
+                    <i class="fas fa-shopping-cart text-xl"></i>
+                    <span id="cart-count" class="absolute -top-2 -right-2 bg-green-600 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+                </a>
+                <div id="user-icon" class="hidden">
+                    <a href="/account/" class="text-white hover:text-green-400">
+                        <i class="fas fa-user text-xl"></i>
+                    </a>
+                </div>
+                <div id="login-icon">
+                    <a href="/login/" class="text-white hover:text-green-400">
+                        <i class="fas fa-sign-in-alt text-xl"></i>
+                    </a>
+                </div>
+                <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none">
+                    <div class="hamburger">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="mobile-menu fixed inset-y-0 right-0 w-64 bg-black/95 backdrop-blur-lg z-50 p-6 overflow-y-auto">
+        <div class="flex justify-between items-center mb-8">
+            <a href="/" class="logo-font text-green-400 text-xl">Xbox</a>
+            <button id="mobile-menu-close" class="text-white focus:outline-none">
+                <i class="fas fa-times text-xl"></i>
+            </button>
+        </div>
+        <nav class="flex flex-col space-y-6">
+            <a href="/" class="text-white hover:text-green-400 text-lg">Home</a>
+            <a href="/shop/" class="text-white hover:text-green-400 text-lg">Shop</a>
+            <a href="/blog/" class="text-white hover:text-green-400 text-lg">Blog</a>
+            <a href="/about/" class="text-white hover:text-green-400 text-lg">About</a>
+            <a href="/contact/" class="text-white hover:text-green-400 text-lg">Contact</a>
+            
+            <div class="pt-4 border-t border-green-900/30">
+                <div id="mobile-login-link">
+                    <a href="/login/" class="flex items-center text-white hover:text-green-400">
+                        <i class="fas fa-sign-in-alt mr-2"></i> Login
+                    </a>
+                </div>
+                <a href="/cart/" class="flex items-center text-white hover:text-green-400 mt-4">
+                    <i class="fas fa-shopping-cart mr-2"></i> Cart (<span id="mobile-cart-count">0</span>)
+                </a>
+            </div>
+        </nav>
+        <div class="absolute bottom-6 left-6 right-6">
+            <p class="text-green-400 text-sm">We are not an affiliate agency. All products are sold independently through our platform.</p>
+        </div>
+    </div>
+    
+    <!-- Main Content -->
+    <main class="flex-grow pt-32 pb-16">
+        <div class="container mx-auto px-4">
+            <!-- Check if user is logged in -->
+            <div id="login-required" class="hidden text-center py-16">
+                <div class="max-w-md mx-auto bg-gray-900/50 rounded-xl p-8 border border-gray-800">
+                    <i class="fas fa-lock text-4xl text-green-400 mb-4"></i>
+                    <h2 class="text-2xl font-bold text-white mb-4">Account Login Required</h2>
+                    <p class="text-gray-400 mb-6">Please log in to view your account details.</p>
+                    <div class="flex flex-col sm:flex-row justify-center gap-4">
+                        <a href="/login/" class="btn-primary text-white font-bold py-3 px-6 rounded-lg">
+                            Login
+                        </a>
+                        <a href="/register/" class="btn-accent font-bold py-3 px-6 rounded-lg">
+                            Register
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Account Dashboard (shown when logged in) -->
+            <div id="account-dashboard" class="hidden">
+                <!-- Welcome Section -->
+                <div class="flex flex-col md:flex-row justify-between items-start md:items-center mb-8">
+                    <div>
+                        <h1 class="text-3xl md:text-4xl font-bold text-white mb-2">
+                            Welcome, <span id="user-email" class="text-green-400"></span>
+                        </h1>
+                        <p class="text-gray-400">
+                            Member since <span id="join-date"></span>
+                        </p>
+                    </div>
+                    <button id="logout-btn" class="btn-primary text-white font-bold py-2 px-6 rounded-lg mt-4 md:mt-0">
+                        <i class="fas fa-sign-out-alt mr-2"></i> Logout
+                    </button>
+                </div>
+                
+                <!-- Account Summary -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                    <div class="account-card rounded-xl p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 rounded-full bg-green-600/20 flex items-center justify-center mr-4">
+                                <i class="fas fa-shopping-bag text-green-400 text-xl"></i>
+                            </div>
+                            <div>
+                                <p class="text-gray-400 text-sm">Total Orders</p>
+                                <h3 id="total-orders" class="text-2xl font-bold text-white">0</h3>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="account-card rounded-xl p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 rounded-full bg-green-600/20 flex items-center justify-center mr-4">
+                                <i class="fas fa-check-circle text-green-400 text-xl"></i>
+                            </div>
+                            <div>
+                                <p class="text-gray-400 text-sm">Completed Orders</p>
+                                <h3 id="completed-orders" class="text-2xl font-bold text-white">0</h3>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="account-card rounded-xl p-6">
+                        <div class="flex items-center mb-4">
+                            <div class="w-12 h-12 rounded-full bg-green-600/20 flex items-center justify-center mr-4">
+                                <i class="fas fa-clock text-green-400 text-xl"></i>
+                            </div>
+                            <div>
+                                <p class="text-gray-400 text-sm">Processing Orders</p>
+                                <h3 id="processing-orders" class="text-2xl font-bold text-white">0</h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Recent Orders -->
+                <div class="mb-12">
+                    <h2 class="text-2xl font-bold text-white mb-6 flex items-center">
+                        <i class="fas fa-history text-green-400 mr-3"></i>
+                        Recent Orders
+                    </h2>
+                    
+                    <div id="orders-list" class="space-y-4">
+                        <!-- Orders will be dynamically inserted here -->
+                    </div>
+                    
+                    <div id="no-orders" class="text-center py-12 bg-gray-900/50 rounded-xl border border-gray-800">
+                        <i class="fas fa-box-open text-4xl text-gray-600 mb-4"></i>
+                        <h3 class="text-xl font-bold text-white mb-2">No Orders Yet</h3>
+                        <p class="text-gray-400 mb-4">You haven't placed any orders yet.</p>
+                        <a href="/shop/" class="inline-block btn-accent font-bold py-2 px-6 rounded-lg">
+                            Start Shopping
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Account Details -->
+                <div class="bg-gray-900/50 rounded-xl p-6 border border-gray-800 mb-12">
+                    <h2 class="text-2xl font-bold text-white mb-6 flex items-center">
+                        <i class="fas fa-user-cog text-green-400 mr-3"></i>
+                        Account Details
+                    </h2>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <h3 class="text-lg font-bold text-white mb-4">Personal Information</h3>
+                            <div class="space-y-3">
+                                <p><span class="text-gray-400">Email:</span> <span id="account-email" class="text-white"></span></p>
+                                <p><span class="text-gray-400">Member Since:</span> <span id="account-join-date" class="text-white"></span></p>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h3 class="text-lg font-bold text-white mb-4">Actions</h3>
+                            <div class="space-y-3">
+                                <button id="change-password-btn" class="text-green-400 hover:text-green-300 flex items-center">
+                                    <i class="fas fa-key mr-2"></i> Change Password
+                                </button>
+                                <button id="delete-account-btn" class="text-red-400 hover:text-red-300 flex items-center">
+                                    <i class="fas fa-trash-alt mr-2"></i> Delete Account
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    
+    <!-- Footer -->
+    <footer class="bg-black/90 border-t border-green-900/30 pt-12 pb-6">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <a href="/" class="flex items-center">
+                    <img src="/images/logo.png" alt="Xbox Logo" class="h-12 mb-4">
+                </a>
+                    <p class="text-gray-400 mb-4">
+                        Your trusted source for Xbox gift cards and digital content. Instant delivery, competitive prices.
+                    </p>
+                </div>
+                
+                <div>
+                    <h3 class="text-white font-bold text-lg mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/" class="text-gray-400 hover:text-green-400">Home</a></li>
+                        <li><a href="/shop/" class="text-gray-400 hover:text-green-400">Shop</a></li>
+                        <li><a href="/blog/" class="text-gray-400 hover:text-green-400">Blog</a></li>
+                        <li><a href="/about/" class="text-gray-400 hover:text-green-400">About Us</a></li>
+                        <li><a href="/contact/" class="text-gray-400 hover:text-green-400">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-white font-bold text-lg mb-4">Support</h3>
+                    <ul class="space-y-2">                        
+                        <li><a href="/cookies" class="text-gray-400 hover:text-green-400">Cookies Policy</a></li>
+                        <li><a href="/privacy/" class="text-gray-400 hover:text-green-400">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="text-gray-400 hover:text-green-400">Terms of Service</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-white font-bold text-lg mb-4">Contact Us</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center text-gray-400">
+                            <i class="fas fa-map-marker-alt mr-2 text-green-400"></i>
+                            490 Chem. de Vassan, Val-d'Or, QC J9P 0C1, Canada
+                        </li>
+                        <li class="flex items-center text-gray-400">
+                            <i class="fas fa-phone-alt mr-2 text-green-400"></i>
+                            +1 (819) 824-3146
+                        </li>
+                        <li class="flex items-center text-gray-400">
+                            <i class="fas fa-envelope mr-2 text-green-400"></i>
+                            info@xboxcardshop.com
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-green-900/30 pt-6 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-500 text-sm mb-4 md:mb-0">
+                    &copy; 2025 XboxCardShop. All rights reserved.
+                </p>
+                <p class="text-gray-500 text-sm">
+                    We are not an affiliate agency. All products are sold independently through our platform.
+                </p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Change Password Modal -->
+    <div id="change-password-modal" class="fixed inset-0 bg-black/80 z-50 flex items-center justify-center hidden">
+        <div class="bg-gray-900 rounded-xl p-6 w-full max-w-md border border-gray-800">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold text-white">Change Password</h3>
+                <button id="close-password-modal" class="text-gray-400 hover:text-white">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <form id="change-password-form" class="space-y-4">
+                <div>
+                    <label for="current-password" class="block text-gray-400 mb-2">Current Password</label>
+                    <input type="password" id="current-password" class="w-full form-input rounded-lg px-4 py-3 text-white" required>
+                </div>
+                
+                <div>
+                    <label for="new-password" class="block text-gray-400 mb-2">New Password</label>
+                    <input type="password" id="new-password" class="w-full form-input rounded-lg px-4 py-3 text-white" required minlength="8">
+                </div>
+                
+                <div>
+                    <label for="confirm-new-password" class="block text-gray-400 mb-2">Confirm New Password</label>
+                    <input type="password" id="confirm-new-password" class="w-full form-input rounded-lg px-4 py-3 text-white" required minlength="8">
+                </div>
+                
+                <button type="submit" class="w-full btn-accent font-bold py-3 px-6 rounded-lg">
+                    Update Password
+                </button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Delete Account Modal -->
+    <div id="delete-account-modal" class="fixed inset-0 bg-black/80 z-50 flex items-center justify-center hidden">
+        <div class="bg-gray-900 rounded-xl p-6 w-full max-w-md border border-gray-800">
+            <div class="flex justify-between items-center mb-6">
+                <h3 class="text-xl font-bold text-white">Delete Account</h3>
+                <button id="close-delete-modal" class="text-gray-400 hover:text-white">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="text-center">
+                <i class="fas fa-exclamation-triangle text-4xl text-red-500 mb-4"></i>
+                <p class="text-gray-300 mb-6">
+                    Are you sure you want to delete your account? This action cannot be undone and all your data will be permanently removed.
+                </p>
+                
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <button id="confirm-delete" class="bg-red-600 hover:bg-red-700 text-white font-bold py-2 px-6 rounded-lg">
+                        Yes, Delete Account
+                    </button>
+                    <button id="cancel-delete" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-lg">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const hamburger = document.querySelector('.hamburger');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('open');
+            hamburger.classList.toggle('open');
+        });
+
+        document.getElementById('mobile-menu-close').addEventListener('click', () => {
+            mobileMenu.classList.remove('open');
+            hamburger.classList.remove('open');
+        });
+
+        // Check login status and update UI
+        function checkLoginStatus() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            const accountNavItem = document.getElementById('account-nav-item');
+            const userIcon = document.getElementById('user-icon');
+            const loginIcon = document.getElementById('login-icon');
+            const mobileAccountLink = document.getElementById('mobile-account-link');
+            const mobileLoginLink = document.getElementById('mobile-login-link');
+            
+            if (isLoggedIn) {
+                if (accountNavItem) accountNavItem.classList.remove('hidden');
+                if (userIcon) userIcon.classList.remove('hidden');
+                if (loginIcon) loginIcon.classList.add('hidden');
+                if (mobileAccountLink) mobileAccountLink.classList.remove('hidden');
+                if (mobileLoginLink) mobileLoginLink.classList.add('hidden');
+                
+                // Show account dashboard
+                document.getElementById('account-dashboard').classList.remove('hidden');
+                document.getElementById('login-required').classList.add('hidden');
+                
+                // Load user data
+                loadUserData();
+            } else {
+                if (accountNavItem) accountNavItem.classList.add('hidden');
+                if (userIcon) userIcon.classList.add('hidden');
+                if (loginIcon) loginIcon.classList.remove('hidden');
+                if (mobileAccountLink) mobileAccountLink.classList.add('hidden');
+                if (mobileLoginLink) mobileLoginLink.classList.remove('hidden');
+                
+                // Show login required
+                document.getElementById('account-dashboard').classList.add('hidden');
+                document.getElementById('login-required').classList.remove('hidden');
+            }
+        }
+
+        // Load user data from localStorage
+        function loadUserData() {
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (!user) return;
+            
+            // Display basic user info
+            document.getElementById('user-email').textContent = user.email;
+            document.getElementById('account-email').textContent = user.email;
+            
+            const joinDate = new Date(user.joined);
+            document.getElementById('join-date').textContent = joinDate.toLocaleDateString();
+            document.getElementById('account-join-date').textContent = joinDate.toLocaleDateString();
+            
+            // Process orders
+            const orders = user.orders || [];
+            const ordersList = document.getElementById('orders-list');
+            const noOrders = document.getElementById('no-orders');
+            
+            // Update order counts
+            document.getElementById('total-orders').textContent = orders.length;
+            document.getElementById('completed-orders').textContent = orders.filter(o => o.status === 'Completed').length;
+            document.getElementById('processing-orders').textContent = orders.filter(o => o.status === 'Processing').length;
+            
+            // Display orders
+            if (orders.length === 0) {
+                noOrders.classList.remove('hidden');
+                ordersList.classList.add('hidden');
+            } else {
+                noOrders.classList.add('hidden');
+                ordersList.classList.remove('hidden');
+                ordersList.innerHTML = '';
+                
+                // Sort orders by date (newest first)
+                const sortedOrders = [...orders].sort((a, b) => new Date(b.date) - new Date(a.date));
+                
+                // Show only the 5 most recent orders
+                const recentOrders = sortedOrders.slice(0, 5);
+                
+                recentOrders.forEach(order => {
+                    const orderDate = new Date(order.date);
+                    const orderTotal = order.items.reduce((total, item) => total + (item.price * item.quantity), 0);
+                    
+                    const orderItem = document.createElement('div');
+                    orderItem.className = 'order-item bg-gray-900/50 rounded-lg p-4 pl-6';
+                    orderItem.innerHTML = `
+                        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between">
+                            <div class="mb-3 sm:mb-0">
+                                <h3 class="font-bold text-white">Order #${order.id.substring(0, 8)}</h3>
+                                <p class="text-gray-400 text-sm">${orderDate.toLocaleDateString()} • ${order.items.length} item(s)</p>
+                            </div>
+                            <div class="flex flex-col sm:items-end">
+                                <span class="text-lg font-bold text-green-400 mb-1">$${orderTotal.toFixed(2)}</span>
+                                <span class="status-badge ${order.status === 'Processing' ? 'status-processing' : 'status-completed'}">
+                                    ${order.status}
+                                </span>
+                            </div>
+                        </div>
+                    `;
+                    ordersList.appendChild(orderItem);
+                });
+                
+                // Add view all orders button if there are more than 5
+                if (orders.length > 5) {
+                    const viewAll = document.createElement('div');
+                    viewAll.className = 'text-center mt-6';
+                    viewAll.innerHTML = `
+                        <a href="javascript:void(0)" class="text-green-400 hover:text-green-300 font-semibold">
+                            View All Orders <i class="fas fa-chevron-right ml-1"></i>
+                        </a>
+                    `;
+                    ordersList.appendChild(viewAll);
+                }
+            }
+        }
+
+        // Logout function
+        function logout() {
+            localStorage.removeItem('isLoggedIn');
+            checkLoginStatus();
+            window.location.href = '/login/';
+        }
+
+        // Change password function
+        function changePassword(currentPass, newPass) {
+            const user = JSON.parse(localStorage.getItem('user'));
+            
+            // In a real app, you would verify the current password properly
+            if (user.password !== currentPass) {
+                alert('Current password is incorrect');
+                return false;
+            }
+            
+            user.password = newPass;
+            localStorage.setItem('user', JSON.stringify(user));
+            return true;
+        }
+
+        // Delete account function
+        function deleteAccount() {
+            localStorage.removeItem('user');
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('cart');
+            checkLoginStatus();
+            window.location.href = '/';
+        }
+
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            checkLoginStatus();
+            
+            // Update cart count
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            document.getElementById('cart-count').textContent = totalItems;
+            document.getElementById('mobile-cart-count').textContent = totalItems;
+            
+            // Event listeners
+            document.getElementById('logout-btn').addEventListener('click', logout);
+            
+            // Password modal
+            document.getElementById('change-password-btn').addEventListener('click', () => {
+                document.getElementById('change-password-modal').classList.remove('hidden');
+            });
+            
+            document.getElementById('close-password-modal').addEventListener('click', () => {
+                document.getElementById('change-password-modal').classList.add('hidden');
+            });
+            
+            document.getElementById('change-password-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                
+                const currentPass = document.getElementById('current-password').value;
+                const newPass = document.getElementById('new-password').value;
+                const confirmPass = document.getElementById('confirm-new-password').value;
+                
+                if (newPass !== confirmPass) {
+                    alert('New passwords do not match!');
+                    return;
+                }
+                
+                if (changePassword(currentPass, newPass)) {
+                    alert('Password changed successfully!');
+                    document.getElementById('change-password-modal').classList.add('hidden');
+                    document.getElementById('change-password-form').reset();
+                }
+            });
+            
+            // Delete account modal
+            document.getElementById('delete-account-btn').addEventListener('click', () => {
+                document.getElementById('delete-account-modal').classList.remove('hidden');
+            });
+            
+            document.getElementById('close-delete-modal').addEventListener('click', () => {
+                document.getElementById('delete-account-modal').classList.add('hidden');
+            });
+            
+            document.getElementById('cancel-delete').addEventListener('click', () => {
+                document.getElementById('delete-account-modal').classList.add('hidden');
+            });
+            
+            document.getElementById('confirm-delete').addEventListener('click', () => {
+                deleteAccount();
+                document.getElementById('delete-account-modal').classList.add('hidden');
+            });
+            
+            // GSAP Animations
+            gsap.from(".logo-font", {
+                duration: 1,
+                y: -50,
+                opacity: 0,
+                ease: "power3.out"
+            });
+            
+            gsap.from(".nav-link", {
+                duration: 1,
+                y: -50,
+                opacity: 0,
+                stagger: 0.1,
+                ease: "power3.out",
+                delay: 0.3
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,715 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Optimizing Mobile Games for Best Performance | JustCoolBlast</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="/images/favicon.png" type="image/x-icon">
+    <link rel="icon" href="/images/favicon.png" type="image/x-icon">
+
+    <!-- Meta Tags -->
+    <meta name="description"
+        content="Learn about the techniques we use to ensure Boat Attack runs smoothly on a wide range of mobile devices.">
+    <meta name="keywords" content="mobile game optimization, performance tuning, unity optimization, mobile graphics, game development">
+    <meta name="author" content="JustCool">
+    <link rel="canonical" href="https://justcoolblast.app/blog/optimizing-mobile-games-performance/" />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Custom Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6366F1',  // Indigo
+                        secondary: '#8B5CF6',  // Violet
+                        accent: '#EC4899',  // Pink
+                        dark: '#1F2937',
+                        light: '#F9FAFB',
+                        surface: '#FFFFFF',
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-fast': 'float 4s ease-in-out infinite',
+                        'pulse-slow': 'pulse 5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #F9FAFB;
+            color: #1F2937;
+        }
+
+        .hero-gradient {
+            background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 50%, #EC4899 100%);
+        }
+
+        .nav-blur {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .text-gradient {
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .section-title {
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 50%;
+            height: 4px;
+            background: linear-gradient(90deg, #6366F1, #EC4899);
+            border-radius: 2px;
+        }
+        
+        /* Blog specific styles */
+        .blog-hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), url('/images/blog-optimization.jpg'));
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .article-content {
+            line-height: 1.8;
+        }
+        
+        .article-content h2 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-top: 2.5rem;
+            margin-bottom: 1.25rem;
+            color: #6366F1;
+        }
+        
+        .article-content h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .article-content p {
+            margin-bottom: 1.5rem;
+        }
+        
+        .article-content ul, 
+        .article-content ol {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+        
+        .article-content ul {
+            list-style-type: disc;
+        }
+        
+        .article-content ol {
+            list-style-type: decimal;
+        }
+        
+        .article-content li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .article-content img {
+            border-radius: 0.75rem;
+            margin: 2rem 0;
+            max-width: 100%;
+            height: auto;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .article-content blockquote {
+            border-left: 4px solid #6366F1;
+            padding-left: 1.5rem;
+            margin: 2rem 0;
+            color: #4B5563;
+            font-style: italic;
+        }
+        
+        .article-content .code-block {
+            background-color: #1F2937;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            font-family: monospace;
+            overflow-x: auto;
+            margin: 2rem 0;
+            color: #E5E7EB;
+        }
+        
+        .article-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        .article-content th, 
+        .article-content td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid #E5E7EB;
+        }
+        
+        .article-content th {
+            background-color: #6366F1;
+            color: white;
+            font-weight: 500;
+        }
+        
+        .article-content tr:nth-child(even) {
+            background-color: #F9FAFB;
+        }
+        
+        .article-content tr:hover {
+            background-color: #F3F4F6;
+        }
+        
+        .tip-box {
+            background-color: #E0E7FF;
+            border-left: 4px solid #6366F1;
+            padding: 1.5rem;
+            border-radius: 0 0.5rem 0.5rem 0;
+            margin: 2rem 0;
+        }
+        
+        .tip-box .tip-title {
+            font-weight: 600;
+            color: #6366F1;
+            margin-bottom: 0.75rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .tip-box .tip-title i {
+            margin-right: 0.75rem;
+            font-size: 1.25rem;
+        }
+        
+        .performance-meter {
+            height: 1.5rem;
+            border-radius: 0.75rem;
+            background: linear-gradient(90deg, #EF4444 0%, #F59E0B 50%, #10B981 100%);
+            position: relative;
+            margin: 2rem 0;
+        }
+        
+        .performance-meter::after {
+            content: '';
+            position: absolute;
+            top: -0.5rem;
+            bottom: -0.5rem;
+            width: 2px;
+            background: #1F2937;
+        }
+        
+        .meter-good { left: 75%; }
+        .meter-ok { left: 50%; }
+        .meter-bad { left: 25%; }
+    </style>
+</head>
+
+<body class="antialiased">
+    <!-- Cookies Consent Banner -->
+    <div id="cookies-banner"
+        class="fixed bottom-4 left-4 right-4 max-w-2xl mx-auto bg-surface rounded-xl shadow-xl p-6 z-50 hidden border border-gray-200">
+        <div class="flex flex-col md:flex-row items-start md:items-center">
+            <div class="mb-4 md:mb-0 md:mr-6 flex-1">
+                <h4 class="font-semibold text-lg mb-1">We value your privacy</h4>
+                <p class="text-gray-600 text-sm">We use cookies to enhance your experience on our website. By continuing
+                    to browse,
+                    you agree to our use of cookies.</p>
+            </div>
+            <div class="flex flex-col sm:flex-row w-full md:w-auto space-y-2 sm:space-y-0 sm:space-x-2">
+                <button id="accept-cookies"
+                    class="px-4 py-2 bg-primary hover:bg-indigo-600 rounded-lg transition duration-300 text-sm font-medium text-white shadow-sm">
+                    Accept
+                </button>
+                <button id="decline-cookies"
+                    class="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition duration-300 text-sm font-medium text-gray-800">
+                    Decline
+                </button>
+                <a href="/privacy/"
+                    class="px-4 py-2 bg-transparent hover:bg-gray-100 border border-gray-200 rounded-lg transition duration-300 text-sm font-medium text-gray-700">
+                    Learn More
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-40 nav-blur bg-white/80 border-b border-gray-100">
+        <div class="container mx-auto px-6">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center space-x-2">
+                     <a href="/" class="flex items-center space-x-3">
+                        <img src="/images/logo.png" alt="JustCoolBlast Logo" class="h-12  rounded-xl">                       
+                    </a>
+                </div>
+
+                <div class="hidden lg:flex items-center space-x-8">
+                    <a href="/" class="text-gray-800 hover:text-primary font-medium transition duration-300">Home</a>
+                    <a href="/games" class="text-gray-600 hover:text-primary transition duration-300">Games</a>
+                    <a href="/about" class="text-gray-600 hover:text-primary transition duration-300">About</a>
+                    <a href="/blog" class="text-primary font-medium transition duration-300">Blog</a>
+                    <a href="/contact/" class="text-gray-600 hover:text-primary transition duration-300">Contact</a>
+                </div>
+
+                <div class="flex items-center space-x-4">
+                    <a href="https://play.google.com/store/apps/details?id=com.justcool.boatattack" target="_blank"
+                        class="hidden md:flex items-center bg-gradient-to-r from-primary to-accent hover:from-indigo-600 hover:to-pink-500 text-white px-5 py-2.5 rounded-lg font-medium transition duration-300 shadow-md">
+                        <i class="fab fa-google-play mr-2"></i> Download
+                    </a>
+                    <button id="mobile-menu-button"
+                        class="lg:hidden text-gray-600 hover:text-gray-900 focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="lg:hidden hidden bg-white border-t border-gray-100 shadow-lg">
+            <div class="container mx-auto px-6 py-4 flex flex-col space-y-3">
+                <a href="/" class="py-3 px-4 rounded-lg hover:bg-gray-50 font-medium">Home</a>
+                <a href="/games" class="py-3 px-4 rounded-lg hover:bg-gray-50">Games</a>
+                <a href="/about/" class="py-3 px-4 rounded-lg hover:bg-gray-50">About</a>
+                <a href="/blog" class="py-3 px-4 rounded-lg hover:bg-gray-50 bg-gray-100 text-primary">Blog</a>
+                <a href="/contact/" class="py-3 px-4 rounded-lg hover:bg-gray-50">Contact</a>
+                <a href="https://play.google.com/store/apps/details?id=com.justcool.boatattack" target="_blank"
+                    class="flex items-center justify-center bg-gradient-to-r from-primary to-accent hover:from-indigo-600 hover:to-pink-500 text-white px-5 py-3 rounded-lg font-medium transition duration-300 mt-2 shadow-md">
+                    <i class="fab fa-google-play mr-2"></i> Download Now
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Article Hero Section -->
+    <section class="relative pt-32 pb-24 overflow-hidden blog-hero">
+        <div class="absolute inset-0 bg-gradient-to-b from-black/30 to-black/70"></div>
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="max-w-4xl mx-auto text-center">
+                <span class="inline-block bg-white text-primary text-sm font-semibold px-4 py-1 rounded-full mb-6">TECH</span>
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 text-white">
+                    Optimizing Mobile Games for <span class="text-gradient bg-gradient-to-r from-accent to-yellow-300">Best Performance</span>
+                </h1>
+                <div class="flex items-center justify-center text-gray-200 space-x-4">
+                    <span class="flex items-center">
+                        <i class="far fa-calendar mr-2"></i> March 28, 2025
+                    </span>
+                    <span class="flex items-center">
+                        <i class="far fa-clock mr-2"></i> 8 min read
+                    </span>
+                    <span class="flex items-center">
+                        <i class="far fa-user mr-2"></i> JustCool Tech Team
+                    </span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Article Content Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col lg:flex-row gap-12">
+                <!-- Main Content -->
+                <div class="lg:w-2/3 mx-auto">
+                    <article class="article-content bg-surface p-8 rounded-2xl shadow-sm border border-gray-100">
+                        <p class="text-lg text-gray-700 mb-8">
+                            Creating a visually stunning game that runs smoothly across a wide range of mobile devices is one of the biggest challenges in mobile game development. In this post, we'll share the optimization techniques we used in Boat Attack to achieve consistent 60fps gameplay while maintaining high visual fidelity.
+                        </p>
+                        
+                        <h2>Performance Targets</h2>
+                        
+                        <p>
+                            Before diving into optimization, it's crucial to establish clear performance targets:
+                        </p>
+                        
+                        <ul>
+                            <li><strong>60fps</strong> on high-end devices (Snapdragon 8 series, A15 Bionic and newer)</li>
+                            <li><strong>30fps</strong> on mid-range devices (3-5 years old)</li>
+                            <li><strong>Stable framerate</strong> with no noticeable hitches</li>
+                            <li><strong>Battery efficiency</strong> - less than 20% drain per hour</li>
+                            <li><strong>Thermal limits</strong> - no thermal throttling after 30 minutes of play</li>
+                        </ul>
+                        
+                        <div class="performance-meter">
+                            <div class="performance-meter::after meter-good"></div>
+                            <div class="performance-meter::after meter-ok"></div>
+                            <div class="performance-meter::after meter-bad"></div>
+                        </div>
+                        
+                        <div class="flex justify-between text-sm text-gray-600">
+                            <span>Low-End</span>
+                            <span>Mid-Range</span>
+                            <span>High-End</span>
+                        </div>
+                        
+                        <h2>Critical Optimization Areas</h2>
+                        
+                        <h3>1. Rendering Pipeline</h3>
+                        
+                        <img src="/images/optimization-rendering.jpg" alt="Rendering Pipeline Optimization" class="w-full rounded-lg">
+                        
+                        <p>
+                            The rendering pipeline is often the biggest performance bottleneck. Here's how we optimized it:
+                        </p>
+                        
+                        <div class="tip-box">
+                            <div class="tip-title">
+                                <i class="fas fa-lightbulb"></i>
+                                <span>Pro Tip</span>
+                            </div>
+                            <p>Always profile before optimizing. Use Unity's Frame Debugger and Profiler to identify actual bottlenecks rather than guessing.</p>
+                        </div>
+                        
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Technique</th>
+                                    <th>Performance Gain</th>
+                                    <th>Visual Impact</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Custom SRP (Scriptable Render Pipeline)</td>
+                                    <td>25-30% faster</td>
+                                    <td>Minimal</td>
+                                </tr>
+                                <tr>
+                                    <td>GPU Instancing for environment</td>
+                                    <td>15% faster</td>
+                                    <td>None</td>
+                                </tr>
+                                <tr>
+                                    <td>LOD (Level of Detail) System</td>
+                                    <td>20% faster</td>
+                                    <td>Controlled</td>
+                                </tr>
+                                <tr>
+                                    <td>Occlusion Culling</td>
+                                    <td>10-40% faster</td>
+                                    <td>None</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                        <h3>2. Memory Management</h3>
+                        
+                        <p>
+                            Mobile devices have limited RAM, making efficient memory usage critical:
+                        </p>
+                        
+                        <div class="code-block">
+                            // Example of our object pooling system<br>
+                            public class BoatPool : MonoBehaviour {<br>
+                            &nbsp;&nbsp;private Queue&lt;GameObject&gt; pool = new Queue&lt;GameObject&gt;();<br>
+                            &nbsp;&nbsp;public GameObject GetObject() {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;if (pool.Count > 0) {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;return pool.Dequeue();<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;}<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;return Instantiate(prefab);<br>
+                            &nbsp;&nbsp;}<br>
+                            &nbsp;&nbsp;public void ReturnObject(GameObject obj) {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;obj.SetActive(false);<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;pool.Enqueue(obj);<br>
+                            &nbsp;&nbsp;}<br>
+                            }
+                        </div>
+                        
+                        <h3>3. Asset Optimization</h3>
+                        
+                        <p>
+                            Proper asset preparation can make a huge difference:
+                        </p>
+                        
+                        <ul>
+                            <li><strong>Texture Compression:</strong> ASTC for newer devices, ETC2 fallback</li>
+                            <li><strong>Mesh Optimization:</strong> Average triangle count per boat: 8,000</li>
+                            <li><strong>Audio Compression:</strong> Vorbis at ~96kbps quality</li>
+                            <li><strong>Shader Complexity:</strong> Limited to 50 instructions for fragment shaders</li>
+                        </ul>
+                        
+                        <h2>Device-Specific Optimizations</h2>
+                        
+                        <p>
+                            We implemented a tiered quality system that automatically adjusts based on device capabilities:
+                        </p>
+                        
+                        <div class="code-block">
+                            // Device tier detection snippet<br>
+                            DeviceTier GetDeviceTier() {<br>
+                            &nbsp;&nbsp;if (SystemInfo.graphicsMemorySize >= 4000 &&<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;SystemInfo.processorFrequency >= 2500) {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;return DeviceTier.High;<br>
+                            &nbsp;&nbsp;}<br>
+                            &nbsp;&nbsp;else if (SystemInfo.graphicsMemorySize >= 2000) {<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;return DeviceTier.Medium;<br>
+                            &nbsp;&nbsp;}<br>
+                            &nbsp;&nbsp;return DeviceTier.Low;<br>
+                            }
+                        </div>
+                        
+                        <h2>Performance Comparison</h2>
+                        
+                        <p>
+                            Here's how our optimizations improved performance across device tiers:
+                        </p>
+                        
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Device Tier</th>
+                                    <th>Before (fps)</th>
+                                    <th>After (fps)</th>
+                                    <th>Improvement</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>High-End (Snapdragon 8 Gen 2)</td>
+                                    <td>45</td>
+                                    <td>60</td>
+                                    <td>+33%</td>
+                                </tr>
+                                <tr>
+                                    <td>Mid-Range (Snapdragon 730G)</td>
+                                    <td>28</td>
+                                    <td>45</td>
+                                    <td>+60%</td>
+                                </tr>
+                                <tr>
+                                    <td>Low-End (Helio G80)</td>
+                                    <td>18</td>
+                                    <td>30</td>
+                                    <td>+66%</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                        <h2>Tools We Used</h2>
+                        
+                        <p>
+                            These tools were invaluable for our optimization process:
+                        </p>
+                        
+                        <ul>
+                            <li><strong>Unity Profiler:</strong> For CPU/GPU/memory profiling</li>
+                            <li><strong>RenderDoc:</strong> For frame debugging</li>
+                            <li><strong>Android GPU Inspector:</strong> For low-level GPU analysis</li>
+                            <li><strong>Xcode Instruments:</strong> For iOS performance analysis</li>
+                            <li><strong>Unity Memory Profiler:</strong> For tracking memory allocations</li>
+                        </ul>
+                        
+                        <h2>Lessons Learned</h2>
+                        
+                        <p>
+                            Our key takeaways from the optimization process:
+                        </p>
+                        
+                        <ul>
+                            <li><strong>Optimize early and often:</strong> Don't leave it until the end</li>
+                            <li><strong>Test on real devices:</strong> Emulators don't tell the full story</li>
+                            <li><strong>Focus on bottlenecks:</strong> Optimize what actually matters</li>
+                            <li><strong>Maintain quality:</strong> Don't sacrifice too much visual fidelity</li>
+                            <li><strong>Automate testing:</strong> Use automated performance regression tests</li>
+                        </ul>
+                        
+                        <p class="mt-8 text-gray-700">
+                            We hope these insights help other developers facing similar challenges. If you have questions about specific optimization techniques, leave a comment below!
+                        </p>
+                        
+                        <div class="mt-12 pt-8 border-t border-gray-200">
+                            <a href="/blog/" class="inline-flex items-center text-primary hover:text-indigo-700 transition duration-300">
+                                <i class="fas fa-arrow-left mr-2"></i> Back to Blog
+                            </a>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-r from-primary to-accent">
+        <div class="container mx-auto px-6 text-center">
+            <div class="max-w-3xl mx-auto">
+                <h2 class="text-3xl md:text-4xl font-bold mb-6 text-white">Experience Optimized Gameplay</h2>
+                <p class="text-xl text-gray-100 mb-8">
+                    Download Boat Attack now and enjoy smooth performance on your device.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                    <a href="https://play.google.com/store/apps/details?id=com.justcool.boatattack" target="_blank"
+                        class="flex items-center justify-center bg-white hover:bg-gray-100 text-primary px-8 py-4 rounded-xl font-bold text-lg transition duration-300 shadow-lg">
+                        <i class="fab fa-google-play mr-3 text-xl"></i> Google Play
+                    </a>
+                    <a href="/games"
+                        class="flex items-center justify-center bg-transparent hover:bg-white/10 text-white border-2 border-white px-8 py-4 rounded-xl font-bold text-lg transition duration-300">
+                        Explore Games
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-900 text-gray-300 pt-16 pb-8">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mb-12">
+                <div>
+                   <a href="/" class="flex items-center space-x-3">
+                        <img src="/images/logo-bottom.png" alt="JustCoolBlast Logo" class="h-14 max-w-2xl mb-4 rounded-xl">                       
+                    </a>
+                    <p class="text-gray-400 mb-6">
+                        Creating exciting mobile gaming experiences with stunning visuals and immersive gameplay.
+                    </p>
+                    
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-5">Company</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/about" class="text-gray-400 hover:text-white transition duration-300">About Us</a>
+                        </li>
+                        <li><a href="/blog" class="text-gray-400 hover:text-white transition duration-300">Blog</a></li>
+                        
+                        <li><a href="/contact"
+                                class="text-gray-400 hover:text-white transition duration-300">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-5">Legal</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/privacy" class="text-gray-400 hover:text-white transition duration-300">Privacy
+                                Policy</a></li>
+                        <li><a href="/terms" class="text-gray-400 hover:text-white transition duration-300">Terms of
+                                Service</a></li>
+                        <li><a href="/cookies" class="text-gray-400 hover:text-white transition duration-300">Cookie
+                                Policy</a></li>
+                         
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-500 text-sm mb-4 md:mb-0">
+                    &copy; 2025 JustCool. All rights reserved.
+                </p>
+                <div class="flex items-center">
+                    <a href="https://play.google.com/store/apps/details?id=com.justcool.boatattack" target="_blank">
+                        <img src="/images/playstore.png" alt="Google Play" class="h-10 mr-4">
+                    </a>
+                    
+                    <a href="mailto:gamebeetlestudio@gmail.com"
+                        class="text-gray-400 hover:text-white transition duration-300">
+                        <i class="fas fa-envelope text-xl"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Cookies Banner
+        const cookiesBanner = document.getElementById('cookies-banner');
+        const acceptCookies = document.getElementById('accept-cookies');
+        const declineCookies = document.getElementById('decline-cookies');
+
+        // Check if user has already made a choice
+        if (!localStorage.getItem('cookiesAccepted')) {
+            cookiesBanner.classList.remove('hidden');
+        }
+
+        acceptCookies.addEventListener('click', () => {
+            localStorage.setItem('cookiesAccepted', 'true');
+            cookiesBanner.classList.add('hidden');
+        });
+
+        declineCookies.addEventListener('click', () => {
+            localStorage.setItem('cookiesAccepted', 'false');
+            cookiesBanner.classList.add('hidden');
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

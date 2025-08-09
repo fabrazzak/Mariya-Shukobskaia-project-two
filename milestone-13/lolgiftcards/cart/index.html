@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Your shopping cart at LOLGiftCards.com. Review your League of Legends gift cards and in-game items before checkout.">
+    <meta name="keywords" content="League of Legends cart, LoL gift cards cart, RP cards cart, LoL skins cart">
+    <meta name="author" content="LOLGiftCards">
+    <title>Cart | LOLGiftCards.com | Official League of Legends Gift Cards & Skins</title>
+    <link rel="canonical" href="https://lolgiftcards.com/cart/" />
+      <link rel="icon" href="/image/logo.png" type="image/x-icon" class="w-40 h-40 object-cover">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0f1923',
+                        secondary: '#1a2a3a',
+                        accent: '#ff4655',
+                        riot: '#ce3e3e',
+                        dark: '#0a0e12',
+                        light: '#f8f9fa',
+                    },
+                    fontFamily: {
+                        sans: ['Beaufort', 'Helvetica', 'Arial', 'sans-serif'],
+                        beaufort: ['Beaufort', 'serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Beaufort+Pro:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Beaufort Pro', serif;
+            background-color: #0a0e12;
+            color: #f8f9fa;
+            overflow-x: hidden;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, #ff4655, #ce3e3e);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #0f1923 0%, #1a2a3a 100%);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(255, 70, 85, 0.25);
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #ff4655;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .btn-accent {
+            background: linear-gradient(135deg, #ff4655 0%, #ce3e3e 100%);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 70, 85, 0.3);
+        }
+        
+        .btn-accent:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 70, 85, 0.4);
+        }
+        
+        .ripple {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .ripple:after {
+            content: "";
+            display: block;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            background-image: radial-gradient(circle, #fff 10%, transparent 10.01%);
+            background-repeat: no-repeat;
+            background-position: 50%;
+            transform: scale(10, 10);
+            opacity: 0;
+            transition: transform .5s, opacity 1s;
+        }
+        
+        .ripple:active:after {
+            transform: scale(0, 0);
+            opacity: .3;
+            transition: 0s;
+        }
+        
+        .quantity-btn {
+            background-color: #1a2a3a;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .quantity-btn:hover {
+            background-color: #ff4655;
+        }
+        
+        .empty-cart-icon {
+            font-size: 5rem;
+            background: linear-gradient(135deg, #ff4655, #ce3e3e);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-primary/90 backdrop-blur-md border-b border-secondary">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="/" class="flex items-center">
+                        <img src="/image/logo.png" alt="LOLGiftCards Logo" class="h-20 w-30 object-cover glow">
+                        
+                    </a>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="nav-link text-light hover:text-accent font-medium">Home</a>
+                    <a href="/shop/" class="nav-link text-light hover:text-accent font-medium">Shop</a>
+                    
+                    <a href="/blog/" class="nav-link text-light hover:text-accent font-medium">Blog</a>
+                    <a href="/about/" class="nav-link text-light hover:text-accent font-medium">About</a>
+                    <a href="/contact/" class="nav-link text-light hover:text-accent font-medium">Contact</a>
+                    
+                    <!-- Cart Icon -->
+                    <a href="/cart/" class="relative p-2 text-light hover:text-accent">
+                        <i class="fas fa-shopping-cart text-xl"></i>
+                        <span id="cart-count" class="absolute -top-1 -right-1 bg-accent text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                    </a>
+                    
+                    <!-- Auth Buttons -->
+                     <a href="/login/" class="text-white hover:text-accent">
+                        <i class="fas fa-user"></i>
+                    </a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-button" class="text-light hover:text-accent focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-primary border-t border-secondary">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="/" class="block px-3 py-2 text-light hover:text-accent font-medium">Home</a>
+                <a href="/shop/" class="block px-3 py-2 text-light hover:text-accent font-medium">Shop</a>
+               
+                <a href="/blog/" class="block px-3 py-2 text-light hover:text-accent font-medium">Blog</a>
+                 <a href="/about/" class="block px-3 py-2 text-light hover:text-accent font-medium">About</a>
+                <a href="/contact/" class="block px-3 py-2 text-light hover:text-accent font-medium">Contact</a>
+                <a href="/cart/" class="block px-3 py-2 text-light hover:text-accent font-medium">
+                    <span>Cart</span>
+                    <span id="mobile-cart-count" class="ml-2 bg-accent text-white text-xs font-bold rounded-full h-5 w-5 inline-flex items-center justify-center">0</span>
+                </a>
+                <a href="/login/" class="text-white hover:text-accent">
+                        <i class="fas fa-user"></i>
+                    </a>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Cart Header -->
+    <section class="pt-32 pb-16 bg-gradient-to-b from-primary to-secondary">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">
+                    Your <span class="gradient-text">Shopping Cart</span>
+                </h1>
+                <p class="text-lg text-gray-300 max-w-2xl mx-auto">
+                    Review your items before proceeding to checkout
+                </p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Cart Content -->
+    <section class="py-12 bg-dark">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div id="cart-container">
+                <!-- Cart items will be dynamically inserted here -->
+                <div id="empty-cart-message" class="text-center py-20 hidden">
+                    <div class="empty-cart-icon mb-6">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Your cart is empty</h3>
+                    <p class="text-gray-400 mb-8">Looks like you haven't added any items to your cart yet</p>
+                    <a href="/shop/" class="btn-accent px-8 py-3 rounded-md text-white font-bold text-lg ripple inline-block">
+                        Continue Shopping <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+                
+                <div id="cart-with-items" class="hidden">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <!-- Cart Items -->
+                        <div class="lg:col-span-2">
+                            <div class="bg-secondary rounded-xl p-6 border border-gray-800">
+                                <div class="flex justify-between items-center mb-6">
+                                    <h2 class="text-xl font-bold">Your Items (<span id="item-count">0</span>)</h2>
+                                    <button id="clear-cart" class="text-gray-400 hover:text-accent text-sm font-medium">
+                                        <i class="fas fa-trash-alt mr-1"></i> Clear Cart
+                                    </button>
+                                </div>
+                                
+                                <div id="cart-items" class="space-y-4">
+                                    <!-- Cart items will be inserted here -->
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Order Summary -->
+                        <div>
+                            <div class="bg-secondary rounded-xl p-6 border border-gray-800 sticky top-24">
+                                <h2 class="text-xl font-bold mb-6">Order Summary</h2>
+                                
+                                <div class="space-y-4 mb-6">
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-400">Subtotal</span>
+                                        <span id="subtotal" class="font-medium">$0.00</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-400">Discount</span>
+                                        <span id="discount" class="font-medium text-accent">-$0.00</span>
+                                    </div>
+                                    <div class="flex justify-between border-t border-gray-800 pt-4">
+                                        <span class="text-gray-400">Estimated Total</span>
+                                        <span id="total" class="text-xl font-bold">$0.00</span>
+                                    </div>
+                                </div>
+                                
+                                <a href="/checkout/" id="checkout-btn" class="block w-full btn-accent py-4 rounded-md text-white font-bold text-center ripple mb-4">
+                                    Proceed to Checkout
+                                </a>
+                                
+                                <div class="text-center">
+                                    <p class="text-gray-400 text-sm">or</p>
+                                    <a href="/shop/" class="inline-block mt-4 text-accent hover:text-accent/80 font-medium">
+                                        Continue Shopping <i class="fas fa-arrow-right ml-1"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="bg-dark pt-12 pb-8 border-t border-secondary">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+                <!-- Column 1 -->
+                <div>
+                    <a href="/" class="flex items-center mb-6">
+                          <img src="/image/logo.png" alt="LOLGiftCards Logo" class="h-20 w-30 object-cover glow">
+                    </a>
+                    <p class="text-gray-400 mb-6">
+                        Your trusted source for League of Legends gift cards, skins, and in-game content. Instant delivery guaranteed.
+                    </p>
+                </div>
+                
+                <!-- Column 2 -->
+                <div>
+                    <h3 class="text-lg font-bold text-light mb-6">Shop</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/shop/" class="text-gray-400 hover:text-accent transition-colors">Gift Cards</a></li>
+                        <li><a href="/shop/" class="text-gray-400 hover:text-accent transition-colors">Skins</a></li>
+                        <li><a href="/shop/" class="text-gray-400 hover:text-accent transition-colors">Champions</a></li>
+                        <li><a href="/shop/" class="text-gray-400 hover:text-accent transition-colors">Bundles</a></li>
+                        <li><a href="/shop/" class="text-gray-400 hover:text-accent transition-colors">Sales & Deals</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Column 3 -->
+                <div>
+                    <h3 class="text-lg font-bold text-light mb-6">Company</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/about/" class="text-gray-400 hover:text-accent transition-colors">About Us</a></li>
+                        <li><a href="/blog/" class="text-gray-400 hover:text-accent transition-colors">Blog</a></li>
+                        <li><a href="/contact/" class="text-gray-400 hover:text-accent transition-colors">Contact Us</a></li>
+                     
+                    </ul>
+                </div>
+                
+                <!-- Column 4 -->
+                <div>
+                    <h3 class="text-lg font-bold text-light mb-6">Support</h3>
+                    <ul class="space-y-3">
+                        
+                        <li><a href="/privacy/" class="text-gray-400 hover:text-accent transition-colors">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="text-gray-400 hover:text-accent transition-colors">Terms of Service</a></li>
+                        <li><a href="/cookies/" class="text-gray-400 hover:text-accent transition-colors">Cookies</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-secondary mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-500 text-sm mb-4 md:mb-0">
+                    &copy; 2025 LOLGiftCards.com. All rights reserved.
+                </p>
+                <p class="text-gray-500 text-sm text-center">
+                    We are not an affiliate agency. All products are sold independently through our platform.
+                </p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Scripts -->
+    <script>
+        // Mobile Menu Toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+        
+        // Cart functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize cart
+            renderCart();
+            updateCartCount();
+            
+            // Clear cart button
+            document.getElementById('clear-cart').addEventListener('click', function() {
+                localStorage.removeItem('cart');
+                renderCart();
+                updateCartCount();
+            });
+            
+            // Checkout button
+            document.getElementById('checkout-btn').addEventListener('click', function(e) {
+                // Save cart to local storage before checkout
+                const cart = JSON.parse(localStorage.getItem('cart')) || [];
+                localStorage.setItem('checkoutCart', JSON.stringify(cart));
+            });
+        });
+        
+        function renderCart() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartItemsContainer = document.getElementById('cart-items');
+            const emptyCartMessage = document.getElementById('empty-cart-message');
+            const cartWithItems = document.getElementById('cart-with-items');
+            
+            if (cart.length === 0) {
+                emptyCartMessage.classList.remove('hidden');
+                cartWithItems.classList.add('hidden');
+                return;
+            }
+            
+            emptyCartMessage.classList.add('hidden');
+            cartWithItems.classList.remove('hidden');
+            
+            // Clear existing items
+            cartItemsContainer.innerHTML = '';
+            
+            // Calculate totals
+            let subtotal = 0;
+            
+            // Add each item to the cart
+            cart.forEach((item, index) => {
+                const itemTotal = parseFloat(item.price) * item.quantity;
+                subtotal += itemTotal;
+                
+                const cartItem = document.createElement('div');
+                cartItem.className = 'flex items-start border-b border-gray-800 pb-4';
+                cartItem.innerHTML = `
+                    <div class="flex-shrink-0 w-20 h-20 rounded-md overflow-hidden bg-primary">
+                        <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover">
+                    </div>
+                    <div class="ml-4 flex-1">
+                        <div class="flex justify-between">
+                            <div>
+                                <h3 class="text-lg font-medium">${item.name}</h3>
+                                <p class="text-gray-400 text-sm">Instant Delivery</p>
+                            </div>
+                            <button class="remove-item text-gray-400 hover:text-accent" data-index="${index}">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <div class="mt-4 flex justify-between items-center">
+                            <div class="flex items-center">
+                                <button class="quantity-btn decrease" data-index="${index}">
+                                    <i class="fas fa-minus text-xs"></i>
+                                </button>
+                                <span class="quantity mx-4">${item.quantity}</span>
+                                <button class="quantity-btn increase" data-index="${index}">
+                                    <i class="fas fa-plus text-xs"></i>
+                                </button>
+                            </div>
+                            <span class="font-bold">$${(itemTotal).toFixed(2)}</span>
+                        </div>
+                    </div>
+                `;
+                cartItemsContainer.appendChild(cartItem);
+            });
+            
+            // Add event listeners to quantity buttons
+            document.querySelectorAll('.increase').forEach(button => {
+                button.addEventListener('click', function() {
+                    const index = parseInt(this.getAttribute('data-index'));
+                    increaseQuantity(index);
+                });
+            });
+            
+            document.querySelectorAll('.decrease').forEach(button => {
+                button.addEventListener('click', function() {
+                    const index = parseInt(this.getAttribute('data-index'));
+                    decreaseQuantity(index);
+                });
+            });
+            
+            document.querySelectorAll('.remove-item').forEach(button => {
+                button.addEventListener('click', function() {
+                    const index = parseInt(this.getAttribute('data-index'));
+                    removeItem(index);
+                });
+            });
+            
+            // Update totals
+            document.getElementById('item-count').textContent = cart.reduce((total, item) => total + item.quantity, 0);
+            document.getElementById('subtotal').textContent = `$${subtotal.toFixed(2)}`;
+            
+            // Calculate discount (10% for example)
+            const discount = subtotal >= 50 ? subtotal * 0.1 : 0;
+            document.getElementById('discount').textContent = `-$${discount.toFixed(2)}`;
+            
+            const total = subtotal - discount;
+            document.getElementById('total').textContent = `$${total.toFixed(2)}`;
+        }
+        
+        function increaseQuantity(index) {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            if (cart[index]) {
+                cart[index].quantity += 1;
+                localStorage.setItem('cart', JSON.stringify(cart));
+                renderCart();
+                updateCartCount();
+            }
+        }
+        
+        function decreaseQuantity(index) {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            if (cart[index] && cart[index].quantity > 1) {
+                cart[index].quantity -= 1;
+                localStorage.setItem('cart', JSON.stringify(cart));
+                renderCart();
+                updateCartCount();
+            }
+        }
+        
+        function removeItem(index) {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            if (cart[index]) {
+                cart.splice(index, 1);
+                localStorage.setItem('cart', JSON.stringify(cart));
+                renderCart();
+                updateCartCount();
+            }
+        }
+        
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            
+            document.getElementById('cart-count').textContent = totalItems;
+            document.getElementById('mobile-cart-count').textContent = totalItems;
+            
+            // Hide/show cart count if zero
+            if (totalItems === 0) {
+                document.getElementById('cart-count').classList.add('hidden');
+                document.getElementById('mobile-cart-count').classList.add('hidden');
+            } else {
+                document.getElementById('cart-count').classList.remove('hidden');
+                document.getElementById('mobile-cart-count').classList.remove('hidden');
+            }
+        }
+    </script>
+</body>
+</html>

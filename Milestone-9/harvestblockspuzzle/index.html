@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Harvest Block is a unique blend of block puzzle and match-3 challenges. Restore farms, harvest fruits, and enjoy strategic gameplay with stunning visuals.">
+    <meta name="keywords" content="block puzzle game, match-3 game, farm puzzle, harvest game, brain game, puzzle adventure, mobile game, funmatica, harvest block">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://harvestblockspuzzle.com/">
+    <title>Harvest Block: Blocks Puzzle | Farm Puzzle Adventure Game</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/assets/logo.webp" type="image/x-icon">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6CBB3C',
+                        secondary: '#FFA726',
+                        accent: '#8BC34A',
+                        dark: '#1A1A1A',
+                        light: '#F5F5F5',
+                    },
+                    fontFamily: {
+                        sans: ['"Poppins"', 'sans-serif'],
+                        display: ['"Luckiest Guy"', 'cursive'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Luckiest+Guy&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, rgba(108,187,60,0.1) 0%, rgba(255,167,38,0.1) 100%);
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        .neon-hover:hover {
+            box-shadow: 0 0 15px rgba(139, 195, 74, 0.7);
+            transition: all 0.3s ease;
+        }
+        .btn-glow {
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-glow::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(255, 255, 255, 0) 45%,
+                rgba(255, 255, 255, 0.8) 50%,
+                rgba(255, 255, 255, 0) 55%
+            );
+            transform: rotate(30deg);
+            transition: all 0.5s ease;
+        }
+        .btn-glow:hover::after {
+            left: 100%;
+        }
+        
+    </style>
+</head>
+<body class="bg-dark text-light font-sans overflow-x-hidden">
+    <!-- Three.js Background Canvas -->
+    <div id="threejs-bg" class="fixed top-0 left-0 w-full h-full -z-10 opacity-30"></div>
+    
+    <!-- Cookie Consent Banner -->
+    <div id="cookieConsent" class="fixed bottom-0 left-0 right-0 bg-dark border-t border-accent hidden z-50">
+        <div class="container mx-auto px-4 py-3 flex flex-col md:flex-row items-center justify-between">
+            <p class="text-sm mb-3 md:mb-0 md:mr-4">
+                We use cookies to enhance your experience. By continuing to visit this site, you agree to our use of cookies.
+            </p>
+            <div class="flex space-x-2">
+                <button id="acceptCookies" class="px-4 py-2 bg-primary text-white rounded-full text-sm font-medium hover:bg-opacity-90 transition">
+                    Accept
+                </button>
+                <button id="declineCookies" class="px-4 py-2 bg-transparent border border-accent text-accent rounded-full text-sm font-medium hover:bg-accent hover:bg-opacity-10 transition">
+                    Decline
+                </button>
+                <a href="/cookies/" class="px-4 py-2 text-accent text-sm font-medium hover:underline">
+                    Learn More
+                </a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Header -->
+    <header class="py-1 px-4 md:px-6 lg:px-8 fixed w-full top-0 z-50 glass-card">
+        <div class="container mx-auto flex justify-between items-center">
+            <a href="/" class="flex items-center">
+                <img src="/assets/logo.png" alt="Harvest Block Logo" class="h-16 mr-2 rounded-full">               
+            </a>
+            
+            <nav class="hidden md:flex space-x-6">
+                <a href="/" class="text-primary hover:text-primary transition">Home</a>
+                <a href="/how-to-play/" class="text-white hover:text-primary transition">How to Play</a>
+                <a href="/about/" class="text-white hover:text-primary transition">About</a>
+                <a href="/blog/" class="text-white hover:text-primary transition">Blog</a>
+                <a href="/responsible-gaming/" class="text-white hover:text-primary transition">Responsible Gaming</a>
+                <a href="/contact/" class="text-white hover:text-primary transition">Contact</a>
+                
+            </nav>
+            
+            <div class="flex items-center space-x-4 ">
+                <a href="https://play.google.com/store/apps/details?id=com.funmatica.harvest.block.puzzle.games" 
+                   class="btn-glow hidden  px-4 py-2 bg-primary text-white rounded-full font-medium hover:bg-opacity-90 transition hidden lg:inline-block">
+                    Download Now
+                </a>
+                <button id="mobileMenuBtn" class="md:hidden text-2xl text-white ">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden absolute top-full left-0 right-0 bg-dark border-t border-accent py-4 px-6">
+            <div class="flex flex-col space-y-4">
+                <a href="/" class="text-primary hover:text-primary transition">Home</a>
+                <a href="/how-to-play/" class="text-white hover:text-primary transition">How to Play</a>
+                <a href="/about/" class="text-white hover:text-primary transition">About</a>
+                <a href="/blog/" class="text-white hover:text-primary transition">Blog</a>
+                 <a href="/responsible-gaming/" class="text-white hover:text-primary transition">Responsible Gaming</a>
+                <a href="/contact/" class="text-white hover:text-primary transition">Contact</a>
+                <a href="https://play.google.com/store/apps/details?id=com.funmatica.harvest.block.puzzle.games" 
+                   class="btn-glow px-4 py-2 bg-primary text-white rounded-full font-medium text-center hover:bg-opacity-90 transition">
+                    Download Now
+                </a>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Hero Section -->
+    <section class="pt-32 pb-20 px-4 md:px-6 lg:px-8">
+        <div class="container mx-auto flex flex-col md:flex-row items-center">
+            <div class="md:w-1/2 mb-12 md:mb-0">
+                <h1 class="text-4xl md:text-6xl font-display text-primary mb-4">
+                    Farm, Match & Puzzle Adventure!
+                </h1>
+                <p class="text-xl mb-8 text-gray-300">
+                    Harvest Block combines block puzzles with match-3 challenges in a vibrant farming adventure. Restore charming farm locations while solving addictive puzzles!
+                </p>
+                <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                    <a href="https://play.google.com/store/apps/details?id=com.funmatica.harvest.block.puzzle.games" 
+                       class="btn-glow px-8 py-4 bg-primary text-white rounded-full font-bold text-lg hover:bg-opacity-90 transition text-center">
+                        Download Now
+                    </a>
+                    <a href="/how-to-play/" 
+                       class="px-8 py-4 bg-transparent border-2 border-primary text-primary rounded-full font-bold text-lg hover:bg-primary hover:bg-opacity-10 transition text-center">
+                        How to Play
+                    </a>
+                </div>
+                <div class="mt-8 flex items-center space-x-4">
+                    <div class="flex items-center">
+                       
+                        <span class="ml-3 text-sm">10,000+ Downloads</span>
+                    </div>
+                    <div class="flex items-center">
+                        <div class="text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <span class="ml-1 text-sm">4.5/5</span>
+                    </div>
+                </div>
+            </div>
+            <div class="md:w-1/2 flex justify-center">
+                <div class="relative max-w-md">
+                    <img src="/assets/images/hero-phone.png" alt="Harvest Block Game Screenshot" class="w-full h-auto animation-float">
+                    <div class="absolute hidden md:block -top-10 -left-10 w-20 h-20 bg-accent rounded-full opacity-20"></div>
+                    <div class="absolute hidden md:block -bottom-10 -right-10 w-32 h-32 bg-secondary rounded-full opacity-20"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Features Section -->
+    <!-- Features Section -->
+<section class="py-16 px-4 md:px-6 lg:px-8 gradient-bg">
+  <div class="container mx-auto">
+    <h2 class="text-3xl md:text-4xl font-display text-center text-primary mb-12">
+      Game Features
+    </h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <!-- Feature 1 -->
+      <div class="glass-card p-6 rounded-xl hover:neon-hover transition bg-gray-800">
+        <div class="w-full h-58 mb-4 overflow-hidden rounded-xl">
+          <img src="/assets/images/feature-unique-gameplay.png" alt="Unique Gameplay" class="w-full h-full object-cover" />
+        </div>
+        <h3 class="text-xl font-bold mb-2 text-white">Unique Gameplay</h3>
+        <p class="text-gray-300">
+          Enjoy a dynamic mix of block puzzle and match-3 mechanics that challenges your brain in new ways.
+        </p>
+      </div>
+
+      <!-- Feature 2 -->
+      <div class="glass-card p-6 rounded-xl hover:neon-hover transition bg-gray-800">
+        <div class="w-full h-58 mb-4 overflow-hidden rounded-xl">
+          <img src="/assets/images/feature-events.png" alt="Exciting Events" class="w-full h-full object-cover" />
+        </div>
+        <h3 class="text-xl font-bold mb-2 text-white">Exciting Events</h3>
+        <p class="text-gray-300">
+          Participate in Farm Races, Crop Circles, and Strawberry Jam events to earn special rewards.
+        </p>
+      </div>
+
+      <!-- Feature 3 -->
+      <div class="glass-card p-6 rounded-xl hover:neon-hover transition bg-gray-800">
+        <div class="w-full h-58 mb-4 overflow-hidden rounded-xl">
+          <img src="/assets/images/feature-farm.png" alt="Farm Restoration" class="w-full h-full object-cover" />
+        </div>
+        <h3 class="text-xl font-bold mb-2 text-white">Farm Restoration</h3>
+        <p class="text-gray-300">
+          Explore and restore iconic locations like the Mill, Chicken Coop, and Wine Cellar.
+        </p>
+      </div>
+
+     
+    </div>
+  </div>
+</section>
+
+    
+    <!-- Game Modes Section -->
+    <section class="py-16 px-4 md:px-6 lg:px-8">
+        <div class="container mx-auto">
+            <h2 class="text-3xl md:text-4xl font-display text-center text-primary mb-12">
+                Two Engaging Modes
+            </h2>
+            
+            <div class="flex flex-col lg:flex-row gap-8">
+                <div class="lg:w-1/2 glass-card p-8 rounded-xl">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 bg-primary rounded-full flex items-center justify-center mr-4">
+                            <i class="fas fa-crown text-white text-xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold">Classic Mode</h3>
+                    </div>
+                    <p class="text-gray-300 mb-6">
+                        Challenge your skills and compete with other players in this fast-paced puzzle mode. Think quickly and strategically to achieve high scores!
+                    </p>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-primary mt-1 mr-2"></i>
+                            <span>Time-limited challenges</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-primary mt-1 mr-2"></i>
+                            <span>Global leaderboards</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-primary mt-1 mr-2"></i>
+                            <span>Daily rewards</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="lg:w-1/2 glass-card p-8 rounded-xl">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 bg-secondary rounded-full flex items-center justify-center mr-4">
+                            <i class="fas fa-moon text-white text-xl"></i>
+                        </div>
+                        <h3 class="text-2xl font-bold">Block Adventure</h3>
+                    </div>
+                    <p class="text-gray-300 mb-6">
+                        Enjoy a more relaxing experience as you restore the farm at your own pace. Perfect for unwinding after a long day!
+                    </p>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-secondary mt-1 mr-2"></i>
+                            <span>No time pressure</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-secondary mt-1 mr-2"></i>
+                            <span>Story-driven progression</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-secondary mt-1 mr-2"></i>
+                            <span>Farm customization</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Power-Ups Section -->
+            <section class="mb-20">
+                <h2 class="text-3xl font-display text-primary mb-8 text-center">
+                    Power-Ups & Tools
+                </h2>
+                
+                <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Hammer -->
+                    <div class="glass-card p-6 rounded-xl text-center">
+                        <div class="w-20 h-20 bg-primary bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <img src="/assets/images/hammer.png" alt="Hammer" class="w-12 h-12">
+                        </div>
+                        <h3 class="text-lg font-bold mb-2">Hammer</h3>
+                        <p class="text-sm text-gray-300 mb-3">
+                            Smash through stubborn blocks to clear space on the board.
+                        </p>
+                        <div class="text-xs text-primary font-medium">
+                            Tap to remove single blocks
+                        </div>
+                    </div>
+                    
+                    <!-- Saw Blade -->
+                    <div class="glass-card p-6 rounded-xl text-center">
+                        <div class="w-20 h-20 bg-secondary bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <img src="/assets/images/saw-blade.png" alt="Saw Blade" class="w-12 h-12">
+                        </div>
+                        <h3 class="text-lg font-bold mb-2">Saw Blade</h3>
+                        <p class="text-sm text-gray-300 mb-3">
+                            Slice through multiple blocks in a straight line.
+                        </p>
+                        <div class="text-xs text-secondary font-medium">
+                            Drag to cut entire rows/columns
+                        </div>
+                    </div>
+                    
+                    <!-- Darts -->
+                    <div class="glass-card p-6 rounded-xl text-center">
+                        <div class="w-20 h-20 bg-accent bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <img src="/assets/images/darts.png" alt="Darts" class="w-12 h-12">
+                        </div>
+                        <h3 class="text-lg font-bold mb-2">Darts</h3>
+                        <p class="text-sm text-gray-300 mb-3">
+                            Target specific blocks to remove them instantly.
+                        </p>
+                        <div class="text-xs text-accent font-medium">
+                            Precise removal of obstacles
+                        </div>
+                    </div>
+                    
+                    <!-- Windmill -->
+                    <div class="glass-card p-6 rounded-xl text-center">
+                        <div class="w-20 h-20 bg-purple-500 bg-opacity-20 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <img src="/assets/images/windmill.png" alt="Windmill" class="w-12 h-12">
+                        </div>
+                        <h3 class="text-lg font-bold mb-2">Windmill</h3>
+                        <p class="text-sm text-gray-300 mb-3">
+                            Shuffle all blocks on the board for a fresh start.
+                        </p>
+                        <div class="text-xs text-purple-500 font-medium">
+                            Complete board reset
+                        </div>
+                    </div>
+                </div>
+            </section>
+    
+    <!-- Screenshots Section -->
+<section class="py-16 px-4 md:px-6 lg:px-8 bg-gray-900 text-white">
+  <div class="max-w-6xl mx-auto">
+    <h2 class="text-3xl md:text-4xl font-bold text-center text-primary mb-12">
+      Game Screenshots
+    </h2>
+
+    <!-- Swiper Container -->
+    <div class="swiper mySwiper">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide">
+          <img src="/assets/images/screenshot1.png" alt="Harvest Block Gameplay Screenshot" class="rounded-xl shadow-lg w-full h-auto object-cover">
+        </div>
+        <div class="swiper-slide">
+          <img src="/assets/images/screenshot2.png" alt="Harvest Block Farm Screenshot" class="rounded-xl shadow-lg w-full h-auto object-cover">
+        </div>
+        <div class="swiper-slide">
+          <img src="/assets/images/screenshot3.png" alt="Harvest Block Puzzle Screenshot" class="rounded-xl shadow-lg w-full h-auto object-cover">
+        </div>
+        <div class="swiper-slide">
+          <img src="/assets/images/screenshot4.png" alt="Harvest Block Tools Screenshot" class="rounded-xl shadow-lg w-full h-auto object-cover">
+        </div>
+        <div class="swiper-slide">
+          <img src="/assets/images/screenshot5.png" alt="Harvest Block Tools Screenshot" class="rounded-xl shadow-lg w-full h-auto object-cover">
+        </div>
+        <div class="swiper-slide">
+          <img src="/assets/images/screenshot6.png" alt="Harvest Block Tools Screenshot" class="rounded-xl shadow-lg w-full h-auto object-cover">
+        </div>
+
+      </div>
+
+      <!-- Pagination & Arrows -->
+      <div class="swiper-pagination mt-6"></div>
+      <div class="swiper-button-prev text-white"></div>
+      <div class="swiper-button-next text-white"></div>
+    </div>
+  </div>
+</section>
+
+    
+    <!-- Testimonials Section -->
+    <section class="py-16 px-4 md:px-6 lg:px-8 gradient-bg">
+        <div class="container mx-auto">
+            <h2 class="text-3xl md:text-4xl font-display text-center text-primary mb-12">
+                What Players Say
+            </h2>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="glass-card p-6 rounded-xl">
+                    <div class="flex items-center mb-4">
+                        
+                        <div>
+                            <h4 class="font-bold">Austin Derrick</h4>
+                            <div class="flex text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 italic">
+                        "This game was amazing but it's not a match 3 game. It's way more strategic and engaging than I expected!"
+                    </p>
+                    <div class="mt-3 text-sm text-gray-400">
+                        4 people found this helpful
+                    </div>
+                </div>
+                
+                <!-- Testimonial 2 -->
+                <div class="glass-card p-6 rounded-xl">
+                    <div class="flex items-center mb-4">
+                        
+                        <div>
+                            <h4 class="font-bold">Kathy Browning</h4>
+                            <div class="flex text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 italic">
+                        "Fun, interesting, love it! The farm restoration aspect adds such a nice progression to the puzzle gameplay."
+                    </p>
+                </div>
+                
+                <!-- Testimonial 3 -->
+                <div class="glass-card p-6 rounded-xl">
+                    <div class="flex items-center mb-4">
+                        
+                        <div>
+                            <h4 class="font-bold">Dorothy Crist</h4>
+                            <div class="flex text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 italic">
+                        "Awesome game and fun to play! The two different modes mean I can play whether I want a challenge or to relax."
+                    </p>
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA Section -->
+    <section class="py-20 px-4 md:px-6 lg:px-8 relative overflow-hidden">
+        <div class="absolute inset-0 bg-primary opacity-10 -rotate-3 scale-110"></div>
+        <div class="container mx-auto relative text-center">
+            <h2 class="text-3xl md:text-4xl font-display text-primary mb-6">
+                Ready to Start Your Farming Puzzle Adventure?
+            </h2>
+            <p class="text-xl mb-8 max-w-2xl mx-auto">
+                Join thousands of players enjoying this unique blend of block puzzles and farm restoration!
+            </p>
+            <a href="https://play.google.com/store/apps/details?id=com.funmatica.harvest.block.puzzle.games" 
+               class="btn-glow inline-block px-8 py-4 bg-primary text-white rounded-full font-bold text-lg hover:bg-opacity-90 transition">
+                Download Now
+            </a>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="bg-dark border-t border-gray-800 py-12 px-4 md:px-6 lg:px-8">
+        <div class="container mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="md:col-span-2">
+                    <a href="/" class="flex items-center mb-4">
+                        <img src="/assets/logo.png" alt="Harvest Block Logo" class="h-16 rounded-full mr-2">                       
+                    </a>
+                    <p class="text-gray-400 mb-4">
+                        A unique blend of block puzzle and match-3 challenges in a vibrant farming adventure. Restore charming farm locations while solving addictive puzzles!
+                    </p>
+                    
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold text-white mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/" class="text-gray-400 hover:text-primary transition">Home</a></li>
+                        <li><a href="/how-to-play/" class="text-gray-400 hover:text-primary transition">How to Play</a></li>
+                        <li><a href="/about/" class="text-gray-400 hover:text-primary transition">About</a></li>
+                        <li><a href="/blog/" class="text-gray-400 hover:text-primary transition">Blog</a></li>
+                        <li><a href="/contact/" class="text-gray-400 hover:text-primary transition">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-lg font-bold text-white mb-4">Legal</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/privacy/" class="text-gray-400 hover:text-primary transition">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="text-gray-400 hover:text-primary transition">Terms of Service</a></li>
+                        <li><a href="/cookies/" class="text-gray-400 hover:text-primary transition">Cookies Policy</a></li>
+                        <li><a href="/responsible-gaming/" class="text-gray-400 hover:text-primary transition">Responsible Gaming</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-8 pt-8 text-center text-gray-500 text-sm">
+                <p>&copy; 2025 Funmatica LTD. All rights reserved.</p>
+                <p class="mt-2">Donnersbachwald 180, 8953 Donnersbachwald, Austria</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Swiper/8.4.5/swiper-bundle.min.js"></script>
+    
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Initialize Swiper
+        const swiper = new Swiper('.swiper-container', {
+            loop: true,
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            autoplay: {
+                delay: 5000,
+            },
+        });
+        
+        // Three.js Background
+        const bgContainer = document.getElementById('threejs-bg');
+        
+        // Only initialize Three.js if container exists
+        if (bgContainer) {
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            bgContainer.appendChild(renderer.domElement);
+            
+            // Create floating cubes
+            const cubes = [];
+            const geometry = new THREE.BoxGeometry(1, 1, 1);
+            const material = new THREE.MeshBasicMaterial({ 
+                color: 0x6CBB3C,
+                transparent: true,
+                opacity: 0.2,
+                wireframe: true
+            });
+            
+            for (let i = 0; i < 10; i++) {
+                const cube = new THREE.Mesh(geometry, material);
+                cube.position.x = Math.random() * 20 - 10;
+                cube.position.y = Math.random() * 20 - 10;
+                cube.position.z = Math.random() * 20 - 10;
+                cube.rotation.x = Math.random() * Math.PI;
+                cube.rotation.y = Math.random() * Math.PI;
+                cubes.push(cube);
+                scene.add(cube);
+            }
+            
+            camera.position.z = 5;
+            
+            // Animation
+            function animate() {
+                requestAnimationFrame(animate);
+                
+                cubes.forEach(cube => {
+                    cube.rotation.x += 0.01;
+                    cube.rotation.y += 0.01;
+                });
+                
+                renderer.render(scene, camera);
+            }
+            
+            animate();
+            
+            // Handle resize
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        }
+        
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Animate elements on scroll
+        gsap.utils.toArray('.glass-card').forEach(card => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                },
+                opacity: 0,
+                y: 50,
+                duration: 0.8
+            });
+        });
+        
+        // Cookie Consent
+        const cookieConsent = document.getElementById('cookieConsent');
+        const acceptCookies = document.getElementById('acceptCookies');
+        const declineCookies = document.getElementById('declineCookies');
+        
+        // Check if user has already made a choice
+        if (!localStorage.getItem('cookieConsent')) {
+            setTimeout(() => {
+                cookieConsent.classList.remove('hidden');
+            }, 2000);
+        }
+        
+        acceptCookies.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'accepted');
+            cookieConsent.classList.add('hidden');
+        });
+        
+        declineCookies.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'declined');
+            cookieConsent.classList.add('hidden');
+        });
+    </script>
+
+    
+<!-- SwiperJS CSS -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+<!-- SwiperJS JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+<!-- Swiper Initialization -->
+<script>
+  new Swiper(".mySwiper", {
+    loop: true,
+    spaceBetween: 30,
+    centeredSlides: true,
+    slidesPerView: 1,
+    autoplay: {
+      delay: 3000,
+      disableOnInteraction: false,
+    },
+    pagination: {
+      el: ".swiper-pagination",
+      clickable: true,
+    },
+    navigation: {
+      nextEl: ".swiper-button-next",
+      prevEl: ".swiper-button-prev",
+    },
+    breakpoints: {
+      768: {
+        slidesPerView: 2,
+      },
+      1024: {
+        slidesPerView: 3,
+      },
+    },
+  });
+</script>
+
+</body>
+</html>

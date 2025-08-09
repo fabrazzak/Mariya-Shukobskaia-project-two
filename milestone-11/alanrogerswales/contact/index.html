@@ -1,0 +1,877 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | Alan Rogers Wales | Caravan & Motorhome Club Sites</title>
+    <meta name="description" content="Get in touch with Alan Rogers Wales for inquiries about our premier caravan and motorhome club sites across Wales. We're here to help plan your perfect holiday.">
+    <meta name="keywords" content="contact caravan sites Wales, motorhome park inquiries, Welsh tourism contact, booking information, customer support">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/assets/favicon.ico" type="image/x-icon">
+    <link rel="canonical" href="https://alanrogerswales.com/contact/" />
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        slate: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            300: '#cbd5e1',
+                            400: '#94a3b8',
+                            500: '#64748b',
+                            600: '#475569',
+                            700: '#334155',
+                            800: '#1e293b',
+                            900: '#0f172a',
+                        },
+                        midnight: {
+                            50: '#e6e9f0',
+                            100: '#ccd4e0',
+                            200: '#99a9c1',
+                            300: '#667fa2',
+                            400: '#335483',
+                            500: '#002964',
+                            600: '#002150',
+                            700: '#00193c',
+                            800: '#001028',
+                            900: '#000814',
+                        },
+                        twilight: {
+                            50: '#f2f3f7',
+                            100: '#e5e7ef',
+                            200: '#cbcfdf',
+                            300: '#b1b8cf',
+                            400: '#97a0bf',
+                            500: '#7d88af',
+                            600: '#646d8c',
+                            700: '#4b5269',
+                            800: '#323646',
+                            900: '#191b23',
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-reverse': 'float-reverse 7s ease-in-out infinite',
+                        'pulse-slow': 'pulse 8s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        'float-reverse': {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Leaflet CSS (for maps) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollTrigger.min.js"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #0f172a;
+            color: #e2e8f0;
+            overflow-x: hidden;
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, #002964 0%, #0c4a6e 50%, #0369a1 100%);
+        }
+        
+        .contact-card {
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+        }
+        
+        .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+        
+        .input-field {
+            transition: all 0.3s ease;
+        }
+        
+        .input-field:focus {
+            border-color: #0ea5e9;
+            box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.2);
+        }
+        
+        .map-container {
+            height: 400px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #334155;
+        }
+        
+        #contactMap {
+            height: 100%;
+            width: 100%;
+            z-index: 1;
+        }
+        
+        .leaflet-popup-content-wrapper {
+            background-color: #1e293b;
+            color: #e2e8f0;
+            border-radius: 8px;
+            border: 1px solid #334155;
+        }
+        
+        .leaflet-popup-tip {
+            background-color: #1e293b;
+        }
+        
+        .form-success {
+            opacity: 0;
+            height: 0;
+            overflow: hidden;
+            transition: all 0.5s ease;
+        }
+        
+        .form-success.show {
+            opacity: 1;
+            height: auto;
+        }
+        
+        .glow-text {
+            text-shadow: 0 0 10px rgba(56, 189, 248, 0.7);
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <!-- Cookie Consent Banner -->
+    <div id="cookieConsent" class="fixed bottom-0 left-0 right-0 bg-twilight-800 text-white p-4 z-50 transform translate-y-full transition-transform duration-500">
+        <div class="container mx-auto flex flex-col md:flex-row items-center justify-between">
+            <div class="mb-4 md:mb-0 md:mr-4">
+                <p class="text-sm">We use cookies to enhance your experience on our website. By continuing to browse, you agree to our use of cookies.</p>
+            </div>
+            <div class="flex space-x-3">
+                <button id="acceptCookies" class="px-4 py-2 bg-primary-600 hover:bg-primary-700 rounded-md text-sm font-medium transition-colors">Accept</button>
+                <button id="declineCookies" class="px-4 py-2 bg-twilight-700 hover:bg-twilight-600 rounded-md text-sm font-medium transition-colors">Decline</button>
+                <a href="/cookies/" class="px-4 py-2 text-primary-400 hover:text-primary-300 text-sm font-medium transition-colors">Learn More</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+     <nav class="fixed top-0 left-0 right-0 z-40 bg-twilight-900/90 backdrop-blur-md border-b border-twilight-700 transition-all duration-300">
+        <div class="container mx-auto px-6 py-2">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center">
+                  <a href="/" class="flex items-center">
+                        <img src="/assets/logo.png" class="h-16" alt="logo"/>
+                    </a>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="text-gray-300 hover:text-primary-300 font-medium transition-colors relative group">
+                        Home
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary-400 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="/about/" class="text-gray-300 hover:text-primary-300 font-medium transition-colors relative group">
+                        About
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary-400 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="/blog/" class="text-gray-300 hover:text-primary-300 font-medium transition-colors relative group">
+                        Blog
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary-400 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="/locations/" class="text-gray-300 hover:text-primary-300 font-medium transition-colors relative group">
+                        Our Locations
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary-400 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="/contact/" class="text-white hover:text-primary-300 font-medium transition-colors relative group">
+                        Contact
+                        <span class="absolute -bottom-1 left-0 w-full h-0.5 bg-primary-400"></span>
+                    </a>
+                    <a href="/faq/" class="text-gray-300 hover:text-primary-300 font-medium transition-colors relative group">
+                        FAQ
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary-400 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button id="mobileMenuButton" class="text-gray-300 hover:text-white focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+           <!-- Mobile Menu -->
+        <!-- Replace your current mobile menu with this -->
+<div id="mobileMenu" class="fixed inset-y-0 right-0 w-64 bg-twilight-900 shadow-xl transform translate-x-full transition-transform duration-300 ease-in-out z-50 border-l border-twilight-700">
+    <div class="flex justify-end p-6">
+        <button id="closeMobileMenu" class="text-gray-300 hover:text-white focus:outline-none">
+            <i class="fas fa-times text-2xl"></i>
+        </button>
+    </div>
+    <div class="px-6 py-4 bg-black/90">
+        <div class="flex flex-col space-y-6">
+            <a href="/" class="text-gray-300 hover:text-primary-300 font-medium text-lg transition-colors flex items-center">
+                <i class="fas fa-home mr-3 w-6 text-center"></i> Home
+            </a>
+            <a href="/about/" class="text-gray-300 hover:text-primary-300 font-medium text-lg transition-colors flex items-center">
+                <i class="fas fa-info-circle mr-3 w-6 text-center"></i> About
+            </a>
+            <a href="/blog/" class="text-gray-300 hover:text-primary-300 font-medium text-lg transition-colors flex items-center">
+                <i class="fas fa-newspaper mr-3 w-6 text-center"></i> Blog
+            </a>
+            <a href="/locations/" class="text-gray-300 hover:text-primary-300 font-medium text-lg transition-colors flex items-center">
+                <i class="fas fa-map-marked-alt mr-3 w-6 text-center"></i> Locations
+            </a>
+            <a href="/contact/" class="text-white hover:text-primary-300 font-medium text-lg transition-colors flex items-center">
+                <i class="fas fa-envelope mr-3 w-6 text-center"></i> Contact
+            </a>
+            <a href="/faq/" class="text-gray-300 hover:text-primary-300 font-medium text-lg transition-colors flex items-center">
+                <i class="fas fa-question-circle mr-3 w-6 text-center"></i> FAQ
+            </a>
+        </div>
+    </div>
+</div>
+<div id="mobileMenuOverlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden"></div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative hero-gradient min-h-[50vh] flex items-center justify-center overflow-hidden pt-28">
+        <div class="absolute inset-0 bg-[url('/assets/gowerton-site.webp')] bg-cover bg-center opacity-20"></div>
+        
+        <div class="container mx-auto px-6 z-10">
+            <div class="max-w-4xl mx-auto text-center">
+                <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+                    <span class="text-white">Get in Touch with</span>
+                    <span class="bg-clip-text text-transparent bg-gradient-to-r from-primary-300 to-primary-500">Alan Rogers Wales</span>
+                </h1>
+                <p class="text-lg md:text-xl text-gray-300 mb-8">
+                    Have questions about our caravan and motorhome club sites? Our team is here to help you plan your perfect Welsh holiday.
+                </p>
+            </div>
+        </div>
+        
+        <div class="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-twilight-900 to-transparent"></div>
+    </section>
+
+    <!-- Contact Options Section -->
+    <section class="py-20 bg-twilight-900">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Contact Card 1 -->
+                <div class="contact-card bg-twilight-800/50 p-8 rounded-xl border border-twilight-700 transition-all duration-300 hover:border-primary-500">
+                    <div class="w-14 h-14 rounded-full bg-primary-900/30 flex items-center justify-center text-primary-400 mb-6">
+                        <i class="fas fa-phone-alt text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Call Us</h3>
+                    <p class="text-gray-400 mb-4">Speak directly with our friendly team for immediate assistance.</p>
+                    <a href="tel:+441412222254" class="text-primary-400 hover:text-primary-300 font-medium flex items-center">
+                        +44 141 222 2254 <i class="fas fa-arrow-right ml-2 text-sm"></i>
+                    </a>
+                </div>
+                
+                <!-- Contact Card 2 -->
+                <div class="contact-card bg-twilight-800/50 p-8 rounded-xl border border-twilight-700 transition-all duration-300 hover:border-primary-500">
+                    <div class="w-14 h-14 rounded-full bg-primary-900/30 flex items-center justify-center text-primary-400 mb-6">
+                        <i class="fas fa-envelope text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Email Us</h3>
+                    <p class="text-gray-400 mb-4">Send us your questions and we'll respond within 24 hours.</p>
+                    <a href="mailto:info@alanrogerswales.com" class="text-primary-400 hover:text-primary-300 font-medium flex items-center">
+                        info@alanrogerswales.com <i class="fas fa-arrow-right ml-2 text-sm"></i>
+                    </a>
+                </div>
+                
+                <!-- Contact Card 3 -->
+                <div class="contact-card bg-twilight-800/50 p-8 rounded-xl border border-twilight-700 transition-all duration-300 hover:border-primary-500">
+                    <div class="w-14 h-14 rounded-full bg-primary-900/30 flex items-center justify-center text-primary-400 mb-6">
+                        <i class="fas fa-map-marker-alt text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Visit Us</h3>
+                    <p class="text-gray-400 mb-4">Our headquarters in Glasgow for in-person inquiries.</p>
+                    <a href="#location" class="text-primary-400 hover:text-primary-300 font-medium flex items-center">
+                        22 Renfield Lane, Glasgow <i class="fas fa-arrow-right ml-2 text-sm"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Form Section -->
+    <section class="py-20 bg-twilight-950">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col lg:flex-row">
+                <div class="lg:w-1/2 lg:pr-12 mb-12 lg:mb-0">
+                    <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">Send Us a Message</h2>
+                    <p class="text-gray-400 mb-8">Fill out the form below and our team will get back to you as soon as possible. For urgent inquiries, please call us directly.</p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-center p-4 bg-twilight-800/50 rounded-lg border border-twilight-700">
+                            <div class="flex-shrink-0 mr-4 text-primary-400">
+                                <i class="fas fa-clock text-2xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-white mb-1">Office Hours</h4>
+                                <p class="text-gray-400 text-sm">Monday - Friday: 9am - 6pm</p>
+                                <p class="text-gray-400 text-sm">Saturday: 10am - 4pm</p>
+                                <p class="text-gray-400 text-sm">Sunday: Closed</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center p-4 bg-twilight-800/50 rounded-lg border border-twilight-700">
+                            <div class="flex-shrink-0 mr-4 text-primary-400">
+                                <i class="fas fa-headset text-2xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-semibold text-white mb-1">Support Hours</h4>
+                                <p class="text-gray-400 text-sm">24/7 emergency support for existing bookings</p>
+                                <a href="tel:+441412222254" class="text-primary-400 hover:text-primary-300 text-sm font-medium mt-1 inline-block">
+                                    Emergency: +44 141 222 2254
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lg:w-1/2">
+                    <form id="contactForm" class="bg-twilight-800/50 p-8 rounded-xl border border-twilight-700">
+                        <!-- Success Message (hidden by default) -->
+                        <div id="formSuccess" class="form-success bg-primary-900/20 border border-primary-700 text-primary-200 px-4 py-3 rounded mb-6">
+                            <div class="flex items-center">
+                                <i class="fas fa-check-circle mr-2 text-xl"></i>
+                                <span>Thank you! Your message has been sent successfully. We'll respond as soon as possible.</span>
+                            </div>
+                        </div>
+                        
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="name" class="block text-sm font-medium text-gray-300 mb-1">Full Name *</label>
+                                <input type="text" id="name" name="name" required class="w-full input-field bg-twilight-700 border border-twilight-600 rounded-md px-4 py-3 text-white focus:outline-none focus:ring-1 focus:ring-primary-500">
+                            </div>
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-gray-300 mb-1">Email Address *</label>
+                                <input type="email" id="email" name="email" required class="w-full input-field bg-twilight-700 border border-twilight-600 rounded-md px-4 py-3 text-white focus:outline-none focus:ring-1 focus:ring-primary-500">
+                            </div>
+                        </div>
+                        
+                        <div class="mt-6">
+                            <label for="phone" class="block text-sm font-medium text-gray-300 mb-1">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" class="w-full input-field bg-twilight-700 border border-twilight-600 rounded-md px-4 py-3 text-white focus:outline-none focus:ring-1 focus:ring-primary-500">
+                        </div>
+                        
+                        <div class="mt-6">
+                            <label for="subject" class="block text-sm font-medium text-gray-300 mb-1">Subject *</label>
+                            <select id="subject" name="subject" required class="w-full input-field bg-twilight-700 border border-twilight-600 rounded-md px-4 py-3 text-white focus:outline-none focus:ring-1 focus:ring-primary-500">
+                                <option value="" disabled selected>Select a subject</option>
+                                <option value="booking">Booking Inquiry</option>
+                                <option value="general">General Question</option>
+                                <option value="feedback">Feedback</option>
+                                <option value="partnership">Partnership Opportunity</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="mt-6">
+                            <label for="message" class="block text-sm font-medium text-gray-300 mb-1">Message *</label>
+                            <textarea id="message" name="message" rows="5" required class="w-full input-field bg-twilight-700 border border-twilight-600 rounded-md px-4 py-3 text-white focus:outline-none focus:ring-1 focus:ring-primary-500"></textarea>
+                        </div>
+                        
+                        <div class="mt-8">
+                            <button type="submit" class="w-full px-6 py-3 bg-primary-600 hover:bg-primary-700 rounded-md text-white font-semibold transition-colors duration-300 flex items-center justify-center">
+                                <span>Send Message</span>
+                                <i class="fas fa-paper-plane ml-2"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Location Map Section -->
+    <section id="location" class="py-20 bg-twilight-900">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Our Location</h2>
+                <p class="max-w-2xl mx-auto text-gray-400">Visit our headquarters in Glasgow or find us at various caravan and motorhome shows throughout the year.</p>
+            </div>
+            
+            <div class="flex flex-col lg:flex-row gap-8">
+                <div class="lg:w-1/2">
+                    <div class="map-container">
+                        <div id="contactMap"></div>
+                    </div>
+                </div>
+                
+                <div class="lg:w-1/2">
+                    <div class="bg-twilight-800/50 p-8 rounded-xl border border-twilight-700 h-full">
+                        <h3 class="text-2xl font-bold text-white mb-4 glow-text">Alan Rogers Wales Headquarters</h3>
+                        
+                        <div class="space-y-4">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 mr-4 text-primary-400 mt-1">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-white mb-1">Address</h4>
+                                    <p class="text-gray-400">22 Renfield Lane<br>Glasgow G2 5AR<br>United Kingdom</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center">
+                                <div class="flex-shrink-0 mr-4 text-primary-400">
+                                    <i class="fas fa-phone-alt"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-white mb-1">Phone</h4>
+                                    <a href="tel:+441412222254" class="text-gray-400 hover:text-primary-300">+44 141 222 2254</a>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-center">
+                                <div class="flex-shrink-0 mr-4 text-primary-400">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-white mb-1">Email</h4>
+                                    <a href="mailto:info@alanrogerswales.com" class="text-gray-400 hover:text-primary-300">info@alanrogerswales.com</a>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start pt-4 mt-4 border-t border-twilight-700">
+                                <div class="flex-shrink-0 mr-4 text-primary-400 mt-1">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-semibold text-white mb-1">Visiting Hours</h4>
+                                    <p class="text-gray-400">Monday - Friday: 9:30am - 5:30pm</p>
+                                    <p class="text-gray-400 text-sm mt-1">Please call ahead to schedule an appointment outside these hours.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="mt-8">
+                            <a href="https://www.google.com/maps/dir//22+Renfield+Lane,+Glasgow+G2+5AR,+UK" target="_blank" class="inline-flex items-center px-6 py-3 bg-primary-600 hover:bg-primary-700 rounded-md text-white font-medium transition-colors">
+                                <i class="fas fa-directions mr-2"></i>
+                                Get Directions
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-20 bg-twilight-950">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Frequently Asked Questions</h2>
+                <p class="max-w-2xl mx-auto text-gray-400">Quick answers to common questions about our caravan and motorhome club sites.</p>
+            </div>
+            
+            <div class="max-w-3xl mx-auto">
+                <div class="space-y-4">
+                    <!-- FAQ Item 1 -->
+                    <div class="faq-item bg-twilight-800/50 rounded-xl border border-twilight-700 overflow-hidden">
+                        <button class="faq-question w-full flex justify-between items-center p-6 text-left">
+                            <h3 class="text-lg font-semibold text-white">How do I book a stay at one of your sites?</h3>
+                            <i class="fas fa-chevron-down text-primary-400 transition-transform duration-200"></i>
+                        </button>
+                        <div class="faq-answer px-6 pb-6 hidden">
+                            <p class="text-gray-400">You can book directly through our website by visiting the specific site page and clicking "Book Now." Alternatively, you can call our booking line at +44 141 222 2254 during office hours or email us at bookings@alanrogerswales.com.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 2 -->
+                    <div class="faq-item bg-twilight-800/50 rounded-xl border border-twilight-700 overflow-hidden">
+                        <button class="faq-question w-full flex justify-between items-center p-6 text-left">
+                            <h3 class="text-lg font-semibold text-white">What are your cancellation policies?</h3>
+                            <i class="fas fa-chevron-down text-primary-400 transition-transform duration-200"></i>
+                        </button>
+                        <div class="faq-answer px-6 pb-6 hidden">
+                            <p class="text-gray-400">Our standard cancellation policy allows for full refunds up to 14 days before your scheduled arrival. Cancellations between 14 and 7 days receive a 50% refund. Cancellations within 7 days are non-refundable. Some premium sites may have different policies which will be clearly stated during booking.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 3 -->
+                    <div class="faq-item bg-twilight-800/50 rounded-xl border border-twilight-700 overflow-hidden">
+                        <button class="faq-question w-full flex justify-between items-center p-6 text-left">
+                            <h3 class="text-lg font-semibold text-white">Are pets allowed at your sites?</h3>
+                            <i class="fas fa-chevron-down text-primary-400 transition-transform duration-200"></i>
+                        </button>
+                        <div class="faq-answer px-6 pb-6 hidden">
+                            <p class="text-gray-400">Most of our sites are pet-friendly, though some may have restrictions on certain breeds or require pets to be kept on leads. Please check the specific site details or contact us for more information about pet policies at your chosen location.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 4 -->
+                    <div class="faq-item bg-twilight-800/50 rounded-xl border border-twilight-700 overflow-hidden">
+                        <button class="faq-question w-full flex justify-between items-center p-6 text-left">
+                            <h3 class="text-lg font-semibold text-white">Do you offer seasonal pitches?</h3>
+                            <i class="fas fa-chevron-down text-primary-400 transition-transform duration-200"></i>
+                        </button>
+                        <div class="faq-answer px-6 pb-6 hidden">
+                            <p class="text-gray-400">Yes, several of our sites offer seasonal pitches for caravans and motorhomes. Availability varies by location and season. Please contact our bookings team for current availability and pricing for seasonal pitches at your preferred site.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 5 -->
+                    <div class="faq-item bg-twilight-800/50 rounded-xl border border-twilight-700 overflow-hidden">
+                        <button class="faq-question w-full flex justify-between items-center p-6 text-left">
+                            <h3 class="text-lg font-semibold text-white">What facilities can I expect at your sites?</h3>
+                            <i class="fas fa-chevron-down text-primary-400 transition-transform duration-200"></i>
+                        </button>
+                        <div class="faq-answer px-6 pb-6 hidden">
+                            <p class="text-gray-400">All our sites offer electric hookups, clean toilet and shower facilities, and waste disposal. Many sites also have laundry facilities, children's play areas, and on-site shops or cafes. Premium sites may offer additional amenities like swimming pools or restaurants. Check individual site pages for specific facilities.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center mt-12">
+                    <a href="/faq/" class="inline-flex items-center px-6 py-3 border border-primary-500 text-primary-300 hover:bg-primary-500/10 rounded-md font-semibold transition-colors duration-300">
+                        View All FAQs <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-r from-primary-900 to-primary-700 relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-full opacity-10">
+            <div class="absolute top-1/4 left-1/4 w-32 h-32 rounded-full bg-white blur-3xl"></div>
+            <div class="absolute bottom-1/4 right-1/4 w-40 h-40 rounded-full bg-white blur-3xl"></div>
+        </div>
+        
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">Ready to Experience Wales' Premier Caravan Sites?</h2>
+                <p class="text-xl text-primary-100 mb-8">Contact us today to start planning your perfect caravan or motorhome holiday in Wales.</p>
+                <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                    <a href="/locations/" class="px-8 py-3 bg-white text-primary-700 hover:bg-gray-100 rounded-md font-semibold text-center transition-colors duration-300 transform hover:scale-105">
+                        Browse Our Sites
+                    </a>
+                    <a href="tel:+441412222254" class="px-8 py-3 border-2 border-white text-white hover:bg-white/10 rounded-md font-semibold text-center transition-colors duration-300 transform hover:scale-105">
+                        Call Now: +44 141 222 2254
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-twilight-950 text-gray-400 pt-20 pb-10">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-16">
+                <!-- About Column -->
+                <div>
+                     <img src="/assets/logo.png"  class="h-20 w-auto mb-6" alt="footer-logo"/>
+                    <p class="mb-6">Discover Wales' finest caravan and motorhome club sites with Alan Rogers. Experience breathtaking landscapes and premium facilities across our network of locations.</p>
+                    <div class="flex space-x-4">
+                        <a href="https://www.facebook.com/alanrogerstravel" class="w-10 h-10 rounded-full bg-twilight-800 hover:bg-primary-600 flex items-center justify-center transition-colors">
+                            <i class="fab fa-facebook-f text-white"></i>
+                        </a>
+                        <a href="https://www.instagram.com/alanrogerstravel/" class="w-10 h-10 rounded-full bg-twilight-800 hover:bg-primary-600 flex items-center justify-center transition-colors">
+                            <i class="fab fa-instagram text-white"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links Column -->
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-6">Quick Links</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/" class="hover:text-primary-300 transition-colors">Home</a></li>
+                        <li><a href="/about/" class="hover:text-primary-300 transition-colors">About Us</a></li>
+                        <li><a href="/locations/" class="hover:text-primary-300 transition-colors">Our Sites</a></li>
+                        <li><a href="/blog/" class="hover:text-primary-300 transition-colors">Blog</a></li>
+                         
+                        <li><a href="/contact/" class="hover:text-primary-300 transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Contact Column -->
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-6">Contact Us</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-3 text-primary-400"></i>
+                            <span>22 Renfield Ln, Glasgow G2 5AR, United Kingdom</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone-alt mr-3 text-primary-400"></i>
+                            <a href="tel:+441412222254" class="hover:text-primary-300 transition-colors">+44 141 222 2254</a>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-3 text-primary-400"></i>
+                            <a href="mailto:info@alanrogerswales.com" class="hover:text-primary-300 transition-colors">info@alanrogerswales.com</a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Newsletter Column -->
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-6">Newsletter</h3>
+                    <p class="mb-4">Subscribe to our newsletter for the latest updates, offers, and travel tips.</p>
+                    <form class="flex flex-col space-y-3">
+                        <input type="email" placeholder="Your email address" class="px-4 py-2 bg-twilight-800 border border-twilight-700 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+                        <button type="submit" class="px-4 py-2 bg-primary-600 hover:bg-primary-700 rounded-md text-white font-medium transition-colors">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="pt-10 border-t border-twilight-800">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="mb-4 md:mb-0">© 2025 Alan Rogers Wales. All rights reserved.</p>
+                    <div class="flex space-x-6">
+                        <a href="/privacy/" class="hover:text-primary-300 transition-colors">Privacy Policy</a>
+                        <a href="/terms/" class="hover:text-primary-300 transition-colors">Terms of Service</a>
+                        <a href="/cookies/" class="hover:text-primary-300 transition-colors">Cookies</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="fixed bottom-6 right-6 w-12 h-12 rounded-full bg-primary-600 hover:bg-primary-700 text-white shadow-lg flex items-center justify-center transition-all duration-300 opacity-0 invisible">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Leaflet JS (for maps) -->
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+    
+    <!-- GSAP Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollTrigger.min.js"></script>
+    
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize GSAP animations
+            gsap.registerPlugin(ScrollTrigger);
+            
+            // Animate elements on scroll
+            gsap.utils.toArray('.contact-card, .faq-item, [class*="animate-"]').forEach(element => {
+                gsap.from(element, {
+                    scrollTrigger: {
+                        trigger: element,
+                        start: "top 80%",
+                        toggleActions: "play none none none"
+                    },
+                    opacity: 0,
+                    y: 50,
+                    duration: 0.8,
+                    ease: "power2.out"
+                });
+            });
+            
+            // Initialize map
+            const contactMap = L.map('contactMap').setView([55.8611, -4.2504], 15); // Centered on Glasgow office
+            
+            // Add tile layer (OpenStreetMap)
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                maxZoom: 18,
+            }).addTo(contactMap);
+            
+            // Add marker for office location
+            L.marker([55.8611, -4.2504], {
+                icon: L.divIcon({
+                    className: 'custom-marker',
+                    html: `<div style="background-color: #0ea5e9; width: 24px; height: 24px; border-radius: 50%; border: 3px solid white; transform: translate(-12px, -12px);"></div>`
+                })
+            }).addTo(contactMap).bindPopup(`
+                <div class="text-sm">
+                    <h3 class="font-bold text-white mb-1">Alan Rogers Wales HQ</h3>
+                    <p class="text-gray-300">22 Renfield Lane, Glasgow G2 5AR</p>
+                    <a href="https://www.google.com/maps/dir//22+Renfield+Lane,+Glasgow+G2+5AR,+UK" target="_blank" class="text-primary-400 hover:text-primary-300 text-sm font-medium mt-1 inline-block">
+                        Get Directions <i class="fas fa-arrow-right ml-1 text-xs"></i>
+                    </a>
+                </div>
+            `).openPopup();
+            
+            // FAQ accordion functionality
+            const faqQuestions = document.querySelectorAll('.faq-question');
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', () => {
+                    const answer = question.nextElementSibling;
+                    const icon = question.querySelector('i');
+                    
+                    // Toggle answer visibility
+                    if (answer.classList.contains('hidden')) {
+                        answer.classList.remove('hidden');
+                        icon.classList.remove('fa-chevron-down');
+                        icon.classList.add('fa-chevron-up');
+                    } else {
+                        answer.classList.add('hidden');
+                        icon.classList.remove('fa-chevron-up');
+                        icon.classList.add('fa-chevron-down');
+                    }
+                    
+                    // Close other open FAQs
+                    faqQuestions.forEach(otherQuestion => {
+                        if (otherQuestion !== question) {
+                            const otherAnswer = otherQuestion.nextElementSibling;
+                            const otherIcon = otherQuestion.querySelector('i');
+                            otherAnswer.classList.add('hidden');
+                            otherIcon.classList.remove('fa-chevron-up');
+                            otherIcon.classList.add('fa-chevron-down');
+                        }
+                    });
+                });
+            });
+            
+            // Form submission
+            const contactForm = document.getElementById('contactForm');
+            const formSuccess = document.getElementById('formSuccess');
+            
+            if (contactForm) {
+                contactForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    
+                    // In a real implementation, this would submit to a server
+                    // For this demo, we'll just show the success message
+                    formSuccess.classList.add('show');
+                    contactForm.reset();
+                    
+                    // Hide success message after 5 seconds
+                    setTimeout(() => {
+                        formSuccess.classList.remove('show');
+                    }, 5000);
+                });
+            }
+            
+            // Cookie consent banner animation
+            const cookieBanner = document.getElementById('cookieConsent');
+            if (cookieBanner && !localStorage.getItem('cookiesAccepted')) {
+                setTimeout(() => {
+                    gsap.to(cookieBanner, {
+                        y: 0,
+                        duration: 0.5,
+                        ease: "power2.out"
+                    });
+                }, 2000);
+            }
+            
+            // Cookie consent buttons
+            const acceptCookies = document.getElementById('acceptCookies');
+            const declineCookies = document.getElementById('declineCookies');
+            
+            if (acceptCookies) {
+                acceptCookies.addEventListener('click', function() {
+                    localStorage.setItem('cookiesAccepted', 'true');
+                    gsap.to(cookieBanner, {
+                        y: '100%',
+                        duration: 0.5,
+                        ease: "power2.in"
+                    });
+                });
+            }
+            
+            if (declineCookies) {
+                declineCookies.addEventListener('click', function() {
+                    localStorage.setItem('cookiesDeclined', 'true');
+                    gsap.to(cookieBanner, {
+                        y: '100%',
+                        duration: 0.5,
+                        ease: "power2.in"
+                    });
+                });
+            }
+            
+            
+            
+            // Back to top button
+            const backToTopButton = document.getElementById('backToTop');
+            
+            if (backToTopButton) {
+                window.addEventListener('scroll', function() {
+                    if (window.pageYOffset > 300) {
+                        gsap.to(backToTopButton, {
+                            opacity: 1,
+                            visibility: 'visible',
+                            duration: 0.3
+                        });
+                    } else {
+                        gsap.to(backToTopButton, {
+                            opacity: 0,
+                            visibility: 'hidden',
+                            duration: 0.3
+                        });
+                    }
+                });
+                
+                backToTopButton.addEventListener('click', function() {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                });
+            }
+        });
+    </script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const closeMobileMenu = document.getElementById('closeMobileMenu');
+        const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+
+        if (mobileMenuButton && mobileMenu) {
+            mobileMenuButton.addEventListener('click', function() {
+                mobileMenu.classList.remove('translate-x-full');
+                mobileMenuOverlay.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            });
+
+            closeMobileMenu.addEventListener('click', function() {
+                mobileMenu.classList.add('translate-x-full');
+                mobileMenuOverlay.classList.add('hidden');
+                document.body.style.overflow = '';
+            });
+
+            mobileMenuOverlay.addEventListener('click', function() {
+                mobileMenu.classList.add('translate-x-full');
+                mobileMenuOverlay.classList.add('hidden');
+                document.body.style.overflow = '';
+            });
+        }
+    });
+</script>
+</body>
+</html>

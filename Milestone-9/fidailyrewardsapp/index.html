@@ -1,0 +1,825 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="FI Daily Rewards App - Claim free energy & rubies for Family Island game. Get daily rewards and enhance your gaming experience.">
+    <meta name="keywords" content="FI Daily Rewards, Family Island rewards, free energy, free rubies, daily rewards, mobile game rewards">
+    <meta name="author" content="Max OP Games">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://fidailyrewardsapp.com/" />
+    <title>FI Daily Rewards App | Free Energy & Rubies for Family Island</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/assets/logo.webp" type="image/x-icon">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6d28d9',
+                        secondary: '#10b981',
+                        dark: '#0B0B0B',
+                        darker: '#050505',
+                        accent: '#f59e0b',
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #0B0B0B;
+            color: #f3f4f6;
+            overflow-x: hidden;
+        }
+        
+        .font-orbitron {
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, #6d28d9, #10b981, #f59e0b);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .glass-card {
+            background: rgba(15, 15, 15, 0.7);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .btn-glow {
+            box-shadow: 0 0 15px rgba(109, 40, 217, 0.5);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-glow:hover {
+            box-shadow: 0 0 25px rgba(109, 40, 217, 0.8);
+            transform: translateY(-2px);
+        }
+        
+        .magnetic {
+            transition: transform 0.2s ease;
+        }
+        
+        .magnetic:hover {
+            transform: scale(1.05);
+        }
+        
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+        
+        .content-wrapper {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .nav-link::after {
+            content: '';
+            display: block;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #6d28d9, #10b981);
+            transition: width 0.3s;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .scroll-down {
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-20px);
+            }
+            60% {
+                transform: translateY(-10px);
+            }
+        }
+        html,body{
+            overflow-x: hidden;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+    <!-- Three.js Background -->
+    <div id="particles-js"></div>
+    
+    <!-- Cookie Consent Popup -->
+    <div id="cookieConsent" class="fixed bottom-0 left-0 right-0 bg-dark border-t border-gray-800 p-4 hidden z-50">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <p class="text-gray-300 text-sm md:text-base">We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies.</p>
+            <div class="flex gap-3">
+                <button id="acceptCookies" class="px-4 py-2 bg-primary rounded-md text-white hover:bg-purple-700 transition">Accept</button>
+                <button id="declineCookies" class="px-4 py-2 bg-gray-700 rounded-md text-white hover:bg-gray-600 transition">Decline</button>
+                <a href="/cookies/" class="px-4 py-2 text-accent hover:underline">Learn More</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Navigation -->
+    <nav class="glass-card fixed w-full z-40 border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <a href="/" class="flex-shrink-0 flex items-center">
+                        <img src="/assets/logo.png" alt="FI Daily Rewards Logo" class="h-16 w-auto ">                       
+                    </a>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-6">
+                        <a href="/" class="nav-link text-white px-3 py-2 text-sm font-medium">Home</a>
+                        <a href="/how-to-play/" class="nav-link text-gray-300 hover:text-white px-3 py-2 text-sm font-medium">How to Play</a>
+                        <a href="/responsible-gaming/" class="nav-link text-gray-300 hover:text-white px-3 py-2 text-sm font-medium">Responsible Gaming</a>
+                        <a href="/blog/" class="nav-link text-gray-300 hover:text-white px-3 py-2 text-sm font-medium">Blog</a>
+                        <a href="/contact/" class="nav-link text-gray-300 hover:text-white px-3 py-2 text-sm font-medium">Contact</a>
+                    </div>
+                </div>
+                <div class="hidden xl:block">
+                    <a href="https://play.google.com/store/apps/details?id=com.firewards.freespinslink" target="_blank" class="btn-glow ml-4 inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-primary hover:bg-purple-700">
+                        <i class="fab fa-google-play mr-2"></i> Download Now
+                    </a>
+                </div>
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-button" class="text-gray-300 hover:text-white focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-darker border-t border-gray-800">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="/" class="block px-3 py-2 text-white text-base font-medium">Home</a>
+                <a href="/how-to-play/" class="block px-3 py-2 text-gray-300 hover:text-white text-base font-medium">How to Play</a>
+                <a href="/responsible-gaming/" class="block px-3 py-2 text-gray-300 hover:text-white text-base font-medium">Responsible Gaming</a>
+                <a href="/blog/" class="block px-3 py-2 text-gray-300 hover:text-white text-base font-medium">Blog</a>
+                <a href="/contact/" class="block px-3 py-2 text-gray-300 hover:text-white text-base font-medium">Contact</a>
+                <a href="https://play.google.com/store/apps/details?id=com.firewards.freespinslink" target="_blank" class="block px-3 py-2 text-white bg-primary rounded-md text-base font-medium">
+                    <i class="fab fa-google-play mr-2"></i> Download Now
+                </a>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="relative pt-24 pb-20 md:pt-32 md:pb-28 overflow-hidden content-wrapper">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div class="text-center md:text-left">
+                    <h1 class="text-4xl md:text-6xl font-bold mb-6 font-orbitron">
+                        <span class="gradient-text">FI Daily Rewards</span>
+                        <span class="block text-white mt-2">For Family Island</span>
+                    </h1>
+                    <p class="text-lg text-gray-300 mb-8 max-w-lg">
+                        Claim your daily free energy & rubies to enhance your Family Island adventure. Never run out of resources again with our exclusive reward links!
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                        <a href="https://play.google.com/store/apps/details?id=com.firewards.freespinslink" target="_blank" class="btn-glow magnetic inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary hover:bg-purple-700 md:py-4 md:text-lg md:px-10">
+                            <i class="fab fa-google-play mr-2"></i> Download Now
+                        </a>
+                        <a href="/how-to-play/" class="magnetic inline-flex items-center justify-center px-8 py-3 border border-accent text-base font-medium rounded-md text-accent bg-transparent hover:bg-opacity-10 hover:bg-accent md:py-4 md:text-lg md:px-10">
+                            <i class="fas fa-play-circle mr-2"></i> How It Works
+                        </a>
+                    </div>
+                    <div class="mt-8 flex items-center justify-center md:justify-start gap-4">
+                        <div class="flex items-center">
+                            
+                            <span class="ml-3 text-sm text-gray-300">1,000+ Downloads</span>
+                        </div>
+                        <div class="flex items-center text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span class="ml-1 text-sm text-gray-300">4.5/5</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="absolute -top-10 -left-10 w-64 h-64 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse-slow"></div>
+                    <div class="absolute -bottom-10 -right-10 w-64 h-64 bg-emerald-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse-slow delay-1000"></div>
+                    <div class="absolute top-20 -right-20 w-64 h-64 bg-yellow-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse-slow delay-2000"></div>
+                    <img src="/assets/app-screenshot.png" alt="FI Daily Rewards App Screenshot" class="relative mx-auto w-full max-w-md rounded-xl shadow-2xl border border-gray-700 transform rotate-3 hover:rotate-0 transition duration-500">
+                </div>
+            </div>
+        </div>
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 scroll-down">
+            <a href="#features" class="text-gray-400 hover:text-white">
+                <i class="fas fa-chevron-down text-2xl"></i>
+            </a>
+        </div>
+    </section>
+    
+    <!-- Features Section -->
+    <section id="features" class="py-20 bg-gradient-to-b from-dark to-darker content-wrapper">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold font-orbitron gradient-text">Why Choose FI Daily Rewards?</h2>
+                <p class="mt-4 max-w-2xl text-xl text-gray-300 mx-auto">
+                    The ultimate companion for Family Island players looking to maximize their gameplay.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Feature 1 -->
+                <div class="glass-card p-6 rounded-xl hover:shadow-lg hover:shadow-purple-500/10 transition duration-300 magnetic">
+                    <div class="w-14 h-14 bg-purple-900 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-bolt text-2xl text-purple-400"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-2">Daily Energy Rewards</h3>
+                    <p class="text-gray-400">
+                        Never run out of energy with our daily free energy links to keep your adventure going.
+                    </p>
+                </div>
+                
+                <!-- Feature 2 -->
+                <div class="glass-card p-6 rounded-xl hover:shadow-lg hover:shadow-emerald-500/10 transition duration-300 magnetic">
+                    <div class="w-14 h-14 bg-emerald-900 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-gem text-2xl text-emerald-400"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-2">Free Rubies</h3>
+                    <p class="text-gray-400">
+                        Collect free rubies daily to unlock premium items and speed up your progress.
+                    </p>
+                </div>
+                
+                <!-- Feature 3 -->
+                <div class="glass-card p-6 rounded-xl hover:shadow-lg hover:shadow-yellow-500/10 transition duration-300 magnetic">
+                    <div class="w-14 h-14 bg-yellow-900 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-bell text-2xl text-yellow-400"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-2">Instant Notifications</h3>
+                    <p class="text-gray-400">
+                        Get notified immediately when new rewards are available so you never miss out.
+                    </p>
+                </div>
+                
+                <!-- Feature 4 -->
+                <div class="glass-card p-6 rounded-xl hover:shadow-lg hover:shadow-blue-500/10 transition duration-300 magnetic">
+                    <div class="w-14 h-14 bg-blue-900 rounded-lg flex items-center justify-center mb-4">
+                        <i class="fas fa-mobile-alt text-2xl text-blue-400"></i>
+                    </div>
+                    <h3 class="text-xl font-semibold text-white mb-2">All Devices Supported</h3>
+                    <p class="text-gray-400">
+                        Works seamlessly with all Android devices running version 5.0 and up.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- How It Works Section -->
+    <section class="py-20 content-wrapper">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div class="order-2 lg:order-1">
+                    <h2 class="text-3xl md:text-4xl font-bold font-orbitron gradient-text mb-6">How It Works</h2>
+                    <p class="text-gray-300 mb-8">
+                        Getting your daily rewards is quick and easy. Follow these simple steps to enhance your Family Island experience.
+                    </p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <div class="flex items-center justify-center h-10 w-10 rounded-full bg-purple-900 text-purple-300 font-bold">
+                                    1
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="text-lg font-medium text-white">Download the App</h3>
+                                <p class="mt-1 text-gray-400">
+                                    Install FI Daily Rewards from the Google Play Store.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <div class="flex items-center justify-center h-10 w-10 rounded-full bg-emerald-900 text-emerald-300 font-bold">
+                                    2
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="text-lg font-medium text-white">Open & Explore</h3>
+                                <p class="mt-1 text-gray-400">
+                                    Launch the app to see available rewards for the day.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex">
+                            <div class="flex-shrink-0">
+                                <div class="flex items-center justify-center h-10 w-10 rounded-full bg-yellow-900 text-yellow-300 font-bold">
+                                    3
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <h3 class="text-lg font-medium text-white">Claim Your Rewards</h3>
+                                <p class="mt-1 text-gray-400">
+                                    Click on the reward links to get free energy and rubies directly in your game.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8">
+                        <a href="/how-to-play/" class="inline-flex items-center text-accent hover:underline">
+                            Learn more about how to use the app
+                            <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="order-1 lg:order-2 relative">
+                    <div class="absolute -top-10 -left-10 w-64 h-64 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse-slow"></div>
+                    <div class="absolute -bottom-10 -right-10 w-64 h-64 bg-emerald-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse-slow delay-1000"></div>
+                    <img src="/assets/how-it-works.png" alt="How FI Daily Rewards Works" class="relative mx-auto w-full max-w-md rounded-xl shadow-2xl border border-gray-700">
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Testimonials Section -->
+    <section class="py-20 bg-gradient-to-b from-darker to-dark content-wrapper">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold font-orbitron gradient-text">What Players Say</h2>
+                <p class="mt-4 max-w-2xl text-xl text-gray-300 mx-auto">
+                    Don't just take our word for it. Here's what our users have to say.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="glass-card p-6 rounded-xl">
+                    <div class="flex items-center mb-4">
+                        
+                        <div>
+                            <h4 class="text-white font-medium">Sarah J.</h4>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 italic">
+                        "This app is a game-changer! I was always running out of energy in Family Island, but now I get daily rewards that keep me playing longer. Highly recommend!"
+                    </p>
+                </div>
+                
+                <!-- Testimonial 2 -->
+                <div class="glass-card p-6 rounded-xl">
+                    <div class="flex items-center mb-4">
+                       
+                        <div>
+                            <h4 class="text-white font-medium">Mark T.</h4>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 italic">
+                        "The notifications for new rewards are so helpful. I never miss a day now. The rubies I've collected have helped me progress so much faster."
+                    </p>
+                </div>
+                
+                <!-- Testimonial 3 -->
+                <div class="glass-card p-6 rounded-xl">
+                    <div class="flex items-center mb-4">
+                        
+                        <div>
+                            <h4 class="text-white font-medium">Emily R.</h4>
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 italic">
+                        "Simple to use and works perfectly. I love that it's free and helps me enjoy Family Island even more. The energy rewards are a lifesaver!"
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+     <!-- Blog Posts Grid -->
+    <section class="py-16 bg-gradient-to-b from-dark to-darker content-wrapper">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold font-orbitron gradient-text">Latest Articles</h2>
+                <p class="mt-4 max-w-2xl text-xl text-gray-300 mx-auto">
+                    Explore our collection of guides and tips to enhance your Family Island experience.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Blog Post 1 -->
+                <article class="glass-card rounded-xl overflow-hidden hover:shadow-lg hover:shadow-purple-500/10 transition duration-300">
+                    <div class="h-48 overflow-hidden">
+                        <img src="/assets/blog1.jpg" alt="Rubies Guide" class="w-full h-full object-cover hover:scale-105 transition duration-500">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center text-sm text-gray-400 mb-3">
+                            <span>June 15, 2025</span>
+                            <span class="mx-2">•</span>
+                            <span>5 min read</span>
+                        </div>
+                        <h3 class="text-xl font-semibold text-white mb-3 hover:text-accent transition">
+                            <a href="/blog/rubies-guide/">How to Earn & Spend Rubies Wisely in Family Island</a>
+                        </h3>
+                        <p class="text-gray-400 mb-4">
+                            Discover the best ways to collect rubies and smart strategies for spending them to maximize your progress in Family Island.
+                        </p>
+                        <a href="/blog/rubies-guide/" class="inline-flex items-center text-accent hover:underline text-sm">
+                            Continue reading
+                            <i class="fas fa-arrow-right ml-1"></i>
+                        </a>
+                    </div>
+                </article>
+                
+                <!-- Blog Post 2 -->
+                <article class="glass-card rounded-xl overflow-hidden hover:shadow-lg hover:shadow-emerald-500/10 transition duration-300">
+                    <div class="h-48 overflow-hidden">
+                        <img src="/assets/blog2.webp" alt="Rewards Strategy" class="w-full h-full object-cover hover:scale-105 transition duration-500">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center text-sm text-gray-400 mb-3">
+                            <span>June 10, 2025</span>
+                            <span class="mx-2">•</span>
+                            <span>6 min read</span>
+                        </div>
+                        <h3 class="text-xl font-semibold text-white mb-3 hover:text-accent transition">
+                            <a href="/blog/rewards-strategy/">Advanced Reward Collection Strategy for Maximum Benefits</a>
+                        </h3>
+                        <p class="text-gray-400 mb-4">
+                            Learn the optimal times to claim your rewards and how to combine them with in-game events for maximum benefits in Family Island.
+                        </p>
+                        <a href="/blog/rewards-strategy/" class="inline-flex items-center text-accent hover:underline text-sm">
+                            Continue reading
+                            <i class="fas fa-arrow-right ml-1"></i>
+                        </a>
+                    </div>
+                </article>
+                
+                <!-- Blog Post 3 -->
+                <article class="glass-card rounded-xl overflow-hidden hover:shadow-lg hover:shadow-blue-500/10 transition duration-300">
+                    <div class="h-48 overflow-hidden">
+                        <img src="/assets/blog3.webp" alt="New Updates" class="w-full h-full object-cover hover:scale-105 transition duration-500">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center text-sm text-gray-400 mb-3">
+                            <span>June 5, 2025</span>
+                            <span class="mx-2">•</span>
+                            <span>4 min read</span>
+                        </div>
+                        <h3 class="text-xl font-semibold text-white mb-3 hover:text-accent transition">
+                            <a href="/blog/new-updates/">Latest Family Island Updates: What's New & How to Benefit</a>
+                        </h3>
+                        <p class="text-gray-400 mb-4">
+                            Everything you need to know about the newest Family Island features and how to take full advantage of them with your daily rewards.
+                        </p>
+                        <a href="/blog/new-updates/" class="inline-flex items-center text-accent hover:underline text-sm">
+                            Continue reading
+                            <i class="fas fa-arrow-right ml-1"></i>
+                        </a>
+                    </div>
+                </article>
+                
+                <!-- Blog Post 4 -->
+                
+            </div>
+            
+           <div class="mt-12 text-center">
+                <a href="/blog/" class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary hover:bg-purple-700">
+                    View All Blog Posts
+                    <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA Section -->
+    <section class="py-20 content-wrapper">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="glass-card rounded-2xl px-6 py-16 sm:p-16 text-center">
+                <h2 class="text-3xl md:text-4xl font-bold font-orbitron gradient-text mb-6">Ready to Boost Your Game?</h2>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto mb-8">
+                    Download FI Daily Rewards now and start claiming your free energy and rubies today. Enhance your Family Island experience with daily rewards!
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="https://play.google.com/store/apps/details?id=com.firewards.freespinslink" target="_blank" class="btn-glow magnetic inline-flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary hover:bg-purple-700 md:py-4 md:text-lg md:px-10">
+                        <i class="fab fa-google-play mr-2"></i> Download Now
+                    </a>
+                    <a href="/contact/" class="magnetic inline-flex items-center justify-center px-8 py-3 border border-accent text-base font-medium rounded-md text-accent bg-transparent hover:bg-opacity-10 hover:bg-accent md:py-4 md:text-lg md:px-10">
+                        <i class="fas fa-question-circle mr-2"></i> Need Help?
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+   
+    
+    <!-- Footer -->
+    <footer class="bg-darker border-t border-gray-800 pt-12 pb-8 content-wrapper">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="md:col-span-2">
+                     <a href="/" class="flex-shrink-0 flex items-center">
+                        <img src="/assets/logo.png" alt="FI Daily Rewards Logo" class="h-16 w-auto ">                       
+                    </a>
+                    <p class="mt-4 text-gray-400 max-w-md">
+                        The ultimate companion app for Family Island players. Get daily free energy, rubies and other rewards to enhance your gaming experience.
+                    </p>
+                    
+                </div>
+                
+                <div>
+                    <h3 class="text-sm font-semibold text-white tracking-wider uppercase">Quick Links</h3>
+                    <div class="mt-4 space-y-4">
+                        <a href="/" class="text-base text-gray-400 hover:text-white block">Home</a>
+                        <a href="/how-to-play/" class="text-base text-gray-400 hover:text-white block">How to Play</a>
+                        <a href="/responsible-gaming/" class="text-base text-gray-400 hover:text-white block">Responsible Gaming</a>
+                        <a href="/blog/" class="text-base text-gray-400 hover:text-white block">Blog</a>
+                        <a href="/contact/" class="text-base text-gray-400 hover:text-white block">Contact</a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-sm font-semibold text-white tracking-wider uppercase">Legal</h3>
+                    <div class="mt-4 space-y-4">
+                        <a href="/privacy/" class="text-base text-gray-400 hover:text-white block">Privacy Policy</a>
+                        <a href="/terms/" class="text-base text-gray-400 hover:text-white block">Terms of Service</a>
+                        <a href="/cookies/" class="text-base text-gray-400 hover:text-white block">Cookies Policy</a>
+                        <a href="https://play.google.com/store/apps/details?id=com.firewards.freespinslink" target="_blank" class="text-base text-gray-400 hover:text-white block">Google Play</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="mt-12 pt-8 border-t border-gray-800 flex flex-col md:flex-row md:justify-between md:items-center">
+                <p class="text-gray-400 text-sm">
+                    &copy; 2025 Max OP Games. All rights reserved.
+                </p>
+                <div class="mt-4 md:mt-0 flex flex-col md:flex-row md:space-x-6">
+                    <a href="mailto:info@fidailyrewardsapp.com" class="text-gray-400 hover:text-white text-sm">
+                        <i class="fas fa-envelope md:mr-1"></i> info@fidailyrewardsapp.com
+                    </a>
+                    <a href="tel:+441612226105" class="text-gray-400 hover:text-white text-sm">
+                        <i class="fas fa-phone md:mr-1"></i> +44 161 222 6105
+                    </a>
+                    <span class="text-gray-400 text-sm">
+                        <i class="fas fa-map-marker-alt md:mr-1"></i> Manchester, UK
+                    </span>
+                </div>
+            </div>
+            
+            <div class="mt-8 text-center text-xs text-gray-500">
+                <p>Disclaimer: This app is not affiliated with or endorsed by any game developers or publishers. All reward links are publicly available and shared for informational purposes only.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+        
+        // Cookie consent
+        document.addEventListener('DOMContentLoaded', function() {
+            const cookieConsent = document.getElementById('cookieConsent');
+            const acceptCookies = document.getElementById('acceptCookies');
+            const declineCookies = document.getElementById('declineCookies');
+            
+            if (!localStorage.getItem('cookieConsent')) {
+                cookieConsent.classList.remove('hidden');
+            }
+            
+            acceptCookies.addEventListener('click', function() {
+                localStorage.setItem('cookieConsent', 'accepted');
+                cookieConsent.classList.add('hidden');
+            });
+            
+            declineCookies.addEventListener('click', function() {
+                localStorage.setItem('cookieConsent', 'declined');
+                cookieConsent.classList.add('hidden');
+            });
+        });
+        
+        // Magnetic button effect
+        document.querySelectorAll('.magnetic').forEach(button => {
+            button.addEventListener('mousemove', function(e) {
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+                
+                const angleX = (x - centerX) / 10;
+                const angleY = (y - centerY) / 10;
+                
+                this.style.transform = `perspective(1000px) rotateX(${angleY}deg) rotateY(${-angleX}deg) scale(1.05)`;
+            });
+            
+            button.addEventListener('mouseleave', function() {
+                this.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
+            });
+        });
+        
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+        
+        gsap.from(".gradient-text", {
+            duration: 1.5,
+            opacity: 0,
+            y: 50,
+            ease: "power3.out",
+            stagger: 0.2
+        });
+        
+        gsap.utils.toArray(".glass-card").forEach(card => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                },
+                opacity: 0,
+                y: 50,
+                duration: 0.8,
+                ease: "power2.out"
+            });
+        });
+        
+        // Three.js Particle Background
+        particlesJS("particles-js", {
+            "particles": {
+                "number": {
+                    "value": 80,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": ["#6d28d9", "#10b981", "#f59e0b"]
+                },
+                "shape": {
+                    "type": "circle",
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000000"
+                    },
+                    "polygon": {
+                        "nb_sides": 5
+                    }
+                },
+                "opacity": {
+                    "value": 0.5,
+                    "random": false,
+                    "anim": {
+                        "enable": false,
+                        "speed": 1,
+                        "opacity_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 3,
+                    "random": true,
+                    "anim": {
+                        "enable": false,
+                        "speed": 40,
+                        "size_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#6d28d9",
+                    "opacity": 0.2,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 2,
+                    "direction": "none",
+                    "random": false,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                    "attract": {
+                        "enable": false,
+                        "rotateX": 600,
+                        "rotateY": 1200
+                    }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "grab"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {
+                        "distance": 140,
+                        "line_linked": {
+                            "opacity": 0.5
+                        }
+                    },
+                    "bubble": {
+                        "distance": 400,
+                        "size": 40,
+                        "duration": 2,
+                        "opacity": 8,
+                        "speed": 3
+                    },
+                    "repulse": {
+                        "distance": 200,
+                        "duration": 0.4
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    },
+                    "remove": {
+                        "particles_nb": 2
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+    </script>
+</body>
+</html>

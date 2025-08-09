@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wild Camping Adventures | Wild Manchester Group</title>
+    <meta name="description"
+        content="Experience authentic wild camping in Manchester with our guided adventures. Learn essential skills, discover beautiful locations, and reconnect with nature.">
+    <meta name="keywords"
+        content="wild camping Manchester, camping adventures, wilderness camping, outdoor camping, survival skills, nature immersion, Manchester camping trips">
+
+    <!-- Favicon -->
+   <link rel="icon" href="/assets/logo.png" type="image/x-icon">
+    <link rel="canonical" href="https://wildmanchestergroup.com/camping/" />
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            200: '#bbf7d0',
+                            300: '#86efac',
+                            400: '#4ade80',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                        },
+                        dark: {
+                            900: '#0a0a0a',
+                            800: '#1a1a1a',
+                            700: '#2a2a2a',
+                            600: '#3a3a3a',
+                            500: '#4a4a4a',
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-reverse': 'float-reverse 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 8s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        'float-reverse': {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollTrigger.min.js"></script>
+
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #0a0a0a;
+            color: #f8fafc;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #4ade80, #3b82f6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, rgba(20, 83, 45, 0.2), rgba(30, 64, 175, 0.2));
+        }
+
+        .parallax-bg {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .card-hover {
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .glow-hover:hover {
+            filter: drop-shadow(0 0 8px rgba(74, 222, 128, 0.7));
+        }
+
+        .text-stroke {
+            -webkit-text-stroke: 1px #f8fafc;
+            color: transparent;
+        }
+
+        .noise-bg::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .camping-feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, rgba(74, 222, 128, 0.1), rgba(30, 64, 175, 0.1));
+            border: 1px solid rgba(74, 222, 128, 0.2);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #4ade80;
+            margin-bottom: 20px;
+        }
+        
+        .tent-animation {
+            animation: tentFloat 6s ease-in-out infinite;
+        }
+        
+        @keyframes tentFloat {
+            0%, 100% { transform: translateY(0) rotate(-2deg); }
+            50% { transform: translateY(-10px) rotate(2deg); }
+        }
+    </style>
+</head>
+
+<body class="noise-bg">
+    <!-- Cookie Consent Banner -->
+    <div id="cookieConsent" class="fixed bottom-0 left-0 right-0 bg-dark-800 p-4 shadow-lg z-50 hidden">
+        <div class="container mx-auto flex flex-col md:flex-row items-center justify-between">
+            <p class="text-sm text-gray-300 mb-4 md:mb-0 md:mr-4">
+                We use cookies to enhance your experience. By continuing to visit this site you agree to our use of
+                cookies.
+                <a href="/privacy/" class="text-primary-400 hover:underline">Learn more</a>
+            </p>
+            <div class="flex space-x-3">
+                <button id="acceptCookies"
+                    class="px-4 py-2 bg-primary-600 hover:bg-primary-700 rounded-md text-sm font-medium transition-colors">
+                    Accept
+                </button>
+                <button id="declineCookies"
+                    class="px-4 py-2 bg-dark-700 hover:bg-dark-600 rounded-md text-sm font-medium transition-colors">
+                    Decline
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-40 bg-dark-900/80 backdrop-blur-md border-b border-dark-700">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="/" class="flex items-center space-x-2 glow-hover">
+                       <img src="/assets/logo.png" class="h-16" alt="logo" />
+                    </a>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="text-gray-300 hover:text-primary-400 transition-colors">Home</a>
+                    <a href="/about/" class="text-gray-300 hover:text-primary-400 transition-colors">About</a>
+                     <a href="/blog/" class="text-gray-300 hover:text-primary-400 transition-colors">Blog</a>
+                    <a href="/camping/" class="text-white  hover:text-primary-400 transition-colors ">Camping</a>
+                    <a href="/contact/" class="text-gray-300 hover:text-primary-400 transition-colors">Contact</a>
+                   <a href="/gallery/" class="text-gray-300 hover:text-primary-400 transition-colors">Gallery</a>
+                </div>
+
+                <!-- CTA and Mobile Menu Button -->
+                <div class="flex items-center space-x-4">
+                    <a href="/contact/"
+                        class="hidden md:block px-4 py-2 bg-primary-600 hover:bg-primary-700 rounded-md text-sm font-medium transition-colors">
+                        Book Adventure
+                    </a>
+                    <button id="mobileMenuButton" class="md:hidden text-gray-300 hover:text-white focus:outline-none">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="md:hidden hidden bg-dark-800 border-t border-dark-700">
+            <div class="container mx-auto px-6 py-4 flex flex-col space-y-4">
+                <a href="/" class="text-gray-300 hover:text-primary-400 transition-colors">Home</a>
+                <a href="/about/" class="text-gray-300 hover:text-primary-400 transition-colors">About</a>
+                 <a href="/blog/" class="text-gray-300 hover:text-primary-400 transition-colors">Blog</a>
+                <a href="/camping/" class="text-white  hover:text-primary-400 transition-colors ">Camping</a>
+                <a href="/contact/" class="text-gray-300 hover:text-primary-400 transition-colors">Contact</a>
+                <a href="/gallery/" class="text-gray-300 hover:text-primary-400 transition-colors">Gallery</a>
+             
+                
+                <a href="/contact/"
+                    class="mt-2 px-4 py-2 bg-primary-600 hover:bg-primary-700 rounded-md text-sm font-medium text-center transition-colors">
+                    Book Adventure
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative md:h-[100vh] flex items-center justify-center overflow-hidden pt-32 bg-[url('/assets/advanced-survival.jpg')] bg-cover bg-center">
+        <div class="absolute inset-0 bg-gradient-to-b from-dark-900/70 via-dark-900/30 to-dark-900/70 z-10"></div>
+
+        <div class="container mx-auto px-6 relative z-20">
+            <div class="max-w-4xl mx-auto text-center">
+                <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+                    <span class="gradient-text">Wild Camping</span> Adventures in <span class="text-stroke">Manchester</span>
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-300 mb-10 max-w-3xl mx-auto">
+                    Experience the freedom of wild camping with our expert-guided adventures. Sleep under the stars, wake to birdsong, and reconnect with nature.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="/contact/"
+                        class="px-8 py-4 bg-primary-600 hover:bg-primary-700 rounded-lg text-lg font-semibold transition-colors shadow-lg transform hover:scale-105 duration-300">
+                        Book Your Camping Trip
+                    </a>
+                    <a href="#camping-experiences"
+                        class="px-8 py-4 bg-dark-700 hover:bg-dark-600 rounded-lg text-lg font-semibold transition-colors shadow-lg transform hover:scale-105 duration-300">
+                        Explore Options
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scrolling Indicator -->
+        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20 animate-bounce hidden">
+            <a href="#camping-experiences"
+                class="block w-10 h-10 rounded-full border-2 border-gray-400 flex items-center justify-center text-gray-400 hover:text-white hover:border-white transition-colors">
+                <i class="fas fa-chevron-down"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Why Wild Camping Section -->
+    <section class="py-20 relative overflow-hidden">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4">
+                    Why Choose <span class="gradient-text">Wild Camping</span>?
+                </h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                    Escape the crowds and experience nature in its purest form with our wild camping adventures.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Benefit 1 -->
+                <div class="bg-dark-800 rounded-xl p-8 card-hover gradient-bg border border-dark-700">
+                    <div class="camping-feature-icon">
+                        <i class="fas fa-moon"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">True Wilderness Experience</h3>
+                    <p class="text-gray-400">
+                        Get away from crowded campsites and enjoy the solitude of nature. Our carefully selected locations offer peace, quiet, and stunning natural beauty.
+                    </p>
+                </div>
+
+                <!-- Benefit 2 -->
+                <div class="bg-dark-800 rounded-xl p-8 card-hover gradient-bg border border-dark-700">
+                    <div class="camping-feature-icon">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Essential Skills Training</h3>
+                    <p class="text-gray-400">
+                        Learn how to set up camp responsibly, build safe fires, navigate terrain, and leave no trace. Our guides will teach you everything you need to know.
+                    </p>
+                </div>
+
+                <!-- Benefit 3 -->
+                <div class="bg-dark-800 rounded-xl p-8 card-hover gradient-bg border border-dark-700">
+                    <div class="camping-feature-icon">
+                        <i class="fas fa-binoculars"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Wildlife Encounters</h3>
+                    <p class="text-gray-400">
+                        Experience Manchester's wildlife in their natural habitat. From deer to owls, our camping spots offer incredible opportunities for wildlife observation.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Camping Experiences Section -->
+    <section id="camping-experiences" class="py-20 bg-dark-800/50 relative overflow-hidden">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4">
+                    Our <span class="gradient-text">Camping Experiences</span>
+                </h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                    Whether you're a first-time camper or a seasoned outdoors enthusiast, we have the perfect adventure for you.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- Beginner Camping -->
+                <div class="bg-dark-800 rounded-2xl overflow-hidden border border-dark-700">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="/assets/wild-camping.webp" alt="Beginner Wild Camping" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-900/90 via-transparent to-transparent flex items-end p-8">
+                            <h3 class="text-3xl font-bold">Beginner Wild Camping</h3>
+                        </div>
+                    </div>
+                    <div class="p-8">
+                        <p class="text-gray-400 mb-6">
+                            Perfect for your first wild camping experience. We provide all the equipment and guidance you need to feel comfortable and safe in the wilderness.
+                        </p>
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-primary-400 mt-1 mr-2"></i>
+                                <span>1-night introduction to wild camping</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-primary-400 mt-1 mr-2"></i>
+                                <span>All equipment provided (tent, sleeping bag, mat)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-primary-400 mt-1 mr-2"></i>
+                                <span>Small group (max 6 people)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-primary-400 mt-1 mr-2"></i>
+                                <span>Basic skills training included</span>
+                            </li>
+                        </ul>
+                        
+                    </div>
+                </div>
+
+                <!-- Intermediate Camping -->
+                <div class="bg-dark-800 rounded-2xl overflow-hidden border border-dark-700">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="/assets/intermediate-camping.jpg" alt="Intermediate Wild Camping" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-900/90 via-transparent to-transparent flex items-end p-8">
+                            <h3 class="text-3xl font-bold">Intermediate Wild Camping</h3>
+                        </div>
+                    </div>
+                    <div class="p-8">
+                        <p class="text-gray-400 mb-6">
+                            For those with some camping experience who want to take their skills further. More remote locations and additional challenges.
+                        </p>
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-primary-400 mt-1 mr-2"></i>
+                                <span>2-night adventure in more remote locations</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-primary-400 mt-1 mr-2"></i>
+                                <span>Bring your own equipment (or rent ours)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-primary-400 mt-1 mr-2"></i>
+                                <span>Advanced skills training (navigation, weather reading)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-primary-400 mt-1 mr-2"></i>
+                                <span>Small group (max 8 people)</span>
+                            </li>
+                        </ul>
+                        
+                    </div>
+                </div>
+
+                <!-- Family Camping -->
+                <div class="bg-dark-800 rounded-2xl overflow-hidden border border-dark-700">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="/assets/family-camping.jpg" alt="Family Wild Camping" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-900/90 via-transparent to-transparent flex items-end p-8">
+                            <h3 class="text-3xl font-bold">Family Wild Camping</h3>
+                        </div>
+                    </div>
+                    <div class="p-8">
+                        <p class="text-gray-400 mb-6">
+                            Designed for families with children aged 7+. A safe and fun introduction to wild camping for the whole family.
+                        </p>
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-primary-400 mt-1 mr-2"></i>
+                                <span>1-night camping adventure</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-primary-400 mt-1 mr-2"></i>
+                                <span>All equipment provided</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-primary-400 mt-1 mr-2"></i>
+                                <span>Nature activities for kids</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-primary-400 mt-1 mr-2"></i>
+                                <span>Campfire stories and marshmallow toasting</span>
+                            </li>
+                        </ul>
+                       
+                    </div>
+                </div>
+
+                <!-- Advanced Survival -->
+                <div class="bg-dark-800 rounded-2xl overflow-hidden border border-dark-700">
+                    <div class="relative h-64 overflow-hidden">
+                        <img src="/assets/survival-camping.jpg" alt="Survival Camping" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-900/90 via-transparent to-transparent flex items-end p-8">
+                            <h3 class="text-3xl font-bold">Survival Camping</h3>
+                        </div>
+                    </div>
+                    <div class="p-8">
+                        <p class="text-gray-400 mb-6">
+                            For those who want to test their limits. Minimal equipment, maximum challenge under expert supervision.
+                        </p>
+                        <ul class="space-y-3 mb-8">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-primary-400 mt-1 mr-2"></i>
+                                <span>3-day survival experience</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-primary-400 mt-1 mr-2"></i>
+                                <span>Learn shelter-building, fire-making, foraging</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-primary-400 mt-1 mr-2"></i>
+                                <span>Small group (max 6 people)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-primary-400 mt-1 mr-2"></i>
+                                <span>Must complete beginner course first</span>
+                            </li>
+                        </ul>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- What to Expect Section -->
+    <section class="py-20 relative overflow-hidden">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col lg:flex-row items-center gap-12">
+                <div class="lg:w-1/2">
+                    <h2 class="text-4xl font-bold mb-6">
+                        What to <span class="gradient-text">Expect</span> on Your Trip
+                    </h2>
+                    <p class="text-xl text-gray-400 mb-8">
+                        Our wild camping adventures follow a carefully designed itinerary to ensure you have an unforgettable experience while staying safe.
+                    </p>
+                    
+                    <!-- Timeline -->
+                    <div class="space-y-8">
+                        <!-- Day 1 -->
+                        <div class="flex">
+                            <div class="flex-shrink-0 mr-6">
+                                <div class="flex items-center justify-center w-12 h-12 rounded-full bg-primary-500/20 text-primary-400 font-bold">
+                                    1
+                                </div>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold mb-2">Afternoon: Meet & Gear Check</h3>
+                                <p class="text-gray-400">
+                                    We'll meet at our base camp, go through equipment, and discuss safety procedures before heading out to our camping location.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <!-- Day 2 -->
+                        <div class="flex">
+                            <div class="flex-shrink-0 mr-6">
+                                <div class="flex items-center justify-center w-12 h-12 rounded-full bg-primary-500/20 text-primary-400 font-bold">
+                                    2
+                                </div>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold mb-2">Evening: Set Up Camp</h3>
+                                <p class="text-gray-400">
+                                    Arrive at our carefully selected camping spot and learn how to set up your tent responsibly in the wilderness.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <!-- Day 3 -->
+                        <div class="flex">
+                            <div class="flex-shrink-0 mr-6">
+                                <div class="flex items-center justify-center w-12 h-12 rounded-full bg-primary-500/20 text-primary-400 font-bold">
+                                    3
+                                </div>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold mb-2">Night: Campfire & Stories</h3>
+                                <p class="text-gray-400">
+                                    Enjoy a campfire meal (where permitted), learn about the night sky, and share stories around the fire.
+                                </p>
+                            </div>
+                        </div>
+                        
+                        <!-- Day 4 -->
+                        <div class="flex">
+                            <div class="flex-shrink-0 mr-6">
+                                <div class="flex items-center justify-center w-12 h-12 rounded-full bg-primary-500/20 text-primary-400 font-bold">
+                                    4
+                                </div>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold mb-2">Morning: Sunrise & Pack Up</h3>
+                                <p class="text-gray-400">
+                                    Wake with the dawn, enjoy breakfast in nature, and learn how to leave no trace as we pack up camp.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lg:w-1/2 relative">
+                    <div class="relative rounded-2xl overflow-hidden border border-dark-700 aspect-[4/5]">
+                        <img src="/assets/camping-tent.jpg" alt="Camping tent in nature" class="w-full h-full object-cover">
+                    </div>
+                    <div class="absolute -bottom-8 -right-8 w-32 h-32 rounded-full bg-primary-500/10 blur-3xl"></div>
+                    <div class="absolute -top-8 -left-8 w-32 h-32 rounded-full bg-blue-500/10 blur-3xl"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Essential Gear Section -->
+    <section class="py-20 bg-dark-800/50 relative overflow-hidden">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4">
+                    Essential <span class="gradient-text">Camping Gear</span>
+                </h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                    We provide all necessary equipment for beginners, but here's what you should bring for intermediate and advanced trips.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Gear 1 -->
+                <div class="bg-dark-800 rounded-xl p-8 card-hover gradient-bg border border-dark-700">
+                    <div class="camping-feature-icon">
+                        <i class="fas fa-campground"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Shelter</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-primary-400 mr-2 mt-1 text-xs"></i>
+                            <span>Lightweight tent or tarp</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-primary-400 mr-2 mt-1 text-xs"></i>
+                            <span>Sleeping bag (appropriate rating)</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-primary-400 mr-2 mt-1 text-xs"></i>
+                            <span>Sleeping pad or mat</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Gear 2 -->
+                <div class="bg-dark-800 rounded-xl p-8 card-hover gradient-bg border border-dark-700">
+                    <div class="camping-feature-icon">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Cooking</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-primary-400 mr-2 mt-1 text-xs"></i>
+                            <span>Portable camping stove</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-primary-400 mr-2 mt-1 text-xs"></i>
+                            <span>Cooking pot and utensils</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-primary-400 mr-2 mt-1 text-xs"></i>
+                            <span>Water bottle or hydration pack</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Gear 3 -->
+                <div class="bg-dark-800 rounded-xl p-8 card-hover gradient-bg border border-dark-700">
+                    <div class="camping-feature-icon">
+                        <i class="fas fa-hiking"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Clothing</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-primary-400 mr-2 mt-1 text-xs"></i>
+                            <span>Moisture-wicking base layers</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-primary-400 mr-2 mt-1 text-xs"></i>
+                            <span>Insulating mid layers</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-primary-400 mr-2 mt-1 text-xs"></i>
+                            <span>Waterproof outer shell</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Gear 4 -->
+                <div class="bg-dark-800 rounded-xl p-8 card-hover gradient-bg border border-dark-700">
+                    <div class="camping-feature-icon">
+                        <i class="fas fa-first-aid"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3">Safety</h3>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-primary-400 mr-2 mt-1 text-xs"></i>
+                            <span>First aid kit</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-primary-400 mr-2 mt-1 text-xs"></i>
+                            <span>Headlamp or flashlight</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-primary-400 mr-2 mt-1 text-xs"></i>
+                            <span>Map and compass (GPS optional)</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+           
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-20 relative overflow-hidden">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-4">
+                    Camping <span class="gradient-text">FAQs</span>
+                </h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                    Answers to common questions about our wild camping adventures.
+                </p>
+            </div>
+            
+            <div class="max-w-3xl mx-auto">
+                <div class="space-y-6">
+                    <!-- FAQ 1 -->
+                    <div class="bg-dark-800 rounded-xl p-6 border border-dark-700">
+                        <button class="flex justify-between items-center w-full text-left faq-toggle">
+                            <h3 class="text-xl font-semibold">Is wild camping legal in Manchester?</h3>
+                            <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                        </button>
+                        <div class="faq-content mt-4 hidden">
+                            <p class="text-gray-400">
+                                Wild camping in England generally requires the landowner's permission. All our camping locations are carefully selected with proper permissions arranged in advance. We strictly follow the Countryside Code and Leave No Trace principles.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ 2 -->
+                    <div class="bg-dark-800 rounded-xl p-6 border border-dark-700">
+                        <button class="flex justify-between items-center w-full text-left faq-toggle">
+                            <h3 class="text-xl font-semibold">What if I've never camped before?</h3>
+                            <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                        </button>
+                        <div class="faq-content mt-4 hidden">
+                            <p class="text-gray-400">
+                                Our beginner camping trips are designed specifically for first-timers. We provide all the equipment you'll need and our expert guides will teach you everything from setting up your tent to cooking outdoors. You'll be in good hands!
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ 3 -->
+                    <div class="bg-dark-800 rounded-xl p-6 border border-dark-700">
+                        <button class="flex justify-between items-center w-full text-left faq-toggle">
+                            <h3 class="text-xl font-semibold">What about toilets and washing facilities?</h3>
+                            <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                        </button>
+                        <div class="faq-content mt-4 hidden">
+                            <p class="text-gray-400">
+                                Part of the wild camping experience is learning to manage without modern facilities. We'll teach you how to handle personal hygiene responsibly in the wilderness. For beginner trips, we choose locations with some basic facilities nearby.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ 4 -->
+                    <div class="bg-dark-800 rounded-xl p-6 border border-dark-700">
+                        <button class="flex justify-between items-center w-full text-left faq-toggle">
+                            <h3 class="text-xl font-semibold">What happens in bad weather?</h3>
+                            <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                        </button>
+                        <div class="faq-content mt-4 hidden">
+                            <p class="text-gray-400">
+                                We monitor weather closely and will reschedule if severe conditions are forecast. For light rain (common in Manchester!), we proceed with extra preparation. You'll learn how to stay dry and comfortable in various conditions.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ 5 -->
+                    <div class="bg-dark-800 rounded-xl p-6 border border-dark-700">
+                        <button class="flex justify-between items-center w-full text-left faq-toggle">
+                            <h3 class="text-xl font-semibold">Can I bring my dog?</h3>
+                            <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                        </button>
+                        <div class="faq-content mt-4 hidden">
+                            <p class="text-gray-400">
+                                On select trips, well-behaved dogs are welcome. They must be kept under control at all times due to wildlife and livestock. Please contact us in advance if you plan to bring your dog.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="mt-12 text-center">
+                    <a href="/faq/" class="inline-block px-6 py-3 bg-primary-600 hover:bg-primary-700 rounded-lg font-medium">
+                        View All FAQs <i class="fas fa-arrow-right ml-2"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   
+    <!-- CTA Section -->
+    <section class="py-20 relative overflow-hidden bg-[url('/assets/advanced-survival.jpg')] bg-cover bg-center">
+        <div class="absolute inset-0 bg-gradient-to-b from-dark-900/80 to-dark-900/90 z-0"></div>
+
+        <!-- Floating blurred shapes -->
+        <div class="absolute inset-0 opacity-10 z-0">
+            <div class="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-primary-500/30 blur-3xl animate-float">
+            </div>
+            <div
+                class="absolute bottom-1/3 right-1/4 w-64 h-64 rounded-full bg-blue-500/30 blur-3xl animate-float-reverse">
+            </div>
+        </div>
+
+        <!-- Main content -->
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">
+                    Ready for Your <span class="gradient-text">Wild Adventure</span>?
+                </h2>
+                <p class="text-xl text-gray-300 mb-10 max-w-3xl mx-auto">
+                    Whether you're a seasoned outdoors enthusiast or a complete beginner, we have the perfect experience
+                    to help you reconnect with nature.
+                </p>
+                <div class="flex flex-col z-50 sm:flex-row justify-center gap-4 relative">
+                    <a href="/contact/"
+                        class="px-8 py-4 bg-white hover:bg-gray-100 text-dark-900 rounded-lg text-lg font-semibold  shadow-lg  hover:scale-105 ">
+                        Book Your Trip Now
+                    </a>
+                    <a href="tel:+441412222254"
+                        class="px-8 py-4 bg-dark-800 hover:bg-dark-700 rounded-lg text-lg font-semibold  shadow-lg  hover:scale-105 flex items-center justify-center">
+                        <i class="fas fa-phone mr-2"></i> Call Us
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Footer -->
+    <footer class="bg-dark-900 border-t border-dark-800 pt-20 pb-10">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+                <div>
+                    <a href="/" class="flex items-center space-x-2 mb-6">
+                        <div
+                            class="w-10 h-10 rounded-full bg-gradient-to-br from-primary-500 to-blue-500 flex items-center justify-center">
+                            <i class="fas fa-tree text-white text-xl"></i>
+                        </div>
+                        <span class="text-xl font-bold gradient-text">Wild Manchester</span>
+                    </a>
+                    <p class="text-gray-400 mb-6">
+                        Reconnecting people with nature through wild camping adventures, foraging experiences, and
+                        wilderness survival training in Manchester.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="https://www.facebook.com/Wildmanc.nature" target="_blank"
+                            class="w-10 h-10 rounded-full bg-dark-800 hover:bg-dark-700 flex items-center justify-center text-gray-400 hover:text-primary-400 transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.instagram.com/wild.manchester/" target="_blank"
+                            class="w-10 h-10 rounded-full bg-dark-800 hover:bg-dark-700 flex items-center justify-center text-gray-400 hover:text-primary-400 transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://x.com/ManchesterWild" target="_blank"
+                            class="w-10 h-10 rounded-full bg-dark-800 hover:bg-dark-700 flex items-center justify-center text-gray-400 hover:text-primary-400 transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://www.youtube.com/channel/UCGXyESNY94ItxqJOdyszYgQ" target="_blank"
+                            class="w-10 h-10 rounded-full bg-dark-800 hover:bg-dark-700 flex items-center justify-center text-gray-400 hover:text-primary-400 transition-colors">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold mb-6">Quick Links</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/" class="text-gray-400 hover:text-primary-400 transition-colors">Home</a></li>
+                        <li><a href="/about/" class="text-gray-400 hover:text-primary-400 transition-colors">About
+                                Us</a></li>
+                        <li><a href="/blog/" class="text-gray-400 hover:text-primary-400 transition-colors">Blog</a>
+                        </li>
+                        <li><a href="/camping/" class="text-gray-400 hover:text-primary-400 transition-colors">Camping</a></li>
+                        <li><a href="/contact/"
+                                class="text-gray-400 hover:text-primary-400 transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold mb-6">Camping Trips</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/camping/"
+                                class="text-gray-400 hover:text-primary-400 transition-colors">Beginner Camping</a></li>
+                        <li><a href="/camping/"
+                                class="text-gray-400 hover:text-primary-400 transition-colors">Intermediate Camping</a></li>
+                        <li><a href="/camping/"
+                                class="text-gray-400 hover:text-primary-400 transition-colors">Family Camping</a></li>
+                        <li><a href="/camping/"
+                                class="text-gray-400 hover:text-primary-400 transition-colors">Survival Camping</a></li>
+                        <li><a href="/camping/"
+                                class="text-gray-400 hover:text-primary-400 transition-colors">Private Group Trips</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold mb-6">Legal</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/privacy/" class="text-gray-400 hover:text-primary-400 transition-colors">Privacy
+                                Policy</a></li>
+                        <li><a href="/terms/" class="text-gray-400 hover:text-primary-400 transition-colors">Terms of
+                                Service</a></li>
+                        <li><a href="/cookies/" class="text-gray-400 hover:text-primary-400 transition-colors">Cookies
+                                Policy</a></li>
+                        <li><a href="/faq/" class="text-gray-400 hover:text-primary-400 transition-colors">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+
+           <div class="border-t border-dark-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-500 text-sm mb-4 md:mb-0">
+                    &copy; 2025 Wild Manchester Group. All rights reserved.
+                </p>
+                <div class="flex space-x-6">
+                    <a href="/privacy/" class="text-gray-500 hover:text-gray-400 text-sm transition-colors">Privacy
+                                Policy</a>
+                    <a href="/terms/" class="text-gray-500 hover:text-gray-400 text-sm transition-colors">Terms of
+                                Service</a>
+                    <a href="/cookies/" class="text-gray-500 hover:text-gray-400 text-sm transition-colors">Cookies
+                                Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop"
+        class="fixed bottom-8 right-8 w-12 h-12 rounded-full bg-primary-600 hover:bg-primary-700 text-white shadow-lg flex items-center justify-center transition-opacity duration-300 opacity-0 invisible">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Back to Top Button
+        const backToTopButton = document.getElementById('backToTop');
+
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.remove('opacity-0', 'invisible');
+                backToTopButton.classList.add('opacity-100', 'visible');
+            } else {
+                backToTopButton.classList.remove('opacity-100', 'visible');
+                backToTopButton.classList.add('opacity-0', 'invisible');
+            }
+        });
+
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Cookie Consent
+        const cookieConsent = document.getElementById('cookieConsent');
+        const acceptCookies = document.getElementById('acceptCookies');
+        const declineCookies = document.getElementById('declineCookies');
+
+        if (!localStorage.getItem('cookieConsent')) {
+            setTimeout(() => {
+                cookieConsent.classList.remove('hidden');
+            }, 2000);
+        }
+
+        acceptCookies.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'accepted');
+            cookieConsent.classList.add('hidden');
+        });
+
+        declineCookies.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'declined');
+            cookieConsent.classList.add('hidden');
+        });
+
+        // FAQ Toggle
+        document.querySelectorAll('.faq-toggle').forEach(button => {
+            button.addEventListener('click', () => {
+                const content = button.nextElementSibling;
+                const icon = button.querySelector('i');
+                
+                content.classList.toggle('hidden');
+                icon.classList.toggle('rotate-180');
+            });
+        });
+
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Animate elements on scroll
+        gsap.utils.toArray('.card-hover').forEach(card => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                },
+                y: 50,
+                opacity: 0,
+                duration: 1,
+                ease: "power3.out"
+            });
+        });
+
+        // Hero text animation
+        gsap.from("section.relative h1 span", {
+            duration: 1.5,
+            y: 50,
+            opacity: 0,
+            stagger: 0.2,
+            ease: "power3.out"
+        });
+
+        gsap.from("section.relative p", {
+            duration: 1.5,
+            y: 50,
+            opacity: 0,
+            delay: 0.5,
+            ease: "power3.out"
+        });
+
+        gsap.from("section.relative .flex a", {
+            duration: 1.5,
+            y: 50,
+            opacity: 0,
+            delay: 0.8,
+            stagger: 0.1,
+            ease: "power3.out"
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog & Research | Bee Central - Latest Honey Bee News</title>
+    <meta name="description" content="Stay updated with the latest news, research, and insights about honey bees, active honey production, and sustainable farming practices from Bee Central in Western Australia.">
+    <meta name="keywords" content="honey bee blog, bee research Australia, active honey news, WA beekeeping updates, sustainable farming blog, bee health articles, varroa mite Australia, Leptospermum honey research">
+    
+    <!-- Favicon -->
+   <link rel="icon" href="/assets/images/favicon.png" type="image/x-icon">
+    <link rel="canonical" href="https://www.beecentralau.com/blog/" />
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            light: '#fbbf24',
+                            DEFAULT: '#d97706',
+                            dark: '#92400e',
+                        },
+                        secondary: {
+                            light: '#a7f3d0',
+                            DEFAULT: '#059669',
+                            dark: '#065f46',
+                        },
+                        accent: {
+                            light: '#fde68a',
+                            DEFAULT: '#f59e0b',
+                            dark: '#b45309',
+                        },
+                        dark: {
+                            100: '#1a1a1a',
+                            200: '#1f1f1f',
+                            300: '#242424',
+                            400: '#2a2a2a',
+                            500: '#2f2f2f',
+                            600: '#343434',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Poppins"', 'sans-serif'],
+                        display: ['"Playfair Display"', 'serif'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body class="bg-dark-100 text-gray-200 font-sans antialiased overflow-x-hidden">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 bg-dark-200/90 backdrop-blur-md z-40 border-b border-dark-400">
+        <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+            <!-- Logo -->
+           <a href="/" class="flex items-center gap-2">
+               <img src="/assets/images/logo.png" class="h-16 w-auto" alt="logo"/>
+            </a>
+            
+            <!-- Desktop Menu -->
+            <div class="hidden lg:flex items-center gap-8">
+                <a href="/" class="hover:text-primary transition-colors">Home</a>
+                <a href="/services/" class="hover:text-primary transition-colors">Services</a>
+                <a href="/products/" class="hover:text-primary transition-colors">Products</a>
+                <a href="/about/" class="hover:text-primary transition-colors">About</a>
+                <a href="/blog/" class="hover:text-primary transition-colors">Blog</a>
+                <a href="/contact/" class="hover:text-primary transition-colors">Contact</a>
+                
+                <!-- Cart Icon -->
+                <a href="/cart/" class="relative group">
+                    <i class="fas fa-shopping-cart text-xl hover:text-primary transition-colors"></i>
+                    <span id="cartCount" class="absolute -top-2 -right-2 bg-primary text-dark-100 text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center hidden">0</span>
+                </a>
+
+                 <!-- Social Links -->
+                <div class="flex gap-4 ml-4">
+                    <a href="https://www.facebook.com/BeeCentralAustralia/" target="_blank"
+                        class="hover:text-primary transition-colors"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://x.com/centralbee1" target="_blank" class="hover:text-primary transition-colors"><i
+                            class="fab fa-twitter"></i></a>
+                    <a href="https://www.instagram.com/BeeCentralAustralia/" target="_blank"
+                        class="hover:text-primary transition-colors"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.youtube.com/channel/UCIkVvpMeMr2oKn1lW7A7CQA" target="_blank"
+                        class="hover:text-primary transition-colors"><i class="fab fa-youtube"></i></a>
+                </div>
+                
+            </div>
+            
+            <!-- Mobile Menu Button -->
+            <button id="mobileMenuButton" class="lg:hidden text-2xl">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="lg:hidden hidden absolute top-full left-0 right-0 bg-dark-300 py-4 px-6 shadow-lg">
+            <div class="flex flex-col gap-4">
+                <a href="/" class="hover:text-primary transition-colors">Home</a>
+                <a href="/services/" class="hover:text-primary transition-colors">Services</a>
+                <a href="/products/" class="hover:text-primary transition-colors">Products</a>
+                <a href="/about/" class="hover:text-primary transition-colors">About</a>
+                <a href="/blog/" class="hover:text-primary transition-colors">Blog</a>
+                <a href="/contact/" class="hover:text-primary transition-colors">Contact</a>
+                
+                <div class="flex items-center justify-between pt-4 border-t border-dark-400">
+                    <a href="/cart/" class="relative group">
+                        <i class="fas fa-shopping-cart text-xl hover:text-primary transition-colors"></i>
+                        <span id="mobileCartCount" class="absolute -top-2 -right-2 bg-primary text-dark-100 text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center hidden">0</span>
+                    </a>
+                    <div class="flex gap-4">
+                        <a href="https://www.facebook.com/BeeCentralAustralia/" target="_blank"
+                            class="hover:text-primary transition-colors"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://x.com/centralbee1" target="_blank"
+                            class="hover:text-primary transition-colors"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.instagram.com/BeeCentralAustralia/" target="_blank"
+                            class="hover:text-primary transition-colors"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.youtube.com/channel/UCIkVvpMeMr2oKn1lW7A7CQA" target="_blank"
+                            class="hover:text-primary transition-colors"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="pt-28 pb-16 min-h-screen">
+        <div class="container mx-auto px-4">
+            <!-- Header -->
+            <div class="text-center mb-12">
+                <h1 class="text-3xl md:text-4xl lg:text-5xl font-display font-bold mb-4">
+                    <span class="bg-clip-text text-transparent bg-gradient-to-r from-primary to-accent">Bee Blog & Research</span>
+                </h1>
+                <p class="max-w-2xl mx-auto text-lg opacity-90">Stay updated with the latest news, research, and insights about honey bees, active honey production, and sustainable farming practices.</p>
+                <div class="w-20 h-1 bg-gradient-to-r from-primary to-accent mx-auto mt-6"></div>
+            </div>
+            
+            <!-- Featured Blog Post -->
+            <div class="mb-16 group">
+                <div class="relative overflow-hidden rounded-2xl mb-6 md:h-[500px] h-96">
+                    <img src="/assets/images/varroa-mite.jpg" alt="Varroa mite under microscope" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                    <div class="absolute inset-0 bg-gradient-to-t from-dark-500/90 via-dark-500/20 to-transparent"></div>
+                    <div class="absolute bottom-0 left-0 p-6 md:p-8">
+                        <span class="inline-block px-3 py-1 bg-primary text-dark-100 text-xs font-bold rounded-full mb-3">Industry Alert</span>
+                        <h2 class="text-2xl md:text-3xl lg:text-4xl font-display font-bold mb-3">Varroa Mite Detection Confirmed in Victoria</h2>
+                        <div class="flex items-center gap-4 text-sm">
+                            <span class="flex items-center gap-2">
+                                <i class="far fa-calendar text-primary"></i>
+                                June 22, 2025
+                            </span>
+                            <span class="flex items-center gap-2">
+                                <i class="far fa-clock text-primary"></i>
+                                5 min read
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <div class="max-w-3xl mx-auto">
+                    <div class="prose prose-invert max-w-none">
+                        <p class="mb-6">Varroa mites have been confirmed within Victoria, posing a significant biosecurity threat to Australia's honey bee industry. Agriculture Victoria has immediately activated its emergency response plan and is working closely with industry to contain the situation.</p>
+                        
+                        <a href="/blog/varroa-mite-detection/" class="inline-flex items-center px-6 py-3 bg-gradient-to-r from-primary to-accent text-dark-100 font-bold rounded-full hover:opacity-90 transition-opacity">
+                            Read Full Article
+                            <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- More Blog Posts -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Blog Post 1 -->
+                <div class="group relative overflow-hidden rounded-2xl bg-dark-200 border border-dark-400 hover:border-primary/50 transition-colors h-full flex flex-col">
+                    <div class="relative overflow-hidden h-48">
+                        <img src="/assets/images/world-bee-day.png" alt="World Bee Day celebration with honeycomb background" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-500/90 via-dark-500/20 to-transparent"></div>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col">
+                        <span class="inline-block px-3 py-1 bg-secondary text-dark-100 text-xs font-bold rounded-full mb-3">In The Media</span>
+                        <h3 class="text-xl font-display font-bold mb-3">World Bee Day Celebrations 2025</h3>
+                        <p class="text-sm opacity-90 mb-4 flex-1">On May 20th, 2025 World Bee Day was celebrated around the globe. Our understanding of bees' impact on our food security, and ecological and personal health has grown dramatically in recent decades...</p>
+                        <div class="flex items-center justify-between pt-4 border-t border-dark-400">
+                            <span class="text-xs opacity-80 flex items-center gap-2">
+                                <i class="far fa-calendar text-primary"></i>
+                                May 15, 2025
+                            </span>
+                            <a href="/blog/world-bee-day/" class="text-primary hover:text-accent transition-colors text-sm font-medium flex items-center gap-1">
+                                Read More
+                                <i class="fas fa-arrow-right text-xs"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Blog Post 2 -->
+                <div class="group relative overflow-hidden rounded-2xl bg-dark-200 border border-dark-400 hover:border-primary/50 transition-colors h-full flex flex-col">
+                    <div class="relative overflow-hidden h-48">
+                        <img src="/assets/images/leptospermum-research.jpg" alt="Leptospermum flowers with honey bee collecting nectar" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-500/90 via-dark-500/20 to-transparent"></div>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col">
+                        <span class="inline-block px-3 py-1 bg-accent text-dark-100 text-xs font-bold rounded-full mb-3">Research Update</span>
+                        <h3 class="text-xl font-display font-bold mb-3">New Findings on WA Leptospermum Honey Potency</h3>
+                        <p class="text-sm opacity-90 mb-4 flex-1">Recent research from the University of Western Australia has revealed exciting new findings about the antibacterial properties of honey derived from local Leptospermum species...</p>
+                        <div class="flex items-center justify-between pt-4 border-t border-dark-400">
+                            <span class="text-xs opacity-80 flex items-center gap-2">
+                                <i class="far fa-calendar text-primary"></i>
+                                April 3, 2025
+                            </span>
+                            <a href="/blog/leptospermum-research/" class="text-primary hover:text-accent transition-colors text-sm font-medium flex items-center gap-1">
+                                Read More
+                                <i class="fas fa-arrow-right text-xs"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Blog Post 3 -->
+                <div class="group relative overflow-hidden rounded-2xl bg-dark-200 border border-dark-400 hover:border-primary/50 transition-colors h-full flex flex-col">
+                    <div class="relative overflow-hidden h-48">
+                        <img src="/assets/images/honey-research.webp" alt="Construction progress at The Bee Shed site in York" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-500/90 via-dark-500/20 to-transparent"></div>
+                    </div>
+                    <div class="p-6 flex-1 flex flex-col">
+                        <span class="inline-block px-3 py-1 bg-primary text-dark-100 text-xs font-bold rounded-full mb-3">Project Update</span>
+                        <h3 class="text-xl font-display font-bold mb-3">The Bee Shed: Construction Milestones Reached</h3>
+                        <p class="text-sm opacity-90 mb-4 flex-1">Bee Central is excited to announce that construction of The Bee Shed discovery centre in York has reached several key milestones, bringing us closer to our goal of creating a world-class...</p>
+                        <div class="flex items-center justify-between pt-4 border-t border-dark-400">
+                            <span class="text-xs opacity-80 flex items-center gap-2">
+                                <i class="far fa-calendar text-primary"></i>
+                                March 18, 2025
+                            </span>
+                            <a href="/blog/bee-shed-progress/" class="text-primary hover:text-accent transition-colors text-sm font-medium flex items-center gap-1">
+                                Read More
+                                <i class="fas fa-arrow-right text-xs"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Newsletter Subscription -->
+            <div class="mt-16 bg-gradient-to-r from-dark-300 to-dark-400 rounded-2xl p-8 md:p-12 border border-dark-500 relative overflow-hidden">
+                <div class="absolute top-0 right-0 w-32 h-32 bg-primary rounded-full filter blur-3xl opacity-20"></div>
+                <div class="absolute bottom-0 left-0 w-32 h-32 bg-accent rounded-full filter blur-3xl opacity-20"></div>
+                <div class="relative z-10 max-w-3xl mx-auto text-center">
+                    <div class="inline-flex items-center justify-center w-16 h-16 bg-gradient-to-br from-primary to-accent rounded-2xl mb-6">
+                        <i class="fas fa-envelope-open-text text-2xl text-dark-100"></i>
+                    </div>
+                    <h3 class="text-2xl font-display font-bold mb-4">Stay Updated with Bee Research</h3>
+                    <p class="mb-6 opacity-90">Subscribe to our newsletter for the latest updates on honey bee research, sustainable farming practices, and Bee Central initiatives.</p>
+                    <form class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+                        <input type="email" placeholder="Your email address" class="flex-1 px-4 py-3 bg-dark-200 border border-dark-400 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                        <button type="submit" class="px-6 py-3 bg-gradient-to-r from-primary to-accent text-dark-100 font-bold rounded-lg hover:opacity-90 transition-opacity">
+                            Subscribe
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark-300 pt-12 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+                <!-- About -->
+                <div>
+                    <a href="/" class="flex items-center gap-2">
+               <img src="/assets/images/logo.png" class="h-16 w-auto mb-4" alt="logo"/>
+            </a>
+                    <p class="text-sm opacity-80">Building healthy Australian honey bee populations for a better future through sustainable farming partnerships and premium active honey products.</p>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-lg font-display font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/" class="text-sm opacity-80 hover:text-primary transition-colors">Home</a></li>
+                        <li><a href="/services/" class="text-sm opacity-80 hover:text-primary transition-colors">Services</a></li>
+                        <li><a href="/products/" class="text-sm opacity-80 hover:text-primary transition-colors">Products</a></li>
+                        <li><a href="/about/" class="text-sm opacity-80 hover:text-primary transition-colors">About Us</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Legal -->
+                <div>
+                    <h3 class="text-lg font-display font-bold mb-4">Legal</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/terms/" class="text-sm opacity-80 hover:text-primary transition-colors">Terms of Service</a></li>
+                        <li><a href="/privacy/" class="text-sm opacity-80 hover:text-primary transition-colors">Privacy Policy</a></li>
+                        <li><a href="/cookies/" class="text-sm opacity-80 hover:text-primary transition-colors">Cookies Policy</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Contact -->
+                <div>
+                    <h3 class="text-lg font-display font-bold mb-4">Contact</h3>
+                    <ul class="space-y-2">
+                        <li class="flex items-center gap-2">
+                            <i class="fas fa-map-marker-alt text-primary text-sm"></i>
+                            <span class="text-sm opacity-80">170 Yulara Dr, Yulara NT 0872</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fas fa-phone text-primary text-sm"></i>
+                            <span class="text-sm opacity-80">+61 8 8957 7036</span>
+                        </li>
+                        <li class="flex items-center gap-2">
+                            <i class="fas fa-envelope text-primary text-sm"></i>
+                            <span class="text-sm opacity-80">info@beecentralau.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-dark-400 pt-6">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                    <p class="text-sm opacity-70">© 2025 Bee Central. All rights reserved.</p>
+                    <div class="flex gap-4">
+                        <a href="https://www.facebook.com/BeeCentralAustralia/" target="_blank" class="text-primary hover:text-accent transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://x.com/centralbee1" target="_blank" class="text-primary hover:text-accent transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://www.instagram.com/BeeCentralAustralia/" target="_blank" class="text-primary hover:text-accent transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://www.youtube.com/channel/UCIkVvpMeMr2oKn1lW7A7CQA" target="_blank" class="text-primary hover:text-accent transition-colors">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            mobileMenuButton.innerHTML = mobileMenu.classList.contains('hidden') ? 
+                '<i class="fas fa-bars"></i>' : '<i class="fas fa-times"></i>';
+        });
+        
+        // Cart Functionality
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            
+            document.querySelectorAll('#cartCount, #mobileCartCount').forEach(el => {
+                el.textContent = totalItems;
+                el.classList.toggle('hidden', totalItems === 0);
+            });
+        }
+        
+        // Initialize cart count
+        updateCartCount();
+        
+        // GSAP Animations
+        document.addEventListener('DOMContentLoaded', () => {
+            gsap.from('nav', { 
+                y: -50, 
+                opacity: 0, 
+                duration: 0.8, 
+                ease: "power3.out" 
+            });
+            
+            gsap.from('main h1', { 
+                y: 30, 
+                opacity: 0, 
+                duration: 0.8, 
+                delay: 0.3, 
+                ease: "back.out" 
+            });
+            
+            gsap.from('.prose p, .prose h3', { 
+                y: 20, 
+                opacity: 0, 
+                duration: 0.6, 
+                stagger: 0.1, 
+                delay: 0.6,
+                ease: "power1.out" 
+            });
+            
+            gsap.from('.grid > div', { 
+                y: 30, 
+                opacity: 0, 
+                duration: 0.8, 
+                stagger: 0.15, 
+                delay: 0.9,
+                ease: "back.out(1.2)" 
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1350 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GK Contracts Build - Premium Construction Services in Banbridge</title>
+    <meta name="description"
+        content="GK Contracts Build offers premium construction services in Banbridge including new builds, extensions, and renovation projects. With over 25 years of experience, we deliver quality craftsmanship for residential projects.">
+    <meta name="keywords"
+        content="Banbridge builders, construction services, house extensions, new builds, home renovations, building contractors, quality craftsmanship, residential construction, Northern Ireland builders, home improvements">
+    <link rel="canonical" href="https://gkcontractsbuild.com/" />
+    <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
+
+    <!-- Load GSAP from CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollToPlugin.min.js"></script>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        dark: '#121212',         // Dark background
+                        darker: '#0D0D0D',       // Even darker elements
+                        primary: '#1E40AF',      // Deep blue (primary)
+                        secondary: '#D97706',    // Amber (accent)
+                        accent: '#2563EB',       // Lighter blue
+                        light: '#1F2937',        // Light elements on dark
+                        text: '#E5E7EB',         // Primary text
+                        textSecondary: '#9CA3AF' // Secondary text
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'wave': 'wave 1.5s linear infinite'
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        wave: {
+                            '0%': { transform: 'rotate(0deg)' },
+                            '10%': { transform: 'rotate(14deg)' },
+                            '20%': { transform: 'rotate(-8deg)' },
+                            '30%': { transform: 'rotate(14deg)' },
+                            '40%': { transform: 'rotate(-4deg)' },
+                            '50%': { transform: 'rotate(10deg)' },
+                            '60%': { transform: 'rotate(0deg)' },
+                            '100%': { transform: 'rotate(0deg)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style type="text/css">
+        /* Base dark theme styles */
+        body {
+            background-color: #121212;
+            color: #E5E7EB;
+        }
+
+        /* Gradient background for hero */
+
+        .hero-gradient {
+            background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('/images/new-builds-hero.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        /* Modern card hover effect */
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            background-color: #1F2937;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0, 0, 0, 0.4);
+            background-color: #1E40AF;
+        }
+
+        /* Underline animation */
+        .underline-animation {
+            position: relative;
+            display: inline-block;
+        }
+
+        .underline-animation::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #D97706;
+            transition: width 0.3s ease;
+        }
+
+        .underline-animation:hover::after {
+            width: 100%;
+        }
+
+        /* Loading animation */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #121212;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s, visibility 0.5s;
+        }
+
+        .loader-hidden {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader::after {
+            content: "";
+            width: 75px;
+            height: 75px;
+            border: 8px solid rgba(255, 255, 255, 0.1);
+            border-top-color: #D97706;
+            border-radius: 50%;
+            animation: loading 1s ease infinite;
+        }
+
+        @keyframes loading {
+            from {
+                transform: rotate(0turn);
+            }
+
+            to {
+                transform: rotate(1turn);
+            }
+        }
+
+        /* Particle background effect */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: -1;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            pointer-events: none;
+        }
+
+        /* Glow effect */
+        .glow {
+            animation: glow 2s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                box-shadow: 0 0 5px rgba(217, 119, 6, 0.5);
+            }
+
+            to {
+                box-shadow: 0 0 20px rgba(217, 119, 6, 0.8);
+            }
+        }
+
+        /* 3D tilt effect */
+        .tilt-effect {
+            transition: transform 0.5s ease;
+        }
+
+        .tilt-effect:hover {
+            transform: perspective(1000px) rotateX(5deg) rotateY(5deg) scale(1.03);
+        }
+
+        /* Gradient text */
+        .gradient-text {
+            background: linear-gradient(90deg, #D97706, #F59E0B);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* Ensure content is visible even if JavaScript fails */
+        .no-js .gsap-animate {
+            opacity: 1 !important;
+            transform: none !important;
+        }
+
+        /* Dark form inputs */
+        .dark-input {
+            background-color: #1F2937;
+            border-color: #374151;
+            color: #E5E7EB;
+        }
+
+        .dark-input:focus {
+            border-color: #D97706;
+            box-shadow: 0 0 0 2px rgba(217, 119, 6, 0.5);
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1F2937;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #D97706;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #B45309;
+        }
+    </style>
+
+    <!-- No-JS fallback -->
+    <noscript>
+        <style>
+            .gsap-animate {
+                opacity: 1 !important;
+                transform: none !important;
+            }
+
+            .loader {
+                display: none !important;
+            }
+        </style>
+    </noscript>
+</head>
+
+<body class="font-sans antialiased overflow-x-hidden no-js bg-dark text-text">
+    <!-- Loading Animation -->
+    <div class="loader" id="pageLoader">
+        <div class="loader-inner"></div>
+    </div>
+
+    <!-- Cookie Consent Banner -->
+    <div id="cookieConsent"
+        class="fixed bottom-0 left-0 right-0 bg-darker text-text p-4 hidden z-50 transform translate-y-full transition-transform duration-300 shadow-lg border-t border-gray-800">
+        <div class="container mx-auto flex flex-col md:flex-row items-center justify-between">
+            <p class="mb-4 md:mb-0 md:mr-4">We use cookies to enhance your experience. By continuing to visit this site
+                you agree to our use of cookies.</p>
+            <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
+                <button onclick="acceptCookies()"
+                    class="bg-secondary text-dark font-bold px-6 py-2 rounded-full hover:bg-opacity-90 transition-all transform hover:scale-105 shadow-md">Accept</button>
+                <button onclick="declineCookies()"
+                    class="border border-textSecondary px-6 py-2 rounded-full hover:bg-light hover:text-text transition-all transform hover:scale-105">Decline</button>
+                <a href="/privacy/"
+                    class="border border-textSecondary px-6 py-2 rounded-full hover:bg-light hover:text-text transition-all transform hover:scale-105 text-center">Learn
+                    More</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav
+        class="bg-darker shadow-md sticky top-0 z-40 transition-all duration-300 backdrop-blur-sm bg-opacity-90 border-b border-gray-800">
+        <div class="container mx-auto px-6 py-3">
+            <div class="flex justify-between items-center">
+                <!-- Logo -->
+                <div class="flex items-center space-x-2">
+                    <a href="/" class="group">
+                        <img class="w-[180px] transition-all duration-300 group-hover:scale-105" src="/images/logo.png"
+                            alt="GK Contracts Build Logo" />
+                    </a>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="text-text font-medium border-b-2 border-secondary pb-1">Home</a>
+                    <a href="/new-builds/"
+                        class="text-textSecondary hover:text-text transition-all underline-animation">New Builds</a>
+                    <a href="/extensions/"
+                        class="text-textSecondary hover:text-text transition-all underline-animation">Extensions</a>
+                    <a href="/projects/"
+                        class="text-textSecondary hover:text-text transition-all underline-animation">Projects</a>
+                    <a href="/blog/"
+                        class="text-textSecondary hover:text-text transition-all underline-animation">Blog</a>
+                    <a href="/contact/"
+                        class="bg-secondary text-dark px-6 py-2 rounded-full font-bold hover:bg-opacity-90 transition-all transform hover:scale-105 shadow-md">Contact
+                        Us</a>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button id="mobileMenuButton"
+                        class="text-textSecondary hover:text-text focus:outline-none transition-all transform hover:scale-110">
+                        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobileMenu"
+                class="md:hidden hidden mt-4 pb-4 bg-darker rounded-lg shadow-lg border border-gray-800">
+                <a href="/" class="block py-3 px-4 text-text font-medium hover:bg-light rounded">Home</a>
+                <a href="/new-builds/"
+                    class="block py-3 px-4 text-textSecondary hover:bg-light rounded hover:text-text transition-all">New
+                    Builds</a>
+                <a href="/extensions/"
+                    class="block py-3 px-4 text-textSecondary hover:bg-light rounded hover:text-text transition-all">Extensions</a>
+                <a href="/projects/"
+                    class="block py-3 px-4 text-textSecondary hover:bg-light rounded hover:text-text transition-all">Projects</a>
+                <a href="/blog/"
+                    class="block py-3 px-4 text-textSecondary hover:bg-light rounded hover:text-text transition-all">Blog</a>
+                <a href="/contact/"
+                    class="block mt-2 mx-4 bg-secondary text-dark px-6 py-3 rounded-full font-bold hover:bg-opacity-90 transition-all text-center transform hover:scale-105 shadow-md">Contact
+                    Us</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section with Particle Background -->
+    <section
+        class="md:min-h-screen min-h-[60vh] flex items-center justify-center relative overflow-hidden hero-gradient">
+        <!-- Particle Background -->
+        <div class="particles" id="particles-js"></div>
+
+        <div class="container mx-auto px-6 text-center z-10">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6 gsap-animate" id="heroTitle">
+                <span class="gradient-text">Building Dreams</span> Into Reality
+            </h1>
+            <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto gsap-animate" id="heroSubtitle">With over 25 years of
+                experience in Banbridge, we transform into exceptional living spaces.</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-6 gsap-animate" id="heroButtons">
+                <a href="/contact/"
+                    class="bg-secondary text-dark font-bold px-8 py-4 rounded-full hover:bg-opacity-90 transition-all transform hover:scale-105 shadow-lg glow">Get
+                    a Free Quote</a>
+                <a href="/projects/"
+                    class="border-2 border-text px-8 py-4 rounded-full hover:bg-light hover:text-dark transition-all transform hover:scale-105">
+                    View Our Work
+                </a>
+            </div>
+        </div>
+
+        <!-- Animated scroll down indicator -->
+        <a href="#about" class="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-10 animate-bounce hidden md:flex">
+            <div class="w-10 h-10 rounded-full bg-white bg-opacity-10 flex items-center justify-center">
+                <svg class="w-6 h-6 text-text" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M19 14l-7 7m0 0l-7-7m7 7V3">
+                    </path>
+                </svg>
+            </div>
+        </a>
+
+        <!-- Floating shapes in background -->
+        <div
+            class="absolute top-20 left-20 w-16 h-16 rounded-full bg-secondary bg-opacity-10 filter blur-lg animate-float">
+        </div>
+        <div
+            class="absolute bottom-1/4 right-1/4 w-24 h-24 rounded-lg bg-white bg-opacity-5 filter blur-lg animate-float animation-delay-1000">
+        </div>
+        <div
+            class="absolute top-1/3 right-20 w-12 h-12 rounded-full bg-secondary bg-opacity-15 filter blur-lg animate-float animation-delay-1500">
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-darker">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col lg:flex-row items-center">
+                <div class="lg:w-1/2 mb-12 lg:mb-0 lg:pr-12 gsap-animate">
+                    <span class="text-secondary font-bold mb-4 block">ABOUT OUR COMPANY</span>
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6">Trusted Builders in <span
+                            class="gradient-text">Banbridge</span></h2>
+                    <div class="space-y-6">
+                        <p>Established over 25 years ago, GK Contracts Build has become synonymous with quality
+                            construction in the Banbridge area. Our reputation is built on a foundation of
+                            craftsmanship, reliability, and attention to detail.</p>
+                        <p>We take immense pride in offering comprehensive building services tailored to your specific
+                            needs. Whether you're planning a new home or expanding your current one, our team of
+                            seasoned professionals ensures every project meets the highest standards.</p>
+
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mt-8">
+                            <div class="flex items-start space-x-4">
+                                <div class="bg-primary bg-opacity-10 text-primary rounded-full p-3 flex-shrink-0">
+                                    <i class="fas fa-medal text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold mb-1">Quality Guaranteed</h4>
+                                    <p class="text-textSecondary">We stand behind our work with a 10-year craftsmanship
+                                        warranty.</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start space-x-4">
+                                <div class="bg-primary bg-opacity-10 text-primary rounded-full p-3 flex-shrink-0">
+                                    <i class="fas fa-users text-xl"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold mb-1">Client-Focused</h4>
+                                    <p class="text-textSecondary">Your satisfaction is our top priority from start to
+                                        finish.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="flex items-center space-x-6 mt-8">
+                            <div class="bg-primary text-text rounded-full p-3">
+                                <i class="fas fa-phone-alt"></i>
+                            </div>
+                            <div>
+                                <p class="text-textSecondary">Call us today</p>
+                                <a href="tel:+447979877464"
+                                    class="text-xl font-bold text-text hover:text-accent transition-all underline-animation">+44
+                                    7979 877464</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="lg:w-1/2 relative gsap-animate">
+                    <div class="relative rounded-xl overflow-hidden tilt-effect shadow-2xl border border-gray-800">
+                        <img src="/images/about-image.jpg" alt="GK Contracts Build team working on a construction site"
+                            class="w-full h-auto">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark to-transparent opacity-70"></div>
+                    </div>
+
+                    <!-- Experience badge with pulse animation -->
+                    <div
+                        class="absolute -bottom-6 -right-6 bg-secondary text-dark p-6 rounded-xl shadow-xl transform rotate-6 animate-pulse-slow">
+                        <p class="text-4xl font-bold">25+</p>
+                        <p class="font-medium">Years Experience</p>
+                    </div>
+
+                    <!-- Floating testimonial card -->
+                    <div
+                        class="absolute hidden w-64 md:w-96 -top-10 -left-10 bg-darker p-6 rounded-lg shadow-lg z-10 transform rotate-3 animate-float border border-gray-800">
+                        <div class="flex items-center mb-3">
+                            <div class="text-yellow-400 mr-2">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                        <p class="text-textSecondary mb-3 italic">"They delivered our dream home on time and on budget!"
+                        </p>
+                        <div class="flex items-center">
+                            <div class="bg-gray-700 w-8 h-8 rounded-full mr-3 overflow-hidden">
+                                <img src="/images/client1.png" alt="Client" class="w-full h-full object-cover">
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-sm">Laura Williams</h4>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="py-20 bg-dark">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 gsap-animate">
+                <span class="text-secondary font-bold mb-4 block">OUR SERVICES</span>
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Building <span class="gradient-text">Solutions</span>
+                    For You</h2>
+                <p class="text-xl text-textSecondary max-w-2xl mx-auto">We offer a comprehensive range of building
+                    services to meet all your residential construction needs.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Service 1 -->
+                <div class="rounded-xl overflow-hidden card-hover gsap-animate border border-gray-800">
+                    <div class="relative overflow-hidden h-64">
+                        <img src="/images/new-builds.jpg" alt="New build construction project"
+                            class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark to-transparent opacity-70"></div>
+                        <div class="absolute bottom-0 left-0 p-6">
+                            <h3 class="text-2xl font-bold">New Builds</h3>
+                        </div>
+                    </div>
+                    <div class="p-8">
+
+                        <h3 class="text-xl font-bold mb-3">Custom Home Construction</h3>
+                        <p class="text-textSecondary mb-6">From concept to completion, we build bespoke homes tailored
+                            to your lifestyle and preferences, ensuring quality at every stage.</p>
+                        <a href="/new-builds/"
+                            class="text-secondary font-bold hover:text-opacity-80 transition-all flex items-center group">
+                            <span class="group-hover:underline mr-2">Discover More</span> <i
+                                class="fas fa-arrow-right transition-transform group-hover:translate-x-1"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="rounded-xl overflow-hidden card-hover gsap-animate border border-gray-800"
+                    style="animation-delay: 0.1s">
+                    <div class="relative overflow-hidden h-64">
+                        <img src="/images/extensions.jpg" alt="House extension project"
+                            class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark to-transparent opacity-70"></div>
+                        <div class="absolute bottom-0 left-0 p-6">
+                            <h3 class="text-2xl font-bold">Extensions</h3>
+                        </div>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-xl font-bold mb-3">Home Extensions</h3>
+                        <p class="text-textSecondary mb-6">Expand your living space with our expertly designed and
+                            constructed extensions that seamlessly blend with your existing property.</p>
+                        <a href="/extensions/"
+                            class="text-secondary font-bold hover:text-opacity-80 transition-all flex items-center group">
+                            <span class="group-hover:underline mr-2">Discover More</span> <i
+                                class="fas fa-arrow-right transition-transform group-hover:translate-x-1"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="rounded-xl overflow-hidden card-hover gsap-animate border border-gray-800"
+                    style="animation-delay: 0.2s">
+                    <div class="relative overflow-hidden h-64">
+                        <img src="/images/renovations.jpg" alt="Home renovation project"
+                            class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark to-transparent opacity-70"></div>
+                        <div class="absolute bottom-0 left-0 p-6">
+                            <h3 class="text-2xl font-bold">Projects</h3>
+                        </div>
+                    </div>
+                    <div class="p-8">
+                        <h3 class="text-xl font-bold mb-3">Home Transformations</h3>
+                        <p class="text-textSecondary mb-6">Transform your existing space with our renovation services
+                            that combine functionality with aesthetic appeal.</p>
+                        <a href="/projects/"
+                            class="text-secondary font-bold hover:text-opacity-80 transition-all flex items-center group">
+                            <span class="group-hover:underline mr-2">Discover More</span> <i
+                                class="fas fa-arrow-right transition-transform group-hover:translate-x-1"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- Why Choose Us Section -->
+    <section class="py-20 bg-darker">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col lg:flex-row items-center">
+                <div class="lg:w-1/2 mb-12 lg:mb-0 lg:pr-12 gsap-animate">
+                    <div class="relative rounded-xl overflow-hidden tilt-effect shadow-2xl border border-gray-800">
+                        <img src="/images/team-working.webp" alt="GK Contracts Build team working together"
+                            class="w-full h-auto">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark to-transparent opacity-70"></div>
+                    </div>
+                </div>
+
+                <div class="lg:w-1/2 gsap-animate">
+                    <span class="text-secondary font-bold mb-4 block">WHY CHOOSE US</span>
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6">Building <span
+                            class="gradient-text">Excellence</span> Since 1998</h2>
+
+                    <div class="space-y-6">
+                        <div
+                            class="flex items-start space-x-6 p-4 bg-dark rounded-lg transition-all hover:bg-primary hover:text-text group border border-gray-800">
+                            <div class="bg-primary text-text rounded-lg p-3 group-hover:bg-secondary flex-shrink-0">
+                                <i class="fas fa-medal text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg mb-2">Quality Craftsmanship</h4>
+                                <p class="text-textSecondary group-hover:text-text">We use only top-quality materials
+                                    and employ skilled craftsmen to ensure lasting results that stand the test of time.
+                                </p>
+                            </div>
+                        </div>
+
+                        <div
+                            class="flex items-start space-x-6 p-4 bg-dark rounded-lg transition-all hover:bg-primary hover:text-text group border border-gray-800">
+                            <div class="bg-primary text-text rounded-lg p-3 group-hover:bg-secondary flex-shrink-0">
+                                <i class="fas fa-user-tie text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg mb-2">Experienced Team</h4>
+                                <p class="text-textSecondary group-hover:text-text">25+ years of combined experience in
+                                    delivering exceptional construction projects across Northern Ireland.</p>
+                            </div>
+                        </div>
+
+                        <div
+                            class="flex items-start space-x-6 p-4 bg-dark rounded-lg transition-all hover:bg-primary hover:text-text group border border-gray-800">
+                            <div class="bg-primary text-text rounded-lg p-3 group-hover:bg-secondary flex-shrink-0">
+                                <i class="fas fa-calendar-check text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg mb-2">Reliable Service</h4>
+                                <p class="text-textSecondary group-hover:text-text">We respect your time and deliver
+                                    projects on schedule with minimal disruption to your daily life.</p>
+                            </div>
+                        </div>
+
+                        <div
+                            class="flex items-start space-x-6 p-4 bg-dark rounded-lg transition-all hover:bg-primary hover:text-text group border border-gray-800">
+                            <div class="bg-primary text-text rounded-lg p-3 group-hover:bg-secondary flex-shrink-0">
+                                <i class="fas fa-pound-sign text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-lg mb-2">Transparent Pricing</h4>
+                                <p class="text-textSecondary group-hover:text-text">Clear, competitive pricing with no
+                                    hidden costs or surprise charges. We provide detailed quotes upfront.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Projects Gallery -->
+    <section class="py-20 bg-dark">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 gsap-animate">
+                <span class="text-secondary font-bold mb-4 block">OUR WORK</span>
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Featured <span class="gradient-text">Projects</span>
+                </h2>
+                <p class="text-xl text-textSecondary max-w-2xl mx-auto">Explore some of our completed projects that
+                    showcase our expertise and attention to detail.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Project 1 -->
+                <div
+                    class="group relative overflow-hidden rounded-xl shadow-lg card-hover gsap-animate border border-gray-800">
+                    <div class="relative h-80 overflow-hidden">
+                        <img src="/images/project1.jpg" alt="Modern new build home"
+                            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark to-transparent opacity-70"></div>
+                    </div>
+                    <div class="absolute inset-0 flex items-end p-6">
+                        <div>
+                            <h3 class="text-xl font-bold mb-1">Contemporary Family Home</h3>
+                            <p class="text-secondary">Banbridge</p>
+                        </div>
+                    </div>
+                    <div
+                        class="absolute top-4 right-4 bg-secondary text-dark px-4 py-1 rounded-full text-sm font-bold shadow-md">
+                        New Build
+                    </div>
+
+                </div>
+
+                <!-- Project 2 -->
+                <div class="group relative overflow-hidden rounded-xl shadow-lg card-hover gsap-animate border border-gray-800"
+                    style="animation-delay: 0.1s">
+                    <div class="relative h-80 overflow-hidden">
+                        <img src="/images/project2.jpg" alt="Two-story house extension"
+                            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark to-transparent opacity-70"></div>
+                    </div>
+                    <div class="absolute inset-0 flex items-end p-6">
+                        <div>
+                            <h3 class="text-xl font-bold mb-1">Two-Story Extension</h3>
+                            <p class="text-secondary">Dromore</p>
+                        </div>
+                    </div>
+                    <div
+                        class="absolute top-4 right-4 bg-secondary text-dark px-4 py-1 rounded-full text-sm font-bold shadow-md">
+                        Extension
+                    </div>
+
+                </div>
+
+                <!-- Project 3 -->
+                <div class="group relative overflow-hidden rounded-xl shadow-lg card-hover gsap-animate border border-gray-800"
+                    style="animation-delay: 0.2s">
+                    <div class="relative h-80 overflow-hidden">
+                        <img src="/images/project3.jpg" alt="Kitchen renovation project"
+                            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark to-transparent opacity-70"></div>
+                    </div>
+                    <div class="absolute inset-0 flex items-end p-6">
+                        <div>
+                            <h3 class="text-xl font-bold mb-1">Complete Home Renovation</h3>
+                            <p class="text-secondary">Rathfriland</p>
+                        </div>
+                    </div>
+                    <div
+                        class="absolute top-4 right-4 bg-secondary text-dark px-4 py-1 rounded-full text-sm font-bold shadow-md">
+                        Renovation
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="text-center mt-12 gsap-animate">
+                <a href="/projects/"
+                    class="inline-block border-2 border-primary text-primary font-bold px-8 py-3 rounded-full hover:bg-primary hover:text-text transition-all transform hover:scale-105">View
+                    All Projects</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-20 bg-darker">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 gsap-animate">
+                <span class="text-secondary font-bold mb-4 block">TESTIMONIALS</span>
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">What Our <span class="gradient-text">Clients</span> Say
+                </h2>
+                <p class="text-xl text-textSecondary max-w-2xl mx-auto">Hear from homeowners who trusted us with their
+                    building projects.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="bg-dark p-8 rounded-xl shadow-md card-hover gsap-animate border border-gray-800">
+                    <div class="flex items-center mb-4">
+                        <div class="text-yellow-400 mr-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <span class="text-textSecondary text-sm">Google Review</span>
+                    </div>
+                    <p class="text-textSecondary mb-6 italic">"GK Contracts Build transformed our outdated bungalow into
+                        a stunning modern home. Their attention to detail and commitment to quality was evident
+                        throughout the project."</p>
+                    <div class="flex items-center">
+                        <div class="bg-gray-700 w-12 h-12 rounded-full mr-4 overflow-hidden">
+                            <img src="/images/client1.png" alt="Sarah Johnson" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-bold">Laura Williams</h4>
+                            <p class="text-textSecondary text-sm">Banbridge</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="bg-dark p-8 rounded-xl shadow-md card-hover gsap-animate border border-gray-800"
+                    style="animation-delay: 0.1s">
+                    <div class="flex items-center mb-4">
+                        <div class="text-yellow-400 mr-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <span class="text-textSecondary text-sm">Google Review</span>
+                    </div>
+                    <p class="text-textSecondary mb-6 italic">"From the initial consultation to the final touches, the
+                        team was professional and communicative. Our extension looks like it was always part of the
+                        original house."</p>
+                    <div class="flex items-center">
+                        <div class="bg-gray-700 w-12 h-12 rounded-full mr-4 overflow-hidden">
+                            <img src="/images/client2.jpg" alt="Michael Brown" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-bold">Robert Clark</h4>
+                            <p class="text-textSecondary text-sm">Dromore</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="bg-dark p-8 rounded-xl shadow-md card-hover gsap-animate border border-gray-800"
+                    style="animation-delay: 0.2s">
+                    <div class="flex items-center mb-4">
+                        <div class="text-yellow-400 mr-2">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <span class="text-textSecondary text-sm">Facebook Review</span>
+                    </div>
+                    <p class="text-textSecondary mb-6 italic">"We couldn't be happier with our new home. GK Contracts
+                        Build worked closely with us to create exactly what we wanted, staying on budget and completing
+                        ahead of schedule."</p>
+                    <div class="flex items-center">
+                        <div class="bg-gray-700 w-12 h-12 rounded-full mr-4 overflow-hidden">
+                            <img src="/images/client3.webp" alt="Emma and David Wilson"
+                                class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-bold">James Taylor</h4>
+                            <p class="text-textSecondary text-sm">Rathfriland</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-secondary text-dark">
+        <div class="container mx-auto px-6 text-center gsap-animate">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready to Start Your <span
+                    class="text-primary">Project</span>?</h2>
+            <p class="text-xl mb-8 max-w-2xl mx-auto">Contact us today for a free consultation and quote. Let's build
+                something amazing together.</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-6">
+                <a href="/contact/"
+                    class="bg-primary text-text font-bold px-8 py-4 rounded-full hover:bg-opacity-90 transition-all transform hover:scale-105 shadow-lg">Get
+                    Your Free Quote</a>
+                <a href="tel:+447979877464"
+                    class="border-2 border-dark px-8 py-4 rounded-full hover:bg-dark hover:text-text transition-all transform hover:scale-105">
+                    <i class="fas fa-phone mr-2 animate-wave"></i> Call Now
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Preview Section -->
+    <section class="py-20 bg-darker">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16 gsap-animate">
+                <span class="text-secondary font-bold mb-4 block">FROM OUR BLOG</span>
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Construction <span class="gradient-text">Insights</span>
+                </h2>
+                <p class="text-xl text-textSecondary max-w-2xl mx-auto">Tips, trends, and expert advice for your
+                    building projects.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Blog Post 1 -->
+                <div
+                    class="bg-dark rounded-lg overflow-hidden shadow-md card-hover gsap-animate border border-gray-800">
+                    <a href="/blog/post1/" class="block h-full">
+                        <div class="relative h-48 overflow-hidden">
+                            <img src="/images/blog-trends.jpg" alt="2025 home design trends"
+                                class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                        </div>
+                        <div class="p-6">
+                            <span
+                                class="inline-block bg-gray-800 text-primary text-xs px-3 py-1 rounded-full mb-3">Design
+                                Trends</span>
+                            <h3 class="text-xl font-bold mb-3">Top Home Design Trends for 2025</h3>
+                            <p class="text-textSecondary mb-4">Discover the most popular design trends shaping new homes
+                                and renovations this year in Northern Ireland.</p>
+                            <div class="flex items-center text-sm text-textSecondary">
+                                <span>May 15, 2025</span>
+                                <span class="mx-2">•</span>
+                                <span>5 min read</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Article 2 -->
+                <div class="bg-dark rounded-lg overflow-hidden shadow-md card-hover gsap-animate border border-gray-800"
+                    style="animation-delay: 0.1s">
+                    <a href="/blog/post2/" class="block h-full">
+                        <div class="relative h-48 overflow-hidden">
+                            <img src="/images/blog-planning.jpg" alt="House extension planning"
+                                class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                        </div>
+                        <div class="p-6">
+                            <span
+                                class="inline-block bg-gray-800 text-primary text-xs px-3 py-1 rounded-full mb-3">Building
+                                Tips</span>
+                            <h3 class="text-xl font-bold mb-3">Essential Planning Tips for Your House Extension</h3>
+                            <p class="text-textSecondary mb-4">Key considerations and steps to ensure your extension
+                                project runs smoothly from start to finish.</p>
+                            <div class="flex items-center text-sm text-textSecondary">
+                                <span>May 28, 2025</span>
+                                <span class="mx-2">•</span>
+                                <span>7 min read</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Article 3 -->
+                <div class="bg-dark rounded-lg overflow-hidden shadow-md card-hover gsap-animate border border-gray-800"
+                    style="animation-delay: 0.2s">
+                    <a href="/blog/post3/" class="block h-full">
+                        <div class="relative h-48 overflow-hidden">
+                            <img src="/images/blog-energy.png" alt="Energy efficient home features"
+                                class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                        </div>
+                        <div class="p-6">
+                            <span
+                                class="inline-block bg-gray-800 text-primary text-xs px-3 py-1 rounded-full mb-3">Expert
+                                Advice</span>
+                            <h3 class="text-xl font-bold mb-3">Building Energy Efficient Homes in Northern Ireland</h3>
+                            <p class="text-textSecondary mb-4">How modern construction techniques can significantly
+                                reduce your energy bills and carbon footprint.</p>
+                            <div class="flex items-center text-sm text-textSecondary">
+                                <span>May 12, 2025</span>
+                                <span class="mx-2">•</span>
+                                <span>8 min read</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <!-- Article 4 -->
+                <div class="bg-dark rounded-lg overflow-hidden shadow-md card-hover gsap-animate border border-gray-800"
+                    style="animation-delay: 0.3s">
+                    <a href="/blog/post4/" class="block h-full">
+                        <div class="relative h-48 overflow-hidden">
+                            <img src="/images/blog-regulations.webp" alt="Building regulations documents"
+                                class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                        </div>
+                        <div class="p-6">
+                            <span
+                                class="inline-block bg-gray-800 text-primary text-xs px-3 py-1 rounded-full mb-3">Industry
+                                News</span>
+                            <h3 class="text-xl font-bold mb-3">2025 Building Regulations Updates: What You Need to Know
+                            </h3>
+                            <p class="text-textSecondary mb-4">Overview of the latest changes to building regulations
+                                and how they affect your construction project.</p>
+                            <div class="flex items-center text-sm text-textSecondary">
+                                <span>April 30, 2025</span>
+                                <span class="mx-2">•</span>
+                                <span>6 min read</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <div class="text-center mt-12 gsap-animate">
+                <a href="/blog/"
+                    class="inline-block border-2 border-primary text-primary font-bold px-8 py-3 rounded-full hover:bg-primary hover:text-text transition-all transform hover:scale-105">View
+                    All Articles</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Info Section -->
+    <section class="py-20 bg-dark">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col lg:flex-row">
+                <!-- Contact Form -->
+                <div class="lg:w-1/2 mb-12 lg:mb-0 lg:pr-10 gsap-animate">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6">Get In <span class="gradient-text">Touch</span></h2>
+                    <form class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="name" class="block mb-2 font-medium">Your Name</label>
+                                <input type="text" id="name"
+                                    class="w-full px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent transition-all dark-input">
+                            </div>
+                            <div>
+                                <label for="email" class="block mb-2 font-medium">Email Address</label>
+                                <input type="email" id="email"
+                                    class="w-full px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent transition-all dark-input">
+                            </div>
+                        </div>
+                        <div>
+                            <label for="phone" class="block mb-2 font-medium">Phone Number</label>
+                            <input type="tel" id="phone"
+                                class="w-full px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent transition-all dark-input">
+                        </div>
+                        <div>
+                            <label for="service" class="block mb-2 font-medium">Service Interested In</label>
+                            <select id="service"
+                                class="w-full px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent transition-all dark-input">
+                                <option value="">Select a service</option>
+                                <option value="new-build">New Build</option>
+                                <option value="extension">Extension</option>
+                                <option value="renovation">Renovation</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="message" class="block mb-2 font-medium">Your Message</label>
+                            <textarea id="message" rows="4"
+                                class="w-full px-4 py-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-secondary focus:border-transparent transition-all dark-input"></textarea>
+                        </div>
+                        <button type="submit"
+                            class="bg-secondary text-dark px-8 py-4 rounded-full font-bold hover:bg-opacity-90 transition-all transform hover:scale-105 w-full shadow-lg">Send
+                            Message</button>
+                    </form>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="lg:w-1/2 gsap-animate">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6">Contact <span
+                            class="gradient-text">Information</span></h2>
+                    <div class="bg-darker p-8 rounded-xl shadow-lg border border-gray-800">
+                        <div class="flex items-start mb-8">
+                            <div class="bg-primary text-text rounded-xl p-4 mr-6">
+                                <i class="fas fa-map-marker-alt text-2xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold mb-2">Our Location</h3>
+                                <p class="text-textSecondary">36 Glebe Rd, Banbridge BT32 5AX</p>
+                                <a href="https://www.google.com/maps/place/House+Builders+Armagh/@54.3082955,-6.2100665,17z/data=!3m1!4b1!4m6!3m5!1s0x4860e1c1b29afe77:0x6909f7cd2302e38a!8m2!3d54.3082955!4d-6.2100665!16s%2Fg%2F11hyf_tt0c?hl=en&entry=ttu"
+                                    target="_blank" rel="noopener noreferrer"
+                                    class="text-secondary font-bold hover:text-opacity-80 transition-all inline-block mt-2 underline-animation">View
+                                    on Google Maps</a>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start mb-8">
+                            <div class="bg-primary text-text rounded-xl p-4 mr-6">
+                                <i class="fas fa-phone-alt text-2xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold mb-2">Phone & Email</h3>
+                                <p class="text-textSecondary mb-2"><a href="tel:+447979877464"
+                                        class="hover:text-text transition-all underline-animation font-medium">+44 7979
+                                        877464</a></p>
+                                <p class="text-textSecondary"><a href="mailto:info@gkcontractsbuild.com"
+                                        class="hover:text-text transition-all underline-animation font-medium">info@gkcontractsbuild.com</a>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="flex items-start">
+                            <div class="bg-primary text-text rounded-xl p-4 mr-6">
+                                <i class="fas fa-clock text-2xl"></i>
+                            </div>
+                            <div>
+                                <h3 class="text-xl font-bold mb-2">Working Hours</h3>
+                                <p class="text-textSecondary mb-1">Monday - Friday: 8:00 AM - 5:00 PM</p>
+                                <p class="text-textSecondary">Saturday: 9:00 AM - 1:00 PM</p>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map Section -->
+    <section class="h-96 w-full gsap-animate">
+        <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2319.866367036574!2d-6.212261423482063!3d54.3082954730888!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4860e1c1b29afe77%3A0x6909f7cd2302e38a!2sHouse%20Builders%20Armagh!5e0!3m2!1sen!2suk!4v1689876543210!5m2!1sen!2suk"
+            width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-darker text-text py-12 border-t border-gray-800">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- About -->
+                <div class="gsap-animate">
+                    <div class="flex items-center space-x-2 mb-4">
+                        <img class="w-[180px] transition-all duration-300 group-hover:scale-105" src="/images/logo.png"
+                            alt="GK Contracts Build Logo" />
+                    </div>
+                    <p class="mb-4 text-textSecondary">With over 25 years of experience, we're Banbridge's trusted
+                        building contractors for new homes, extensions, and renovations.</p>
+                    <p>
+                        <a href="https://www.facebook.com/GKContractsBanbridge" target="_blank" rel="noopener noreferrer">
+                            <i class="fab fa-facebook fa-lg text-white hover:text-blue-800"></i>
+                        </a>
+                    </p>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="gsap-animate">
+                    <h3 class="text-xl font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/" class="hover:text-secondary transition-all underline-animation">Home</a></li>
+                        <li><a href="/new-builds/" class="hover:text-secondary transition-all underline-animation">New
+                                Builds</a></li>
+                        <li><a href="/extensions/"
+                                class="hover:text-secondary transition-all underline-animation">Extensions</a></li>
+                        <li><a href="/projects/"
+                                class="hover:text-secondary transition-all underline-animation">Projects</a></li>
+                        <li><a href="/blog/" class="hover:text-secondary transition-all underline-animation">Blog</a>
+                        </li>
+                        <li><a href="/contact/"
+                                class="hover:text-secondary transition-all underline-animation">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Services -->
+                <div class="gsap-animate">
+                    <h3 class="text-xl font-bold mb-4">Services</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/new-builds/"
+                                class="hover:text-secondary transition-all underline-animation">Custom Home Building</a>
+                        </li>
+                        <li><a href="/extensions/" class="hover:text-secondary transition-all underline-animation">House
+                                Extensions</a></li>
+                        <li><a href="/projects/" class="hover:text-secondary transition-all underline-animation">Home
+                                Renovations</a></li>
+
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="gsap-animate">
+                    <h3 class="text-xl font-bold mb-4">Contact Us</h3>
+                    <address class="not-italic">
+                        <p class="mb-2 text-textSecondary">36 Glebe Rd, Banbridge</p>
+                        <p class="mb-2 text-textSecondary">BT32 5AX</p>
+                        <p class="mb-2"><a href="tel:+447979877464"
+                                class="hover:text-secondary transition-all underline-animation font-medium">+44 7979
+                                877464</a></p>
+                        <p class="mb-4"><a href="mailto:info@gkcontractsbuild.com"
+                                class="hover:text-secondary transition-all underline-animation font-medium">info@gkcontractsbuild.com</a>
+                        </p>
+                        <a href="/contact/"
+                            class="inline-block border-2 border-text text-text px-6 py-2 rounded-full hover:bg-text hover:text-dark transition-all transform hover:scale-105">Contact
+                            Form</a>
+                    </address>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center ">
+                <p class="text-textSecondary">&copy; 2025 GK Contracts Build. All rights reserved.</p>
+                <div class="flex space-x-6 mt-4 md:mt-0">
+                    <a href="/privacy/"
+                        class="text-textSecondary hover:text-secondary transition-all underline-animation">Privacy
+                        Policy</a>
+                    <a href="/terms/"
+                        class="text-textSecondary hover:text-secondary transition-all underline-animation">Terms of
+                        Service</a>
+                    <a href="/cookies/"
+                        class="text-textSecondary hover:text-secondary transition-all underline-animation">Cookies
+                        Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop"
+        class="fixed bottom-8 right-8 bg-secondary text-dark w-14 h-14 rounded-full shadow-lg flex items-center justify-center transform translate-y-20 transition-transform duration-300 z-30 hover:bg-opacity-90 hover:scale-110">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+        </svg>
+    </button>
+
+    <script>
+        // Remove no-js class if JavaScript is enabled
+        document.body.classList.remove('no-js');
+
+        // Loading animation
+        window.addEventListener('load', function () {
+            const loader = document.getElementById('pageLoader');
+            setTimeout(function () {
+                loader.classList.add('loader-hidden');
+                loader.addEventListener('transitionend', function () {
+                    loader.remove();
+                });
+            }, 500);
+        });
+
+        // Mobile menu toggle
+        document.getElementById('mobileMenuButton').addEventListener('click', function () {
+            const menu = document.getElementById('mobileMenu');
+            menu.classList.toggle('hidden');
+            this.classList.toggle('text-secondary');
+        });
+
+        // Cookie consent functions
+        function checkCookies() {
+            if (!localStorage.getItem('cookiesDecision')) {
+                const consentBanner = document.getElementById('cookieConsent');
+                consentBanner.classList.remove('hidden');
+                setTimeout(() => {
+                    consentBanner.classList.remove('translate-y-full');
+                }, 100);
+            }
+        }
+
+        function acceptCookies() {
+            localStorage.setItem('cookiesDecision', 'accepted');
+            localStorage.setItem('cookiesAccepted', 'true');
+            const consentBanner = document.getElementById('cookieConsent');
+            consentBanner.classList.add('translate-y-full');
+            setTimeout(() => {
+                consentBanner.classList.add('hidden');
+            }, 300);
+            initializeCookies();
+        }
+
+        function declineCookies() {
+            localStorage.setItem('cookiesDecision', 'declined');
+            localStorage.setItem('cookiesAccepted', 'false');
+            const consentBanner = document.getElementById('cookieConsent');
+            consentBanner.classList.add('translate-y-full');
+            setTimeout(() => {
+                consentBanner.classList.add('hidden');
+            }, 300);
+            disableNonEssentialCookies();
+        }
+
+        function initializeCookies() {
+            console.log('Cookies accepted - initializing tracking');
+        }
+
+        function disableNonEssentialCookies() {
+            console.log('Cookies declined - disabling non-essential cookies');
+        }
+
+        // Back to top button
+        const backToTopButton = document.getElementById('backToTop');
+        window.addEventListener('scroll', function () {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.remove('translate-y-20');
+            } else {
+                backToTopButton.classList.add('translate-y-20');
+            }
+        });
+
+        backToTopButton.addEventListener('click', function () {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Particle background effect
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles-js');
+            if (!particlesContainer) return;
+
+            const particleCount = 30;
+
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+
+                // Random size between 2px and 6px
+                const size = Math.random() * 4 + 2;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+
+                // Random position
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+
+                // Random opacity
+                particle.style.opacity = Math.random() * 0.5 + 0.1;
+
+                // Random animation duration and delay
+                const duration = Math.random() * 20 + 10;
+                const delay = Math.random() * 5;
+                particle.style.animation = `float ${duration}s ease-in-out ${delay}s infinite`;
+
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Initialize GSAP animations
+        document.addEventListener('DOMContentLoaded', function () {
+            checkCookies();
+            createParticles();
+
+            // If cookies were previously accepted, initialize them
+            if (localStorage.getItem('cookiesDecision') === 'accepted') {
+                initializeCookies();
+            }
+
+            // Register ScrollTrigger plugin
+            if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+                gsap.registerPlugin(ScrollTrigger);
+
+                // Set initial state for animated elements
+                gsap.set('.gsap-animate', {
+                    opacity: 0,
+                    y: 50
+                });
+
+                // Animate all elements with gsap-animate class
+                gsap.utils.toArray('.gsap-animate').forEach((element, i) => {
+                    gsap.to(element, {
+                        scrollTrigger: {
+                            trigger: element,
+                            start: "top 80%",
+                            toggleActions: "play none none none",
+                            markers: false // Set to true for debugging
+                        },
+                        y: 0,
+                        opacity: 1,
+                        duration: 0.3,
+                        ease: "power2.out",
+                        // delay: i * 0.1
+                    });
+                });
+            }
+
+            // Navbar shadow on scroll
+            window.addEventListener('scroll', function () {
+                const nav = document.querySelector('nav');
+                if (window.scrollY > 50) {
+                    nav.classList.add('shadow-lg', 'backdrop-blur-md');
+                } else {
+                    nav.classList.remove('shadow-lg', 'backdrop-blur-md');
+                }
+            });
+
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        gsap.to(window, {
+                            duration: 0.3,
+                            scrollTo: {
+                                y: target,
+                                offsetY: 80
+                            },
+                            ease: "power2.out"
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

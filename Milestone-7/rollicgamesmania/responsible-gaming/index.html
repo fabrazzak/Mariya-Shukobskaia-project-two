@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Rollic Games is committed to responsible gaming. Learn about our policies, tools, and resources to ensure safe and enjoyable gaming experiences.">
+    <meta name="keywords" content="responsible gaming, safe gaming, gaming addiction, parental controls, gaming limits, Rollic Games">
+    <meta name="author" content="Rollic Games">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://rollicgamesmania.com/responsible-gaming/">
+    
+    <title>Responsible Gaming | Rollic Games Mania</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/image/logo.webp" type="image/x-icon">
+    
+    <!-- Google Fonts - Rajdhani -->
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        rajdhani: ['Rajdhani', 'sans-serif'],
+                    },
+                    colors: {
+                        primary: '#00ffff',
+                        secondary: '#8e05c2',
+                        accent: '#ff0066',
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <style>
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background-color: #0f0f1a;
+            color: #ffffff;
+            overflow-x: hidden;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, #00ffff, #8e05c2, #ff0066);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .hero-bg {
+            background: radial-gradient(circle at 30% 50%, rgba(142, 5, 194, 0.2) 0%, rgba(0, 0, 0, 0) 50%),
+                        radial-gradient(circle at 70% 30%, rgba(0, 255, 255, 0.2) 0%, rgba(0, 0, 0, 0) 50%),
+                        radial-gradient(circle at 50% 80%, rgba(255, 0, 102, 0.2) 0%, rgba(0, 0, 0, 0) 50%);
+        }
+        
+        .parallax-bg {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        
+        .blob {
+            position: absolute;
+            filter: blur(60px);
+            border-radius: 50%;
+            z-index: -1;
+        }
+        
+        .blob-1 {
+            width: 500px;
+            height: 500px;
+            background: rgba(0, 255, 255, 0.2);
+            top: -200px;
+            left: -200px;
+        }
+        
+        .blob-2 {
+            width: 400px;
+            height: 400px;
+            background: rgba(142, 5, 194, 0.2);
+            bottom: -150px;
+            right: -100px;
+        }
+        
+        .blob-3 {
+            width: 300px;
+            height: 300px;
+            background: rgba(255, 0, 102, 0.2);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .threejs-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.3;
+        }
+        
+        .policy-card {
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+        
+        .policy-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px -12px rgba(0, 255, 255, 0.1);
+        }
+        
+        .checkmark {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: block;
+            stroke-width: 3;
+            stroke: #00ffff;
+            stroke-miterlimit: 10;
+            margin: 10% auto;
+            box-shadow: inset 0px 0px 0px #00ffff;
+            animation: checkmark-fill 0.4s ease-in-out 0.4s forwards, checkmark-scale 0.3s ease-in-out 0.9s both;
+        }
+        
+        .checkmark-circle {
+            stroke-dasharray: 166;
+            stroke-dashoffset: 166;
+            stroke-width: 3;
+            stroke-miterlimit: 10;
+            stroke: #00ffff;
+            fill: none;
+            animation: checkmark-stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+        }
+        
+        .checkmark-check {
+            transform-origin: 50% 50%;
+            stroke-dasharray: 48;
+            stroke-dashoffset: 48;
+            animation: checkmark-stroke 0.3s cubic-bezier(0.65, 0, 0.45, 1) 0.8s forwards;
+        }
+        
+        @keyframes checkmark-stroke {
+            100% {
+                stroke-dashoffset: 0;
+            }
+        }
+        
+        @keyframes checkmark-scale {
+            0%, 100% {
+                transform: none;
+            }
+            50% {
+                transform: scale3d(1.1, 1.1, 1);
+            }
+        }
+        
+        @keyframes checkmark-fill {
+            100% {
+                box-shadow: inset 0px 0px 0px 30px rgba(0, 255, 255, 0.1);
+            }
+        }
+    </style>
+</head>
+<body class="font-rajdhani">
+    <!-- Cookie Consent Banner -->
+    <div id="cookie-banner" class="fixed bottom-0 left-0 right-0 bg-gray-900 text-white p-4 z-50 hidden">
+        <div class="container mx-auto flex flex-col md:flex-row items-center justify-between">
+            <div class="mb-4 md:mb-0 md:mr-4">
+                <p class="text-sm">We use cookies to enhance your experience. By continuing to visit this site, you agree to our use of cookies.</p>
+            </div>
+            <div class="flex space-x-3">
+                <button id="cookie-decline" class="px-4 py-2 text-sm border border-accent text-accent rounded-md hover:bg-accent hover:text-white transition-colors">Decline</button>
+                <button id="cookie-accept" class="px-4 py-2 text-sm bg-accent text-white rounded-md hover:bg-opacity-90 transition-colors">Accept</button>
+                <a href="/cookies/" class="px-4 py-2 text-sm border border-primary text-primary rounded-md hover:bg-primary hover:text-gray-900 transition-colors">Learn More</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-40 bg-gray-900 bg-opacity-90 backdrop-blur-md border-b border-gray-800">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center">
+                    <a href="/" class="flex items-center gap-3">
+                        <img src="/image/logo.png" alt="logo" class="rounded-full md:h-14 h-10 ">                         
+                    </a>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="text-white hover:text-primary transition-colors">Home</a>
+                    <a href="/games/" class="text-white hover:text-primary transition-colors">Games</a>
+                    <a href="/about/" class="text-white hover:text-primary transition-colors">About</a>
+                    <a href="/blog/" class="text-white hover:text-primary transition-colors">Blog</a>
+                    <a href="/responsible-gaming/" class="text-primary font-semibold">Responsible Gaming</a>
+                    <a href="/contact/" class="text-white hover:text-primary transition-colors">Contact</a>
+                </div>
+                
+                <div class="flex items-center space-x-4 md:hidden lg:block">
+                    <a href="https://play.google.com/store/apps/details?id=com.wixot.pressurewashing&hl=en" class="hidden md:block px-4 py-2 bg-primary text-gray-900 font-semibold rounded-md hover:bg-opacity-90 transition-colors">Download Now</a>
+                    <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-gray-900">
+            <div class="container mx-auto px-6 py-4 flex flex-col space-y-4">
+                <a href="/" class="text-white hover:text-primary transition-colors">Home</a>
+                <a href="/games/" class="text-white hover:text-primary transition-colors">Games</a>
+                <a href="/about/" class="text-white hover:text-primary transition-colors">About</a>
+                <a href="/blog/" class="text-white hover:text-primary transition-colors">Blog</a>
+                <a href="/responsible-gaming/" class="text-primary font-semibold">Responsible Gaming</a>
+                <a href="/contact/" class="text-white hover:text-primary transition-colors">Contact</a>
+                <a href="https://play.google.com/store/apps/details?id=com.wixot.pressurewashing&hl=en" class="px-4 py-2 bg-primary text-gray-900 font-semibold rounded-md hover:bg-opacity-90 transition-colors text-center">Download Now</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-[60vh] flex items-center justify-center overflow-hidden hero-bg pt-20">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+        
+        <div class="threejs-container" id="threejs-canvas"></div>
+        
+        <div class="container mx-auto px-6 py-20 z-10 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6">
+                <span class="gradient-text">Responsible Gaming</span>
+            </h1>
+            <p class="text-xl text-gray-300 max-w-3xl mx-auto">Our commitment to safe and enjoyable gaming experiences for all players</p>
+        </div>
+    </section>
+
+    <!-- Breadcrumbs -->
+    <div class="bg-gray-900 border-b border-gray-800">
+        <div class="container mx-auto px-6 py-4">
+            <nav class="flex" aria-label="Breadcrumb">
+                <ol class="inline-flex items-center space-x-1 md:space-x-3">
+                    <li class="inline-flex items-center">
+                        <a href="/" class="inline-flex items-center text-sm text-gray-400 hover:text-primary transition-colors">
+                            <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path>
+                            </svg>
+                            Home
+                        </a>
+                    </li>
+                    <li aria-current="page">
+                        <div class="flex items-center">
+                            <svg class="w-6 h-6 text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                            <span class="ml-1 text-sm text-primary md:ml-2">Responsible Gaming</span>
+                        </div>
+                    </li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Commitment Section -->
+    <section class="py-20 bg-gray-900">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col lg:flex-row items-center gap-12">
+                <div class="lg:w-1/2">
+                    <div class="relative">
+                        <img src="/image/image3.webp" alt="Responsible Gaming" class="rounded-xl shadow-2xl w-full md:h-[500px] object-cover">
+                        <div class="absolute -bottom-6 -left-6 bg-secondary p-4 rounded-lg shadow-lg z-10">
+                            <div class="text-white font-bold text-xl">Our Pledge</div>
+                            <div class="text-gray-300 text-sm">Safe gaming for everyone</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:w-1/2">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6">Our <span class="gradient-text">Commitment</span></h2>
+                    <p class="text-gray-400 mb-6">At Rollic Games, we believe gaming should be fun, safe, and enjoyable for everyone. We're committed to promoting responsible gaming practices and providing tools to help players maintain healthy gaming habits.</p>
+                    <p class="text-gray-400 mb-6">While our games are designed for entertainment, we recognize that some players may need help managing their gameplay. This page provides information about our responsible gaming policies, tools, and resources available to players and parents.</p>
+                    <p class="text-gray-400 mb-8">We continuously work to improve our responsible gaming measures and collaborate with industry organizations to maintain best practices in player protection.</p>
+                    <a href="#resources" class="px-8 py-3 bg-primary text-gray-900 font-bold rounded-lg hover:bg-opacity-90 transition-colors inline-flex items-center">
+                        View Resources
+                        <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Policies Section -->
+    <section class="py-20 bg-gray-900 parallax-bg" style="background-image: linear-gradient(rgba(15, 15, 26, 0.9), rgba(15, 15, 26, 0.9)),">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Our Responsible <span class="gradient-text">Gaming Policies</span></h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Measures we've implemented to promote healthy gaming habits</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="policy-card p-8 rounded-xl bg-gray-800 border border-gray-700">
+                    <div class="text-center mb-6">
+                        <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                            <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
+                            <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-center text-primary">Age-Appropriate Content</h3>
+                    <p class="text-gray-400 text-center">All our games are clearly rated according to international standards. We provide detailed content descriptors to help players and parents make informed choices.</p>
+                </div>
+                
+                <div class="policy-card p-8 rounded-xl bg-gray-800 border border-gray-700">
+                    <div class="text-center mb-6">
+                        <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                            <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
+                            <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-center text-secondary">Parental Controls</h3>
+                    <p class="text-gray-400 text-center">We support device-level parental controls and provide guidance to parents on managing in-app purchases, play time, and content access for younger players.</p>
+                </div>
+                
+                <div class="policy-card p-8 rounded-xl bg-gray-800 border border-gray-700">
+                    <div class="text-center mb-6">
+                        <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                            <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
+                            <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-center text-accent">Spending Limits</h3>
+                    <p class="text-gray-400 text-center">Our games provide clear information about in-app purchases and support platform-level spending controls to prevent unintended purchases.</p>
+                </div>
+                
+                <div class="policy-card p-8 rounded-xl bg-gray-800 border border-gray-700">
+                    <div class="text-center mb-6">
+                        <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                            <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
+                            <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-center text-primary">Play Time Notifications</h3>
+                    <p class="text-gray-400 text-center">Many of our games include optional play time reminders to help players maintain awareness of their gaming duration.</p>
+                </div>
+                
+                <div class="policy-card p-8 rounded-xl bg-gray-800 border border-gray-700">
+                    <div class="text-center mb-6">
+                        <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                            <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
+                            <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-center text-secondary">Fair Monetization</h3>
+                    <p class="text-gray-400 text-center">We design our monetization systems to be fair and transparent, avoiding exploitative practices that could lead to problematic spending.</p>
+                </div>
+                
+                <div class="policy-card p-8 rounded-xl bg-gray-800 border border-gray-700">
+                    <div class="text-center mb-6">
+                        <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 52 52">
+                            <circle class="checkmark-circle" cx="26" cy="26" r="25" fill="none"/>
+                            <path class="checkmark-check" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3 text-center text-accent">Player Support</h3>
+                    <p class="text-gray-400 text-center">We provide accessible support channels for players who need assistance with account management or have concerns about their gaming habits.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Resources Section -->
+    <section id="resources" class="py-20 bg-gray-900">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Player <span class="gradient-text">Resources</span></h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Tools and information to support healthy gaming habits</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-gray-800 rounded-xl border border-gray-700 overflow-hidden">
+                    <div class="p-8">
+                        <h3 class="text-2xl font-bold mb-4 text-primary">Self-Assessment Tool</h3>
+                        <p class="text-gray-400 mb-6">Ask yourself these questions to evaluate your gaming habits:</p>
+                        <ul class="space-y-4 text-gray-300">
+                            <li class="flex items-start">
+                                <svg class="w-5 h-5 text-primary mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                <span>Do I play for longer than I intended to?</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="w-5 h-5 text-primary mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                <span>Does gaming interfere with my daily responsibilities?</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="w-5 h-5 text-primary mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                <span>Have I tried to cut back on gaming without success?</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="w-5 h-5 text-primary mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                <span>Do I feel irritable when I can't play?</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg class="w-5 h-5 text-primary mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                <span>Has gaming caused problems in my relationships?</span>
+                            </li>
+                        </ul>
+                        <p class="text-gray-400 mt-6">If you answered "yes" to several of these questions, you may want to evaluate your gaming habits or seek support.</p>
+                    </div>
+                </div>
+                
+                <div class="bg-gray-800 rounded-xl border border-gray-700 overflow-hidden">
+                    <div class="p-8">
+                        <h3 class="text-2xl font-bold mb-4 text-secondary">Tips for Healthy Gaming</h3>
+                        <div class="space-y-6">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 bg-secondary bg-opacity-10 p-2 rounded-lg mr-4">
+                                    <svg class="w-6 h-6 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-white mb-1">Set Time Limits</h4>
+                                    <p class="text-gray-400">Decide in advance how long you'll play and set alarms to remind you when to stop.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 bg-secondary bg-opacity-10 p-2 rounded-lg mr-4">
+                                    <svg class="w-6 h-6 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-white mb-1">Track Spending</h4>
+                                    <p class="text-gray-400">Keep a record of in-game purchases and set monthly budgets for gaming expenses.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 bg-secondary bg-opacity-10 p-2 rounded-lg mr-4">
+                                    <svg class="w-6 h-6 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-white mb-1">Take Regular Breaks</h4>
+                                    <p class="text-gray-400">Follow the 20-20-20 rule: every 20 minutes, look at something 20 feet away for 20 seconds.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 bg-secondary bg-opacity-10 p-2 rounded-lg mr-4">
+                                    <svg class="w-6 h-6 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-white mb-1">Balance Activities</h4>
+                                    <p class="text-gray-400">Make time for other hobbies, social activities, and physical exercise.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Parental Guidance Section -->
+    <section class="py-20 bg-gray-900">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">For <span class="gradient-text">Parents</span></h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Guidance on managing your child's gaming experience</p>
+            </div>
+            
+            <div class="bg-gray-800 rounded-xl border border-gray-700 overflow-hidden">
+                <div class="grid grid-cols-1 lg:grid-cols-2">
+                    <div class="p-8 lg:p-12">
+                        <h3 class="text-2xl font-bold mb-6">Parental Controls Guide</h3>
+                        <p class="text-gray-400 mb-6">We recommend using device-level parental controls to manage your child's gaming experience. Here's how to set them up:</p>
+                        
+                        <div class="space-y-6">
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 bg-primary bg-opacity-10 p-2 rounded-lg mr-4">
+                                    <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-white mb-1">Android Devices</h4>
+                                    <p class="text-gray-400">Use Google's Family Link app to manage apps, set time limits, and control purchases.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 bg-secondary bg-opacity-10 p-2 rounded-lg mr-4">
+                                    <svg class="w-6 h-6 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-white mb-1">iOS Devices</h4>
+                                    <p class="text-gray-400">Use Screen Time in Settings to set app limits, content restrictions, and require approval for purchases.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="flex items-start">
+                                <div class="flex-shrink-0 bg-accent bg-opacity-10 p-2 rounded-lg mr-4">
+                                    <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z"></path>
+                                    </svg>
+                                </div>
+                                <div>
+                                    <h4 class="font-bold text-white mb-1">General Tips</h4>
+                                    <ul class="list-disc list-inside text-gray-400 space-y-1">
+                                        <li>Play games with your child to understand the content</li>
+                                        <li>Set clear rules about when and how long they can play</li>
+                                        <li>Keep gaming devices in common areas, not bedrooms</li>
+                                        <li>Encourage a balance of activities beyond screens</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gray-700 p-8 lg:p-12 flex items-center justify-center">
+                        <div class="max-w-md">
+                            <h3 class="text-2xl font-bold mb-6">Conversation Starters</h3>
+                            <p class="text-gray-400 mb-6">Talking openly with your child about gaming is important. Try these questions:</p>
+                            
+                            <div class="space-y-4">
+                                <div class="p-4 bg-gray-800 rounded-lg border-l-4 border-primary">
+                                    <p class="text-white">"What do you enjoy most about this game?"</p>
+                                </div>
+                                <div class="p-4 bg-gray-800 rounded-lg border-l-4 border-secondary">
+                                    <p class="text-white">"How do you feel when you've been playing for a long time?"</p>
+                                </div>
+                                <div class="p-4 bg-gray-800 rounded-lg border-l-4 border-accent">
+                                    <p class="text-white">"What other activities do you enjoy besides gaming?"</p>
+                                </div>
+                                <div class="p-4 bg-gray-800 rounded-lg border-l-4 border-primary">
+                                    <p class="text-white">"How can we make sure gaming doesn't interfere with other important things?"</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+  <section class="py-20 bg-gray-900 parallax-bg" style="background-image: linear-gradient(rgba(15, 15, 26, 0.9), rgba(15, 15, 26, 0.9)),">
+    <div class="container mx-auto px-6">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-bold mb-4">Need <span class="gradient-text">Help?</span> We're Here for You</h2>
+            <p class="text-gray-400 max-w-2xl mx-auto">If you're facing gambling-related challenges, connect with trusted organizations offering free and confidential help.</p>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+            <div class="p-8 rounded-xl bg-gray-800 border border-gray-700">
+                <div class="flex items-center ">
+                    <div class="w-[200px] h-[100px]   flex items-center justify-center mr-6">
+                       <img src="/image/adiction_begambleaware.svg" alt="">
+                    </div>
+                  
+                </div>
+                <p class="text-gray-400 mb-4">National gambling support service. Get free and confidential help via phone, live chat, or forums—available 24/7 for anyone facing gambling problems.</p>
+                <a href="https://www.begambleaware.org/" class="text-primary hover:underline font-medium">Visit BeGambleAware</a>
+            </div>
+            
+            <div class="p-8 rounded-xl bg-gray-800 border border-gray-700">
+                <div class="flex items-center mb-6">
+                    <div class="w-[200px] h-[100px] flex items-center justify-center mr-6">
+                       <img src="/image/adiction_gamecare.svg" alt="">
+                    </div>
+                    
+                </div>
+                <p class="text-gray-400 mb-4">UK's leading gambling support charity. GameCare offers expert advice, support, and treatment for anyone affected by gambling harm—through phone, chat, or counseling.</p>
+                <a href="https://www.gamcare.org.uk/" class="text-secondary hover:underline font-medium">Visit GameCare</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-br from-gray-900 to-gray-800">
+        <div class="container mx-auto px-6 text-center">
+            <h2 class="text-3xl md:text-5xl font-bold mb-6">Game <span class="gradient-text">Responsibly</span></h2>
+            <p class="text-xl text-gray-300 max-w-2xl mx-auto mb-10">We're committed to providing fun, safe gaming experiences for all our players.</p>
+            
+            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+                <a href="/games/" class="px-8 py-4 bg-primary text-gray-900 font-bold rounded-lg hover:bg-opacity-90 transition-colors flex items-center justify-center">
+                    <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                    </svg>
+                    Explore Our Games
+                </a>
+                <a href="/contact/" class="px-8 py-4 border border-primary text-primary font-bold rounded-lg hover:bg-primary hover:text-gray-900 transition-colors flex items-center justify-center">
+                    <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                    </svg>
+                    Contact Us
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 border-t border-gray-800">
+        <div class="container mx-auto px-6 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+                <div>
+                     <a href="/" class="flex items-center gap-3">
+                        <img src="/image/logo.png" alt="logo" class="rounded-full md:h-14 h-10 mb-4 ">                         
+                    </a>
+                    <p class="text-gray-400 mb-6">Creating satisfying and engaging mobile gaming experiences for players worldwide.</p>
+                    
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-6">Quick Links</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/games/" class="text-gray-400 hover:text-primary transition-colors">Our Games</a></li>
+                        <li><a href="/about/" class="text-gray-400 hover:text-primary transition-colors">About Us</a></li>
+                        <li><a href="/blog/" class="text-gray-400 hover:text-primary transition-colors">Blog</a></li>
+                        <li><a href="/responsible-gaming/" class="text-gray-400 hover:text-primary transition-colors">Responsible Gaming</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-6">Support</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/contact/" class="text-gray-400 hover:text-primary transition-colors">Contact Us</a></li>
+                        <li><a href="/privacy/" class="text-gray-400 hover:text-primary transition-colors">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="text-gray-400 hover:text-primary transition-colors">Terms of Service</a></li>
+                        <li><a href="/cookies/" class="text-gray-400 hover:text-primary transition-colors">Cookie Policy</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-6">Contact Info</h3>
+                    <ul class="space-y-3 text-gray-400">
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 mr-3 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                            <span>Flat 9B, Block D80 Maida Vale Residences Visnezade Road, Kensington London, W8 5AA United Kingdom</span>
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 mr-3 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                            </svg>
+                            <span>+90 212 243 32 43</span>
+                        </li>
+                        <li class="flex items-center">
+                            <svg class="w-5 h-5 mr-3 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                            </svg>
+                            <span>info@rollicgamesmania.com</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-500 text-sm mb-4 md:mb-0">© 2025 Rollic Games. All rights reserved.</p>
+                <div class="flex space-x-6">
+                    <a href="/privacy/" class="text-gray-500 hover:text-primary transition-colors text-sm">Privacy Policy</a>
+                    <a href="/terms/" class="text-gray-500 hover:text-primary transition-colors text-sm">Terms of Service</a>
+                    <a href="/cookies/" class="text-gray-500 hover:text-primary transition-colors text-sm">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Cookie Banner
+        const cookieBanner = document.getElementById('cookie-banner');
+        const cookieAccept = document.getElementById('cookie-accept');
+        const cookieDecline = document.getElementById('cookie-decline');
+        
+        if (!localStorage.getItem('cookiesAccepted')) {
+            cookieBanner.classList.remove('hidden');
+        }
+        
+        cookieAccept.addEventListener('click', () => {
+            localStorage.setItem('cookiesAccepted', 'true');
+            cookieBanner.classList.add('hidden');
+        });
+        
+        cookieDecline.addEventListener('click', () => {
+            localStorage.setItem('cookiesAccepted', 'false');
+            cookieBanner.classList.add('hidden');
+        });
+        
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+        
+        gsap.from('.hero-bg h1', {
+            duration: 1,
+            y: 50,
+            opacity: 0,
+            ease: 'power3.out'
+        });
+        
+        gsap.from('.hero-bg p', {
+            duration: 1,
+            y: 50,
+            opacity: 0,
+            delay: 0.3,
+            ease: 'power3.out'
+        });
+        
+        // Animate policy cards with staggered delay
+        gsap.utils.toArray('.policy-card').forEach((card, i) => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: 'top 80%',
+                    toggleActions: 'play none none none'
+                },
+                opacity: 0,
+                y: 30,
+                duration: 0.8,
+                delay: i * 0.1,
+                ease: 'power2.out'
+            });
+        });
+        
+        // Animate other sections
+        gsap.utils.toArray('section').forEach(section => {
+            gsap.from(section, {
+                scrollTrigger: {
+                    trigger: section,
+                    start: 'top 80%',
+                    toggleActions: 'play none none none'
+                },
+                opacity: 0,
+                y: 50,
+                duration: 1,
+                ease: 'power3.out'
+            });
+        });
+        
+        // Three.js Background
+        const threejsContainer = document.getElementById('threejs-canvas');
+        
+        if (threejsContainer) {
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(threejsContainer.offsetWidth, threejsContainer.offsetHeight);
+            threejsContainer.appendChild(renderer.domElement);
+            
+            // Create particles
+            const particlesGeometry = new THREE.BufferGeometry();
+            const particleCount = 1000;
+            
+            const posArray = new Float32Array(particleCount * 3);
+            
+            for (let i = 0; i < particleCount * 3; i++) {
+                posArray[i] = (Math.random() - 0.5) * 10;
+            }
+            
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+            
+            const particlesMaterial = new THREE.PointsMaterial({
+                size: 0.02,
+                color: 0x00ffff,
+                transparent: true,
+                opacity: 0.8,
+                blending: THREE.AdditiveBlending
+            });
+            
+            const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+            scene.add(particlesMesh);
+            
+            camera.position.z = 3;
+            
+            // Animation
+            function animate() {
+                requestAnimationFrame(animate);
+                
+                particlesMesh.rotation.x += 0.0005;
+                particlesMesh.rotation.y += 0.0005;
+                
+                renderer.render(scene, camera);
+            }
+            
+            animate();
+            
+            // Handle resize
+            window.addEventListener('resize', () => {
+                camera.aspect = threejsContainer.offsetWidth / threejsContainer.offsetHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(threejsContainer.offsetWidth, threejsContainer.offsetHeight);
+            });
+        }
+    </script>
+</body>
+</html>

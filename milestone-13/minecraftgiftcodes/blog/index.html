@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft Blog | News, Guides & Updates</title>
+    <meta name="description"
+        content="Latest Minecraft news, updates, guides and tutorials. Stay informed about new features, mods, and gameplay tips.">
+    <meta name="keywords" content="minecraft blog, minecraft news, minecraft guides, minecraft updates, minecraft tips">
+    <link rel="canonical" href="https://minecraftgiftcodes.com/blog/">
+
+    <!-- Favicon -->
+    <link rel="icon" href="/assets/favicon.png" type="image/x-icon">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            DEFAULT: '#4CAF50',
+                            light: '#81C784',
+                            dark: '#388E3C'
+                        },
+                        secondary: {
+                            DEFAULT: '#FF9800',
+                            light: '#FFB74D',
+                            dark: '#F57C00'
+                        },
+                        dark: {
+                            DEFAULT: '#121212',
+                            light: '#1E1E1E',
+                            lighter: '#2D2D2D'
+                        }
+                    },
+                    animation: {
+                        'float': 'float 3s ease-in-out infinite',
+                        'float-reverse': 'float-reverse 3s ease-in-out infinite',
+                        'pulse-slow': 'pulse 5s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' }
+                        },
+                        'float-reverse': {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(10px)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap');
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #121212;
+            color: #f5f5f5;
+            overflow-x: hidden;
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, #4CAF50, #8BC34A, #FF9800);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(139, 195, 74, 0.1), rgba(255, 152, 0, 0.1));
+        }
+
+        .card-hover {
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+        }
+
+        .card-hover:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Unique Hamburger Menu */
+        .hamburger {
+            width: 30px;
+            height: 20px;
+            position: relative;
+            transform: rotate(0deg);
+            transition: .5s ease-in-out;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            display: block;
+            position: absolute;
+            height: 3px;
+            width: 100%;
+            background: #4CAF50;
+            border-radius: 3px;
+            opacity: 1;
+            left: 0;
+            transform: rotate(0deg);
+            transition: .25s ease-in-out;
+        }
+
+        .hamburger span:nth-child(1) {
+            top: 0px;
+            transform-origin: left center;
+        }
+
+        .hamburger span:nth-child(2) {
+            top: 10px;
+            transform-origin: left center;
+        }
+
+        .hamburger span:nth-child(3) {
+            top: 20px;
+            transform-origin: left center;
+        }
+
+        .hamburger.open span:nth-child(1) {
+            transform: rotate(45deg);
+            top: -3px;
+            left: 5px;
+        }
+
+        .hamburger.open span:nth-child(2) {
+            width: 0%;
+            opacity: 0;
+        }
+
+        .hamburger.open span:nth-child(3) {
+            transform: rotate(-45deg);
+            top: 19px;
+            left: 5px;
+        }
+
+        .mobile-menu {
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+
+        .mobile-menu.open {
+            max-height: 1000px;
+            opacity: 1;
+        }
+
+        /* Particle canvas */
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1E1E1E;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #4CAF50;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #388E3C;
+        }
+
+        /* Blog specific styles */
+        .blog-content p {
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .blog-content h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin: 2rem 0 1.5rem;
+            color: #4CAF50;
+        }
+
+        .blog-content h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 1.75rem 0 1.25rem;
+        }
+
+        .blog-content ul,
+        .blog-content ol {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+
+        .blog-content ul li {
+            list-style-type: disc;
+            margin-bottom: 0.5rem;
+        }
+
+        .blog-content ol li {
+            list-style-type: decimal;
+            margin-bottom: 0.5rem;
+        }
+
+        .blog-content blockquote {
+            border-left: 4px solid #4CAF50;
+            padding-left: 1.5rem;
+            margin: 1.5rem 0;
+            font-style: italic;
+            color: #aaa;
+        }
+
+        .blog-content img {
+            max-width: 100%;
+            height: auto;
+            margin: 1.5rem 0;
+            border-radius: 0.5rem;
+        }
+    </style>
+</head>
+
+<body class="antialiased">
+    <!-- Cookie Consent -->
+    <div id="cookie-consent" class="fixed bottom-0 left-0 right-0 bg-dark-lighter p-4 shadow-lg z-50 hidden">
+        <div class="container mx-auto flex flex-col md:flex-row items-center justify-between">
+            <div class="mb-4 md:mb-0 md:mr-8">
+                <p class="text-sm">We use cookies to enhance your experience. By continuing to visit this site you agree
+                    to our use of cookies.</p>
+            </div>
+            <div class="flex space-x-4">
+                <button id="cookie-decline"
+                    class="px-4 py-2 text-sm border border-gray-600 rounded hover:bg-gray-700 transition">Decline</button>
+                <button id="cookie-accept"
+                    class="px-4 py-2 text-sm bg-primary rounded hover:bg-primary-dark transition">Accept</button>
+                <a href="/privacy/" class="px-4 py-2 text-sm text-secondary hover:underline">Learn More</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <header class="fixed w-full z-40 bg-dark shadow-md">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="/" class="flex items-center">
+                        <img src="/assets/logo.png" alt="Minecraft Gift Codes" class="h-12 mr-2">
+
+                    </a>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="text-white hover:text-primary transition">Home</a>
+                    <a href="/shop/" class="text-white hover:text-primary transition">Shop</a>
+                    <a href="/about/" class="text-white hover:text-primary transition">About</a>
+                    <a href="/blog/" class="text-white hover:text-primary transition ">Blog</a>
+                    <a href="/contact/" class="text-white hover:text-primary transition">Contact</a>
+                     <div class="flex items-center space-x-4 ml-4">
+                        <a href="/cart/" class="relative text-white hover:text-primary transition">
+                            <i class="fas fa-shopping-cart text-xl"></i>
+                            <span id="cart-count" class="absolute -top-2 -right-2 bg-secondary text-dark text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                        </a>
+                      <a href="/login/" class="px-4 py-2 bg-primary rounded hover:bg-primary-dark transition ">
+  <i class="fas fa-user"></i>
+</a>
+                    </div>
+                </nav>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center space-x-4">
+                    <a href="/cart/" class="relative text-white hover:text-primary transition">
+                        <i class="fas fa-shopping-cart text-xl"></i>
+                        <span id="mobile-cart-count"
+                            class="absolute -top-2 -right-2 bg-secondary text-dark text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                    </a>
+                    <button id="menu-toggle" class="hamburger focus:outline-none">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="mobile-menu md:hidden bg-dark-light rounded-lg mt-2">
+                <div class="px-4 py-3 space-y-4">
+                    <a href="/" class="block text-white hover:text-primary transition">Home</a>
+                    <a href="/shop/" class="block text-white hover:text-primary transition">Shop</a>
+                    <a href="/about/" class="block text-white hover:text-primary transition">About</a>
+                    <a href="/blog/"
+                        class="block text-white hover:text-primary transition">Blog</a>
+                     <a href="/contact/" class="block text-white hover:text-primary transition pb-4">Contact</a>
+                    <a href="/login/" class="px-4 py-2 bg-primary rounded hover:bg-primary-dark transition ">
+                        <i class="fas fa-user"></i>
+                    </a>
+                    <div class="pt-4 border-t border-gray-700">
+                        <p class="text-xs text-gray-400">We are not an affiliate agency. All products are sold
+                            independently through our platform.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Blog Hero Section -->
+    <section class="relative pt-24 pb-16 md:pt-32 md:pb-24 overflow-hidden bg-gradient-to-br from-dark to-primary-dark">
+        <div id="particles-js"></div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="max-w-4xl mx-auto text-center">
+                <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+                    <span class="gradient-text">Minecraft Blog</span>
+                </h1>
+                <p class="text-xl text-gray-300 mb-8">
+                    Latest news, updates, guides and tutorials to enhance your Minecraft experience
+                </p>
+                <div class="relative max-w-md mx-auto hidden">
+                    <input type="text" placeholder="Search blog posts..."
+                        class="w-full px-6 py-3 rounded-full bg-dark-light border border-gray-700 focus:border-primary focus:outline-none">
+                    <button
+                        class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-primary text-dark p-2 rounded-full hover:bg-primary-dark transition">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Blog Post -->
+    <section class="py-16">
+        <div class="container mx-auto px-4">
+            <div class="bg-dark-lighter rounded-xl overflow-hidden shadow-2xl">
+                <div class="md:flex">
+                    <div class="md:w-1/2">
+                        <img src="/assets/blog/minecraft-update.jpg" alt="Minecraft 1.20 Update Features"
+                            class="w-full h-full object-cover">
+                    </div>
+                    <div class="md:w-1/2 p-8 md:p-12">
+                        <div class="flex items-center text-sm text-gray-400 mb-4">
+                            <span>June 15, 2025</span>
+                            <span class="mx-2">•</span>
+                            <span>8 min read</span>
+                            <span class="mx-2">•</span>
+                            <span class="text-primary">Featured</span>
+                        </div>
+                        <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                            <a href="/blog/minecraft-1-20-update/" class="hover:text-primary transition">Minecraft 1.20
+                                Update: All New Features Explained</a>
+                        </h2>
+                        <p class="text-gray-400 mb-6">Discover everything new in the latest Minecraft update, from the
+                            Cherry Blossom biome to archaeology and armor trims.</p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="px-3 py-1 bg-dark text-xs rounded-full">Updates</span>
+                            <span class="px-3 py-1 bg-dark text-xs rounded-full">Features</span>
+                            <span class="px-3 py-1 bg-dark text-xs rounded-full">Guide</span>
+                        </div>
+                        <a href="/blog/minecraft-1-20-update/"
+                            class="inline-flex items-center text-primary hover:underline">
+                            Read Full Article <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Posts Grid -->
+    <section class="py-16 bg-dark-light">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Latest Articles</h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">Stay updated with the newest Minecraft content</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Blog Post 1 -->
+                <article class="bg-dark-lighter rounded-lg overflow-hidden shadow-lg card-hover">
+                    <a href="/blog/best-minecraft-mods-2023/">
+                        <img src="/assets/blog/minecraft-mods.jpg" alt="Best Minecraft Mods 2023"
+                            class="w-full h-64 object-cover">
+                    </a>
+                    <div class="p-6">
+                        <div class="flex items-center text-sm text-gray-400 mb-2">
+                            <span>May 28, 2025</span>
+                            <span class="mx-2">•</span>
+                            <span>10 min read</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">
+                            <a href="/blog/best-minecraft-mods-2023/" class="hover:text-primary transition">Top 15
+                                Must-Have Minecraft Mods in 2025</a>
+                        </h3>
+                        <p class="text-gray-400 mb-4">Transform your Minecraft experience with these incredible mods
+                            that add new dimensions, mechanics, and graphics.</p>
+                        <a href="/blog/best-minecraft-mods-2023/"
+                            class="text-primary hover:underline inline-flex items-center">
+                            Read More <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Blog Post 2 -->
+                <article class="bg-dark-lighter rounded-lg overflow-hidden shadow-lg card-hover">
+                    <a href="/blog/how-to-make-money-minecraft/">
+                        <img src="/assets/blog/minecraft-money.jpg" alt="How to Make Money in Minecraft"
+                            class="w-full h-64 object-cover">
+                    </a>
+                    <div class="p-6">
+                        <div class="flex items-center text-sm text-gray-400 mb-2">
+                            <span>May 10, 2025</span>
+                            <span class="mx-2">•</span>
+                            <span>6 min read</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">
+                            <a href="/blog/how-to-make-money-minecraft/" class="hover:text-primary transition">How to
+                                Make Real Money Playing Minecraft</a>
+                        </h3>
+                        <p class="text-gray-400 mb-4">Discover legitimate ways to turn your Minecraft skills into
+                            real-world income through servers, skins, and more.</p>
+                        <a href="/blog/how-to-make-money-minecraft/"
+                            class="text-primary hover:underline inline-flex items-center">
+                            Read More <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Blog Post 3 -->
+                <article class="bg-dark-lighter rounded-lg overflow-hidden shadow-lg card-hover">
+                    <a href="/blog/building-tips-beginners/">
+                        <img src="/assets/blog/minecrat-village.avif" alt="Minecraft Building Tips"
+                            class="w-full h-64 object-cover">
+                    </a>
+                    <div class="p-6">
+                        <div class="flex items-center text-sm text-gray-400 mb-2">
+                            <span>April 22, 2025</span>
+                            <span class="mx-2">•</span>
+                            <span>7 min read</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">
+                            <a href="/blog/building-tips-beginners/" class="hover:text-primary transition">10 Building
+                                Tips Every Minecraft Beginner Should Know</a>
+                        </h3>
+                        <p class="text-gray-400 mb-4">Improve your building skills with these essential tips and tricks
+                            for Minecraft beginners and intermediate players.</p>
+                        <a href="/blog/building-tips-beginners/"
+                            class="text-primary hover:underline inline-flex items-center">
+                            Read More <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </article>
+
+                <!-- Blog Post 4 -->
+                <article class="bg-dark-lighter rounded-lg overflow-hidden shadow-lg card-hover">
+                    <a href="/blog/redstone-guide/">
+                        <img src="/assets/blog/redstone-guide.jpg" alt="Redstone Guide"
+                            class="w-full h-64 object-cover">
+                    </a>
+                    <div class="p-6">
+                        <div class="flex items-center text-sm text-gray-400 mb-2">
+                            <span>April 5, 2025</span>
+                            <span class="mx-2">•</span>
+                            <span>12 min read</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3">
+                            <a href="/blog/redstone-guide/" class="hover:text-primary transition">The Ultimate Redstone
+                                Guide for Beginners</a>
+                        </h3>
+                        <p class="text-gray-400 mb-4">Master the basics of Redstone with this comprehensive guide that
+                            will take you from complete novice to competent engineer.</p>
+                        <a href="/blog/redstone-guide/" class="text-primary hover:underline inline-flex items-center">
+                            Read More <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </article>
+            </div>
+
+            
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="py-16 bg-gradient-to-r from-primary-dark to-secondary-dark">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Never Miss an Update</h2>
+                <p class="text-xl mb-8 max-w-3xl mx-auto">Subscribe to our newsletter for exclusive deals, new product announcements, gaming news, and a chance to get digital bonus drop till $1500.</p>
+
+                <form id="newsletter-form" class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+                    <input type="email" placeholder="Your email address"
+                        class="flex-grow px-4 py-3 rounded bg-dark border border-gray-700 focus:border-primary focus:outline-none"
+                        required>
+                    <button type="submit"
+                        class="px-6 py-3 bg-white text-dark font-bold rounded hover:bg-gray-200 transition">
+                        Subscribe
+                    </button>
+                </form>
+
+                <p class="text-sm text-gray-300 mt-4">We respect your privacy. Unsubscribe at any time.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+                <!-- Column 1 -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4 flex items-center">
+                        <img src="/assets/logo.png" alt="Minecraft Gift Codes" class="h-12 mr-2">
+
+                    </h3>
+                    <p class="text-gray-400 mb-4">Your trusted source for authentic Minecraft digital products and gift
+                        codes.</p>
+
+                </div>
+
+                <!-- Column 2 -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Shop</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/shop/" class="text-gray-400 hover:text-primary transition">Gift Cards</a></li>
+
+                        <li><a href="/shop/" class="text-gray-400 hover:text-primary transition">Mods</a></li>
+                        <li><a href="/shop/" class="text-gray-400 hover:text-primary transition">Bundles</a></li>
+                        <li><a href="/shop/" class="text-gray-400 hover:text-primary transition">New Releases</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 3 -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Quick Link</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/contact/" class="text-gray-400 hover:text-primary transition">Contact Us</a></li>
+
+
+                        <li><a href="/account/" class="text-gray-400 hover:text-primary transition">My Account</a></li>
+                        <li><a href="/blog/" class="text-gray-400 hover:text-primary transition">Blog</a></li>
+                        <li><a href="/about/" class="text-gray-400 hover:text-primary transition">About Us</a></li>
+                    </ul>
+                </div>
+
+                <!-- Column 4 -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Legal</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/privacy/" class="text-gray-400 hover:text-primary transition">Privacy Policy</a>
+                        </li>
+                        <li><a href="/terms/" class="text-gray-400 hover:text-primary transition">Terms of Service</a>
+                        </li>
+                        <li><a href="/cookies/" class="text-gray-400 hover:text-primary transition">Cookie Policy</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="pt-8 border-t border-gray-800">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-500 text-sm mb-4 md:mb-0">
+                        &copy; 2025 MinecraftGiftCodes.com. All rights reserved.
+                    </p>
+                    <p class="text-gray-500 text-sm">
+                        We are not an affiliate agency. All products are sold independently through our platform.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Particles.js -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+   <script>
+    // Mobile Menu Toggle
+    const menuToggle = document.getElementById('menu-toggle');
+    const mobileMenu = document.getElementById('mobile-menu');
+    
+    menuToggle.addEventListener('click', () => {
+        menuToggle.classList.toggle('open');
+        mobileMenu.classList.toggle('open');
+    });
+
+    // Cart functionality
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    function updateCartCount() {
+        const cartCount = cart.reduce((total, item) => total + (item.quantity || 1), 0);
+        document.getElementById('cart-count').textContent = cartCount;
+        document.getElementById('mobile-cart-count').textContent = cartCount;
+    }
+
+    // Initialize cart on page load
+    function initCart() {
+        try {
+            const savedCart = localStorage.getItem('cart');
+            cart = savedCart ? JSON.parse(savedCart) : [];
+            
+            // Ensure cart is an array and items have quantity
+            if (!Array.isArray(cart)) {
+                cart = [];
+            }
+            
+            cart = cart.map(item => ({
+                ...item,
+                quantity: item.quantity || 1
+            }));
+            
+            updateCartCount();
+        } catch (e) {
+            console.error("Error loading cart:", e);
+            cart = [];
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+        }
+    }
+
+    // Newsletter form
+    document.getElementById('newsletter-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const email = this.querySelector('input[type="email"]').value;
+        
+        // Store in local storage
+        let newsletters = JSON.parse(localStorage.getItem('newsletters')) || [];
+        newsletters.push(email);
+        localStorage.setItem('newsletters', JSON.stringify(newsletters));
+        
+        // Show feedback
+        this.querySelector('button').textContent = 'Subscribed!';
+        this.querySelector('input').value = '';
+        
+        setTimeout(() => {
+            this.querySelector('button').textContent = 'Subscribe';
+        }, 2000);
+    });
+    
+    // Cookie consent
+    const cookieConsent = document.getElementById('cookie-consent');
+    const cookieAccept = document.getElementById('cookie-accept');
+    const cookieDecline = document.getElementById('cookie-decline');
+    
+    if (!localStorage.getItem('cookieConsent')) {
+        setTimeout(() => {
+            cookieConsent.classList.remove('hidden');
+        }, 2000);
+    }
+    
+    cookieAccept.addEventListener('click', () => {
+        localStorage.setItem('cookieConsent', 'accepted');
+        cookieConsent.classList.add('hidden');
+    });
+    
+    cookieDecline.addEventListener('click', () => {
+        localStorage.setItem('cookieConsent', 'declined');
+        cookieConsent.classList.add('hidden');
+    });
+    
+    // GSAP Animations
+    gsap.registerPlugin(ScrollTrigger);
+    
+    // Animate elements on scroll
+    gsap.utils.toArray('.card-hover, article').forEach(element => {
+        gsap.from(element, {
+            scrollTrigger: {
+                trigger: element,
+                start: "top 80%",
+                toggleActions: "play none none none"
+            },
+            opacity: 0,
+            y: 50,
+            duration: 0.8,
+            ease: "power2.out"
+        });
+    });
+    
+    // Hero text animation
+    gsap.from("section.relative h1, section.relative p, section.relative div", {
+        duration: 1,
+        opacity: 0,
+        y: 30,
+        stagger: 0.2,
+        ease: "power2.out"
+    });
+    
+    // Particles.js initialization
+    document.addEventListener('DOMContentLoaded', function() {
+        initCart(); // Initialize cart count
+        
+        if (document.getElementById('particles-js')) {
+            particlesJS('particles-js', {
+                "particles": {
+                    "number": {
+                        "value": 80,
+                        "density": {
+                            "enable": true,
+                            "value_area": 800
+                        }
+                    },
+                    "color": {
+                        "value": "#4CAF50"
+                    },
+                    "shape": {
+                        "type": "circle",
+                        "stroke": {
+                            "width": 0,
+                            "color": "#000000"
+                        },
+                        "polygon": {
+                            "nb_sides": 5
+                        }
+                    },
+                    "opacity": {
+                        "value": 0.5,
+                        "random": false,
+                        "anim": {
+                            "enable": false,
+                            "speed": 1,
+                            "opacity_min": 0.1,
+                            "sync": false
+                        }
+                    },
+                    "size": {
+                        "value": 3,
+                        "random": true,
+                        "anim": {
+                            "enable": false,
+                            "speed": 40,
+                            "size_min": 0.1,
+                            "sync": false
+                        }
+                    },
+                    "line_linked": {
+                        "enable": true,
+                        "distance": 150,
+                        "color": "#4CAF50",
+                        "opacity": 0.4,
+                        "width": 1
+                    },
+                    "move": {
+                        "enable": true,
+                        "speed": 2,
+                        "direction": "none",
+                        "random": false,
+                        "straight": false,
+                        "out_mode": "out",
+                        "bounce": false,
+                        "attract": {
+                            "enable": false,
+                            "rotateX": 600,
+                            "rotateY": 1200
+                        }
+                    }
+                },
+                "interactivity": {
+                    "detect_on": "canvas",
+                    "events": {
+                        "onhover": {
+                            "enable": true,
+                            "mode": "grab"
+                        },
+                        "onclick": {
+                            "enable": true,
+                            "mode": "push"
+                        },
+                        "resize": true
+                    },
+                    "modes": {
+                        "grab": {
+                            "distance": 140,
+                            "line_linked": {
+                                "opacity": 1
+                            }
+                        },
+                        "bubble": {
+                            "distance": 400,
+                            "size": 40,
+                            "duration": 2,
+                            "opacity": 8,
+                            "speed": 3
+                        },
+                        "repulse": {
+                            "distance": 200,
+                            "duration": 0.4
+                        },
+                        "push": {
+                            "particles_nb": 4
+                        },
+                        "remove": {
+                            "particles_nb": 2
+                        }
+                    }
+                },
+                "retina_detect": true
+            });
+        }
+    });
+</script>
+</body>
+
+</html>

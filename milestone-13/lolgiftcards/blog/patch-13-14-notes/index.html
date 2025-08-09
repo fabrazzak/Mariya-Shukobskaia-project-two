@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Detailed breakdown of the latest League of Legends patch 13.14 notes including champion buffs, nerfs, and item changes.">
+    <meta name="keywords" content="League of Legends patch, LoL patch 13.14, patch notes, champion buffs, champion nerfs, item changes">
+    <meta name="author" content="LOLGiftCards">
+    <title>Patch 13.14 Notes - Major Champion Adjustments | LOLGiftCards.com</title>
+    <link rel="canonical" href="https://lolgiftcards.com/blog/patch-13-14-notes/" />
+    <link rel="icon" href="/image/logo.png" type="image/x-icon" class="w-40 h-40 object-cover">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0f1923',
+                        secondary: '#1a2a3a',
+                        accent: '#ff4655',
+                        riot: '#ce3e3e',
+                        dark: '#0a0e12',
+                        light: '#f8f9fa',
+                    },
+                    fontFamily: {
+                        sans: ['Beaufort', 'Helvetica', 'Arial', 'sans-serif'],
+                        beaufort: ['Beaufort', 'serif'],
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Beaufort+Pro:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollTrigger.min.js"></script>
+    
+    <style>
+        body {
+            font-family: 'Beaufort Pro', serif;
+            background-color: #0a0e12;
+            color: #f8f9fa;
+            overflow-x: hidden;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, #ff4655, #ce3e3e);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #0f1923 0%, #1a2a3a 100%);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(255, 70, 85, 0.25);
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #ff4655;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .btn-accent {
+            background: linear-gradient(135deg, #ff4655 0%, #ce3e3e 100%);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 70, 85, 0.3);
+        }
+        
+        .btn-accent:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 70, 85, 0.4);
+        }
+        
+        .particles-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        
+        .hero-gradient {
+            background: radial-gradient(circle at 20% 50%, rgba(255, 70, 85, 0.15) 0%, rgba(15, 25, 35, 0) 50%);
+        }
+        
+        .glow {
+            filter: drop-shadow(0 0 8px rgba(255, 70, 85, 0.7));
+        }
+        
+        .feature-icon {
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1) rotate(5deg);
+            color: #ff4655;
+        }
+        
+        .ripple {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .ripple:after {
+            content: "";
+            display: block;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            background-image: radial-gradient(circle, #fff 10%, transparent 10.01%);
+            background-repeat: no-repeat;
+            background-position: 50%;
+            transform: scale(10, 10);
+            opacity: 0;
+            transition: transform .5s, opacity 1s;
+        }
+        
+        .ripple:active:after {
+            transform: scale(0, 0);
+            opacity: .3;
+            transition: 0s;
+        }
+        
+        .tilt-hover {
+            transition: transform 0.3s ease;
+        }
+        
+        .tilt-hover:hover {
+            transform: rotateY(10deg) rotateX(5deg);
+        }
+        
+        .blog-content h2 {
+            font-size: 1.75rem;
+            font-weight: bold;
+            margin: 1.5rem 0 1rem;
+            color: #ff4655;
+        }
+        
+        .blog-content h3 {
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 1.25rem 0 0.75rem;
+            color: #f8f9fa;
+        }
+        
+        .blog-content p {
+            margin-bottom: 1rem;
+            line-height: 1.7;
+            color: #d1d5db;
+        }
+        
+        .blog-content ul, .blog-content ol {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+        
+        .blog-content li {
+            margin-bottom: 0.5rem;
+            line-height: 1.7;
+        }
+        
+        .blog-content a {
+            color: #ff4655;
+            text-decoration: underline;
+        }
+        
+        .blog-content a:hover {
+            color: #ce3e3e;
+        }
+        
+        .blog-content blockquote {
+            border-left: 4px solid #ff4655;
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+            font-style: italic;
+            color: #9ca3af;
+        }
+        
+        .blog-content img {
+            max-width: 100%;
+            height: auto;
+            margin: 1.5rem auto;
+            border-radius: 0.5rem;
+            display: block;
+        }
+        
+        .tag {
+            display: inline-block;
+            background-color: rgba(255, 70, 85, 0.2);
+            color: #ff4655;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+            transition: all 0.3s ease;
+        }
+        
+        .tag:hover {
+            background-color: rgba(255, 70, 85, 0.4);
+        }
+        
+        .pagination-link {
+            width: 2.5rem;
+            height: 2.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 0.375rem;
+            transition: all 0.3s ease;
+        }
+        
+        .pagination-link:hover {
+            background-color: rgba(255, 70, 85, 0.2);
+        }
+        
+        .pagination-link.active {
+            background-color: #ff4655;
+            color: white;
+        }
+        
+        .patch-change {
+            background-color: rgba(26, 42, 58, 0.5);
+            border-left: 3px solid #ff4655;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0 0.375rem 0.375rem 0;
+        }
+        
+        .buff {
+            color: #4ade80;
+        }
+        
+        .nerf {
+            color: #f87171;
+        }
+        
+        .adjustment {
+            color: #60a5fa;
+        }
+        
+        .change-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+        
+        .change-icon {
+            margin-right: 0.5rem;
+            font-size: 1.25rem;
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <!-- Particles Background -->
+    <div id="particles-js" class="particles-container fixed inset-0 w-full h-full"></div>
+    
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-primary/90 backdrop-blur-md border-b border-secondary">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="/" class="flex items-center">
+                       <img src="/image/logo.png" alt="LOLGiftCards Logo" class="h-20 w-30 object-cover glow">
+                    </a>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="nav-link text-light hover:text-accent font-medium">Home</a>
+                    <a href="/shop/" class="nav-link text-light hover:text-accent font-medium">Shop</a>
+                    <a href="/blog/" class="nav-link text-accent font-medium">Blog</a>
+                    <a href="/about/" class="nav-link text-light hover:text-accent font-medium">About</a>
+                    <a href="/contact/" class="nav-link text-light hover:text-accent font-medium">Contact</a>
+                    
+                    <!-- Cart Icon -->
+                    <a href="/cart/" class="relative p-2 text-light hover:text-accent">
+                        <i class="fas fa-shopping-cart text-xl"></i>
+                        <span id="cart-count" class="absolute -top-1 -right-1 bg-accent text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                    </a>
+                    
+                    <!-- Auth Buttons -->
+                    <a href="/login/" class="text-white hover:text-accent">
+                        <i class="fas fa-user"></i>
+                    </a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-button" class="text-light hover:text-accent focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-primary border-t border-secondary">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="/" class="block px-3 py-2 text-light hover:text-accent font-medium">Home</a>
+                <a href="/shop/" class="block px-3 py-2 text-light hover:text-accent font-medium">Shop</a>
+                <a href="/blog/" class="block px-3 py-2 text-accent font-medium">Blog</a>
+                <a href="/about/" class="block px-3 py-2 text-light hover:text-accent font-medium">About</a>
+                <a href="/contact/" class="block px-3 py-2 text-light hover:text-accent font-medium">Contact</a>
+                <a href="/cart/" class="block px-3 py-2 text-light hover:text-accent font-medium">
+                    <span>Cart</span>
+                    <span id="mobile-cart-count" class="ml-2 bg-accent text-white text-xs font-bold rounded-full h-5 w-5 inline-flex items-center justify-center">0</span>
+                </a>
+                <a href="/login/" class="text-white hover:text-accent">
+                        <i class="fas fa-user"></i>
+                    </a>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Blog Header -->
+    <section class="relative pt-32 pb-20 md:pt-40 md:pb-28 hero-gradient overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center">
+                <div class="flex justify-center mb-4">
+                    <a href="/blog/" class="tag bg-accent/20 text-accent">News</a>
+                    <a href="/blog/" class="tag bg-accent/20 text-accent">Updates</a>
+                </div>
+                <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+                    <span class="gradient-text">Patch 13.14 Notes</span><br>
+                    Major Champion Adjustments
+                </h1>
+                <p class="text-lg md:text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
+                    Detailed breakdown of the latest patch notes including champion buffs, nerfs, and item changes.
+                </p>
+                <div class="flex items-center justify-center space-x-4 text-gray-400">
+                    <span>Patch Analyst</span>
+                    <span>•</span>
+                    <span>June 24, 2025</span>
+                    <span>•</span>
+                    <span>7 min read</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Blog Content -->
+    <section class="py-16 bg-dark">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="blog-content">
+                <img src="/image/Blog/patch-notes.jpg" alt="Patch 13.14 Banner" class="w-full rounded-xl mb-12">
+                
+                <p class="text-xl text-gray-300 mb-8">Patch 13.14 brings significant changes to the League of Legends landscape, with major adjustments to several champions and items. This mid-season patch aims to shake up the meta and address some balance outliers before the competitive summer split. Let's dive into the most important changes and what they mean for your games.</p>
+                
+                <h2>Champion Buffs</h2>
+                
+                <p>Several underperforming champions received buffs in this patch to bring them back into viability:</p>
+                
+                <div class="patch-change">
+                    <div class="change-header">
+                        <i class="fas fa-arrow-up change-icon buff"></i>
+                        <h3 class="text-xl font-bold buff">Azir</h3>
+                    </div>
+                    <ul class="text-gray-300">
+                        <li><strong>Base Health:</strong> 550 ⇒ 580</li>
+                        <li><strong>W - Arise!:</strong> Soldier auto attack range increased by 50</li>
+                        <li><strong>R - Emperor's Divide:</strong> Wall duration increased from 3/4.5/6 ⇒ 4/5.5/7 seconds</li>
+                    </ul>
+                    <p class="text-gray-400 mt-2"><strong>Developer Comments:</strong> "Azir has been underperforming since the mid-season mage item changes. These buffs should help him compete in the current meta while maintaining his skill expression."</p>
+                </div>
+                
+                <div class="patch-change">
+                    <div class="change-header">
+                        <i class="fas fa-arrow-up change-icon buff"></i>
+                        <h3 class="text-xl font-bold buff">Kalista</h3>
+                    </div>
+                    <ul class="text-gray-300">
+                        <li><strong>Base Attack Damage:</strong> 69 ⇒ 72</li>
+                        <li><strong>E - Rend:</strong> Damage per spear increased from 20/28/36/44/52 ⇒ 22/31/40/49/58</li>
+                        <li><strong>R - Fate's Call:</strong> Cooldown reduced from 120/100/80 ⇒ 110/90/70 seconds</li>
+                    </ul>
+                    <p class="text-gray-400 mt-2"><strong>Developer Comments:</strong> "Kalista's unique playstyle has been struggling in the current bot lane meta. These changes should help her compete with other marksmen."</p>
+                </div>
+                
+                <div class="patch-change">
+                    <div class="change-header">
+                        <i class="fas fa-arrow-up change-icon buff"></i>
+                        <h3 class="text-xl font-bold buff">Zac</h3>
+                    </div>
+                    <ul class="text-gray-300">
+                        <li><strong>Q - Stretching Strikes:</strong> Cooldown reduced from 13/12/11/10/9 ⇒ 12/11/10/9/8 seconds</li>
+                        <li><strong>W - Unstable Matter:</strong> Damage increased from 35/50/65/80/95 ⇒ 40/55/70/85/100</li>
+                        <li><strong>E - Elastic Slingshot:</strong> Range increased by 100 at all ranks</li>
+                    </ul>
+                </div>
+                
+               
+                
+                <h2>Champion Nerfs</h2>
+                
+                <p>Some dominant champions received nerfs to bring them more in line with others:</p>
+                
+                <div class="patch-change">
+                    <div class="change-header">
+                        <i class="fas fa-arrow-down change-icon nerf"></i>
+                        <h3 class="text-xl font-bold nerf">K'Sante</h3>
+                    </div>
+                    <ul class="text-gray-300">
+                        <li><strong>Base Armor:</strong> 35 ⇒ 33</li>
+                        <li><strong>Q - Ntofo Strikes:</strong> Slow duration reduced from 1.5 ⇒ 1.25 seconds</li>
+                        <li><strong>R - All Out:</strong> Bonus AD ratio reduced from 65% ⇒ 55%</li>
+                    </ul>
+                    <p class="text-gray-400 mt-2"><strong>Developer Comments:</strong> "K'Sante has been overperforming at all levels of play, especially in skilled hands. These changes should maintain his identity while reducing his dominance."</p>
+                </div>
+                
+                <div class="patch-change">
+                    <div class="change-header">
+                        <i class="fas fa-arrow-down change-icon nerf"></i>
+                        <h3 class="text-xl font-bold nerf">Zoe</h3>
+                    </div>
+                    <ul class="text-gray-300">
+                        <li><strong>Q - Paddle Star:</strong> Damage ratio reduced from 60/100/140/180/220 (+60% AP) ⇒ 50/90/130/170/210 (+55% AP)</li>
+                        <li><strong>E - Sleepy Trouble Bubble:</strong> Cooldown increased from 16/15.5/15/14.5/14 ⇒ 18/17/16/15/14 seconds</li>
+                    </ul>
+                </div>
+                
+                <div class="patch-change">
+                    <div class="change-header">
+                        <i class="fas fa-arrow-down change-icon nerf"></i>
+                        <h3 class="text-xl font-bold nerf">Rek'Sai</h3>
+                    </div>
+                    <ul class="text-gray-300">
+                        <li><strong>Base Attack Speed:</strong> 0.667 ⇒ 0.644</li>
+                        <li><strong>Q - Queen's Wrath:</strong> Bonus AD ratio reduced from 40% ⇒ 35%</li>
+                        <li><strong>E - Tunnel:</strong> Cooldown increased from 26/23/20/17/14 ⇒ 30/26/22/18/14 seconds</li>
+                    </ul>
+                </div>
+                
+                <h2>Champion Adjustments</h2>
+                
+                <p>Some champions received more nuanced changes that aren't strictly buffs or nerfs:</p>
+                
+                <div class="patch-change">
+                    <div class="change-header">
+                        <i class="fas fa-exchange-alt change-icon adjustment"></i>
+                        <h3 class="text-xl font-bold adjustment">Rell</h3>
+                    </div>
+                    <ul class="text-gray-300">
+                        <li><strong>Passive - Break the Mold:</strong> Armor/MR steal increased from 10% ⇒ 12%, but duration reduced from 4 ⇒ 3 seconds</li>
+                        <li><strong>W - Ferromancy:</strong> Crash Down shield increased from 35/60/85/110/135 ⇒ 40/70/100/130/160</li>
+                        <li><strong>W - Ferromancy:</strong> Mount Up movement speed reduced from 25/30/35/40/45% ⇒ 20/25/30/35/40%</li>
+                    </ul>
+                    <p class="text-gray-400 mt-2"><strong>Developer Comments:</strong> "We're shifting some of Rell's power from her mobility to her durability, making her better at engaging but slightly less slippery after the fact."</p>
+                </div>
+                
+                <div class="patch-change">
+                    <div class="change-header">
+                        <i class="fas fa-exchange-alt change-icon adjustment"></i>
+                        <h3 class="text-xl font-bold adjustment">Syndra</h3>
+                    </div>
+                    <ul class="text-gray-300">
+                        <li><strong>Q - Dark Sphere:</strong> Mana cost reduced from 60/65/70/75/80 ⇒ 50/55/60/65/70</li>
+                        <li><strong>W - Force of Will:</strong> Damage reduced from 70/110/150/190/230 (+70% AP) ⇒ 60/100/140/180/220 (+65% AP)</li>
+                        <li><strong>E - Scatter the Weak:</strong> Stun duration increased from 1.25 ⇒ 1.5 seconds</li>
+                    </ul>
+                </div>
+                
+               
+                
+                <h2>Item Changes</h2>
+                
+                <p>Several items received adjustments to better balance their power:</p>
+                
+                <div class="patch-change">
+                    <div class="change-header">
+                        <i class="fas fa-exchange-alt change-icon adjustment"></i>
+                        <h3 class="text-xl font-bold adjustment">Duskblade of Draktharr</h3>
+                    </div>
+                    <ul class="text-gray-300">
+                        <li><strong>Nightstalker Passive:</strong> Cooldown increased from 10 ⇒ 15 seconds</li>
+                        <li><strong>Attack Damage:</strong> 60 ⇒ 65</li>
+                    </ul>
+                    <p class="text-gray-400 mt-2"><strong>Developer Comments:</strong> "Duskblade has been providing too much safety for assassins. We're increasing its cooldown but giving it more AD to compensate."</p>
+                </div>
+                
+                <div class="patch-change">
+                    <div class="change-header">
+                        <i class="fas fa-arrow-up change-icon buff"></i>
+                        <h3 class="text-xl font-bold buff">Rod of Ages</h3>
+                    </div>
+                    <ul class="text-gray-300">
+                        <li><strong>Health:</strong> 400 ⇒ 450</li>
+                        <li><strong>Mana:</strong> 400 ⇒ 450</li>
+                        <li><strong>Time to fully stack:</strong> 10 minutes ⇒ 8 minutes</li>
+                    </ul>
+                </div>
+                
+                <div class="patch-change">
+                    <div class="change-header">
+                        <i class="fas fa-arrow-down change-icon nerf"></i>
+                        <h3 class="text-xl font-bold nerf">Statikk Shiv</h3>
+                    </div>
+                    <ul class="text-gray-300">
+                        <li><strong>Energized Damage:</strong> 100-180 (based on level) ⇒ 80-160 (based on level)</li>
+                        <li><strong>Cost:</strong> 3000 ⇒ 3100</li>
+                    </ul>
+                </div>
+                
+                <h2>System Changes</h2>
+                
+                <div class="patch-change">
+                    <div class="change-header">
+                        <i class="fas fa-exchange-alt change-icon adjustment"></i>
+                        <h3 class="text-xl font-bold adjustment">Turret Plating</h3>
+                    </div>
+                    <ul class="text-gray-300">
+                        <li><strong>Gold per Plate:</strong> 175 ⇒ 160</li>
+                        <li><strong>Resistance Buff Duration:</strong> 30 seconds after plate falls ⇒ 45 seconds after plate falls</li>
+                    </ul>
+                    <p class="text-gray-400 mt-2"><strong>Developer Comments:</strong> "We're reducing the snowball potential from turret plates while making it slightly harder to take consecutive plates."</p>
+                </div>
+                
+                <div class="patch-change">
+                    <div class="change-header">
+                        <i class="fas fa-arrow-up change-icon buff"></i>
+                        <h3 class="text-xl font-bold buff">Jungle Camp Experience</h3>
+                    </div>
+                    <ul class="text-gray-300">
+                        <li><strong>Buff Camp Experience:</strong> Increased by 10%</li>
+                        <li><strong>Gromp Experience:</strong> Increased by 15%</li>
+                    </ul>
+                </div>
+                
+              
+                
+                <h2>Meta Predictions</h2>
+                
+                <p>Based on these changes, we expect to see the following shifts in the meta:</p>
+                
+                <ul>
+                    <li><strong>Azir's Return:</strong> The buffs should bring Azir back into viability, especially in competitive play where he's always been favored.</li>
+                    <li><strong>Assassin Adjustments:</strong> The Duskblade changes may shift assassin itemization patterns, with some opting for other mythics.</li>
+                    <li><strong>Top Lane Impact:</strong> K'Sante's nerfs may open up space for other top laners like Fiora and Jax to shine.</li>
+                    <li><strong>Jungle Diversity:</strong> The camp experience changes should help farming junglers compete better with early gankers.</li>
+                    <li><strong>Mage Itemization:</strong> Rod of Ages buffs make it more attractive for scaling mages, potentially bringing back champions like Anivia and Cassiopeia.</li>
+                </ul>
+                
+                <h2>Final Thoughts</h2>
+                
+                <p>Patch 13.14 brings significant changes that should shake up the meta in interesting ways. The champion adjustments target some of the most dominant picks while bringing up underperformers, and the item changes aim to create more diversity in builds. The turret plating and jungle experience changes will also have ripple effects on game pacing and strategy.</p>
+                
+                <p>As always, it will take a few weeks for the meta to settle after these changes. Be sure to experiment with the buffed champions and items to find new powerful strategies before they become mainstream!</p>
+                
+                <div class="mt-12 pt-8 border-t border-secondary">
+                   
+                    
+                    <div class="flex justify-between items-center">
+                        <a href="/blog/" class="text-accent hover:text-accent/80 font-medium flex items-center">
+                            <i class="fas fa-arrow-left mr-2"></i> Back to Blog
+                        </a>
+                        
+                       
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-r from-primary to-accent/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6 text-light">
+                Ready for the <span class="gradient-text">New Meta</span>?
+            </h2>
+            <p class="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+                Get the RP you need to try out all the buffed champions and items in this patch.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="/shop/" class="bg-white text-primary px-8 py-4 rounded-md font-bold text-lg ripple transform hover:scale-105 transition-transform duration-300">
+                    Shop Gift Cards <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+                <a href="/register/" class="bg-accent hover:bg-accent/90 text-white px-8 py-4 rounded-md font-bold text-lg border border-white/20 ripple transform hover:scale-105 transition-transform duration-300">
+                    Get 10% Bonus <i class="fas fa-gift ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="bg-dark pt-16 pb-8 border-t border-secondary">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+                <!-- Column 1 -->
+                <div>
+                    <a href="/" class="flex items-center mb-6">
+                        <img src="/image/logo.png" alt="LOLGiftCards Logo" class="h-20 w-30 object-cover glow">
+                    </a>
+                    <p class="text-gray-400 mb-6">
+                        Your trusted source for League of Legends gift cards, skins, and in-game content. Instant delivery guaranteed.
+                    </p>
+                </div>
+                
+                <!-- Column 2 -->
+                <div>
+                    <h3 class="text-lg font-bold text-light mb-6">Shop</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/shop/" class="text-gray-400 hover:text-accent transition-colors">Gift Cards</a></li>
+                        <li><a href="/shop/" class="text-gray-400 hover:text-accent transition-colors">Skins</a></li>
+                        <li><a href="/shop/" class="text-gray-400 hover:text-accent transition-colors">Champions</a></li>
+                        <li><a href="/shop/" class="text-gray-400 hover:text-accent transition-colors">Bundles</a></li>
+                        <li><a href="/shop/" class="text-gray-400 hover:text-accent transition-colors">Sales & Deals</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Column 3 -->
+                <div>
+                    <h3 class="text-lg font-bold text-light mb-6">Company</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/about/" class="text-gray-400 hover:text-accent transition-colors">About Us</a></li>
+                        <li><a href="/blog/" class="text-gray-400 hover:text-accent transition-colors">Blog</a></li>
+                        <li><a href="/contact/" class="text-gray-400 hover:text-accent transition-colors">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Column 4 -->
+                <div>
+                    <h3 class="text-lg font-bold text-light mb-6">Support</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/privacy/" class="text-gray-400 hover:text-accent transition-colors">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="text-gray-400 hover:text-accent transition-colors">Terms of Service</a></li>
+                        <li><a href="/cookies/" class="text-gray-400 hover:text-accent transition-colors">Cookies</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-secondary mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-500 text-sm mb-4 md:mb-0">
+                    &copy; 2025 LOLGiftCards.com. All rights reserved.
+                </p>
+                <p class="text-gray-500 text-sm text-center">
+                    We are not an affiliate agency. All products are sold independently through our platform.
+                </p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Cookies Consent -->
+    <div id="cookies-consent" class="hidden fixed bottom-0 left-0 right-0 bg-primary border-t border-secondary p-4 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <div class="mb-4 md:mb-0">
+                    <p class="text-gray-300">
+                        We use cookies to enhance your experience on our website. By continuing to browse, you agree to our use of cookies.
+                    </p>
+                </div>
+                <div class="flex space-x-4">
+                    <button id="accept-cookies" class="btn-accent px-6 py-2 rounded-md text-white font-medium ripple">
+                        Accept
+                    </button>
+                    <button id="decline-cookies" class="bg-secondary hover:bg-secondary/80 px-6 py-2 rounded-md text-white font-medium border border-gray-700 ripple">
+                        Decline
+                    </button>
+                    <a href="/privacy/" class="bg-transparent hover:bg-secondary/50 px-6 py-2 rounded-md text-accent font-medium border border-accent ripple">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script>
+        // Mobile Menu Toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+        
+        // Initialize Particles.js
+        particlesJS('particles-js', {
+            "particles": {
+                "number": {
+                    "value": 80,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#ff4655"
+                },
+                "shape": {
+                    "type": "circle",
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000000"
+                    },
+                    "polygon": {
+                        "nb_sides": 5
+                    }
+                },
+                "opacity": {
+                    "value": 0.3,
+                    "random": false,
+                    "anim": {
+                        "enable": false,
+                        "speed": 1,
+                        "opacity_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 3,
+                    "random": true,
+                    "anim": {
+                        "enable": false,
+                        "speed": 40,
+                        "size_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#ff4655",
+                    "opacity": 0.2,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 2,
+                    "direction": "none",
+                    "random": false,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                    "attract": {
+                        "enable": false,
+                        "rotateX": 600,
+                        "rotateY": 1200
+                    }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "grab"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {
+                        "distance": 140,
+                        "line_linked": {
+                            "opacity": 1
+                        }
+                    },
+                    "bubble": {
+                        "distance": 400,
+                        "size": 40,
+                        "duration": 2,
+                        "opacity": 8,
+                        "speed": 3
+                    },
+                    "repulse": {
+                        "distance": 200,
+                        "duration": 0.4
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    },
+                    "remove": {
+                        "particles_nb": 2
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+        
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+        
+        gsap.from(".hero-gradient", {
+            duration: 1.5,
+            opacity: 0,
+            y: 50,
+            ease: "power3.out"
+        });
+        
+        // Cart functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize cart count
+            updateCartCount();
+            
+            // Cookies Consent
+            if (!localStorage.getItem('cookiesAccepted')) {
+                document.getElementById('cookies-consent').classList.remove('hidden');
+            }
+            
+            document.getElementById('accept-cookies').addEventListener('click', function() {
+                localStorage.setItem('cookiesAccepted', 'true');
+                document.getElementById('cookies-consent').classList.add('hidden');
+            });
+            
+            document.getElementById('decline-cookies').addEventListener('click', function() {
+                localStorage.setItem('cookiesDeclined', 'true');
+                document.getElementById('cookies-consent').classList.add('hidden');
+            });
+        });
+        
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            
+            document.getElementById('cart-count').textContent = totalItems;
+            document.getElementById('mobile-cart-count').textContent = totalItems;
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact SpinVerse | Premium Social Casino Platform</title>
+    <meta name="description" content="Get in touch with SpinVerse customer support. We're here to help with any questions about our social casino platform, games, or account issues.">
+    <meta name="keywords" content="contact social casino, spinverse support, virtual casino help, game questions, account assistance">
+    <link rel="canonical" href="https://spinverse.org/contact/">
+     <link rel="icon" href="/images/favicon.png" type="image/x-icon">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FF6B35',
+                        secondary: '#004E89',
+                        accent: '#00A6FB',
+                        dark: '#1A1A2E',
+                        light: '#F7F7FF',
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                        display: ['Montserrat', 'sans-serif'],
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollTrigger.min.js"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Poppins:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #0F0F1B;
+            color: #F7F7FF;
+            overflow-x: hidden;
+        }
+        
+        .contact-hero {
+            background: linear-gradient(135deg, #1A1A2E 0%, #0F0F1B 100%);
+        }
+        
+        .contact-form {
+            background: linear-gradient(145deg, #1A1A2E, #16213E);
+            box-shadow: 20px 20px 60px #0d0d16, -20px -20px 60px #272746;
+        }
+        
+        .hamburger-menu {
+            width: 30px;
+            height: 20px;
+            position: relative;
+            transform: rotate(0deg);
+            transition: .5s ease-in-out;
+            cursor: pointer;
+        }
+        
+        .hamburger-menu span {
+            display: block;
+            position: absolute;
+            height: 3px;
+            width: 100%;
+            background: #FF6B35;
+            border-radius: 3px;
+            opacity: 1;
+            left: 0;
+            transform: rotate(0deg);
+            transition: .25s ease-in-out;
+        }
+        
+        .hamburger-menu span:nth-child(1) {
+            top: 0px;
+        }
+        
+        .hamburger-menu span:nth-child(2), .hamburger-menu span:nth-child(3) {
+            top: 10px;
+        }
+        
+        .hamburger-menu span:nth-child(4) {
+            top: 20px;
+        }
+        
+        .hamburger-menu.open span:nth-child(1) {
+            top: 10px;
+            width: 0%;
+            left: 50%;
+        }
+        
+        .hamburger-menu.open span:nth-child(2) {
+            transform: rotate(45deg);
+        }
+        
+        .hamburger-menu.open span:nth-child(3) {
+            transform: rotate(-45deg);
+        }
+        
+        .hamburger-menu.open span:nth-child(4) {
+            top: 10px;
+            width: 0%;
+            left: 50%;
+        }
+        
+        .contact-info-card {
+            background: linear-gradient(145deg, #1A1A2E, #16213E);
+            border: 1px solid #2d2d42;
+            transition: all 0.3s ease;
+        }
+        
+        .contact-info-card:hover {
+            border-color: #FF6B35;
+            transform: translateY(-5px);
+        }
+        
+        .input-field {
+            background-color: #1A1A2E;
+            border: 1px solid #2d2d42;
+            transition: all 0.3s ease;
+        }
+        
+        .input-field:focus {
+            border-color: #FF6B35;
+            box-shadow: 0 0 0 3px rgba(255, 107, 53, 0.2);
+        }
+        
+        .user-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .user-dropdown-btn {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .user-dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: #1A1A2E;
+            min-width: 200px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 8px;
+            border: 1px solid #2d2d42;
+            overflow: hidden;
+        }
+        
+        .user-dropdown-content a {
+            color: #F7F7FF;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s;
+        }
+        
+        .user-dropdown-content a:hover {
+            background-color: #2d2d42;
+        }
+        
+        .user-dropdown:hover .user-dropdown-content {
+            display: block;
+        }
+        
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: #FF6B35;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 8px;
+            color: white;
+            font-weight: bold;
+        }
+        
+        @media (max-width: 768px) {
+            .user-dropdown-content {
+                position: static;
+                background-color: transparent;
+                box-shadow: none;
+                border: none;
+            }
+        }
+    </style>
+</head>
+<body class="relative">
+    <!-- Age Verification Modal -->
+    <div id="ageVerification" class="fixed inset-0 bg-dark bg-opacity-90 z-50 flex justify-center items-center hidden">
+        <div class="max-w-2xl mx-auto p-8 rounded-xl bg-dark bg-opacity-90">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6 text-primary font-display">Age Verification Required</h1>
+            <p class="text-xl mb-8">You must be 18 years or older to access this social casino platform. Please confirm your age to continue and enjoy our premium gaming experience.</p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button id="confirmAge" class="bg-gradient-to-r from-primary to-orange-500 text-white font-bold py-3 px-8 rounded-full text-lg">
+                    I am 18 or older
+                </button>
+                <button id="denyAge" class="bg-gradient-to-r from-secondary to-blue-600 text-white font-bold py-3 px-8 rounded-full text-lg">
+                    I am under 18
+                </button>
+            </div>
+            
+            <p class="mt-8 text-sm opacity-80">Important: This platform is for entertainment only. No real money gambling is involved.</p>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="fixed w-full z-50 bg-dark bg-opacity-90 backdrop-blur-md">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <a href="/" class="flex items-center z-50">
+                    <img src="/images/logo.png" alt="SpinVerse Logo" class="h-12 mr-2">
+                </a>
+            </div>
+            
+            <div class="hidden lg:flex items-center space-x-8">
+                <nav>
+                    <ul class="flex space-x-8">
+                        <li><a href="/" class="text-white hover:text-primary transition">Home</a></li>
+                        <li><a href="/games/" class="text-white hover:text-primary transition">Games</a></li>
+                        <li><a href="/responsible-gaming/" class="text-white hover:text-primary transition">Responsible Gaming</a></li>
+                        <li><a href="/about/" class="text-white hover:text-primary transition">About</a></li>
+                        <li><a href="/contact/" class="text-primary font-bold transition">Contact</a></li>
+                    </ul>
+                </nav>
+                
+                <div class="flex items-center space-x-4">
+                    <div id="userInfo" class="hidden">
+                        <div class="user-dropdown">
+                            <div class="user-dropdown-btn">
+                                <div class="user-avatar" id="userAvatar">U</div>
+                                <span class="text-white"><span id="usernameDisplay">User</span> • <span id="coinsDisplay">5,000</span> Coins <i class="fas fa-chevron-down ml-1"></i></span>
+                            </div>
+                            <div class="user-dropdown-content">                                
+                                <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt mr-2"></i> Logout</a>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="/login/" class="text-white hover:text-primary transition" id="loginLink">Login</a>
+                    <a href="/register/" class="bg-gradient-to-r from-primary to-orange-500 text-white font-bold py-2 px-6 rounded-full" id="registerLink">
+                        Register
+                    </a>
+                </div>
+            </div>
+            
+            <div class="lg:hidden z-50">
+                <div class="hamburger-menu" id="mobileMenuBtn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div class="lg:hidden fixed inset-0  z-40 pt-20 px-4 transform translate-x-full transition-transform duration-300" id="mobileMenu">
+            <nav class="bg-black  rounded-lg p-6">
+                <ul class="space-y-6">
+                    <li><a href="/" class="block text-2xl text-white hover:text-primary transition py-2">Home</a></li>
+                    <li><a href="/games/" class="block text-2xl text-white hover:text-primary transition py-2">Games</a></li>
+                    <li><a href="/responsible-gaming/" class="block text-2xl text-white hover:text-primary transition py-2">Responsible Gaming</a></li>
+                    <li><a href="/about/" class="block text-2xl text-white hover:text-primary transition py-2">About</a></li>
+                    <li><a href="/contact/" class="block text-2xl text-primary font-bold transition py-2">Contact</a></li>
+                </ul>
+            </nav>
+            
+            <div class="space-y-4 bg-black  rounded-b-lg p-6">
+                <div id="mobileUserInfo" class="hidden text-center">
+                    <p class="text-white text-xl">Welcome, <span id="mobileUsernameDisplay">User</span></p>
+                    <p class="text-primary text-xl"><span id="mobileCoinsDisplay">5,000</span> Coins</p>
+                    <div class="mt-4 flex flex-col space-y-3">                        
+                        <a href="#" id="mobileLogoutBtn" class="bg-gradient-to-r from-primary to-orange-500 text-white font-bold py-3 px-6 rounded-full text-center text-lg">
+                            Logout
+                        </a>
+                    </div>
+                </div>
+               <a href="/login/" class="block text-xl text-center text-white hover:text-primary transition py-3 border-primary border rounded-full" id="mobileLoginLink">Login</a>
+                <a href="/register/" class="block bg-gradient-to-r from-primary to-orange-500 text-white font-bold py-3 px-6 rounded-full text-center text-xl" id="mobileRegisterLink">
+                    Register
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="contact-hero min-h-[300px] flex items-center pt-24 pb-16 relative overflow-hidden">
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="max-w-4xl mx-auto text-center">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white font-display leading-tight">
+                    Contact <span class="text-primary">SpinVerse</span>
+                </h1>
+                <p class="text-xl text-gray-300 max-w-2xl mx-auto">
+                    We're here to help with any questions about our platform, games, or your account
+                </p>
+            </div>
+        </div>
+        <div class="absolute inset-0 bg-gradient-to-t from-dark to-transparent opacity-80 z-0"></div>
+    </section>
+
+    <!-- Contact Content -->
+    <section class="py-16 bg-dark">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col lg:flex-row gap-12">
+                <!-- Contact Form -->
+                <div class="lg:w-1/2">
+                    <div class="contact-form rounded-2xl p-8 md:p-10">
+                        <h2 class="text-3xl font-bold mb-6 text-white font-display">Send Us a Message</h2>
+                        <p class="text-gray-400 mb-8">Fill out the form below and our support team will get back to you within 24 hours</p>
+                        
+                        <form id="contactForm" class="space-y-6">
+                            <div>
+                                <label for="name" class="block text-gray-300 mb-2">Your Name</label>
+                                <input type="text" id="name" name="name" class="w-full px-4 py-3 rounded-lg input-field text-white focus:outline-none" required>
+                            </div>
+                            
+                            <div>
+                                <label for="email" class="block text-gray-300 mb-2">Email Address</label>
+                                <input type="email" id="email" name="email" class="w-full px-4 py-3 rounded-lg input-field text-white focus:outline-none" required>
+                            </div>
+                            
+                            <div>
+                                <label for="subject" class="block text-gray-300 mb-2">Subject</label>
+                                <select id="subject" name="subject" class="w-full px-4 py-3 rounded-lg input-field text-white focus:outline-none" required>
+                                    <option value="" disabled selected>Select a subject</option>
+                                    <option value="account">Account Help</option>
+                                    <option value="games">Game Questions</option>
+                                    <option value="technical">Technical Support</option>
+                                    <option value="feedback">Feedback</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label for="message" class="block text-gray-300 mb-2">Your Message</label>
+                                <textarea id="message" name="message" rows="5" class="w-full px-4 py-3 rounded-lg input-field text-white focus:outline-none" required></textarea>
+                            </div>
+                            
+                            <button type="submit" class="w-full bg-gradient-to-r from-primary to-orange-500 text-white font-bold py-4 px-6 rounded-full hover:opacity-90 transition">
+                                Send Message <i class="fas fa-paper-plane ml-2"></i>
+                            </button>
+                        </form>
+                        
+                        <div id="formSuccess" class="hidden mt-6 p-4 bg-green-900 bg-opacity-50 rounded-lg text-green-300">
+                            <i class="fas fa-check-circle mr-2"></i> Thank you! Your message has been sent successfully.
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Contact Info -->
+                <div class="lg:w-1/2">
+                    <div class="space-y-8">
+                        <div>
+                            <h2 class="text-3xl font-bold mb-6 text-white font-display">Contact Information</h2>
+                            <p class="text-gray-400 mb-8">You can reach us through any of the following methods. Our support team is available 24/7 to assist you.</p>
+                        </div>
+                        
+                        <!-- Contact Card - Email -->
+                        <div class="contact-info-card rounded-xl p-6">
+                            <div class="flex items-start">
+                                <div class="w-12 h-12 bg-primary bg-opacity-20 rounded-full flex items-center justify-center mr-4">
+                                    <i class="fas fa-envelope text-xl text-primary"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-bold text-white mb-2">Email Support</h3>
+                                    <p class="text-gray-400 mb-2">For general inquiries and support</p>
+                                    <a href="mailto:info@spinworldclub.org" class="text-primary hover:underline">info@spinworldclub.org</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Contact Card - Phone -->
+                        <div class="contact-info-card rounded-xl p-6">
+                            <div class="flex items-start">
+                                <div class="w-12 h-12 bg-primary bg-opacity-20 rounded-full flex items-center justify-center mr-4">
+                                    <i class="fas fa-phone-alt text-xl text-primary"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-bold text-white mb-2">Phone Support</h3>
+                                    <p class="text-gray-400 mb-2">For urgent matters and account verification</p>
+                                    <a href="tel:+4740696111" class="text-primary hover:underline">+47 406 96 111</a>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Contact Card - Address -->
+                        <div class="contact-info-card rounded-xl p-6">
+                            <div class="flex items-start">
+                                <div class="w-12 h-12 bg-primary bg-opacity-20 rounded-full flex items-center justify-center mr-4">
+                                    <i class="fas fa-map-marker-alt text-xl text-primary"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-xl font-bold text-white mb-2">Our Office</h3>
+                                    <p class="text-gray-400 mb-2">Visit us during business hours</p>
+                                    <p class="text-gray-300">Vestre Ringvei 5, 1831 Askim, Norway</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- FAQ Section -->
+                        <div class="mt-12">
+                            <h3 class="text-2xl font-bold text-white mb-6">Frequently Asked Questions</h3>
+                            
+                            <div class="space-y-4">
+                                <!-- FAQ Item 1 -->
+                                <div class="bg-gray-900 rounded-lg overflow-hidden">
+                                    <button class="faq-toggle w-full flex justify-between items-center p-4 text-left">
+                                        <span class="font-medium text-white">How do I reset my password?</span>
+                                        <i class="fas fa-chevron-down text-primary transition-transform duration-300"></i>
+                                    </button>
+                                    <div class="faq-content hidden px-4 pb-4 text-gray-400">
+                                        You can reset your password by clicking on "Forgot Password" on the login page. We'll send a password reset link to your registered email address.
+                                    </div>
+                                </div>
+                                
+                                <!-- FAQ Item 2 -->
+                                <div class="bg-gray-900 rounded-lg overflow-hidden">
+                                    <button class="faq-toggle w-full flex justify-between items-center p-4 text-left">
+                                        <span class="font-medium text-white">Are there any fees to play games?</span>
+                                        <i class="fas fa-chevron-down text-primary transition-transform duration-300"></i>
+                                    </button>
+                                    <div class="faq-content hidden px-4 pb-4 text-gray-400">
+                                        No, SpinVerse is completely free to play. We offer virtual coins for entertainment purposes only, with no real money involved.
+                                    </div>
+                                </div>
+                                
+                                <!-- FAQ Item 3 -->
+                                <div class="bg-gray-900 rounded-lg overflow-hidden">
+                                    <button class="faq-toggle w-full flex justify-between items-center p-4 text-left">
+                                        <span class="font-medium text-white">How do I get more virtual coins?</span>
+                                        <i class="fas fa-chevron-down text-primary transition-transform duration-300"></i>
+                                    </button>
+                                    <div class="faq-content hidden px-4 pb-4 text-gray-400">
+                                        You can earn free coins through daily bonuses, special promotions, or by purchasing coin packages in our store. Registered users get 5,000 free coins to start!
+                                    </div>
+                                </div>
+                                
+                                <!-- FAQ Item 4 -->
+                                <div class="bg-gray-900 rounded-lg overflow-hidden">
+                                    <button class="faq-toggle w-full flex justify-between items-center p-4 text-left">
+                                        <span class="font-medium text-white">Is my personal information secure?</span>
+                                        <i class="fas fa-chevron-down text-primary transition-transform duration-300"></i>
+                                    </button>
+                                    <div class="faq-content hidden px-4 pb-4 text-gray-400">
+                                        Absolutely. We use industry-standard encryption and security measures to protect your data. Read our <a href="/privacy/" class="text-primary hover:underline">Privacy Policy</a> for more details.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+  
+
+     <section class="py-16 bg-fixed bg-center bg-cover relative" style="background-image: url('/images/background-image.webp');">
+    <!-- Overlay -->
+    <div class="absolute inset-0 bg-black bg-opacity-60 z-0"></div>
+
+    <!-- Content -->
+    <div class="container mx-auto px-4 text-center relative z-10">
+        <h2 class="text-3xl md:text-4xl font-bold mb-6 text-white font-display">Need Immediate Help?</h2>
+        <p class="text-xl mb-8 text-white max-w-2xl mx-auto">Check out our comprehensive Help Center for answers to common questions</p>
+        
+       <div class="flex flex-col sm:flex-row gap-4 justify-center">
+               
+                <a href="/games/" class="bg-black bg-opacity-20 text-white font-bold py-4 px-8 rounded-full text-lg border border-white hover:bg-opacity-30 transition">
+                    Explore Games
+                </a>
+            </div>
+    </div>
+</section>
+
+    <!-- Responsible Gaming -->
+    <section class="py-12 bg-dark">
+        <div class="container mx-auto px-4">
+            <div class="bg-gray-900 rounded-xl p-8">
+                <h3 class="text-2xl font-bold mb-4 text-white font-display">Responsible Gaming Commitment</h3>
+                <p class="text-gray-300 mb-4">SpinVerse is committed to promoting responsible gaming practices. We provide comprehensive tools and resources to help players maintain control over their gaming habits and ensure a safe, enjoyable experience for all users.</p>
+                <p class="text-gray-300 font-bold mb-6">Important Notice: This is a social casino platform for entertainment only. No real money gambling or payouts are involved. All coins are virtual and have no monetary value.</p>
+                
+                <div class="flex flex-wrap gap-4">
+                    <a href="https://www.gamcare.org.uk/" class="text-primary hover:underline flex items-center">
+                        <i class="fas fa-external-link-alt mr-2"></i> GamCare
+                    </a>
+                    <a href="https://www.begambleaware.org/" class="text-primary hover:underline flex items-center">
+                        <i class="fas fa-external-link-alt mr-2"></i> GambleAware
+                    </a>
+                    <a href="/responsible-gaming/" class="text-primary hover:underline flex items-center">
+                        <i class="fas fa-file-alt mr-2"></i> Responsible Gaming Policy
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 pt-12 pb-6">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <img src="/images/logo.png" alt="SpinVerse Logo" class="h-12 mr-2">
+                    <p class="mb-4">The premier social casino platform offering exciting games with no real money involved. Pure entertainment, zero risk.</p>
+                    
+                </div>
+                
+                <div>
+                    <h4 class="text-white text-lg font-bold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/" class="hover:text-primary transition">Home</a></li>
+                        <li><a href="/games/" class="hover:text-primary transition">Games</a></li>
+                        <li><a href="/responsible-gaming/" class="hover:text-primary transition">Responsible Gaming</a></li>
+                        <li><a href="/about/" class="hover:text-primary transition">About</a></li>
+                        <li><a href="/contact/" class="text-primary font-bold transition">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-white text-lg font-bold mb-4">Legal</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/privacy/" class="hover:text-primary transition">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="hover:text-primary transition">Terms of Service</a></li>
+                        <li><a href="/cookies/" class="hover:text-primary transition">Cookies Policy</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-white text-lg font-bold mb-4">Contact Us</h4>
+                    <ul class="space-y-2">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-3 text-primary"></i>
+                            <span>Vestre Ringvei 5, 1831 Askim, Norway</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone-alt mr-3 text-primary"></i>
+                            <span>+47 406 96 111</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-3 text-primary"></i>
+                            <span>info@spinworldclub.org</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-6 text-center">
+                <p class="mb-2">18+ Only | Social Casino Platform | No Real Money Gambling</p>
+                <p class="text-sm">This website operates as a social casino platform for entertainment purposes only. No real money gambling, betting, or wagering is involved. Virtual coins and winnings have no cash value and cannot be exchanged for real money, prizes, or any monetary compensation. Success in social casino games does not guarantee future success at real money gambling activities.</p>
+                <p class="mt-4 text-sm">© 2025 SpinVerse. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cookies Consent -->
+    <div id="cookiesConsent" class="fixed bottom-0 left-0 right-0 bg-gray-800 text-white p-4 hidden z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="mb-4 md:mb-0 md:mr-4 flex-1">
+                    <p class="text-sm md:text-base">We use cookies to enhance your experience. By continuing to browse, you agree to our use of cookies.</p>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <a href="/cookies/" class="bg-gradient-to-r from-secondary to-blue-600 text-white font-bold py-2 px-4 rounded-full whitespace-nowrap text-center text-sm md:text-base">
+                        Learn More
+                    </a>
+                    <button id="declineCookies" class="bg-transparent border border-gray-500 text-white font-bold py-2 px-4 rounded-full whitespace-nowrap hover:bg-gray-700 transition text-sm md:text-base">
+                        Decline
+                    </button>
+                    <button id="acceptCookies" class="bg-gradient-to-r from-primary to-orange-500 text-white font-bold py-2 px-4 rounded-full whitespace-nowrap text-sm md:text-base">
+                        Accept
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check login state and update UI
+        function checkLoginState() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            
+            if (isLoggedIn) {
+                // Show user info and hide login/register buttons
+                document.getElementById('userInfo').classList.remove('hidden');
+                document.getElementById('mobileUserInfo').classList.remove('hidden');
+                document.getElementById('loginLink').classList.add('hidden');
+                document.getElementById('registerLink').classList.add('hidden');
+                document.getElementById('mobileLoginLink').classList.add('hidden');
+                document.getElementById('mobileRegisterLink').classList.add('hidden');
+                
+                // Set username and avatar
+                const username = localStorage.getItem('username') || 'User';
+                document.getElementById('usernameDisplay').textContent = username;
+                document.getElementById('mobileUsernameDisplay').textContent = username;
+                document.getElementById('userAvatar').textContent = username.charAt(0).toUpperCase();
+                
+                // Set coins
+                const coins = localStorage.getItem('coins') || '5,000';
+                document.getElementById('coinsDisplay').textContent = coins;
+                document.getElementById('mobileCoinsDisplay').textContent = coins;
+            } else {
+                // Hide user info and show login/register buttons
+                document.getElementById('userInfo').classList.add('hidden');
+                document.getElementById('mobileUserInfo').classList.add('hidden');
+                document.getElementById('loginLink').classList.remove('hidden');
+                document.getElementById('registerLink').classList.remove('hidden');
+                document.getElementById('mobileLoginLink').classList.remove('hidden');
+                document.getElementById('mobileRegisterLink').classList.remove('hidden');
+            }
+        }
+
+        // Age Verification
+        document.addEventListener('DOMContentLoaded', function() {
+            const ageVerified = localStorage.getItem('ageVerified');
+            const ageVerification = document.getElementById('ageVerification');
+            
+            // Only show age verification if not previously confirmed
+            if (ageVerified !== 'true') {
+                ageVerification.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            }
+            
+            document.getElementById('confirmAge').addEventListener('click', function() {
+                localStorage.setItem('ageVerified', 'true');
+                ageVerification.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            });
+            
+            document.getElementById('denyAge').addEventListener('click', function() {
+                window.location.href = 'https://www.google.com/';
+            });
+            
+            // Mobile Menu
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            
+            mobileMenuBtn.addEventListener('click', function() {
+                this.classList.toggle('open');
+                mobileMenu.classList.toggle('translate-x-full');
+            });
+            
+            // Logout functionality
+            document.getElementById('logoutBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                localStorage.removeItem('isLoggedIn');
+                localStorage.removeItem('username');
+                checkLoginState();
+                
+                // Close mobile menu if open
+                mobileMenuBtn.classList.remove('open');
+                mobileMenu.classList.add('translate-x-full');
+            });
+            
+            document.getElementById('mobileLogoutBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                localStorage.removeItem('isLoggedIn');
+                localStorage.removeItem('username');
+                checkLoginState();
+                
+                // Close mobile menu
+                mobileMenuBtn.classList.remove('open');
+                mobileMenu.classList.add('translate-x-full');
+            });
+            
+            // Simulate login state (for demo purposes)
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('login')) {
+                localStorage.setItem('isLoggedIn', 'true');
+                localStorage.setItem('username', 'DemoUser');
+                localStorage.setItem('coins', '15,750');
+            }
+            
+            // Check login state on page load
+            checkLoginState();
+            
+            // Cookies Consent
+            const cookiesConsent = document.getElementById('cookiesConsent');
+            const acceptCookies = document.getElementById('acceptCookies');
+            const declineCookies = document.getElementById('declineCookies');
+
+            // Check if user has made a choice before
+            const hasCookieChoice = localStorage.getItem('cookiesAccepted') !== null;
+
+            if (!hasCookieChoice) {
+                // Only show if user hasn't made a choice
+                setTimeout(() => {
+                    cookiesConsent.classList.remove('hidden');
+                }, 1000);
+            }
+
+            acceptCookies.addEventListener('click', function() {
+                localStorage.setItem('cookiesAccepted', 'true');
+                cookiesConsent.classList.add('hidden');
+                // Set necessary cookies here
+            });
+
+            declineCookies.addEventListener('click', function() {
+                localStorage.setItem('cookiesAccepted', 'false');
+                cookiesConsent.classList.add('hidden');
+                // Remove non-essential cookies here
+            });
+            
+            // Contact Form Submission
+            const contactForm = document.getElementById('contactForm');
+            const formSuccess = document.getElementById('formSuccess');
+            
+            contactForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Simulate form submission
+                setTimeout(() => {
+                    contactForm.reset();
+                    formSuccess.classList.remove('hidden');
+                    
+                    // Hide success message after 5 seconds
+                    setTimeout(() => {
+                        formSuccess.classList.add('hidden');
+                    }, 5000);
+                }, 1000);
+            });
+            
+            // FAQ Toggle
+            const faqToggles = document.querySelectorAll('.faq-toggle');
+            
+            faqToggles.forEach(toggle => {
+                toggle.addEventListener('click', function() {
+                    const content = this.nextElementSibling;
+                    const icon = this.querySelector('i');
+                    
+                    // Toggle content
+                    content.classList.toggle('hidden');
+                    
+                    // Rotate icon
+                    icon.classList.toggle('rotate-180');
+                });
+            });
+            
+            // GSAP Animations
+            gsap.registerPlugin(ScrollTrigger);
+            
+            gsap.from(".contact-hero h1", {
+                duration: 1,
+                y: 50,
+                opacity: 0,
+                ease: "power3.out"
+            });
+            
+            gsap.from(".contact-hero p", {
+                duration: 1,
+                y: 50,
+                opacity: 0,
+                delay: 0.2,
+                ease: "power3.out"
+            });
+            
+            gsap.from(".contact-form", {
+                scrollTrigger: {
+                    trigger: ".contact-form",
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                },
+                y: 50,
+                opacity: 0,
+                duration: 0.8
+            });
+            
+            gsap.utils.toArray(".contact-info-card").forEach((card, i) => {
+                gsap.from(card, {
+                    scrollTrigger: {
+                        trigger: card,
+                        start: "top 80%",
+                        toggleActions: "play none none none"
+                    },
+                    y: 50,
+                    opacity: 0,
+                    duration: 0.5,
+                    delay: i * 0.1
+                });
+            });
+        });
+    </script>
+</body>
+</html>

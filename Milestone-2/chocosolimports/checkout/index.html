@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | ChocoSol Imports | Premium Dark Chocolate</title>
+    <meta name="description" content="Complete your purchase of premium dark chocolate from ChocoSol Imports. Secure checkout process.">
+    <meta name="keywords" content="chocolate checkout, buy dark chocolate online, secure payment, chocolate delivery">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://chocosolimports.com/checkout/" />
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/assets/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/assets/favicon.png" type="image/png">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Raleway:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Stripe Elements -->
+    <script src="https://js.stripe.com/v3/"></script>
+    
+    <!-- CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/checkout.css">
+    
+    <!-- Cookie Consent -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-inner">
+                <div class="logo">
+                    <a href="/">
+                          <img src="/assets/logo.jpg" alt="ChocoSol Imports Logo" width="180">
+                    </a>
+                </div>
+                
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/shop/">Shop</a></li>
+                        <li><a href="/about/">About</a></li>
+                        <li><a href="/blog/">Blog</a></li>
+                        <li><a href="/contact/">Contact</a></li>
+                    </ul>
+                </nav>
+                
+                <div class="header-actions">
+                    <a href="/cart/" class="cart-icon" aria-label="Shopping Cart">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span class="cart-count">0</span>
+                    </a>
+                    <button class="mobile-menu-toggle" aria-label="Toggle Menu">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Checkout Hero -->
+    <section class="checkout-hero">
+        <div class="container">
+            <div class="checkout-progress">
+                <div class="progress-step active">
+                    <span>1</span>
+                    <p>Shipping</p>
+                </div>
+                <div class="progress-step">
+                    <span>2</span>
+                    <p>Payment</p>
+                </div>
+                <div class="progress-step">
+                    <span>3</span>
+                    <p>Confirmation</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Checkout Content -->
+    <main class="checkout-content">
+        <div class="container">
+            <form id="checkoutForm" class="checkout-form">
+                <div class="checkout-container">
+                    <div class="checkout-details">
+                        <h2>Shipping Information</h2>
+                        
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" required>
+                            <div class="error-message" id="emailError"></div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="firstName">First Name</label>
+                                <input type="text" id="firstName" name="firstName" required>
+                                <div class="error-message" id="firstNameError"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="lastName">Last Name</label>
+                                <input type="text" id="lastName" name="lastName" required>
+                                <div class="error-message" id="lastNameError"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="address">Street Address</label>
+                            <input type="text" id="address" name="address" required>
+                            <div class="error-message" id="addressError"></div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="address2">Apt, Suite, etc. (Optional)</label>
+                            <input type="text" id="address2" name="address2">
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="city">City</label>
+                                <input type="text" id="city" name="city" required>
+                                <div class="error-message" id="cityError"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="province">Province</label>
+                                <select id="province" name="province" required>
+                                    <option value="">Select Province</option>
+                                    <option value="AB">Alberta</option>
+                                    <option value="BC">British Columbia</option>
+                                    <option value="MB">Manitoba</option>
+                                    <option value="NB">New Brunswick</option>
+                                    <option value="NL">Newfoundland and Labrador</option>
+                                    <option value="NT">Northwest Territories</option>
+                                    <option value="NS">Nova Scotia</option>
+                                    <option value="NU">Nunavut</option>
+                                    <option value="ON">Ontario</option>
+                                    <option value="PE">Prince Edward Island</option>
+                                    <option value="QC">Quebec</option>
+                                    <option value="SK">Saskatchewan</option>
+                                    <option value="YT">Yukon</option>
+                                </select>
+                                <div class="error-message" id="provinceError"></div>
+                            </div>
+                            <div class="form-group">
+                                <label for="postalCode">Postal Code</label>
+                                <input type="text" id="postalCode" name="postalCode" required>
+                                <div class="error-message" id="postalCodeError"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" required>
+                            <div class="error-message" id="phoneError"></div>
+                        </div>
+                        
+                        <div class="form-group shipping-method">
+                            <h3>Shipping Method</h3>
+                            <div class="radio-group">
+                                <input type="radio" id="standard" name="shippingMethod" value="standard" checked>
+                                <label for="standard">
+                                    <span class="radio-label">Standard Shipping</span>
+                                    <span class="radio-price">Free</span>
+                                    <span class="radio-desc">3-5 business days</span>
+                                </label>
+                            </div>
+                            <div class="radio-group">
+                                <input type="radio" id="express" name="shippingMethod" value="express">
+                                <label for="express">
+                                    <span class="radio-label">Express Shipping</span>
+                                    <span class="radio-price">$9.99</span>
+                                    <span class="radio-desc">1-2 business days</span>
+                                </label>
+                            </div>
+                        </div>                      
+                       
+                        
+                        
+                        <div class="form-actions">
+                            <a href="/cart/" class="btn btn-outline">Back to Cart</a>
+                            <button type="submit" class="btn btn-primary" id="submitOrder">Complete Order</button>
+                        </div>
+                    </div>
+                    
+                    <div class="order-summary">
+                        <h3>Order Summary</h3>
+                        <div class="summary-items" id="summaryItems">
+                            <!-- Cart items will be dynamically inserted here -->
+                        </div>
+                        
+                        <div class="summary-details">
+                            <div class="summary-row">
+                                <span>Subtotal</span>
+                                <span class="subtotal">$0.00 CAD</span>
+                            </div>
+                            <div class="summary-row">
+                                <span>Shipping</span>
+                                <span class="shipping">Free</span>
+                            </div>
+                            <div class="summary-row">
+                                <span>Estimated Tax</span>
+                                <span class="tax">$0.00 CAD</span>
+                            </div>
+                            <div class="summary-divider"></div>
+                            <div class="summary-row total">
+                                <span>Total</span>
+                                <span class="total-amount">$0.00 CAD</span>
+                            </div>
+                        </div>
+                        
+                        <div class="secure-checkout">
+                            <i class="fas fa-lock"></i>
+                            <span>Secure Checkout</span>
+                        </div>
+                        
+                        <div class="payment-methods">
+                            <i class="fab fa-cc-visa" aria-label="Visa"></i>
+                            <i class="fab fa-cc-mastercard" aria-label="Mastercard"></i>
+                            <i class="fab fa-cc-amex" aria-label="American Express"></i>
+                            <i class="fab fa-cc-paypal" aria-label="PayPal"></i>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                
+                
+                <div class="footer-col">
+                    <h3>Information</h3>
+                    <ul>
+                        <li><a href="/shop/">shop</a></li>
+                        <li><a href="/about/">About Us</a></li>
+                        <li><a href="/blog/">Blog</a></li>
+                        <li><a href="/contact/">Contact</a></li>                       
+
+                         
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Legal</h3>
+                    <ul>
+                        <li><a href="/privacy/">Privacy Policy</a></li>
+                        <li><a href="/terms/">Terms of Service</a></li>
+                        <li><a href="/cookies/">Cookies Policy</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-col">
+                    <h3>Connect</h3>
+                    <address>
+                        <p>505 3 St SW #1300<br>
+                        Calgary, AB T2P 3E6</p>
+                        <p><a href="tel:14032328448">(403) 232-8448</a></p>
+                    </address>
+                    <div class="social-links">
+                        <a href="https://www.instagram.com/chocosoltraders/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.tiktok.com/@chocosoltraders" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <div class="copyright">
+                    &copy; 2025 ChocoSol Imports. All rights reserved.
+                </div>
+                <div class="payment-methods">
+                    <i class="fab fa-cc-visa" aria-label="Visa"></i>
+                    <i class="fab fa-cc-mastercard" aria-label="Mastercard"></i>
+                    <i class="fab fa-cc-amex" aria-label="American Express"></i>
+                    <i class="fab fa-cc-paypal" aria-label="PayPal"></i>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="/js/main.js"></script>
+    <script src="/js/checkout.js"></script>
+    
+    <!-- Cookie Consent -->
+    <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js" data-cfasync="false"></script>
+    <script>
+    window.cookieconsent.initialise({
+        palette: {
+            popup: {
+                background: "#2d2d2d"
+            },
+            button: {
+                background: "#5e3a1e"
+            }
+        },
+        theme: "classic",
+        position: "bottom-right",
+        content: {
+            message: "We use cookies to enhance your experience on our website.",
+            dismiss: "Got it!",
+            link: "Learn more",
+            href: "/cookies/"
+        }
+    });
+    </script>
+</body>
+</html>

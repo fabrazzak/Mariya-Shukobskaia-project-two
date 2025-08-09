@@ -1,0 +1,1571 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minecraft Shop | Gift Codes, Skins & Mods - MinecraftGiftCodes.com</title>
+    <meta name="description" content="Shop authentic Minecraft gift codes, skins, mods and bundles. Instant delivery, competitive prices for all Minecraft editions.">
+    <meta name="keywords" content="minecraft shop, minecraft codes, minecraft skins, minecraft mods, minecraft gift cards, minecraft marketplace">
+    <link rel="canonical" href="https://minecraftgiftcodes.com/shop/">
+    
+    <!-- Favicon -->
+     <link rel="icon" href="/assets/favicon.png" type="image/x-icon">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            DEFAULT: '#4CAF50',
+                            light: '#81C784',
+                            dark: '#388E3C'
+                        },
+                        secondary: {
+                            DEFAULT: '#FF9800',
+                            light: '#FFB74D',
+                            dark: '#F57C00'
+                        },
+                        dark: {
+                            DEFAULT: '#121212',
+                            light: '#1E1E1E',
+                            lighter: '#2D2D2D'
+                        }
+                    },
+                    animation: {
+                        'float': 'float 3s ease-in-out infinite',
+                        'float-reverse': 'float-reverse 3s ease-in-out infinite',
+                        'pulse-slow': 'pulse 5s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' }
+                        },
+                        'float-reverse': {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(10px)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #121212;
+            color: #f5f5f5;
+            overflow-x: hidden;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, #4CAF50, #8BC34A, #FF9800);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(139, 195, 74, 0.1), rgba(255, 152, 0, 0.1));
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px) scale(1.02);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Filter sidebar */
+        .filter-section {
+            transition: all 0.3s ease;
+        }
+        
+        .filter-header {
+            cursor: pointer;
+        }
+        
+        .filter-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .filter-content.open {
+            max-height: 500px;
+        }
+        
+        /* Price range slider */
+        .range-slider {
+            height: 5px;
+            position: relative;
+            background-color: #2D2D2D;
+            border-radius: 2px;
+        }
+        
+        .range-selected {
+            height: 100%;
+            left: 0%;
+            right: 0%;
+            position: absolute;
+            border-radius: 5px;
+            background-color: #4CAF50;
+        }
+        
+        .range-input {
+            position: relative;
+        }
+        
+        .range-input input {
+            position: absolute;
+            width: 100%;
+            height: 5px;
+            top: -7px;
+            background: none;
+            pointer-events: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+        }
+        
+        .range-input input::-webkit-slider-thumb {
+            height: 20px;
+            width: 20px;
+            border-radius: 50%;
+            border: 3px solid #4CAF50;
+            background-color: #121212;
+            pointer-events: auto;
+            -webkit-appearance: none;
+        }
+        
+        .range-input input::-moz-range-thumb {
+            height: 15px;
+            width: 15px;
+            border-radius: 50%;
+            border: 3px solid #4CAF50;
+            background-color: #121212;
+            pointer-events: auto;
+            -moz-appearance: none;
+        }
+        
+        /* Custom checkbox */
+        .custom-checkbox {
+            position: relative;
+            padding-left: 30px;
+            cursor: pointer;
+            display: block;
+        }
+        
+        .custom-checkbox input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+        
+        .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 20px;
+            width: 20px;
+            background-color: #2D2D2D;
+            border-radius: 4px;
+            transition: all 0.3s;
+        }
+        
+        .custom-checkbox:hover .checkmark {
+            background-color: #3E3E3E;
+        }
+        
+        .custom-checkbox input:checked ~ .checkmark {
+            background-color: #4CAF50;
+        }
+        
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+        
+        .custom-checkbox input:checked ~ .checkmark:after {
+            display: block;
+        }
+        
+        .custom-checkbox .checkmark:after {
+            left: 7px;
+            top: 3px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+        
+        /* Custom radio */
+        .custom-radio {
+            position: relative;
+            padding-left: 30px;
+            cursor: pointer;
+            display: block;
+        }
+        
+        .custom-radio input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+        
+        .radiomark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 20px;
+            width: 20px;
+            background-color: #2D2D2D;
+            border-radius: 50%;
+            transition: all 0.3s;
+        }
+        
+        .custom-radio:hover .radiomark {
+            background-color: #3E3E3E;
+        }
+        
+        .custom-radio input:checked ~ .radiomark {
+            background-color: #4CAF50;
+        }
+        
+        .radiomark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+        
+        .custom-radio input:checked ~ .radiomark:after {
+            display: block;
+        }
+        
+        .custom-radio .radiomark:after {
+            top: 6px;
+            left: 6px;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: white;
+        }
+        
+        /* Pagination */
+        .pagination .page-item {
+            margin: 0 2px;
+        }
+        
+        .pagination .page-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 4px;
+            background-color: #2D2D2D;
+            color: #f5f5f5;
+            transition: all 0.3s;
+        }
+        
+        .pagination .page-link:hover {
+            background-color: #4CAF50;
+            color: #121212;
+        }
+        
+        .pagination .page-item.active .page-link {
+            background-color: #4CAF50;
+            color: #121212;
+            font-weight: bold;
+        }
+        
+        .pagination .page-item.disabled .page-link {
+            background-color: #1E1E1E;
+            color: #666;
+            cursor: not-allowed;
+        }
+        /* Unique Hamburger Menu */
+        .hamburger {
+            width: 30px;
+            height: 20px;
+            position: relative;
+            transform: rotate(0deg);
+            transition: .5s ease-in-out;
+            cursor: pointer;
+        }
+        
+        .hamburger span {
+            display: block;
+            position: absolute;
+            height: 3px;
+            width: 100%;
+            background: #4CAF50;
+            border-radius: 3px;
+            opacity: 1;
+            left: 0;
+            transform: rotate(0deg);
+            transition: .25s ease-in-out;
+        }
+        
+        .hamburger span:nth-child(1) {
+            top: 0px;
+            transform-origin: left center;
+        }
+        
+        .hamburger span:nth-child(2) {
+            top: 10px;
+            transform-origin: left center;
+        }
+        
+        .hamburger span:nth-child(3) {
+            top: 20px;
+            transform-origin: left center;
+        }
+        
+        .hamburger.open span:nth-child(1) {
+            transform: rotate(45deg);
+            top: -3px;
+            left: 5px;
+        }
+        
+        .hamburger.open span:nth-child(2) {
+            width: 0%;
+            opacity: 0;
+        }
+        
+        .hamburger.open span:nth-child(3) {
+            transform: rotate(-45deg);
+            top: 19px;
+            left: 5px;
+        }
+        
+        .mobile-menu {
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+        
+        .mobile-menu.open {
+            max-height: 1000px;
+            opacity: 1;
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <!-- Navigation -->
+    <header class="fixed w-full z-40 bg-dark shadow-md">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="/" class="flex items-center">
+                        <img src="/assets/logo.png" alt="Minecraft Gift Codes" class="h-12 mr-2">
+                        
+                    </a>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="text-white hover:text-primary transition">Home</a>
+                     <a href="/shop/" class="text-white hover:text-primary transition">Shop</a>
+                    <a href="/about/" class="text-white hover:text-primary transition">About</a>
+                    <a href="/blog/" class="text-white hover:text-primary transition">Blog</a>
+                    <a href="/contact/" class="text-white hover:text-primary transition">Contact</a>
+                    <div class="flex items-center space-x-4 ml-4">
+                        <a href="/cart/" class="relative text-white hover:text-primary transition">
+                            <i class="fas fa-shopping-cart text-xl"></i>
+                            <span id="cart-count" class="absolute -top-2 -right-2 bg-secondary text-dark text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                        </a>
+                      <a href="/login/" class="px-4 py-2 bg-primary rounded hover:bg-primary-dark transition ">
+  <i class="fas fa-user"></i>
+</a>
+                    </div>
+                </nav>
+                
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center space-x-4">
+                    <a href="/cart/" class="relative text-white hover:text-primary transition">
+                        <i class="fas fa-shopping-cart text-xl"></i>
+                        <span id="mobile-cart-count" class="absolute -top-2 -right-2 bg-secondary text-dark text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                    </a>
+                    <button id="menu-toggle" class="hamburger focus:outline-none">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu -->
+             <div id="mobile-menu" class="mobile-menu md:hidden bg-dark-light rounded-lg mt-2">
+                <div class="px-4 py-3 space-y-4">
+                    <a href="/" class="block text-white hover:text-primary transition">Home</a>
+                    <a href="/shop/" class="block text-white hover:text-primary transition">Shop</a>
+                    <a href="/about/" class="block text-white hover:text-primary transition">About</a>  
+                    <a href="/blog/" class="block text-white hover:text-primary transition">Blog</a>
+                     <a href="/contact/" class="block text-white hover:text-primary transition pb-4">Contact</a>
+                   <a href="/login/" class="px-4 py-2 bg-primary rounded hover:bg-primary-dark transition ">
+  <i class="fas fa-user"></i>
+</a>
+                    <div class="pt-4 border-t border-gray-700">
+                        <p class="text-xs text-gray-400">We are not an affiliate agency. All products are sold independently through our platform.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Shop Hero -->
+    <section class="pt-32 pb-16 bg-dark-light relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-dark to-transparent z-0"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-dark to-transparent z-0"></div>
+        <img src="/assets/shop-hero-bg.webp" alt="Minecraft Shop" class="absolute inset-0 w-full h-full object-cover object-center z-0 opacity-30">
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="max-w-3xl">
+                <h1 class="text-4xl md:text-5xl font-bold mb-4">Minecraft Shop</h1>
+                <p class="text-lg text-gray-300 mb-6">Browse our collection of authentic Minecraft products including gift codes, skins, mods, and exclusive bundles.</p>
+                <div class="flex items-center text-sm text-gray-400">
+                    <a href="/" class="text-primary hover:underline">Home</a>
+                    <span class="mx-2">/</span>
+                    <span>Shop</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Shop Content -->
+    <section class="py-12">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col lg:flex-row gap-8">
+                <!-- Filters Sidebar -->
+                <aside class="lg:w-1/4">
+                    <div class="bg-dark-lighter rounded-lg p-6 sticky top-24">
+                        <!-- Mobile Filters Toggle -->
+                        <div class="lg:hidden mb-6">
+                            <button id="mobile-filters-toggle" class="w-full flex items-center justify-between px-4 py-3 bg-dark rounded-lg">
+                                <span class="font-bold">Filters</span>
+                                <i class="fas fa-sliders-h"></i>
+                            </button>
+                        </div>
+                        
+                        <!-- Filters Content -->
+                        <div id="filters-content" class="hidden lg:block">
+                            <!-- Search -->
+                            <div class="mb-6">
+                                <h3 class="text-lg font-bold mb-3">Search</h3>
+                                <div class="relative">
+                                    <input type="text" id="product-search" placeholder="Search products..." class="w-full px-4 py-2 bg-dark border border-gray-700 rounded-lg focus:border-primary focus:outline-none">
+                                    <button class="absolute right-3 top-2 text-gray-400 hover:text-primary">
+                                        <i class="fas fa-search"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            
+                            <!-- Categories Filter -->
+                            <div class="filter-section mb-6">
+                                <div class="filter-header flex items-center justify-between cursor-pointer">
+                                    <h3 class="text-lg font-bold">Categories</h3>
+                                    <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                                </div>
+                                <div class="filter-content mt-3 pl-2">
+                                    <div class="space-y-2">
+                                        <label class="custom-checkbox">All Categories
+                                            <input type="checkbox" name="category" value="all" checked>
+                                            <span class="checkmark"></span>
+                                        </label>
+                                        <label class="custom-checkbox">Gift Cards
+                                            <input type="checkbox" name="category" value="gift-cards">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                        <label class="custom-checkbox">Skins
+                                            <input type="checkbox" name="category" value="skins">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                        <label class="custom-checkbox">Mods
+                                            <input type="checkbox" name="category" value="mods">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                        <label class="custom-checkbox">Bundles
+                                            <input type="checkbox" name="category" value="bundles">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                        <label class="custom-checkbox">Minecoins
+                                            <input type="checkbox" name="category" value="minecoins">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Price Filter -->
+                            <div class="filter-section mb-6">
+                                <div class="filter-header flex items-center justify-between cursor-pointer">
+                                    <h3 class="text-lg font-bold">Price Range</h3>
+                                    <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                                </div>
+                                <div class="filter-content mt-3">
+                                    <div class="mb-4">
+                                        <div class="range-slider">
+                                            <div class="range-selected" id="range-selected"></div>
+                                        </div>
+                                        <div class="range-input relative">
+                                            <input type="range" id="price-min" class="min" min="0" max="100" value="0" step="5">
+                                            <input type="range" id="price-max" class="max" min="0" max="100" value="100" step="5">
+                                        </div>
+                                    </div>
+                                    <div class="flex items-center justify-between">
+                                        <div>
+                                            <label for="min-price-input" class="block text-sm text-gray-400 mb-1">Min</label>
+                                            <div class="relative">
+                                                <span class="absolute left-3 top-2">$</span>
+                                                <input type="number" id="min-price-input" min="0" max="100" value="0" class="pl-8 w-20 px-2 py-1 bg-dark border border-gray-700 rounded">
+                                            </div>
+                                        </div>
+                                        <div class="h-px w-4 bg-gray-600 mx-2"></div>
+                                        <div>
+                                            <label for="max-price-input" class="block text-sm text-gray-400 mb-1">Max</label>
+                                            <div class="relative">
+                                                <span class="absolute left-3 top-2">$</span>
+                                                <input type="number" id="max-price-input" min="0" max="100" value="100" class="pl-8 w-20 px-2 py-1 bg-dark border border-gray-700 rounded">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Platform Filter -->
+                            <div class="filter-section mb-6">
+                                <div class="filter-header flex items-center justify-between cursor-pointer">
+                                    <h3 class="text-lg font-bold">Platform</h3>
+                                    <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                                </div>
+                                <div class="filter-content mt-3 pl-2">
+                                    <div class="space-y-2">
+                                        <label class="custom-checkbox">All Platforms
+                                            <input type="checkbox" name="platform" value="all" checked>
+                                            <span class="checkmark"></span>
+                                        </label>
+                                        <label class="custom-checkbox">Windows
+                                            <input type="checkbox" name="platform" value="windows">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                        <label class="custom-checkbox">Xbox
+                                            <input type="checkbox" name="platform" value="xbox">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                        <label class="custom-checkbox">PlayStation
+                                            <input type="checkbox" name="platform" value="playstation">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                        <label class="custom-checkbox">Nintendo Switch
+                                            <input type="checkbox" name="platform" value="switch">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                        <label class="custom-checkbox">Mobile
+                                            <input type="checkbox" name="platform" value="mobile">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Edition Filter -->
+                            <div class="filter-section mb-6">
+                                <div class="filter-header flex items-center justify-between cursor-pointer">
+                                    <h3 class="text-lg font-bold">Edition</h3>
+                                    <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                                </div>
+                                <div class="filter-content mt-3 pl-2">
+                                    <div class="space-y-2">
+                                        <label class="custom-checkbox">All Editions
+                                            <input type="checkbox" name="edition" value="all" checked>
+                                            <span class="checkmark"></span>
+                                        </label>
+                                        <label class="custom-checkbox">Java Edition
+                                            <input type="checkbox" name="edition" value="java">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                        <label class="custom-checkbox">Bedrock Edition
+                                            <input type="checkbox" name="edition" value="bedrock">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                        <label class="custom-checkbox">Dungeons
+                                            <input type="checkbox" name="edition" value="dungeons">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                        <label class="custom-checkbox">Legends
+                                            <input type="checkbox" name="edition" value="legends">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Rating Filter -->
+                            <div class="filter-section mb-6">
+                                <div class="filter-header flex items-center justify-between cursor-pointer">
+                                    <h3 class="text-lg font-bold">Rating</h3>
+                                    <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                                </div>
+                                <div class="filter-content mt-3 pl-2">
+                                    <div class="space-y-2">
+                                        <label class="custom-radio">Any Rating
+                                            <input type="radio" name="rating" value="any" checked>
+                                            <span class="radiomark"></span>
+                                        </label>
+                                        <label class="custom-radio">4 Stars & Up
+                                            <input type="radio" name="rating" value="4">
+                                            <span class="radiomark"></span>
+                                        </label>
+                                        <label class="custom-radio">3 Stars & Up
+                                            <input type="radio" name="rating" value="3">
+                                            <span class="radiomark"></span>
+                                        </label>
+                                        <label class="custom-radio">2 Stars & Up
+                                            <input type="radio" name="rating" value="2">
+                                            <span class="radiomark"></span>
+                                        </label>
+                                        <label class="custom-radio">1 Star & Up
+                                            <input type="radio" name="rating" value="1">
+                                            <span class="radiomark"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Availability Filter -->
+                            <div class="filter-section">
+                                <div class="filter-header flex items-center justify-between cursor-pointer">
+                                    <h3 class="text-lg font-bold">Availability</h3>
+                                    <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                                </div>
+                                <div class="filter-content mt-3 pl-2">
+                                    <div class="space-y-2">
+                                        <label class="custom-checkbox">In Stock
+                                            <input type="checkbox" name="availability" value="in-stock" checked>
+                                            <span class="checkmark"></span>
+                                        </label>
+                                        <label class="custom-checkbox">Out of Stock
+                                            <input type="checkbox" name="availability" value="out-of-stock">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                        <label class="custom-checkbox">Pre-Order
+                                            <input type="checkbox" name="availability" value="pre-order">
+                                            <span class="checkmark"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <button id="reset-filters" class="mt-6 w-full px-4 py-2 text-sm border border-gray-600 rounded hover:bg-gray-700 transition">
+                                Reset All Filters
+                            </button>
+                        </div>
+                    </div>
+                </aside>
+                
+                <!-- Products Section -->
+                <div class="lg:w-3/4">
+                    <!-- Sort and View Options -->
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
+                        <div class="text-sm text-gray-400">
+                            Showing <span id="showing-start">1</span>-<span id="showing-end">12</span> of <span id="total-products">48</span> products
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <div class="flex items-center">
+                                <label for="sort-by" class="mr-2 text-sm text-gray-400">Sort by:</label>
+                                <select id="sort-by" class="bg-dark border border-gray-700 rounded px-3 py-1 text-sm focus:border-primary focus:outline-none">
+                                    <option value="popular">Most Popular</option>
+                                    <option value="price-low">Price: Low to High</option>
+                                    <option value="price-high">Price: High to Low</option>
+                                    <option value="rating">Highest Rated</option>
+                                    <option value="newest">Newest</option>
+                                    <option value="name-asc">Name: A-Z</option>
+                                    <option value="name-desc">Name: Z-A</option>
+                                </select>
+                            </div>
+                            <div class="hidden sm:flex items-center gap-2">
+                                <button class="view-option active" data-view="grid">
+                                    <i class="fas fa-th"></i>
+                                </button>
+                                <button class="view-option" data-view="list">
+                                    <i class="fas fa-list"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Products Grid -->
+                    <div id="products-container" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Products will be dynamically inserted here -->
+                    </div>
+                    
+                    <!-- Pagination -->
+                    
+                    
+                    <!-- No Results Message -->
+                    <div id="no-results" class="hidden text-center py-12">
+                        <div class="max-w-md mx-auto">
+                            <i class="fas fa-search text-5xl text-gray-600 mb-4"></i>
+                            <h3 class="text-xl font-bold mb-2">No products found</h3>
+                            <p class="text-gray-400 mb-6">Try adjusting your search or filter criteria to find what you're looking for.</p>
+                            <button id="reset-search" class="px-6 py-2 bg-primary rounded hover:bg-primary-dark transition">
+                                Reset Filters
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="py-16 bg-dark-light">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Get Exclusive Deals</h2>
+                <p class="text-gray-400 mb-8">Subscribe to our newsletter for exclusive deals, new product announcements, gaming news, and a chance to get digital bonus drop till $1500.</p>
+                
+                <form id="newsletter-form" class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+                    <input type="email" placeholder="Your email address" class="flex-grow px-4 py-3 rounded bg-dark border border-gray-700 focus:border-primary focus:outline-none" required>
+                    <button type="submit" class="px-6 py-3 bg-primary text-dark font-bold rounded hover:bg-primary-dark transition">
+                        Subscribe
+                    </button>
+                </form>
+                
+                <p class="text-xs text-gray-500 mt-4">We respect your privacy. Unsubscribe at any time.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+                <!-- Column 1 -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4 flex items-center">
+                       <img src="/assets/logo.png" alt="Minecraft Gift Codes" class="h-12 mr-2">
+                        
+                    </h3>
+                    <p class="text-gray-400 mb-4">Your trusted source for authentic Minecraft digital products and gift codes.</p>
+                     
+                </div>
+                
+                <!-- Column 2 -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Shop</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/shop/" class="text-gray-400 hover:text-primary transition">Gift Cards</a></li>
+                        
+                        <li><a href="/shop/" class="text-gray-400 hover:text-primary transition">Mods</a></li>
+                        <li><a href="/shop/" class="text-gray-400 hover:text-primary transition">Bundles</a></li>
+                        <li><a href="/shop/" class="text-gray-400 hover:text-primary transition">New Releases</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Column 3 -->
+                <div>
+                     <h4 class="text-lg font-bold mb-4">Quick Link</h4>
+                     <ul class="space-y-2">
+                        <li><a href="/contact/" class="text-gray-400 hover:text-primary transition">Contact Us</a></li>
+                        
+                        
+                        <li><a href="/account/" class="text-gray-400 hover:text-primary transition">My Account</a></li>
+                         <li><a href="/blog/" class="text-gray-400 hover:text-primary transition">Blog</a></li>
+                         <li><a href="/about/" class="text-gray-400 hover:text-primary transition">About Us</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Column 4 -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Legal</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/privacy/" class="text-gray-400 hover:text-primary transition">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="text-gray-400 hover:text-primary transition">Terms of Service</a></li>
+                        <li><a href="/cookies/" class="text-gray-400 hover:text-primary transition">Cookie Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="pt-8 border-t border-gray-800">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-500 text-sm mb-4 md:mb-0">
+                        &copy; 2025 MinecraftGiftCodes.com. All rights reserved.
+                    </p>
+                    <p class="text-gray-500 text-sm">
+                        We are not an affiliate agency. All products are sold independently through our platform.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+<script>
+      // Mobile Menu Toggle
+const menuToggle = document.getElementById('menu-toggle');
+const mobileMenu = document.getElementById('mobile-menu');
+
+menuToggle.addEventListener('click', () => {
+    menuToggle.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+});
+    
+    // Cart functionality
+    function updateCartCount() {
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
+        document.getElementById('cart-count').textContent = cartCount;
+        document.getElementById('mobile-cart-count').textContent = cartCount;
+    }
+    
+    // Initialize cart count
+    updateCartCount();
+    
+    // Mobile filters toggle
+    const mobileFiltersToggle = document.getElementById('mobile-filters-toggle');
+    const filtersContent = document.getElementById('filters-content');
+    
+    mobileFiltersToggle.addEventListener('click', () => {
+        filtersContent.classList.toggle('hidden');
+    });
+    
+    // Filter sections toggle
+    document.querySelectorAll('.filter-header').forEach(header => {
+        header.addEventListener('click', function() {
+            const content = this.nextElementSibling;
+            const icon = this.querySelector('i');
+            
+            content.classList.toggle('open');
+            icon.classList.toggle('rotate-180');
+        });
+    });
+    
+    // Price range slider functionality
+    const rangeInput = document.querySelectorAll('.range-input input');
+    const rangeSelected = document.getElementById('range-selected');
+    const minPriceInput = document.getElementById('min-price-input');
+    const maxPriceInput = document.getElementById('max-price-input');
+    
+    let priceGap = 10;
+    
+    rangeInput.forEach(input => {
+        input.addEventListener('input', function(e) {
+            let minVal = parseInt(rangeInput[0].value);
+            let maxVal = parseInt(rangeInput[1].value);
+            
+            if (maxVal - minVal < priceGap) {
+                if (e.target.className === 'min') {
+                    rangeInput[0].value = maxVal - priceGap;
+                } else {
+                    rangeInput[1].value = minVal + priceGap;
+                }
+            } else {
+                minPriceInput.value = minVal;
+                maxPriceInput.value = maxVal;
+                rangeSelected.style.left = (minVal / rangeInput[0].max) * 100 + '%';
+                rangeSelected.style.right = 100 - (maxVal / rangeInput[1].max) * 100 + '%';
+                
+                // Trigger product filtering
+                filterProducts();
+            }
+        });
+    });
+    
+    minPriceInput.addEventListener('change', function() {
+        let minVal = parseInt(minPriceInput.value);
+        let maxVal = parseInt(maxPriceInput.value);
+        
+        if (minVal < 0) minVal = 0;
+        if (minVal > 100) minVal = 100;
+        if (maxVal - minVal < priceGap) minVal = maxVal - priceGap;
+        
+        rangeInput[0].value = minVal;
+        minPriceInput.value = minVal;
+        rangeSelected.style.left = (minVal / rangeInput[0].max) * 100 + '%';
+        
+        filterProducts();
+    });
+    
+    maxPriceInput.addEventListener('change', function() {
+        let minVal = parseInt(minPriceInput.value);
+        let maxVal = parseInt(maxPriceInput.value);
+        
+        if (maxVal < 0) maxVal = 0;
+        if (maxVal > 100) maxVal = 100;
+        if (maxVal - minVal < priceGap) maxVal = minVal + priceGap;
+        
+        rangeInput[1].value = maxVal;
+        maxPriceInput.value = maxVal;
+        rangeSelected.style.right = 100 - (maxVal / rangeInput[1].max) * 100 + '%';
+        
+        filterProducts();
+    });
+    
+    // Product data (20 products)
+    const products = [
+        {
+            id: 1,
+            name: "Minecraft Triple Bundle",
+            category: "bundles",
+            platform: ["windows", "xbox"],
+            edition: ["java", "bedrock", "dungeons", "legends"],
+            price: 59.99,
+            rating: 4.2,
+            inStock: true,
+            image: "/assets/products/minecraft-triple-bundle.jpg",
+            description: "Includes Minecraft, Minecraft Dungeons, and Minecraft Legends with 1020 Minecoins",
+            tags: ["bestseller", "featured"]
+        },
+        {
+            id: 2,
+            name: "Minecraft Deluxe Collection",
+            category: "bundles",
+            platform: ["windows", "xbox"],
+            edition: ["java", "bedrock"],
+            price: 29.99,
+            rating: 4.5,
+            inStock: true,
+            image: "/assets/products/minecraft-deluxe-collection.jpg",
+            description: "Includes Minecraft Java & Bedrock plus 3500 Minecoins",
+            tags: ["featured"]
+        },
+        {
+            id: 3,
+            name: "Roblox 8000 Robux",
+            category: "gift-cards",
+            platform: ["windows", "mobile"],
+            edition: [],
+            price: 75.00,
+            rating: 4.7,
+            inStock: true,
+            image: "/assets/products/roblox-gift-card.jpg",
+            description: "Digital Gift Card with Exclusive Virtual Item",
+            tags: ["exclusive"]
+        },
+        {
+            id: 4,
+            name: "Minecraft 1720 Minecoins",
+            category: "minecoins",
+            platform: ["windows", "xbox", "mobile"],
+            edition: ["bedrock"],
+            price: 9.49,
+            rating: 4.1,
+            inStock: true,
+            image: "/assets/products/minecraft-minecoins.jpg",
+            description: "Purchase skins, texture packs, and more in the Minecraft Marketplace",
+            tags: []
+        },
+        {
+            id: 5,
+            name: "Minecraft Dungeons: Ultimate Edition",
+            category: "bundles",
+            platform: ["windows", "xbox"],
+            edition: ["dungeons"],
+            price: 39.99,
+            rating: 4.3,
+            inStock: true,
+            image: "/assets/products/minecraft-dungeons-ultimate.jpg",
+            description: "Includes all DLCs and expansion packs for Minecraft Dungeons",
+            tags: []
+        },
+        {
+            id: 6,
+            name: "Minecraft Legends – Deluxe Edition",
+            category: "bundles",
+            platform: ["windows", "xbox"],
+            edition: ["legends"],
+            price: 49.99,
+            rating: 3.9,
+            inStock: true,
+            image: "/assets/products/minecraft-legends-deluxe.jpg",
+            description: "Deluxe edition includes bonus skins and in-game content",
+            tags: ["new"]
+        },
+        {
+            id: 7,
+            name: "Minecraft Java Edition",
+            category: "gift-cards",
+            platform: ["windows", "mac"],
+            edition: ["java"],
+            price: 26.95,
+            rating: 4.8,
+            inStock: true,
+            image: "/assets/products/minecraft-java.jpg",
+            description: "The original Minecraft experience with unlimited creativity",
+            tags: ["popular"]
+        },
+        {
+            id: 8,
+            name: "Minecraft Bedrock Edition",
+            category: "gift-cards",
+            platform: ["windows", "xbox", "mobile"],
+            edition: ["bedrock"],
+            price: 19.99,
+            rating: 4.0,
+            inStock: true,
+            image: "/assets/products/minecraft-bedrock.jpg",
+            description: "Play with friends across different platforms",
+            tags: []
+        },
+       
+       
+       
+        {
+            id: 13,
+            name: "Roblox 1000 Robux",
+            category: "gift-cards",
+            platform: ["windows", "mobile"],
+            edition: [],
+            price: 10.00,
+            rating: 4.6,
+            inStock: true,
+            image: "/assets/products/roblox-1000.jpg",
+            description: "Digital Gift Card with Exclusive Virtual Item",
+            tags: ["bestseller"]
+        },
+        {
+            id: 14,
+            name: "Roblox 2000 Robux",
+            category: "gift-cards",
+            platform: ["windows", "mobile"],
+            edition: [],
+            price: 20.00,
+            rating: 4.6,
+            inStock: true,
+            image: "/assets/products/roblox-2000.jpg",
+            description: "Digital Gift Card with Exclusive Virtual Item",
+            tags: []
+        },
+        {
+            id: 15,
+            name: "Roblox 5250 Robux",
+            category: "gift-cards",
+            platform: ["windows", "mobile"],
+            edition: [],
+            price: 50.00,
+            rating: 4.7,
+            inStock: true,
+            image: "/assets/products/roblox-5250.jpg",
+            description: "Digital Gift Card with Exclusive Virtual Item",
+            tags: []
+        },
+        {
+            id: 16,
+            name: "Roblox 11000 Robux",
+            category: "gift-cards",
+            platform: ["windows", "mobile"],
+            edition: [],
+            price: 100.00,
+            rating: 4.8,
+            inStock: true,
+            image: "/assets/products/roblox-11000.jpg",
+            description: "Digital Gift Card with Exclusive Virtual Item",
+            tags: ["featured"]
+        },
+        {
+            id: 17,
+            name: "Minecraft 500 Minecoins",
+            category: "minecoins",
+            platform: ["windows", "xbox", "mobile"],
+            edition: ["bedrock"],
+            price: 2.99,
+            rating: 4.0,
+            inStock: true,
+            image: "/assets/products/minecraft-500-coins.png",
+            description: "Purchase skins, texture packs, and more in the Minecraft Marketplace",
+            tags: []
+        },
+       
+        {
+            id: 19,
+            name: "Minecraft 3500 Minecoins",
+            category: "minecoins",
+            platform: ["windows", "xbox", "mobile"],
+            edition: ["bedrock"],
+            price: 19.99,
+            rating: 4.3,
+            inStock: true,
+            image: "/assets/products/minecraft-3500-coins.jpg",
+            description: "Purchase skins, texture packs, and more in the Minecraft Marketplace",
+            tags: []
+        },
+        {
+            id: 20,
+            name: "Minecraft Skin Pack: Fantasy",
+            category: "skins",
+            platform: ["windows", "xbox", "mobile"],
+            edition: ["bedrock"],
+            price: 3.99,
+            rating: 4.4,
+            inStock: true,
+            image: "/assets/products/skin-pack-fantasy.avif",
+            description: "Fantasy-themed skins including wizards, elves, and dragons",
+            tags: ["new"]
+        },
+        {
+    id: 21,
+    name: "Minecraft Ultimate Creator Bundle",
+    category: "bundles",
+    platform: ["windows", "xbox", "playstation", "switch", "mobile"],
+    edition: ["java", "bedrock"],
+    price: 249.99,
+    rating: 4.8,
+    inStock: true,
+    image: "/assets/products/minecraft-ultimate-creator.jpg",
+    description: "Complete creator package with all texture packs, skin packs, and 10,000 Minecoins",
+    tags: ["featured", "bestseller"]
+},
+{
+    id: 22,
+    name: "Minecraft Server Pro Package",
+    category: "bundles",
+    platform: ["windows"],
+    edition: ["java"],
+    price: 279.99,
+    rating: 4.9,
+    inStock: true,
+    image: "/assets/products/minecraft-server-pro.jpg",
+    description: "Professional server setup with 1-year hosting, premium plugins, and dedicated support",
+    tags: ["featured"]
+},
+{
+    id: 23,
+    name: "Minecraft Diamond VIP Package",
+    category: "bundles",
+    platform: ["windows", "xbox", "playstation", "switch", "mobile"],
+    edition: ["java", "bedrock", "dungeons", "legends"],
+    price: 1499.99,
+    rating: 5.0,
+    inStock: true,
+    image: "/assets/products/minecraft-diamond-vip.jpg",
+    description: "Ultimate package including all games, lifetime updates, 50,000 Minecoins, and exclusive VIP perks",
+    tags: ["featured", "exclusive"]
+}
+    ];
+    
+    let filteredProducts = [...products];
+    
+    // Initialize shop
+    function initShop() {
+        renderProducts();
+        
+        // Set up event listeners
+        document.getElementById('sort-by').addEventListener('change', function() {
+            sortProducts(this.value);
+            renderProducts();
+        });
+        
+        document.querySelectorAll('.view-option').forEach(button => {
+            button.addEventListener('click', function() {
+                document.querySelectorAll('.view-option').forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                // Here you would toggle between grid and list view
+                // For this example, we'll keep it as grid view
+            });
+        });
+        
+        // Filter event listeners
+        document.querySelectorAll('input[name="category"], input[name="platform"], input[name="edition"], input[name="rating"], input[name="availability"]').forEach(input => {
+            input.addEventListener('change', function() {
+                filterProducts();
+                renderProducts();
+            });
+        });
+        
+        document.getElementById('product-search').addEventListener('input', function() {
+            filterProducts();
+            renderProducts();
+        });
+        
+        document.getElementById('reset-filters').addEventListener('click', function() {
+            resetFilters();
+            filterProducts();
+            renderProducts();
+        });
+        
+        document.getElementById('reset-search').addEventListener('click', function() {
+            resetFilters();
+            filterProducts();
+            renderProducts();
+        });
+    }
+    
+    // Filter products based on selected filters
+    function filterProducts() {
+        const searchQuery = document.getElementById('product-search').value.toLowerCase();
+        const minPrice = parseInt(document.getElementById('min-price-input').value);
+        const maxPrice = parseInt(document.getElementById('max-price-input').value);
+        
+        // Get selected categories
+        const selectedCategories = [];
+        document.querySelectorAll('input[name="category"]:checked').forEach(checkbox => {
+            if (checkbox.value !== 'all') {
+                selectedCategories.push(checkbox.value);
+            }
+        });
+        
+        // Get selected platforms
+        const selectedPlatforms = [];
+        document.querySelectorAll('input[name="platform"]:checked').forEach(checkbox => {
+            if (checkbox.value !== 'all') {
+                selectedPlatforms.push(checkbox.value);
+            }
+        });
+        
+        // Get selected editions
+        const selectedEditions = [];
+        document.querySelectorAll('input[name="edition"]:checked').forEach(checkbox => {
+            if (checkbox.value !== 'all') {
+                selectedEditions.push(checkbox.value);
+            }
+        });
+        
+        // Get selected rating
+        const selectedRating = document.querySelector('input[name="rating"]:checked').value;
+        
+        // Get selected availability
+        const selectedAvailability = [];
+        document.querySelectorAll('input[name="availability"]:checked').forEach(checkbox => {
+            selectedAvailability.push(checkbox.value);
+        });
+        
+        filteredProducts = products.filter(product => {
+            // Search filter
+            if (searchQuery && !product.name.toLowerCase().includes(searchQuery)) {
+                return false;
+            }
+            
+            // Price filter
+            if (product.price < minPrice || product.price > maxPrice) {
+                return false;
+            }
+            
+            // Category filter
+            if (selectedCategories.length > 0 && !selectedCategories.includes(product.category)) {
+                return false;
+            }
+            
+            // Platform filter
+            if (selectedPlatforms.length > 0) {
+                let platformMatch = false;
+                for (const platform of selectedPlatforms) {
+                    if (product.platform.includes(platform)) {
+                        platformMatch = true;
+                        break;
+                    }
+                }
+                if (!platformMatch) return false;
+            }
+            
+            // Edition filter
+            if (selectedEditions.length > 0) {
+                let editionMatch = false;
+                for (const edition of selectedEditions) {
+                    if (product.edition.includes(edition)) {
+                        editionMatch = true;
+                        break;
+                    }
+                }
+                if (!editionMatch) return false;
+            }
+            
+            // Rating filter
+            if (selectedRating !== 'any' && product.rating < parseInt(selectedRating)) {
+                return false;
+            }
+            
+            // Availability filter
+            if (selectedAvailability.length > 0) {
+                if (selectedAvailability.includes('in-stock') && product.inStock) {
+                    return true;
+                }
+                if (selectedAvailability.includes('out-of-stock') && !product.inStock) {
+                    return true;
+                }
+                if (selectedAvailability.includes('pre-order') && product.tags && product.tags.includes('pre-order')) {
+                    return true;
+                }
+                return false;
+            }
+            
+            return true;
+        });
+        
+        // Show/hide no results message
+        if (filteredProducts.length === 0) {
+            document.getElementById('no-results').classList.remove('hidden');
+            document.getElementById('products-container').classList.add('hidden');
+        } else {
+            document.getElementById('no-results').classList.add('hidden');
+            document.getElementById('products-container').classList.remove('hidden');
+        }
+    }
+    
+    // Reset all filters
+    function resetFilters() {
+        // Reset search
+        document.getElementById('product-search').value = '';
+        
+        // Reset price range
+        document.getElementById('min-price-input').value = 0;
+        document.getElementById('max-price-input').value = 100;
+        document.getElementById('price-min').value = 0;
+        document.getElementById('price-max').value = 100;
+        document.getElementById('range-selected').style.left = '0%';
+        document.getElementById('range-selected').style.right = '0%';
+        
+        // Reset checkboxes and radios
+        document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+            checkbox.checked = false;
+        });
+        document.querySelectorAll('input[type="radio"]').forEach(radio => {
+            if (radio.value === 'any') radio.checked = true;
+            else radio.checked = false;
+        });
+        
+        // Check "all" checkboxes
+        document.querySelectorAll('input[value="all"]').forEach(checkbox => {
+            checkbox.checked = true;
+        });
+        
+        // Reset sort
+        document.getElementById('sort-by').value = 'popular';
+    }
+    
+    // Sort products
+    function sortProducts(sortBy) {
+        switch(sortBy) {
+            case 'price-low':
+                filteredProducts.sort((a, b) => a.price - b.price);
+                break;
+            case 'price-high':
+                filteredProducts.sort((a, b) => b.price - a.price);
+                break;
+            case 'rating':
+                filteredProducts.sort((a, b) => b.rating - a.rating);
+                break;
+            case 'newest':
+                // Assuming newer products have higher IDs
+                filteredProducts.sort((a, b) => b.id - a.id);
+                break;
+            case 'name-asc':
+                filteredProducts.sort((a, b) => a.name.localeCompare(b.name));
+                break;
+            case 'name-desc':
+                filteredProducts.sort((a, b) => b.name.localeCompare(a.name));
+                break;
+            case 'popular':
+            default:
+                // Sort by tags (bestseller, featured, popular first)
+                const tagPriority = ['bestseller', 'featured', 'popular', 'new'];
+                filteredProducts.sort((a, b) => {
+                    const aTag = a.tags ? a.tags.find(tag => tagPriority.includes(tag)) : null;
+                    const bTag = b.tags ? b.tags.find(tag => tagPriority.includes(tag)) : null;
+                    
+                    if (aTag && bTag) {
+                        return tagPriority.indexOf(aTag) - tagPriority.indexOf(bTag);
+                    } else if (aTag) {
+                        return -1;
+                    } else if (bTag) {
+                        return 1;
+                    } else {
+                        return b.rating - a.rating; // Fallback to rating
+                    }
+                });
+                break;
+        }
+    }
+    
+    // Render products
+    function renderProducts() {
+        const container = document.getElementById('products-container');
+        container.innerHTML = '';
+        
+        // Update showing count
+        document.getElementById('showing-start').textContent = 1;
+        document.getElementById('showing-end').textContent = filteredProducts.length;
+        document.getElementById('total-products').textContent = filteredProducts.length;
+        
+        filteredProducts.forEach(product => {
+            const productElement = createProductElement(product);
+            container.appendChild(productElement);
+        });
+        
+        // Add to cart functionality - UPDATED TO INCLUDE IMAGE
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', function() {
+                const id = this.getAttribute('data-id');
+                const name = this.getAttribute('data-name');
+                const price = parseFloat(this.getAttribute('data-price'));
+                const img = this.getAttribute('data-image');
+                
+                let cart = JSON.parse(localStorage.getItem('cart')) || [];
+                
+                // Check if item already in cart
+                const existingItem = cart.find(item => item.id === id);
+                
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    cart.push({
+                        id,
+                        name,
+                        price,
+                        img,
+                        quantity: 1
+                    });
+                }
+                
+                localStorage.setItem('cart', JSON.stringify(cart));
+                updateCartCount();
+                
+                // Animation feedback
+                this.textContent = 'Added!';
+                this.classList.remove('bg-primary');
+                this.classList.add('bg-secondary');
+                
+                setTimeout(() => {
+                    this.textContent = 'Add to Cart';
+                    this.classList.remove('bg-secondary');
+                    this.classList.add('bg-primary');
+                }, 1500);
+            });
+        });
+    }
+    
+    // Create product HTML element
+    function createProductElement(product) {
+        const element = document.createElement('div');
+        element.className = 'card-hover bg-dark-lighter rounded-lg overflow-hidden shadow-lg transition-all duration-300';
+        
+        let tagsHtml = '';
+        if (product.tags && product.tags.includes('bestseller')) {
+            tagsHtml += '<div class="absolute top-2 right-2 bg-primary text-dark text-xs font-bold px-2 py-1 rounded">Best Seller</div>';
+        }
+        if (product.tags && product.tags.includes('featured')) {
+            tagsHtml += '<div class="absolute top-2 left-2 bg-secondary text-dark text-xs font-bold px-2 py-1 rounded">Featured</div>';
+        }
+        if (product.tags && product.tags.includes('new')) {
+            tagsHtml += '<div class="absolute top-10 right-2 bg-blue-500 text-white text-xs font-bold px-2 py-1 rounded">New</div>';
+        }
+        if (product.tags && product.tags.includes('free')) {
+            tagsHtml += '<div class="absolute bottom-2 right-2 bg-green-500 text-white text-xs font-bold px-2 py-1 rounded">FREE</div>';
+        }
+        
+        element.innerHTML = `
+            <div class="relative overflow-hidden">
+                <img src="${product.image}" alt="${product.name}" class="w-full h-48 object-cover">
+                ${tagsHtml}
+                ${!product.inStock ? '<div class="absolute inset-0 bg-black bg-opacity-60 flex items-center justify-center"><span class="bg-red-500 text-white px-3 py-1 rounded text-sm">Out of Stock</span></div>' : ''}
+            </div>
+            <div class="p-4">
+                <h3 class="text-lg font-bold mb-2">${product.name}</h3>
+                <p class="text-gray-400 text-sm mb-4">${product.description}</p>
+                <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center">
+                        ${renderRatingStars(product.rating)}
+                        <span class="text-xs text-gray-500 ml-1">(${product.rating.toFixed(1)})</span>
+                    </div>
+                    <span class="text-sm text-gray-400">${product.platform.map(p => p.charAt(0).toUpperCase() + p.slice(1)).join(', ')}</span>
+                </div>
+                <div class="flex items-center justify-between">
+                    <span class="text-2xl font-bold">$${product.price.toFixed(2)}</span>
+                    <button class="add-to-cart px-4 py-2 bg-primary rounded hover:bg-primary-dark transition ${!product.inStock ? 'opacity-50 cursor-not-allowed' : ''}" 
+                            data-id="${product.id}" data-name="${product.name}" data-price="${product.price}" 
+                            data-image="${product.image}"
+                            ${!product.inStock ? 'disabled' : ''}>
+                        ${product.inStock ? 'Add to Cart' : 'Out of Stock'}
+                    </button>
+                </div>
+            </div>
+        `;
+        
+        return element;
+    }
+    
+    // Render rating stars
+    function renderRatingStars(rating) {
+        let stars = '';
+        const fullStars = Math.floor(rating);
+        const hasHalfStar = rating % 1 >= 0.5;
+        
+        for (let i = 1; i <= 5; i++) {
+            if (i <= fullStars) {
+                stars += '<i class="fas fa-star text-yellow-400"></i>';
+            } else if (i === fullStars + 1 && hasHalfStar) {
+                stars += '<i class="fas fa-star-half-alt text-yellow-400"></i>';
+            } else {
+                stars += '<i class="far fa-star text-yellow-400"></i>';
+            }
+        }
+        
+        return stars;
+    }
+    
+    // Newsletter form
+    document.getElementById('newsletter-form').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const email = this.querySelector('input[type="email"]').value;
+        
+        // Store in local storage
+        let newsletters = JSON.parse(localStorage.getItem('newsletters')) || [];
+        newsletters.push(email);
+        localStorage.setItem('newsletters', JSON.stringify(newsletters));
+        
+        // Show feedback
+        this.querySelector('button').textContent = 'Subscribed!';
+        this.querySelector('input').value = '';
+        
+        setTimeout(() => {
+            this.querySelector('button').textContent = 'Subscribe';
+        }, 2000);
+    });
+    
+    // Initialize the shop when DOM is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+        initShop();
+        
+        // GSAP animations
+        gsap.registerPlugin(ScrollTrigger);
+        
+        gsap.utils.toArray('.card-hover').forEach(element => {
+            gsap.from(element, {
+                scrollTrigger: {
+                    trigger: element,
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                },
+                opacity: 0,
+                y: 50,
+                duration: 0.8,
+                ease: "power2.out"
+            });
+        });
+    });
+</script>
+</body>
+</html>

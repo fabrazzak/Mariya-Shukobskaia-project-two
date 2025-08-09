@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GeoBallistics Games | Shooting Simulations & Training Tools</title>
+    <meta name="description" content="Enhance your shooting skills with GeoBallistics games and simulations. Interactive training tools for precision shooting practice.">
+    <meta name="keywords" content="shooting games, ballistics games, precision shooting simulator, sniper training, shooting practice">
+    <link rel="canonical" href="https://geoballistics.app/games/">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/image/logo.webp" type="image/x-icon">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Roboto:wght@300;400;500&family=Orbitron:wght@500&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2A2E35',
+                        secondary: '#4B5320',
+                        accent: '#FFB400',
+                    },
+                    fontFamily: {
+                        heading: ['Rajdhani', 'sans-serif'],
+                        body: ['Roboto', 'sans-serif'],
+                        tactical: ['Orbitron', 'sans-serif'],
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-delay': 'float 6s ease-in-out infinite 2s',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    
+    <style>
+        .bg-grid-pattern {
+            background-image: 
+                linear-gradient(to right, rgba(255, 180, 0, 0.1) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(255, 180, 0, 0.1) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        
+        .game-card {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 50%);
+            z-index: 1;
+        }
+        
+        .game-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+        
+        .game-card:hover .game-image {
+            transform: scale(1.05);
+        }
+        
+        .game-content {
+            position: relative;
+            z-index: 2;
+        }
+        
+        .game-image {
+            transition: transform 0.5s ease;
+        }
+        
+        .difficulty-easy {
+            background-color: rgba(16, 185, 129, 0.2);
+            color: #10B981;
+        }
+        
+        .difficulty-medium {
+            background-color: rgba(245, 158, 11, 0.2);
+            color: #F59E0B;
+        }
+        
+        .difficulty-hard {
+            background-color: rgba(239, 68, 68, 0.2);
+            color: #EF4444;
+        }
+        
+        .crosshair {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            pointer-events: none;
+        }
+        
+        #ballistics-simulator {
+            position: relative;
+            height: 500px;
+            background-image: url('/image/range-background.jpg');
+            background-size: cover;
+            background-position: center;
+            overflow: hidden;
+        }
+        
+        .target {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            background-image: url('/image/target.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            cursor: crosshair;
+        }
+    </style>
+</head>
+<body class="bg-primary text-gray-200 font-body antialiased">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 bg-primary bg-opacity-90 backdrop-blur-sm z-40 border-b border-secondary">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <a href="/" class="flex items-center space-x-2">
+                    <div class="w-10 h-10 rounded-sm flex items-center justify-center">
+                       <img src="/image/logo.webp" alt="GeoBallistics Logo" class="rounded-full">
+                    </div>
+                    <span class="text-xl font-heading font-bold tracking-tight">GEO<span class="text-accent">BALLISTICS</span></span>
+                </a>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="hover:text-accent transition-colors font-heading">Home</a>
+                    <a href="/games/" class="text-accent font-heading font-medium">Games</a>
+                    <a href="/about/" class="hover:text-accent transition-colors font-heading">About</a>
+                    <a href="/blog/" class="hover:text-accent transition-colors font-heading">Blog</a>
+                    <a href="/contact/" class="hover:text-accent transition-colors font-heading">Contact</a>
+                    <a href="https://play.google.com/store/apps/details?id=com.geoballistics.ballisticsarc" target="_blank" class="bg-accent text-primary px-4 py-2 rounded-sm font-heading font-semibold hover:bg-yellow-500 transition-colors">Download App</a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuButton" class="md:hidden text-gray-300 hover:text-accent focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-primary border-t border-secondary">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="/" class="block px-3 py-2 hover:text-accent transition-colors font-heading">Home</a>
+                <a href="/games/" class="block px-3 py-2 text-accent font-heading">Games</a>
+                <a href="/about/" class="block px-3 py-2 hover:text-accent transition-colors font-heading">About</a>
+                <a href="/blog/" class="block px-3 py-2 hover:text-accent transition-colors font-heading">Blog</a>
+                <a href="/contact/" class="block px-3 py-2 hover:text-accent transition-colors font-heading">Contact</a>
+                <a href="https://play.google.com/store/apps/details?id=com.geoballistics.ballisticsarc" target="_blank" class="block px-3 py-2 bg-accent text-primary rounded-sm text-center font-heading font-semibold">Download App</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 bg-gradient-to-b from-gray-900 to-primary overflow-hidden">
+        <div class="absolute inset-0 bg-grid-pattern opacity-10 z-0"></div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="max-w-4xl mx-auto text-center">
+                <h1 class="text-4xl md:text-6xl font-heading font-bold mb-6">
+                    <span class="text-accent">SHOOTING</span> GAMES & SIMULATORS
+                </h1>
+                <p class="text-xl md:text-2xl text-gray-300 mb-8">Enhance your marksmanship skills with our interactive training tools and ballistics simulations.</p>
+                <div class="flex justify-center space-x-4">
+                    <a href="#games" class="bg-accent text-primary px-6 py-3 rounded-sm font-heading font-semibold hover:bg-yellow-500 transition-colors">
+                        Explore Games
+                    </a>
+                   
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Games Grid Section -->
+    <section id="games" class="py-20 bg-primary">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-heading font-bold mb-4">
+                    <span class="border-b-2 border-accent pb-2">TRAINING</span> GAMES
+                </h2>
+                <p class="max-w-2xl mx-auto text-gray-400">Interactive tools designed to improve your shooting skills and ballistics knowledge.</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Game 1 -->
+                <div class="game-card rounded-lg overflow-hidden h-96">
+                    <div class="relative h-full">
+                        <div class="game-image absolute inset-0 bg-gray-800">
+                            <img src="/image/wind-game.png" alt="Wind Reading Challenge" class="w-full h-full object-cover">
+                        </div>
+                        <div class="game-content absolute bottom-0 left-0 right-0 p-6">
+                            <span class="inline-block px-3 py-1 rounded-full text-sm text-white font-heading font-medium difficulty-medium mb-2">Medium</span>
+                            <h3 class="text-2xl font-heading font-bold mb-2">GeoBallistics</h3>
+                            <p class="text-gray-300 mb-4">GeoBallistics is a mobile app available for android devices and is compatible with Vortex Razor HD 4000 GB</p>
+                            <a href="https://play.google.com/store/apps/details?id=com.geoballistics.ballisticsarc" class="inline-flex items-center text-accent font-heading font-semibold group">
+                                Play Now
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Game 2 -->
+                <div class="game-card rounded-lg overflow-hidden h-96">
+                    <div class="relative h-full">
+                        <div class="game-image absolute inset-0 bg-gray-800">
+                            <img src="/image/range-estimation.png" alt="Range Estimation Trainer" class="w-full h-full object-cover">
+                        </div>
+                        <div class="game-content absolute bottom-0 left-0 right-0 p-6">
+                            <span class="inline-block px-3 py-1 rounded-full text-sm font-heading text-white font-medium difficulty-easy mb-2">Easy</span>
+                            <h3 class="text-2xl font-heading font-bold mb-2">FURY HD</h3>
+                            <p class="text-gray-300 mb-4">Improve your ability to estimate distances using mil-dots and other methods.</p>
+                            <a href="https://play.google.com/store/apps/details?id=com.vortexoptics.furyhd" class="inline-flex items-center text-accent font-heading font-semibold group">
+                                Play Now
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Game 3 -->
+                <div class="game-card rounded-lg overflow-hidden h-96">
+                    <div class="relative h-full">
+                        <div class="game-image absolute inset-0 bg-gray-800">
+                            <img src="/image/ballistics-sim.png" alt="Ballistics Simulator" class="w-full h-full object-cover">
+                        </div>
+                        <div class="game-content absolute bottom-0 left-0 right-0 p-6">
+                            <span class="inline-block px-3 py-1 rounded-full text-sm font-medium font-heading text-white difficulty-hard mb-2">Hard</span>
+                            <h3 class="text-2xl font-heading font-bold mb-2">Ballistics Simulator</h3>
+                            <p class="text-gray-300 mb-4">Practice making adjustments for wind, elevation, and atmospheric conditions.</p>
+                            <a href="https://play.google.com/store/apps/details?id=com.geoballistics.ballisticsarc" class="inline-flex items-center text-accent font-heading font-semibold group">
+                                Play Now
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 ml-2 group-hover:translate-x-1 transition-transform" viewBox="0 0 20 20" fill="currentColor">
+                                    <path fill-rule="evenodd" d="M10.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L12.586 11H5a1 1 0 110-2h7.586l-2.293-2.293a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Game 4 -->
+               
+            </div>
+        </div>
+    </section>
+
+
+    
+    <!-- CTA Section -->
+    <section class="py-20 bg-primary relative overflow-hidden">
+        <!-- Animated background elements -->
+        <div class="absolute top-0 left-0 w-full h-full">
+            <div class="absolute top-1/4 left-1/4 w-32 h-32 bg-accent rounded-full opacity-10 animate-float"></div>
+            <div class="absolute top-1/3 right-1/4 w-24 h-24 bg-accent rounded-full opacity-5 animate-float-delay"></div>
+            <div class="absolute bottom-1/4 left-1/3 w-20 h-20 bg-accent rounded-full opacity-10 animate-float" style="animation-delay: 1.5s;"></div>
+        </div>
+        
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="text-3xl md:text-4xl font-heading font-bold mb-6">
+                    READY TO <span class="text-accent">ELEVATE</span> YOUR SHOOTING?
+                </h2>
+                <p class="text-xl text-gray-300 mb-8">Download GeoBallistics today and experience the most advanced mobile ballistics solution available.</p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="https://play.google.com/store/apps/details?id=com.geoballistics.ballisticsarc" target="_blank" class="bg-accent text-primary px-8 py-4 rounded-sm font-heading font-semibold text-lg hover:bg-yellow-500 transition-colors transform hover:scale-105">
+                        Download on Google Play
+                    </a>
+                    <a href="/contact/" class="border-2 border-accent text-accent px-8 py-4 rounded-sm font-heading font-semibold text-lg hover:bg-accent hover:bg-opacity-10 transition-colors transform hover:scale-105">
+                        Contact Support
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8 mb-12">
+                <!-- About -->
+                <div>
+                    <h3 class="text-lg font-heading font-semibold text-white mb-4">About GeoBallistics</h3>
+                    <p class="mb-4">The most advanced mobile ballistics solution featuring 3DOF calculations, range cards, and hardware integration for precision shooting.</p>
+                   
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-lg font-heading font-semibold text-white mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/games/" class="hover:text-accent transition-colors">Games</a></li>
+                        <li><a href="/about/" class="hover:text-accent transition-colors">About Us</a></li>
+                        <li><a href="/blog/" class="hover:text-accent transition-colors">Blog</a></li>
+                        <li><a href="/contact/" class="hover:text-accent transition-colors">Contact</a></li>
+                        <li><a href="https://play.google.com/store/apps/details?id=com.geoballistics.ballisticsarc" target="_blank" class="hover:text-accent transition-colors">Download</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Support -->
+                <div>
+                    <h3 class="text-lg font-heading font-semibold text-white mb-4">Support</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/privacy/" class="hover:text-accent transition-colors">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="hover:text-accent transition-colors">Terms of Service</a></li>
+                        <li><a href="/cookies/" class="hover:text-accent transition-colors">Cookies Policy</a></li>
+                       
+                    </ul>
+                </div>
+                
+                <!-- Contact -->
+                <div>
+                    <h3 class="text-lg font-heading font-semibold text-white mb-4">Contact Us</h3>
+                    <address class="not-italic">
+                        <div class="mb-2">Sheltered Wings, Inc.</div>
+                        <div class="mb-2">1 Vortex Dr</div>
+                        <div class="mb-2">Barneveld, WI 53507</div>
+                        <div class="mb-2">United States</div>
+                        <div class="mb-2">Phone: <a href="tel:+16086022295" class="hover:text-accent transition-colors">+1 608-602-2295</a></div>
+                        <div class="mb-2">Email: <a href="mailto:info@geoballistics.app" class="hover:text-accent transition-colors">info@geoballistics.app</a></div>
+                    </address>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8 text-sm text-center">
+                <p>&copy; 2025 GeoBallistics by Sheltered Wings, Inc. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Ballistics Simulator
+        document.addEventListener('DOMContentLoaded', function() {
+        
+            
+          
+           
+            // Simulator functionality
+            const simulator = document.getElementById('ballistics-simulator');
+            const crosshair = document.getElementById('crosshair');
+            const target = document.getElementById('target');
+            
+           
+            
+           
+            
+            // Initialize GSAP animations
+            gsap.registerPlugin(ScrollTrigger);
+            
+            // Animate game cards on scroll
+            gsap.utils.toArray(".game-card").forEach((card, i) => {
+                gsap.from(card, {
+                    scrollTrigger: {
+                        trigger: card,
+                        start: "top 80%",
+                        toggleActions: "play none none none"
+                    },
+                    opacity: 0,
+                    y: 50,
+                    duration: 0.8,
+                    delay: i * 0.1,
+                    ease: "power2.out"
+                });
+            });
+            
+            // Animate resources
+            gsap.utils.toArray(".bg-gray-900").forEach((resource, i) => {
+                gsap.from(resource, {
+                    scrollTrigger: {
+                        trigger: resource,
+                        start: "top 80%",
+                        toggleActions: "play none none none"
+                    },
+                    opacity: 0,
+                    y: 50,
+                    duration: 0.8,
+                    delay: i * 0.1,
+                    ease: "power2.out"
+                });
+            });
+        });
+    </script>
+</body>
+</html>

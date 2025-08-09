@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn about SocialGamblers - The premium social casino platform offering free virtual gaming with no real money involved.">
+    <meta name="keywords" content="about social casino, free slots, virtual gambling, about us, casino games">
+    <meta name="author" content="SocialGamblers">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://socialgamblers.org/about/" />
+    <title>About Us | SocialGamblers - Premium Social Casino Platform</title>
+    
+    <!-- Favicon -->
+   <link rel="icon" href="/assets/favicon.png" type="image/x-icon">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3b82f6',
+                        secondary: '#10b981',
+                        accent: '#f59e0b',
+                        dark: '#1e293b',
+                        darker: '#0f172a',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            background-color: #0f172a;
+            color: #f8fafc;
+        }
+        
+        .hamburger-menu {
+            width: 30px;
+            height: 20px;
+            position: relative;
+            transform: rotate(0deg);
+            transition: .5s ease-in-out;
+            cursor: pointer;
+        }
+        
+        .hamburger-menu span {
+            display: block;
+            position: absolute;
+            height: 3px;
+            width: 100%;
+            background: white;
+            border-radius: 3px;
+            opacity: 1;
+            left: 0;
+            transform: rotate(0deg);
+            transition: .25s ease-in-out;
+        }
+        
+        .hamburger-menu span:nth-child(1) {
+            top: 0px;
+        }
+        
+        .hamburger-menu span:nth-child(2), .hamburger-menu span:nth-child(3) {
+            top: 10px;
+        }
+        
+        .hamburger-menu span:nth-child(4) {
+            top: 20px;
+        }
+        
+        .hamburger-menu.open span:nth-child(1) {
+            top: 10px;
+            width: 0%;
+            left: 50%;
+        }
+        
+        .hamburger-menu.open span:nth-child(2) {
+            transform: rotate(45deg);
+        }
+        
+        .hamburger-menu.open span:nth-child(3) {
+            transform: rotate(-45deg);
+        }
+        
+        .hamburger-menu.open span:nth-child(4) {
+            top: 10px;
+            width: 0%;
+            left: 50%;
+        }
+        
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .age-verification {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(15, 23, 42, 0.95);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+        
+        .age-content {
+            background-color: #1e293b;
+            padding: 40px;
+            border-radius: 12px;
+            max-width: 600px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 40px;
+        }
+        
+        .timeline-item:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 2px;
+            height: 100%;
+            background: #3b82f6;
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            left: -8px;
+            top: 0;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #3b82f6;
+        }
+        
+        .team-member-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .team-member-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body class="bg-darker text-slate-100">
+    <!-- Age Verification Modal -->
+    <div class="age-verification" id="ageVerification">
+        <div class="age-content">
+            <h2 class="text-3xl font-bold mb-4 text-accent">Age Verification Required</h2>
+            <p class="text-lg mb-6">You must be 18 years or older to access this social casino platform. Please confirm your age to continue and enjoy our premium gaming experience.</p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button onclick="verifyAge(true)" class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300">
+                    <i class="fas fa-check-circle mr-2"></i> I am 18 or older
+                </button>
+                <button onclick="verifyAge(false)" class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition duration-300">
+                    <i class="fas fa-times-circle mr-2"></i> I am under 18
+                </button>
+            </div>
+            
+            <p class="text-sm mt-6 text-slate-400">
+                <i class="fas fa-exclamation-triangle mr-2"></i> Important: This platform is for entertainment only. No real money gambling is involved.
+            </p>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="bg-dark sticky top-0 z-50 shadow-lg">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <a href="/" class="flex items-center">
+                    <img src="/assets/logo.png" alt="SocialGamblers Logo" class="h-14 mr-2">
+                </a>
+            </div>
+            
+            <div class="hidden md:flex items-center space-x-6">
+                <a href="/" class="text-white hover:text-accent transition">Home</a>
+                <a href="/games/" class="text-white hover:text-accent transition">Games</a>
+                <a href="/about/" class="text-white hover:text-accent transition">About Us</a>
+                <a href="/responsible-gaming/" class="text-white hover:text-accent transition">Responsible Gaming</a>
+                <a href="/contact/" class="text-white hover:text-accent transition">Contact</a>
+            </div>
+            
+            <div class="flex items-center space-x-4">
+                <button id="loginBtn" class="hidden md:block bg-primary hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition">
+                    <i class="fas fa-sign-in-alt mr-2"></i> Login
+                </button>
+                <button id="registerBtn" class="hidden md:block bg-accent hover:bg-yellow-700 text-white px-4 py-2 rounded-lg transition">
+                    <i class="fas fa-user-plus mr-2"></i> Register
+                </button>
+                
+                <!-- Mobile menu button -->
+                <button id="mobileMenuButton" class="md:hidden focus:outline-none">
+                    <div class="hamburger-menu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="md:hidden hidden bg-darker absolute w-full left-0 right-0 shadow-lg z-40">
+            <div class="container mx-auto px-4 py-4 flex flex-col space-y-4">
+                <a href="/" class="text-white hover:text-accent transition py-2 border-b border-slate-700">Home</a>
+                <a href="/games/" class="text-white hover:text-accent transition py-2 border-b border-slate-700">Games</a>
+                <a href="/about/" class="text-white hover:text-accent transition py-2 border-b border-slate-700">About Us</a>
+                <a href="/responsible-gaming/" class="text-white hover:text-accent transition py-2 border-b border-slate-700">Responsible Gaming</a>
+                <a href="/contact/" class="text-white hover:text-accent transition py-2 border-b border-slate-700">Contact</a>
+                
+                <div class="pt-4">
+                    <button id="mobileLoginBtn" class="w-full bg-primary hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition mb-2">
+                        <i class="fas fa-sign-in-alt mr-2"></i> Login
+                    </button>
+                    <button id="mobileRegisterBtn" class="w-full bg-accent hover:bg-yellow-700 text-white px-4 py-2 rounded-lg transition">
+                        <i class="fas fa-user-plus mr-2"></i> Register
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden bg-gradient-to-br from-darker to-dark py-32">
+        <div class="container mx-auto px-4 text-center z-10 relative">
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+                About <span class="bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">SocialGamblers</span>
+            </h1>
+            <p class="text-xl mb-8 text-slate-300 max-w-3xl mx-auto">Our mission is to provide the ultimate social casino experience with no financial risk - just pure entertainment.</p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="#our-story" class="bg-primary hover:bg-blue-700 text-white font-bold py-3 px-6 rounded-lg transition">
+                    <i class="fas fa-book-open mr-2"></i> Our Story
+                </a>
+               
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Story Section -->
+    <section id="our-story" class="py-16 bg-dark">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Our <span class="text-primary">Story</span></h2>
+                <p class="text-lg text-slate-300 max-w-3xl mx-auto">From humble beginnings to becoming a leading social casino platform</p>
+            </div>
+            
+            <div class="max-w-4xl mx-auto">
+                <!-- Timeline Item 1 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="bg-slate-800 p-6 rounded-xl">
+                        <h3 class="text-2xl font-bold mb-2 text-primary">2018 - The Beginning</h3>
+                        <p class="text-slate-300 mb-4">SocialGamblers was founded by a group of gaming enthusiasts who wanted to create a safe, social environment for casino game lovers. Our vision was simple - provide authentic casino experiences without any financial risk.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-slate-700 px-3 py-1 rounded-full text-sm">Startup</span>
+                            <span class="bg-slate-700 px-3 py-1 rounded-full text-sm">5 Employees</span>
+                            <span class="bg-slate-700 px-3 py-1 rounded-full text-sm">10 Games</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Timeline Item 2 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="bg-slate-800 p-6 rounded-xl">
+                        <h3 class="text-2xl font-bold mb-2 text-primary">2019 - First Milestone</h3>
+                        <p class="text-slate-300 mb-4">We reached our first 10,000 registered users and expanded our game library to 50 titles. Partnered with Hacksaw Gaming to bring premium slot experiences to our platform.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-slate-700 px-3 py-1 rounded-full text-sm">Growth</span>
+                            <span class="bg-slate-700 px-3 py-1 rounded-full text-sm">15 Employees</span>
+                            <span class="bg-slate-700 px-3 py-1 rounded-full text-sm">50 Games</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Timeline Item 3 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="bg-slate-800 p-6 rounded-xl">
+                        <h3 class="text-2xl font-bold mb-2 text-primary">2020 - Mobile Expansion</h3>
+                        <p class="text-slate-300 mb-4">Launched our mobile-optimized platform, allowing players to enjoy their favorite games anywhere. Introduced daily login bonuses and social features like friend challenges.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-slate-700 px-3 py-1 rounded-full text-sm">Mobile</span>
+                            <span class="bg-slate-700 px-3 py-1 rounded-full text-sm">25 Employees</span>
+                            <span class="bg-slate-700 px-3 py-1 rounded-full text-sm">100+ Games</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Timeline Item 4 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="bg-slate-800 p-6 rounded-xl">
+                        <h3 class="text-2xl font-bold mb-2 text-primary">2021 - Awards & Recognition</h3>
+                        <p class="text-slate-300 mb-4">Won the "Best Social Casino Platform" award at the iGaming Excellence Awards. Expanded our team with top talent from the gaming industry and reached 500,000 active users.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-slate-700 px-3 py-1 rounded-full text-sm">Award-Winning</span>
+                            <span class="bg-slate-700 px-3 py-1 rounded-full text-sm">40 Employees</span>
+                            <span class="bg-slate-700 px-3 py-1 rounded-full text-sm">200+ Games</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Timeline Item 5 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="bg-slate-800 p-6 rounded-xl">
+                        <h3 class="text-2xl font-bold mb-2 text-primary">2023 - Present Day</h3>
+                        <p class="text-slate-300 mb-4">With over 1 million registered users and 300+ games from top providers, we continue to innovate while maintaining our commitment to responsible, social gaming experiences.</p>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="bg-slate-700 px-3 py-1 rounded-full text-sm">Industry Leader</span>
+                            <span class="bg-slate-700 px-3 py-1 rounded-full text-sm">60 Employees</span>
+                            <span class="bg-slate-700 px-3 py-1 rounded-full text-sm">300+ Games</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="py-16 bg-darker">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col lg:flex-row items-center">
+                <div class="lg:w-1/2 mb-10 lg:mb-0 lg:pr-10">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6">Our <span class="text-primary">Mission</span> & Values</h2>
+                    <p class="text-lg mb-6 text-slate-300">At SocialGamblers, we're driven by a simple but powerful mission: to provide the most entertaining social casino experience while promoting responsible gaming practices.</p>
+                    
+                    <div class="space-y-6">
+                        <div class="flex items-start">
+                            <div class="bg-primary bg-opacity-20 p-3 rounded-full mr-4">
+                                <i class="fas fa-gamepad text-primary text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-bold mb-1">Entertainment First</h4>
+                                <p class="text-slate-400">We focus on creating fun, engaging experiences without any financial risk to our players.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="bg-green-500 bg-opacity-20 p-3 rounded-full mr-4">
+                                <i class="fas fa-shield-alt text-green-500 text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-bold mb-1">Responsible Gaming</h4>
+                                <p class="text-slate-400">We implement comprehensive tools and policies to promote healthy gaming habits.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="bg-purple-500 bg-opacity-20 p-3 rounded-full mr-4">
+                                <i class="fas fa-users text-purple-500 text-xl"></i>
+                            </div>
+                            <div>
+                                <h4 class="text-xl font-bold mb-1">Community Focus</h4>
+                                <p class="text-slate-400">We build features that foster positive social interactions between players.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="lg:w-1/2">
+                    <div class="bg-slate-800 p-8 rounded-xl">
+                        <h3 class="text-2xl font-bold mb-6 text-center text-accent">By The Numbers</h3>
+                        
+                        <div class="grid grid-cols-2 gap-6">
+                            <div class="bg-slate-900 p-6 rounded-xl text-center">
+                                <div class="text-4xl font-bold text-primary mb-2">1M+</div>
+                                <div class="text-slate-400">Registered Users</div>
+                            </div>
+                            
+                            <div class="bg-slate-900 p-6 rounded-xl text-center">
+                                <div class="text-4xl font-bold text-primary mb-2">300+</div>
+                                <div class="text-slate-400">Games Available</div>
+                            </div>
+                            
+                            <div class="bg-slate-900 p-6 rounded-xl text-center">
+                                <div class="text-4xl font-bold text-primary mb-2">60+</div>
+                                <div class="text-slate-400">Team Members</div>
+                            </div>
+                            
+                            <div class="bg-slate-900 p-6 rounded-xl text-center">
+                                <div class="text-4xl font-bold text-primary mb-2">24/7</div>
+                                <div class="text-slate-400">Customer Support</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+  
+    <!-- CTA Section -->
+    <section class="py-16 bg-gradient-to-r from-primary to-accent">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6 text-white">Ready to Join Our Community?</h2>
+            <p class="text-xl mb-8 text-white opacity-90 max-w-3xl mx-auto">Experience premium social casino gaming with no financial risk</p>
+            
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">               
+                <a href="/games/" class="bg-black bg-opacity-30 hover:bg-opacity-50 text-white font-bold py-4 px-8 rounded-lg text-lg transition duration-300 border-2 border-white">
+                    <i class="fas fa-gamepad mr-2"></i> Browse Games
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Responsible Gaming Section -->
+    <section class="py-16 bg-slate-900">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="md:col-span-1">
+                    <h3 class="text-2xl font-bold mb-4 text-accent">Responsible Gaming Commitment</h3>
+                    <p class="text-slate-300">SocialGamblers is committed to promoting responsible gaming practices. We provide comprehensive tools and resources to help players maintain control over their gaming habits and ensure a safe, enjoyable experience for all users.</p>
+                </div>
+                
+                <div class="md:col-span-1">
+                    <h3 class="text-2xl font-bold mb-4 text-accent">Important Notice</h3>
+                    <p class="text-slate-300">This is a social casino platform for entertainment only. No real money gambling or payouts are involved. All coins are virtual and have no monetary value.</p>
+                </div>
+                
+                <div class="md:col-span-1">
+                    <h3 class="text-2xl font-bold mb-4 text-accent">Resources</h3>
+                    <div class="space-y-3">
+                        <a href="https://www.gamcare.org.uk/" target="_blank" class="flex items-center text-slate-300 hover:text-primary transition">
+                            <i class="fas fa-external-link-alt mr-2"></i> GamCare
+                        </a>
+                        <a href="https://www.begambleaware.org/" target="_blank" class="flex items-center text-slate-300 hover:text-primary transition">
+                            <i class="fas fa-external-link-alt mr-2"></i> GambleAware
+                        </a>
+                        <a href="/responsible-gaming/" class="flex items-center text-slate-300 hover:text-primary transition">
+                            <i class="fas fa-file-alt mr-2"></i> Responsible Gaming Policy
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-darker py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <img src="/assets/logo.png" alt="SocialGamblers Logo" class="h-12 mr-2">
+                    </div>
+                    <p class="text-slate-400 mb-4">The premier social casino platform for entertainment without financial risk.</p>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/" class="text-slate-400 hover:text-primary transition">Home</a></li>
+                        <li><a href="/games/" class="text-slate-400 hover:text-primary transition">Games</a></li>
+                        <li><a href="/about/" class="text-slate-400 hover:text-primary transition">About Us</a></li>
+                        <li><a href="/contact/" class="text-slate-400 hover:text-primary transition">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Legal</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/privacy/" class="text-slate-400 hover:text-primary transition">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="text-slate-400 hover:text-primary transition">Terms of Service</a></li>
+                        <li><a href="/cookies/" class="text-slate-400 hover:text-primary transition">Cookies Policy</a></li>
+                        <li><a href="/responsible-gaming/" class="text-slate-400 hover:text-primary transition">Responsible Gaming</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Contact Us</h3>
+                    <ul class="space-y-2 text-slate-400">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-2 text-primary"></i>
+                            <span>490 Chem. de Vassan, Val-d'Or, QC J9P 0C1, Canada</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone-alt mr-2 text-primary"></i>
+                            <span>+1 (819) 824-3146</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-2 text-primary"></i>
+                            <span>info@socialgamblers.org</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-slate-800 pt-8">
+                <p class="text-center text-slate-500 text-sm">
+                    <strong>18+ Only | Social Casino Platform | No Real Money Gambling</strong><br>
+                    This website operates as a social casino platform for entertainment purposes only. No real money gambling, betting, or wagering is involved. Virtual coins and winnings have no cash value and cannot be exchanged for real money, prizes, or any monetary compensation. Success in social casino games does not guarantee future success at real money gambling activities.
+                </p>
+                <p class="text-center text-slate-600 text-sm mt-4">
+                    &copy; 2023 SocialGamblers. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div class="modal-overlay" id="loginModal">
+        <div class="bg-slate-800 rounded-xl p-8 max-w-md w-full relative">
+            <div class="close-modal" id="closeLoginModal">
+                <i class="fas fa-times"></i>
+            </div>
+            <h2 class="text-2xl font-bold mb-6 text-center">Login to Your Account</h2>
+            <form id="loginForm">
+                <div class="mb-4">
+                    <label for="loginEmail" class="block text-sm font-medium mb-2">Email</label>
+                    <input type="email" id="loginEmail" class="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" required>
+                </div>
+                <div class="mb-6">
+                    <label for="loginPassword" class="block text-sm font-medium mb-2">Password</label>
+                    <input type="password" id="loginPassword" class="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" required>
+                </div>
+                <button type="submit" class="w-full bg-primary hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition mb-4">
+                    <i class="fas fa-sign-in-alt mr-2"></i> Login
+                </button>
+                <div class="text-center text-sm">
+                    <a href="#" class="text-primary hover:underline">Forgot password?</a>
+                    <p class="mt-2 text-slate-400">Don't have an account? <a href="#" id="showRegisterFromLogin" class="text-accent hover:underline">Register now</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="modal-overlay" id="registerModal">
+        <div class="bg-slate-800 rounded-xl p-8 max-w-md w-full relative">
+            <div class="close-modal" id="closeRegisterModal">
+                <i class="fas fa-times"></i>
+            </div>
+            <h2 class="text-2xl font-bold mb-6 text-center">Create Your Account</h2>
+            <form id="registerForm">
+                <div class="mb-4">
+                    <label for="registerUsername" class="block text-sm font-medium mb-2">Username</label>
+                    <input type="text" id="registerUsername" class="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" required>
+                </div>
+                <div class="mb-4">
+                    <label for="registerEmail" class="block text-sm font-medium mb-2">Email</label>
+                    <input type="email" id="registerEmail" class="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" required>
+                </div>
+                <div class="mb-6">
+                    <label for="registerPassword" class="block text-sm font-medium mb-2">Password</label>
+                    <input type="password" id="registerPassword" class="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" required>
+                </div>
+                <div class="mb-6 flex items-start">
+                    <input type="checkbox" id="registerTerms" class="mt-1 mr-2" required>
+                    <label for="registerTerms" class="text-sm text-slate-400">I confirm I am 18+ and agree to the <a href="/terms/" class="text-primary hover:underline">Terms</a> and <a href="/privacy/" class="text-primary hover:underline">Privacy Policy</a></label>
+                </div>
+                <button type="submit" class="w-full bg-accent hover:bg-yellow-700 text-white font-bold py-3 px-4 rounded-lg transition mb-4">
+                    <i class="fas fa-user-plus mr-2"></i> Register Now & Get 5,000 Coins
+                </button>
+                <div class="text-center text-sm">
+                    <p class="text-slate-400">Already have an account? <a href="#" id="showLoginFromRegister" class="text-primary hover:underline">Login here</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Cookies Consent -->
+    <div class="fixed bottom-0 left-0 right-0 bg-slate-800 border-t border-slate-700 p-4 z-50 hidden" id="cookiesConsent">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <div class="mb-4 md:mb-0 md:mr-6">
+                    <p class="text-slate-300">We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies. <a href="/cookies/" class="text-primary hover:underline">Learn more</a></p>
+                </div>
+                <div class="flex space-x-3">
+                    <button id="acceptCookies" class="bg-primary hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition">Accept</button>
+                    <button id="rejectCookies" class="bg-slate-700 hover:bg-slate-600 text-white px-4 py-2 rounded-lg transition">Reject</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Age Verification
+        function verifyAge(isAdult) {
+            const ageVerification = document.getElementById('ageVerification');
+            
+            if (isAdult) {
+                // User is 18+, hide the modal
+                ageVerification.style.display = 'none';
+                // Set a cookie/localStorage to remember the choice
+                localStorage.setItem('ageVerified', 'true');
+                // Show cookies consent if not already shown
+                showCookiesConsent();
+            } else {
+                // User is under 18, redirect to Google
+                window.location.href = 'https://www.google.com/';
+            }
+        }
+        
+        // Check if age is already verified
+        if (localStorage.getItem('ageVerified') === 'true') {
+            document.getElementById('ageVerification').style.display = 'none';
+            // Show cookies consent if not already shown
+            showCookiesConsent();
+        }
+        
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const hamburgerMenu = document.querySelector('.hamburger-menu');
+        
+        mobileMenuButton.addEventListener('click', function() {
+            mobileMenu.classList.toggle('hidden');
+            hamburgerMenu.classList.toggle('open');
+        });
+        
+        // Login/Register Modals
+        const loginBtn = document.getElementById('loginBtn');
+        const registerBtn = document.getElementById('registerBtn');
+        const mobileLoginBtn = document.getElementById('mobileLoginBtn');
+        const mobileRegisterBtn = document.getElementById('mobileRegisterBtn');
+        const aboutRegisterBtn = document.getElementById('aboutRegisterBtn');
+        
+        const loginModal = document.getElementById('loginModal');
+        const registerModal = document.getElementById('registerModal');
+        const closeLoginModal = document.getElementById('closeLoginModal');
+        const closeRegisterModal = document.getElementById('closeRegisterModal');
+        const showRegisterFromLogin = document.getElementById('showRegisterFromLogin');
+        const showLoginFromRegister = document.getElementById('showLoginFromRegister');
+        
+        function openLoginModal() {
+            loginModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            // Close mobile menu if open
+            mobileMenu.classList.add('hidden');
+            hamburgerMenu.classList.remove('open');
+        }
+        
+        function openRegisterModal() {
+            registerModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            // Close mobile menu if open
+            mobileMenu.classList.add('hidden');
+            hamburgerMenu.classList.remove('open');
+        }
+        
+        function closeAllModals() {
+            loginModal.classList.remove('active');
+            registerModal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        
+        loginBtn.addEventListener('click', openLoginModal);
+        mobileLoginBtn.addEventListener('click', openLoginModal);
+        registerBtn.addEventListener('click', openRegisterModal);
+        mobileRegisterBtn.addEventListener('click', openRegisterModal);
+        aboutRegisterBtn.addEventListener('click', openRegisterModal);
+        
+        closeLoginModal.addEventListener('click', closeAllModals);
+        closeRegisterModal.addEventListener('click', closeAllModals);
+        
+        showRegisterFromLogin.addEventListener('click', function(e) {
+            e.preventDefault();
+            loginModal.classList.remove('active');
+            registerModal.classList.add('active');
+        });
+        
+        showLoginFromRegister.addEventListener('click', function(e) {
+            e.preventDefault();
+            registerModal.classList.remove('active');
+            loginModal.classList.add('active');
+        });
+        
+        // Login Form
+        const loginForm = document.getElementById('loginForm');
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Simulate login
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('username', 'Alex');
+            localStorage.setItem('coins', '5000');
+            
+            // Update UI to show logged in state
+            updateUserUI();
+            
+            // Close modal
+            closeAllModals();
+            
+            // Show welcome message
+            showWelcomeMessage();
+        });
+        
+        // Register Form
+        const registerForm = document.getElementById('registerForm');
+        registerForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Simulate registration
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('username', document.getElementById('registerUsername').value || 'Alex');
+            localStorage.setItem('coins', '5000'); // Give 5000 coins as bonus
+            
+            // Update UI to show logged in state
+            updateUserUI();
+            
+            // Close modal
+            closeAllModals();
+            
+            // Show welcome message
+            showWelcomeMessage();
+        });
+        
+        // Update UI based on login state
+        function updateUserUI() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            
+            if (isLoggedIn) {
+                const username = localStorage.getItem('username') || 'User';
+                const coins = localStorage.getItem('coins') || '0';
+                
+                // Update login/register buttons to show user info
+                if (loginBtn) loginBtn.innerHTML = `<i class="fas fa-user mr-2"></i> ${username} • ${coins} Coins`;
+                if (mobileLoginBtn) mobileLoginBtn.innerHTML = `<i class="fas fa-user mr-2"></i> ${username} • ${coins} Coins`;
+                
+                // Hide register button
+                if (registerBtn) registerBtn.style.display = 'none';
+                if (mobileRegisterBtn) mobileRegisterBtn.style.display = 'none';
+                if (aboutRegisterBtn) aboutRegisterBtn.style.display = 'none';
+            }
+        }
+        
+        // Show welcome message
+        function showWelcomeMessage() {
+            const username = localStorage.getItem('username') || 'User';
+            const coins = localStorage.getItem('coins') || '0';
+            
+            // Create welcome notification
+            const welcomeDiv = document.createElement('div');
+            welcomeDiv.className = 'fixed top-4 right-4 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg z-50 flex items-center';
+            welcomeDiv.innerHTML = `
+                <i class="fas fa-check-circle mr-2 text-xl"></i>
+                <div>
+                    <p class="font-bold">Welcome, ${username}!</p>
+                    <p class="text-sm">You've received ${coins} free coins to start playing!</p>
+                </div>
+            `;
+            
+            document.body.appendChild(welcomeDiv);
+            
+            // Remove after 5 seconds
+            setTimeout(() => {
+                welcomeDiv.style.opacity = '0';
+                welcomeDiv.style.transition = 'opacity 0.5s ease';
+                setTimeout(() => welcomeDiv.remove(), 500);
+            }, 5000);
+        }
+        
+        // Initialize UI on load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateUserUI();
+            
+            // GSAP animations
+            if (typeof gsap !== 'undefined') {
+                gsap.from(".hero-content h1", { 
+                    duration: 1, 
+                    y: 50, 
+                    opacity: 0, 
+                    ease: "power3.out",
+                    delay: 0.3
+                });
+                
+                gsap.from(".hero-content p", { 
+                    duration: 1, 
+                    y: 50, 
+                    opacity: 0, 
+                    ease: "power3.out",
+                    delay: 0.5
+                });
+                
+                gsap.from(".hero-content button", { 
+                    duration: 1, 
+                    y: 50, 
+                    opacity: 0, 
+                    ease: "power3.out",
+                    delay: 0.7,
+                    stagger: 0.2
+                });
+                
+                gsap.from(".timeline-item", {
+                    duration: 0.8,
+                    y: 50,
+                    opacity: 0,
+                    ease: "back.out(1.7)",
+                    stagger: 0.2,
+                    scrollTrigger: {
+                        trigger: ".timeline-item",
+                        start: "top 80%"
+                    }
+                });
+                
+                gsap.from(".team-member-card", {
+                    duration: 0.8,
+                    y: 50,
+                    opacity: 0,
+                    ease: "back.out(1.7)",
+                    stagger: 0.1,
+                    scrollTrigger: {
+                        trigger: ".team-member-card",
+                        start: "top 80%"
+                    }
+                });
+            }
+        });
+        
+        // Cookies Consent
+        function showCookiesConsent() {
+            if (localStorage.getItem('cookiesAccepted') === null) {
+                const cookiesConsent = document.getElementById('cookiesConsent');
+                cookiesConsent.classList.remove('hidden');
+                
+                document.getElementById('acceptCookies').addEventListener('click', function() {
+                    localStorage.setItem('cookiesAccepted', 'true');
+                    cookiesConsent.style.opacity = '0';
+                    setTimeout(() => cookiesConsent.style.display = 'none', 500);
+                });
+                
+                document.getElementById('rejectCookies').addEventListener('click', function() {
+                    localStorage.setItem('cookiesAccepted', 'false');
+                    cookiesConsent.style.opacity = '0';
+                    setTimeout(() => cookiesConsent.style.display = 'none', 500);
+                });
+            }
+        }
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 100,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

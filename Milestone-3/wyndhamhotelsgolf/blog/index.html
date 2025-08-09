@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Golf Blog & News | Wyndham Hotels Golf Resort Insights</title>
+    <meta name="description" content="Discover golf tips, destination guides, equipment reviews, and the latest news from Wyndham Hotels Golf resorts worldwide.">
+    <meta name="keywords" content="golf blog, golf tips, golf news, golf destinations, golf equipment, golf instruction, golf travel, wyndham golf">
+    <link rel="canonical" href="https://wyndhamhotelsgolf.com/blog/">
+      <link rel="icon" href="/assets/favicon.webp" type="image/x-icon">
+      <link rel="icon" type="image/png" href="https://www.wyndhamhotels.com//etc/designs/wyndham-tablet/images/favicons/favicon-whg.png" sizes="32x32"/>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#005f73',
+                        secondary: '#0a9396',
+                        accent: '#ee9b00',
+                        dark: '#001219',
+                        light: '#e9d8a6'
+                    },
+                    fontFamily: {
+                        sans: ['"Open Sans"', 'sans-serif'],
+                        heading: ['"Playfair Display"', 'serif']
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 1s ease-in-out',
+                        'slide-up': 'slideUp 0.8s ease-out',
+                        'float': 'float 6s ease-in-out infinite'
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' }
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        .hero-gradient {
+            background: linear-gradient(135deg, rgba(0, 96, 115, 0.637) 0%, rgba(10, 148, 150, 0.582) 100%);
+        }
+        .article-card {
+            transition: all 0.3s ease;
+        }
+        .article-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+        .category-filter {
+            transition: all 0.3s ease;
+        }
+        .category-filter:hover {
+            transform: scale(1.05);
+        }
+        .tab-active {
+            border-bottom: 3px solid #ee9b00;
+            color: #005f73;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="font-sans text-dark bg-gray-50">
+  <!-- Cookie Consent Banner -->
+<div id="cookieConsent" class="fixed bottom-0 left-0 right-0 bg-dark text-white p-4 hidden z-50">
+    <div class="container mx-auto">
+        <div class="flex flex-col md:flex-row items-center justify-between">
+            <div class="mb-4 md:mb-0 md:mr-4 flex-1">
+                <p>We use cookies to enhance your experience. By continuing to visit this site, you agree to our use of cookies.</p>
+            </div>
+            <div class="flex flex-col sm:flex-row gap-3">
+                <a href="/privacy/" class="bg-transparent hover:bg-gray-700 text-white font-medium py-2 px-4 rounded border border-gray-500 transition duration-300 text-center">
+                    Learn More
+                </a>
+                <div class="flex gap-3">
+                    <button id="declineCookies" class="bg-transparent hover:bg-gray-700 text-white font-medium py-2 px-4 rounded border border-gray-500 transition duration-300">
+                        Decline
+                    </button>
+                    <button id="acceptCookies" class="bg-accent hover:bg-yellow-600 text-white font-bold py-2 px-6 rounded transition duration-300">
+                        Accept
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <!-- Navigation -->
+     <nav class="bg-dark shadow-md fixed top-0 w-full z-40 transition-all duration-500" id="navbar">
+        <div class="container mx-auto px-6 py-3">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="/" class="flex items-center">
+                        <img src="/assets/logo.svg" alt="Wyndham Hotels Golf" class="h-12">
+                        <!-- <span class="ml-3 text-xl font-bold text-primary hidden md:block">Wyndham Hotels Golf</span> -->
+                    </a>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                     <button id="mobileMenuButton" class="text-white focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="text-primary font-semibold hover:text-accent transition duration-300 text-white">Home</a>
+                    <a href="/destinations/" class="text-gray-600 hover:text-accent transition duration-300 text-white">Destinations</a>
+                    
+                    <a href="/blog/" class="text-gray-600 hover:text-accent transition duration-300 text-white">Blog</a>
+                    <a href="/contact/" class="text-gray-600 hover:text-accent transition duration-300 text-white">Contact</a>
+                      </div>
+            </div>
+            
+           <!-- Mobile Menu -->
+            <div id="mobileMenu" class="md:hidden hidden mt-4 pb-4">
+                <a href="/" class="block py-2 font-semibold text-white">Home</a>
+                <a href="/destinations/" class="block py-2 hover:text-accent transition duration-300 text-white">Destinations</a>              
+                <a href="/blog/" class="block py-2  hover:text-accent transition duration-300 text-white" >Blog</a>
+                <a href="/contact/" class="block py-2  hover:text-accent transition duration-300 text-white">Contact</a>
+             </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative h-96 flex items-center justify-center overflow-hidden mt-16">
+        <!-- Background Image -->
+        <div class="absolute inset-0 z-0">
+            <img src="/assets/blog-hero.jpg" alt="Golf Blog & News" class="w-full h-full object-cover">
+            <div class="absolute inset-0 hero-gradient"></div>
+        </div>
+        
+        <!-- Hero Content -->
+        <div class="container mx-auto px-6 z-10 text-center text-white animate-fade-in">
+            <h1 class="text-4xl md:text-5xl font-heading font-bold mb-6">Golf Insights & Stories</h1>
+            <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">Tips, destination guides, equipment reviews and more from our golf experts</p>
+        </div>
+    </section>
+
+    <!-- Blog Content -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-6">
+            <!-- Featured Article -->
+            <div class="mb-20">
+                <div class="bg-white rounded-xl overflow-hidden shadow-lg">
+                    <div class="md:flex">
+                        <div class="md:w-1/2">
+                            <img src="/assets/featured-article.webp" alt="Mastering the Mental Game of Golf" class="w-full h-full object-cover">
+                        </div>
+                        <div class="md:w-1/2 p-8 md:p-10">
+                            <div class="flex items-center mb-4">
+                                <span class="bg-primary text-white text-xs font-bold px-3 py-1 rounded-full mr-3">Featured</span>
+                                <span class="text-sm text-gray-500">May 15, 2025</span>
+                            </div>
+                            <h2 class="text-3xl font-heading font-bold mb-4">Mastering the Mental Game: Golf Psychology Tips from Pros</h2>
+                            <p class="text-gray-700 mb-6">Discover how top tour players manage pressure and maintain focus during critical moments on the course. Our sports psychologist breaks down actionable techniques you can apply to your game.</p>
+                            <div class="flex flex-wrap gap-3 mb-6">
+                                <span class="bg-gray-100 text-gray-800 text-xs font-medium px-3 py-1 rounded-full">Improvement</span>
+                                <span class="bg-gray-100 text-gray-800 text-xs font-medium px-3 py-1 rounded-full">Psychology</span>
+                                <span class="bg-gray-100 text-gray-800 text-xs font-medium px-3 py-1 rounded-full">Pro Tips</span>
+                            </div>
+                            <a href="/blog/post1/" class="inline-flex items-center text-accent font-semibold">
+                                Read Article <i class="fas fa-arrow-right ml-2"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Category Filters -->
+            <div class="flex flex-wrap justify-center gap-4 mb-12">
+                <button class="category-filter bg-white px-6 py-3 rounded-full shadow-md font-medium text-gray-700 hover:bg-primary hover:text-white transition duration-300 active" data-category="all">All Articles</button>
+                <button class="category-filter bg-white px-6 py-3 rounded-full shadow-md font-medium text-gray-700 hover:bg-primary hover:text-white transition duration-300" data-category="improvement">Game Improvement</button>
+                <button class="category-filter bg-white px-6 py-3 rounded-full shadow-md font-medium text-gray-700 hover:bg-primary hover:text-white transition duration-300" data-category="destinations">Destinations</button>
+                <button class="category-filter bg-white px-6 py-3 rounded-full shadow-md font-medium text-gray-700 hover:bg-primary hover:text-white transition duration-300" data-category="equipment">Equipment</button>
+             </div>
+            
+            <!-- Articles Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-12" id="articlesContainer">
+                <!-- Article 1 -->
+                <article class="article-card bg-white rounded-lg overflow-hidden shadow-md" data-category="destinations">
+                    <a href="/blog/post2/">
+                        <img src="/assets/article-destinations.jpg" alt="Top Golf Destinations for 2025" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex items-center mb-3">
+                                <span class="text-sm text-gray-500">May 22, 2025</span>
+                                <span class="mx-2 text-gray-300">•</span>
+                                <span class="text-sm text-accent font-medium">Destinations</span>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3">Top Golf Destinations for 2025</h3>
+                            <p class="text-gray-600 mb-4">Our picks for the most exciting golf destinations to visit this year, from hidden gems to classic favorites.</p>
+                            <div class="flex items-center text-primary font-medium">
+                                Read More <i class="fas fa-arrow-right ml-2"></i>
+                            </div>
+                        </div>
+                    </a>
+                </article>
+                
+                <!-- Article 2 -->
+                <article class="article-card bg-white rounded-lg overflow-hidden shadow-md" data-category="equipment">
+                    <a href="/blog/post3/">
+                        <img src="/assets/article-equipment.webp" alt="2025 Golf Equipment Guide" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex items-center mb-3">
+                                <span class="text-sm text-gray-500">April 15, 2025</span>
+                                <span class="mx-2 text-gray-300">•</span>
+                                <span class="text-sm text-accent font-medium">Equipment</span>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3">2025 Golf Equipment Guide</h3>
+                            <p class="text-gray-600 mb-4">What's new in clubs, balls, and tech this season - and what's worth upgrading for your game.</p>
+                            <div class="flex items-center text-primary font-medium">
+                                Read More <i class="fas fa-arrow-right ml-2"></i>
+                            </div>
+                        </div>
+                    </a>
+                </article>
+                
+                <!-- Article 3 -->
+                <article class="article-card bg-white rounded-lg overflow-hidden shadow-md" data-category="improvement">
+                    <a href="/blog/post4/">
+                        <img src="/assets/article-shortgame.jpg" alt="Short Game Secrets" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <div class="flex items-center mb-3">
+                                <span class="text-sm text-gray-500">March 28, 2025</span>
+                                <span class="mx-2 text-gray-300">•</span>
+                                <span class="text-sm text-accent font-medium">Improvement</span>
+                            </div>
+                            <h3 class="text-xl font-bold mb-3">Short Game Secrets from Tour Pros</h3>
+                            <p class="text-gray-600 mb-4">Learn the chipping and putting techniques that separate amateur golfers from the professionals.</p>
+                            <div class="flex items-center text-primary font-medium">
+                                Read More <i class="fas fa-arrow-right ml-2"></i>
+                            </div>
+                        </div>
+                    </a>
+                </article>                
+               
+                
+            </div>
+    
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="py-16 bg-primary text-white">
+        <div class="container mx-auto px-6 text-center">
+            <div class="max-w-2xl mx-auto">
+                <h2 class="text-3xl font-heading font-bold mb-6">Stay Updated with Golf Tips & Offers</h2>
+                <p class="text-xl mb-8">Subscribe to our newsletter for exclusive content, resort updates, and special offers.</p>
+                <form class="flex flex-col sm:flex-row gap-4">
+                    <input type="email" placeholder="Your email address" class="flex-grow px-6 py-4 rounded-full focus:outline-none focus:ring-2 focus:ring-accent text-dark">
+                    <button type="submit" class="bg-accent hover:bg-yellow-600 text-white font-bold py-4 px-8 rounded-full transition duration-300">Subscribe</button>
+                </form>
+                <p class="text-sm text-light mt-4">We respect your privacy. Unsubscribe at any time.</p>
+            </div>
+        </div>
+    </section>
+
+    
+
+     <!-- Footer -->
+    <footer class="bg-dark text-white pt-16 pb-8">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+                <div>
+                   <a href="/"> <img src="/assets/logo.svg" alt="Wyndham Hotels Golf" class="h-12 mb-4"></a>
+                    <p class="text-light mb-4">Premium golf resorts offering unforgettable experiences at world-class destinations.</p>
+                     
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-heading font-bold mb-6">Quick Links</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/" class="text-light hover:text-accent transition duration-300">Home</a></li>
+                        <li><a href="/destinations/" class="text-light hover:text-accent transition duration-300">Destinations</a></li>
+                        
+                        <li><a href="/blog/" class="text-light hover:text-accent transition duration-300">Blog</a></li>
+                        <li><a href="/contact/" class="text-light hover:text-accent transition duration-300">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-heading font-bold mb-6">Contact Us</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-3 text-accent"></i>
+                            <span>Wallingford Rd, North Stoke, Wallingford OX10 6BE, United Kingdom</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone-alt mr-3 text-accent"></i>
+                            <span>+441491827300</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-3 text-accent"></i>
+                            <span>info@wyndhamhotelsgolf.com</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-xl font-heading font-bold mb-6">Newsletter</h3>
+                    <p class="text-light mb-4">Subscribe for exclusive offers, golf tips, and destination updates.</p>
+                    <form class="flex">
+                        <input type="email" placeholder="Your email" class="bg-gray-700 text-white px-4 py-2 rounded-l focus:outline-none focus:ring-2 focus:ring-accent w-full">
+                        <button type="submit" class="bg-accent hover:bg-yellow-600 text-white px-4 py-2 rounded-r transition duration-300">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-light mb-4 md:mb-0">© 2025 Wyndham Hotels Golf. All rights reserved.</p>
+                <div class="flex space-x-6">
+                    <a href="/privacy/" class="text-light hover:text-accent transition duration-300">Privacy Policy</a>
+                    <a href="/terms/" class="text-light hover:text-accent transition duration-300">Terms of Service</a>
+                    <a href="/cookies/" class="text-light hover:text-accent transition duration-300">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Booking Modal (Same as homepage) -->
+    <div id="bookingModal" class="fixed inset-0 z-50 hidden overflow-y-auto">
+        <!-- Modal content from homepage would be here -->
+    </div>
+
+    <!-- Scripts -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Navbar Scroll Effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('shadow-lg');
+                navbar.classList.add('py-2');
+                navbar.classList.remove('py-3');
+            } else {
+                navbar.classList.remove('shadow-lg');
+                navbar.classList.remove('py-2');
+                navbar.classList.add('py-3');
+            }
+        });
+        
+        // Article Filtering
+        const categoryFilters = document.querySelectorAll('.category-filter');
+        
+        categoryFilters.forEach(filter => {
+            filter.addEventListener('click', () => {
+                const category = filter.getAttribute('data-category');
+                
+                // Update active filter styling
+                categoryFilters.forEach(f => {
+                    f.classList.remove('bg-primary', 'text-white');
+                    f.classList.add('bg-white', 'text-gray-700', 'hover:bg-primary', 'hover:text-white');
+                });
+                filter.classList.add('bg-primary', 'text-white');
+                filter.classList.remove('bg-white', 'text-gray-700', 'hover:bg-primary', 'hover:text-white');
+                
+                // Filter articles
+                const articles = document.querySelectorAll('.article-card');
+                articles.forEach(article => {
+                    const articleCategory = article.getAttribute('data-category');
+                    
+                    if (category === 'all' || articleCategory === category) {
+                        article.classList.remove('hidden');
+                    } else {
+                        article.classList.add('hidden');
+                    }
+                });
+            });
+        });
+        
+        // Booking Modal Functionality
+        const bookingModal = document.getElementById('bookingModal');
+        const openBookingModalButtons = [
+            document.getElementById('openBookingModal'),
+            document.getElementById('openBookingModalMobile')
+        ];
+        
+        // Open modal function
+        function openModal() {
+            bookingModal.classList.remove('hidden');
+            document.body.classList.add('overflow-hidden');
+        }
+        
+        // Event listeners for opening modal
+        openBookingModalButtons.forEach(button => {
+            if (button) {
+                button.addEventListener('click', openModal);
+            }
+        });
+        
+      
+
+        // Cookie Consent Banner
+const cookieConsent = document.getElementById('cookieConsent');
+const acceptCookiesButton = document.getElementById('acceptCookies');
+const declineCookiesButton = document.getElementById('declineCookies');
+
+// Check if cookie consent was already given
+function checkCookieConsent() {
+    return localStorage.getItem('cookieConsent');
+}
+
+// Hide cookie banner and set preference
+function setCookiePreference(value) {
+    localStorage.setItem('cookieConsent', value);
+    cookieConsent.classList.add('hidden');
+    
+    // If declined, set a temporary cookie that expires in 1 day
+    if (value === 'declined') {
+        const date = new Date();
+        date.setTime(date.getTime() + (1 * 24 * 60 * 60 * 1000));
+        document.cookie = `cookieConsent=declined; expires=${date.toUTCString()}; path=/`;
+    }
+    
+    // Initialize analytics or other cookies based on preference
+    if (value === 'accepted') {
+        initAnalytics();
+    }
+}
+
+// Example function to initialize analytics if accepted
+function initAnalytics() {
+    // Replace with your actual analytics initialization code
+    console.log('Analytics initialized - cookies accepted');
+}
+
+// Show banner if no consent given yet
+if (!checkCookieConsent()) {
+    setTimeout(() => {
+        cookieConsent.classList.remove('hidden');
+    }, 1000);
+}
+
+// Event listeners for cookie buttons
+if (acceptCookiesButton) {
+    acceptCookiesButton.addEventListener('click', () => {
+        setCookiePreference('accepted');
+    });
+}
+
+if (declineCookiesButton) {
+    declineCookiesButton.addEventListener('click', () => {
+        setCookiePreference('declined');
+    });
+}
+
+// Check cookie consent on page load
+document.addEventListener('DOMContentLoaded', () => {
+    const consent = checkCookieConsent();
+    if (consent === 'accepted') {
+        initAnalytics();
+    }
+});
+     
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

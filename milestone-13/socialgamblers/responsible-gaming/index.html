@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="SocialGamblers is committed to responsible gaming. Learn about our policies, tools, and resources to ensure a safe gaming experience.">
+    <meta name="keywords" content="responsible gaming, social casino, play for fun, gambling awareness, gaming control">
+    <meta name="author" content="SocialGamblers">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://socialgamblers.org/responsible-gaming/" />
+    <title>Responsible Gaming | SocialGamblers</title>
+    
+    <!-- Favicon -->
+   <link rel="icon" href="/assets/favicon.png" type="image/x-icon">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3b82f6',
+                        secondary: '#10b981',
+                        accent: '#f59e0b',
+                        dark: '#1e293b',
+                        darker: '#0f172a',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            background-color: #0f172a;
+            color: #f8fafc;
+        }
+        
+        .hamburger-menu {
+            width: 30px;
+            height: 20px;
+            position: relative;
+            transform: rotate(0deg);
+            transition: .5s ease-in-out;
+            cursor: pointer;
+        }
+        
+        .hamburger-menu span {
+            display: block;
+            position: absolute;
+            height: 3px;
+            width: 100%;
+            background: white;
+            border-radius: 3px;
+            opacity: 1;
+            left: 0;
+            transform: rotate(0deg);
+            transition: .25s ease-in-out;
+        }
+        
+        .hamburger-menu span:nth-child(1) {
+            top: 0px;
+        }
+        
+        .hamburger-menu span:nth-child(2), .hamburger-menu span:nth-child(3) {
+            top: 10px;
+        }
+        
+        .hamburger-menu span:nth-child(4) {
+            top: 20px;
+        }
+        
+        .hamburger-menu.open span:nth-child(1) {
+            top: 10px;
+            width: 0%;
+            left: 50%;
+        }
+        
+        .hamburger-menu.open span:nth-child(2) {
+            transform: rotate(45deg);
+        }
+        
+        .hamburger-menu.open span:nth-child(3) {
+            transform: rotate(-45deg);
+        }
+        
+        .hamburger-menu.open span:nth-child(4) {
+            top: 10px;
+            width: 0%;
+            left: 50%;
+        }
+        
+        .policy-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        }
+        
+        .warning-banner {
+            background: linear-gradient(135deg, #f59e0b 0%, #ef4444 100%);
+        }
+        
+        .resource-card:hover {
+            transform: scale(1.03);
+        }
+        
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #3b82f6;
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            z-index: 1001;
+        }
+    </style>
+</head>
+<body class="bg-darker text-slate-100">
+    <!-- Header -->
+    <header class="bg-dark sticky top-0 z-50 shadow-lg">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <a href="/" class="flex items-center">
+                   <img src="/assets/logo.png" alt="SocialGamblers Logo" class="h-14 mr-2">
+                    
+                </a>
+            </div>
+            
+            <div class="hidden md:flex items-center space-x-6">
+                <a href="/" class="text-white hover:text-accent transition">Home</a>
+                <a href="/games/" class="text-white hover:text-accent transition">Games</a>
+                <a href="/about/" class="text-white hover:text-accent transition">About Us</a>
+                <a href="/responsible-gaming/" class="text-accent hover:text-yellow-600 transition">Responsible Gaming</a>
+                <a href="/contact/" class="text-white hover:text-accent transition">Contact</a>
+            </div>
+            
+            <div class="flex items-center space-x-4">
+                <button id="loginBtn" class="hidden md:block bg-primary hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition">
+                    <i class="fas fa-sign-in-alt mr-2"></i> Login
+                </button>
+                <button id="registerBtn" class="hidden md:block bg-accent hover:bg-yellow-700 text-white px-4 py-2 rounded-lg transition">
+                    <i class="fas fa-user-plus mr-2"></i> Register
+                </button>
+                
+                <!-- Mobile menu button -->
+                <button id="mobileMenuButton" class="md:hidden focus:outline-none">
+                    <div class="hamburger-menu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="md:hidden hidden bg-darker absolute w-full left-0 right-0 shadow-lg z-40">
+            <div class="container mx-auto px-4 py-4 flex flex-col space-y-4">
+                <a href="/" class="text-white hover:text-accent transition py-2 border-b border-slate-700">Home</a>
+                <a href="/games/" class="text-white hover:text-accent transition py-2 border-b border-slate-700">Games</a>
+                <a href="/about/" class="text-white hover:text-accent transition py-2 border-b border-slate-700">About Us</a>
+                <a href="/responsible-gaming/" class="text-accent hover:text-yellow-600 transition py-2 border-b border-slate-700">Responsible Gaming</a>
+                <a href="/contact/" class="text-white hover:text-accent transition py-2 border-b border-slate-700">Contact</a>
+                
+                <div class="pt-4">
+                    <button id="mobileLoginBtn" class="w-full bg-primary hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition mb-2">
+                        <i class="fas fa-sign-in-alt mr-2"></i> Login
+                    </button>
+                    <button id="mobileRegisterBtn" class="w-full bg-accent hover:bg-yellow-700 text-white px-4 py-2 rounded-lg transition">
+                        <i class="fas fa-user-plus mr-2"></i> Register
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative bg-gradient-to-br from-darker to-dark py-28">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">Responsible <span class="text-accent">Gaming</span></h1>
+            <p class="text-xl md:text-2xl text-slate-300 max-w-3xl mx-auto">Our commitment to promoting safe and responsible gaming practices</p>
+        </div>
+    </section>
+
+    <!-- Warning Banner -->
+    <section class="warning-banner py-6">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center justify-center text-center md:text-left">
+                <div class="mb-4 md:mb-0 md:mr-6">
+                    <i class="fas fa-exclamation-triangle text-3xl text-white"></i>
+                </div>
+                <div>
+                    <h2 class="text-xl font-bold text-white">Important Notice</h2>
+                    <p class="text-white">This is a social casino platform for entertainment only. No real money gambling or payouts are involved. All coins are virtual and have no monetary value.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Commitment Section -->
+    <section class="py-16 bg-dark">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col lg:flex-row items-center gap-12">
+                <div class="lg:w-2/2">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6">Our <span class="text-primary text-center">Commitment</span></h2>
+                    <p class="text-lg text-slate-300 mb-6">At SocialGamblers, we are dedicated to providing a safe and responsible gaming environment. We understand that while our platform is designed for entertainment purposes only, it's important to promote healthy gaming habits.</p>
+                    <p class="text-lg text-slate-300">We implement various measures to help our players stay in control, including deposit limits, time reminders, and self-exclusion options. Our goal is to ensure that gaming remains a fun and positive experience for all our users.</p>
+                </div>
+                
+               
+            </div>
+        </div>
+    </section>
+
+    <!-- Policies Section -->
+    <section class="py-16 bg-darker">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Responsible Gaming <span class="text-primary">Policies</span></h2>
+                <p class="text-lg text-slate-300 max-w-3xl mx-auto">Tools and features we provide to help you stay in control</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="policy-card bg-slate-800 p-8 rounded-xl">
+                    <div class="w-16 h-16 bg-primary bg-opacity-20 rounded-full flex items-center justify-center mb-6 mx-auto">
+                        <i class="fas fa-clock text-3xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-center">Session Limits</h3>
+                    <p class="text-slate-300 text-center">Set limits on your gaming sessions to help manage your time spent on our platform.</p>
+                </div>
+                
+                <div class="policy-card bg-slate-800 p-8 rounded-xl ">
+                    <div class="w-16 h-16 bg-green-500 bg-opacity-20 rounded-full flex items-center justify-center mb-6 mx-auto">
+                        <i class="fas fa-coins text-3xl text-green-500"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-center">Virtual Coin Limits</h3>
+                    <p class="text-slate-300 text-center">Control your virtual coin usage with daily, weekly, or monthly spending limits.</p>
+                </div>
+                
+                <div class="policy-card bg-slate-800 p-8 rounded-xl ">
+                    <div class="w-16 h-16 bg-purple-500 bg-opacity-20 rounded-full flex items-center justify-center mb-6 mx-auto">
+                        <i class="fas fa-ban text-3xl text-purple-500"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-center">Self-Exclusion</h3>
+                    <p class="text-slate-300 text-center">Take a break from gaming with our self-exclusion options for specified periods.</p>
+                </div>
+                
+                <div class="policy-card bg-slate-800 p-8 rounded-xl ">
+                    <div class="w-16 h-16 bg-yellow-500 bg-opacity-20 rounded-full flex items-center justify-center mb-6 mx-auto">
+                        <i class="fas fa-bell text-3xl text-yellow-500"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-center">Reality Checks</h3>
+                    <p class="text-slate-300 text-center">Receive periodic reminders about your gaming duration to help you stay aware.</p>
+                </div>
+                
+                <div class="policy-card bg-slate-800 p-8 rounded-xl ">
+                    <div class="w-16 h-16 bg-red-500 bg-opacity-20 rounded-full flex items-center justify-center mb-6 mx-auto">
+                        <i class="fas fa-lock text-3xl text-red-500"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-center">Account Protection</h3>
+                    <p class="text-slate-300 text-center">Secure your account with additional authentication measures if needed.</p>
+                </div>
+                
+                <div class="policy-card bg-slate-800 p-8 rounded-xl ">
+                    <div class="w-16 h-16 bg-accent bg-opacity-20 rounded-full flex items-center justify-center mb-6 mx-auto">
+                        <i class="fas fa-child text-3xl text-accent"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-center">Age Verification</h3>
+                    <p class="text-slate-300 text-center">Strict 18+ policy with age verification to prevent underage access.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Warning Signs Section -->
+    <section class="py-16 bg-dark">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Recognizing <span class="text-accent">Problem Gaming</span></h2>
+                <p class="text-lg text-slate-300 max-w-3xl mx-auto">Be aware of these warning signs that gaming may be becoming problematic</p>
+            </div>
+            
+            <div class="max-w-4xl mx-auto bg-slate-800 rounded-xl p-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-xl font-bold mb-4 text-primary">Behavioral Signs</h3>
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <i class="fas fa-exclamation-circle text-red-500 mt-1 mr-3"></i>
+                                <span class="text-slate-300">Spending more time or virtual coins than intended</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-exclamation-circle text-red-500 mt-1 mr-3"></i>
+                                <span class="text-slate-300">Neglecting work, studies, or personal relationships</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-exclamation-circle text-red-500 mt-1 mr-3"></i>
+                                <span class="text-slate-300">Using gaming to escape from problems or negative feelings</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-exclamation-circle text-red-500 mt-1 mr-3"></i>
+                                <span class="text-slate-300">Lying to others about gaming activities</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div>
+                        <h3 class="text-xl font-bold mb-4 text-primary">Emotional Signs</h3>
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <i class="fas fa-exclamation-circle text-red-500 mt-1 mr-3"></i>
+                                <span class="text-slate-300">Feeling restless or irritable when not gaming</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-exclamation-circle text-red-500 mt-1 mr-3"></i>
+                                <span class="text-slate-300">Experiencing guilt or shame about gaming habits</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-exclamation-circle text-red-500 mt-1 mr-3"></i>
+                                <span class="text-slate-300">Failed attempts to control or stop gaming</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-exclamation-circle text-red-500 mt-1 mr-3"></i>
+                                <span class="text-slate-300">Gaming to relieve anxiety or depression</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="mt-10 text-center">
+                    <p class="text-slate-300 mb-4">If you recognize these signs in yourself or someone you know, consider using our responsible gaming tools or seeking help from the resources below.</p>
+                    <button id="selfAssessmentBtn" class="bg-accent hover:bg-yellow-700 text-white font-bold py-3 px-6 rounded-lg transition">
+                        <i class="fas fa-clipboard-check mr-2"></i> Take Self-Assessment Test
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Self-Assessment Modal -->
+    <div class="modal-overlay" id="selfAssessmentModal">
+        <div class="bg-slate-800 rounded-xl p-8 max-w-2xl w-full relative">
+            <div class="close-modal" id="closeAssessmentModal">
+                <i class="fas fa-times"></i>
+            </div>
+            <h2 class="text-2xl font-bold mb-6 text-center">Gaming Habits Self-Assessment</h2>
+            <form id="assessmentForm">
+                <div class="mb-6">
+                    <p class="text-slate-300 mb-4">Answer these questions honestly to assess your gaming habits:</p>
+                    
+                    <div class="space-y-6">
+                        <div class="bg-slate-700 p-4 rounded-lg">
+                            <p class="font-medium mb-3">1. Have you ever felt the need to game for increasing amounts of time?</p>
+                            <div class="flex flex-wrap gap-3">
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="q1" value="never" class="form-radio text-primary" required>
+                                    <span class="ml-2">Never</span>
+                                </label>
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="q1" value="sometimes" class="form-radio text-primary">
+                                    <span class="ml-2">Sometimes</span>
+                                </label>
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="q1" value="often" class="form-radio text-primary">
+                                    <span class="ml-2">Often</span>
+                                </label>
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="q1" value="always" class="form-radio text-primary">
+                                    <span class="ml-2">Always</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-slate-700 p-4 rounded-lg">
+                            <p class="font-medium mb-3">2. Do you feel restless or irritable when attempting to cut down or stop gaming?</p>
+                            <div class="flex flex-wrap gap-3">
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="q2" value="never" class="form-radio text-primary" required>
+                                    <span class="ml-2">Never</span>
+                                </label>
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="q2" value="sometimes" class="form-radio text-primary">
+                                    <span class="ml-2">Sometimes</span>
+                                </label>
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="q2" value="often" class="form-radio text-primary">
+                                    <span class="ml-2">Often</span>
+                                </label>
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="q2" value="always" class="form-radio text-primary">
+                                    <span class="ml-2">Always</span>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="bg-slate-700 p-4 rounded-lg">
+                            <p class="font-medium mb-3">3. Have you lied to family members or others to conceal your gaming?</p>
+                            <div class="flex flex-wrap gap-3">
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="q3" value="never" class="form-radio text-primary" required>
+                                    <span class="ml-2">Never</span>
+                                </label>
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="q3" value="sometimes" class="form-radio text-primary">
+                                    <span class="ml-2">Sometimes</span>
+                                </label>
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="q3" value="often" class="form-radio text-primary">
+                                    <span class="ml-2">Often</span>
+                                </label>
+                                <label class="inline-flex items-center">
+                                    <input type="radio" name="q3" value="always" class="form-radio text-primary">
+                                    <span class="ml-2">Always</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button type="submit" class="w-full bg-primary hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition">
+                    <i class="fas fa-poll mr-2"></i> Get Assessment Results
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Resources Section -->
+    <section class="py-16 bg-darker">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Helpful <span class="text-primary">Resources</span></h2>
+                <p class="text-lg text-slate-300 max-w-3xl mx-auto">Organizations that provide support and information about responsible gaming</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <a href="https://www.gamcare.org.uk/" target="_blank" class="resource-card bg-slate-800 rounded-xl overflow-hidden shadow-lg t">
+                    <div class="p-6 flex items-center">
+                        <div class="w-16 h-16 bg-green-500 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fas fa-hands-helping text-white text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold">GamCare</h3>
+                            <p class="text-slate-400">UK-based support for problem gaming</p>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6">
+                        <p class="text-slate-300 text-sm">Provides information, advice and support for anyone affected by problem gaming.</p>
+                    </div>
+                </a>
+                
+                <a href="https://www.begambleaware.org/" target="_blank" class="resource-card bg-slate-800 rounded-xl overflow-hidden shadow-lg ">
+                    <div class="p-6 flex items-center">
+                        <div class="w-16 h-16 bg-blue-500 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fas fa-info-circle text-white text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold">GambleAware</h3>
+                            <p class="text-slate-400">National gambling support service</p>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6">
+                        <p class="text-slate-300 text-sm">Offers free, confidential help and support for anyone worried about their or someone else's gaming.</p>
+                    </div>
+                </a>
+                
+                <a href="https://www.gamblingtherapy.org/" target="_blank" class="resource-card bg-slate-800 rounded-xl overflow-hidden shadow-lg ">
+                    <div class="p-6 flex items-center">
+                        <div class="w-16 h-16 bg-purple-500 rounded-lg flex items-center justify-center mr-4">
+                            <i class="fas fa-comments text-white text-2xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold">Gambling Therapy</h3>
+                            <p class="text-slate-400">Global support community</p>
+                        </div>
+                    </div>
+                    <div class="px-6 pb-6">
+                        <p class="text-slate-300 text-sm">Provides practical advice and emotional support to people affected by problem gaming worldwide.</p>
+                    </div>
+                </a>
+            </div>
+            
+            
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-16 bg-dark">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Frequently Asked <span class="text-primary">Questions</span></h2>
+                <p class="text-lg text-slate-300 max-w-3xl mx-auto">Common questions about responsible gaming on our platform</p>
+            </div>
+            
+            <div class="max-w-3xl mx-auto">
+                <div class="space-y-4">
+                    <!-- FAQ Item 1 -->
+                    <div class="bg-slate-800 rounded-xl overflow-hidden">
+                        <button class="faq-toggle w-full text-left p-6 flex justify-between items-center">
+                            <h3 class="text-lg font-bold">Is SocialGamblers a real money gambling site?</h3>
+                            <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                        </button>
+                        <div class="faq-content px-6 pb-6 hidden">
+                            <p class="text-slate-300">No, SocialGamblers is a social casino platform for entertainment purposes only. We do not offer real money gambling, betting, or payouts. All coins are virtual and have no monetary value.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 2 -->
+                    <div class="bg-slate-800 rounded-xl overflow-hidden">
+                        <button class="faq-toggle w-full text-left p-6 flex justify-between items-center">
+                            <h3 class="text-lg font-bold">How can I set limits on my account?</h3>
+                            <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                        </button>
+                        <div class="faq-content px-6 pb-6 hidden">
+                            <p class="text-slate-300">You can set various limits through your account settings after logging in. Options include session time limits, virtual coin spending limits, and cooling-off periods. These tools help you stay in control of your gaming activity.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 3 -->
+                    <div class="bg-slate-800 rounded-xl overflow-hidden">
+                        <button class="faq-toggle w-full text-left p-6 flex justify-between items-center">
+                            <h3 class="text-lg font-bold">What is self-exclusion and how does it work?</h3>
+                            <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                        </button>
+                        <div class="faq-content px-6 pb-6 hidden">
+                            <p class="text-slate-300">Self-exclusion allows you to take a break from our platform for a set period (from 24 hours up to 6 months). During this time, you won't be able to access your account. This can be set in your account settings or by contacting our support team.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 4 -->
+                    <div class="bg-slate-800 rounded-xl overflow-hidden">
+                        <button class="faq-toggle w-full text-left p-6 flex justify-between items-center">
+                            <h3 class="text-lg font-bold">How do I know if my gaming is becoming problematic?</h3>
+                            <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                        </button>
+                        <div class="faq-content px-6 pb-6 hidden">
+                            <p class="text-slate-300">Warning signs include spending more time or virtual coins than intended, neglecting responsibilities, lying about gaming activities, or using gaming to escape problems. If you're concerned, take our self-assessment test or contact the support organizations listed above.</p>
+                        </div>
+                    </div>
+                    
+                    <!-- FAQ Item 5 -->
+                    <div class="bg-slate-800 rounded-xl overflow-hidden">
+                        <button class="faq-toggle w-full text-left p-6 flex justify-between items-center">
+                            <h3 class="text-lg font-bold">Can I permanently delete my account?</h3>
+                            <i class="fas fa-chevron-down transition-transform duration-300"></i>
+                        </button>
+                        <div class="faq-content px-6 pb-6 hidden">
+                            <p class="text-slate-300">Yes, you can permanently close your account at any time through your account settings or by contacting our support team. Please note this action is irreversible and all your virtual coins and progress will be lost.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    
+    <!-- Responsible Gaming Section -->
+    <section class="py-16 bg-slate-900">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="md:col-span-1">
+                    <h3 class="text-2xl font-bold mb-4 text-accent">Responsible Gaming Commitment</h3>
+                    <p class="text-slate-300">SocialGamblers is committed to promoting responsible gaming practices. We provide comprehensive tools and resources to help players maintain control over their gaming habits and ensure a safe, enjoyable experience for all users.</p>
+                </div>
+                
+                <div class="md:col-span-1">
+                    <h3 class="text-2xl font-bold mb-4 text-accent">Important Notice</h3>
+                    <p class="text-slate-300">This is a social casino platform for entertainment only. No real money gambling or payouts are involved. All coins are virtual and have no monetary value.</p>
+                </div>
+                
+                <div class="md:col-span-1">
+                    <h3 class="text-2xl font-bold mb-4 text-accent">Resources</h3>
+                    <div class="space-y-3">
+                        <a href="https://www.gamcare.org.uk/" target="_blank" class="flex items-center text-slate-300 hover:text-primary transition">
+                            <i class="fas fa-external-link-alt mr-2"></i> GamCare
+                        </a>
+                        <a href="https://www.begambleaware.org/" target="_blank" class="flex items-center text-slate-300 hover:text-primary transition">
+                            <i class="fas fa-external-link-alt mr-2"></i> GambleAware
+                        </a>
+                        <a href="/responsible-gaming/" class="flex items-center text-slate-300 hover:text-primary transition">
+                            <i class="fas fa-file-alt mr-2"></i> Responsible Gaming Policy
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-darker py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <div class="flex items-center mb-4">
+                       
+                        <a href="/" >  <a href="/" >  <img src="/assets/logo.png" alt="SocialGamblers Logo" class="h-12 mr-2"> </a> </a>
+                    </div>
+                    <p class="text-slate-400 mb-4">The premier social casino platform for entertainment without financial risk.</p>
+                     
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/" class="text-slate-400 hover:text-primary transition">Home</a></li>
+                        <li><a href="/games/" class="text-slate-400 hover:text-primary transition">Games</a></li>
+                        <li><a href="/about/" class="text-slate-400 hover:text-primary transition">About Us</a></li>                         
+                        <li><a href="/contact/" class="text-slate-400 hover:text-primary transition">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Legal</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/privacy/" class="text-slate-400 hover:text-primary transition">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="text-slate-400 hover:text-primary transition">Terms of Service</a></li>
+                        <li><a href="/cookies/" class="text-slate-400 hover:text-primary transition">Cookies Policy</a></li>
+                        <li><a href="/responsible-gaming/" class="text-slate-400 hover:text-primary transition">Responsible Gaming</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Contact Us</h3>
+                    <ul class="space-y-2 text-slate-400">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-2 text-primary"></i>
+                            <span>490 Chem. de Vassan, Val-d'Or, QC J9P 0C1, Canada</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone-alt mr-2 text-primary"></i>
+                            <span>+1 (819) 824-3146</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-2 text-primary"></i>
+                            <span>info@socialgamblers.org</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-slate-800 pt-8">
+                <p class="text-center text-slate-500 text-sm">
+                    <strong>18+ Only | Social Casino Platform | No Real Money Gambling</strong><br>
+                    This website operates as a social casino platform for entertainment purposes only. No real money gambling, betting, or wagering is involved. Virtual coins and winnings have no cash value and cannot be exchanged for real money, prizes, or any monetary compensation. Success in social casino games does not guarantee future success at real money gambling activities.
+                </p>
+                <p class="text-center text-slate-600 text-sm mt-4">
+                    &copy; 2023 SocialGamblers. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div class="modal-overlay" id="loginModal">
+        <div class="bg-slate-800 rounded-xl p-8 max-w-md w-full relative">
+            <div class="close-modal" id="closeLoginModal">
+                <i class="fas fa-times"></i>
+            </div>
+            <h2 class="text-2xl font-bold mb-6 text-center">Login to Your Account</h2>
+            <form id="loginForm">
+                <div class="mb-4">
+                    <label for="loginEmail" class="block text-sm font-medium mb-2">Email</label>
+                    <input type="email" id="loginEmail" class="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" required>
+                </div>
+                <div class="mb-6">
+                    <label for="loginPassword" class="block text-sm font-medium mb-2">Password</label>
+                    <input type="password" id="loginPassword" class="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" required>
+                </div>
+                <button type="submit" class="w-full bg-primary hover:bg-blue-700 text-white font-bold py-3 px-4 rounded-lg transition mb-4">
+                    <i class="fas fa-sign-in-alt mr-2"></i> Login
+                </button>
+                <div class="text-center text-sm">
+                    <a href="#" class="text-primary hover:underline">Forgot password?</a>
+                    <p class="mt-2 text-slate-400">Don't have an account? <a href="#" id="showRegisterFromLogin" class="text-accent hover:underline">Register now</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="modal-overlay" id="registerModal">
+        <div class="bg-slate-800 rounded-xl p-8 max-w-md w-full relative">
+            <div class="close-modal" id="closeRegisterModal">
+                <i class="fas fa-times"></i>
+            </div>
+            <h2 class="text-2xl font-bold mb-6 text-center">Create Your Account</h2>
+            <form id="registerForm">
+                <div class="mb-4">
+                    <label for="registerUsername" class="block text-sm font-medium mb-2">Username</label>
+                    <input type="text" id="registerUsername" class="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" required>
+                </div>
+                <div class="mb-4">
+                    <label for="registerEmail" class="block text-sm font-medium mb-2">Email</label>
+                    <input type="email" id="registerEmail" class="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" required>
+                </div>
+                <div class="mb-6">
+                    <label for="registerPassword" class="block text-sm font-medium mb-2">Password</label>
+                    <input type="password" id="registerPassword" class="w-full px-4 py-3 bg-slate-700 border border-slate-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary" required>
+                </div>
+                <div class="mb-6 flex items-start">
+                    <input type="checkbox" id="registerTerms" class="mt-1 mr-2" required>
+                    <label for="registerTerms" class="text-sm text-slate-400">I confirm I am 18+ and agree to the <a href="/terms/" class="text-primary hover:underline">Terms</a> and <a href="/privacy/" class="text-primary hover:underline">Privacy Policy</a></label>
+                </div>
+                <button type="submit" class="w-full bg-accent hover:bg-yellow-700 text-white font-bold py-3 px-4 rounded-lg transition mb-4">
+                    <i class="fas fa-user-plus mr-2"></i> Register Now & Get 5,000 Coins
+                </button>
+                <div class="text-center text-sm">
+                    <p class="text-slate-400">Already have an account? <a href="#" id="showLoginFromRegister" class="text-primary hover:underline">Login here</a></p>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Cookies Consent -->
+    <div class="fixed bottom-0 left-0 right-0 bg-slate-800 border-t border-slate-700 p-4 z-50 hidden" id="cookiesConsent">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <div class="mb-4 md:mb-0 md:mr-6">
+                    <p class="text-slate-300">We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies. <a href="/cookies/" class="text-primary hover:underline">Learn more</a></p>
+                </div>
+                <div class="flex space-x-3">
+                    <button id="acceptCookies" class="bg-primary hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition">Accept</button>
+                    <button id="rejectCookies" class="bg-slate-700 hover:bg-slate-600 text-white px-4 py-2 rounded-lg transition">Reject</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const hamburgerMenu = document.querySelector('.hamburger-menu');
+        
+        mobileMenuButton.addEventListener('click', function() {
+            mobileMenu.classList.toggle('hidden');
+            hamburgerMenu.classList.toggle('open');
+        });
+        
+        // FAQ Toggle
+        document.querySelectorAll('.faq-toggle').forEach(button => {
+            button.addEventListener('click', function() {
+                const content = this.nextElementSibling;
+                const icon = this.querySelector('i');
+                
+                content.classList.toggle('hidden');
+                icon.classList.toggle('rotate-180');
+            });
+        });
+        
+        // Self-Assessment Modal
+        const selfAssessmentBtn = document.getElementById('selfAssessmentBtn');
+        const selfAssessmentModal = document.getElementById('selfAssessmentModal');
+        const closeAssessmentModal = document.getElementById('closeAssessmentModal');
+        
+        selfAssessmentBtn.addEventListener('click', function() {
+            selfAssessmentModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+        
+        closeAssessmentModal.addEventListener('click', function() {
+            selfAssessmentModal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+        
+        // Assessment Form
+        const assessmentForm = document.getElementById('assessmentForm');
+        assessmentForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get answers
+            const q1 = document.querySelector('input[name="q1"]:checked').value;
+            const q2 = document.querySelector('input[name="q2"]:checked').value;
+            const q3 = document.querySelector('input[name="q3"]:checked').value;
+            
+            // Simple scoring
+            const scores = {
+                never: 0,
+                sometimes: 1,
+                often: 2,
+                always: 3
+            };
+            
+            const totalScore = scores[q1] + scores[q2] + scores[q3];
+            
+            // Close modal
+            selfAssessmentModal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            
+            // Show results
+            showAssessmentResults(totalScore);
+        });
+        
+        function showAssessmentResults(score) {
+            let message, color;
+            
+            if (score <= 2) {
+                message = "Your responses suggest your gaming habits are currently healthy. Continue to monitor your gaming and use our tools if needed.";
+                color = "bg-green-600";
+            } else if (score <= 5) {
+                message = "Your responses suggest some potential concerns with your gaming habits. Consider using our account limit tools or taking a break.";
+                color = "bg-yellow-600";
+            } else {
+                message = "Your responses suggest your gaming habits may be problematic. We strongly recommend using our self-exclusion tools and contacting the support resources listed on this page.";
+                color = "bg-red-600";
+            }
+            
+            // Create results notification
+            const resultsDiv = document.createElement('div');
+            resultsDiv.className = `fixed top-4 right-4 ${color} text-white px-6 py-3 rounded-lg shadow-lg z-50 flex items-start max-w-md`;
+            resultsDiv.innerHTML = `
+                <i class="fas fa-info-circle text-xl mt-1 mr-3"></i>
+                <div>
+                    <p class="font-bold mb-1">Self-Assessment Results</p>
+                    <p class="text-sm">${message}</p>
+                </div>
+            `;
+            
+            document.body.appendChild(resultsDiv);
+            
+            // Remove after 8 seconds
+            setTimeout(() => {
+                resultsDiv.style.opacity = '0';
+                resultsDiv.style.transition = 'opacity 0.5s ease';
+                setTimeout(() => resultsDiv.remove(), 500);
+            }, 8000);
+        }
+        
+        // Set Limits Button
+        const setLimitsBtn = document.getElementById('setLimitsBtn');
+        setLimitsBtn.addEventListener('click', function() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            
+            if (isLoggedIn) {
+                // In a real implementation, this would redirect to account settings
+                alert("Redirecting to account limits settings...");
+            } else {
+                document.getElementById('loginModal').classList.add('active');
+            }
+        });
+        
+        // Self-Exclude Button
+        const selfExcludeBtn = document.getElementById('selfExcludeBtn');
+        selfExcludeBtn.addEventListener('click', function() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            
+            if (isLoggedIn) {
+                // In a real implementation, this would redirect to self-exclusion settings
+                alert("Redirecting to self-exclusion settings...");
+            } else {
+                document.getElementById('loginModal').classList.add('active');
+            }
+        });
+        
+        // Login/Register Modals
+        const loginBtn = document.getElementById('loginBtn');
+        const registerBtn = document.getElementById('registerBtn');
+        const mobileLoginBtn = document.getElementById('mobileLoginBtn');
+        const mobileRegisterBtn = document.getElementById('mobileRegisterBtn');
+        
+        const loginModal = document.getElementById('loginModal');
+        const registerModal = document.getElementById('registerModal');
+        const closeLoginModal = document.getElementById('closeLoginModal');
+        const closeRegisterModal = document.getElementById('closeRegisterModal');
+        const showRegisterFromLogin = document.getElementById('showRegisterFromLogin');
+        const showLoginFromRegister = document.getElementById('showLoginFromRegister');
+        
+        function openLoginModal() {
+            loginModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            // Close mobile menu if open
+            mobileMenu.classList.add('hidden');
+            hamburgerMenu.classList.remove('open');
+        }
+        
+        function openRegisterModal() {
+            registerModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+            // Close mobile menu if open
+            mobileMenu.classList.add('hidden');
+            hamburgerMenu.classList.remove('open');
+        }
+        
+        function closeAllModals() {
+            loginModal.classList.remove('active');
+            registerModal.classList.remove('active');
+            selfAssessmentModal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+        
+        loginBtn.addEventListener('click', openLoginModal);
+        mobileLoginBtn.addEventListener('click', openLoginModal);
+        registerBtn.addEventListener('click', openRegisterModal);
+        mobileRegisterBtn.addEventListener('click', openRegisterModal);
+        
+        closeLoginModal.addEventListener('click', closeAllModals);
+        closeRegisterModal.addEventListener('click', closeAllModals);
+        
+        showRegisterFromLogin.addEventListener('click', function(e) {
+            e.preventDefault();
+            loginModal.classList.remove('active');
+            registerModal.classList.add('active');
+        });
+        
+        showLoginFromRegister.addEventListener('click', function(e) {
+            e.preventDefault();
+            registerModal.classList.remove('active');
+            loginModal.classList.add('active');
+        });
+        
+        // Login Form
+        const loginForm = document.getElementById('loginForm');
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Simulate login
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('username', 'Alex');
+            localStorage.setItem('coins', '5000');
+            
+            // Update UI to show logged in state
+            updateUserUI();
+            
+            // Close modal
+            closeAllModals();
+            
+            // Show welcome message
+            showWelcomeMessage();
+        });
+        
+        // Register Form
+        const registerForm = document.getElementById('registerForm');
+        registerForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Simulate registration
+            localStorage.setItem('isLoggedIn', 'true');
+            localStorage.setItem('username', document.getElementById('registerUsername').value || 'Alex');
+            localStorage.setItem('coins', '5000'); // Give 5000 coins as bonus
+            
+            // Update UI to show logged in state
+            updateUserUI();
+            
+            // Close modal
+            closeAllModals();
+            
+            // Show welcome message
+            showWelcomeMessage();
+        });
+        
+        // Update UI based on login state
+        function updateUserUI() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            
+            if (isLoggedIn) {
+                const username = localStorage.getItem('username') || 'User';
+                const coins = localStorage.getItem('coins') || '0';
+                
+                // Update login/register buttons to show user info
+                if (loginBtn) loginBtn.innerHTML = `<i class="fas fa-user mr-2"></i> ${username} • ${coins} Coins`;
+                if (mobileLoginBtn) mobileLoginBtn.innerHTML = `<i class="fas fa-user mr-2"></i> ${username} • ${coins} Coins`;
+                
+                // Hide register button
+                if (registerBtn) registerBtn.style.display = 'none';
+                if (mobileRegisterBtn) mobileRegisterBtn.style.display = 'none';
+            }
+        }
+        
+        // Show welcome message
+        function showWelcomeMessage() {
+            const username = localStorage.getItem('username') || 'User';
+            const coins = localStorage.getItem('coins') || '0';
+            
+            // Create welcome notification
+            const welcomeDiv = document.createElement('div');
+            welcomeDiv.className = 'fixed top-4 right-4 bg-green-600 text-white px-6 py-3 rounded-lg shadow-lg z-50 flex items-center';
+            welcomeDiv.innerHTML = `
+                <i class="fas fa-check-circle mr-2 text-xl"></i>
+                <div>
+                    <p class="font-bold">Welcome, ${username}!</p>
+                    <p class="text-sm">You've received ${coins} free coins to start playing!</p>
+                </div>
+            `;
+            
+            document.body.appendChild(welcomeDiv);
+            
+            // Remove after 5 seconds
+            setTimeout(() => {
+                welcomeDiv.style.opacity = '0';
+                welcomeDiv.style.transition = 'opacity 0.5s ease';
+                setTimeout(() => welcomeDiv.remove(), 500);
+            }, 5000);
+        }
+        
+        // Initialize UI on load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateUserUI();
+            
+            // GSAP animations
+            if (typeof gsap !== 'undefined') {
+                gsap.from(".policy-card", { 
+                    duration: 1, 
+                    y: 50, 
+                    opacity: 0, 
+                    ease: "power3.out",
+                    stagger: 0.2,
+                    scrollTrigger: {
+                        trigger: ".policy-card",
+                        start: "top 80%"
+                    }
+                });
+                
+                gsap.from(".resource-card", { 
+                    duration: 0.8, 
+                    y: 50, 
+                    opacity: 0, 
+                    ease: "back.out(1.7)",
+                    stagger: 0.1,
+                    scrollTrigger: {
+                        trigger: ".resource-card",
+                        start: "top 80%"
+                    }
+                });
+            }
+        });
+        
+        // Cookies Consent
+        function showCookiesConsent() {
+            if (localStorage.getItem('cookiesAccepted') === null) {
+                const cookiesConsent = document.getElementById('cookiesConsent');
+                cookiesConsent.classList.remove('hidden');
+                
+                document.getElementById('acceptCookies').addEventListener('click', function() {
+                    localStorage.setItem('cookiesAccepted', 'true');
+                    cookiesConsent.style.opacity = '0';
+                    setTimeout(() => cookiesConsent.style.display = 'none', 500);
+                });
+                
+                document.getElementById('rejectCookies').addEventListener('click', function() {
+                    localStorage.setItem('cookiesAccepted', 'false');
+                    cookiesConsent.style.opacity = '0';
+                    setTimeout(() => cookiesConsent.style.display = 'none', 500);
+                });
+            }
+        }
+        
+        // Check if age is already verified and show cookies consent if needed
+        if (localStorage.getItem('ageVerified') === 'true') {
+            showCookiesConsent();
+        }
+    </script>
+</body>
+</html>

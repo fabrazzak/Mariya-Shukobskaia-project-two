@@ -1,0 +1,1380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop - SGiftCodes | Premium Gaming Gift Cards & Codes</title>
+    <meta name="description" content="Browse our full collection of digital gaming gift cards, skins, mods and codes for PlayStation, Xbox, Roblox and more. Instant delivery worldwide.">
+    <meta name="keywords" content="buy gaming codes, PlayStation store cards, Xbox live codes, Robux cards, digital game codes, esports skins, game mods">
+    <link rel="canonical" href="https://sgiftcodes.com/shop/">
+    <link rel="icon" href="/assets/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Oxanium:wght@400;500;600;700&family=Rubik:wght@400;500;600;700&display=swap');
+        
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --accent: #fd79a8;
+            --dark: #2d3436;
+            --light: #f5f6fa;
+        }
+        
+        body {
+            font-family: 'Rubik', sans-serif;
+            background-color: #0f0f13;
+            color: #e0e0e0;
+            overflow-x: hidden;
+        }
+        
+        .font-gaming {
+            font-family: 'Oxanium', cursive;
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+        }
+        
+        .glow-text {
+            text-shadow: 0 0 10px rgba(108, 92, 231, 0.7);
+        }
+        
+        .glow-box {
+            box-shadow: 0 0 15px rgba(108, 92, 231, 0.5);
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(108, 92, 231, 0.3);
+        }
+        
+        .hamburger-menu {
+            width: 30px;
+            height: 20px;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .hamburger-menu span {
+            display: block;
+            position: absolute;
+            height: 3px;
+            width: 100%;
+            background: white;
+            border-radius: 3px;
+            opacity: 1;
+            left: 0;
+            transform: rotate(0deg);
+            transition: .25s ease-in-out;
+        }
+        
+        .hamburger-menu span:nth-child(1) {
+            top: 0px;
+        }
+        
+        .hamburger-menu span:nth-child(2), .hamburger-menu span:nth-child(3) {
+            top: 10px;
+        }
+        
+        .hamburger-menu span:nth-child(4) {
+            top: 20px;
+        }
+        
+        .hamburger-menu.open span:nth-child(1) {
+            top: 10px;
+            width: 0%;
+            left: 50%;
+        }
+        
+        .hamburger-menu.open span:nth-child(2) {
+            transform: rotate(45deg);
+        }
+        
+        .hamburger-menu.open span:nth-child(3) {
+            transform: rotate(-45deg);
+        }
+        
+        .hamburger-menu.open span:nth-child(4) {
+            top: 10px;
+            width: 0%;
+            left: 50%;
+        }
+        
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+        
+        .content-over-particle {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .threejs-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .gradient-border {
+            position: relative;
+            border-radius: 12px;
+        }
+        
+        .gradient-border::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #6c5ce7, #fd79a8, #00cec9);
+            border-radius: 14px;
+            z-index: -1;
+            opacity: 0.7;
+        }
+        
+        .newsletter-input:focus {
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(108, 92, 231, 0.5);
+        }
+        
+        /* Shop specific styles */
+        .filter-section {
+            transition: all 0.3s ease;
+        }
+        
+        .filter-toggle {
+            cursor: pointer;
+        }
+        
+        .filter-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .filter-section.active .filter-content {
+            max-height: 1000px;
+        }
+        
+        .filter-option {
+            position: relative;
+            padding-left: 30px;
+            cursor: pointer;
+            margin-bottom: 10px;
+        }
+        
+        .filter-option input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+        }
+        
+        .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 20px;
+            width: 20px;
+            background-color: #2d3436;
+            border: 1px solid #6c5ce7;
+            border-radius: 4px;
+        }
+        
+        .filter-option:hover .checkmark {
+            background-color: #3d4346;
+        }
+        
+        .filter-option input:checked ~ .checkmark {
+            background-color: #6c5ce7;
+        }
+        
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+        
+        .filter-option input:checked ~ .checkmark:after {
+            display: block;
+        }
+        
+        .filter-option .checkmark:after {
+            left: 7px;
+            top: 3px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+        
+        .price-range-slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 5px;
+            background: #2d3436;
+            outline: none;
+            border-radius: 5px;
+        }
+        
+        .price-range-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            background: #6c5ce7;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+        
+        .price-range-slider::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            background: #6c5ce7;
+            cursor: pointer;
+            border-radius: 50%;
+        }
+        
+        .pagination .page-item {
+            margin: 0 5px;
+        }
+        
+        .pagination .page-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background: #2d3436;
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .pagination .page-link:hover {
+            background: #6c5ce7;
+        }
+        
+        .pagination .page-item.active .page-link {
+            background: #6c5ce7;
+        }
+        
+        .pagination .page-item.disabled .page-link {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .sort-dropdown {
+            position: relative;
+        }
+        
+        .sort-dropdown-toggle {
+            cursor: pointer;
+        }
+        
+        .sort-dropdown-menu {
+            position: absolute;
+            right: 0;
+            top: 100%;
+            min-width: 200px;
+            background: #2d3436;
+            border-radius: 8px;
+            padding: 10px 0;
+            z-index: 1000;
+            display: none;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+        }
+        
+        .sort-dropdown:hover .sort-dropdown-menu {
+            display: block;
+        }
+        
+        .sort-dropdown-item {
+            padding: 8px 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .sort-dropdown-item:hover {
+            background: #6c5ce7;
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <!-- Header -->
+    <header class="fixed w-full z-50 bg-black bg-opacity-90 backdrop-blur-sm border-b border-gray-800">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <!-- Logo -->
+            <div class="flex items-center">
+                <a href="/" class="flex items-center">
+                    <div class="w-10 h-10 rounded-full bg-gradient-to-r from-purple-600 to-pink-500 flex items-center justify-center mr-2">
+                        <span class="font-gaming font-bold text-white text-xl">SC</span>
+                    </div>
+                    <span class="font-gaming text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-400">SGiftCodes</span>
+                </a>
+            </div>
+            
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="/" class="text-white hover:text-purple-400 transition font-medium">Home</a>
+                <a href="/shop/" class="text-purple-400 transition font-medium">Shop</a>
+                <a href="/blog/" class="text-white hover:text-purple-400 transition font-medium">Blog</a>
+                <a href="/about/" class="text-white hover:text-purple-400 transition font-medium">About</a>
+                <a href="/contact/" class="text-white hover:text-purple-400 transition font-medium">Contact</a>
+                <div id="account-nav" class="hidden">
+                    <a href="/account/" class="text-white hover:text-purple-400 transition font-medium">Account</a>
+                </div>
+            </nav>
+            
+            <!-- Right Side Icons -->
+            <div class="flex items-center space-x-4">
+                <a href="/cart/" class="relative text-white hover:text-purple-400 transition">
+                    <i class="fas fa-shopping-cart text-xl"></i>
+                    <span id="cart-count" class="absolute -top-2 -right-2 bg-purple-600 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                </a>
+                
+                <a href="/login/" class="hidden md:block ml-4 px-4 py-2 bg-gradient-to-r from-purple-600 to-pink-500 text-white rounded-lg font-medium hover:opacity-90 transition">Login</a>
+                
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <div id="hamburger" class="hamburger-menu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-gray-900 bg-opacity-95 backdrop-blur-sm w-full absolute top-16 left-0 py-4 px-4 border-t border-gray-800">
+            <div class="flex flex-col space-y-4">
+                <a href="/" class="text-white hover:text-purple-400 transition font-medium py-2">Home</a>
+                <a href="/shop/" class="text-purple-400 transition font-medium py-2">Shop</a>
+                <a href="/blog/" class="text-white hover:text-purple-400 transition font-medium py-2">Blog</a>
+                <a href="/about/" class="text-white hover:text-purple-400 transition font-medium py-2">About</a>
+                <a href="/contact/" class="text-white hover:text-purple-400 transition font-medium py-2">Contact</a>
+                <div id="mobile-account-nav" class="hidden">
+                    <a href="/account/" class="text-white hover:text-purple-400 transition font-medium py-2">Account</a>
+                </div>
+                <a href="/login/" class="mt-4 px-4 py-2 bg-gradient-to-r from-purple-600 to-pink-500 text-white rounded-lg font-medium hover:opacity-90 transition text-center">Login</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section with Three.js Background -->
+    <section class="relative hero-gradient pt-32 pb-20 overflow-hidden">
+        <div id="particles-js" class="absolute top-0 left-0 w-full h-full"></div>
+        <div class="threejs-container" id="threejs-container"></div>
+        
+        <div class="container mx-auto px-4 content-over-particle">
+            <div class="max-w-4xl mx-auto text-center">
+                <h1 class="font-gaming text-4xl md:text-6xl font-bold text-white mb-6 glow-text">
+                    <span class="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-400">Shop</span> Gaming Codes
+                </h1>
+                <p class="text-xl text-gray-300 mb-10 max-w-2xl mx-auto">
+                    Browse our full collection of digital gaming gift cards, skins, mods and codes
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Shop Content -->
+    <section class="py-12 bg-gray-900">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col lg:flex-row gap-8">
+                <!-- Filters Sidebar -->
+                <div class="lg:w-1/4">
+                    <div class="bg-gray-800 rounded-xl p-6 sticky top-24">
+                        <h3 class="font-gaming text-xl text-white mb-6">Filters</h3>
+                        
+                        <!-- Categories Filter -->
+                        <div class="filter-section mb-6">
+                            <div class="filter-toggle flex justify-between items-center mb-4">
+                                <h4 class="font-medium text-white">Categories</h4>
+                                <i class="fas fa-chevron-down text-gray-400 transition-transform"></i>
+                            </div>
+                            <div class="filter-content">
+                                <div class="space-y-3">
+                                    <label class="filter-option flex items-center">
+                                        <input type="checkbox" class="category-filter" value="PlayStation" checked>
+                                        <span class="checkmark"></span>
+                                        <span class="ml-3 text-gray-300">PlayStation</span>
+                                    </label>
+                                    <label class="filter-option flex items-center">
+                                        <input type="checkbox" class="category-filter" value="Xbox" checked>
+                                        <span class="checkmark"></span>
+                                        <span class="ml-3 text-gray-300">Xbox</span>
+                                    </label>
+                                    <label class="filter-option flex items-center">
+                                        <input type="checkbox" class="category-filter" value="Roblox" checked>
+                                        <span class="checkmark"></span>
+                                        <span class="ml-3 text-gray-300">Roblox</span>
+                                    </label>
+                                    <label class="filter-option flex items-center">
+                                        <input type="checkbox" class="category-filter" value="Skins" checked>
+                                        <span class="checkmark"></span>
+                                        <span class="ml-3 text-gray-300">Skins</span>
+                                    </label>
+                                    <label class="filter-option flex items-center">
+                                        <input type="checkbox" class="category-filter" value="Mods" checked>
+                                        <span class="checkmark"></span>
+                                        <span class="ml-3 text-gray-300">Mods</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Price Filter -->
+                        <div class="filter-section mb-6">
+                            <div class="filter-toggle flex justify-between items-center mb-4">
+                                <h4 class="font-medium text-white">Price Range</h4>
+                                <i class="fas fa-chevron-down text-gray-400 transition-transform"></i>
+                            </div>
+                            <div class="filter-content">
+                                <div class="mb-4">
+                                    <input type="range" min="0" max="200" value="200" class="price-range-slider" id="price-range">
+                                </div>
+                                <div class="flex justify-between text-gray-300">
+                                    <span>$0</span>
+                                    <span id="price-range-value">$200</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Platform Filter -->
+                        <div class="filter-section mb-6">
+                            <div class="filter-toggle flex justify-between items-center mb-4">
+                                <h4 class="font-medium text-white">Platform</h4>
+                                <i class="fas fa-chevron-down text-gray-400 transition-transform"></i>
+                            </div>
+                            <div class="filter-content">
+                                <div class="space-y-3">
+                                    <label class="filter-option flex items-center">
+                                        <input type="checkbox" class="platform-filter" value="PlayStation 4" checked>
+                                        <span class="checkmark"></span>
+                                        <span class="ml-3 text-gray-300">PlayStation 4</span>
+                                    </label>
+                                    <label class="filter-option flex items-center">
+                                        <input type="checkbox" class="platform-filter" value="PlayStation 5" checked>
+                                        <span class="checkmark"></span>
+                                        <span class="ml-3 text-gray-300">PlayStation 5</span>
+                                    </label>
+                                    <label class="filter-option flex items-center">
+                                        <input type="checkbox" class="platform-filter" value="Xbox One" checked>
+                                        <span class="checkmark"></span>
+                                        <span class="ml-3 text-gray-300">Xbox One</span>
+                                    </label>
+                                    <label class="filter-option flex items-center">
+                                        <input type="checkbox" class="platform-filter" value="Xbox Series X|S" checked>
+                                        <span class="checkmark"></span>
+                                        <span class="ml-3 text-gray-300">Xbox Series X|S</span>
+                                    </label>
+                                    <label class="filter-option flex items-center">
+                                        <input type="checkbox" class="platform-filter" value="Windows" checked>
+                                        <span class="checkmark"></span>
+                                        <span class="ml-3 text-gray-300">Windows</span>
+                                    </label>
+                                    <label class="filter-option flex items-center">
+                                        <input type="checkbox" class="platform-filter" value="Mac" checked>
+                                        <span class="checkmark"></span>
+                                        <span class="ml-3 text-gray-300">Mac</span>
+                                    </label>
+                                    <label class="filter-option flex items-center">
+                                        <input type="checkbox" class="platform-filter" value="Mobile" checked>
+                                        <span class="checkmark"></span>
+                                        <span class="ml-3 text-gray-300">Mobile</span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Rating Filter -->
+                        <div class="filter-section">
+                            <div class="filter-toggle flex justify-between items-center mb-4">
+                                <h4 class="font-medium text-white">Rating</h4>
+                                <i class="fas fa-chevron-down text-gray-400 transition-transform"></i>
+                            </div>
+                            <div class="filter-content">
+                                <div class="space-y-3">
+                                    <label class="filter-option flex items-center">
+                                        <input type="checkbox" class="rating-filter" value="5" checked>
+                                        <span class="checkmark"></span>
+                                        <span class="ml-3 text-gray-300">
+                                            <i class="fas fa-star text-yellow-400"></i>
+                                            <i class="fas fa-star text-yellow-400"></i>
+                                            <i class="fas fa-star text-yellow-400"></i>
+                                            <i class="fas fa-star text-yellow-400"></i>
+                                            <i class="fas fa-star text-yellow-400"></i>
+                                        </span>
+                                    </label>
+                                    <label class="filter-option flex items-center">
+                                        <input type="checkbox" class="rating-filter" value="4" checked>
+                                        <span class="checkmark"></span>
+                                        <span class="ml-3 text-gray-300">
+                                            <i class="fas fa-star text-yellow-400"></i>
+                                            <i class="fas fa-star text-yellow-400"></i>
+                                            <i class="fas fa-star text-yellow-400"></i>
+                                            <i class="fas fa-star text-yellow-400"></i>
+                                            <i class="far fa-star text-yellow-400"></i>
+                                            4+
+                                        </span>
+                                    </label>
+                                    <label class="filter-option flex items-center">
+                                        <input type="checkbox" class="rating-filter" value="3" checked>
+                                        <span class="checkmark"></span>
+                                        <span class="ml-3 text-gray-300">
+                                            <i class="fas fa-star text-yellow-400"></i>
+                                            <i class="fas fa-star text-yellow-400"></i>
+                                            <i class="fas fa-star text-yellow-400"></i>
+                                            <i class="far fa-star text-yellow-400"></i>
+                                            <i class="far fa-star text-yellow-400"></i>
+                                            3+
+                                        </span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button id="reset-filters" class="mt-8 w-full px-4 py-2 bg-gray-700 text-white rounded-lg font-medium hover:bg-gray-600 transition">
+                            Reset Filters
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Products Grid -->
+                <div class="lg:w-3/4">
+                    <!-- Sorting and Results Count -->
+                    <div class="flex flex-col sm:flex-row justify-between items-center mb-8">
+                        <p class="text-gray-400 mb-4 sm:mb-0" id="results-count">Showing 12 of 24 products</p>
+                        
+                        <div class="sort-dropdown">
+                            <div class="sort-dropdown-toggle flex items-center bg-gray-800 px-4 py-2 rounded-lg cursor-pointer">
+                                <span class="text-gray-300 mr-2">Sort by:</span>
+                                <span class="text-white font-medium" id="sort-selected">Popularity</span>
+                                <i class="fas fa-chevron-down text-gray-400 ml-2"></i>
+                            </div>
+                            <div class="sort-dropdown-menu">
+                                <div class="sort-dropdown-item text-gray-300" data-sort="popularity">Popularity</div>
+                                <div class="sort-dropdown-item text-gray-300" data-sort="price-low">Price: Low to High</div>
+                                <div class="sort-dropdown-item text-gray-300" data-sort="price-high">Price: High to Low</div>
+                                <div class="sort-dropdown-item text-gray-300" data-sort="rating">Rating</div>
+                                <div class="sort-dropdown-item text-gray-300" data-sort="newest">Newest</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Products Grid -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="products-grid">
+                        <!-- Products will be loaded here via JavaScript -->
+                    </div>
+                    
+                    <!-- Pagination -->
+                    <div class="mt-12 flex justify-center">
+                        <ul class="pagination flex">
+                            <li class="page-item disabled">
+                                <a class="page-link" href="javascript:void(0)">
+                                    <i class="fas fa-chevron-left"></i>
+                                </a>
+                            </li>
+                            <li class="page-item active">
+                                <a class="page-link" href="javascript:void(0)">1</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="javascript:void(0)">2</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="javascript:void(0)">3</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link" href="javascript:void(0)">
+                                    <i class="fas fa-chevron-right"></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="py-20 bg-gradient-to-br from-purple-900 to-gray-900">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto bg-gray-900 bg-opacity-50 rounded-xl p-8 md:p-12 backdrop-blur-sm border border-gray-800">
+                <div class="text-center mb-8">
+                    <h2 class="font-gaming text-3xl md:text-4xl font-bold text-white mb-4">
+                        Get <span class="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-400">Exclusive</span> Deals
+                    </h2>
+                    <p class="text-gray-400">
+                        Subscribe to our newsletter and receive special offers, new product announcements, and gaming tips.
+                    </p>
+                </div>
+                
+                <form class="flex flex-col sm:flex-row gap-4 max-w-2xl mx-auto">
+                    <input type="email" placeholder="Your email address" class="flex-grow px-6 py-4 bg-gray-800 border border-gray-700 rounded-lg text-white placeholder-gray-500 newsletter-input focus:border-purple-500 transition">
+                    <button type="submit" class="px-8 py-4 bg-gradient-to-r from-purple-600 to-pink-500 text-white rounded-lg font-bold hover:opacity-90 transition">
+                        Subscribe
+                    </button>
+                </form>
+                
+                <p class="text-gray-500 text-sm text-center mt-4">
+                    We respect your privacy. Unsubscribe at any time.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 pt-20 pb-10 border-t border-gray-800">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+                <div>
+                    <div class="flex items-center mb-6">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-r from-purple-600 to-pink-500 flex items-center justify-center mr-2">
+                            <span class="font-gaming font-bold text-white text-xl">SC</span>
+                        </div>
+                        <span class="font-gaming text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-400">SGiftCodes</span>
+                    </div>
+                    <p class="text-gray-400 mb-6">
+                        Your premier destination for digital gaming codes, gift cards, skins and mods.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-purple-400 transition">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-purple-400 transition">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-purple-400 transition">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-purple-400 transition">
+                            <i class="fab fa-discord"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="font-gaming text-xl text-white mb-6">Shop</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/shop/playstation/" class="text-gray-400 hover:text-purple-400 transition">PlayStation</a></li>
+                        <li><a href="/shop/xbox/" class="text-gray-400 hover:text-purple-400 transition">Xbox</a></li>
+                        <li><a href="/shop/roblox/" class="text-gray-400 hover:text-purple-400 transition">Roblox</a></li>
+                        <li><a href="/shop/skins/" class="text-gray-400 hover:text-purple-400 transition">Skins</a></li>
+                        <li><a href="/shop/mods/" class="text-gray-400 hover:text-purple-400 transition">Mods</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="font-gaming text-xl text-white mb-6">Company</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/about/" class="text-gray-400 hover:text-purple-400 transition">About Us</a></li>
+                        <li><a href="/blog/" class="text-gray-400 hover:text-purple-400 transition">Blog</a></li>
+                        <li><a href="/contact/" class="text-gray-400 hover:text-purple-400 transition">Contact</a></li>
+                        <li><a href="/careers/" class="text-gray-400 hover:text-purple-400 transition">Careers</a></li>
+                        <li><a href="/press/" class="text-gray-400 hover:text-purple-400 transition">Press</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="font-gaming text-xl text-white mb-6">Support</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/faq/" class="text-gray-400 hover:text-purple-400 transition">FAQ</a></li>
+                        <li><a href="/shipping/" class="text-gray-400 hover:text-purple-400 transition">Shipping & Delivery</a></li>
+                        <li><a href="/returns/" class="text-gray-400 hover:text-purple-400 transition">Returns & Refunds</a></li>
+                        <li><a href="/privacy/" class="text-gray-400 hover:text-purple-400 transition">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="text-gray-400 hover:text-purple-400 transition">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="pt-10 border-t border-gray-800">
+                <p class="text-gray-500 text-center">
+                    &copy; 2025 SGiftCodes. All rights reserved.
+                </p>
+                <p class="text-gray-600 text-center text-sm mt-2">
+                    We are not an affiliate agency. All products are sold independently through our platform.
+                </p>
+                <p class="text-gray-600 text-center text-sm mt-2">
+                    Address: 490 Chem. de Vassan, Val-d'Or, QC J9P 0C1, Canada | Phone: +1 (819) 824-3146 | Email: info@sgiftcodes.com
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cookies Consent -->
+    <div id="cookies-consent" class="hidden fixed bottom-0 left-0 right-0 bg-gray-800 border-t border-gray-700 z-50 p-4">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <div class="mb-4 md:mb-0 md:mr-6">
+                    <p class="text-gray-300">
+                        We use cookies to enhance your experience on our website. By continuing to browse, you agree to our use of cookies.
+                    </p>
+                </div>
+                <div class="flex space-x-4">
+                    <button id="accept-cookies" class="px-6 py-2 bg-purple-600 text-white rounded-lg font-medium hover:bg-purple-700 transition">
+                        Accept
+                    </button>
+                    <a href="/privacy/" class="px-6 py-2 bg-transparent border border-gray-600 text-gray-300 rounded-lg font-medium hover:bg-gray-700 transition">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check if user is logged in (simulated)
+        const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+        
+        // Update UI based on login status
+        if (isLoggedIn) {
+            document.getElementById('account-nav').classList.remove('hidden');
+            document.getElementById('mobile-account-nav').classList.remove('hidden');
+        }
+        
+        // Mobile menu toggle
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('open');
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('open');
+                mobileMenu.classList.add('hidden');
+            });
+        });
+        
+        // Filter toggle functionality
+        document.querySelectorAll('.filter-toggle').forEach(toggle => {
+            toggle.addEventListener('click', () => {
+                const section = toggle.closest('.filter-section');
+                section.classList.toggle('active');
+                
+                const icon = toggle.querySelector('i');
+                icon.classList.toggle('fa-chevron-down');
+                icon.classList.toggle('fa-chevron-up');
+            });
+        });
+        
+        // Price range slider
+        const priceRangeSlider = document.getElementById('price-range');
+        const priceRangeValue = document.getElementById('price-range-value');
+        
+        priceRangeSlider.addEventListener('input', () => {
+            priceRangeValue.textContent = `$${priceRangeSlider.value}`;
+            filterProducts();
+        });
+        
+        // Sample product data (same as home page)
+        const products = [
+            {
+                id: 1,
+                name: "$10 PlayStation Store Gift Card",
+                price: 10.00,
+                image: "/assets/products/ps10.jpg",
+                category: "PlayStation",
+                rating: 4.6,
+                reviews: 270021,
+                platform: "PlayStation 4 | PlayStation 5",
+                description: "Redeem for anything on PlayStation Store: games, add-ons, PlayStation Plus and more.",
+                dateAdded: "2025-06-15"
+            },
+            {
+                id: 2,
+                name: "$25 PlayStation Store Gift Card",
+                price: 25.00,
+                image: "/assets/products/ps25.jpg",
+                category: "PlayStation",
+                rating: 4.6,
+                reviews: 270021,
+                platform: "PlayStation 4 | PlayStation 5",
+                description: "Redeem for anything on PlayStation Store: games, add-ons, PlayStation Plus and more.",
+                dateAdded: "2025-06-10"
+            },
+            {
+                id: 3,
+                name: "$50 PlayStation Store Gift Card",
+                price: 50.00,
+                image: "/assets/products/ps50.jpg",
+                category: "PlayStation",
+                rating: 4.6,
+                reviews: 270021,
+                platform: "PlayStation 4 | PlayStation 5",
+                description: "Redeem for anything on PlayStation Store: games, add-ons, PlayStation Plus and more.",
+                dateAdded: "2025-06-05"
+            },
+            {
+                id: 4,
+                name: "$100 PlayStation Store Gift Card",
+                price: 100.00,
+                image: "/assets/products/ps100.jpg",
+                category: "PlayStation",
+                rating: 4.6,
+                reviews: 270021,
+                platform: "PlayStation 4 | PlayStation 5",
+                description: "Redeem for anything on PlayStation Store: games, add-ons, PlayStation Plus and more.",
+                dateAdded: "2025-05-28"
+            },
+            {
+                id: 5,
+                name: "Roblox 1,000 Robux Gift Card",
+                price: 10.00,
+                image: "/assets/products/roblox1000.jpg",
+                category: "Roblox",
+                rating: 4.5,
+                reviews: 174602,
+                platform: "Windows | Mac | Mobile",
+                description: "Includes exclusive virtual item. Redeem for Robux to use in Roblox games.",
+                dateAdded: "2025-06-18"
+            },
+            {
+                id: 6,
+                name: "$10 Xbox Gift Card",
+                price: 10.00,
+                image: "/assets/products/xbox10.jpg",
+                category: "Xbox",
+                rating: 4.6,
+                reviews: 187899,
+                platform: "Xbox One | Xbox Series X|S",
+                description: "Redeem for games, movies, TV shows, devices, and more at Microsoft Store.",
+                dateAdded: "2025-06-12"
+            },
+            {
+                id: 7,
+                name: "$25 Xbox Gift Card",
+                price: 25.00,
+                image: "/assets/products/xbox25.jpg",
+                category: "Xbox",
+                rating: 4.6,
+                reviews: 187899,
+                platform: "Xbox One | Xbox Series X|S",
+                description: "Redeem for games, movies, TV shows, devices, and more at Microsoft Store.",
+                dateAdded: "2025-06-08"
+            },
+            {
+                id: 8,
+                name: "$50 Xbox Gift Card",
+                price: 50.00,
+                image: "/assets/products/xbox50.jpg",
+                category: "Xbox",
+                rating: 4.6,
+                reviews: 187899,
+                platform: "Xbox One | Xbox Series X|S",
+                description: "Redeem for games, movies, TV shows, devices, and more at Microsoft Store.",
+                dateAdded: "2025-05-30"
+            },
+            {
+                id: 9,
+                name: "Roblox 2,000 Robux Gift Card",
+                price: 20.00,
+                image: "/assets/products/roblox2000.jpg",
+                category: "Roblox",
+                rating: 4.5,
+                reviews: 174602,
+                platform: "Windows | Mac | Mobile",
+                description: "Includes exclusive virtual item. Redeem for Robux to use in Roblox games.",
+                dateAdded: "2025-06-20"
+            },
+            {
+                id: 10,
+                name: "Fortnite Skin: Galaxy Scout",
+                price: 15.00,
+                image: "/assets/products/fortnite-galaxy.jpg",
+                category: "Skins",
+                rating: 4.7,
+                reviews: 89234,
+                platform: "Windows | Mac | PlayStation | Xbox | Mobile",
+                description: "Exclusive Galaxy Scout skin for Fortnite with back bling and pickaxe.",
+                dateAdded: "2025-06-22"
+            },
+            {
+                id: 11,
+                name: "Minecraft Texture Pack: Fantasy",
+                price: 8.00,
+                image: "/assets/products/minecraft-fantasy.jpg",
+                category: "Mods",
+                rating: 4.4,
+                reviews: 45678,
+                platform: "Windows | Mac | PlayStation | Xbox | Mobile",
+                description: "Transform your Minecraft world with this beautiful fantasy texture pack.",
+                dateAdded: "2025-06-17"
+            },
+            {
+                id: 12,
+                name: "Valorant Skin: Prime Vandal",
+                price: 25.00,
+                image: "/assets/products/valorant-prime.jpg",
+                category: "Skins",
+                rating: 4.8,
+                reviews: 112345,
+                platform: "Windows",
+                description: "Premium Prime Vandal skin for Valorant with unique animations and sound effects.",
+                dateAdded: "2025-06-14"
+            }
+        ];
+        
+        // Current sort method
+        let currentSort = 'popularity';
+        
+        // Filter products based on selected filters
+        function filterProducts() {
+            const selectedCategories = Array.from(document.querySelectorAll('.category-filter:checked')).map(el => el.value);
+            const selectedPlatforms = Array.from(document.querySelectorAll('.platform-filter:checked')).map(el => el.value);
+            const selectedRatings = Array.from(document.querySelectorAll('.rating-filter:checked')).map(el => parseInt(el.value));
+            const maxPrice = parseInt(priceRangeSlider.value);
+            
+            const filteredProducts = products.filter(product => {
+                // Category filter
+                if (selectedCategories.length > 0 && !selectedCategories.includes(product.category)) {
+                    return false;
+                }
+                
+                // Platform filter
+                if (selectedPlatforms.length > 0) {
+                    const productPlatforms = product.platform.split('|').map(p => p.trim());
+                    const hasPlatform = selectedPlatforms.some(platform => 
+                        productPlatforms.some(p => p.includes(platform))
+                    );
+                    if (!hasPlatform) return false;
+                }
+                
+                // Rating filter
+                if (selectedRatings.length > 0) {
+                    const productRating = Math.floor(product.rating);
+                    if (!selectedRatings.some(rating => productRating >= rating)) {
+                        return false;
+                    }
+                }
+                
+                // Price filter
+                if (product.price > maxPrice) {
+                    return false;
+                }
+                
+                return true;
+            });
+            
+            // Sort products
+            sortProducts(filteredProducts);
+            
+            // Display filtered products
+            displayProducts(filteredProducts);
+            
+            // Update results count
+            document.getElementById('results-count').textContent = `Showing ${filteredProducts.length} of ${products.length} products`;
+        }
+        
+        // Sort products based on current sort method
+        function sortProducts(products) {
+            switch (currentSort) {
+                case 'price-low':
+                    products.sort((a, b) => a.price - b.price);
+                    break;
+                case 'price-high':
+                    products.sort((a, b) => b.price - a.price);
+                    break;
+                case 'rating':
+                    products.sort((a, b) => b.rating - a.rating);
+                    break;
+                case 'newest':
+                    products.sort((a, b) => new Date(b.dateAdded) - new Date(a.dateAdded));
+                    break;
+                case 'popularity':
+                default:
+                    products.sort((a, b) => b.reviews - a.reviews);
+                    break;
+            }
+        }
+        
+        // Display products in the grid
+        function displayProducts(products) {
+            const productsGrid = document.getElementById('products-grid');
+            productsGrid.innerHTML = '';
+            
+            if (products.length === 0) {
+                productsGrid.innerHTML = `
+                    <div class="col-span-full text-center py-12">
+                        <i class="fas fa-search text-4xl text-gray-500 mb-4"></i>
+                        <h3 class="text-xl text-white mb-2">No products found</h3>
+                        <p class="text-gray-400">Try adjusting your filters to find what you're looking for.</p>
+                        <button id="reset-filters-btn" class="mt-4 px-6 py-2 bg-purple-600 text-white rounded-lg font-medium hover:bg-purple-700 transition">
+                            Reset All Filters
+                        </button>
+                    </div>
+                `;
+                
+                document.getElementById('reset-filters-btn').addEventListener('click', resetFilters);
+                return;
+            }
+            
+            products.forEach(product => {
+                const productElement = document.createElement('div');
+                productElement.className = 'bg-gray-800 rounded-xl overflow-hidden product-card hover:shadow-lg transition';
+                productElement.innerHTML = `
+                    <div class="h-48 bg-gray-700 flex items-center justify-center p-4">
+                        <img src="${product.image}" alt="${product.name}" class="max-h-full max-w-full object-contain">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center mb-2">
+                            <div class="flex text-yellow-400">
+                                ${Array(Math.floor(product.rating)).fill('<i class="fas fa-star"></i>').join('')}
+                                ${product.rating % 1 >= 0.5 ? '<i class="fas fa-star-half-alt"></i>' : ''}
+                            </div>
+                            <span class="text-gray-400 text-sm ml-2">(${product.reviews.toLocaleString()})</span>
+                        </div>
+                        <h3 class="font-gaming text-lg text-white mb-2">${product.name}</h3>
+                        <p class="text-gray-400 text-sm mb-3">${product.platform}</p>
+                        <div class="flex justify-between items-center">
+                            <span class="font-bold text-white">$${product.price.toFixed(2)}</span>
+                            <button class="add-to-cart px-4 py-2 bg-gradient-to-r from-purple-600 to-pink-500 text-white rounded-lg font-medium hover:opacity-90 transition" data-id="${product.id}">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                `;
+                productsGrid.appendChild(productElement);
+            });
+        }
+        
+        // Reset all filters
+        function resetFilters() {
+            // Check all category filters
+            document.querySelectorAll('.category-filter').forEach(checkbox => {
+                checkbox.checked = true;
+            });
+            
+            // Check all platform filters
+            document.querySelectorAll('.platform-filter').forEach(checkbox => {
+                checkbox.checked = true;
+            });
+            
+            // Check all rating filters
+            document.querySelectorAll('.rating-filter').forEach(checkbox => {
+                checkbox.checked = true;
+            });
+            
+            // Reset price range
+            priceRangeSlider.value = 200;
+            priceRangeValue.textContent = '$200';
+            
+            // Reset sort to popularity
+            currentSort = 'popularity';
+            document.getElementById('sort-selected').textContent = 'Popularity';
+            
+            // Filter products
+            filterProducts();
+        }
+        
+        // Initialize filters
+        document.getElementById('reset-filters').addEventListener('click', resetFilters);
+        
+        // Filter change events
+        document.querySelectorAll('.category-filter, .platform-filter, .rating-filter').forEach(filter => {
+            filter.addEventListener('change', filterProducts);
+        });
+        
+        // Sort dropdown functionality
+        document.querySelectorAll('.sort-dropdown-item').forEach(item => {
+            item.addEventListener('click', () => {
+                currentSort = item.getAttribute('data-sort');
+                document.getElementById('sort-selected').textContent = item.textContent;
+                filterProducts();
+            });
+        });
+        
+        // Initial load
+        filterProducts();
+        
+        // Cart functionality
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        
+        function updateCartCount() {
+            const count = cart.reduce((total, item) => total + item.quantity, 0);
+            document.getElementById('cart-count').textContent = count;
+        }
+        
+        // Event delegation for add to cart buttons
+        document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('add-to-cart') || e.target.closest('.add-to-cart')) {
+                const button = e.target.classList.contains('add-to-cart') ? e.target : e.target.closest('.add-to-cart');
+                const productId = parseInt(button.getAttribute('data-id'));
+                const product = products.find(p => p.id === productId);
+                
+                const existingItem = cart.find(item => item.id === productId);
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    cart.push({
+                        id: product.id,
+                        name: product.name,
+                        price: product.price,
+                        image: product.image,
+                        quantity: 1
+                    });
+                }
+                
+                localStorage.setItem('cart', JSON.stringify(cart));
+                updateCartCount();
+                
+                // Show added to cart notification
+                const notification = document.createElement('div');
+                notification.className = 'fixed bottom-4 right-4 bg-green-600 text-white px-4 py-2 rounded-lg shadow-lg flex items-center';
+                notification.innerHTML = `
+                    <i class="fas fa-check-circle mr-2"></i>
+                    ${product.name} added to cart!
+                `;
+                document.body.appendChild(notification);
+                
+                setTimeout(() => {
+                    notification.classList.add('opacity-0', 'transition-opacity', 'duration-300');
+                    setTimeout(() => notification.remove(), 300);
+                }, 2000);
+            }
+        });
+        
+        // Initialize cart count
+        updateCartCount();
+        
+        // Cookies consent
+        const cookiesConsent = document.getElementById('cookies-consent');
+        const acceptCookies = document.getElementById('accept-cookies');
+        
+        if (!localStorage.getItem('cookiesAccepted')) {
+            setTimeout(() => {
+                cookiesConsent.classList.remove('hidden');
+            }, 2000);
+        }
+        
+        acceptCookies.addEventListener('click', () => {
+            localStorage.setItem('cookiesAccepted', 'true');
+            cookiesConsent.classList.add('hidden');
+        });
+        
+        // Three.js background for hero section
+        function initThreeJS() {
+            const container = document.getElementById('threejs-container');
+            if (!container) return;
+            
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+            
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(width, height);
+            container.appendChild(renderer.domElement);
+            
+            // Create floating particles
+            const particlesGeometry = new THREE.BufferGeometry();
+            const particleCount = 500;
+            
+            const posArray = new Float32Array(particleCount * 3);
+            
+            for (let i = 0; i < particleCount * 3; i++) {
+                posArray[i] = (Math.random() - 0.5) * 10;
+            }
+            
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+            
+            const particlesMaterial = new THREE.PointsMaterial({
+                size: 0.02,
+                color: 0x6c5ce7,
+                transparent: true,
+                opacity: 0.8,
+                blending: THREE.AdditiveBlending
+            });
+            
+            const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+            scene.add(particlesMesh);
+            
+            camera.position.z = 3;
+            
+            // Animation loop
+            function animate() {
+                requestAnimationFrame(animate);
+                
+                particlesMesh.rotation.x += 0.0005;
+                particlesMesh.rotation.y += 0.0005;
+                
+                renderer.render(scene, camera);
+            }
+            
+            animate();
+            
+            // Handle resize
+            window.addEventListener('resize', () => {
+                const width = container.clientWidth;
+                const height = container.clientHeight;
+                
+                camera.aspect = width / height;
+                camera.updateProjectionMatrix();
+                renderer.setSize(width, height);
+            });
+        }
+        
+        // Initialize Three.js when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            initThreeJS();
+            
+            // Initialize particles.js
+            if (typeof particlesJS !== 'undefined') {
+                particlesJS('particles-js', {
+                    "particles": {
+                        "number": {
+                            "value": 80,
+                            "density": {
+                                "enable": true,
+                                "value_area": 800
+                            }
+                        },
+                        "color": {
+                            "value": "#6c5ce7"
+                        },
+                        "shape": {
+                            "type": "circle",
+                            "stroke": {
+                                "width": 0,
+                                "color": "#000000"
+                            },
+                            "polygon": {
+                                "nb_sides": 5
+                            }
+                        },
+                        "opacity": {
+                            "value": 0.5,
+                            "random": false,
+                            "anim": {
+                                "enable": false,
+                                "speed": 1,
+                                "opacity_min": 0.1,
+                                "sync": false
+                            }
+                        },
+                        "size": {
+                            "value": 3,
+                            "random": true,
+                            "anim": {
+                                "enable": false,
+                                "speed": 40,
+                                "size_min": 0.1,
+                                "sync": false
+                            }
+                        },
+                        "line_linked": {
+                            "enable": true,
+                            "distance": 150,
+                            "color": "#6c5ce7",
+                            "opacity": 0.4,
+                            "width": 1
+                        },
+                        "move": {
+                            "enable": true,
+                            "speed": 2,
+                            "direction": "none",
+                            "random": false,
+                            "straight": false,
+                            "out_mode": "out",
+                            "bounce": false,
+                            "attract": {
+                                "enable": false,
+                                "rotateX": 600,
+                                "rotateY": 1200
+                            }
+                        }
+                    },
+                    "interactivity": {
+                        "detect_on": "canvas",
+                        "events": {
+                            "onhover": {
+                                "enable": true,
+                                "mode": "grab"
+                            },
+                            "onclick": {
+                                "enable": true,
+                                "mode": "push"
+                            },
+                            "resize": true
+                        },
+                        "modes": {
+                            "grab": {
+                                "distance": 140,
+                                "line_linked": {
+                                    "opacity": 1
+                                }
+                            },
+                            "bubble": {
+                                "distance": 400,
+                                "size": 40,
+                                "duration": 2,
+                                "opacity": 8,
+                                "speed": 3
+                            },
+                            "repulse": {
+                                "distance": 200,
+                                "duration": 0.4
+                            },
+                            "push": {
+                                "particles_nb": 4
+                            },
+                            "remove": {
+                                "particles_nb": 2
+                            }
+                        }
+                    },
+                    "retina_detect": true
+                });
+            }
+            
+            // GSAP animations
+            gsap.from(".hero-gradient h1", {
+                duration: 1.5,
+                y: 50,
+                opacity: 0,
+                ease: "power3.out"
+            });
+            
+            gsap.from(".hero-gradient p", {
+                duration: 1.5,
+                y: 50,
+                opacity: 0,
+                ease: "power3.out",
+                delay: 0.3
+            });
+            
+            gsap.from(".product-card", {
+                duration: 1,
+                y: 50,
+                opacity: 0,
+                ease: "power3.out",
+                stagger: 0.1,
+                scrollTrigger: {
+                    trigger: ".bg-gray-900",
+                    start: "top 80%"
+                }
+            });
+        });
+    </script>
+</body>
+</html>

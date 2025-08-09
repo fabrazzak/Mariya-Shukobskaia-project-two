@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsible Gaming | Lucky Play Casino Hub</title>
+    <meta name="description" content="Learn about our commitment to responsible gaming at Lucky Play Casino. Discover tools and resources to help maintain healthy gaming habits.">
+    <meta name="keywords" content="responsible gaming, gambling awareness, gaming limits, self-exclusion, gambling help">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/image/logo.webp" type="image/x-icon">
+    
+    <!-- Playfair Display Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#800020',
+                        secondary: '#FFD700',
+                        dark: '#1C1C1C',
+                    },
+                    fontFamily: {
+                        playfair: ['Playfair Display', 'serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+</head>
+<body class="bg-dark text-white font-playfair overflow-x-hidden">
+    <!-- Cookie Consent Banner -->
+    <div id="cookieConsent" class="fixed bottom-0 left-0 right-0 bg-primary py-4 px-6 z-50 hidden">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <p class="text-sm md:text-base">We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies.</p>
+            <div class="flex gap-3">
+                <button id="learnMoreBtn" class="text-secondary hover:underline text-sm md:text-base">Learn More</button>
+                <button id="declineCookiesBtn" class="bg-transparent border border-secondary text-secondary px-4 py-2 rounded hover:bg-secondary hover:text-dark transition-colors text-sm md:text-base">Decline</button>
+                <button id="acceptCookiesBtn" class="bg-secondary text-dark px-4 py-2 rounded hover:bg-opacity-90 transition-colors text-sm md:text-base">Accept</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 bg-dark bg-opacity-90 backdrop-blur-md z-40 border-b border-primary">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex items-center">
+                    <a href="/" class="flex items-center">
+                         <img src="/image/logo.png" alt="Lucky Play Casino Hub" class="w-40">
+                         
+                    </a>
+                </div>
+                
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="text-white hover:text-secondary transition-colors font-medium">Home</a>
+                    <a href="/how-to-play/" class="text-white hover:text-secondary transition-colors font-medium">How to Play</a>
+                    <a href="/responsible-gaming/" class="text-secondary font-medium">Responsible Gaming</a>
+                    <a href="/contact/" class="text-white hover:text-secondary transition-colors font-medium">Contact</a>
+                </div>
+                
+                <div class="flex items-center lg:block  md:hidden">
+                 <a href="https://play.google.com/store/apps/details?id=com.rocketplay.luckyplay&hl=en" 
+                       class="bg-secondary hidden md:flex text-dark px-6 py-2 rounded-full font-bold hover:bg-opacity-90 transition-colors flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 24 24" fill="currentColor">
+                            <path d="M3 20.5v-17c0-.59.34-1.11.84-1.35L13.69 12l-9.85 9.85c-.5-.25-.84-.76-.84-1.35m13.81-5.38L6.05 21.34l8.49-8.49 2.27 2.27m3.35-4.31c.34.27.59.69.59 1.19s-.22.9-.57 1.18l-2.29 1.32-2.5-2.5 2.5-2.5 2.27 1.31M6.05 2.66l10.76 6.22-2.27 2.27-8.49-8.49z"/>
+                        </svg>
+                        Download
+                    </a>
+                    
+                    <button id="mobileMenuBtn" class="md:hidden ml-4 text-white focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="md:hidden hidden bg-dark bg-opacity-95 absolute top-20 left-0 right-0 py-4 px-6 border-t border-primary">
+            <div class="flex flex-col space-y-4">
+                <a href="/" class="text-white hover:text-secondary transition-colors font-medium">Home</a>
+                <a href="/how-to-play/" class="text-white hover:text-secondary transition-colors font-medium">How to Play</a>
+                <a href="/responsible-gaming/" class="text-secondary font-medium">Responsible Gaming</a>
+                <a href="/contact/" class="text-white hover:text-secondary transition-colors font-medium">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative h-96 flex items-center justify-center overflow-hidden pt-20 bg-gradient-to-r from-primary to-dark">
+        <!-- Animated Background -->
+        <div class="absolute inset-0 opacity-20">
+            <div class="absolute inset-0 bg-[url('/image/pattern.jpg')] bg-repeat"></div>
+        </div>
+        
+        <div class="absolute inset-0 bg-black bg-opacity-50 z-10"></div>
+        
+        <div class="relative z-20 text-center px-4 max-w-6xl mx-auto">
+            <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-secondary">
+                Responsible <span class="text-white">Gaming</span>
+            </h1>
+            <p class="text-xl md:text-2xl max-w-3xl mx-auto">
+                Our commitment to promoting safe and responsible gaming practices
+            </p>
+        </div>
+        
+        <!-- Scrolling chips animation -->
+        <div class="absolute bottom-0 left-0 right-0 h-16 overflow-hidden z-20">
+            <div class="flex h-full animate-scrollChips">
+                <div class="flex-shrink-0 flex items-center space-x-8 pr-8">
+                    <span class="text-3xl">♠️</span>
+                    <span class="text-3xl">♥️</span>
+                    <span class="text-3xl">♦️</span>
+                    <span class="text-3xl">♣️</span>
+                    <span class="text-3xl">🎰</span>
+                    <span class="text-3xl">🎲</span>
+                    <span class="text-3xl">💰</span>
+                    <span class="text-3xl">🃏</span>
+                </div>
+                <div class="flex-shrink-0 flex items-center space-x-8 pr-8">
+                    <span class="text-3xl">♠️</span>
+                    <span class="text-3xl">♥️</span>
+                    <span class="text-3xl">♦️</span>
+                    <span class="text-3xl">♣️</span>
+                    <span class="text-3xl">🎰</span>
+                    <span class="text-3xl">🎲</span>
+                    <span class="text-3xl">💰</span>
+                    <span class="text-3xl">🃏</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Commitment Section -->
+    <section class="py-20 bg-dark">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
+                    Our <span class="text-secondary">Commitment</span>
+                </h2>
+                <p class="text-lg md:text-xl max-w-3xl mx-auto">
+                    At Lucky Play Casino, we believe gaming should always be entertaining and never harmful
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center mb-20">
+                <div class="md:order-1">
+                    <div class="bg-primary bg-opacity-20 p-8 rounded-xl border border-primary border-opacity-30 h-full">
+                        <h3 class="text-2xl font-bold mb-6 text-secondary">Responsible Gaming Philosophy</h3>
+                        <p class="text-gray-300 mb-6">
+                            Lucky Play Casino is committed to promoting responsible gaming as a fun and entertaining activity. While our games are free to play, we recognize that any form of gaming can potentially lead to problems for some individuals.
+                        </p>
+                        <p class="text-gray-300">
+                            We encourage all players to maintain control of their gaming experience by setting personal limits, monitoring time spent playing, and being aware of the signs of problem gaming.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="md:order-2">
+                    <div class="relative rounded-xl overflow-hidden h-80 w-full">
+                        <img src="/image/RoyalReels.webp" alt="Responsible Gaming Commitment" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-6">
+                            <h3 class="text-2xl font-bold text-secondary">Play Responsibly</h3>
+                            <p class="text-gray-300">Gaming should always be about entertainment, not a way to make money or escape problems</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div class="md:order-2">
+                    <div class="bg-primary bg-opacity-20 p-8 rounded-xl border border-primary border-opacity-30 h-full">
+                        <h3 class="text-2xl font-bold mb-6 text-secondary">Age Restrictions</h3>
+                        <p class="text-gray-300 mb-6">
+                            Lucky Play Casino is strictly for players 18 years of age and older. We employ age verification measures and encourage parents to use device-level controls to prevent underage access to our games.
+                        </p>
+                        <p class="text-gray-300">
+                            Our games do not offer real money gambling or prizes, but we maintain this age restriction to promote responsible gaming habits from the start.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="md:order-1">
+                    <div class="relative rounded-xl overflow-hidden h-80 w-full">
+                        <img src="/image/RoyalReel.webp" alt="Age Restriction" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
+                        <div class="absolute bottom-0 left-0 right-0 p-6">
+                            <h3 class="text-2xl font-bold text-secondary">18+ Only</h3>
+                            <p class="text-gray-300">Our games are intended for adult audiences only</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Warning Signs Section -->
+    <section class="py-20 bg-primary">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
+                    Warning <span class="text-secondary">Signs</span>
+                </h2>
+                <p class="text-lg md:text-xl max-w-3xl mx-auto">
+                    Recognizing potential problem gaming behaviors
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="warning-card bg-dark bg-opacity-70 p-8 rounded-xl border border-primary border-opacity-30 hover:border-secondary transition-all transform hover:-translate-y-2 h-full">
+                    <div class="text-secondary text-5xl mb-6">
+                        <img src="/image/image1.png" alt="" class="h-[250px] ">
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Time Spent</h3>
+                    <p class="text-gray-300">
+                        Spending more time or money on gaming than you can afford, or neglecting other responsibilities.
+                    </p>
+                </div>
+                
+                <div class="warning-card bg-dark bg-opacity-70 p-8 rounded-xl border border-primary border-opacity-30 hover:border-secondary transition-all transform hover:-translate-y-2 h-full">
+                    <div class="text-secondary text-5xl mb-6">
+                        <img src="/image/image2.png" alt="" class="h-[250px] ">
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Mood Changes</h3>
+                    <p class="text-gray-300">
+                        Feeling restless or irritable when trying to cut down or stop gaming.
+                    </p>
+                </div>
+                
+                <div class="warning-card bg-dark bg-opacity-70 p-8 rounded-xl border border-primary border-opacity-30 hover:border-secondary transition-all transform hover:-translate-y-2 h-full">
+                    <div class="text-secondary text-5xl mb-6">
+                        <img src="/image/image3.png" alt="" class="h-[250px] ">
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Chasing Losses</h3>
+                    <p class="text-gray-300">
+                        Trying to win back virtual losses by continuing to play beyond planned limits.
+                    </p>
+                </div>
+                
+              
+            </div>
+        </div>
+    </section>
+
+    <!-- Tools & Resources Section -->
+    <section class="py-20 bg-dark">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-6">
+                    Tools & <span class="text-secondary">Resources</span>
+                </h2>
+                <p class="text-lg md:text-xl max-w-3xl mx-auto">
+                    Helpful information and support for maintaining control
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10 mb-16">
+                <div class="resource-card bg-primary bg-opacity-20 p-8 rounded-xl border border-primary border-opacity-30 hover:border-secondary transition-all transform hover:-translate-y-2 h-full">
+                    <h3 class="text-2xl font-bold mb-6 text-secondary">Self-Assessment</h3>
+                    <p class="text-gray-300 mb-6">
+                        Ask yourself these questions to evaluate your gaming habits:
+                    </p>
+                    <ul class="space-y-4 text-gray-300">
+                        <li class="flex items-start">
+                            <span class="text-secondary mr-2">•</span>
+                            <span>Do you play longer than you intended?</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-secondary mr-2">•</span>
+                            <span>Has gaming caused financial problems for you?</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-secondary mr-2">•</span>
+                            <span>Have you lied to others about your gaming?</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-secondary mr-2">•</span>
+                            <span>Do you feel guilty about your gaming habits?</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="resource-card bg-primary bg-opacity-20 p-8 rounded-xl border border-primary border-opacity-30 hover:border-secondary transition-all transform hover:-translate-y-2 h-full">
+                    <h3 class="text-2xl font-bold mb-6 text-secondary">Setting Limits</h3>
+                    <p class="text-gray-300 mb-6">
+                        Maintain control with these practical strategies:
+                    </p>
+                    <ul class="space-y-4 text-gray-300">
+                        <li class="flex items-start">
+                            <span class="text-secondary mr-2">•</span>
+                            <span>Set a time limit before you start playing</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-secondary mr-2">•</span>
+                            <span>Take regular breaks during gaming sessions</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-secondary mr-2">•</span>
+                            <span>Balance gaming with other activities</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="text-secondary mr-2">•</span>
+                            <span>Never play to escape problems or relieve stress</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="bg-dark bg-opacity-70 p-8 rounded-xl border border-secondary border-opacity-30">
+    <h3 class="text-3xl md:text-4xl font-bold mb-8 text-secondary text-center">Need Help? We're Here for You</h3>
+    <p class="text-lg md:text-xl text-center text-gray-300 max-w-3xl mx-auto mb-12">
+        If you're facing gambling-related challenges, connect with trusted organizations offering free and confidential help.
+    </p>
+    
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        <!-- BeGambleAware Card -->
+        <div class="support-org bg-primary bg-opacity-20 p-8 rounded-xl border border-primary border-opacity-30 hover:border-secondary transition-all transform hover:-translate-y-1">
+            <div class="flex flex-col md:flex-row items-center gap-6">
+                
+                <div class="text-center md:text-left">
+                   <div class="text-secondary text-5xl mb-4 md:mb-0">
+                    <img src="/image/adiction_begambleaware.svg" alt="begambleaware" class="w-[200px] h-[100px] ">
+                </div>
+                    <p class="text-gray-300 mb-4 font-medium">National gambling support service</p>
+                    <p class="text-gray-400 mb-4">
+                        Get free and confidential help via phone, live chat, or forums—available 24/7 for anyone facing gambling problems.
+                    </p>
+                    <a href="https://www.begambleaware.org/" target="_blank" rel="noopener noreferrer" 
+                       class="inline-block bg-secondary text-dark px-6 py-2 rounded-full font-bold hover:bg-opacity-90 transition-colors">
+                        Visit BeGambleAware
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- GamCare Card -->
+        <div class="support-org bg-primary bg-opacity-20 p-8 rounded-xl border border-primary border-opacity-30 hover:border-secondary transition-all transform hover:-translate-y-1">
+            <div class="flex flex-col md:flex-row items-center gap-6">
+               
+                <div class="text-center md:text-left">
+                    <div class="text-secondary text-5xl mb-4 md:mb-0">
+                    <img src="/image/adiction_gamecare.svg" alt="adiction gamecare" class="w-[200px] h-[100px]">
+                </div>
+                    <p class="text-gray-300 mb-4 font-medium">UK's leading gambling support charity</p>
+                    <p class="text-gray-400 mb-4">
+                        GamCare offers expert advice, support, and treatment for anyone affected by gambling harm—through phone, chat, or counseling.
+                    </p>
+                    <a href="https://www.gamcare.org.uk/" target="_blank" rel="noopener noreferrer" 
+                       class="inline-block bg-secondary text-dark px-6 py-2 rounded-full font-bold hover:bg-opacity-90 transition-colors">
+                        Visit GamCare
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+        </div>
+    </section>
+
+    <!-- Final CTA Section -->
+    <section class="py-16 bg-gradient-to-r from-primary to-dark relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute inset-0 bg-[url('/image/pattern.jpg')] bg-repeat"></div>
+        </div>
+        
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+            <h2 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-8">
+                Game <span class="text-secondary">Responsibly</span>
+            </h2>
+            <p class="text-xl md:text-2xl mb-10 max-w-3xl mx-auto">
+                Remember, gaming should always be fun and entertaining. Set your limits and stick to them.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="/how-to-play/" class="inline-block border-2 border-secondary text-secondary px-8 py-3 rounded-full font-bold hover:bg-secondary hover:text-dark transition-colors">
+                    How to Play
+                </a>
+                <a href="/contact/" class="inline-block bg-secondary text-dark px-8 py-3 rounded-full font-bold hover:bg-opacity-90 transition-colors">
+                    Contact Support
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark border-t border-primary border-opacity-30">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10">
+                <div class="md:col-span-2">
+                    <a href="/" class="flex items-center mb-6">
+                      <img src="/image/logo.png" alt="Lucky Play Casino Hub" class="w-40">
+                         
+                    </a>
+                    <p class="text-gray-400 mb-6">
+                        Lucky Play Casino brings you the best slot machines to play online, high roller blackjack, FREE Bingo games and more right to your mobile device!
+                    </p>
+                  
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-6">Quick Links</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/how-to-play/" class="text-gray-400 hover:text-secondary transition-colors">How to Play</a></li>
+                        <li><a href="/responsible-gaming/" class="text-secondary">Responsible Gaming</a></li>
+                        <li><a href="/contact/" class="text-gray-400 hover:text-secondary transition-colors">Contact Us</a></li>
+                        <li><a href="/privacy-policy/" class="text-gray-400 hover:text-secondary transition-colors">Privacy Policy</a></li>
+                        <li><a href="/terms-of-service/" class="text-gray-400 hover:text-secondary transition-colors">Terms of Service</a></li>
+                         <li><a href="/cookies/" class="text-gray-400 hover:text-secondary transition-colors">Cookies Policy</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-6">Contact Info</h3>
+                    <ul class="space-y-3 text-gray-400">
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 mr-3 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                            </svg>
+                            <span>info@luckyplaycasinohub.com</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 mr-3 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"></path>
+                            </svg>
+                            <span>+18673328632</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 mr-3 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                            <span>82035 AB-744, Marie-Reine, AB T0H 2N1, Canada</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-primary border-opacity-30 mt-12 pt-8 text-center text-gray-500 text-sm">
+                <p>© 2025 Lucky Play Casino by AGS Interactive. All rights reserved. | 18+ Only | Play Responsibly | *Powered by Intel® technology</p>
+                <p class="mt-2">This game is intended for an adult audience and does not offer "real money gambling". Practice or success at social gaming does not imply future success at "real money gambling". Use of this application is governed by AGS's Terms of Service. Collection and use of personal data are subject to AGS's Privacy Policy.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Cookie Consent
+        const cookieConsent = document.getElementById('cookieConsent');
+        const acceptCookiesBtn = document.getElementById('acceptCookiesBtn');
+        const declineCookiesBtn = document.getElementById('declineCookiesBtn');
+        const learnMoreBtn = document.getElementById('learnMoreBtn');
+        
+        if (!localStorage.getItem('cookieConsent')) {
+            cookieConsent.classList.remove('hidden');
+        }
+        
+        acceptCookiesBtn.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'accepted');
+            cookieConsent.classList.add('hidden');
+        });
+        
+        declineCookiesBtn.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'declined');
+            cookieConsent.classList.add('hidden');
+        });
+        
+        learnMoreBtn.addEventListener('click', () => {
+            window.location.href = '/cookies-policy/';
+        });
+        
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Animate elements on scroll
+        gsap.utils.toArray('.warning-card').forEach((card, i) => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                },
+                y: 50,
+                opacity: 0,
+                duration: 0.8,
+                delay: i * 0.1
+            });
+        });
+        
+        gsap.utils.toArray('.resource-card').forEach((card, i) => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                },
+                y: 50,
+                opacity: 0,
+                duration: 0.8,
+                delay: i * 0.1
+            });
+        });
+        
+        gsap.utils.toArray('.support-org').forEach((card, i) => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                },
+                y: 50,
+                opacity: 0,
+                duration: 0.8,
+                delay: i * 0.1
+            });
+        });
+        
+        // Infinite scrolling chips animation
+        const scrollingChips = document.querySelector('.animate-scrollChips');
+        if (scrollingChips) {
+            const chipsWidth = scrollingChips.scrollWidth / 2;
+            gsap.to(scrollingChips, {
+                x: -chipsWidth,
+                duration: 20,
+                ease: "none",
+                repeat: -1
+            });
+        }
+    </script>
+    
+    <style>
+        /* Custom animations */
+        @keyframes pulse {
+            0%, 100% { opacity: 0.8; }
+            50% { opacity: 1; }
+        }
+        
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+    </style>
+</body>
+</html>

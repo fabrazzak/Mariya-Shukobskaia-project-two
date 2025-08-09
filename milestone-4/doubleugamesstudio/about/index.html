@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+<link rel="shortcut icon" href="/images/logo.webp" type="image/x-icon"> 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About DoubleUGames Studio | Innovative Mobile Game Developers</title>
+    <meta name="description" content="Learn about DoubleUGames Studio, creators of Color Slide Jam and other premium puzzle games. Our mission is to deliver innovative mobile gaming experiences.">
+    <meta name="keywords" content="DoubleUGames, game developers, mobile games, puzzle games, Color Slide Jam, gaming studio, Seoul game developers">
+    
+    <!-- Tailwind CSS with custom config -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        neon: {
+                            pink: '#ff2ced',
+                            blue: '#00f2ff',
+                            purple: '#9d00ff',
+                        },
+                        dark: {
+                            900: '#0a0a0a',
+                            800: '#1a1a1a',
+                            700: '#2a2a2a',
+                        }
+                    },
+                    animation: {
+                        'glow': 'glow 8s ease infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 8s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'text-gradient': 'text-gradient 8s ease infinite',
+                        'rotate': 'rotate 20s linear infinite',
+                    },
+                    keyframes: {
+                        glow: {
+                            '0%, 100%': { 'text-shadow': '0 0 10px #ff2ced, 0 0 20px #9d00ff' },
+                            '50%': { 'text-shadow': '0 0 20px #00f2ff, 0 0 30px #9d00ff' }
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        'text-gradient': {
+                            '0%, 100%': {
+                                'background-size': '200% 200%',
+                                'background-position': 'left center'
+                            },
+                            '50%': {
+                                'background-size': '200% 200%',
+                                'background-position': 'right center'
+                            }
+                        },
+                        rotate: {
+                            '0%': { transform: 'rotate(0deg)' },
+                            '100%': { transform: 'rotate(360deg)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Custom Styles -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --neon-pink: #ff2ced;
+            --neon-blue: #00f2ff;
+            --neon-purple: #9d00ff;
+        }
+        
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background-color: #0a0a0a;
+            color: #fff;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4, .font-orbitron {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+        }
+        
+        .neon-text {
+            animation: glow 8s ease infinite;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, var(--neon-pink), var(--neon-blue), var(--neon-purple));
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: text-gradient 8s ease infinite;
+        }
+        
+        .particle {
+            position: absolute;
+            background: linear-gradient(var(--neon-pink), var(--neon-blue));
+            border-radius: 50%;
+            filter: blur(5px);
+            opacity: 0.7;
+            z-index: 0;
+        }
+        
+        .grid-pattern {
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        
+        .team-card {
+            background: rgba(26, 26, 26, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s ease;
+        }
+        
+        .team-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 30px rgba(157, 0, 255, 0.3);
+            border-color: var(--neon-purple);
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: linear-gradient(90deg, var(--neon-pink), var(--neon-blue));
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .btn-neon {
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn-neon::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(157, 0, 255, 0.3), transparent);
+            transform: rotate(45deg);
+            z-index: -1;
+            transition: all 0.6s ease;
+        }
+        
+        .btn-neon:hover::before {
+            left: 100%;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -38px;
+            top: 0;
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--neon-pink), var(--neon-blue));
+            border: 3px solid var(--neon-purple);
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 30px;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--neon-pink), var(--neon-blue));
+        }
+        
+        .cookies-container {
+            transform: translateY(100%);
+            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        
+        .cookies-container.active {
+            transform: translateY(0);
+        }
+        
+        .hexagon {
+            clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+        }
+        
+        .hexagon-bg {
+            background: conic-gradient(from 180deg at 50% 50%, var(--neon-pink) 0deg, var(--neon-blue) 180deg, var(--neon-purple) 360deg);
+        }
+    </style>
+</head>
+<body class="grid-pattern">
+    <!-- Animated Particles Background -->
+    <div id="particles"></div>
+    
+    <!-- Cookies Consent -->
+    <div id="cookiesConsent" class="cookies-container fixed bottom-0 left-0 right-0 bg-dark-800 border-t border-neon-purple p-6 max-w-4xl mx-auto z-50 hidden">
+        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+            <div class="flex-1">
+                <h3 class="text-lg font-bold text-white mb-2">We Use Cookies</h3>
+                <p class="text-gray-400 text-sm">To enhance your experience, we use cookies. By continuing, you agree to our <a href="/privacy/" class="text-neon-blue hover:underline">Privacy Policy</a>.</p>
+            </div>
+            <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+                <button id="declineCookies" class="px-4 py-2 border border-gray-600 text-gray-300 rounded hover:bg-dark-700 transition">Decline</button>
+                <button id="acceptCookies" class="px-4 py-2 bg-neon-purple text-white rounded hover:bg-neon-purple/80 transition">Accept</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-dark-900/80 backdrop-blur-md z-40 border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <!-- Logo -->
+                <a href="/" class="flex items-center">
+                    <div class=" md:w-32 w-28   rounded-lg flex items-center justify-center mr-3">
+                        <img src="/images/logo.png" class="rounded" />
+                    </div>
+                </a>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="nav-link text-white">Home</a>
+                    <a href="/games/" class="nav-link text-white">Games</a>
+                    <a href="/blog/" class="nav-link text-white">Blog</a>
+                    <a href="/about/" class="nav-link text-neon-pink">About</a>
+                    <a href="/contact/" class="nav-link text-white">Contact</a>
+                    
+                   <a href="https://play.google.com/store/apps/developer?id=DoubleUGames" 
+                       class="btn-neon px-6 py-2 bg-gradient-to-r from-neon-pink to-neon-blue text-white font-bold rounded">
+                        Our Games
+                    </a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuButton" class="md:hidden text-white focus:outline-none">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="md:hidden bg-dark-800 overflow-hidden max-h-0 transition-all duration-500">
+            <div class="px-6 py-4 space-y-4">
+                <a href="/" class="block text-white hover:text-neon-pink transition">Home</a>
+                <a href="/games/" class="block text-white hover:text-neon-blue transition">Games</a>
+                <a href="/blog/" class="block text-white hover:text-neon-purple transition">Blog</a>
+                <a href="/about/" class="block text-neon-pink">About</a>
+                <a href="/contact/" class="block text-white hover:text-neon-pink transition">Contact</a>
+                
+               </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-[60vh] flex items-center pt-32 pb-20 overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-full z-0 opacity-20">
+            <div class="absolute top-1/4 left-1/4 w-64 h-64 bg-neon-pink rounded-full filter blur-3xl opacity-30"></div>
+            <div class="absolute bottom-1/4 right-1/4 w-64 h-64 bg-neon-blue rounded-full filter blur-3xl opacity-30"></div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto px-6 relative z-10 text-center">
+            <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold mb-6 leading-tight">
+                <span class="gradient-text">Our Story</span> <span class="neon-text">Beyond</span> <br>
+                <span class="gradient-text">The Games</span>
+            </h1>
+            <p class="text-xl text-gray-300 mb-10 max-w-3xl mx-auto">
+                We create innovative mobile experiences that challenge minds and spark joy
+            </p>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="py-24 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+                <div class="relative" data-aos="fade-right">
+                    <div class="absolute -top-10 -left-10 w-64 h-64 bg-neon-pink/20 rounded-full animate-pulse-slow"></div>
+                    <div class="absolute -bottom-10 -right-10 w-64 h-64 bg-neon-blue/20 rounded-full animate-pulse-slow"></div>
+                    <div class="relative z-10">
+                        <div class="hexagon w-full h-96 mx-auto hexagon-bg flex items-center justify-center">
+                            <div class="hexagon w-[calc(100%-8px)] h-[calc(100%-8px)] bg-dark-900 overflow-hidden">
+                                <img src="/images/about.jpg" alt="DoubleUGames Studio Office" class="w-full h-full object-cover">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div data-aos="fade-left">
+                    <h2 class="text-4xl md:text-5xl font-bold mb-8">
+                        <span class="gradient-text">Who We Are</span>
+                    </h2>
+                    <p class="text-lg text-gray-400 mb-6">
+                        DoubleUGames is a premier mobile game development studio based in Seoul, South Korea. Founded with a passion for creating engaging puzzle experiences, we specialize in games that challenge the mind while delivering vibrant, immersive experiences.
+                    </p>
+                    <p class="text-lg text-gray-400 mb-6">
+                        Our team of talented designers, developers, and artists work tirelessly to craft games that stand out in the mobile gaming landscape. We believe in the power of games to entertain, educate, and bring people together.
+                    </p>
+                    <div class="grid grid-cols-2 gap-4 mt-8">
+                        <div class="p-4 border-l-2 border-neon-pink">
+                            <h3 class="text-2xl font-bold mb-2">5K+</h3>
+                            <p class="text-gray-400">Downloads</p>
+                        </div>
+                        <div class="p-4 border-l-2 border-neon-blue">
+                            <h3 class="text-2xl font-bold mb-2">10+</h3>
+                            <p class="text-gray-400">Team Members</p>
+                        </div>
+                        <div class="p-4 border-l-2 border-neon-purple">
+                            <h3 class="text-2xl font-bold mb-2">3+</h3>
+                            <p class="text-gray-400">Games Released</p>
+                        </div>
+                        <div class="p-4 border-l-2 border-neon-blue">
+                            <h3 class="text-2xl font-bold mb-2">4.8★</h3>
+                            <p class="text-gray-400">Average Rating</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="py-24 bg-dark-800 relative overflow-hidden">
+        <div class="absolute inset-0 z-0 opacity-10">
+            <div class="absolute top-0 left-0 w-full h-full  bg-repeat"></div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="text-center mb-20">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">
+                    <span class="gradient-text">Our Mission</span> <span class="neon-text">& Vision</span>
+                </h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                    Driving innovation in mobile gaming through creativity and technology
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Mission 1 -->
+                <div class="team-card p-8 rounded-xl" data-aos="fade-up">
+                    <div class="w-16 h-16 bg-neon-pink/10 rounded-lg flex items-center justify-center text-neon-pink mb-6">
+                        <i class="fas fa-lightbulb text-3xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Innovation</h3>
+                    <p class="text-gray-400">
+                        We push boundaries to create unique gaming experiences that stand out in a crowded market.
+                    </p>
+                </div>
+                
+                <!-- Mission 2 -->
+                <div class="team-card p-8 rounded-xl" data-aos="fade-up" data-aos-delay="100">
+                    <div class="w-16 h-16 bg-neon-blue/10 rounded-lg flex items-center justify-center text-neon-blue mb-6">
+                        <i class="fas fa-users text-3xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Player Focus</h3>
+                    <p class="text-gray-400">
+                        Every decision we make is guided by what will create the best experience for our players.
+                    </p>
+                </div>
+                
+                <!-- Mission 3 -->
+                <div class="team-card p-8 rounded-xl" data-aos="fade-up" data-aos-delay="200">
+                    <div class="w-16 h-16 bg-neon-purple/10 rounded-lg flex items-center justify-center text-neon-purple mb-6">
+                        <i class="fas fa-medal text-3xl"></i>
+                    </div>
+                    <h3 class="text-2xl font-bold mb-4">Quality</h3>
+                    <p class="text-gray-400">
+                        We're committed to excellence in every aspect of game design, development, and support.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline Section -->
+    <section class="py-24 relative">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="text-center mb-20">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">
+                    <span class="gradient-text">Our Journey</span> <span class="neon-text">So Far</span>
+                </h2>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto">
+                    Key milestones in our studio's evolution
+                </p>
+            </div>
+            
+            <div class="relative pl-16 timeline max-w-3xl mx-auto">
+                <!-- Timeline Item 1 -->
+                <div class="relative mb-12 timeline-item" data-aos="fade-up">
+                    <div class="p-6 bg-dark-800 rounded-xl border border-gray-800">
+                        <div class="flex items-center mb-2">
+                            <span class="bg-neon-pink text-white text-xs font-bold px-3 py-1 rounded-full">2018</span>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-2">Studio Founded</h3>
+                        <p class="text-gray-400">
+                            DoubleUGames was established in Seoul by a small team of passionate game developers with a vision to create innovative puzzle games.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Timeline Item 2 -->
+                <div class="relative mb-12 timeline-item" data-aos="fade-up" data-aos-delay="100">
+                    <div class="p-6 bg-dark-800 rounded-xl border border-gray-800">
+                        <div class="flex items-center mb-2">
+                            <span class="bg-neon-blue text-white text-xs font-bold px-3 py-1 rounded-full">2020</span>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-2">First Game Launch</h3>
+                        <p class="text-gray-400">
+                            Released our debut title "Puzzle Master" which gained positive reception for its innovative mechanics and clean design.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Timeline Item 3 -->
+                <div class="relative mb-12 timeline-item" data-aos="fade-up" data-aos-delay="200">
+                    <div class="p-6 bg-dark-800 rounded-xl border border-gray-800">
+                        <div class="flex items-center mb-2">
+                            <span class="bg-neon-purple text-white text-xs font-bold px-3 py-1 rounded-full">2022</span>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-2">Team Expansion</h3>
+                        <p class="text-gray-400">
+                            Grew our team to 10 members and moved to our current office in Gangnam Finance Center to accommodate growth.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- Timeline Item 4 -->
+                <div class="relative mb-12 timeline-item" data-aos="fade-up" data-aos-delay="300">
+                    <div class="p-6 bg-dark-800 rounded-xl border border-gray-800">
+                        <div class="flex items-center mb-2">
+                            <span class="bg-neon-pink text-white text-xs font-bold px-3 py-1 rounded-full">2025</span>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-2">Color Slide Jam Release</h3>
+                        <p class="text-gray-400">
+                            Launched our flagship title Color Slide Jam, reaching 5,000+ downloads in the first month with excellent reviews.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    
+
+    <!-- CTA Section -->
+    <section class="py-24 relative overflow-hidden">
+        <div class="absolute inset-0 z-0">
+            <div class="absolute top-0 left-0 w-full h-full  bg-repeat opacity-10"></div>
+            <div class="absolute top-1/3 left-1/4 w-64 h-64 bg-neon-pink rounded-full filter blur-3xl opacity-10"></div>
+            <div class="absolute bottom-1/4 right-1/4 w-64 h-64 bg-neon-blue rounded-full filter blur-3xl opacity-10"></div>
+        </div>
+        
+        <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
+            <h2 class="text-4xl md:text-5xl font-bold mb-8">
+                <span class="gradient-text">Experience Our</span> <span class="neon-text">Games</span>
+            </h2>
+            <p class="text-xl text-gray-300 mb-10">
+                Download Color Slide Jam and discover why players love our innovative puzzle experience
+            </p>
+            <a href="https://play.google.com/store/apps/details?id=com.doubleugames.ngfe.cbj" 
+               class="btn-neon inline-flex items-center px-10 py-5 bg-gradient-to-r from-neon-pink to-neon-purple text-white font-bold rounded-lg text-lg">
+                <i class="fab fa-google-play text-2xl mr-3"></i>
+                Download Now
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark-900 border-t border-gray-800 pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+                <!-- About -->
+                <div>
+                    <h3 class="text-xl font-bold mb-6 text-white">DoubleUGames</h3>
+                    <p class="text-gray-400 mb-6">
+                        Creating innovative mobile games that challenge and entertain.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="https://www.facebook.com/doubleucasino.en" class="text-gray-400 hover:text-neon-pink transition"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://x.com/doubleucasino" class="text-gray-400 hover:text-neon-blue transition"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.instagram.com/doubleucasino" class="text-gray-400 hover:text-neon-purple transition"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.youtube.com/@DoubleUCasino" class="text-gray-400 hover:text-neon-blue transition"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-xl font-bold mb-6 text-white">Quick Links</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/" class="text-gray-400 hover:text-neon-pink transition">Home</a></li>
+                        <li><a href="/games/" class="text-gray-400 hover:text-neon-blue transition">Games</a></li>
+                        <li><a href="/blog/" class="text-gray-400 hover:text-neon-purple transition">Blog</a></li>
+                        <li><a href="/about/" class="text-gray-400 hover:text-neon-blue transition">About</a></li>
+                        <li><a href="/contact/" class="text-gray-400 hover:text-neon-pink transition">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Legal -->
+                <div>
+                    <h3 class="text-xl font-bold mb-6 text-white">Legal</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/privacy/" class="text-gray-400 hover:text-neon-blue transition">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="text-gray-400 hover:text-neon-purple transition">Terms of Service</a></li>
+                        <li><a href="/cookies/" class="text-gray-400 hover:text-neon-pink transition">Cookie Policy</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Contact -->
+                <div>
+                    <h3 class="text-xl font-bold mb-6 text-white">Contact</h3>
+                    <ul class="space-y-3 text-gray-400">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-3 text-neon-pink"></i>
+                            <span>152 Teheran-ro, 16F Gangnam Finance Center, Seoul, Korea</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-3 text-neon-blue"></i>
+                            <a href="mailto:jumyung.choi@doubleugames.com" class="hover:text-neon-blue transition">jumyung.choi@doubleugames.com</a>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone-alt mr-3 text-neon-purple"></i>
+                            <a href="tel:+821089422627" class="hover:text-neon-purple transition">+82 10-8942-2627</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-500 mb-4 md:mb-0">© 2025 DoubleUGames. All rights reserved.</p>
+                <a href="https://play.google.com/store/apps/details?id=com.doubleugames.ngfe.cbj" class="text-gray-500 hover:text-neon-pink transition">
+                        <img src="/images/play-store.png" class="w-28  "/>                       
+                        
+                        </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top -->
+    <button id="backToTop" class="fixed bottom-8 right-8 w-12 h-12 bg-neon-purple text-white rounded-full shadow-lg flex items-center justify-center hover:bg-neon-pink transition-colors opacity-0 invisible z-40">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS animation
+        AOS.init({
+            duration: 800,
+            once: false,
+            mirror: true
+        });
+        
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.style.maxHeight = mobileMenu.style.maxHeight ? null : `${mobileMenu.scrollHeight}px`;
+        });
+        
+        // Back to top button
+        const backToTopButton = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.remove('opacity-0', 'invisible');
+                backToTopButton.classList.add('opacity-100', 'visible');
+            } else {
+                backToTopButton.classList.remove('opacity-100', 'visible');
+                backToTopButton.classList.add('opacity-0', 'invisible');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Cookies consent
+        const cookiesConsent = document.getElementById('cookiesConsent');
+        const acceptCookies = document.getElementById('acceptCookies');
+        const declineCookies = document.getElementById('declineCookies');
+        
+        if (!localStorage.getItem('cookiesAccepted')) {
+            setTimeout(() => {
+                cookiesConsent.classList.remove('hidden');
+                setTimeout(() => {
+                    cookiesConsent.classList.add('active');
+                }, 100);
+            }, 2000);
+        }
+        
+        acceptCookies.addEventListener('click', () => {
+            localStorage.setItem('cookiesAccepted', 'true');
+            cookiesConsent.classList.remove('active');
+            setTimeout(() => {
+                cookiesConsent.classList.add('hidden');
+            }, 500);
+        });
+        
+        declineCookies.addEventListener('click', () => {
+            cookiesConsent.classList.remove('active');
+            setTimeout(() => {
+                cookiesConsent.classList.add('hidden');
+            }, 500);
+        });
+        
+        // Create particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random size between 5 and 15px
+                const size = Math.random() * 10 + 5;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // Random position
+                particle.style.left = `${Math.random() * 100}vw`;
+                particle.style.top = `${Math.random() * 100}vh`;
+                
+                // Animation
+                gsap.to(particle, {
+                    x: `${(Math.random() - 0.5) * 200}px`,
+                    y: `${(Math.random() - 0.5) * 200}px`,
+                    duration: Math.random() * 10 + 10,
+                    repeat: -1,
+                    yoyo: true,
+                    ease: "sine.inOut"
+                });
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        // Initialize particles when DOM is loaded
+        document.addEventListener('DOMContentLoaded', createParticles);
+    </script>
+</body>
+</html>

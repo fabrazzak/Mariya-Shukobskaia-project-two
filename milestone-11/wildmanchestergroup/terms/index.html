@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Service | Wild Manchester Group</title>
+    <meta name="description" content="Terms and conditions governing the use of Wild Manchester Group's services and website.">
+    <meta name="keywords" content="wild camping terms, foraging terms, nature adventures conditions, website terms of use, outdoor activities legal">
+    
+    <!-- Favicon -->
+   <link rel="icon" href="/assets/logo.png" type="image/x-icon">
+    <link rel="canonical" href="https://wildmanchestergroup.com/terms/" />
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            200: '#bbf7d0',
+                            300: '#86efac',
+                            400: '#4ade80',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                        },
+                        dark: {
+                            900: '#0a0a0a',
+                            800: '#1a1a1a',
+                            700: '#2a2a2a',
+                            600: '#3a3a3a',
+                            500: '#4a4a4a',
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-reverse': 'float-reverse 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 8s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        'float-reverse': {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollTrigger.min.js"></script>
+    
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            background-color: #0a0a0a;
+            color: #f8fafc;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        .gradient-text {
+            background: linear-gradient(90deg, #4ade80, #3b82f6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, rgba(20, 83, 45, 0.2), rgba(30, 64, 175, 0.2));
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+        }
+        .card-hover:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+        .glow-hover:hover {
+            filter: drop-shadow(0 0 8px rgba(74, 222, 128, 0.7));
+        }
+        .noise-bg::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: -1;
+        }
+        .content-section {
+            margin-bottom: 3rem;
+        }
+        .content-section h2 {
+            border-bottom: 2px solid #2a2a2a;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .content-section h3 {
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        .content-section p, .content-section ul {
+            margin-bottom: 1rem;
+        }
+        .content-section ul {
+            list-style-type: disc;
+            padding-left: 1.5rem;
+        }
+    </style>
+</head>
+<body class="noise-bg">
+    <!-- Cookie Consent Banner -->
+    <div id="cookieConsent" class="fixed bottom-0 left-0 right-0 bg-dark-800 p-4 shadow-lg z-50 hidden">
+        <div class="container mx-auto flex flex-col md:flex-row items-center justify-between">
+            <p class="text-sm text-gray-300 mb-4 md:mb-0 md:mr-4">
+                We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies.
+                <a href="/privacy/" class="text-primary-400 hover:underline">Learn more</a>
+            </p>
+            <div class="flex space-x-3">
+                <button id="acceptCookies" class="px-4 py-2 bg-primary-600 hover:bg-primary-700 rounded-md text-sm font-medium transition-colors">
+                    Accept
+                </button>
+                <button id="declineCookies" class="px-4 py-2 bg-dark-700 hover:bg-dark-600 rounded-md text-sm font-medium transition-colors">
+                    Decline
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-40 bg-dark-900/80 backdrop-blur-md border-b border-dark-700">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="/" class="flex items-center space-x-2 glow-hover">
+                       <img src="/assets/logo.png" class="h-16" alt="logo" />
+                    </a>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="text-gray-300 hover:text-primary-400 transition-colors">Home</a>
+                    <a href="/about/" class="text-gray-300 hover:text-primary-400 transition-colors">About</a>
+                     <a href="/blog/" class="text-gray-300 hover:text-primary-400 transition-colors">Blog</a>
+                    <a href="/camping/" class="text-gray-300  hover:text-primary-400 transition-colors ">Camping</a>
+                    <a href="/contact/" class="text-gray-300 hover:text-primary-400 transition-colors">Contact</a>
+                    <a href="/gallery/" class="text-gray-300 hover:text-primary-400 transition-colors">Gallery</a>
+                </div>
+
+                <!-- CTA and Mobile Menu Button -->
+                <div class="flex items-center space-x-4">
+                    <a href="/contact/" class="hidden md:block px-4 py-2 bg-primary-600 hover:bg-primary-700 rounded-md text-sm font-medium transition-colors">
+                        Book Adventure
+                    </a>
+                    <button id="mobileMenuButton" class="md:hidden text-gray-300 hover:text-white focus:outline-none">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="md:hidden hidden bg-dark-800 border-t border-dark-700">
+            <div class="container mx-auto px-6 py-4 flex flex-col space-y-4">
+                <a href="/" class="text-gray-300 hover:text-primary-400 transition-colors">Home</a>
+                <a href="/about/" class="text-gray-300 hover:text-primary-400 transition-colors">About</a>
+                 <a href="/blog/" class="text-gray-300 hover:text-primary-400 transition-colors">Blog</a>
+                    <a href="/camping/" class="text-gray-300  hover:text-primary-400 transition-colors ">Camping</a>
+                <a href="/contact/" class="text-gray-300 hover:text-primary-400 transition-colors">Contact</a>
+               
+                <a href="/contact/" class="mt-2 px-4 py-2 bg-primary-600 hover:bg-primary-700 rounded-md text-sm font-medium text-center transition-colors">
+                    Book Adventure
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Terms Hero Section -->
+    <section class="relative pt-32 pb-20 overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-dark-900/70 via-dark-900/30 to-dark-900/70 z-10"></div>
+        <div class="absolute inset-0 bg-[url('/assets/gallery/landscape1.jpeg')] bg-cover bg-center opacity-30"></div>
+        
+        <div class="container mx-auto px-6 relative z-20">
+            <div class="max-w-4xl mx-auto text-center">
+                <h1 class="text-5xl md:text-6xl font-bold mb-6 leading-tight">
+                    <span class="gradient-text">Terms of</span> Service
+                </h1>
+                <p class="text-xl text-gray-300 mb-10 max-w-3xl mx-auto">
+                    Last updated: June 15, 2025. Please read these Terms of Service carefully before using our website or services.
+                </p>
+                <div class="flex justify-center gap-4">
+                    <a href="#acceptance" class="px-6 py-3 bg-dark-700 hover:bg-dark-600 rounded-lg font-medium transition-colors">
+                        Quick Navigation
+                    </a>
+                    <a href="/contact/" class="px-6 py-3 bg-primary-600 hover:bg-primary-700 rounded-lg font-medium transition-colors">
+                        Contact for Questions
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Terms Content Section -->
+    <section class="py-20 relative">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto bg-dark-800 rounded-xl p-8 md:p-12 border border-dark-700">
+                <div class="content-section">
+                    <h2 id="acceptance" class="text-3xl font-bold gradient-text">1. Acceptance of Terms</h2>
+                    <p>By accessing or using the Wild Manchester Group website ("Site") or any of our services ("Services"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree to all of these Terms, do not use our Site or Services.</p>
+                    <p>We reserve the right to modify these Terms at any time. All changes will be effective immediately upon posting to the Site. Material changes will be conspicuously posted on the Site or otherwise communicated to you.</p>
+                </div>
+
+                <div class="content-section">
+                    <h2 class="text-3xl font-bold gradient-text">2. Services Overview</h2>
+                    <p>Wild Manchester Group provides nature-based experiences including but not limited to:</p>
+                    <ul>
+                        <li>Guided wild camping adventures</li>
+                        <li>Foraging workshops and experiences</li>
+                        <li>Wilderness survival training</li>
+                        <li>Nature immersion programs</li>
+                        <li>Related educational content and resources</li>
+                    </ul>
+                    <p>All services are subject to availability and may be modified, suspended, or discontinued at our sole discretion without notice.</p>
+                </div>
+
+                <div class="content-section">
+                    <h2 class="text-3xl font-bold gradient-text">3. Eligibility and Requirements</h2>
+                    <h3 class="text-xl font-semibold">3.1 Age Requirements</h3>
+                    <p>Participants must be at least 18 years old to book and participate in our experiences independently. Minors aged 6-17 may participate when accompanied by a parent or legal guardian.</p>
+                    
+                    <h3 class="text-xl font-semibold">3.2 Physical Requirements</h3>
+                    <p>Our experiences often involve physical activity in outdoor environments. By booking, you confirm that you:</p>
+                    <ul>
+                        <li>Are in good physical health</li>
+                        <li>Have no medical conditions that would put you at risk during outdoor activities</li>
+                        <li>Will disclose any relevant health conditions to our guides</li>
+                    </ul>
+                    
+                    <h3 class="text-xl font-semibold">3.3 Equipment Requirements</h3>
+                    <p>Participants are responsible for bringing appropriate clothing and footwear as specified in our pre-trip materials. We provide specialized equipment where noted in experience descriptions.</p>
+                </div>
+
+                <div class="content-section">
+                    <h2 class="text-3xl font-bold gradient-text">4. Bookings and Payments</h2>
+                    <h3 class="text-xl font-semibold">4.1 Booking Process</h3>
+                    <p>All bookings are subject to availability and are not confirmed until full payment is received. We reserve the right to refuse any booking at our discretion.</p>
+                    
+                    <h3 class="text-xl font-semibold">4.2 Pricing</h3>
+                    <p>All prices are in GBP (£) and include VAT where applicable. We reserve the right to adjust prices at any time, but confirmed bookings will not be affected.</p>
+                    
+                    <h3 class="text-xl font-semibold">4.3 Cancellation Policy</h3>
+                    <p>Cancellations must be made in writing:</p>
+                    <ul>
+                        <li>14+ days before experience: Full refund</li>
+                        <li>7-14 days before: 50% refund</li>
+                        <li>Less than 7 days: No refund</li>
+                    </ul>
+                    <p>We may cancel experiences due to severe weather or other safety concerns, in which case participants will receive a full refund or option to reschedule.</p>
+                </div>
+
+                <div class="content-section">
+                    <h2 class="text-3xl font-bold gradient-text">5. Participant Responsibilities</h2>
+                    <p>By participating in our experiences, you agree to:</p>
+                    <ul>
+                        <li>Follow all instructions from Wild Manchester Group staff</li>
+                        <li>Respect the natural environment and leave no trace</li>
+                        <li>Behave in a manner that doesn't endanger yourself or others</li>
+                        <li>Inform guides of any medical conditions or limitations</li>
+                        <li>Take responsibility for your personal belongings</li>
+                    </ul>
+                    <p>We reserve the right to remove any participant from an experience for behavior that we deem unsafe, disruptive, or harmful to the environment, without refund.</p>
+                </div>
+
+                <div class="content-section">
+                    <h2 class="text-3xl font-bold gradient-text">6. Risk Acknowledgement</h2>
+                    <p>Outdoor activities carry inherent risks including but not limited to:</p>
+                    <ul>
+                        <li>Injury from terrain, wildlife, or weather</li>
+                        <li>Illness from environmental factors or food</li>
+                        <li>Getting lost or separated from the group</li>
+                        <li>Equipment failure</li>
+                    </ul>
+                    <p>By participating, you acknowledge these risks and agree that Wild Manchester Group is not liable for injuries, damages, or losses resulting from these inherent risks, except where caused by our negligence.</p>
+                </div>
+
+                <div class="content-section">
+                    <h2 class="text-3xl font-bold gradient-text">7. Intellectual Property</h2>
+                    <p>All content on our Site and provided during our Services, including text, graphics, logos, and images, is our property or the property of our licensors and is protected by copyright and other intellectual property laws.</p>
+                    <p>You may not reproduce, distribute, modify, or create derivative works of any content without our express written permission.</p>
+                </div>
+
+                <div class="content-section">
+                    <h2 class="text-3xl font-bold gradient-text">8. User Content</h2>
+                    <p>If you submit content to us (reviews, photos, etc.), you grant us a perpetual, royalty-free license to use, modify, and display that content for promotional and other business purposes.</p>
+                    <p>You represent that you have all necessary rights to any content you submit and that it does not violate any third-party rights.</p>
+                </div>
+
+                <div class="content-section">
+                    <h2 class="text-3xl font-bold gradient-text">9. Limitation of Liability</h2>
+                    <p>To the maximum extent permitted by law, Wild Manchester Group shall not be liable for any indirect, incidental, special, consequential, or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses.</p>
+                    <p>Our total liability for any claims related to our Services shall not exceed the amount you paid to us for the specific Service giving rise to the claim.</p>
+                </div>
+
+                <div class="content-section">
+                    <h2 class="text-3xl font-bold gradient-text">10. Governing Law</h2>
+                    <p>These Terms shall be governed by and construed in accordance with the laws of England and Wales. Any disputes shall be subject to the exclusive jurisdiction of the courts of England and Wales.</p>
+                </div>
+
+                <div class="content-section">
+                    <h2 class="text-3xl font-bold gradient-text">11. Contact Information</h2>
+                    <p>For questions about these Terms, please contact us:</p>
+                    <p>Wild Manchester Group<br>
+                    22 Renfield Ln, Glasgow G2 5AR, United Kingdom<br>
+                    Phone: +441412222254<br>
+                    Email: info@wildmanchestergroup.com</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <!-- Footer -->
+    <footer class="bg-dark-900 border-t border-dark-800 pt-20 pb-10">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+                <div>
+                     <a href="/" class="flex items-center space-x-2 glow-hover">
+                       <img src="/assets/logo.png" class="h-16 mb-6" alt="logo" />
+                    </a>
+                    <p class="text-gray-400 mb-6">
+                        Reconnecting people with nature through wild camping adventures, foraging experiences, and
+                        wilderness survival training in Manchester.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="https://www.facebook.com/Wildmanc.nature" target="_blank"
+                            class="w-10 h-10 rounded-full bg-dark-800 hover:bg-dark-700 flex items-center justify-center text-gray-400 hover:text-primary-400 transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.instagram.com/wild.manchester/" target="_blank"
+                            class="w-10 h-10 rounded-full bg-dark-800 hover:bg-dark-700 flex items-center justify-center text-gray-400 hover:text-primary-400 transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://x.com/ManchesterWild" target="_blank"
+                            class="w-10 h-10 rounded-full bg-dark-800 hover:bg-dark-700 flex items-center justify-center text-gray-400 hover:text-primary-400 transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://www.youtube.com/channel/UCGXyESNY94ItxqJOdyszYgQ" target="_blank"
+                            class="w-10 h-10 rounded-full bg-dark-800 hover:bg-dark-700 flex items-center justify-center text-gray-400 hover:text-primary-400 transition-colors">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold mb-6">Quick Links</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/" class="text-gray-400 hover:text-primary-400 transition-colors">Home</a></li>
+                        <li><a href="/about/" class="text-gray-400 hover:text-primary-400 transition-colors">About
+                                Us</a></li>
+                        <li><a href="/blog/" class="text-gray-400 hover:text-primary-400 transition-colors">Blog</a>
+                        </li>
+                        <li><a href="/gallery/"
+                                class="text-gray-400 hover:text-primary-400 transition-colors">Gallery</a></li>
+                        <li><a href="/contact/"
+                                class="text-gray-400 hover:text-primary-400 transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold mb-6">Experiences</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/camping/"
+                                class="text-gray-400 hover:text-primary-400 transition-colors">Beginner Camping</a></li>
+                        <li><a href="/camping/" class="text-gray-400 hover:text-primary-400 transition-colors">Foraging
+                                Adventures</a></li>
+                        <li><a href="/camping/" class="text-gray-400 hover:text-primary-400 transition-colors">Survival
+                                Training</a></li>
+                        <li><a href="/camping/"
+                                class="text-gray-400 hover:text-primary-400 transition-colors">Family Camping</a></li>
+                        <li><a href="/camping/"
+                                class="text-gray-400 hover:text-primary-400 transition-colors">Wildlife Photography</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold mb-6">Legal</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/privacy/" class="text-gray-400 hover:text-primary-400 transition-colors">Privacy
+                                Policy</a></li>
+                        <li><a href="/terms/" class="text-gray-400 hover:text-primary-400 transition-colors">Terms of
+                                Service</a></li>
+                        <li><a href="/cookies/" class="text-gray-400 hover:text-primary-400 transition-colors">Cookies
+                                Policy</a></li>
+                        <li><a href="/faq/" class="text-gray-400 hover:text-primary-400 transition-colors">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-dark-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-500 text-sm mb-4 md:mb-0">
+                    &copy; 2025 Wild Manchester Group. All rights reserved.
+                </p>
+                <div class="flex space-x-6">
+                    <a href="/privacy/" class="text-gray-500 hover:text-gray-400 text-sm transition-colors">Privacy
+                                Policy</a>
+                    <a href="/terms/" class="text-gray-500 hover:text-gray-400 text-sm transition-colors">Terms of
+                                Service</a>
+                    <a href="/cookies/" class="text-gray-500 hover:text-gray-400 text-sm transition-colors">Cookies
+                                Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="fixed bottom-8 right-8 w-12 h-12 rounded-full bg-primary-600 hover:bg-primary-700 text-white shadow-lg flex items-center justify-center transition-opacity duration-300 opacity-0 invisible">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Back to Top Button
+        const backToTopButton = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.remove('opacity-0', 'invisible');
+                backToTopButton.classList.add('opacity-100', 'visible');
+            } else {
+                backToTopButton.classList.remove('opacity-100', 'visible');
+                backToTopButton.classList.add('opacity-0', 'invisible');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Cookie Consent
+        const cookieConsent = document.getElementById('cookieConsent');
+        const acceptCookies = document.getElementById('acceptCookies');
+        const declineCookies = document.getElementById('declineCookies');
+        
+        if (!localStorage.getItem('cookieConsent')) {
+            setTimeout(() => {
+                cookieConsent.classList.remove('hidden');
+            }, 2000);
+        }
+        
+        acceptCookies.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'accepted');
+            cookieConsent.classList.add('hidden');
+        });
+        
+        declineCookies.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'declined');
+            cookieConsent.classList.add('hidden');
+        });
+
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Animate content sections
+        gsap.utils.toArray('.content-section').forEach((section, i) => {
+            gsap.from(section, {
+                scrollTrigger: {
+                    trigger: section,
+                    start: "top 70%",
+                    toggleActions: "play none none none"
+                },
+                y: 50,
+                opacity: 0,
+                duration: 0.8,
+                ease: "power3.out",
+                delay: i * 0.1
+            });
+        });
+    </script>
+</body>
+</html>

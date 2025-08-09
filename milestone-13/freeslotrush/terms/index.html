@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Service | FreeSlotRush Social Casino</title>
+    <meta name="description" content="FreeSlotRush Terms of Service. Read our terms and conditions for using our social casino platform.">
+    <meta name="keywords" content="terms of service, FreeSlotRush terms, social casino terms, platform rules, user agreement">
+    <link rel="canonical"     href="https://freeslotrush.org/terms/">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/assets/favicon.ico" type="image/x-icon">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FF6B35',
+                        secondary: '#004E89',
+                        accent: '#00A6FB',
+                        dark: '#1A1A2E',
+                        light: '#F8F9FA',
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                        display: ['Barlow', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@700;800;900&family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            overflow-x: hidden;
+            font-family: 'Poppins', sans-serif;
+            background-color: #0F0F1B;
+            color: #F8F9FA;
+        }
+        
+        .hero-gradient {
+            background: radial-gradient(ellipse at top, #1A1A2E, #0F0F1B);
+        }
+        
+        .hamburger {
+            width: 30px;
+            height: 20px;
+            position: relative;
+            transform: rotate(0deg);
+            transition: .5s ease-in-out;
+            cursor: pointer;
+        }
+        
+        .hamburger span {
+            display: block;
+            position: absolute;
+            height: 3px;
+            width: 100%;
+            background: #FF6B35;
+            border-radius: 3px;
+            opacity: 1;
+            left: 0;
+            transform: rotate(0deg);
+            transition: .25s ease-in-out;
+        }
+        
+        .hamburger span:nth-child(1) {
+            top: 0px;
+        }
+        
+        .hamburger span:nth-child(2), .hamburger span:nth-child(3) {
+            top: 10px;
+        }
+        
+        .hamburger span:nth-child(4) {
+            top: 20px;
+        }
+        
+        .hamburger.open span:nth-child(1) {
+            top: 10px;
+            width: 0%;
+            left: 50%;
+        }
+        
+        .hamburger.open span:nth-child(2) {
+            transform: rotate(45deg);
+        }
+        
+        .hamburger.open span:nth-child(3) {
+            transform: rotate(-45deg);
+        }
+        
+        .hamburger.open span:nth-child(4) {
+            top: 10px;
+            width: 0%;
+            left: 50%;
+        }
+        
+        .login-modal, .register-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(10, 10, 20, 0.95);
+            z-index: 999;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(10px);
+        }
+        
+        .terms-section {
+            margin-bottom: 3rem;
+        }
+        
+        .terms-section h3 {
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        
+        .terms-section h3::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.6em;
+            height: 0.5em;
+            width: 0.5em;
+            background: #FF6B35;
+            border-radius: 50%;
+        }
+        
+        .glow-text {
+            text-shadow: 0 0 10px rgba(255, 107, 53, 0.7);
+        }
+    </style>
+</head>
+<body class="relative">
+    <!-- Login Modal -->
+    <div class="login-modal">
+        <div class="bg-dark p-8 rounded-xl max-w-md w-full mx-4 relative z-10 border border-gray-700">
+            <button class="close-modal absolute top-4 right-4">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="text-center mb-6">
+                <h2 class="text-2xl font-bold text-white mb-2">Welcome Back!</h2>
+                <p class="text-gray-400">Login to access your account</p>
+            </div>
+            
+            <form id="loginForm" class="space-y-4">
+                <div>
+                    <label for="loginEmail" class="block text-gray-400 mb-2">Email</label>
+                    <input type="email" id="loginEmail" required class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary">
+                </div>
+                
+                <div>
+                    <label for="loginPassword" class="block text-gray-400 mb-2">Password</label>
+                    <input type="password" id="loginPassword" required class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary">
+                </div>
+                
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <input type="checkbox" id="rememberMe" class="h-4 w-4 text-primary focus:ring-primary border-gray-600 rounded">
+                        <label for="rememberMe" class="ml-2 block text-sm text-gray-400">Remember me</label>
+                    </div>
+                    <a href="javascript:void(0)" class="text-sm text-primary hover:text-opacity-80">Forgot password?</a>
+                </div>
+                
+                <button type="submit" class="w-full bg-primary hover:bg-opacity-90 text-white font-bold py-3 px-4 rounded-lg transition-all duration-300">
+                    Log In
+                </button>
+                
+                <div class="text-center text-gray-400">
+                    Don't have an account? <button id="switchToRegister" class="text-primary hover:text-opacity-80">Register</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Register Modal -->
+    <div class="register-modal">
+        <div class="bg-dark p-8 rounded-xl max-w-md w-full mx-4 relative z-10 border border-gray-700">
+            <button class="close-modal absolute top-4 right-4">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="text-center mb-6">
+                <h2 class="text-2xl font-bold text-white mb-2">Create Your Account</h2>
+                <p class="text-gray-400">Register now and get 5,000 free points!</p>
+            </div>
+            
+            <form id="registerForm" class="space-y-4">
+                <div>
+                    <label for="registerUsername" class="block text-gray-400 mb-2">Username</label>
+                    <input type="text" id="registerUsername" required class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary">
+                </div>
+                
+                <div>
+                    <label for="registerEmail" class="block text-gray-400 mb-2">Email</label>
+                    <input type="email" id="registerEmail" required class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary">
+                </div>
+                
+                <div>
+                    <label for="registerPassword" class="block text-gray-400 mb-2">Password</label>
+                    <input type="password" id="registerPassword" required class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary">
+                </div>
+                
+                <div>
+                    <label for="registerConfirmPassword" class="block text-gray-400 mb-2">Confirm Password</label>
+                    <input type="password" id="registerConfirmPassword" required class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary">
+                </div>
+                
+                <div class="flex items-center">
+                    <input type="checkbox" id="acceptTerms" required class="h-4 w-4 text-primary focus:ring-primary border-gray-600 rounded">
+                    <label for="acceptTerms" class="ml-2 block text-sm text-gray-400">
+                        I agree to the <a href="/terms/" class="text-primary hover:text-opacity-80">Terms of Service</a> and <a href="/privacy/" class="text-primary hover:text-opacity-80">Privacy Policy</a>
+                    </label>
+                </div>
+                
+                <button type="submit" class="w-full bg-primary hover:bg-opacity-90 text-white font-bold py-3 px-4 rounded-lg transition-all duration-300">
+                    Register Now
+                </button>
+                
+                <div class="text-center text-gray-400">
+                    Already have an account? <button id="switchToLogin" class="text-primary hover:text-opacity-80">Log In</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-dark bg-opacity-90 backdrop-filter backdrop-blur-md border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="/" class="text-2xl font-bold text-white flex items-center">
+                       <img src="/assets/logo.png" class="h-14" alt="logo"/>
+                    </a>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="/" class="text-white hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">Home</a>
+                    <a href="/games/" class="text-white hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">Games</a>
+                    <a href="/about/" class="text-white hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">About Us</a>
+                    <a href="/responsible-gaming/" class="text-white hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">Responsible Gaming</a>
+                    <a href="/contact/" class="text-white hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">Contact</a>
+                    
+                    <div class="ml-4 flex items-center space-x-4" id="authButtons">
+                        <button id="loginBtn" class="text-white hover:text-primary px-4 py-2 rounded-md text-sm font-medium transition-colors">
+                            <i class="fas fa-sign-in-alt mr-1"></i> Log In
+                        </button>
+                        <button id="registerBtn" class="bg-primary hover:bg-opacity-90 text-white px-4 py-2 rounded-full text-sm font-bold transition-colors transform hover:scale-105">
+                            <i class="fas fa-user-plus mr-1"></i> Register
+                        </button>
+                    </div>
+                    
+                    <div class="ml-4 flex items-center space-x-4 hidden" id="userInfo">
+                        <div class="text-white flex flex-col items-center justify-center border p-1 px-3 rounded-lg">
+                            <div class="flex item items-center justify-center gap-2">
+                            <i class="fas fa-coins text-yellow-400 mr-1"></i>
+                            <span id="userCoins">0</span> Coins
+                            </div>
+                             <span id="usernameDisplay" class="font-medium">Guest</span>
+                        </div>
+                        <div class="flex items-center">
+                           
+                        </div>
+                        <button id="mobileLogoutBtn" class="w-full text-left px-3 py-2 rounded-md text-base font-medium text-white hover:text-primary">
+                        <i class="fas fa-sign-out-alt mr-2"></i> Log Out
+                    </button>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobileMenuBtn" class="hamburger">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-dark border-t border-gray-800">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="/" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-primary">Home</a>
+                <a href="/games/" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-primary">Games</a>
+                <a href="/about/" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-primary">About Us</a>
+                <a href="/responsible-gaming/" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-primary">Responsible Gaming</a>
+                <a href="/contact/" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-primary">Contact</a>
+                
+                <div class="pt-4 border-t border-gray-800" id="mobileAuthButtons">
+                    <button id="mobileLoginBtn" class="w-full text-left px-3 py-2 rounded-md text-base font-medium text-white hover:text-primary">
+                        <i class="fas fa-sign-in-alt mr-2"></i> Log In
+                    </button>
+                    <button id="mobileRegisterBtn" class="w-full mt-2 bg-primary hover:bg-opacity-90 text-white px-3 py-2 rounded-full text-base font-bold">
+                        <i class="fas fa-user-plus mr-2"></i> Register
+                    </button>
+                </div>
+                
+                <div class="pt-4 border-t border-gray-800 hidden" id="mobileUserInfo">
+                    <div class="px-3 py-2 text-white">
+                        <i class="fas fa-user mr-2"></i>
+                        <span id="mobileUsernameDisplay">Guest</span>
+                    </div>
+                    <div class="px-3 py-2 text-white">
+                        <i class="fas fa-coins text-yellow-400 mr-2"></i>
+                        <span id="mobileUserCoins">0</span> Coins
+                    </div>
+                    <button id="mobileLogoutBtn" class="w-full text-left px-3 py-2 rounded-md text-base font-medium text-white hover:text-primary">
+                        <i class="fas fa-sign-out-alt mr-2"></i> Log Out
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="hero-gradient pt-32 pb-20 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+                    <span class="text-primary">Terms</span> <span class="text-white">of Service</span>
+                </h1>
+                <p class="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
+                    Last Updated: January 1, 2025
+                </p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Main Content -->
+    <section class="py-16 bg-dark">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="prose prose-invert max-w-4xl mx-auto">
+                <div class="terms-section">
+                    <h2 class="text-3xl font-bold mb-6">1. Acceptance of Terms</h2>
+                    <p>
+                        By accessing or using the FreeSlotRush website ("Site") and social casino platform ("Service"), you agree to be bound by these Terms of Service ("Terms"). If you do not agree to all of these Terms, do not access or use the Service. We may modify these Terms at any time, and such modifications shall be effective immediately upon posting on the Site. Your continued use of the Service after any such changes constitutes your acceptance of the new Terms.
+                    </p>
+                </div>
+                
+                <div class="terms-section">
+                    <h2 class="text-3xl font-bold mb-6">2. Description of Service</h2>
+                    <p>
+                        FreeSlotRush provides a social casino platform for entertainment purposes only. Our Service includes various free-to-play casino-style games where users can play with virtual coins that have no monetary value. The Service is strictly for entertainment and does not constitute gambling as no real money is wagered, won, or lost.
+                    </p>
+                </div>
+                
+                <div class="terms-section">
+                    <h2 class="text-3xl font-bold mb-6">3. Eligibility</h2>
+                    <p>
+                        To use the Service, you must be at least 18 years of age or the legal age of majority in your jurisdiction, whichever is higher. By using the Service, you represent and warrant that you meet these eligibility requirements. We reserve the right to request proof of age at any time to verify compliance with this requirement.
+                    </p>
+                </div>
+                
+                <div class="terms-section">
+                    <h2 class="text-3xl font-bold mb-6">4. Account Registration</h2>
+                    <p>
+                        To access certain features of the Service, you may be required to register for an account. When registering, you agree to: (a) provide accurate, current, and complete information; (b) maintain and promptly update your information; (c) maintain the security of your password; (d) not share your account credentials; and (e) accept all risks of unauthorized access to your account. You are solely responsible for all activities that occur under your account.
+                    </p>
+                </div>
+                
+                <div class="terms-section">
+                    <h2 class="text-3xl font-bold mb-6">5. Virtual Currency</h2>
+                    <p>
+                        The Service uses a virtual currency ("Coins") that has no monetary value. Coins cannot be redeemed for cash, prizes, or any other thing of value. Coins are provided solely for entertainment purposes to enhance your experience on the platform. We may offer opportunities to obtain additional Coins through various means, including but not limited to purchases, promotions, or bonuses. All purchases of virtual items are final and non-refundable.
+                    </p>
+                </div>
+                
+                <div class="terms-section">
+                    <h2 class="text-3xl font-bold mb-6">6. User Conduct</h2>
+                    <p>
+                        You agree not to engage in any of the following prohibited activities:
+                    </p>
+                    <ul class="list-disc pl-6 space-y-2 mt-4">
+                        <li>Using the Service for any illegal purpose or in violation of any laws</li>
+                        <li>Attempting to interfere with, compromise the system integrity or security of the Service</li>
+                        <li>Taking any action that imposes an unreasonable load on our infrastructure</li>
+                        <li>Uploading or transmitting viruses or any other malicious code</li>
+                        <li>Attempting to gain unauthorized access to the Service or its related systems</li>
+                        <li>Using any automated system to access the Service in a manner that sends more request messages than a human could reasonably produce</li>
+                        <li>Engaging in any fraudulent activity, including but not limited to manipulating the Service or using stolen payment methods</li>
+                        <li>Harassing, threatening, or bullying other users</li>
+                        <li>Posting content that is obscene, defamatory, or otherwise objectionable</li>
+                    </ul>
+                </div>
+                
+                <div class="terms-section">
+                    <h2 class="text-3xl font-bold mb-6">7. Intellectual Property</h2>
+                    <p>
+                        The Service and its original content, features, and functionality are owned by FreeSlotRush and are protected by international copyright, trademark, patent, trade secret, and other intellectual property or proprietary rights laws. You agree not to modify, copy, distribute, transmit, display, perform, reproduce, publish, license, create derivative works from, transfer, or sell any information, software, products or services obtained from the Service.
+                    </p>
+                </div>
+                
+                <div class="terms-section">
+                    <h2 class="text-3xl font-bold mb-6">8. Termination</h2>
+                    <p>
+                        We may terminate or suspend your account and bar access to the Service immediately, without prior notice or liability, under our sole discretion, for any reason whatsoever and without limitation, including but not limited to a breach of these Terms. Upon termination, your right to use the Service will immediately cease. If you wish to terminate your account, you may simply discontinue using the Service or request account deletion through our contact form.
+                    </p>
+                </div>
+                
+                <div class="terms-section">
+                    <h2 class="text-3xl font-bold mb-6">9. Limitation of Liability</h2>
+                    <p>
+                        In no event shall FreeSlotRush, nor its directors, employees, partners, agents, suppliers, or affiliates, be liable for any indirect, incidental, special, consequential or punitive damages, including without limitation, loss of profits, data, use, goodwill, or other intangible losses, resulting from (i) your access to or use of or inability to access or use the Service; (ii) any conduct or content of any third party on the Service; (iii) any content obtained from the Service; and (iv) unauthorized access, use or alteration of your transmissions or content, whether based on warranty, contract, tort (including negligence) or any other legal theory, whether or not we have been informed of the possibility of such damage, and even if a remedy set forth herein is found to have failed of its essential purpose.
+                    </p>
+                </div>
+                
+                <div class="terms-section">
+                    <h2 class="text-3xl font-bold mb-6">10. Disclaimer of Warranties</h2>
+                    <p>
+                        Your use of the Service is at your sole risk. The Service is provided on an "AS IS" and "AS AVAILABLE" basis. The Service is provided without warranties of any kind, whether express or implied, including, but not limited to, implied warranties of merchantability, fitness for a particular purpose, non-infringement or course of performance. FreeSlotRush does not warrant that (a) the Service will function uninterrupted, secure or available at any particular time or location; (b) any errors or defects will be corrected; (c) the Service is free of viruses or other harmful components; or (d) the results of using the Service will meet your requirements.
+                    </p>
+                </div>
+                
+                <div class="terms-section">
+                    <h2 class="text-3xl font-bold mb-6">11. Governing Law</h2>
+                    <p>
+                        These Terms shall be governed and construed in accordance with the laws of Canada, without regard to its conflict of law provisions. Our failure to enforce any right or provision of these Terms will not be considered a waiver of those rights. If any provision of these Terms is held to be invalid or unenforceable by a court, the remaining provisions of these Terms will remain in effect.
+                    </p>
+                </div>
+                
+                <div class="terms-section">
+                    <h2 class="text-3xl font-bold mb-6">12. Changes to Terms</h2>
+                    <p>
+                        We reserve the right, at our sole discretion, to modify or replace these Terms at any time. If a revision is material, we will provide at least 30 days' notice prior to any new terms taking effect. What constitutes a material change will be determined at our sole discretion. By continuing to access or use our Service after those revisions become effective, you agree to be bound by the revised terms. If you do not agree to the new terms, please stop using the Service.
+                    </p>
+                </div>
+                
+                <div class="terms-section">
+                    <h2 class="text-3xl font-bold mb-6">13. Contact Us</h2>
+                    <p>
+                        If you have any questions about these Terms, please contact us at:
+                    </p>
+                    <p class="mt-4">
+                        FreeSlotRush<br>
+                        490 Chem. de Vassan<br>
+                        Val-d'Or, QC J9P 0C1<br>
+                        Canada<br>
+                        Email: <a href="mailto:info@freeslotrush.org" class="text-primary hover:text-opacity-80">info@freeslotrush.org</a><br>
+                        Phone: <a href="tel:+18198243146" class="text-primary hover:text-opacity-80">+1 (819) 824-3146</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Responsible Gaming Section -->
+    <section class="py-12 bg-dark border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="md:col-span-2">
+                    <h3 class="text-xl font-bold mb-4 text-white">
+                        <i class="fas fa-shield-alt text-primary mr-2"></i> Responsible Gaming Commitment
+                    </h3>
+                    <p class="text-gray-400 mb-4">
+                        FreeSlotRush is committed to promoting responsible gaming practices. We provide comprehensive tools and resources to help players maintain control over their gaming habits and ensure a safe, enjoyable experience for all users.
+                    </p>
+                    <p class="text-gray-400 font-semibold">
+                        Important Notice: This is a social casino platform for entertainment only. No real money gambling or payouts are involved. All coins are virtual and have no monetary value.
+                    </p>
+                </div>
+                <div class="flex flex-col md:items-end justify-center space-y-3">
+                    <a href="https://www.gamcare.org.uk/" target="_blank" class="text-primary hover:text-opacity-80 flex items-center">
+                        <i class="fas fa-external-link-alt mr-2"></i> GamCare
+                    </a>
+                    <a href="https://www.gambleaware.org/" target="_blank" class="text-primary hover:text-opacity-80 flex items-center">
+                        <i class="fas fa-external-link-alt mr-2"></i> GambleAware
+                    </a>
+                    <a href="/responsible-gaming/" class="text-primary hover:text-opacity-80 flex items-center">
+                        <i class="fas fa-file-alt mr-2"></i> Responsible Gaming Policy
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div>
+                    <a href="/" class="text-2xl font-bold text-white flex items-center mb-4">
+                       <img src="/assets/logo.png" class="h-14" alt="logo"/>
+                    </a>
+                    <p class="mb-4">
+                        The premier social casino platform offering the best free-to-play casino games with no real money involved.
+                    </p>
+                    
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-bold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/" class="hover:text-primary transition-colors">Home</a></li>
+                        <li><a href="/games/" class="hover:text-primary transition-colors">Games</a></li>
+                        
+                        <li><a href="/about/" class="hover:text-primary transition-colors">About Us</a></li>
+                        <li><a href="/contact/" class="hover:text-primary transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-bold mb-4">Legal</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/privacy/" class="hover:text-primary transition-colors">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="hover:text-primary transition-colors">Terms of Service</a></li>
+                        <li><a href="/cookies/" class="hover:text-primary transition-colors">Cookies Policy</a></li>
+                        <li><a href="/responsible-gaming/" class="hover:text-primary transition-colors">Responsible Gaming</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-bold mb-4">Contact Us</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-envelope text-primary mr-2 mt-1"></i>
+                            <a href="mailto:info@freeslotrush.org" class="hover:text-primary transition-colors">info@freeslotrush.org</a>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-phone-alt text-primary mr-2 mt-1"></i>
+                            <a href="tel:+18198243146" class="hover:text-primary transition-colors">+1 (819) 824-3146</a>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt text-primary mr-2 mt-1"></i>
+                            <span>490 Chem. de Vassan, Val-d'Or, QC J9P 0C1, Canada</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8 text-sm">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p>
+                        &copy; 2025 FreeSlotRush. All rights reserved.
+                    </p>
+                    <div class="flex flex-wrap justify-center md:justify-end gap-x-4 gap-y-2 mt-4 md:mt-0">
+                        <span>18+ Only</span>
+                        <span>•</span>
+                        <span>Social Casino Platform</span>
+                        <span>•</span>
+                        <span>No Real Money Gambling</span>
+                    </div>
+                </div>
+                
+                <p class="mt-4 text-xs text-gray-600">
+                    This website operates as a social casino platform for entertainment purposes only. No real money gambling, betting, or wagering is involved. Virtual coins and winnings have no cash value and cannot be exchanged for real money, prizes, or any monetary compensation. Success in social casino games does not guarantee future success at real money gambling activities.
+                </p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // User Management System
+        class UserManager {
+            constructor() {
+                this.currentUser = null;
+                this.loadUser();
+            }
+            
+            loadUser() {
+                const userData = localStorage.getItem('currentUser');
+                if (userData) {
+                    this.currentUser = JSON.parse(userData);
+                    this.updateUI();
+                }
+            }
+            
+            register(username, email, password) {
+                // Check if user already exists
+                const users = JSON.parse(localStorage.getItem('users') )|| [];
+                const userExists = users.some(user => user.email === email);
+                
+                if (userExists) {
+                    return { success: false, message: 'Email already registered' };
+                }
+                
+                // Create new user
+                const newUser = {
+                    id: Date.now().toString(),
+                    username,
+                    email,
+                    password, // Note: In a real app, you would hash the password
+                    coins: 5000, // Starting bonus
+                    joinDate: new Date().toISOString(),
+                    lastLogin: new Date().toISOString()
+                };
+                
+                users.push(newUser);
+                localStorage.setItem('users', JSON.stringify(users));
+                
+                // Log the user in
+                return this.login(email, password);
+            }
+            
+            login(email, password) {
+                const users = JSON.parse(localStorage.getItem('users')) || [];
+                const user = users.find(u => u.email === email && u.password === password);
+                
+                if (user) {
+                    // Update last login
+                    user.lastLogin = new Date().toISOString();
+                    localStorage.setItem('users', JSON.stringify(users));
+                    
+                    // Set current user
+                    this.currentUser = user;
+                    localStorage.setItem('currentUser', JSON.stringify(user));
+                    
+                    this.updateUI();
+                    return { success: true, user };
+                }
+                
+                return { success: false, message: 'Invalid email or password' };
+            }
+            
+            logout() {
+                this.currentUser = null;
+                localStorage.removeItem('currentUser');
+                this.updateUI();
+            }
+            
+            updateUI() {
+                const authButtons = document.getElementById('authButtons');
+                const userInfo = document.getElementById('userInfo');
+                const usernameDisplay = document.getElementById('usernameDisplay');
+                const userCoins = document.getElementById('userCoins');
+                
+                const mobileAuthButtons = document.getElementById('mobileAuthButtons');
+                const mobileUserInfo = document.getElementById('mobileUserInfo');
+                const mobileUsernameDisplay = document.getElementById('mobileUsernameDisplay');
+                const mobileUserCoins = document.getElementById('mobileUserCoins');
+                
+                if (this.currentUser) {
+                    // Desktop UI
+                    if (authButtons) authButtons.classList.add('hidden');
+                    if (userInfo) userInfo.classList.remove('hidden');
+                    if (usernameDisplay) usernameDisplay.textContent = this.currentUser.username;
+                    if (userCoins) userCoins.textContent = this.currentUser.coins.toLocaleString();
+                    
+                    // Mobile UI
+                    if (mobileAuthButtons) mobileAuthButtons.classList.add('hidden');
+                    if (mobileUserInfo) mobileUserInfo.classList.remove('hidden');
+                    if (mobileUsernameDisplay) mobileUsernameDisplay.textContent = this.currentUser.username;
+                    if (mobileUserCoins) mobileUserCoins.textContent = this.currentUser.coins.toLocaleString();
+                } else {
+                    // Desktop UI
+                    if (authButtons) authButtons.classList.remove('hidden');
+                    if (userInfo) userInfo.classList.add('hidden');
+                    
+                    // Mobile UI
+                    if (mobileAuthButtons) mobileAuthButtons.classList.remove('hidden');
+                    if (mobileUserInfo) mobileUserInfo.classList.add('hidden');
+                }
+            }
+            
+            isLoggedIn() {
+                return this.currentUser !== null;
+            }
+        }
+        
+        // Initialize User Manager
+        const userManager = new UserManager();
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check age verification
+            const ageVerified = localStorage.getItem('ageVerified');
+            if (ageVerified !== 'true') {
+                window.location.href = '/';
+            }
+            
+            // Mobile Menu Toggle
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            
+            if (mobileMenuBtn && mobileMenu) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    this.classList.toggle('open');
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+            
+            // Register Buttons
+            const registerButtons = [
+                document.getElementById('registerBtn'),
+                document.getElementById('mobileRegisterBtn')
+            ];
+            
+            registerButtons.forEach(button => {
+                if (button) {
+                    button.addEventListener('click', function() {
+                        document.querySelector('.register-modal').style.display = 'flex';
+                        document.querySelector('.login-modal').style.display = 'none';
+                    });
+                }
+            });
+            
+            // Login Buttons
+            const loginButtons = [
+                document.getElementById('loginBtn'),
+                document.getElementById('mobileLoginBtn')
+            ];
+            
+            loginButtons.forEach(button => {
+                if (button) {
+                    button.addEventListener('click', function() {
+                        document.querySelector('.login-modal').style.display = 'flex';
+                        document.querySelector('.register-modal').style.display = 'none';
+                    });
+                }
+            });
+            
+            // Close modals
+            const closeModal = document.querySelectorAll('.close-modal');
+            
+            closeModal.forEach(button => {
+                button.addEventListener('click', function() {
+                    document.querySelectorAll('.login-modal, .register-modal').forEach(modal => {
+                        modal.style.display = 'none';
+                    });
+                    document.body.style.overflow = 'auto';
+                });
+            });
+            
+            // Close modal when clicking outside
+            document.querySelectorAll('.login-modal, .register-modal').forEach(modal => {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === modal) {
+                        modal.style.display = 'none';
+                        document.body.style.overflow = 'auto';
+                    }
+                });
+            });
+            
+            // Switch between login and register forms
+            const switchToRegister = document.getElementById('switchToRegister');
+            if (switchToRegister) {
+                switchToRegister.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    document.querySelector('.login-modal').style.display = 'none';
+                    document.querySelector('.register-modal').style.display = 'flex';
+                });
+            }
+            
+            const switchToLogin = document.getElementById('switchToLogin');
+            if (switchToLogin) {
+                switchToLogin.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    document.querySelector('.register-modal').style.display = 'none';
+                    document.querySelector('.login-modal').style.display = 'flex';
+                });
+            }
+            
+            // Login form submission
+            const loginForm = document.getElementById('loginForm');
+            if (loginForm) {
+                loginForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const email = document.getElementById('loginEmail').value;
+                    const password = document.getElementById('loginPassword').value;
+                    
+                    const result = userManager.login(email, password);
+                    if (result.success) {
+                        
+                        document.querySelector('.login-modal').style.display = 'none';
+                    } else {
+                        
+                    }
+                });
+            }
+            
+            // Register form submission
+            const registerForm = document.getElementById('registerForm');
+            if (registerForm) {
+                registerForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const username = document.getElementById('registerUsername').value;
+                    const email = document.getElementById('registerEmail').value;
+                    const password = document.getElementById('registerPassword').value;
+                    const confirmPassword = document.getElementById('registerConfirmPassword').value;
+                    
+                    if (password !== confirmPassword) {
+                         
+                        return;
+                    }
+                    
+                    const result = userManager.register(username, email, password);
+                    if (result.success) {
+                        
+                        document.querySelector('.register-modal').style.display = 'none';
+                    } else {
+                        
+                    }
+                });
+            }
+            
+            // Logout buttons
+            const logoutBtn = document.getElementById('logoutBtn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', function() {
+                    userManager.logout();
+                     
+                });
+            }
+            
+            const mobileLogoutBtn = document.getElementById('mobileLogoutBtn');
+            if (mobileLogoutBtn) {
+                mobileLogoutBtn.addEventListener('click', function() {
+                    userManager.logout();
+                     
+                });
+            }
+            
+            // GSAP Animations
+            if (typeof gsap !== 'undefined') {
+                gsap.from('.terms-section', {
+                    scrollTrigger: {
+                        trigger: '.terms-section',
+                        start: "top 80%",
+                        toggleActions: "play none none none"
+                    },
+                    y: 50,
+                    opacity: 0,
+                    duration: 0.8,
+                    stagger: 0.1
+                });
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+ <link rel="shortcut icon" href="/images/logo.png" type="image/x-icon">
+ <link rel="canonical" href="https://slotcarnival.org/cookies/" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cookies Policy - Slot Carnival</title>
+    <meta name="description" content="Learn how Slot Carnival uses cookies and similar technologies to enhance your experience on our social casino platform.">
+    <meta name="keywords" content="cookies policy, website cookies, tracking technologies, social casino cookies, Slot Carnival cookies">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap');
+        
+        :root {
+            --primary: #ff5e14;
+            --secondary: #0f172a;
+            --accent: #f59e0b;
+            --dark: #0f172a;
+            --light: #f8fafc;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+        }
+        
+        .parallax-bg {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, rgba(15,23,42,0.95) 0%, rgba(15,23,42,0.7) 100%);
+        }
+        
+        .hamburger-menu {
+            width: 30px;
+            height: 20px;
+            position: relative;
+            transform: rotate(0deg);
+            transition: .5s ease-in-out;
+            cursor: pointer;
+        }
+        
+        .hamburger-menu span {
+            display: block;
+            position: absolute;
+            height: 3px;
+            width: 100%;
+            background: var(--primary);
+            border-radius: 3px;
+            opacity: 1;
+            left: 0;
+            transform: rotate(0deg);
+            transition: .25s ease-in-out;
+        }
+        
+        .hamburger-menu span:nth-child(1) {
+            top: 0px;
+        }
+        
+        .hamburger-menu span:nth-child(2), .hamburger-menu span:nth-child(3) {
+            top: 10px;
+        }
+        
+        .hamburger-menu span:nth-child(4) {
+            top: 20px;
+        }
+        
+        .hamburger-menu.open span:nth-child(1) {
+            top: 10px;
+            width: 0%;
+            left: 50%;
+        }
+        
+        .hamburger-menu.open span:nth-child(2) {
+            transform: rotate(45deg);
+        }
+        
+        .hamburger-menu.open span:nth-child(3) {
+            transform: rotate(-45deg);
+        }
+        
+        .hamburger-menu.open span:nth-child(4) {
+            top: 10px;
+            width: 0%;
+            left: 50%;
+        }
+        
+        .dropdown-menu {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .cookies-consent {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: var(--secondary);
+            z-index: 100;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .cookies-consent.show {
+            transform: translateY(0);
+        }
+        
+        .terms-content h2 {
+            font-size: 1.75rem;
+            color: var(--accent);
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .terms-content h3 {
+            font-size: 1.25rem;
+            color: white;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        .terms-content p {
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+        
+        .terms-content ul {
+            list-style-type: disc;
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .terms-content li {
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body class="relative">
+    <!-- Age Verification Modal -->
+    <div id="ageVerification" class="fixed inset-0 bg-black/90 z-[9999] flex items-center justify-center" style="display: none;">
+        <div class="max-w-2xl mx-4 p-8 bg-slate-800 rounded-xl shadow-2xl text-center">
+            <h2 class="text-3xl font-bold text-orange-500 mb-6">AGE VERIFICATION REQUIRED</h2>
+            <p class="text-lg mb-8">You must be 18 years or older to access this social casino platform. Please confirm your age to continue and enjoy our premium gaming experience.</p>
+            
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button id="confirmAge" class="px-8 py-3 bg-orange-600 hover:bg-orange-700 text-white font-bold rounded-lg transition duration-300 transform hover:scale-105">
+                    I am 18 or older
+                </button>
+                <button id="denyAge" class="px-8 py-3 bg-slate-600 hover:bg-slate-700 text-white font-bold rounded-lg transition duration-300">
+                    I am under 18
+                </button>
+            </div>
+            
+            <p class="text-sm mt-8 text-slate-400">Important: This platform is for entertainment only. No real money gambling is involved.</p>
+        </div>
+    </div>
+
+    <!-- Cookies Consent -->
+    <div id="cookiesConsent" class="cookies-consent p-4 border-t border-slate-700">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="flex-1">
+                <p class="text-sm">We use cookies to enhance your experience on our platform. By continuing to browse, you agree to our use of cookies. Learn more in our <a href="/privacy/" class="text-orange-500 hover:underline">Privacy Policy</a>.</p>
+            </div>
+            <div class="flex gap-2">
+                <button id="acceptCookies" class="px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white text-sm font-medium rounded transition duration-300">
+                    Accept
+                </button>
+                <button id="declineCookies" class="px-4 py-2 bg-slate-600 hover:bg-slate-700 text-white text-sm font-medium rounded transition duration-300">
+                    Decline
+                </button>
+                <a href="/privacy/" class="px-4 py-2 text-orange-500 hover:underline text-sm font-medium">
+                    Learn More
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="fixed w-full bg-slate-900/90 backdrop-blur-md z-50 border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center">
+                  <a href="/" class="text-2xl font-bold text-orange-500">
+                        <img src="/images/logo.png" alt="Slot Carnival Logo" class="h-12">                        
+                    </a>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="text-white hover:text-orange-500 font-medium transition duration-300">Home</a>
+                    <a href="/games/" class="text-white hover:text-orange-500 font-medium transition duration-300">Games</a>
+                    <a href="/about/" class="text-white hover:text-orange-500 font-medium transition duration-300">About</a>
+                    <a href="/responsible-gaming/" class="text-white hover:text-orange-500 font-medium transition duration-300">Responsible Gaming</a>
+                    <a href="/contact/" class="text-white hover:text-orange-500 font-medium transition duration-300">Contact</a>
+                    
+                    <!-- Login/Register or User Profile -->
+                    <div id="authButtons" class="flex items-center space-x-4">
+                        <a href="/login/" class="px-4 py-2 text-white hover:text-orange-500 font-medium transition duration-300">Login</a>
+                        <a href="/register/" class="px-6 py-2 bg-orange-600 hover:bg-orange-700 text-white font-medium rounded-lg transition duration-300 transform hover:scale-105">
+                            Register
+                        </a>
+                    </div>
+                    
+                    <div id="userProfile" class="hidden items-center space-x-2 dropdown relative">
+                        <div class="flex items-center space-x-2 cursor-pointer">
+                            <div class="w-8 h-8 rounded-full bg-orange-600 flex items-center justify-center text-white font-bold" id="profileInitial">U</div>
+                            <span class="text-white font-medium" id="usernameDisplay">Username</span>
+                            <span class="text-orange-500 font-bold">•</span>
+                            <span class="text-yellow-400 font-bold"><span id="userCoins">0</span> Coins</span>
+                        </div>
+                        <div class="dropdown-menu absolute right-0 mt-2 w-48 bg-slate-800 rounded-md shadow-lg py-1 z-50 border border-slate-700">
+                             
+                            <a href="javascript:void(0)" id="logoutBtn" class="block px-4 py-2 text-sm text-white hover:bg-slate-700">Logout</a>
+                        </div>
+                    </div>
+                </nav>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobileMenuButton" class="hamburger-menu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="md:hidden hidden bg-slate-900 border-t border-slate-800">
+              <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 flex flex-col justify-center items-center">
+                <a href="/" class="block px-3 py-2 text-white hover:text-orange-500 font-medium">Home</a>
+                <a href="/games/" class="block px-3 py-2 text-white hover:text-orange-500 font-medium">Games</a>
+                <a href="/about/" class="block px-3 py-2 text-white hover:text-orange-500 font-medium">About</a>
+                <a href="/responsible-gaming/" class="block px-3 py-2 text-white hover:text-orange-500 font-medium">Responsible Gaming</a>
+                <a href="/contact/" class="block px-3 py-2 text-white hover:text-orange-500 font-medium">Contact</a>
+                
+                <div id="mobileAuthButtons" class="pt-4 border-t border-slate-800">
+                     <a href="/login/" class="block px-3 py-2 text-white hover:text-orange-500 font-medium border border-orange-600 text-center rounded-full">Login</a>
+                    <a href="/register/" class="block px-3 py-2 mt-2 bg-orange-600 hover:bg-orange-700 text-white font-medium rounded-lg text-center">
+                        Register
+                    </a>
+                </div>
+                
+                <div id="mobileUserProfile" class="hidden pt-4 border-t border-slate-800">
+                    <div class="flex items-center px-3 py-2">
+                        <div class="w-8 h-8 rounded-full bg-orange-600 flex items-center justify-center text-white font-bold mr-3" id="mobileProfileInitial">U</div>
+                        <div>
+                            <div class="text-white font-medium" id="mobileUsernameDisplay">Username</div>
+                            <div class="text-yellow-400 text-sm"><span id="mobileUserCoins">0</span> Coins</div>
+                        </div>
+                    </div>
+                     
+                    <a href="javascript:void(0)" id="mobileLogoutBtn" class="block px-3 py-2 text-white hover:text-orange-500 font-medium">Logout</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 flex items-center justify-center overflow-hidden bg-[url('/images/hero-bg.webp')] bg-cover bg-center parallax-bg">
+        <div class="absolute inset-0 bg-slate-900/80"></div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6 text-white leading-tight">
+                COOKIES <span class="text-orange-500">POLICY</span>
+            </h1>
+            <p class="text-xl text-slate-300 max-w-3xl mx-auto">Last Updated: August 1, 2025</p>
+        </div>
+    </section>
+
+    <!-- Cookies Content Section -->
+    <section class="py-16 bg-slate-900/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="bg-slate-800/50 backdrop-blur-sm rounded-xl p-8 md:p-12 border border-slate-700 terms-content">
+                <h2 class="text-3xl font-bold text-orange-500 mb-8">1. Introduction</h2>
+                <p>Slot Carnival ("we", "us", or "our") uses cookies and similar tracking technologies to enhance your experience on our social casino platform ("Service"). This Cookies Policy explains what cookies are, how we use them, the types of cookies we use, and how you can manage your cookie preferences.</p>
+                
+                <p>By using our Service, you consent to the use of cookies in accordance with this policy. If you do not agree to our use of cookies, you should adjust your browser settings accordingly or refrain from using our Service.</p>
+                
+                <h2 class="text-3xl font-bold text-orange-500 mb-8 mt-12">2. What Are Cookies?</h2>
+                <p>Cookies are small text files that are placed on your computer, smartphone, or other device when you visit a website. They are widely used to make websites work more efficiently, as well as to provide information to the website owners.</p>
+                
+                <h3>2.1 How Cookies Work</h3>
+                <p>When you visit our Service, we may place cookies on your device. These cookies allow us to:</p>
+                <ul>
+                    <li>Remember your preferences and settings</li>
+                    <li>Understand how you interact with our Service</li>
+                    <li>Improve and optimize the performance of our Service</li>
+                    <li>Deliver content tailored to your interests</li>
+                    <li>Provide security features to protect your account</li>
+                </ul>
+                
+                <h3>2.2 Types of Data Collected</h3>
+                <p>Cookies may collect the following types of information:</p>
+                <ul>
+                    <li>IP address and device information</li>
+                    <li>Browser type and version</li>
+                    <li>Pages you visit on our Service</li>
+                    <li>Time spent on pages and navigation paths</li>
+                    <li>Preferences and settings</li>
+                    <li>Game progress and virtual currency balances</li>
+                </ul>
+                
+                <h2 class="text-3xl font-bold text-orange-500 mb-8 mt-12">3. Types of Cookies We Use</h2>
+                <p>We use several types of cookies for different purposes:</p>
+                
+                <h3>3.1 Essential Cookies</h3>
+                <p>These cookies are necessary for the Service to function and cannot be switched off. They are usually only set in response to actions made by you such as logging in or filling in forms. You can set your browser to block these cookies, but some parts of the Service may not work.</p>
+                
+                <h3>3.2 Performance Cookies</h3>
+                <p>These cookies allow us to count visits and traffic sources so we can measure and improve the performance of our Service. They help us know which pages are most and least popular and see how visitors move around the site.</p>
+                
+                <h3>3.3 Functionality Cookies</h3>
+                <p>These cookies enable the Service to provide enhanced functionality and personalization. They may be set by us or by third-party providers whose services we have added to our pages.</p>
+                
+                <h3>3.4 Targeting/Advertising Cookies</h3>
+                <p>These cookies may be set through our site by our advertising partners. They may be used by those companies to build a profile of your interests and show you relevant advertisements on other sites.</p>
+                
+                <h2 class="text-3xl font-bold text-orange-500 mb-8 mt-12">4. Third-Party Cookies</h2>
+                <p>In addition to our own cookies, we may also use various third-party cookies to report usage statistics of the Service, deliver advertisements on and through the Service, and so on.</p>
+                
+                <h3>4.1 Analytics Cookies</h3>
+                <p>We use Google Analytics to help us understand how our visitors use the Service. Google Analytics uses cookies to collect information and report site usage statistics without personally identifying individual visitors.</p>
+                
+                <h3>4.2 Social Media Cookies</h3>
+                <p>These cookies are used when you share information using a social media sharing button or "like" button on our Service, or you link your account or engage with our content on social media platforms.</p>
+                
+                <h2 class="text-3xl font-bold text-orange-500 mb-8 mt-12">5. Cookie Duration</h2>
+                <p>Cookies may be either "persistent" cookies or "session" cookies:</p>
+                
+                <h3>5.1 Session Cookies</h3>
+                <p>Session cookies remain on your device only while your browser is open and are automatically deleted when you close your browser.</p>
+                
+                <h3>5.2 Persistent Cookies</h3>
+                <p>Persistent cookies remain on your device after you close your browser until they expire or you delete them. The expiration time is set within the cookies themselves and may vary from a few minutes to several years.</p>
+                
+                <h2 class="text-3xl font-bold text-orange-500 mb-8 mt-12">6. Managing Cookies</h2>
+                <p>You have the right to accept or reject cookies. You can exercise your cookie preferences by adjusting the settings in your browser. Most browsers allow you to:</p>
+                <ul>
+                    <li>See what cookies you've got and delete them on an individual basis</li>
+                    <li>Block third-party cookies</li>
+                    <li>Block cookies from particular sites</li>
+                    <li>Block all cookies from being set</li>
+                    <li>Delete all cookies when you close your browser</li>
+                </ul>
+                
+                <h3>6.1 Browser-Specific Instructions</h3>
+                <p>To manage cookies in your browser, follow these links for instructions:</p>
+                <ul>
+                    <li><a href="https://support.google.com/chrome/answer/95647" target="_blank" class="text-orange-500 hover:underline">Google Chrome</a></li>
+                    <li><a href="https://support.mozilla.org/en-US/kb/enable-and-disable-cookies-website-preferences" target="_blank" class="text-orange-500 hover:underline">Mozilla Firefox</a></li>
+                    <li><a href="https://support.apple.com/guide/safari/manage-cookies-and-website-data-sfri11471/mac" target="_blank" class="text-orange-500 hover:underline">Apple Safari</a></li>
+                    <li><a href="https://support.microsoft.com/en-us/microsoft-edge/delete-cookies-in-microsoft-edge-63947406-40ac-c3b8-57b9-2a946a29ae09" target="_blank" class="text-orange-500 hover:underline">Microsoft Edge</a></li>
+                    <li><a href="https://support.microsoft.com/en-us/windows/delete-and-manage-cookies-168dab11-0753-043d-7c16-ede5947fc64d" target="_blank" class="text-orange-500 hover:underline">Internet Explorer</a></li>
+                </ul>
+                
+                <h3>6.2 Consequences of Disabling Cookies</h3>
+                <p>If you choose to disable cookies, certain features of our Service may not function properly. You may not be able to:</p>
+                <ul>
+                    <li>Access certain parts of the Service</li>
+                    <li>Save your preferences</li>
+                    <li>Maintain your game progress</li>
+                    <li>Receive personalized content</li>
+                </ul>
+                
+                <h2 class="text-3xl font-bold text-orange-500 mb-8 mt-12">7. Changes to This Policy</h2>
+                <p>We may update our Cookies Policy from time to time. We will notify you of any changes by posting the new Cookies Policy on this page and updating the "Last Updated" date at the top of this policy.</p>
+                
+                <p>You are advised to review this Cookies Policy periodically for any changes. Changes to this Cookies Policy are effective when they are posted on this page.</p>
+                
+                <h2 class="text-3xl font-bold text-orange-500 mb-8 mt-12">8. Contact Us</h2>
+                <p>If you have any questions about this Cookies Policy, please contact us:</p>
+                <p class="mt-4">
+                    Slot Carnival<br>
+                    Vestre Ringvei 5, 1831 Askim, Norway<br>
+                    Email: info@slotcarnival.org<br>
+                    Phone: +4740696111
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Responsible Gaming Section -->
+    <section class="bg-slate-900 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div class="md:col-span-1">
+                    <h3 class="text-xl font-bold text-white mb-4">Responsible Gaming Commitment</h3>
+                </div>
+                <div class="md:col-span-3">
+                    <p class="text-slate-300 mb-4">Slot Carnival is committed to promoting responsible gaming practices. We provide comprehensive tools and resources to help players maintain control over their gaming habits and ensure a safe, enjoyable experience for all users.</p>
+                    <p class="text-orange-400 font-medium mb-4">Important Notice: This is a social casino platform for entertainment only. No real money gambling or payouts are involved. All coins are virtual and have no monetary value.</p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="https://www.gamcare.org.uk/" target="_blank" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded transition duration-300">GamCare</a>
+                        <a href="https://www.begambleaware.org/" target="_blank" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded transition duration-300">GambleAware</a>
+                        <a href="/responsible-gaming/" class="px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white rounded transition duration-300">Responsible Gaming Policy</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-slate-900 border-t border-slate-800 pt-12 pb-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                   <a href="/" class="text-2xl font-bold text-orange-500">
+                        <img src="/images/logo.png" alt="Slot Carnival Logo" class="h-12 mb-4">                        
+                    </a>
+                    <p class="text-slate-400 mb-4">The ultimate social casino experience with premium games, generous bonuses, and a vibrant community.</p>
+                      <p class="text-slate-400 mb-4">No real money gambling or payouts are involved. </p> 
+                </div>
+                
+                <div >
+                    <h3 class="text-lg font-bold text-white mb-4 text-center md:text-left ">Quick Links</h3>
+                    <ul class="space-y-2 flex flex-col items-center md:items-start">
+                        <li><a href="/" class="text-slate-400 hover:text-orange-500 transition duration-300">Home</a></li>
+                        <li><a href="/games/" class="text-slate-400 hover:text-orange-500 transition duration-300">Games</a></li>
+                        <li><a href="/about/" class="text-slate-400 hover:text-orange-500 transition duration-300">About Us</a></li>
+                        <li><a href="/contact/" class="text-slate-400 hover:text-orange-500 transition duration-300">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-4 text-center md:text-left ">Legal</h3>
+                    <ul class="space-y-2 flex flex-col items-center md:items-start">
+                        <li><a href="/privacy/" class="text-slate-400 hover:text-orange-500 transition duration-300">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="text-slate-400 hover:text-orange-500 transition duration-300">Terms of Service</a></li>
+                        <li><a href="/cookies/" class="text-slate-400 hover:text-orange-500 transition duration-300">Cookies Policy</a></li>
+                        <li><a href="/responsible-gaming/" class="text-slate-400 hover:text-orange-500 transition duration-300">Responsible Gaming</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-4 text-center md:text-left">Contact Us</h3>
+                    <ul class="space-y-2 text-slate-400 flex flex-col items-center md:items-start">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-3 text-orange-500 hidden md:block"></i>
+                            <span>Vestre Ringvei 5, 1831 Askim, Norway</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone-alt mr-3 text-orange-500 hidden md:block"></i>
+                            <span>+4740696111</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-3 text-orange-500 hidden md:block"></i>
+                            <span>info@slotcarnival.org</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-slate-800 pt-6">
+                <div class="flex flex-col md:flex-row md:justify-between justify-center items-center text-center">
+                    <p class="text-slate-500 text-sm mb-4 md:mb-0">© 2025 Slot Carnival. All rights reserved.</p>
+                    <p class="text-orange-500 text-sm font-medium">18+ Only | Social Casino Platform | No Real Money Gambling</p>
+                </div>
+                <p class="text-slate-600 text-xs mt-4 text-center md:text-left">This website operates as a social casino platform for entertainment purposes only. No real money gambling, betting, or wagering is involved. Virtual coins and winnings have no cash value and cannot be exchanged for real money, prizes, or any monetary compensation. Success in social casino games does not guarantee future success at real money gambling activities.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check age verification in localStorage
+            const ageVerified = localStorage.getItem('ageVerified') === 'true';
+            
+            if (!ageVerified) {
+                document.getElementById('ageVerification').style.display = 'flex';
+                document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+            }
+            
+            // Check cookies consent
+            if (localStorage.getItem('cookiesAccepted') !== null) {
+                document.getElementById('cookiesConsent').classList.remove('show');
+            } else {
+                setTimeout(() => {
+                    document.getElementById('cookiesConsent').classList.add('show');
+                }, 2000);
+            }
+            
+            // Check if user is logged in
+            checkLoginStatus();
+            
+            // Initialize other event listeners
+            initEventListeners();
+        });
+        
+        // Check login status and update UI
+        function checkLoginStatus() {
+            const userData = localStorage.getItem('currentUser');
+            if (userData) {
+                const user = JSON.parse(userData);
+                updateUserProfile(user);
+            }
+        }
+        
+        // Update user profile in header
+        function updateUserProfile(user) {
+            // Desktop header
+            document.getElementById('authButtons').classList.add('hidden');
+            document.getElementById('userProfile').classList.remove('hidden');
+            document.getElementById('usernameDisplay').textContent = user.username;
+            document.getElementById('userCoins').textContent = user.coins.toLocaleString();
+            document.getElementById('profileInitial').textContent = user.username.charAt(0).toUpperCase();
+            
+            // Mobile header
+            document.getElementById('mobileAuthButtons').classList.add('hidden');
+            document.getElementById('mobileUserProfile').classList.remove('hidden');
+            document.getElementById('mobileUsernameDisplay').textContent = user.username;
+            document.getElementById('mobileUserCoins').textContent = user.coins.toLocaleString();
+            document.getElementById('mobileProfileInitial').textContent = user.username.charAt(0).toUpperCase();
+        }
+        
+        // Initialize all event listeners
+        function initEventListeners() {
+            // Age verification buttons
+            document.getElementById('confirmAge').addEventListener('click', function() {
+                localStorage.setItem('ageVerified', 'true');
+                document.getElementById('ageVerification').style.display = 'none';
+                document.body.style.overflow = 'auto'; // Re-enable scrolling
+            });
+            
+            document.getElementById('denyAge').addEventListener('click', function() {
+                window.location.href = 'https://www.google.com/';
+            });
+            
+            // Cookies consent buttons
+            document.getElementById('acceptCookies').addEventListener('click', function() {
+                localStorage.setItem('cookiesAccepted', 'true');
+                document.getElementById('cookiesConsent').classList.remove('show');
+            });
+            
+            document.getElementById('declineCookies').addEventListener('click', function() {
+                localStorage.setItem('cookiesAccepted', 'false');
+                document.getElementById('cookiesConsent').classList.remove('show');
+            });
+            
+            // Mobile menu toggle
+            document.getElementById('mobileMenuButton').addEventListener('click', function() {
+                this.classList.toggle('open');
+                document.getElementById('mobileMenu').classList.toggle('hidden');
+            });
+            
+            // Logout functionality
+            document.getElementById('logoutBtn').addEventListener('click', logoutUser);
+            document.getElementById('mobileLogoutBtn').addEventListener('click', logoutUser);
+        }
+        
+        // Logout user
+        function logoutUser() {
+            localStorage.removeItem('currentUser');
+            window.location.href = '/';
+        }
+        
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Header animation
+        gsap.from('header', { 
+            opacity: 0, 
+            y: -20, 
+            duration: 0.8, 
+            ease: "power2.out" 
+        });
+        
+        // Hero section animations
+        gsap.from('.hero-gradient h1, .hero-gradient p', { 
+            opacity: 0, 
+            y: 30, 
+            duration: 0.8, 
+            stagger: 0.1, 
+            delay: 0.3, 
+            ease: "power2.out" 
+        });
+        
+        // Terms content animation
+        gsap.from('.terms-content', {
+            scrollTrigger: {
+                trigger: '.terms-content',
+                start: "top 80%",
+                toggleActions: "play none none none"
+            },
+            opacity: 0,
+            y: 50,
+            duration: 0.8,
+            ease: "power2.out"
+        });
+    </script>
+</body>
+</html>

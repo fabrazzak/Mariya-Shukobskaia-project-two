@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsible Gaming | Fantasy Springs Slots</title>
+    <meta name="description"
+        content="Fantasy Springs Slots promotes responsible gaming. Learn about our commitment to safe and enjoyable gameplay for adult players.">
+    <meta name="keywords"
+        content="responsible gaming, safe gambling, gaming limits, fantasy springs slots, casino game safety">
+    <link rel="canonical" href="https://fantasyspringsreels.com/responsible-gaming/">
+   <link rel="icon" href="/Image/loog.png" type="image/x-icon">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#4DA8DA',
+                        secondary: '#80D8C3',
+                        accent: '#FFD66B',
+                    },
+                    animation: {
+                        'spin-slow': 'spin 3s linear infinite',
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+
+    <style>
+        .parallax-bg {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .btn-primary {
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .hero-video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-primary:active {
+            transform: translateY(1px);
+        }
+
+        .info-card {
+            transition: all 0.3s ease;
+            transform: translateY(0);
+        }
+
+        .info-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+
+<body class="bg-gradient-to-b from-blue-50 to-green-50 font-sans antialiased">
+    <!-- Cookie Consent Banner -->
+    <div id="cookieConsent" class="fixed bottom-0 left-0 right-0 bg-white shadow-lg z-50 p-4 hidden">
+        <div class="container mx-auto flex flex-col md:flex-row items-center justify-between">
+            <div class="mb-4 md:mb-0 md:mr-4">
+                <p class="text-gray-700">We use cookies to enhance your experience. By continuing to visit this site,
+                    you agree to our use of cookies. <a href="/privacy/" class="text-primary hover:underline">Learn
+                        more</a></p>
+            </div>
+            <div class="flex space-x-3">
+                <button id="cookieDecline"
+                    class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-100 transition">Decline</button>
+                <button id="cookieAccept"
+                    class="px-4 py-2 bg-primary text-white rounded-md hover:bg-blue-600 transition">Accept</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-40">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <a href="/" class="flex items-center">
+                    <img src="/Image/loog.png" alt="Fantasy Springs Slots Logo" class="h-14 mr-2 rounded-full">
+                    
+                </a>
+            </div>
+
+            <nav class="hidden md:flex space-x-8">
+                <a href="/" class="text-gray-700 hover:text-primary transition">Home</a>
+                <a href="/how-to-play/" class="text-gray-700 hover:text-primary transition">How to Play</a>
+                <a href="/responsible-gaming/" class="text-primary font-medium">Responsible Gaming</a>
+                <a href="/contact/" class="text-gray-700 hover:text-primary transition">Contact</a>
+            </nav>
+
+            <div class="flex items-center space-x-4">
+               <a href="https://play.google.com/store/apps/details?id=com.rubyseven.fantasyspringsslots"
+                    class="bg-primary text-white px-4 py-2 rounded-md hover:bg-blue-600 transition flex items-center hidden md:hidden lg:flex"> 
+                    <i class="fab fa-google-play mr-2"></i>
+                    Download
+                </a> 
+
+                <button id="mobileMenuButton" class="md:hidden text-gray-700">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-white border-t">
+            <div class="container mx-auto px-4 py-3 flex flex-col space-y-3">
+                <a href="/" class="text-gray-700 py-2">Home</a>
+                <a href="/how-to-play/" class="text-gray-700 py-2">How to Play</a>
+                <a href="/responsible-gaming/" class="text-primary py-2">Responsible Gaming</a>
+                <a href="/contact/" class="text-gray-700 py-2">Contact</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden">
+        <!-- 🎥 Background Video -->
+        <video autoplay muted loop playsinline preload="auto" class="absolute inset-0 w-full h-full object-cover z-0">
+            <source src="https://play-games.googleusercontent.com/vp/mp4/1280x720/fm9xKNpocOU.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+
+        <!-- 🌓 Optional dark overlay for text readability -->
+        <div class="absolute inset-0 bg-black/50 z-0"></div>
+
+        <!-- 💬 Foreground Text Content -->
+        <div class="container mx-auto px-4 py-20 md:py-32 relative z-10 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold text-white mb-6">
+                Responsible <span class="text-primary">Gaming</span>
+            </h1>
+            <p class="text-xl text-white/90 max-w-2xl mx-auto">
+                At Fantasy Springs Slots, we're committed to promoting safe and responsible gaming for all our players.
+            </p>
+        </div>
+    </section>
+
+
+    <!-- Main Content -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
+                <div class="mb-16">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-6">Our Commitment to Responsible Gaming</h2>
+                    <p class="text-lg text-gray-600 mb-6">Fantasy Springs Slots is designed for entertainment purposes
+                        only. We are committed to ensuring our games remain a fun and safe experience for adult players.
+                        While our games simulate casino-style gaming, they do not offer real money gambling or the
+                        opportunity to win real money or prizes.</p>
+                    <p class="text-lg text-gray-600">We encourage all players to maintain a healthy balance between
+                        gaming and other aspects of life. Below you'll find important information about responsible
+                        gaming practices and resources for those who may need assistance.</p>
+                </div>
+
+                <div class="mb-16">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-6">Tips for Responsible Play</h2>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-10">
+                        <div class="bg-gradient-to-br from-blue-50 to-green-50 rounded-xl p-8 shadow-md info-card">
+                            <div
+                                class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mb-6 mx-auto">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-center mb-3 text-gray-800">Set Time Limits</h3>
+                            <p class="text-gray-600 text-center">Decide in advance how much time you want to spend
+                                playing and stick to it. Take regular breaks to maintain perspective.</p>
+                        </div>
+
+                        <div class="bg-gradient-to-br from-blue-50 to-green-50 rounded-xl p-8 shadow-md info-card">
+                            <div
+                                class="w-16 h-16 bg-secondary rounded-full flex items-center justify-center mb-6 mx-auto">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-center mb-3 text-gray-800">Set Spending Limits</h3>
+                            <p class="text-gray-600 text-center">If you choose to make in-app purchases, set a budget
+                                and never exceed what you can comfortably afford to spend.</p>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="bg-gradient-to-br from-blue-50 to-green-50 rounded-xl p-8 shadow-md info-card">
+                            <div class="w-16 h-16 bg-accent rounded-full flex items-center justify-center mb-6 mx-auto">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-center mb-3 text-gray-800">Play for Fun</h3>
+                            <p class="text-gray-600 text-center">Remember that our games are for entertainment only.
+                                Never play to recover losses or solve financial problems.</p>
+                        </div>
+
+                        <div class="bg-gradient-to-br from-blue-50 to-green-50 rounded-xl p-8 shadow-md info-card">
+                            <div
+                                class="w-16 h-16 bg-primary rounded-full flex items-center justify-center mb-6 mx-auto">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-white" fill="none"
+                                    viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-bold text-center mb-3 text-gray-800">Balance Activities</h3>
+                            <p class="text-gray-600 text-center">Make sure gaming doesn't replace other social
+                                activities, exercise, or time with family and friends.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-16">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-6">Warning Signs of Problem Gaming</h2>
+                    <p class="text-lg text-gray-600 mb-6">While most people play our games responsibly, for some it can
+                        become problematic. Be aware of these warning signs:</p>
+
+                    <div class="bg-gradient-to-r from-primary/10 to-secondary/10 rounded-xl p-8 mb-8">
+                        <ul class="space-y-4">
+                            <li class="flex items-start">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                    class="h-6 w-6 text-accent flex-shrink-0 mt-1 mr-3" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                                </svg>
+                                <span class="text-gray-700">Spending more time or money on gaming than you
+                                    intended</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                    class="h-6 w-6 text-accent flex-shrink-0 mt-1 mr-3" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                                </svg>
+                                <span class="text-gray-700">Neglecting work, school, or family responsibilities due to
+                                    gaming</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                    class="h-6 w-6 text-accent flex-shrink-0 mt-1 mr-3" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                                </svg>
+                                <span class="text-gray-700">Borrowing money or selling possessions to fund gaming</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                    class="h-6 w-6 text-accent flex-shrink-0 mt-1 mr-3" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                                </svg>
+                                <span class="text-gray-700">Feeling restless or irritable when trying to cut down on
+                                    gaming</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                    class="h-6 w-6 text-accent flex-shrink-0 mt-1 mr-3" fill="none" viewBox="0 0 24 24"
+                                    stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                        d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                                </svg>
+                                <span class="text-gray-700">Lying to family or friends about time or money spent
+                                    gaming</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <p class="text-lg text-gray-600">If you recognize several of these signs in yourself or someone you
+                        care about, it may indicate a problem with gaming. We encourage you to seek help from
+                        professional resources.</p>
+                </div>
+
+                <!-- Support Services Section -->
+                <div class="mb-16">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-6 text-center">Need Help? We're Here for You</h2>
+                    <p class="text-lg text-gray-600 text-center max-w-2xl mx-auto mb-10">
+                        If you're facing gambling-related challenges, connect with trusted organizations offering free
+                        and confidential help.
+                    </p>
+
+                    <div class="grid md:grid-cols-2 gap-8">
+
+                        <!-- BeGambleAware Card -->
+                        <div
+                            class="bg-primary text-white border border-blue-100 rounded-2xl shadow-sm hover:shadow-lg transition p-6">
+                            <div class="flex items-start gap-4">
+                                
+                                <div>
+                                    <img src="/Image/adiction_begambleaware.svg" alt="BeGambleAware Logo"
+                                        class="w-auto mb-4 rounded-full">
+
+                                    <p class="text-sm text-white mb-3">National gambling support service</p>
+                                    <p class="text-white mb-4">
+                                        Get free and confidential help via phone, live chat, or forums—available 24/7
+                                        for anyone facing gambling problems.
+                                    </p>
+                                    <a href="https://www.gambleaware.org/" target="_blank" rel="noopener noreferrer"
+                                        class="inline-block  bg-white text-black hover:bg-blue-200 font-medium px-5 py-2 rounded-lg transition">
+                                        Visit BeGambleAware
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- GameCare Card -->
+
+                        <div
+                            class="bg-primary text-white border border-blue-100 rounded-2xl shadow-sm hover:shadow-lg transition p-6">
+                            <div class="flex items-start gap-4">
+                                
+                                <div>
+                                    <img src="/Image/adiction_gamecare.svg" alt="GameCare Logo"
+                                        class="w-auto mb-4 rounded-full">
+
+                                     <p class="text-sm text-white mb-3">UK’s leading gambling support charity</p>
+                                    <p class="text-white mb-4">
+                                       GamCare offers expert advice, support, and treatment for anyone affected by
+                                        gambling harm—through phone, chat, or counseling.
+                                    </p>
+                                    <a href="https://www.gamcare.org.uk/" target="_blank" rel="noopener noreferrer"
+                                        class="inline-block  bg-white text-black hover:bg-blue-200 font-medium px-5 py-2 rounded-lg transition">
+                                         Visit GamCare
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        
+
+                    </div>
+                </div>
+
+
+                <div class="bg-gradient-to-r from-primary/10 to-secondary/10 rounded-xl p-8">
+                    <h2 class="text-3xl font-bold text-gray-800 mb-6">Age Restrictions</h2>
+                    <p class="text-lg text-gray-600 mb-6">Fantasy Springs Slots is intended for adult players aged 18
+                        and over. We do not knowingly collect personal information from individuals under 18 years of
+                        age. If we become aware that a minor has provided us with personal information, we will take
+                        steps to delete such information.</p>
+                    <p class="text-lg text-gray-600">Parents and guardians are encouraged to monitor their children's
+                        online activities and consider using parental control tools available from device manufacturers
+                        and internet service providers to help provide a safe online environment for their children.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 relative overflow-hidden">
+        <!-- Background Video -->
+        <video autoplay muted loop class="absolute inset-0 w-full h-full object-cover z-0">
+            <source src="https://play-games.googleusercontent.com/vp/mp4/1280x720/fm9xKNpocOU.mp4" type="video/mp4">
+        </video>
+
+        <!-- Linear Black Gradient Overlay (top to bottom) -->
+        <div class="absolute inset-0 z-10 bg-gradient-to-b from-black via-black/70 to-black/90"></div>
+
+        <!-- Content -->
+        <div class="relative z-20 container mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">Ready to Start Playing?</h2>
+            <p class="text-xl text-white/90 mb-8 max-w-2xl mx-auto">
+                Download Fantasy Springs Slots now and enjoy your favorite casino games with free coin bonuses!
+            </p>
+            <a href="https://play.google.com/store/apps/details?id=com.rubyseven.fantasyspringsslots"
+                class="inline-block bg-white text-primary hover:bg-gray-100 px-8 py-4 rounded-lg text-xl font-semibold transition btn-download">
+                <i class="fab fa-google-play mr-2"></i>
+                Download for Android
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white pt-12 pb-6">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                     <a href="/" class="flex items-center">
+                    <img src="/Image/loog.png" alt="Fantasy Springs Slots Logo" class="h-14 mr-2 rounded-full">
+                    
+                </a>
+                    <p class="text-gray-400">Play your favorite casino slots anytime, anywhere with free coin bonuses
+                        and exciting features.</p>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/" class="text-gray-400 hover:text-white transition">Home</a></li>
+                        <li><a href="/how-to-play/" class="text-gray-400 hover:text-white transition">How to Play</a>
+                        </li>
+                        <li><a href="/responsible-gaming/" class="text-gray-400 hover:text-white transition">Responsible
+                                Gaming</a></li>
+                        <li><a href="/contact/" class="text-gray-400 hover:text-white transition">Contact Us</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Legal</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/privacy/" class="text-gray-400 hover:text-white transition">Privacy Policy</a>
+                        </li>
+                        <li><a href="/terms/" class="text-gray-400 hover:text-white transition">Terms of Service</a>
+                        </li>
+                        <li><a href="/cookies/" class="text-gray-400 hover:text-white transition">Cookies Policy</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-lg font-semibold mb-4">Contact</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20"
+                                fill="currentColor">
+                                <path d="M2.003 5.884L10 9.882l7.997-3.998A2 2 0 0016 4H4a2 2 0 00-1.997 1.884z" />
+                                <path d="M18 8.118l-8 4-8-4V14a2 2 0 002 2h12a2 2 0 002-2V8.118z" />
+                            </svg>
+                            info@fantasyspringsreels.com
+                        </li>
+                        <li class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20"
+                                fill="currentColor">
+                                <path fill-rule="evenodd"
+                                    d="M7 2a2 2 0 00-2 2v12a2 2 0 002 2h6a2 2 0 002-2V4a2 2 0 00-2-2H7zm3 14a1 1 0 100-2 1 1 0 000 2z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            +91 48440 59440
+                        </li>
+                        <li class="flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" viewBox="0 0 20 20"
+                                fill="currentColor">
+                                <path fill-rule="evenodd"
+                                    d="M5.05 4.05a7 7 0 119.9 9.9L10 18.9l-4.95-4.95a7 7 0 010-9.9zM10 11a2 2 0 100-4 2 2 0 000 4z"
+                                    clip-rule="evenodd" />
+                            </svg>
+                            275 Hill St, Reno, NV 89501
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-700 pt-6  mx-auto">
+                <div class="flex flex-col md:flex-row justify-center items-center mx-auto">
+                    <p class="text-gray-400 text-sm mb-4 md:mb-0 text-center">
+                        © 2025 ARK Casino by Murka Games. All rights reserved. | 18+ Only | Play Responsibly | *Powered
+                        by Intel® technology
+                    </p>
+
+                </div>
+
+                <div class="mt-4 text-center text-gray-500 text-xs max-w-4xl mx-auto">
+                    <p>This game is intended for an adult audience and does not offer "real money gambling". Practice or
+                        success at social gaming does not imply future success at "real money gambling". Use of this
+                        application is governed by Murka's Terms of Service. Collection and use of personal data are
+                        subject to Murka's Privacy Policy.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Cookie Consent
+        const cookieConsent = document.getElementById('cookieConsent');
+        const cookieAccept = document.getElementById('cookieAccept');
+        const cookieDecline = document.getElementById('cookieDecline');
+
+        // Check if cookie consent was already given
+        if (!localStorage.getItem('cookieConsent')) {
+            setTimeout(() => {
+                cookieConsent.classList.remove('hidden');
+            }, 1000);
+        }
+
+        cookieAccept.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'accepted');
+            cookieConsent.classList.add('hidden');
+        });
+
+        cookieDecline.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'declined');
+            cookieConsent.classList.add('hidden');
+        });
+
+        // GSAP Animations
+        document.addEventListener('DOMContentLoaded', () => {
+            gsap.registerPlugin(ScrollTrigger);
+
+            // Hero section animation
+            gsap.from('header', { duration: 0.8, y: -50, opacity: 0, ease: 'power2.out' });
+            gsap.from('.hero-content h1', { duration: 0.8, y: 30, opacity: 0, delay: 0.3, ease: 'power2.out' });
+            gsap.from('.hero-content p', { duration: 0.8, y: 30, opacity: 0, delay: 0.5, ease: 'power2.out' });
+
+            // Info cards animations
+            gsap.utils.toArray('.info-card').forEach((card, i) => {
+                gsap.from(card, {
+                    scrollTrigger: {
+                        trigger: card,
+                        start: "top 80%",
+                        toggleActions: "play none none none"
+                    },
+                    y: 50,
+                    opacity: 0,
+                    duration: 0.5,
+                    delay: i * 0.1
+                });
+            });
+
+            // Warning signs animation
+            gsap.utils.toArray('.bg-gradient-to-r.from-primary\\/10.to-secondary\\/10 li').forEach((item, i) => {
+                gsap.from(item, {
+                    scrollTrigger: {
+                        trigger: item,
+                        start: "top 90%",
+                        toggleActions: "play none none none"
+                    },
+                    x: -20,
+                    opacity: 0,
+                    duration: 0.5,
+                    delay: i * 0.1
+                });
+            });
+
+            // Resources animation
+            gsap.utils.toArray('.bg-white.border.border-gray-200').forEach((box, i) => {
+                gsap.from(box, {
+                    scrollTrigger: {
+                        trigger: box,
+                        start: "top 80%",
+                        toggleActions: "play none none none"
+                    },
+                    y: 50,
+                    opacity: 0,
+                    duration: 0.5,
+                    delay: i * 0.1
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>

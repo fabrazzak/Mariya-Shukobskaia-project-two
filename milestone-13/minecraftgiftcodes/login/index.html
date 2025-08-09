@@ -1,0 +1,726 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Minecraft Gift Codes</title>
+    <meta name="description" content="Login to your Minecraft Gift Codes account to access your orders and exclusive content.">
+    <meta name="keywords" content="minecraft login, minecraft account, minecraft codes login">
+    <link rel="canonical" href="https://minecraftgiftcodes.com/login/">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/assets/favicon.png" type="image/x-icon">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            DEFAULT: '#4CAF50',
+                            light: '#81C784',
+                            dark: '#388E3C'
+                        },
+                        secondary: {
+                            DEFAULT: '#FF9800',
+                            light: '#FFB74D',
+                            dark: '#F57C00'
+                        },
+                        dark: {
+                            DEFAULT: '#121212',
+                            light: '#1E1E1E',
+                            lighter: '#2D2D2D'
+                        }
+                    },
+                    animation: {
+                        'float': 'float 3s ease-in-out infinite',
+                        'float-reverse': 'float-reverse 3s ease-in-out infinite',
+                        'pulse-slow': 'pulse 5s cubic-bezier(0.4, 0, 0.6, 1) infinite'
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' }
+                        },
+                        'float-reverse': {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(10px)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #121212;
+            color: #f5f5f5;
+            overflow-x: hidden;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, #4CAF50, #8BC34A, #FF9800);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.1), rgba(139, 195, 74, 0.1), rgba(255, 152, 0, 0.1));
+        }
+        
+        /* Unique Hamburger Menu */
+        .hamburger {
+            width: 30px;
+            height: 20px;
+            position: relative;
+            transform: rotate(0deg);
+            transition: .5s ease-in-out;
+            cursor: pointer;
+        }
+        
+        .hamburger span {
+            display: block;
+            position: absolute;
+            height: 3px;
+            width: 100%;
+            background: #4CAF50;
+            border-radius: 3px;
+            opacity: 1;
+            left: 0;
+            transform: rotate(0deg);
+            transition: .25s ease-in-out;
+        }
+        
+        .hamburger span:nth-child(1) {
+            top: 0px;
+            transform-origin: left center;
+        }
+        
+        .hamburger span:nth-child(2) {
+            top: 10px;
+            transform-origin: left center;
+        }
+        
+        .hamburger span:nth-child(3) {
+            top: 20px;
+            transform-origin: left center;
+        }
+        
+        .hamburger.open span:nth-child(1) {
+            transform: rotate(45deg);
+            top: -3px;
+            left: 5px;
+        }
+        
+        .hamburger.open span:nth-child(2) {
+            width: 0%;
+            opacity: 0;
+        }
+        
+        .hamburger.open span:nth-child(3) {
+            transform: rotate(-45deg);
+            top: 19px;
+            left: 5px;
+        }
+        
+        .mobile-menu {
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            max-height: 0;
+            opacity: 0;
+            overflow: hidden;
+        }
+        
+        .mobile-menu.open {
+            max-height: 1000px;
+            opacity: 1;
+        }
+        
+        /* Particle canvas */
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+        
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #1E1E1E;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #4CAF50;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #388E3C;
+        }
+        
+        /* Form styles */
+        .form-input {
+            background-color: #1E1E1E;
+            border: 1px solid #2D2D2D;
+            border-radius: 6px;
+            padding: 12px;
+            width: 100%;
+            color: #f5f5f5;
+            transition: all 0.3s ease;
+        }
+        
+        .form-input:focus {
+            outline: none;
+            border-color: #4CAF50;
+            box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.2);
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .password-toggle {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #6b7280;
+        }
+        
+        .password-toggle:hover {
+            color: #4CAF50;
+        }
+        
+        /* Error message */
+        .error-message {
+            display: none;
+            background-color: rgba(244, 63, 94, 0.1);
+            border: 1px solid rgba(244, 63, 94, 0.5);
+            border-radius: 6px;
+            padding: 12px;
+            margin-bottom: 16px;
+        }
+        
+        /* Notice message */
+        .notice-message {
+            background-color: rgba(76, 175, 80, 0.1);
+            border: 1px solid rgba(76, 175, 80, 0.5);
+            border-radius: 6px;
+            padding: 12px;
+            margin-bottom: 16px;
+        }
+        
+        /* No users message */
+        .no-users-message {
+            background-color: rgba(255, 152, 0, 0.1);
+            border: 1px solid rgba(255, 152, 0, 0.5);
+            border-radius: 6px;
+            padding: 16px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        /* Checkbox style */
+        .checkbox-container {
+            display: block;
+            position: relative;
+            padding-left: 30px;
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        .checkbox-container input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+        
+        .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 20px;
+            width: 20px;
+            background-color: #1E1E1E;
+            border: 1px solid #2D2D2D;
+            border-radius: 4px;
+        }
+        
+        .checkbox-container:hover input ~ .checkmark {
+            background-color: #2D2D2D;
+        }
+        
+        .checkbox-container input:checked ~ .checkmark {
+            background-color: #4CAF50;
+            border-color: #4CAF50;
+        }
+        
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+        
+        .checkbox-container input:checked ~ .checkmark:after {
+            display: block;
+        }
+        
+        .checkbox-container .checkmark:after {
+            left: 7px;
+            top: 3px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <!-- Navigation -->
+    <header class="fixed w-full z-40 bg-dark shadow-md">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="/" class="flex items-center">
+                        <img src="/assets/logo.png" alt="Minecraft Gift Codes" class="h-12 mr-2">
+                    </a>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="text-white hover:text-primary transition">Home</a>
+                    <a href="/shop/" class="text-white hover:text-primary transition">Shop</a>
+                    <a href="/about/" class="text-white hover:text-primary transition">About</a>
+                    <a href="/blog/" class="text-white hover:text-primary transition">Blog</a>
+                    <a href="/contact/" class="text-white hover:text-primary transition">Contact</a>
+                    <div class="flex items-center space-x-4 ml-4">
+                        <a href="/cart/" class="relative text-white hover:text-primary transition">
+                            <i class="fas fa-shopping-cart text-xl"></i>
+                            <span id="cart-count" class="absolute -top-2 -right-2 bg-secondary text-dark text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                        </a>
+                       <a href="/login/" class="px-4 py-2 bg-primary rounded hover:bg-primary-dark transition ">
+                            <i class="fas fa-user"></i>
+                        </a>
+                    </div>
+                </nav>
+                
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center space-x-4">
+                    <a href="/cart/" class="relative text-white hover:text-primary transition">
+                        <i class="fas fa-shopping-cart text-xl"></i>
+                        <span id="mobile-cart-count" class="absolute -top-2 -right-2 bg-secondary text-dark text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                    </a>
+                    <button id="menu-toggle" class="hamburger focus:outline-none">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="mobile-menu md:hidden bg-dark-light rounded-lg mt-2">
+                <div class="px-4 py-3 space-y-4">
+                    <a href="/" class="block text-white hover:text-primary transition">Home</a>
+                    <a href="/shop/" class="block text-white hover:text-primary transition">Shop</a>
+                    <a href="/about/" class="block text-white hover:text-primary transition">About</a>
+                    <a href="/blog/" class="block text-white hover:text-primary transition">Blog</a>
+                     <a href="/contact/" class="block text-white hover:text-primary transition pb-4">Contact</a>
+                    <a href="/login/" class="block px-4 py-2 bg-primary text-center rounded hover:bg-primary-dark transition">Login</a>
+                    <div class="pt-4 border-t border-gray-700">
+                        <p class="text-xs text-gray-400">We are not an affiliate agency. All products are sold independently through our platform.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="relative pt-24 pb-16 min-h-screen">
+        <div id="particles-js"></div>
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="max-w-md mx-auto">
+                <!-- No Users Message -->
+                <div id="no-users-message" class="no-users-message hidden">
+                    <div class="flex flex-col items-center">
+                        <i class="fas fa-user-plus text-secondary text-3xl mb-3"></i>
+                        <h3 class="font-bold text-lg mb-2">No Accounts Found</h3>
+                        <p class="text-sm mb-4 text-center">You need to register before you can log in. No accounts exist in our system yet.</p>
+                        <a href="/register/" class="w-full py-2 bg-secondary text-dark font-bold rounded hover:bg-secondary-dark transition text-center">
+                            Register Now
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Error Message -->
+                <div id="error-message" class="error-message hidden">
+                    <div class="flex items-center">
+                        <i class="fas fa-exclamation-circle text-red-500 mr-3"></i>
+                        <div>
+                            <h3 class="font-bold">Invalid Credentials</h3>
+                            <p class="text-sm">The email or password you entered is incorrect.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Login Form -->
+                <div id="login-container" class="bg-dark-light rounded-lg shadow-lg p-8">
+                    <h1 class="text-2xl font-bold mb-6 text-center">Login to Your Account</h1>
+                    
+                    <form id="login-form" class="space-y-4">
+                        <div class="form-group">
+                            <label for="login-email" class="form-label">Email Address</label>
+                            <input type="email" id="login-email" class="form-input" required>
+                        </div>
+                        
+                        <div class="form-group relative">
+                            <label for="login-password" class="form-label">Password</label>
+                            <input type="password" id="login-password" class="form-input pr-10" required>
+                            <span class="password-toggle" id="toggle-password">
+                                <i class="far fa-eye"></i>
+                            </span>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <label class="checkbox-container">Remember me
+                                <input type="checkbox" id="remember-me">
+                                <span class="checkmark"></span>
+                            </label>                            
+                        </div>
+                        
+                        <button type="submit" class="w-full py-3 bg-secondary text-dark font-bold rounded hover:bg-secondary-dark transition">
+                            Login
+                        </button>
+                        
+                        <div class="text-center pt-4 border-t border-gray-700">
+                            <p class="text-gray-400">Don't have an account? <a href="/register/" class="text-primary hover:underline">Register now</a></p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark pt-12 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <!-- Column 1 -->
+                <div>
+                    <h3 class="text-xl font-bold mb-4 flex items-center">
+                        <img src="/assets/logo.png" alt="Minecraft Gift Codes" class="h-12 mr-2">
+                    </h3>
+                    <p class="text-gray-400 mb-4">Your trusted source for authentic Minecraft digital products and gift codes.</p>
+                </div>
+                
+                <!-- Column 2 -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Shop</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/shop/" class="text-gray-400 hover:text-primary transition">Gift Cards</a></li>
+                        <li><a href="/shop/" class="text-gray-400 hover:text-primary transition">Mods</a></li>
+                        <li><a href="/shop/" class="text-gray-400 hover:text-primary transition">Bundles</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Column 3 -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Quick Link</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/contact/" class="text-gray-400 hover:text-primary transition">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Column 4 -->
+                <div>
+                    <h4 class="text-lg font-bold mb-4">Legal</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/privacy/" class="text-gray-400 hover:text-primary transition">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="text-gray-400 hover:text-primary transition">Terms of Service</a></li>
+                        <li><a href="/cookies/" class="text-gray-400 hover:text-primary transition">Cookie Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="pt-8 border-t border-gray-800">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-500 text-sm mb-4 md:mb-0">
+                        &copy; 2025 MinecraftGiftCodes.com. All rights reserved.
+                    </p>
+                    <p class="text-gray-500 text-sm">
+                        We are not an affiliate agency. All products are sold independently through our platform.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Particles.js -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    
+    <script>
+        // Check for existing user session on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentUser = localStorage.getItem('currentUser');
+            
+            // If user is already logged in, redirect to account page
+            if (currentUser) {
+                window.location.href = '/account/';
+                return;
+            }
+            
+            // Initialize other components only if not redirecting
+            initPage();
+        });
+        
+        function initPage() {
+            // Mobile Menu Toggle
+            const menuToggle = document.getElementById('menu-toggle');
+            const mobileMenu = document.getElementById('mobile-menu');
+            
+            menuToggle.addEventListener('click', () => {
+                menuToggle.classList.toggle('open');
+                mobileMenu.classList.toggle('open');
+            });
+            
+            // Cart functionality
+            function updateCartCount() {
+                let cart = JSON.parse(localStorage.getItem('cart')) || [];
+                const cartCount = cart.reduce((total, item) => total + item.quantity, 0);
+                document.getElementById('cart-count').textContent = cartCount;
+                document.getElementById('mobile-cart-count').textContent = cartCount;
+                return cart;
+            }
+            
+            // Password toggle
+            function setupPasswordToggle() {
+                const passwordInput = document.getElementById('login-password');
+                const toggleButton = document.getElementById('toggle-password');
+                
+                toggleButton.addEventListener('click', function() {
+                    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                    passwordInput.setAttribute('type', type);
+                    this.querySelector('i').classList.toggle('fa-eye');
+                    this.querySelector('i').classList.toggle('fa-eye-slash');
+                });
+            }
+            
+            // Check if any users exist in localStorage
+            function checkForUsers() {
+                const users = JSON.parse(localStorage.getItem('users')) || [];
+                const noUsersMessage = document.getElementById('no-users-message');
+                const loginContainer = document.getElementById('login-container');
+                
+                if (users.length === 0) {
+                    noUsersMessage.classList.remove('hidden');
+                    loginContainer.classList.add('hidden');
+                } else {
+                    noUsersMessage.classList.add('hidden');
+                    loginContainer.classList.remove('hidden');
+                }
+            }
+            
+            // Form submission
+            document.getElementById('login-form').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const email = document.getElementById('login-email').value;
+                const password = document.getElementById('login-password').value;
+                const rememberMe = document.getElementById('remember-me').checked;
+                
+                // Get users from localStorage
+                const users = JSON.parse(localStorage.getItem('users')) || [];
+                
+                // Find user with matching email
+                const user = users.find(u => u.email === email);
+                
+                if (!user) {
+                    // User not found - show error
+                    document.getElementById('error-message').style.display = 'block';
+                    document.getElementById('error-message').querySelector('p').textContent = 
+                        'No account found with this email. Please register first.';
+                    return;
+                }
+                
+                // Check password (in a real app, this would compare hashed passwords)
+                if (user.password !== password) {
+                    document.getElementById('error-message').style.display = 'block';
+                    document.getElementById('error-message').querySelector('p').textContent = 
+                        'The password you entered is incorrect.';
+                    return;
+                }
+                
+                // Hide any previous error
+                document.getElementById('error-message').style.display = 'none';
+                
+                // Create user session
+                const userSession = {
+                    email: user.email,
+                    username: user.username
+                };
+                
+                // Store session in localStorage
+                localStorage.setItem('currentUser', JSON.stringify(userSession));
+                
+                // Remember me functionality
+                if (rememberMe) {
+                    localStorage.setItem('rememberedEmail', email);
+                } else {
+                    localStorage.removeItem('rememberedEmail');
+                }
+                
+                // Redirect to account page
+                window.location.href = '/account/';
+            });
+            
+            // Initialize components
+            updateCartCount();
+            setupPasswordToggle();
+            checkForUsers();
+            
+            // Check for remembered email
+            const rememberedEmail = localStorage.getItem('rememberedEmail');
+            if (rememberedEmail) {
+                document.getElementById('login-email').value = rememberedEmail;
+                document.getElementById('remember-me').checked = true;
+            }
+            
+            // Particles.js initialization
+            if (document.getElementById('particles-js')) {
+                particlesJS('particles-js', {
+                    "particles": {
+                        "number": {
+                            "value": 80,
+                            "density": {
+                                "enable": true,
+                                "value_area": 800
+                            }
+                        },
+                        "color": {
+                            "value": "#4CAF50"
+                        },
+                        "shape": {
+                            "type": "circle",
+                            "stroke": {
+                                "width": 0,
+                                "color": "#000000"
+                            },
+                            "polygon": {
+                                "nb_sides": 5
+                            }
+                        },
+                        "opacity": {
+                            "value": 0.5,
+                            "random": false,
+                            "anim": {
+                                "enable": false,
+                                "speed": 1,
+                                "opacity_min": 0.1,
+                                "sync": false
+                            }
+                        },
+                        "size": {
+                            "value": 3,
+                            "random": true,
+                            "anim": {
+                                "enable": false,
+                                "speed": 40,
+                                "size_min": 0.1,
+                                "sync": false
+                            }
+                        },
+                        "line_linked": {
+                            "enable": true,
+                            "distance": 150,
+                            "color": "#4CAF50",
+                            "opacity": 0.4,
+                            "width": 1
+                        },
+                        "move": {
+                            "enable": true,
+                            "speed": 2,
+                            "direction": "none",
+                            "random": false,
+                            "straight": false,
+                            "out_mode": "out",
+                            "bounce": false,
+                            "attract": {
+                                "enable": false,
+                                "rotateX": 600,
+                                "rotateY": 1200
+                            }
+                        }
+                    },
+                    "interactivity": {
+                        "detect_on": "canvas",
+                        "events": {
+                            "onhover": {
+                                "enable": true,
+                                "mode": "grab"
+                            },
+                            "onclick": {
+                                "enable": true,
+                                "mode": "push"
+                            },
+                            "resize": true
+                        },
+                        "modes": {
+                            "grab": {
+                                "distance": 140,
+                                "line_linked": {
+                                    "opacity": 1
+                                }
+                            },
+                            "bubble": {
+                                "distance": 400,
+                                "size": 40,
+                                "duration": 2,
+                                "opacity": 8,
+                                "speed": 3
+                            },
+                            "repulse": {
+                                "distance": 200,
+                                "duration": 0.4
+                            },
+                            "push": {
+                                "particles_nb": 4
+                            },
+                            "remove": {
+                                "particles_nb": 2
+                            }
+                        }
+                    },
+                    "retina_detect": true
+                });
+            }
+        }
+    </script>
+</body>
+</html>

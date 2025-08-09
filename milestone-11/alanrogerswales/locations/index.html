@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Premier Sites | Alan Rogers Wales | Caravan & Motorhome Club Locations</title>
+    <meta name="description" content="Explore our network of premier caravan and motorhome club sites across Wales' most beautiful locations. Find your perfect holiday base today.">
+    <meta name="keywords" content="caravan sites Wales, motorhome parks Wales, Gower Peninsula sites, Snowdonia camping, Pembrokeshire coast caravanning">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/assets/favicon.ico" type="image/x-icon">
+    <link rel="canonical" href="https://alanrogerswales.com/locations/" />
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        slate: {
+                            50: '#f8fafc',
+                            100: '#f1f5f9',
+                            200: '#e2e8f0',
+                            300: '#cbd5e1',
+                            400: '#94a3b8',
+                            500: '#64748b',
+                            600: '#475569',
+                            700: '#334155',
+                            800: '#1e293b',
+                            900: '#0f172a',
+                        },
+                        midnight: {
+                            50: '#e6e9f0',
+                            100: '#ccd4e0',
+                            200: '#99a9c1',
+                            300: '#667fa2',
+                            400: '#335483',
+                            500: '#002964',
+                            600: '#002150',
+                            700: '#00193c',
+                            800: '#001028',
+                            900: '#000814',
+                        },
+                        twilight: {
+                            50: '#f2f3f7',
+                            100: '#e5e7ef',
+                            200: '#cbcfdf',
+                            300: '#b1b8cf',
+                            400: '#97a0bf',
+                            500: '#7d88af',
+                            600: '#646d8c',
+                            700: '#4b5269',
+                            800: '#323646',
+                            900: '#191b23',
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-reverse': 'float-reverse 7s ease-in-out infinite',
+                        'pulse-slow': 'pulse 8s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        'float-reverse': {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Leaflet CSS (for maps) -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.3/dist/leaflet.css" />
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollTrigger.min.js"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: #0f172a;
+            color: #e2e8f0;
+            overflow-x: hidden;
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, #002964 0%, #0c4a6e 50%, #0369a1 100%);
+        }
+        
+        .site-card {
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+        }
+        
+        .site-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+        
+        .site-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #0ea5e9, #7dd3fc, #0ea5e9);
+            background-size: 200% 100%;
+            animation: gradient 3s ease infinite;
+        }
+        
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        
+        .map-container {
+            height: 500px;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #334155;
+        }
+        
+        .filter-pill {
+            transition: all 0.2s ease;
+        }
+        
+        .filter-pill:hover {
+            transform: translateY(-2px);
+        }
+        
+        .filter-pill.active {
+            background-color: #0ea5e9;
+            color: white;
+            border-color: #0ea5e9;
+        }
+        
+        .region-selector {
+            background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%2394a3b8' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='M6 8l4 4 4-4'/%3e%3c/svg%3e") no-repeat right 0.5rem center/1.5em 1.5em;
+        }
+        
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        
+        #map {
+            height: 100%;
+            width: 100%;
+            z-index: 1;
+        }
+        
+        .leaflet-popup-content-wrapper {
+            background-color: #1e293b;
+            color: #e2e8f0;
+            border-radius: 8px;
+            border: 1px solid #334155;
+        }
+        
+        .leaflet-popup-tip {
+            background-color: #1e293b;
+        }
+        
+        .leaflet-marker-icon {
+            filter: hue-rotate(180deg) brightness(1.2);
+        }
+        
+        .site-feature i {
+            color: #0ea5e9;
+        }
+        html,body{
+            overflow-x: hidden;
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <!-- Cookie Consent Banner -->
+    <div id="cookieConsent" class="fixed bottom-0 left-0 right-0 bg-twilight-800 text-white p-4 z-50 transform translate-y-full transition-transform duration-500">
+        <div class="container mx-auto flex flex-col md:flex-row items-center justify-between">
+            <div class="mb-4 md:mb-0 md:mr-4">
+                <p class="text-sm">We use cookies to enhance your experience on our website. By continuing to browse, you agree to our use of cookies.</p>
+            </div>
+            <div class="flex space-x-3">
+                <button id="acceptCookies" class="px-4 py-2 bg-primary-600 hover:bg-primary-700 rounded-md text-sm font-medium transition-colors">Accept</button>
+                <button id="declineCookies" class="px-4 py-2 bg-twilight-700 hover:bg-twilight-600 rounded-md text-sm font-medium transition-colors">Decline</button>
+                <a href="/cookies/" class="px-4 py-2 text-primary-400 hover:text-primary-300 text-sm font-medium transition-colors">Learn More</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+     <nav class="fixed top-0 left-0 right-0 z-40 bg-twilight-900/90 backdrop-blur-md border-b border-twilight-700 transition-all duration-300">
+        <div class="container mx-auto px-6 py-2">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center">
+                  <a href="/" class="flex items-center">
+                        <img src="/assets/logo.png" class="h-16" alt="logo"/>
+                    </a>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="text-gray-300 hover:text-primary-300 font-medium transition-colors relative group">
+                        Home
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary-400 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="/about/" class="text-gray-300 hover:text-primary-300 font-medium transition-colors relative group">
+                        About
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary-400 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="/blog/" class="text-gray-300 hover:text-primary-300 font-medium transition-colors relative group">
+                        Blog
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary-400 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="/locations/" class="text-white hover:text-primary-300 font-medium transition-colors relative group">
+                        Our Locations
+                        <span class="absolute -bottom-1 left-0 w-full h-0.5 bg-primary-400"></span>
+                    </a>
+                    <a href="/contact/" class="text-gray-300 hover:text-primary-300 font-medium transition-colors relative group">
+                        Contact
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary-400 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                    <a href="/faq/" class="text-gray-300 hover:text-primary-300 font-medium transition-colors relative group">
+                        FAQ
+                        <span class="absolute -bottom-1 left-0 w-0 h-0.5 bg-primary-400 transition-all duration-300 group-hover:w-full"></span>
+                    </a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button id="mobileMenuButton" class="text-gray-300 hover:text-white focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+           <!-- Mobile Menu -->
+        <!-- Replace your current mobile menu with this -->
+<div id="mobileMenu" class="fixed inset-y-0 right-0 w-64 bg-twilight-900 shadow-xl transform translate-x-full transition-transform duration-300 ease-in-out z-50 border-l border-twilight-700">
+    <div class="flex justify-end p-6">
+        <button id="closeMobileMenu" class="text-gray-300 hover:text-white focus:outline-none">
+            <i class="fas fa-times text-2xl"></i>
+        </button>
+    </div>
+    <div class="px-6 py-4 bg-black/90">
+        <div class="flex flex-col space-y-6">
+            <a href="/" class="text-gray-300 hover:text-primary-300 font-medium text-lg transition-colors flex items-center">
+                <i class="fas fa-home mr-3 w-6 text-center"></i> Home
+            </a>
+            <a href="/about/" class="text-gray-300 hover:text-primary-300 font-medium text-lg transition-colors flex items-center">
+                <i class="fas fa-info-circle mr-3 w-6 text-center"></i> About
+            </a>
+            <a href="/blog/" class="text-gray-300 hover:text-primary-300 font-medium text-lg transition-colors flex items-center">
+                <i class="fas fa-newspaper mr-3 w-6 text-center"></i> Blog
+            </a>
+            <a href="/locations/" class="text-white hover:text-primary-300 font-medium text-lg transition-colors flex items-center">
+                <i class="fas fa-map-marked-alt mr-3 w-6 text-center"></i> Locations
+            </a>
+            <a href="/contact/" class="text-gray-300 hover:text-primary-300 font-medium text-lg transition-colors flex items-center">
+                <i class="fas fa-envelope mr-3 w-6 text-center"></i> Contact
+            </a>
+            <a href="/faq/" class="text-gray-300 hover:text-primary-300 font-medium text-lg transition-colors flex items-center">
+                <i class="fas fa-question-circle mr-3 w-6 text-center"></i> FAQ
+            </a>
+        </div>
+    </div>
+</div>
+<div id="mobileMenuOverlay" class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden"></div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative hero-gradient min-h-[50vh] flex items-center justify-center overflow-hidden pt-28">
+        <div class="absolute inset-0 bg-[url('/assets/west-wales.png')] bg-cover bg-center opacity-20"></div>
+        
+        <div class="container mx-auto px-6 z-10">
+            <div class="max-w-4xl mx-auto text-center">
+                <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+                    <span class="text-white">Discover Our Premier</span>
+                    <span class="bg-clip-text text-transparent bg-gradient-to-r from-primary-300 to-primary-500">Caravan & Motorhome Sites</span>
+                </h1>
+                <p class="text-lg md:text-xl text-gray-300 mb-8">
+                    Explore our carefully curated selection of Wales' finest caravan and motorhome club sites, each offering unique experiences in breathtaking locations.
+                </p>
+            </div>
+        </div>
+        
+        <div class="absolute bottom-0 left-0 right-0 h-20 bg-gradient-to-t from-twilight-900 to-transparent"></div>
+    </section>
+
+    <!-- Interactive Map Section -->
+    <section class="py-16 bg-twilight-900">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Explore Our Sites on the Map</h2>
+                <p class="max-w-2xl mx-auto text-gray-400">Click on any marker to view site details and learn more about each location.</p>
+            </div>
+            
+            <div class="map-container relative">
+                <div id="map"></div>
+                <div class="absolute top-4 right-4 z-[1000] bg-twilight-800/80 backdrop-blur-sm rounded-lg p-3 shadow-lg border border-twilight-700">
+                    <div class="flex items-center space-x-2">
+                        <div class="w-3 h-3 rounded-full bg-primary-500"></div>
+                        <span class="text-sm text-gray-300">Caravan & Motorhome Sites</span>
+                    </div>
+                    <div class="flex items-center space-x-2 mt-1">
+                        <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+                        <span class="text-sm text-gray-300">Featured Locations</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Filter Section -->
+    <section class="py-12 bg-twilight-950 border-y border-twilight-800  z-30">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <div class="mb-4 md:mb-0">
+                    <h3 class="text-lg font-semibold text-white mb-2">Filter Sites</h3>
+                </div>
+                
+                <div class="flex flex-wrap gap-4 hidden md:flex">
+                    <!-- Region Filter -->
+                    <div class="relative">
+                        <select id="regionFilter" class="region-selector appearance-none bg-twilight-800 border border-twilight-700 text-gray-300 rounded-md pl-4 pr-8 py-2 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+                            <option value="all">All Regions</option>
+                            <option value="north">North Wales</option>
+                            <option value="mid">Mid Wales</option>
+                            <option value="south">South Wales</option>
+                            <option value="west">West Wales</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Type Filter -->
+                    <div class="flex space-x-2 overflow-x-auto no-scrollbar pb-2">
+                        <button data-filter="all" class="filter-pill px-4 py-2 bg-twilight-800 hover:bg-twilight-700 border border-twilight-700 text-gray-300 rounded-full text-sm font-medium transition-colors active">
+                            All Sites
+                        </button>
+                        <button data-filter="coastal" class="filter-pill px-4 py-2 bg-twilight-800 hover:bg-twilight-700 border border-twilight-700 text-gray-300 rounded-full text-sm font-medium transition-colors">
+                            Coastal
+                        </button>
+                        <button data-filter="mountain" class="filter-pill px-4 py-2 bg-twilight-800 hover:bg-twilight-700 border border-twilight-700 text-gray-300 rounded-full text-sm font-medium transition-colors">
+                            Mountain
+                        </button>
+                        <button data-filter="countryside" class="filter-pill px-4 py-2 bg-twilight-800 hover:bg-twilight-700 border border-twilight-700 text-gray-300 rounded-full text-sm font-medium transition-colors">
+                            Countryside
+                        </button>
+                        <button data-filter="family" class="filter-pill px-4 py-2 bg-twilight-800 hover:bg-twilight-700 border border-twilight-700 text-gray-300 rounded-full text-sm font-medium transition-colors">
+                            Family-Friendly
+                        </button>
+                        <button data-filter="premium" class="filter-pill px-4 py-2 bg-twilight-800 hover:bg-twilight-700 border border-twilight-700 text-gray-300 rounded-full text-sm font-medium transition-colors">
+                            Premium
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sites Grid Section -->
+    <section class="py-20 bg-twilight-900">
+        <div class="container mx-auto px-6">
+            <div id="sitesContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Site cards will be dynamically filtered -->
+                
+                <!-- Gowerton Site -->
+                <div class="site-card relative bg-twilight-800 rounded-xl overflow-hidden border border-twilight-700 transition-all duration-300 hover:border-primary-500" data-region="south" data-type="coastal family">
+                    <div class="h-48 overflow-hidden">
+                        <img src="/assets/gowerton-site.webp" alt="Gowerton Caravan and Motorhome Club Site" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute top-4 right-4 bg-primary-600 text-white text-xs font-bold px-2 py-1 rounded">FEATURED</div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="flex space-x-2">
+                                <span class="px-2 py-1 text-xs font-medium bg-primary-900/30 text-primary-300 rounded">Coastal</span>
+                                <span class="px-2 py-1 text-xs font-medium bg-primary-900/30 text-primary-300 rounded">Family</span>
+                            </div>
+                            <div class="flex items-center text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <span class="ml-1 text-gray-300">4.7</span>
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Gowerton Club Site</h3>
+                        <p class="text-gray-400 mb-4">Located in the Gower Peninsula with access to pristine beaches and coastal walks.</p>
+                        
+                        <div class="space-y-3 mb-4">
+                            <div class="flex items-center site-feature">
+                                <i class="fas fa-caravan mr-2"></i>
+                                <span class="text-sm text-gray-300">128 Pitches (Hardstanding & Grass)</span>
+                            </div>
+                            <div class="flex items-center site-feature">
+                                <i class="fas fa-bolt mr-2"></i>
+                                <span class="text-sm text-gray-300">16 Amp Electric Hookups</span>
+                            </div>
+                            <div class="flex items-center site-feature">
+                                <i class="fas fa-umbrella-beach mr-2"></i>
+                                <span class="text-sm text-gray-300">Beach Access</span>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between pt-4 border-t border-twilight-700">
+                            <div class="flex items-center text-sm text-gray-400">
+                                <i class="fas fa-map-marker-alt mr-2 text-primary-400"></i>
+                                <span>Swansea, South Wales</span>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Brecon Beacons Site -->
+                <div class="site-card relative bg-twilight-800 rounded-xl overflow-hidden border border-twilight-700 transition-all duration-300 hover:border-primary-500" data-region="mid" data-type="mountain">
+                    <div class="h-48 overflow-hidden">
+                        <img src="/assets/brecon-site.webp" alt="Brecon Beacons Caravan and Motorhome Club Site" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="flex space-x-2">
+                                <span class="px-2 py-1 text-xs font-medium bg-primary-900/30 text-primary-300 rounded">Mountain</span>
+                            </div>
+                            <div class="flex items-center text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <span class="ml-1 text-gray-300">4.8</span>
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Brecon Beacons Club Site</h3>
+                        <p class="text-gray-400 mb-4">Set in the heart of the national park with stunning mountain views and walking trails.</p>
+                        
+                        <div class="space-y-3 mb-4">
+                            <div class="flex items-center site-feature">
+                                <i class="fas fa-caravan mr-2"></i>
+                                <span class="text-sm text-gray-300">149 Pitches (Hardstanding & Grass)</span>
+                            </div>
+                            <div class="flex items-center site-feature">
+                                <i class="fas fa-bolt mr-2"></i>
+                                <span class="text-sm text-gray-300">10/16 Amp Electric Hookups</span>
+                            </div>
+                            <div class="flex items-center site-feature">
+                                <i class="fas fa-hiking mr-2"></i>
+                                <span class="text-sm text-gray-300">Hiking Trails</span>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between pt-4 border-t border-twilight-700">
+                            <div class="flex items-center text-sm text-gray-400">
+                                <i class="fas fa-map-marker-alt mr-2 text-primary-400"></i>
+                                <span>Brecon, Mid Wales</span>
+                            </div>
+                           
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- St David's Site -->
+                <div class="site-card relative bg-twilight-800 rounded-xl overflow-hidden border border-twilight-700 transition-all duration-300 hover:border-primary-500" data-region="west" data-type="coastal premium">
+                    <div class="h-48 overflow-hidden">
+                        <img src="/assets/pembrokeshire-site.webp" alt="St David's Lleithyr Meadow Caravan and Motorhome Club Site" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                        <div class="absolute top-4 right-4 bg-primary-600 text-white text-xs font-bold px-2 py-1 rounded">PREMIUM</div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="flex space-x-2">
+                                <span class="px-2 py-1 text-xs font-medium bg-primary-900/30 text-primary-300 rounded">Coastal</span>
+                                <span class="px-2 py-1 text-xs font-medium bg-primary-900/30 text-primary-300 rounded">Premium</span>
+                            </div>
+                            <div class="flex items-center text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <span class="ml-1 text-gray-300">4.9</span>
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">St David's Lleithyr Meadow</h3>
+                        <p class="text-gray-400 mb-4">Nestled between dramatic headlands on the Pembrokeshire Coast with access to Whitesands Bay.</p>
+                        
+                        <div class="space-y-3 mb-4">
+                            <div class="flex items-center site-feature">
+                                <i class="fas fa-caravan mr-2"></i>
+                                <span class="text-sm text-gray-300">115 Pitches (Grass)</span>
+                            </div>
+                            <div class="flex items-center site-feature">
+                                <i class="fas fa-bolt mr-2"></i>
+                                <span class="text-sm text-gray-300">16 Amp Electric Hookups</span>
+                            </div>
+                            <div class="flex items-center site-feature">
+                                <i class="fas fa-water mr-2"></i>
+                                <span class="text-sm text-gray-300">Beach & Surfing</span>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between pt-4 border-t border-twilight-700">
+                            <div class="flex items-center text-sm text-gray-400">
+                                <i class="fas fa-map-marker-alt mr-2 text-primary-400"></i>
+                                <span>St David's, West Wales</span>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Snowdonia Site -->
+                <div class="site-card relative bg-twilight-800 rounded-xl overflow-hidden border border-twilight-700 transition-all duration-300 hover:border-primary-500" data-region="north" data-type="mountain family">
+                    <div class="h-48 overflow-hidden">
+                        <img src="/assets/snowdonia-site.jpg" alt="Snowdonia Caravan and Motorhome Club Site" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="flex space-x-2">
+                                <span class="px-2 py-1 text-xs font-medium bg-primary-900/30 text-primary-300 rounded">Mountain</span>
+                                <span class="px-2 py-1 text-xs font-medium bg-primary-900/30 text-primary-300 rounded">Family</span>
+                            </div>
+                            <div class="flex items-center text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <span class="ml-1 text-gray-300">4.6</span>
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Snowdonia Club Site</h3>
+                        <p class="text-gray-400 mb-4">Basecamp for exploring Snowdonia National Park with spectacular mountain views.</p>
+                        
+                        <div class="space-y-3 mb-4">
+                            <div class="flex items-center site-feature">
+                                <i class="fas fa-caravan mr-2"></i>
+                                <span class="text-sm text-gray-300">90 Pitches (Hardstanding)</span>
+                            </div>
+                            <div class="flex items-center site-feature">
+                                <i class="fas fa-bolt mr-2"></i>
+                                <span class="text-sm text-gray-300">16 Amp Electric Hookups</span>
+                            </div>
+                            <div class="flex items-center site-feature">
+                                <i class="fas fa-mountain mr-2"></i>
+                                <span class="text-sm text-gray-300">Mountain Access</span>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between pt-4 border-t border-twilight-700">
+                            <div class="flex items-center text-sm text-gray-400">
+                                <i class="fas fa-map-marker-alt mr-2 text-primary-400"></i>
+                                <span>Snowdonia, North Wales</span>
+                            </div>
+                           
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Anglesey Site -->
+                <div class="site-card relative bg-twilight-800 rounded-xl overflow-hidden border border-twilight-700 transition-all duration-300 hover:border-primary-500" data-region="north" data-type="coastal countryside">
+                    <div class="h-48 overflow-hidden">
+                        <img src="/assets/anglesey-site.jpg" alt="Anglesey Caravan and Motorhome Club Site" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="flex space-x-2">
+                                <span class="px-2 py-1 text-xs font-medium bg-primary-900/30 text-primary-300 rounded">Coastal</span>
+                                <span class="px-2 py-1 text-xs font-medium bg-primary-900/30 text-primary-300 rounded">Countryside</span>
+                            </div>
+                            <div class="flex items-center text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <span class="ml-1 text-gray-300">4.5</span>
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Anglesey Club Site</h3>
+                        <p class="text-gray-400 mb-4">Tranquil coastal retreat on the Isle of Anglesey with stunning sea views.</p>
+                        
+                        <div class="space-y-3 mb-4">
+                            <div class="flex items-center site-feature">
+                                <i class="fas fa-caravan mr-2"></i>
+                                <span class="text-sm text-gray-300">73 Pitches (Grass & Hardstanding)</span>
+                            </div>
+                            <div class="flex items-center site-feature">
+                                <i class="fas fa-bolt mr-2"></i>
+                                <span class="text-sm text-gray-300">16 Amp Electric Hookups</span>
+                            </div>
+                            <div class="flex items-center site-feature">
+                                <i class="fas fa-water mr-2"></i>
+                                <span class="text-sm text-gray-300">Beach Access</span>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between pt-4 border-t border-twilight-700">
+                            <div class="flex items-center text-sm text-gray-400">
+                                <i class="fas fa-map-marker-alt mr-2 text-primary-400"></i>
+                                <span>Anglesey, North Wales</span>
+                            </div>
+                            
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Wye Valley Site -->
+                <div class="site-card relative bg-twilight-800 rounded-xl overflow-hidden border border-twilight-700 transition-all duration-300 hover:border-primary-500" data-region="south" data-type="countryside">
+                    <div class="h-48 overflow-hidden">
+                        <img src="/assets/wye-valley-site.jpg" alt="Wye Valley Caravan and Motorhome Club Site" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center justify-between mb-3">
+                            <div class="flex space-x-2">
+                                <span class="px-2 py-1 text-xs font-medium bg-primary-900/30 text-primary-300 rounded">Countryside</span>
+                            </div>
+                            <div class="flex items-center text-yellow-400 text-sm">
+                                <i class="fas fa-star"></i>
+                                <span class="ml-1 text-gray-300">4.7</span>
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">Wye Valley Club Site</h3>
+                        <p class="text-gray-400 mb-4">Peaceful riverside location in the picturesque Wye Valley Area of Outstanding Natural Beauty.</p>
+                        
+                        <div class="space-y-3 mb-4">
+                            <div class="flex items-center site-feature">
+                                <i class="fas fa-caravan mr-2"></i>
+                                <span class="text-sm text-gray-300">85 Pitches (Grass & Hardstanding)</span>
+                            </div>
+                            <div class="flex items-center site-feature">
+                                <i class="fas fa-bolt mr-2"></i>
+                                <span class="text-sm text-gray-300">16 Amp Electric Hookups</span>
+                            </div>
+                            <div class="flex items-center site-feature">
+                                <i class="fas fa-tree mr-2"></i>
+                                <span class="text-sm text-gray-300">Riverside Location</span>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between pt-4 border-t border-twilight-700">
+                            <div class="flex items-center text-sm text-gray-400">
+                                <i class="fas fa-map-marker-alt mr-2 text-primary-400"></i>
+                                <span>Wye Valley, South Wales</span>
+                            </div>
+                           
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            
+        </div>
+    </section>
+
+    <!-- Why Choose Our Sites Section -->
+    <section class="py-20 bg-twilight-950 relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-full opacity-10">
+            <div class="absolute top-20 left-1/4 w-32 h-32 rounded-full bg-primary-500 blur-3xl"></div>
+            <div class="absolute bottom-20 right-1/4 w-40 h-40 rounded-full bg-primary-400 blur-3xl"></div>
+        </div>
+        
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <span class="inline-block px-3 py-1 text-xs font-semibold text-primary-300 bg-primary-900/30 rounded-full mb-4">QUALITY ASSURED</span>
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-4">Why Choose Our Sites</h2>
+                <p class="max-w-2xl mx-auto text-gray-400">All Alan Rogers Wales partner sites meet our rigorous standards for quality, location, and customer experience.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-twilight-800/50 p-8 rounded-xl border border-twilight-700 transition-all duration-300 hover:border-primary-500">
+                    <div class="w-14 h-14 rounded-full bg-primary-900/30 flex items-center justify-center text-primary-400 mb-4">
+                        <i class="fas fa-star text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Curated Selection</h3>
+                    <p class="text-gray-400">We personally inspect every site to ensure they meet our high standards for facilities, cleanliness, and location.</p>
+                </div>
+                
+                <div class="bg-twilight-800/50 p-8 rounded-xl border border-twilight-700 transition-all duration-300 hover:border-primary-500">
+                    <div class="w-14 h-14 rounded-full bg-primary-900/30 flex items-center justify-center text-primary-400 mb-4">
+                        <i class="fas fa-map-marked-alt text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Prime Locations</h3>
+                    <p class="text-gray-400">Our sites are strategically located in Wales' most beautiful areas, from coastal retreats to mountain hideaways.</p>
+                </div>
+                
+                <div class="bg-twilight-800/50 p-8 rounded-xl border border-twilight-700 transition-all duration-300 hover:border-primary-500">
+                    <div class="w-14 h-14 rounded-full bg-primary-900/30 flex items-center justify-center text-primary-400 mb-4">
+                        <i class="fas fa-headset text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Dedicated Support</h3>
+                    <p class="text-gray-400">Our team is available to assist with bookings, recommendations, and any questions about your stay.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-r from-primary-900 to-primary-700 relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-full opacity-10">
+            <div class="absolute top-1/4 left-1/4 w-32 h-32 rounded-full bg-white blur-3xl"></div>
+            <div class="absolute bottom-1/4 right-1/4 w-40 h-40 rounded-full bg-white blur-3xl"></div>
+        </div>
+        
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-3xl md:text-4xl font-bold text-white mb-6">Ready to Book Your Welsh Adventure?</h2>
+                <p class="text-xl text-primary-100 mb-8">Experience the best of Wales with our premier caravan and motorhome club sites. Book your stay today.</p>
+                <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                    <a href="/contact/" class="px-8 py-3 bg-white text-primary-700 hover:bg-gray-100 rounded-md font-semibold text-center transition-colors duration-300 transform hover:scale-105">
+                        Contact Our Team
+                    </a>
+                    <a href="tel:+441412222254" class="px-8 py-3 border-2 border-white text-white hover:bg-white/10 rounded-md font-semibold text-center transition-colors duration-300 transform hover:scale-105">
+                        Call Now: +44 141 222 2254
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-twilight-950 text-gray-400 pt-20 pb-10">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 mb-16">
+                <!-- About Column -->
+                <div>
+                     <img src="/assets/logo.png"  class="h-20 w-auto mb-6" alt="footer-logo"/>
+                    <p class="mb-6">Discover Wales' finest caravan and motorhome club sites with Alan Rogers. Experience breathtaking landscapes and premium facilities across our network of locations.</p>
+                    <div class="flex space-x-4">
+                        <a href="https://www.facebook.com/alanrogerstravel" class="w-10 h-10 rounded-full bg-twilight-800 hover:bg-primary-600 flex items-center justify-center transition-colors">
+                            <i class="fab fa-facebook-f text-white"></i>
+                        </a>
+                        <a href="https://www.instagram.com/alanrogerstravel/" class="w-10 h-10 rounded-full bg-twilight-800 hover:bg-primary-600 flex items-center justify-center transition-colors">
+                            <i class="fab fa-instagram text-white"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links Column -->
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-6">Quick Links</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/" class="hover:text-primary-300 transition-colors">Home</a></li>
+                        <li><a href="/about/" class="hover:text-primary-300 transition-colors">About Us</a></li>
+                        <li><a href="/locations/" class="hover:text-primary-300 transition-colors">Our Sites</a></li>
+                        <li><a href="/blog/" class="hover:text-primary-300 transition-colors">Blog</a></li>
+                         
+                        <li><a href="/contact/" class="hover:text-primary-300 transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Contact Column -->
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-6">Contact Us</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-3 text-primary-400"></i>
+                            <span>22 Renfield Ln, Glasgow G2 5AR, United Kingdom</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone-alt mr-3 text-primary-400"></i>
+                            <a href="tel:+441412222254" class="hover:text-primary-300 transition-colors">+44 141 222 2254</a>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-3 text-primary-400"></i>
+                            <a href="mailto:info@alanrogerswales.com" class="hover:text-primary-300 transition-colors">info@alanrogerswales.com</a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Newsletter Column -->
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-6">Newsletter</h3>
+                    <p class="mb-4">Subscribe to our newsletter for the latest updates, offers, and travel tips.</p>
+                    <form class="flex flex-col space-y-3">
+                        <input type="email" placeholder="Your email address" class="px-4 py-2 bg-twilight-800 border border-twilight-700 rounded-md focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent">
+                        <button type="submit" class="px-4 py-2 bg-primary-600 hover:bg-primary-700 rounded-md text-white font-medium transition-colors">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="pt-10 border-t border-twilight-800">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="mb-4 md:mb-0">© 2025 Alan Rogers Wales. All rights reserved.</p>
+                    <div class="flex space-x-6">
+                        <a href="/privacy/" class="hover:text-primary-300 transition-colors">Privacy Policy</a>
+                        <a href="/terms/" class="hover:text-primary-300 transition-colors">Terms of Service</a>
+                        <a href="/cookies/" class="hover:text-primary-300 transition-colors">Cookies</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="fixed bottom-6 right-6 w-12 h-12 rounded-full bg-primary-600 hover:bg-primary-700 text-white shadow-lg flex items-center justify-center transition-all duration-300 opacity-0 invisible">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Leaflet JS (for maps) -->
+    <script src="https://unpkg.com/leaflet@1.9.3/dist/leaflet.js"></script>
+    
+    <!-- GSAP Animations -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize GSAP animations
+            gsap.registerPlugin(ScrollTrigger);
+            
+            // Animate elements on scroll
+            gsap.utils.toArray('.site-card, [class*="animate-"]').forEach(element => {
+                gsap.from(element, {
+                    scrollTrigger: {
+                        trigger: element,
+                        start: "top 80%",
+                        toggleActions: "play none none none"
+                    },
+                    opacity: 0,
+                    y: 50,
+                    duration: 0.8,
+                    ease: "power2.out"
+                });
+            });
+            
+            // Initialize map
+            const map = L.map('map').setView([52.1307, -3.7837], 7); // Centered on Wales
+            
+            // Add tile layer (OpenStreetMap)
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+                maxZoom: 18,
+            }).addTo(map);
+            
+            // Define site markers
+            const sites = [
+                {
+                    name: "Gowerton Club Site",
+                    lat: 51.6494,
+                    lng: -4.0426,
+                    type: "featured",
+                    link: "/locations/gowerton/",
+                    region: "south",
+                    description: "Located in the Gower Peninsula with access to pristine beaches and coastal walks."
+                },
+                {
+                    name: "Brecon Beacons Club Site",
+                    lat: 51.9476,
+                    lng: -3.3893,
+                    type: "standard",
+                    link: "/locations/brecon-beacons/",
+                    region: "mid",
+                    description: "Set in the heart of the national park with stunning mountain views."
+                },
+                {
+                    name: "St David's Lleithyr Meadow",
+                    lat: 51.8813,
+                    lng: -5.2659,
+                    type: "featured",
+                    link: "/locations/st-davids/",
+                    region: "west",
+                    description: "Nestled between dramatic headlands on the Pembrokeshire Coast."
+                },
+                {
+                    name: "Snowdonia Club Site",
+                    lat: 53.0685,
+                    lng: -4.0763,
+                    type: "standard",
+                    link: "/locations/snowdonia/",
+                    region: "north",
+                    description: "Basecamp for exploring Snowdonia National Park."
+                },
+                {
+                    name: "Anglesey Club Site",
+                    lat: 53.2578,
+                    lng: -4.2223,
+                    type: "standard",
+                    link: "/locations/anglesey/",
+                    region: "north",
+                    description: "Tranquil coastal retreat on the Isle of Anglesey."
+                },
+                {
+                    name: "Wye Valley Club Site",
+                    lat: 51.8122,
+                    lng: -2.7156,
+                    type: "standard",
+                    link: "/locations/wye-valley/",
+                    region: "south",
+                    description: "Peaceful riverside location in the Wye Valley."
+                }
+            ];
+            
+            // Add markers to map
+            sites.forEach(site => {
+                const markerColor = site.type === "featured" ? 'yellow' : 'blue';
+                const marker = L.marker([site.lat, site.lng], {
+                    icon: L.divIcon({
+                        className: 'custom-marker',
+                        html: `<div style="background-color: ${markerColor}; width: 20px; height: 20px; border-radius: 50%; border: 2px solid white; transform: translate(-10px, -10px);"></div>`
+                    })
+                }).addTo(map);
+                
+                marker.bindPopup(`
+                    <div class="text-sm">
+                        <h3 class="font-bold text-white mb-1">${site.name}</h3>
+                        <p class="text-gray-300 mb-2">${site.description}</p>
+                        <a href="${site.link}" class="text-primary-400 hover:text-primary-300 text-sm font-medium">
+                            View Site <i class="fas fa-arrow-right ml-1 text-xs"></i>
+                        </a>
+                    </div>
+                `);
+            });
+            
+            // Site filtering functionality
+            const filterPills = document.querySelectorAll('.filter-pill');
+            const regionFilter = document.getElementById('regionFilter');
+            const siteCards = document.querySelectorAll('.site-card');
+            
+            // Filter by type
+            filterPills.forEach(pill => {
+                pill.addEventListener('click', function() {
+                    // Update active state
+                    filterPills.forEach(p => p.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const filterValue = this.dataset.filter;
+                    filterSites(filterValue, regionFilter.value);
+                });
+            });
+            
+            // Filter by region
+            regionFilter.addEventListener('change', function() {
+                const activeFilter = document.querySelector('.filter-pill.active');
+                filterSites(activeFilter ? activeFilter.dataset.filter : 'all', this.value);
+            });
+            
+            // Combined filter function
+            function filterSites(typeFilter, regionFilter) {
+                siteCards.forEach(card => {
+                    const cardTypes = card.dataset.type.split(' ');
+                    const cardRegion = card.dataset.region;
+                    
+                    const typeMatch = typeFilter === 'all' || cardTypes.includes(typeFilter);
+                    const regionMatch = regionFilter === 'all' || cardRegion === regionFilter;
+                    
+                    if (typeMatch && regionMatch) {
+                        card.style.display = 'block';
+                        gsap.from(card, {
+                            opacity: 0,
+                            y: 20,
+                            duration: 0.5,
+                            ease: "power2.out"
+                        });
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            }
+            
+            // Load more functionality
+            const loadMoreBtn = document.getElementById('loadMore');
+            if (loadMoreBtn) {
+                loadMoreBtn.addEventListener('click', function() {
+                    // In a real implementation, this would fetch more sites from an API
+                    // For this demo, we'll just show an alert
+                    alert('In a full implementation, this would load more sites dynamically.');
+                });
+            }
+            
+            // Cookie consent banner animation
+            const cookieBanner = document.getElementById('cookieConsent');
+            if (cookieBanner && !localStorage.getItem('cookiesAccepted')) {
+                setTimeout(() => {
+                    gsap.to(cookieBanner, {
+                        y: 0,
+                        duration: 0.5,
+                        ease: "power2.out"
+                    });
+                }, 2000);
+            }
+            
+            // Cookie consent buttons
+            const acceptCookies = document.getElementById('acceptCookies');
+            const declineCookies = document.getElementById('declineCookies');
+            
+            if (acceptCookies) {
+                acceptCookies.addEventListener('click', function() {
+                    localStorage.setItem('cookiesAccepted', 'true');
+                    gsap.to(cookieBanner, {
+                        y: '100%',
+                        duration: 0.5,
+                        ease: "power2.in"
+                    });
+                });
+            }
+            
+            if (declineCookies) {
+                declineCookies.addEventListener('click', function() {
+                    localStorage.setItem('cookiesDeclined', 'true');
+                    gsap.to(cookieBanner, {
+                        y: '100%',
+                        duration: 0.5,
+                        ease: "power2.in"
+                    });
+                });
+            }
+            
+           
+            // Back to top button
+            const backToTopButton = document.getElementById('backToTop');
+            
+            if (backToTopButton) {
+                window.addEventListener('scroll', function() {
+                    if (window.pageYOffset > 300) {
+                        gsap.to(backToTopButton, {
+                            opacity: 1,
+                            visibility: 'visible',
+                            duration: 0.3
+                        });
+                    } else {
+                        gsap.to(backToTopButton, {
+                            opacity: 0,
+                            visibility: 'hidden',
+                            duration: 0.3
+                        });
+                    }
+                });
+                
+                backToTopButton.addEventListener('click', function() {
+                    window.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                });
+            }
+        });
+    </script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const closeMobileMenu = document.getElementById('closeMobileMenu');
+        const mobileMenuOverlay = document.getElementById('mobileMenuOverlay');
+
+        if (mobileMenuButton && mobileMenu) {
+            mobileMenuButton.addEventListener('click', function() {
+                mobileMenu.classList.remove('translate-x-full');
+                mobileMenuOverlay.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            });
+
+            closeMobileMenu.addEventListener('click', function() {
+                mobileMenu.classList.add('translate-x-full');
+                mobileMenuOverlay.classList.add('hidden');
+                document.body.style.overflow = '';
+            });
+
+            mobileMenuOverlay.addEventListener('click', function() {
+                mobileMenu.classList.add('translate-x-full');
+                mobileMenuOverlay.classList.add('hidden');
+                document.body.style.overflow = '';
+            });
+        }
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,841 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+ <link rel="shortcut icon" href="/images/logo.png" type="image/x-icon">
+ <link rel="canonical" href="https://slotcarnival.org/responsible-gaming/" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Responsible Gaming | Slot Carnival</title>
+    <meta name="description" content="Slot Carnival is committed to responsible gaming. Learn about our policies, tools, and resources to ensure a safe and enjoyable gaming experience.">
+    <meta name="keywords" content="responsible gaming, social casino safety, gaming addiction help, play responsibly, gambling awareness">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap');
+        
+        :root {
+            --primary: #ff5e14;
+            --secondary: #0f172a;
+            --accent: #f59e0b;
+            --dark: #0f172a;
+            --light: #f8fafc;
+        }
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+        }
+        
+        .parallax-bg {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, rgba(15,23,42,0.95) 0%, rgba(15,23,42,0.7) 100%);
+        }
+        
+        .hamburger-menu {
+            width: 30px;
+            height: 20px;
+            position: relative;
+            transform: rotate(0deg);
+            transition: .5s ease-in-out;
+            cursor: pointer;
+        }
+        
+        .hamburger-menu span {
+            display: block;
+            position: absolute;
+            height: 3px;
+            width: 100%;
+            background: var(--primary);
+            border-radius: 3px;
+            opacity: 1;
+            left: 0;
+            transform: rotate(0deg);
+            transition: .25s ease-in-out;
+        }
+        
+        .hamburger-menu span:nth-child(1) {
+            top: 0px;
+        }
+        
+        .hamburger-menu span:nth-child(2), .hamburger-menu span:nth-child(3) {
+            top: 10px;
+        }
+        
+        .hamburger-menu span:nth-child(4) {
+            top: 20px;
+        }
+        
+        .hamburger-menu.open span:nth-child(1) {
+            top: 10px;
+            width: 0%;
+            left: 50%;
+        }
+        
+        .hamburger-menu.open span:nth-child(2) {
+            transform: rotate(45deg);
+        }
+        
+        .hamburger-menu.open span:nth-child(3) {
+            transform: rotate(-45deg);
+        }
+        
+        .hamburger-menu.open span:nth-child(4) {
+            top: 10px;
+            width: 0%;
+            left: 50%;
+        }
+        
+        .dropdown-menu {
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .dropdown:hover .dropdown-menu {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+        }
+        
+        .age-verification {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.95);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .cookies-consent {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: var(--secondary);
+            z-index: 100;
+            transform: translateY(100%);
+            transition: transform 0.3s ease;
+        }
+        
+        .cookies-consent.show {
+            transform: translateY(0);
+        }
+        
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+        }
+        
+        .accordion.active .accordion-content {
+            max-height: 500px;
+            transition: max-height 0.5s ease-in;
+        }
+    </style>
+</head>
+<body class="relative">
+    <!-- Age Verification Modal -->
+    <div id="ageVerification" class="age-verification" style="display: none;">
+        <div class="max-w-2xl mx-4 p-8 bg-slate-800 rounded-xl shadow-2xl text-center">
+            <h2 class="text-3xl font-bold text-orange-500 mb-6">AGE VERIFICATION REQUIRED</h2>
+            <p class="text-lg mb-8">You must be 18 years or older to access this social casino platform. Please confirm your age to continue and enjoy our premium gaming experience.</p>
+            
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <button id="confirmAge" class="px-8 py-3 bg-orange-600 hover:bg-orange-700 text-white font-bold rounded-lg transition duration-300 transform hover:scale-105">
+                    I am 18 or older
+                </button>
+                <button id="denyAge" class="px-8 py-3 bg-slate-600 hover:bg-slate-700 text-white font-bold rounded-lg transition duration-300">
+                    I am under 18
+                </button>
+            </div>
+            
+            <p class="text-sm mt-8 text-slate-400">Important: This platform is for entertainment only. No real money gambling is involved.</p>
+        </div>
+    </div>
+
+    <!-- Cookies Consent -->
+    <div id="cookiesConsent" class="cookies-consent p-4 border-t border-slate-700">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="flex-1">
+                <p class="text-sm">We use cookies to enhance your experience on our platform. By continuing to browse, you agree to our use of cookies. Learn more in our <a href="/privacy/" class="text-orange-500 hover:underline">Privacy Policy</a>.</p>
+            </div>
+            <div class="flex gap-2">
+                <button id="acceptCookies" class="px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white text-sm font-medium rounded transition duration-300">
+                    Accept
+                </button>
+                <button id="declineCookies" class="px-4 py-2 bg-slate-600 hover:bg-slate-700 text-white text-sm font-medium rounded transition duration-300">
+                    Decline
+                </button>
+                <a href="/privacy/" class="px-4 py-2 text-orange-500 hover:underline text-sm font-medium">
+                    Learn More
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="fixed w-full bg-slate-900/90 backdrop-blur-md z-50 border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center">
+                  <a href="/" class="text-2xl font-bold text-orange-500">
+                        <img src="/images/logo.png" alt="Slot Carnival Logo" class="h-12">                        
+                    </a>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="text-white hover:text-orange-500 font-medium transition duration-300">Home</a>
+                    <a href="/games/" class="text-white hover:text-orange-500 font-medium transition duration-300">Games</a>
+                    <a href="/about/" class="text-white hover:text-orange-500 font-medium transition duration-300">About</a>
+                    <a href="/responsible-gaming/" class="text-orange-500 font-medium transition duration-300">Responsible Gaming</a>
+                    <a href="/contact/" class="text-white hover:text-orange-500 font-medium transition duration-300">Contact</a>
+                    
+                    <!-- Login/Register or User Profile -->
+                    <div id="authButtons" class="flex items-center space-x-4">
+                        <a href="/login/" class="px-4 py-2 text-white hover:text-orange-500 font-medium transition duration-300">Login</a>
+                        <a href="/register/" class="px-6 py-2 bg-orange-600 hover:bg-orange-700 text-white font-medium rounded-lg transition duration-300 transform hover:scale-105">
+                            Register
+                        </a>
+                    </div>
+                    
+                    <div id="userProfile" class="hidden items-center space-x-2 dropdown relative">
+                        <div class="flex items-center space-x-2 cursor-pointer">
+                            <div class="w-8 h-8 rounded-full bg-orange-600 flex items-center justify-center text-white font-bold" id="profileInitial">U</div>
+                            <span class="text-white font-medium" id="usernameDisplay">Username</span>
+                            <span class="text-orange-500 font-bold">•</span>
+                            <span class="text-yellow-400 font-bold"><span id="userCoins">0</span> Coins</span>
+                        </div>
+                        <div class="dropdown-menu absolute right-0 mt-2 w-48 bg-slate-800 rounded-md shadow-lg py-1 z-50 border border-slate-700">
+                             
+                            <a href="javascript:void(0)" id="logoutBtn" class="block px-4 py-2 text-sm text-white hover:bg-slate-700">Logout</a>
+                        </div>
+                    </div>
+                </nav>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobileMenuButton" class="hamburger-menu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="md:hidden hidden bg-slate-900 border-t border-slate-800">
+              <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 flex flex-col justify-center items-center">
+                <a href="/" class="block px-3 py-2 text-white hover:text-orange-500 font-medium">Home</a>
+                <a href="/games/" class="block px-3 py-2 text-white hover:text-orange-500 font-medium">Games</a>
+                <a href="/about/" class="block px-3 py-2 text-white hover:text-orange-500 font-medium">About</a>
+                <a href="/responsible-gaming/" class="block px-3 py-2 text-orange-500 font-medium">Responsible Gaming</a>
+                <a href="/contact/" class="block px-3 py-2 text-white hover:text-orange-500 font-medium">Contact</a>
+                
+                <div id="mobileAuthButtons" class="pt-4 border-t border-slate-800">
+                     <a href="/login/" class="block px-3 py-2 text-white hover:text-orange-500 font-medium border border-orange-600 text-center rounded-full">Login</a>
+                    <a href="/register/" class="block px-3 py-2 mt-2 bg-orange-600 hover:bg-orange-700 text-white font-medium rounded-lg text-center">
+                        Register
+                    </a>
+                </div>
+                
+                <div id="mobileUserProfile" class="hidden pt-4 border-t border-slate-800">
+                    <div class="flex items-center px-3 py-2">
+                        <div class="w-8 h-8 rounded-full bg-orange-600 flex items-center justify-center text-white font-bold mr-3" id="mobileProfileInitial">U</div>
+                        <div>
+                            <div class="text-white font-medium" id="mobileUsernameDisplay">Username</div>
+                            <div class="text-yellow-400 text-sm"><span id="mobileUserCoins">0</span> Coins</div>
+                        </div>
+                    </div>
+                     
+                    <a href="javascript:void(0)" id="mobileLogoutBtn" class="block px-3 py-2 text-white hover:text-orange-500 font-medium">Logout</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 overflow-hidden">
+        <div class="absolute inset-0 bg-[url('/images/hero-bg.webp')] bg-cover bg-center parallax-bg"></div>
+        <div class="absolute inset-0 hero-gradient"></div>
+        
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 z-10 text-center">
+            <h1 class="text-4xl md:text-6xl font-bold mb-6 text-white">
+                <span class="text-orange-500">RESPONSIBLE</span> GAMING
+            </h1>
+            <p class="text-xl md:text-2xl mb-6 text-slate-300 max-w-3xl mx-auto">Our commitment to promoting safe and responsible gaming practices for all players.</p>
+            
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#commitment" class="px-6 py-3 bg-orange-600 hover:bg-orange-700 text-white font-bold rounded-lg transition duration-300 transform hover:scale-105">
+                    Our Commitment
+                </a>
+                <a href="#resources" class="px-6 py-3 bg-transparent border-2 border-orange-500 hover:bg-orange-500/20 text-white font-bold rounded-lg transition duration-300 transform hover:scale-105">
+                    Help Resources
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Commitment Section -->
+    <section id="commitment" class="py-20 relative overflow-hidden">
+        <div class="absolute inset-0 bg-[url('/images/hero-bg.webp')] bg-cover bg-center parallax-bg opacity-10"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-5xl font-bold mb-4 text-white uppercase">OUR <span class="text-orange-500">COMMITMENT</span></h2>
+                <div class="w-20 h-1 bg-orange-500 mx-auto mb-6"></div>
+                <p class="text-lg text-slate-300 max-w-3xl mx-auto">At Slot Carnival, we prioritize player safety and responsible gaming above all else.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-slate-800/50 backdrop-blur-sm p-8 rounded-xl border border-slate-700 hover:border-orange-500 transition duration-300 feature-card">
+                    <div class="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center text-white text-2xl mb-6 mx-auto">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-4 text-center">Safe Gaming Environment</h3>
+                    <p class="text-slate-300 text-center">We provide a secure platform with built-in tools to help you stay in control of your gaming experience.</p>
+                </div>
+                
+                <div class="bg-slate-800/50 backdrop-blur-sm p-8 rounded-xl border border-slate-700 hover:border-orange-500 transition duration-300 feature-card">
+                    <div class="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center text-white text-2xl mb-6 mx-auto">
+                        <i class="fas fa-info-circle"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-4 text-center">Transparent Information</h3>
+                    <p class="text-slate-300 text-center">Clear communication about game rules, odds, and the nature of our social casino platform.</p>
+                </div>
+                
+                <div class="bg-slate-800/50 backdrop-blur-sm p-8 rounded-xl border border-slate-700 hover:border-orange-500 transition duration-300 feature-card">
+                    <div class="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center text-white text-2xl mb-6 mx-auto">
+                        <i class="fas fa-tools"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-4 text-center">Player Protection Tools</h3>
+                    <p class="text-slate-300 text-center">Features to help you set limits and take breaks when needed.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Important Notice -->
+    <section class="py-16 bg-gradient-to-r from-orange-600 to-orange-800 relative overflow-hidden">
+        <div class="absolute inset-0 bg-[url('/images/featured-bg.jpg')] bg-cover bg-center parallax-bg opacity-20"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative text-center">
+            <div class="w-16 h-16 bg-white rounded-full flex items-center justify-center text-orange-600 text-2xl mb-6 mx-auto">
+                <i class="fas fa-exclamation-triangle"></i>
+            </div>
+            <h2 class="text-3xl md:text-5xl font-bold mb-6 text-white uppercase">IMPORTANT <span class="text-slate-900">NOTICE</span></h2>
+            <p class="text-xl text-white mb-6 max-w-4xl mx-auto">This is a social casino platform for entertainment purposes only. No real money gambling or payouts are involved.</p>
+            <p class="text-xl text-white max-w-4xl mx-auto">All coins are virtual and have no monetary value. Success in social casino games does not guarantee future success at real money gambling activities.</p>
+        </div>
+    </section>
+
+    <!-- Resources Section -->
+    <section id="resources" class="py-20 bg-slate-900/50 relative overflow-hidden">
+        <div class="absolute inset-0 bg-[url('/images/timeline.jpg')] bg-cover bg-center parallax-bg opacity-10"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-5xl font-bold mb-4 text-white uppercase">HELP <span class="text-orange-500">RESOURCES</span></h2>
+                <div class="w-20 h-1 bg-orange-500 mx-auto mb-6"></div>
+                <p class="text-lg text-slate-300 max-w-3xl mx-auto">Access to tools and organizations that can provide support and information.</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
+                <div class="bg-slate-800/50 backdrop-blur-sm p-8 rounded-xl border border-slate-700">
+                    <h3 class="text-2xl font-bold text-white mb-6 flex items-center">
+                        <i class="fas fa-hands-helping text-orange-500 mr-4"></i>
+                        <span>Responsible Gaming Tools</span>
+                    </h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-400 mt-1 mr-3"></i>
+                            <span class="text-slate-300">Set daily, weekly, or monthly play limits</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-400 mt-1 mr-3"></i>
+                            <span class="text-slate-300">Self-exclusion options for any duration</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-400 mt-1 mr-3"></i>
+                            <span class="text-slate-300">Reality check reminders during play</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check text-green-400 mt-1 mr-3"></i>
+                            <span class="text-slate-300">Access to your play history and statistics</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="bg-slate-800/50 backdrop-blur-sm p-8 rounded-xl border border-slate-700">
+                    <h3 class="text-2xl font-bold text-white mb-6 flex items-center">
+                        <i class="fas fa-globe-americas text-orange-500 mr-4"></i>
+                        <span>External Support Organizations</span>
+                    </h3>
+                    <ul class="space-y-4">
+                        <li class="flex items-start">
+                            <i class="fas fa-external-link-alt text-blue-400 mt-1 mr-3"></i>
+                            <a href="https://www.gamcare.org.uk/" target="_blank" class="text-slate-300 hover:text-orange-500 transition duration-300">GamCare - UK-based support and resources</a>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-external-link-alt text-blue-400 mt-1 mr-3"></i>
+                            <a href="https://www.begambleaware.org/" target="_blank" class="text-slate-300 hover:text-orange-500 transition duration-300">BeGambleAware - Information and support</a>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-external-link-alt text-blue-400 mt-1 mr-3"></i>
+                            <a href="https://www.gamblingtherapy.org/" target="_blank" class="text-slate-300 hover:text-orange-500 transition duration-300">Gambling Therapy - Global support service</a>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-external-link-alt text-blue-400 mt-1 mr-3"></i>
+                            <a href="https://www.ncpgambling.org/" target="_blank" class="text-slate-300 hover:text-orange-500 transition duration-300">National Council on Problem Gambling (US)</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="bg-slate-800/50 backdrop-blur-sm p-8 rounded-xl border border-slate-700">
+                <h3 class="text-2xl font-bold text-white mb-6 text-center">Signs of Problem Gaming</h3>
+                <p class="text-slate-300 mb-8 text-center max-w-3xl mx-auto">Gaming should be fun and entertaining. If you're experiencing any of these signs, it might be time to take a break or seek help:</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-slate-700/50 p-6 rounded-lg">
+                        <div class="w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center text-white text-xl mb-4 mx-auto">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                        <p class="text-slate-300 text-center">Spending more time or money than intended</p>
+                    </div>
+                    <div class="bg-slate-700/50 p-6 rounded-lg">
+                        <div class="w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center text-white text-xl mb-4 mx-auto">
+                            <i class="fas fa-sad-tear"></i>
+                        </div>
+                        <p class="text-slate-300 text-center">Feeling distressed when not gaming</p>
+                    </div>
+                    <div class="bg-slate-700/50 p-6 rounded-lg">
+                        <div class="w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center text-white text-xl mb-4 mx-auto">
+                            <i class="fas fa-comment-slash"></i>
+                        </div>
+                        <p class="text-slate-300 text-center">Lying to others about gaming habits</p>
+                    </div>
+                    <div class="bg-slate-700/50 p-6 rounded-lg">
+                        <div class="w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center text-white text-xl mb-4 mx-auto">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                        <p class="text-slate-300 text-center">Borrowing money to continue gaming</p>
+                    </div>
+                    <div class="bg-slate-700/50 p-6 rounded-lg">
+                        <div class="w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center text-white text-xl mb-4 mx-auto">
+                            <i class="fas fa-user-clock"></i>
+                        </div>
+                        <p class="text-slate-300 text-center">Neglecting work, school, or relationships</p>
+                    </div>
+                    <div class="bg-slate-700/50 p-6 rounded-lg">
+                        <div class="w-12 h-12 bg-orange-500 rounded-full flex items-center justify-center text-white text-xl mb-4 mx-auto">
+                            <i class="fas fa-redo"></i>
+                        </div>
+                        <p class="text-slate-300 text-center">Chasing losses or trying to win back money</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="py-20 relative overflow-hidden">
+        <div class="absolute inset-0 bg-[url('/images/featured-bg.jpg')] bg-cover bg-center parallax-bg opacity-10"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-5xl font-bold mb-4 text-white uppercase">FREQUENTLY <span class="text-orange-500">ASKED QUESTIONS</span></h2>
+                <div class="w-20 h-1 bg-orange-500 mx-auto mb-6"></div>
+                <p class="text-lg text-slate-300 max-w-3xl mx-auto">Find answers to common questions about responsible gaming at Slot Carnival.</p>
+            </div>
+            
+            <div class="max-w-4xl mx-auto space-y-4">
+                <div class="accordion bg-slate-800/50 backdrop-blur-sm rounded-xl border border-slate-700 overflow-hidden transition duration-300">
+                    <button class="accordion-btn w-full flex justify-between items-center p-6 text-left">
+                        <h3 class="text-lg font-bold text-white">Is this real money gambling?</h3>
+                        <i class="fas fa-chevron-down text-orange-500 transition-transform duration-300"></i>
+                    </button>
+                    <div class="accordion-content px-6">
+                        <div class="pb-6 text-slate-300">
+                            <p>No, Slot Carnival is a social casino platform for entertainment purposes only. We do not offer real money gambling, betting, or payouts. All coins are virtual and have no cash value. You cannot win real money or prizes on our platform.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion bg-slate-800/50 backdrop-blur-sm rounded-xl border border-slate-700 overflow-hidden transition duration-300">
+                    <button class="accordion-btn w-full flex justify-between items-center p-6 text-left">
+                        <h3 class="text-lg font-bold text-white">How can I set limits on my account?</h3>
+                        <i class="fas fa-chevron-down text-orange-500 transition-transform duration-300"></i>
+                    </button>
+                    <div class="accordion-content px-6">
+                        <div class="pb-6 text-slate-300">
+                            <p>Registered users can set various limits through their account settings:</p>
+                            <ul class="list-disc pl-6 mt-3 space-y-2">
+                                <li>Deposit limits (maximum virtual coins per day/week/month)</li>
+                                <li>Time limits (maximum play time per session/day)</li>
+                                <li>Loss limits (maximum virtual coins lost per day/week)</li>
+                                <li>Self-exclusion (take a break for a set period)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion bg-slate-800/50 backdrop-blur-sm rounded-xl border border-slate-700 overflow-hidden transition duration-300">
+                    <button class="accordion-btn w-full flex justify-between items-center p-6 text-left">
+                        <h3 class="text-lg font-bold text-white">What should I do if I think I have a gambling problem?</h3>
+                        <i class="fas fa-chevron-down text-orange-500 transition-transform duration-300"></i>
+                    </button>
+                    <div class="accordion-content px-6">
+                        <div class="pb-6 text-slate-300">
+                            <p>If you're concerned about your gaming habits, we recommend:</p>
+                            <ol class="list-decimal pl-6 mt-3 space-y-2">
+                                <li>Using our self-exclusion tool to take a break</li>
+                                <li>Speaking with a professional counselor or therapist</li>
+                                <li>Contacting one of the support organizations listed on this page</li>
+                                <li>Talking to friends or family members about your concerns</li>
+                            </ol>
+                            <p class="mt-4">Remember, our platform is for entertainment only and should not negatively impact your life.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion bg-slate-800/50 backdrop-blur-sm rounded-xl border border-slate-700 overflow-hidden transition duration-300">
+                    <button class="accordion-btn w-full flex justify-between items-center p-6 text-left">
+                        <h3 class="text-lg font-bold text-white">Can I get my money back if I spend too much on virtual coins?</h3>
+                        <i class="fas fa-chevron-down text-orange-500 transition-transform duration-300"></i>
+                    </button>
+                    <div class="accordion-content px-6">
+                        <div class="pb-6 text-slate-300">
+                            <p>All purchases of virtual coins are final. We strongly encourage players to set budgets and stick to them. Our platform includes multiple reminders and warnings before purchases are completed to help prevent overspending.</p>
+                            <p class="mt-3">If you feel you've spent more than intended, we recommend using our self-exclusion tool to take a break and reassess your gaming habits.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="accordion bg-slate-800/50 backdrop-blur-sm rounded-xl border border-slate-700 overflow-hidden transition duration-300">
+                    <button class="accordion-btn w-full flex justify-between items-center p-6 text-left">
+                        <h3 class="text-lg font-bold text-white">How do I permanently close my account?</h3>
+                        <i class="fas fa-chevron-down text-orange-500 transition-transform duration-300"></i>
+                    </button>
+                    <div class="accordion-content px-6">
+                        <div class="pb-6 text-slate-300">
+                            <p>You can request permanent account closure by contacting our support team at <a href="mailto:support@slotcarnival.org" class="text-orange-500 hover:underline">support@slotcarnival.org</a>. Please include your username and the reason for closure in your request.</p>
+                            <p class="mt-3">Before closing your account, you may want to consider using our self-exclusion tool for a temporary break instead.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-16 bg-gradient-to-r from-orange-600 to-orange-800 relative overflow-hidden">
+        <div class="absolute inset-0 bg-[url('/images/choose-us.jpg')] bg-cover bg-center parallax-bg opacity-20"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative text-center">
+            <h2 class="text-3xl md:text-5xl font-bold mb-6 text-white uppercase">NEED <span class="text-slate-900">HELP</span>?</h2>
+            <p class="text-xl text-white mb-10 max-w-3xl mx-auto">Contact our support team for assistance with responsible gaming tools or account settings.</p>
+            
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="mailto:support@slotcarnival.org" class="px-8 py-4 bg-white hover:bg-slate-100 text-orange-600 font-bold rounded-lg text-lg transition duration-300 transform hover:scale-105 shadow-lg">
+                    Email Support
+                </a>
+                <a href="/contact/" class="px-8 py-4 bg-transparent border-2 border-white hover:bg-white/10 text-white font-bold rounded-lg text-lg transition duration-300 transform hover:scale-105">
+                    Contact Form
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Responsible Gaming Section -->
+    <section class="bg-slate-900 py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+                <div class="md:col-span-1">
+                    <h3 class="text-xl font-bold text-white mb-4">Responsible Gaming Commitment</h3>
+                </div>
+                <div class="md:col-span-3">
+                    <p class="text-slate-300 mb-4">Slot Carnival is committed to promoting responsible gaming practices. We provide comprehensive tools and resources to help players maintain control over their gaming habits and ensure a safe, enjoyable experience for all users.</p>
+                    <p class="text-orange-400 font-medium mb-4">Important Notice: This is a social casino platform for entertainment only. No real money gambling or payouts are involved. All coins are virtual and have no monetary value.</p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="https://www.gamcare.org.uk/" target="_blank" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded transition duration-300">GamCare</a>
+                        <a href="https://www.begambleaware.org/" target="_blank" class="px-4 py-2 bg-slate-800 hover:bg-slate-700 text-white rounded transition duration-300">GambleAware</a>
+                        <a href="/responsible-gaming/" class="px-4 py-2 bg-orange-600 hover:bg-orange-700 text-white rounded transition duration-300">Responsible Gaming Policy</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-slate-900 border-t border-slate-800 pt-12 pb-6">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <div>
+                   <a href="/" class="text-2xl font-bold text-orange-500">
+                        <img src="/images/logo.png" alt="Slot Carnival Logo" class="h-12 mb-4">                        
+                    </a>
+                    <p class="text-slate-400 mb-4">The ultimate social casino experience with premium games, generous bonuses, and a vibrant community.</p>
+                      <p class="text-slate-400 mb-4">No real money gambling or payouts are involved. </p> 
+                </div>
+                
+                <div >
+                    <h3 class="text-lg font-bold text-white mb-4 text-center md:text-left ">Quick Links</h3>
+                    <ul class="space-y-2 flex flex-col items-center md:items-start">
+                        <li><a href="/" class="text-slate-400 hover:text-orange-500 transition duration-300">Home</a></li>
+                        <li><a href="/games/" class="text-slate-400 hover:text-orange-500 transition duration-300">Games</a></li>
+                        <li><a href="/about/" class="text-slate-400 hover:text-orange-500 transition duration-300">About Us</a></li>
+                        <li><a href="/contact/" class="text-slate-400 hover:text-orange-500 transition duration-300">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-4 text-center md:text-left ">Legal</h3>
+                    <ul class="space-y-2 flex flex-col items-center md:items-start">
+                        <li><a href="/privacy/" class="text-slate-400 hover:text-orange-500 transition duration-300">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="text-slate-400 hover:text-orange-500 transition duration-300">Terms of Service</a></li>
+                        <li><a href="/cookies/" class="text-slate-400 hover:text-orange-500 transition duration-300">Cookies Policy</a></li>
+                        <li><a href="/responsible-gaming/" class="text-slate-400 hover:text-orange-500 transition duration-300">Responsible Gaming</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-4 text-center md:text-left">Contact Us</h3>
+                    <ul class="space-y-2 text-slate-400 flex flex-col items-center md:items-start">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-3 text-orange-500 hidden md:block"></i>
+                            <span>Vestre Ringvei 5, 1831 Askim, Norway</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone-alt mr-3 text-orange-500 hidden md:block"></i>
+                            <span>+4740696111</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-3 text-orange-500 hidden md:block"></i>
+                            <span>info@slotcarnival.org</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-slate-800 pt-6">
+                <div class="flex flex-col md:flex-row md:justify-between justify-center items-center text-center">
+                    <p class="text-slate-500 text-sm mb-4 md:mb-0">© 2025 Slot Carnival. All rights reserved.</p>
+                    <p class="text-orange-500 text-sm font-medium">18+ Only | Social Casino Platform | No Real Money Gambling</p>
+                </div>
+                <p class="text-slate-600 text-xs mt-4 text-center md:text-left">This website operates as a social casino platform for entertainment purposes only. No real money gambling, betting, or wagering is involved. Virtual coins and winnings have no cash value and cannot be exchanged for real money, prizes, or any monetary compensation. Success in social casino games does not guarantee future success at real money gambling activities.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize the page
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check age verification in localStorage
+            const ageVerified = localStorage.getItem('ageVerified') === 'true';
+            
+            if (!ageVerified) {
+                document.getElementById('ageVerification').style.display = 'flex';
+                document.body.style.overflow = 'hidden'; // Prevent scrolling when modal is open
+            }
+            
+            // Check cookies consent
+            if (localStorage.getItem('cookiesAccepted') !== null) {
+                document.getElementById('cookiesConsent').classList.remove('show');
+            } else {
+                setTimeout(() => {
+                    document.getElementById('cookiesConsent').classList.add('show');
+                }, 2000);
+            }
+            
+            // Check if user is logged in
+            checkLoginStatus();
+            
+            // Initialize other event listeners
+            initEventListeners();
+            
+            // Initialize accordion functionality
+            initAccordion();
+        });
+        
+        // Check login status and update UI
+        function checkLoginStatus() {
+            const userData = localStorage.getItem('currentUser');
+            if (userData) {
+                const user = JSON.parse(userData);
+                updateUserProfile(user);
+            }
+        }
+        
+        // Update user profile in header
+        function updateUserProfile(user) {
+            // Desktop header
+            document.getElementById('authButtons').classList.add('hidden');
+            document.getElementById('userProfile').classList.remove('hidden');
+            document.getElementById('usernameDisplay').textContent = user.username;
+            document.getElementById('userCoins').textContent = user.coins.toLocaleString();
+            document.getElementById('profileInitial').textContent = user.username.charAt(0).toUpperCase();
+            
+            // Mobile header
+            document.getElementById('mobileAuthButtons').classList.add('hidden');
+            document.getElementById('mobileUserProfile').classList.remove('hidden');
+            document.getElementById('mobileUsernameDisplay').textContent = user.username;
+            document.getElementById('mobileUserCoins').textContent = user.coins.toLocaleString();
+            document.getElementById('mobileProfileInitial').textContent = user.username.charAt(0).toUpperCase();
+        }
+        
+        // Initialize all event listeners
+        function initEventListeners() {
+            // Age verification buttons
+            document.getElementById('confirmAge').addEventListener('click', function() {
+                localStorage.setItem('ageVerified', 'true');
+                document.getElementById('ageVerification').style.display = 'none';
+                document.body.style.overflow = 'auto'; // Re-enable scrolling
+            });
+            
+            document.getElementById('denyAge').addEventListener('click', function() {
+                // Redirect to a safe site if user is underage
+                window.location.href = 'https://www.google.com/';
+            });
+            
+            // Cookies consent buttons
+            document.getElementById('acceptCookies').addEventListener('click', function() {
+                localStorage.setItem('cookiesAccepted', 'true');
+                document.getElementById('cookiesConsent').classList.remove('show');
+            });
+            
+            document.getElementById('declineCookies').addEventListener('click', function() {
+                localStorage.setItem('cookiesAccepted', 'false');
+                document.getElementById('cookiesConsent').classList.remove('show');
+            });
+            
+            // Mobile menu toggle
+            document.getElementById('mobileMenuButton').addEventListener('click', function() {
+                this.classList.toggle('open');
+                document.getElementById('mobileMenu').classList.toggle('hidden');
+            });
+            
+            // Logout functionality
+            document.getElementById('logoutBtn').addEventListener('click', logoutUser);
+            document.getElementById('mobileLogoutBtn').addEventListener('click', logoutUser);
+        }
+        
+        // Initialize accordion functionality
+        function initAccordion() {
+            const accordions = document.querySelectorAll('.accordion');
+            
+            accordions.forEach(accordion => {
+                const btn = accordion.querySelector('.accordion-btn');
+                const content = accordion.querySelector('.accordion-content');
+                const icon = btn.querySelector('i');
+                
+                btn.addEventListener('click', () => {
+                    // Close all other accordions
+                    accordions.forEach(otherAccordion => {
+                        if (otherAccordion !== accordion) {
+                            otherAccordion.classList.remove('active');
+                            otherAccordion.querySelector('i').classList.remove('fa-chevron-up');
+                            otherAccordion.querySelector('i').classList.add('fa-chevron-down');
+                        }
+                    });
+                    
+                    // Toggle current accordion
+                    accordion.classList.toggle('active');
+                    
+                    // Toggle icon
+                    if (accordion.classList.contains('active')) {
+                        icon.classList.remove('fa-chevron-down');
+                        icon.classList.add('fa-chevron-up');
+                    } else {
+                        icon.classList.remove('fa-chevron-up');
+                        icon.classList.add('fa-chevron-down');
+                    }
+                });
+            });
+        }
+        
+        // Logout user
+        function logoutUser() {
+            localStorage.removeItem('currentUser');
+            window.location.href = '/';
+        }
+        
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Header animation
+        gsap.from('header', { 
+            opacity: 0, 
+            y: -20, 
+            duration: 0.8, 
+            ease: "power2.out" 
+        });
+        
+        // Hero section animations
+        gsap.from('.hero-gradient h1, .hero-gradient p, .hero-gradient .flex', { 
+            opacity: 0, 
+            y: 30, 
+            duration: 0.8, 
+            stagger: 0.1, 
+            delay: 0.3, 
+            ease: "power2.out" 
+        });
+        
+        // Feature card animations
+        gsap.utils.toArray('.feature-card').forEach((card, i) => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                },
+                opacity: 0,
+                y: 30,
+                duration: 0.6,
+                delay: i * 0.1,
+                ease: "power2.out"
+            });
+        });
+        
+        // Accordion animations
+        gsap.utils.toArray('.accordion').forEach((accordion, i) => {
+            gsap.from(accordion, {
+                scrollTrigger: {
+                    trigger: accordion,
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                },
+                opacity: 0,
+                y: 30,
+                duration: 0.6,
+                delay: i * 0.1,
+                ease: "power2.out"
+            });
+        });
+    </script>
+</body>
+</html>

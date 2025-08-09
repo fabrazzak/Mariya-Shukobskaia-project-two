@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog | Murphy Door Ogden - Hidden Door Inspiration & Tips</title>
+    <meta name="description" content="Discover design ideas, installation tips, and creative uses for hidden doors in our blog. Get inspired for your next space-saving project.">
+    <meta name="keywords" content="hidden door blog, space-saving ideas, interior design tips, Murphy door installation, home renovation">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/image/logo.png" type="image/x-icon">
+    <!-- Blog Page -->
+<link rel="canonical" href="https://murphydoorogden.com/blog/" />
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap');
+        
+        :root {
+            --primary: #1a365d;
+            --secondary: #cba052;
+            --accent: #2d3748;
+            --light: #f7fafc;
+            --dark: #1a202c;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .hero-bg {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6));
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(45deg, #cba052, #8a6d3b);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .blog-card:hover img {
+            transform: scale(1.05);
+        }
+        
+        .category-filter.active {
+            background-color: #cba052;
+            color: white;
+        }
+        
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .cookie-consent {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.9);
+            color: white;
+            padding: 1rem;
+            transform: translateY(100%);
+            transition: transform 0.5s ease;
+            z-index: 999;
+        }
+        
+        .cookie-consent.show {
+            transform: translateY(0);
+        }
+        
+        .pagination .active {
+            background-color: #cba052;
+            color: white;
+        }
+    </style>
+</head>
+<body class="relative">
+    <!-- Cookie Consent -->
+    <div id="cookieConsent" class="cookie-consent">
+        <div class="container mx-auto flex flex-col md:flex-row items-center justify-between">
+            <p class="text-sm mb-4 md:mb-0">We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies. <a href="/privacy/" class="underline">Learn more</a></p>
+            <div class="flex space-x-2">
+                <button id="acceptCookies" class="px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition">Accept</button>
+                <button id="declineCookies" class="px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 transition">Decline</button>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Toast Notification -->
+    <div id="toast" class="toast p-4 bg-green-600 text-white rounded-lg shadow-lg">
+        <div class="flex items-center">
+            <i class="fas fa-check-circle mr-2"></i>
+            <span id="toastMessage">Product added to cart!</span>
+        </div>
+    </div>
+    
+   <!-- Navigation -->
+<nav class="bg-white shadow-lg sticky top-0 z-50">
+    <div class="container mx-auto px-4">
+        <div class="flex justify-between items-center py-4">
+            <div class="flex items-center">
+                <a href="/" class="flex items-center">
+                    <img src="/image/logo.png" alt="Murphy Door Ogden Logo" class="h-10 w-24 object-cover mr-2">
+                </a>
+            </div>
+            
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="/" class="text-gray-800 hover:text-amber-600 transition">Home</a>
+                <a href="/shop/" class="text-gray-800 hover:text-amber-600 transition">Shop</a>
+                <a href="/about/" class="text-gray-800 hover:text-amber-600 transition">About</a>
+                <a href="/blog/" class="text-amber-600 hover:text-amber-600 transition">Blog</a>
+                <a href="/contact/" class="text-gray-800 hover:text-amber-600 transition">Contact</a>
+                <div class="relative">
+                    <button id="cartButton" class="text-gray-800 hover:text-amber-600 transition relative">
+                        <i class="fas fa-shopping-cart text-xl"></i>
+                        <span id="cartCount" class="absolute -top-2 -right-2 bg-amber-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                    </button>
+                    <div id="cartDropdown" class="hidden absolute right-0 mt-2 w-72 bg-white rounded-md shadow-lg z-50 p-4">
+                        <div id="cartItems" class="max-h-60 overflow-y-auto">
+                            <p class="text-gray-500 text-center py-4">Your cart is empty</p>
+                        </div>
+                        <div class="border-t mt-2 pt-2">
+                            <a href="/cart/" class="block text-center bg-amber-600 text-white py-2 rounded hover:bg-amber-700 transition">View Cart</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu Button - Custom door icon -->
+            <button id="mobileMenuButton" class="md:hidden text-gray-800 focus:outline-none">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<!-- Mobile Menu Panel - Unique sliding door design -->
+<div id="mobileMenu" class="hidden fixed inset-0 z-50 overflow-hidden">
+    <div class="absolute inset-0 overflow-hidden">
+        <!-- Background overlay with fade animation -->
+        <div id="menuOverlay" class="absolute inset-0 bg-black bg-opacity-50 transition-opacity duration-300 opacity-0"></div>
+        
+        <!-- Menu panel with sliding door effect -->
+        <div id="menuPanel" class="fixed inset-y-0 right-0 max-w-full flex transform transition-all duration-500 translate-x-full">
+            <div class="relative w-screen max-w-xs">
+                <div class="h-full flex flex-col bg-gradient-to-b from-amber-800 to-amber-900 shadow-xl overflow-y-auto">
+                    <!-- Decorative door handle -->
+                    <div class="absolute left-0 top-1/2 -ml-2 w-6 h-12 bg-amber-600 rounded-l-lg shadow-lg transform -translate-y-1/2 hidden"></div>
+                    
+                    <!-- Menu header with close button -->
+                    <div class="flex items-center justify-between px-6 py-2 border-b border-amber-700">
+                        <img src="/image/logo-white.png" alt="Murphy Door Ogden Logo" class="h-14">
+                        <button id="closeMobileMenu" class="text-amber-200 hover:text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <!-- Menu navigation links -->
+                    <div class="flex-1 px-6 py-8">
+                        <nav class="space-y-6">
+                            <a href="/" class="flex items-center text-amber-100 hover:text-white group">
+                                <span class="mr-3 h-1 w-6 bg-amber-600 group-hover:bg-white transition-all duration-300"></span>
+                                Home
+                            </a>
+                            <a href="/shop/" class="flex items-center text-amber-100 hover:text-white group">
+                                <span class="mr-3 h-1 w-6 bg-amber-600 group-hover:bg-white transition-all duration-300"></span>
+                                Shop
+                            </a>
+                            <a href="/about/" class="flex items-center text-amber-100 hover:text-white group">
+                                <span class="mr-3 h-1 w-6 bg-amber-600 group-hover:bg-white transition-all duration-300"></span>
+                                About
+                            </a>
+                            <a href="/blog/" class="flex font-bold items-center text-amber-100 hover:text-white group">
+                                <span class="mr-3 h-1 w-6 bg-amber-600 group-hover:bg-white transition-all duration-300"></span>
+                                Blog
+                            </a>
+                            <a href="/contact/" class="flex items-center text-amber-100 hover:text-white group">
+                                <span class="mr-3 h-1 w-6 bg-amber-600 group-hover:bg-white transition-all duration-300"></span>
+                                Contact
+                            </a>
+                            <a href="/cart/" class="flex items-center text-amber-100 hover:text-white group mt-10 pt-6 border-t border-amber-700">
+                                <i class="fas fa-shopping-cart mr-3"></i> 
+                                Cart (<span id="mobileCartCount">0</span>)
+                            </a>
+                        </nav>
+                    </div>
+                    
+                    <!-- Menu footer with tagline -->
+                    <div class="px-6 py-4 border-t border-amber-700 text-center">
+                        <p class="text-xs text-amber-300">"Opening doors to hidden possibilities"</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Mobile Menu Toggle - Enhanced with door animation
+    document.getElementById('mobileMenuButton').addEventListener('click', function() {
+        const menu = document.getElementById('mobileMenu');
+        const overlay = document.getElementById('menuOverlay');
+        const panel = document.getElementById('menuPanel');
+        
+        menu.classList.remove('hidden');
+        setTimeout(() => {
+            overlay.classList.add('opacity-100');
+            panel.classList.remove('translate-x-full');
+        }, 20);
+    });
+
+    // Close mobile menu
+    document.getElementById('closeMobileMenu').addEventListener('click', function() {
+        closeMobileMenu();
+    });
+
+    // Close when clicking overlay
+    document.getElementById('menuOverlay').addEventListener('click', function() {
+        closeMobileMenu();
+    });
+
+    function closeMobileMenu() {
+        const menu = document.getElementById('mobileMenu');
+        const overlay = document.getElementById('menuOverlay');
+        const panel = document.getElementById('menuPanel');
+        
+        overlay.classList.remove('opacity-100');
+        panel.classList.add('translate-x-full');
+        
+        setTimeout(() => {
+            menu.classList.add('hidden');
+        }, 500);
+    }
+
+    // Cart Dropdown Toggle (unchanged from original)
+    document.getElementById('cartButton').addEventListener('click', function(e) {
+        e.stopPropagation();
+        const dropdown = document.getElementById('cartDropdown');
+        dropdown.classList.toggle('hidden');
+    });
+    
+    // Close cart dropdown when clicking outside
+    document.addEventListener('click', function() {
+        const dropdown = document.getElementById('cartDropdown');
+        if (!dropdown.classList.contains('hidden')) {
+            dropdown.classList.add('hidden');
+        }
+    });
+</script>
+    
+   <!-- Hero Section with Background Image -->
+<section class="min-h-[50vh] flex items-center justify-center text-white relative overflow-hidden bg-cover bg-center" style="background-image: url('/image/Product/liquor-cabinet.webp');">
+    <!-- Dark overlay -->
+    <div class="absolute inset-0 bg-black opacity-40"></div>
+
+    <!-- Content -->
+    <div class="container mx-auto px-4 z-10 text-center">
+        <h1 class="text-4xl md:text-6xl font-bold mb-6">
+            Hidden Door <span class="gradient-text">Inspiration</span>
+        </h1>
+        <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
+            Discover design ideas, installation tips, and creative uses for hidden doors in modern spaces.
+        </p>
+    </div>
+</section>
+
+    
+    <!-- Blog Content -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col lg:flex-row gap-12">
+                <!-- Main Content -->
+                <div class="lg:w-2/3">
+                    <!-- Featured Post -->
+                    <div class="mb-16">
+                        <div class="bg-gray-50 rounded-lg overflow-hidden shadow-md mb-8">
+                            <a href="/blog/hidden-door-design-trends/" class="block overflow-hidden h-96">
+                                <img src="/image/blog/featured-post.jpg" alt="Hidden Door Design Trends" class="w-full h-full object-cover transition duration-500 hover:scale-105">
+                            </a>
+                            <div class="p-8">
+                                <div class="flex items-center mb-4">
+                                    <span class="text-sm text-amber-600 font-medium">DESIGN TRENDS</span>
+                                    <span class="mx-2 text-gray-400">•</span>
+                                    <span class="text-sm text-gray-500">June 15, 2025</span>
+                                </div>
+                                <a href="/blog/hidden-door-design-trends/">
+                                    <h2 class="text-2xl md:text-3xl font-bold mb-4">Emerging Hidden Door Design Trends for 2025</h2>
+                                </a>
+                                <p class="text-gray-600 mb-6">Explore the latest innovations in hidden door design, from smart technology integration to sustainable materials, that are transforming modern interiors this year.</p>
+                                <a href="/blog/hidden-door-design-trends/" class="inline-flex items-center text-amber-600 font-medium">
+                                    Read More
+                                    <i class="fas fa-arrow-right ml-2"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Category Filter -->
+                    <div class="mb-12">
+                        <div class="flex flex-wrap gap-2">
+                            <button class="category-filter px-4 py-2 border rounded-full hover:bg-amber-600 hover:text-white transition active" data-category="all">All Articles</button>
+                            <button class="category-filter px-4 py-2 border rounded-full hover:bg-amber-600 hover:text-white transition" data-category="design">Design Ideas</button>
+                            <button class="category-filter px-4 py-2 border rounded-full hover:bg-amber-600 hover:text-white transition" data-category="installation">Installation</button>
+                            <button class="category-filter px-4 py-2 border rounded-full hover:bg-amber-600 hover:text-white transition" data-category="case-studies">Case Studies</button>
+                            <button class="category-filter px-4 py-2 border rounded-full hover:bg-amber-600 hover:text-white transition" data-category="tips">Tips & Tricks</button>
+                        </div>
+                    </div>
+                    
+                    <!-- Blog Posts Grid -->
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12" id="blogPosts">
+                        <!-- Blog Post 1 -->
+                        <article class="blog-card bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition">
+                            <a href="/blog/small-space-solutions/">
+                                <div class="relative overflow-hidden h-48">
+                                    <img src="/image/blog/space-saving.jpg" alt="Small Space Solutions" class="w-full h-full object-cover transition duration-500">
+                                    <span class="absolute top-2 left-2 bg-amber-600 text-white px-2 py-1 rounded text-xs font-bold">POPULAR</span>
+                                </div>
+                                <div class="p-6">
+                                    <div class="flex items-center mb-2">
+                                        <span class="text-xs text-amber-600 font-medium">DESIGN IDEAS</span>
+                                        <span class="mx-2 text-gray-400">•</span>
+                                        <span class="text-xs text-gray-500">May 28, 2025</span>
+                                    </div>
+                                    <h3 class="text-xl font-bold mb-3">Maximizing Small Spaces with Hidden Doors</h3>
+                                    <p class="text-gray-600 mb-4">Creative ways to use hidden doors to make small apartments and homes feel more spacious and functional.</p>
+                                    <div class="flex items-center text-sm text-gray-500">
+                                        <span>5 min read</span>
+                                    </div>
+                                </div>
+                            </a>
+                        </article>
+                        
+                        <!-- Blog Post 2 -->
+                        <article class="blog-card bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition">
+                            <a href="/blog/diy-installation-guide/">
+                                <div class="relative overflow-hidden h-48">
+                                    <img src="/image/blog/installation.webp" alt="DIY Installation Guide" class="w-full h-full object-cover transition duration-500">
+                                </div>
+                                <div class="p-6">
+                                    <div class="flex items-center mb-2">
+                                        <span class="text-xs text-amber-600 font-medium">INSTALLATION</span>
+                                        <span class="mx-2 text-gray-400">•</span>
+                                        <span class="text-xs text-gray-500">May 10, 2025</span>
+                                    </div>
+                                    <h3 class="text-xl font-bold mb-3">The Complete DIY Hidden Door Installation Guide</h3>
+                                    <p class="text-gray-600 mb-4">Step-by-step instructions for installing your Murphy Door, with professional tips to ensure perfect results.</p>
+                                    <div class="flex items-center text-sm text-gray-500">
+                                        <span>8 min read</span>
+                                    </div>
+                                </div>
+                            </a>
+                        </article>
+                        
+                        <!-- Blog Post 3 -->
+                         <article class="bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition">
+                    <a href="/blog/diy-installations-guide/">
+                        <img src="/image/blog/diy-installation.webp" alt="DIY Installation Guide" class="w-full h-48 object-cover">
+                        <div class="p-6">
+                            <span class="text-sm text-amber-600">HOW-TO GUIDE</span>
+                            <h3 class="text-xl font-bold my-2">A Beginner's Guide to Installing Hidden Doors</h3>
+                            <p class="text-gray-600 mb-4">Step-by-step instructions for installing your Murphy Door, with tips to ensure a perfect fit and smooth operation.</p>
+                            <div class="flex items-center text-sm text-gray-500">
+                                <span>May 10, 2025</span>
+                                <span class="mx-2">•</span>
+                                <span>7 min read</span>
+                            </div>
+                        </div>
+                    </a>
+                </article>
+                        
+                      
+                        <!-- Blog Post 4 -->
+                        <article class="blog-card bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition">
+                            <a href="/blog/bookcase-door-designs/">
+                                <div class="relative overflow-hidden h-48">
+                                    <img src="/image/blog/design-ideas.jpg" alt="Bookcase Door Designs" class="w-full h-full object-cover transition duration-500">
+                                </div>
+                                <div class="p-6">
+                                    <div class="flex items-center mb-2">
+                                        <span class="text-xs text-amber-600 font-medium">DESIGN IDEAS</span>
+                                        <span class="mx-2 text-gray-400">•</span>
+                                        <span class="text-xs text-gray-500">March 2, 2025</span>
+                                    </div>
+                                    <h3 class="text-xl font-bold mb-3">10 Stunning Bookcase Hidden Door Designs</h3>
+                                    <p class="text-gray-600 mb-4">From traditional to contemporary, explore beautiful bookcase door designs that conceal and delight.</p>
+                                    <div class="flex items-center text-sm text-gray-500">
+                                        <span>7 min read</span>
+                                    </div>
+                                </div>
+                            </a>
+                        </article>
+                    </div>
+                    
+                   
+                </div>
+                
+                <!-- Sidebar -->
+                <div class="lg:w-1/3">
+                    <!-- About Blog -->
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-sm mb-8">
+                        <h3 class="text-xl font-bold mb-4">About This Blog</h3>
+                        <p class="text-gray-600 mb-4">Welcome to the Murphy Door Ogden blog, where we share inspiration, tips, and insights about hidden door solutions and space-saving design.</p>
+                        <p class="text-gray-600">Subscribe to stay updated on the latest trends, projects, and innovations in hidden space design.</p>
+                    </div>
+                    
+                    <!-- Categories -->
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-sm mb-8">
+                        <h3 class="text-xl font-bold mb-4">Categories</h3>
+                        <ul class="space-y-2">
+                            <li><a href="/blog/?category=design" class="flex justify-between items-center text-gray-700 hover:text-amber-600 transition py-2 border-b border-gray-100">
+                                <span>Design Ideas</span>
+                                <span class="bg-gray-200 text-gray-700 text-xs font-medium px-2 py-1 rounded-full">12</span>
+                            </a></li>
+                            <li><a href="/blog/?category=installation" class="flex justify-between items-center text-gray-700 hover:text-amber-600 transition py-2 border-b border-gray-100">
+                                <span>Installation Guides</span>
+                                <span class="bg-gray-200 text-gray-700 text-xs font-medium px-2 py-1 rounded-full">8</span>
+                            </a></li>
+                            <li><a href="/blog/?category=case-studies" class="flex justify-between items-center text-gray-700 hover:text-amber-600 transition py-2 border-b border-gray-100">
+                                <span>Case Studies</span>
+                                <span class="bg-gray-200 text-gray-700 text-xs font-medium px-2 py-1 rounded-full">5</span>
+                            </a></li>
+                            <li><a href="/blog/?category=tips" class="flex justify-between items-center text-gray-700 hover:text-amber-600 transition py-2">
+                                <span>Tips & Tricks</span>
+                                <span class="bg-gray-200 text-gray-700 text-xs font-medium px-2 py-1 rounded-full">7</span>
+                            </a></li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Popular Posts -->
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-sm mb-8">
+                        <h3 class="text-xl font-bold mb-4">Popular Posts</h3>
+                        <div class="space-y-4">
+                            <a href="/blog/hidden-door-design-trends/" class="flex items-center group">
+                                <img src="/image/blog/featured-post.jpg" alt="Hidden Door Trends" class="w-16 h-16 object-cover rounded mr-4">
+                                <div>
+                                    <h4 class="font-medium group-hover:text-amber-600 transition">Hidden Door Design Trends for 2025</h4>
+                                    <span class="text-xs text-gray-500">June 15, 2025</span>
+                                </div>
+                            </a>
+                            <a href="/blog/small-space-solutions/" class="flex items-center group">
+                                <img src="/image/blog/space-saving.jpg" alt="Small Space Solutions" class="w-16 h-16 object-cover rounded mr-4">
+                                <div>
+                                    <h4 class="font-medium group-hover:text-amber-600 transition">Maximizing Small Spaces</h4>
+                                    <span class="text-xs text-gray-500">May 28, 2025</span>
+                                </div>
+                            </a>
+                            <a href="/blog/bookcase-door-designs/" class="flex items-center group">
+                                <img src="/image/blog/design-ideas.jpg" alt="DIY Installation" class="w-16 h-16 object-cover rounded mr-4">
+                                <div>
+                                    <h4 class="font-medium group-hover:text-amber-600 transition">10 Stunning Bookcase Hidden Door Designs</h4>
+                                    <span class="text-xs text-gray-500">May 10, 2025</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    
+                    <!-- Newsletter -->
+                    <div class="bg-gray-50 p-6 rounded-lg shadow-sm">
+                        <h3 class="text-xl font-bold mb-4">Subscribe to Newsletter</h3>
+                        <p class="text-gray-600 mb-4">Get the latest blog posts and design inspiration delivered to your inbox.</p>
+                        <form class="space-y-3">
+                            <input type="text" placeholder="Your Name" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-amber-500">
+                            <input type="email" placeholder="Your Email" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-amber-500">
+                            <button type="submit" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-2 px-4 rounded transition">Subscribe</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+      
+ <!-- CTA Section with Background Image -->
+<section class="py-20 bg-cover bg-center bg-no-repeat text-white relative" style="background-image: url('/image/blog/diy-installation.webp');">
+    <!-- Dark overlay for better readability -->
+    <div class="absolute inset-0 bg-black opacity-60"></div>
+
+    <!-- CTA Content -->
+    <div class="container mx-auto px-4 text-center relative z-10">
+        <h2 class="text-3xl md:text-4xl font-bold mb-6">
+            Ready to Transform Your Space?
+        </h2>
+        <p class="text-xl mb-8 max-w-2xl mx-auto">
+            Schedule a free consultation with our hidden door experts today and discover the perfect solution for your home.
+        </p>
+        <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+            <a href="/contact/" class="bg-white hover:bg-gray-100 text-amber-800 font-bold py-3 px-8 rounded-full transition transform hover:scale-105">
+                Get Started
+            </a>
+            <a href="tel:+61290117626" class="bg-transparent hover:bg-white hover:text-amber-800 border-2 border-white text-white font-bold py-3 px-8 rounded-full transition">
+                Call Us: +61 2 9011 7626
+            </a>
+        </div>
+    </div>
+</section>
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+                <div>
+                    <a href="/" class="flex items-center mb-6">
+                   <img src="/image/logo-white.png" alt="Murphy Door Ogden Logo" class="h-16 w-24 object-cover mr-2">
+                    </a>
+                    <p class="text-gray-400 mb-4">Innovative hidden door solutions that combine functionality with elegant design for modern living spaces.</p>
+                    <div class="flex space-x-4">
+                        <a href="https://www.facebook.com/MurphyDoor/" class="text-gray-400 hover:text-white transition"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/murphydoor/" class="text-gray-400 hover:text-white transition"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.pinterest.com/murphydoor/" class="text-gray-400 hover:text-white transition"><i class="fab fa-pinterest"></i></a>
+                        <a href="https://www.youtube.com/@murphydoor" class="text-gray-400 hover:text-white transition"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/" class="text-gray-400 hover:text-white transition">Home</a></li>
+                        <li><a href="/shop/" class="text-gray-400 hover:text-white transition">Shop</a></li>
+                        <li><a href="/about/" class="text-gray-400 hover:text-white transition">About Us</a></li>
+                        <li><a href="/blog/" class="text-gray-400 hover:text-white transition">Blog</a></li>
+                        <li><a href="/contact/" class="text-gray-400 hover:text-white transition">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Customer Service</h3>
+                    <ul class="space-y-2">
+                        
+                        <li><a href="/cookies/" class="text-gray-400 hover:text-white transition">Cookies</a></li>
+                        <li><a href="/privacy/" class="text-gray-400 hover:text-white transition">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="text-gray-400 hover:text-white transition">Terms of Service</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Contact Us</h3>
+                    <address class="not-italic text-gray-400">
+                        <p class="mb-2">36 Darlinghurst Road,</p>
+                        <p class="mb-2">Sydney, NSW 2010,</p>
+                        <p class="mb-4">Australia</p>
+                        <p class="mb-2"><a href="tel:+61290117626" class="hover:text-white transition">+61 2 9011 7626</a></p>
+                        <p class="mb-4"><a href="mailto:info@murphydoorogden.com" class="hover:text-white transition">info@murphydoorogden.com</a></p>
+                        <p>Mon-Fri: 9am-5pm</p>
+                        <p>Sat: 10am-2pm</p>
+                    </address>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 pt-8 text-center text-gray-400 text-sm">
+                <p>&copy; 2025 Murphy Door Ogden. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        
+        
+        // Cart Dropdown Toggle
+        document.getElementById('cartButton').addEventListener('click', function(e) {
+            e.stopPropagation();
+            const dropdown = document.getElementById('cartDropdown');
+            dropdown.classList.toggle('hidden');
+        });
+        
+        // Close cart dropdown when clicking outside
+        document.addEventListener('click', function() {
+            const dropdown = document.getElementById('cartDropdown');
+            if (!dropdown.classList.contains('hidden')) {
+                dropdown.classList.add('hidden');
+            }
+        });
+        
+        // Cart functionality
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        
+        function updateCartCount() {
+            const count = cart.reduce((total, item) => total + item.quantity, 0);
+            document.getElementById('cartCount').textContent = count;
+            document.getElementById('mobileCartCount').textContent = count;
+        }
+        
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            
+            toastMessage.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+        
+        function updateCartDropdown() {
+            const cartItems = document.getElementById('cartItems');
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p class="text-gray-500 text-center py-4">Your cart is empty</p>';
+                return;
+            }
+            
+            let html = '';
+            cart.forEach(item => {
+                html += `
+                    <div class="flex items-center py-2 border-b">
+                        <img src="${item.image}" alt="${item.name}" class="w-12 h-12 object-cover rounded mr-3">
+                        <div class="flex-grow">
+                            <h4 class="text-sm font-medium">${item.name}</h4>
+                            <p class="text-xs text-gray-500">$${item.price.toFixed(2)} x ${item.quantity}</p>
+                        </div>
+                        <button class="remove-from-cart text-red-500 hover:text-red-700" data-id="${item.id}">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                `;
+            });
+            
+            cartItems.innerHTML = html;
+            
+            // Add event listeners to remove buttons
+            document.querySelectorAll('.remove-from-cart').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const id = this.getAttribute('data-id');
+                    removeFromCart(id);
+                });
+            });
+        }
+        
+        function addToCart(product) {
+            const existingItem = cart.find(item => item.id === product.id);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    ...product,
+                    quantity: 1
+                });
+            }
+            
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+            updateCartDropdown();
+            showToast(`${product.name} added to cart!`);
+        }
+        
+        function removeFromCart(id) {
+            cart = cart.filter(item => item.id !== id);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+            updateCartDropdown();
+            showToast('Item removed from cart');
+        }
+        
+        // Initialize cart
+        updateCartCount();
+        updateCartDropdown();
+        
+        // Category filter functionality
+        document.querySelectorAll('.category-filter').forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all buttons
+                document.querySelectorAll('.category-filter').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                
+                // Add active class to clicked button
+                this.classList.add('active');
+                
+                const category = this.getAttribute('data-category');
+                
+                // Filter posts (in a real implementation, this might be done server-side)
+                if (category === 'all') {
+                    document.querySelectorAll('.blog-card').forEach(post => {
+                        post.style.display = 'block';
+                    });
+                } else {
+                    document.querySelectorAll('.blog-card').forEach(post => {
+                        // This is simplified - in a real site you'd check the actual category
+                        if (post.querySelector('span').textContent.includes(category.toUpperCase())) {
+                            post.style.display = 'block';
+                        } else {
+                            post.style.display = 'none';
+                        }
+                    });
+                }
+            });
+        });
+        
+        // Cookie Consent
+        const cookieConsent = document.getElementById('cookieConsent');
+        const acceptCookies = document.getElementById('acceptCookies');
+        const declineCookies = document.getElementById('declineCookies');
+        
+        if (!localStorage.getItem('cookiesAccepted')) {
+            setTimeout(() => {
+                cookieConsent.classList.add('show');
+            }, 1000);
+        }
+        
+        acceptCookies.addEventListener('click', () => {
+            localStorage.setItem('cookiesAccepted', 'true');
+            cookieConsent.classList.remove('show');
+        });
+        
+        declineCookies.addEventListener('click', () => {
+            localStorage.setItem('cookiesAccepted', 'false');
+            cookieConsent.classList.remove('show');
+        });
+        
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Animate blog cards
+        gsap.utils.toArray('.blog-card').forEach((card, i) => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                },
+                y: 50,
+                opacity: 0,
+                duration: 0.8,
+                delay: i * 0.1,
+                ease: "power2.out"
+            });
+        });
+        
+        // Animate featured post
+        gsap.from('.bg-gray-50.rounded-lg', {
+            scrollTrigger: {
+                trigger: '.bg-gray-50.rounded-lg',
+                start: "top 80%",
+                toggleActions: "play none none none"
+            },
+            y: 50,
+            opacity: 0,
+            duration: 1,
+            ease: "power2.out"
+        });
+    </script>
+</body>
+</html>

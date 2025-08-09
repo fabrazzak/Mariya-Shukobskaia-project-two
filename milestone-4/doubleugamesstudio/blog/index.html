@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head> 
+<link rel="shortcut icon" href="/images/logo.webp" type="image/x-icon"> 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Game Development Blog | DoubleUGames Studio</title>
+    <meta name="description" content="Latest news, tips and insights from DoubleUGames Studio - creators of Color Slide Jam and other premium mobile games">
+    
+    <!-- Tailwind CSS with custom config -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        neon: {
+                            pink: '#ff2ced',
+                            blue: '#00f2ff',
+                            purple: '#9d00ff',
+                        },
+                        dark: {
+                            900: '#0a0a0a',
+                            800: '#1a1a1a',
+                            700: '#2a2a2a',
+                        }
+                    },
+                    animation: {
+                        'glow': 'glow 8s ease infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 8s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'text-gradient': 'text-gradient 8s ease infinite',
+                    },
+                    keyframes: {
+                        glow: {
+                            '0%, 100%': { 'text-shadow': '0 0 10px #ff2ced, 0 0 20px #9d00ff' },
+                            '50%': { 'text-shadow': '0 0 20px #00f2ff, 0 0 30px #9d00ff' }
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        'text-gradient': {
+                            '0%, 100%': {
+                                'background-size': '200% 200%',
+                                'background-position': 'left center'
+                            },
+                            '50%': {
+                                'background-size': '200% 200%',
+                                'background-position': 'right center'
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Custom Styles -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Rajdhani:wght@300;400;500;600;700&display=swap');
+        
+        :root {
+            --neon-pink: #ff2ced;
+            --neon-blue: #00f2ff;
+            --neon-purple: #9d00ff;
+        }
+        
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            background-color: #0a0a0a;
+            color: #fff;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4, .font-orbitron {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+        }
+        
+        .neon-text {
+            animation: glow 8s ease infinite;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, var(--neon-pink), var(--neon-blue), var(--neon-purple));
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            animation: text-gradient 8s ease infinite;
+        }
+        
+        .particle {
+            position: absolute;
+            background: linear-gradient(var(--neon-pink), var(--neon-blue));
+            border-radius: 50%;
+            filter: blur(5px);
+            opacity: 0.7;
+            z-index: 0;
+        }
+        
+        .blog-card {
+            background: rgba(26, 26, 26, 0.6);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.4s ease;
+        }
+        
+        .blog-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(157, 0, 255, 0.2);
+            border-color: var(--neon-blue);
+        }
+        
+        .featured-post {
+            background: linear-gradient(135deg, rgba(157, 0, 255, 0.2) 0%, rgba(0, 242, 255, 0.1) 100%);
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: linear-gradient(90deg, var(--neon-pink), var(--neon-blue));
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .btn-neon {
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn-neon::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(157, 0, 255, 0.3), transparent);
+            transform: rotate(45deg);
+            z-index: -1;
+            transition: all 0.6s ease;
+        }
+        
+        .btn-neon:hover::before {
+            left: 100%;
+        }
+        
+        .grid-pattern {
+            background-image: 
+                linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px;
+        }
+        
+        .cookies-container {
+            transform: translateY(100%);
+            transition: transform 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        
+        .cookies-container.active {
+            transform: translateY(0);
+        }
+        
+        .category-filter {
+            background: rgba(26, 26, 26, 0.6);
+            backdrop-filter: blur(10px);
+        }
+        
+        .category-btn.active {
+            background: linear-gradient(90deg, var(--neon-pink), var(--neon-purple));
+            color: white;
+        }
+        
+        .tag {
+            transition: all 0.3s ease;
+        }
+        
+        .tag:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(157, 0, 255, 0.2);
+        }
+    </style>
+</head>
+<body class="grid-pattern">
+    <!-- Animated Particles Background -->
+    <div id="particles"></div>
+    
+    <!-- Cookies Consent -->
+    <div id="cookiesConsent" class="cookies-container fixed bottom-0 left-0 right-0 bg-dark-800 border-t border-neon-purple p-6 max-w-4xl mx-auto z-50 hidden">
+        <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
+            <div class="flex-1">
+                <h3 class="text-lg font-bold text-white mb-2">We Use Cookies</h3>
+                <p class="text-gray-400 text-sm">To enhance your experience, we use cookies. By continuing, you agree to our <a href="/privacy/" class="text-neon-blue hover:underline">Privacy Policy</a>.</p>
+            </div>
+            <div class="flex flex-col sm:flex-row gap-3 w-full md:w-auto">
+                <button id="declineCookies" class="px-4 py-2 border border-gray-600 text-gray-300 rounded hover:bg-dark-700 transition">Decline</button>
+                <button id="acceptCookies" class="px-4 py-2 bg-neon-purple text-white rounded hover:bg-neon-purple/80 transition">Accept</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-dark-900/80 backdrop-blur-md z-40 border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-6 py-4">
+            <div class="flex justify-between items-center">
+                <!-- Logo -->
+                <a href="/" class="flex items-center">
+                    <div class=" md:w-32 w-28   rounded-lg flex items-center justify-center mr-3">
+                        <img src="/images/logo.png" class="rounded" />
+                    </div>
+                </a>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="nav-link text-white">Home</a>
+                    <a href="/games/" class="nav-link text-white">Games</a>
+                    <a href="/blog/" class="nav-link text-white font-bold">Blog</a>
+                    <a href="/about/" class="nav-link text-white">About</a>
+                    <a href="/contact/" class="nav-link text-white">Contact</a>
+                    
+                   <a href="https://play.google.com/store/apps/developer?id=DoubleUGames" 
+                       class="btn-neon px-6 py-2 bg-gradient-to-r from-neon-pink to-neon-blue text-white font-bold rounded">
+                        Our Games
+                    </a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuButton" class="md:hidden text-white focus:outline-none">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="md:hidden bg-dark-800 overflow-hidden max-h-0 transition-all duration-500">
+            <div class="px-6 py-4 space-y-4">
+                <a href="/" class="block text-white hover:text-neon-pink transition">Home</a>
+                <a href="/games/" class="block text-white hover:text-neon-blue transition">Games</a>
+                <a href="/blog/" class="block text-white font-bold hover:text-neon-purple transition">Blog</a>
+                <a href="/about/" class="block text-white hover:text-neon-blue transition">About</a>
+                <a href="/contact/" class="block text-white hover:text-neon-pink transition">Contact</a>
+                
+               </div>
+        </div>
+    </nav>
+
+    <!-- Blog Banner -->
+    <section class="pt-32 pb-20 relative overflow-hidden">
+        <div class="absolute top-0 left-0 w-full h-full z-0 opacity-20">
+            <div class="absolute top-1/4 left-1/4 w-64 h-64 bg-neon-pink rounded-full filter blur-3xl opacity-30"></div>
+            <div class="absolute bottom-1/4 right-1/4 w-64 h-64 bg-neon-blue rounded-full filter blur-3xl opacity-30"></div>
+        </div>
+        
+        <div class="max-w-7xl mx-auto px-6 relative z-10">
+            <div class="text-center">
+                <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold mb-6">
+                    <span class="gradient-text">Game Dev</span> <span class="neon-text">Blog</span>
+                </h1>
+                <p class="text-xl text-gray-300 max-w-3xl mx-auto">
+                    Insights, updates and behind-the-scenes from our game development studio
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Post -->
+    <section class="py-12">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="featured-post rounded-xl overflow-hidden" data-aos="fade-up">
+                <div class="grid grid-cols-1 lg:grid-cols-2">
+                    <div class="p-8 md:p-12 lg:p-16">
+                        <div class="flex items-center text-sm text-gray-400 mb-4">
+                            <span>June 18, 2025</span>
+                            <span class="mx-2">•</span>
+                            <span>8 min read</span>
+                            <span class="mx-2">•</span>
+                            <span class="text-neon-pink">Featured</span>
+                        </div>
+                        <h2 class="text-3xl md:text-4xl font-bold mb-6">The Making of Color Slide Jam: Design Challenges</h2>
+                        <p class="text-xl text-gray-300 mb-6">How we created the addictive sliding puzzle mechanics and balanced difficulty in our latest hit game.</p>
+                        <div class="flex flex-wrap gap-3 mb-8">
+                            <span class="tag px-4 py-1 bg-neon-blue/10 text-neon-blue rounded-full text-sm">Game Design</span>
+                            <span class="tag px-4 py-1 bg-neon-purple/10 text-neon-purple rounded-full text-sm">Behind the Scenes</span>
+                            <span class="tag px-4 py-1 bg-neon-pink/10 text-neon-pink rounded-full text-sm">Case Study</span>
+                        </div>
+                        <a href="/blog/making-color-slide-jam/" class="btn-neon inline-flex items-center px-6 py-3 bg-gradient-to-r from-neon-pink to-neon-purple text-white font-bold rounded-lg">
+                            Read Full Story
+                            <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                    <div class="h-64 lg:h-auto">
+                        <img src="/images/featured-blog.jpg" alt="Making of Color Slide Jam" class="w-full h-full object-cover">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Category Filters -->
+    <section class="py-6 bg-dark-800  z-30 border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-wrap justify-center gap-4">
+                <button class="category-btn px-6 py-2 rounded-full border border-gray-700 text-gray-300 hover:bg-gray-800 transition active" data-category="all">
+                    All Posts
+                </button>
+                <button class="category-btn px-6 py-2 rounded-full border border-gray-700 text-gray-300 hover:bg-gray-800 transition" data-category="development">
+                    Development
+                </button>
+                <button class="category-btn px-6 py-2 rounded-full border border-gray-700 text-gray-300 hover:bg-gray-800 transition" data-category="design">
+                    Design
+                </button>
+                <button class="category-btn px-6 py-2 rounded-full border border-gray-700 text-gray-300 hover:bg-gray-800 transition" data-category="updates">
+                    Updates
+                </button>
+                <button class="category-btn px-6 py-2 rounded-full border border-gray-700 text-gray-300 hover:bg-gray-800 transition" data-category="industry">
+                    Industry
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Grid -->
+    <section class="py-20 bg-dark-900">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Blog Post 1 -->
+                <div class="blog-card overflow-hidden rounded-xl" data-categories="development updates" data-aos="fade-up">
+                    <img src="/images/blog-1.png" alt="Color Slide Jam v1.1 Update" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="flex items-center text-sm text-gray-400 mb-3">
+                            <span>June 15, 2025</span>
+                            <span class="mx-2">•</span>
+                            <span>5 min read</span>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3">Color Slide Jam v1.1 Update</h3>
+                        <p class="text-gray-400 mb-4">Discover all the new features and improvements in our latest game update, including 20 new challenging levels.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="tag px-3 py-1 bg-neon-blue/10 text-neon-blue rounded-full text-xs">Development</span>
+                            <span class="tag px-3 py-1 bg-neon-purple/10 text-neon-purple rounded-full text-xs">Updates</span>
+                        </div>
+                        <a href="/blog/color-slide-jam-update/" class="text-neon-blue hover:underline inline-flex items-center">
+                            Read More
+                            <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Blog Post 2 -->
+                <div class="blog-card overflow-hidden rounded-xl" data-categories="design" data-aos="fade-up" data-aos-delay="100">
+                    <img src="/images/blog-2.jpg" alt="Puzzle Game Design" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="flex items-center text-sm text-gray-400 mb-3">
+                            <span>June 5, 2025</span>
+                            <span class="mx-2">•</span>
+                            <span>7 min read</span>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3">The Psychology of Puzzle Game Design</h3>
+                        <p class="text-gray-400 mb-4">How we use psychological principles to create satisfying and addictive puzzle mechanics in our games.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="tag px-3 py-1 bg-neon-pink/10 text-neon-pink rounded-full text-xs">Design</span>
+                            <span class="tag px-3 py-1 bg-neon-blue/10 text-neon-blue rounded-full text-xs">Psychology</span>
+                        </div>
+                        <a href="/blog/puzzle-game-psychology/" class="text-neon-blue hover:underline inline-flex items-center">
+                            Read More
+                            <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Blog Post 3 -->
+                <div class="blog-card overflow-hidden rounded-xl" data-categories="industry" data-aos="fade-up" data-aos-delay="200">
+                    <img src="/images/blog-3.png" alt="Mobile Gaming Trends" class="w-full h-48 object-cover">
+                    <div class="p-6">
+                        <div class="flex items-center text-sm text-gray-400 mb-3">
+                            <span>May 28, 2025</span>
+                            <span class="mx-2">•</span>
+                            <span>10 min read</span>
+                        </div>
+                        <h3 class="text-2xl font-bold mb-3">Mobile Gaming Trends in 2025</h3>
+                        <p class="text-gray-400 mb-4">Our predictions for where mobile gaming is headed this year and how we're adapting our development strategy.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="tag px-3 py-1 bg-neon-purple/10 text-neon-purple rounded-full text-xs">Industry</span>
+                            <span class="tag px-3 py-1 bg-neon-pink/10 text-neon-pink rounded-full text-xs">Trends</span>
+                        </div>
+                        <a href="/blog/mobile-gaming-trends/" class="text-neon-blue hover:underline inline-flex items-center">
+                            Read More
+                            <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Blog Post 4 -->
+                
+            </div>
+            
+           
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="py-20 bg-dark-800">
+        <div class="max-w-4xl mx-auto px-6 text-center">
+            <div class="inline-block bg-dark-700 rounded-xl p-1 mb-8">
+                <span class="text-xs font-bold px-3 py-1 bg-neon-blue/10 text-neon-blue rounded-full">NEWSLETTER</span>
+            </div>
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">Stay Updated</h2>
+            <p class="text-xl text-gray-400 mb-8 max-w-2xl mx-auto">
+                Subscribe to our newsletter for the latest game updates, development insights, and exclusive content.
+            </p>
+            <form class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+                <input type="email" placeholder="Your email address" class="flex-1 px-4 py-3 bg-dark-700 border border-gray-700 rounded-lg focus:border-neon-blue focus:outline-none">
+                <button type="submit" class="btn-neon px-6 py-3 bg-gradient-to-r from-neon-pink to-neon-purple text-white font-bold rounded-lg">
+                    Subscribe
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <footer class="bg-dark-900 border-t border-gray-800 pt-16 pb-8">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+                <!-- About -->
+                <div>
+                    <h3 class="text-xl font-bold mb-6 text-white">DoubleUGames</h3>
+                    <p class="text-gray-400 mb-6">
+                        Creating innovative mobile games that challenge and entertain.
+                    </p>
+
+                     <div class="flex space-x-4">
+                        <a href="https://www.facebook.com/doubleucasino.en" class="text-gray-400 hover:text-neon-pink transition"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://x.com/doubleucasino" class="text-gray-400 hover:text-neon-blue transition"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.instagram.com/doubleucasino" class="text-gray-400 hover:text-neon-purple transition"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.youtube.com/@DoubleUCasino" class="text-gray-400 hover:text-neon-blue transition"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-xl font-bold mb-6 text-white">Quick Links</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/" class="text-gray-400 hover:text-neon-pink transition">Home</a></li>
+                        <li><a href="/games/" class="text-gray-400 hover:text-neon-blue transition">Games</a></li>
+                        <li><a href="/blog/" class="text-gray-400 hover:text-neon-purple transition">Blog</a></li>
+                        <li><a href="/about/" class="text-gray-400 hover:text-neon-blue transition">About</a></li>
+                        <li><a href="/contact/" class="text-gray-400 hover:text-neon-pink transition">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Legal -->
+                <div>
+                    <h3 class="text-xl font-bold mb-6 text-white">Legal</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/privacy/" class="text-gray-400 hover:text-neon-blue transition">Privacy Policy</a>
+                        </li>
+                        <li><a href="/terms/" class="text-gray-400 hover:text-neon-purple transition">Terms of
+                                Service</a></li>
+                        <li><a href="/cookies/" class="text-gray-400 hover:text-neon-pink transition">Cookie Policy</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Contact -->
+                <div>
+                    <h3 class="text-xl font-bold mb-6 text-white">Contact</h3>
+                    <ul class="space-y-3 text-gray-400">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-3 text-neon-pink"></i>
+                            <span>152 Teheran-ro, 16F Gangnam Finance Center, Seoul, Korea</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-3 text-neon-blue"></i>
+                            <a href="mailto:jumyung.choi@doubleugames.com"
+                                class="hover:text-neon-blue transition">jumyung.choi@doubleugames.com</a>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone-alt mr-3 text-neon-purple"></i>
+                            <a href="tel:+821089422627" class="hover:text-neon-purple transition">+82 10-8942-2627</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-500 mb-4 md:mb-0">© 2025 DoubleUGames. All rights reserved.</p>
+                <div class="flex space-x-6">
+                    <a href="https://play.google.com/store/apps/details?id=com.doubleugames.ngfe.cbj" class="text-gray-500 hover:text-neon-pink transition">
+                        <img src="/images/play-store.png" class="w-28  " />
+
+                    </a>
+
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top -->
+    <button id="backToTop" class="fixed bottom-8 right-8 w-12 h-12 bg-neon-purple text-white rounded-full shadow-lg flex items-center justify-center hover:bg-neon-pink transition-colors opacity-0 invisible z-40">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS animation
+        AOS.init({
+            duration: 800,
+            once: false,
+            mirror: true
+        });
+        
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.style.maxHeight = mobileMenu.style.maxHeight ? null : `${mobileMenu.scrollHeight}px`;
+        });
+        
+        // Back to top button
+        const backToTopButton = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.remove('opacity-0', 'invisible');
+                backToTopButton.classList.add('opacity-100', 'visible');
+            } else {
+                backToTopButton.classList.remove('opacity-100', 'visible');
+                backToTopButton.classList.add('opacity-0', 'invisible');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Cookies consent
+        const cookiesConsent = document.getElementById('cookiesConsent');
+        const acceptCookies = document.getElementById('acceptCookies');
+        const declineCookies = document.getElementById('declineCookies');
+        
+        if (!localStorage.getItem('cookiesAccepted')) {
+            setTimeout(() => {
+                cookiesConsent.classList.remove('hidden');
+                setTimeout(() => {
+                    cookiesConsent.classList.add('active');
+                }, 100);
+            }, 2000);
+        }
+        
+        acceptCookies.addEventListener('click', () => {
+            localStorage.setItem('cookiesAccepted', 'true');
+            cookiesConsent.classList.remove('active');
+            setTimeout(() => {
+                cookiesConsent.classList.add('hidden');
+            }, 500);
+        });
+        
+        declineCookies.addEventListener('click', () => {
+            cookiesConsent.classList.remove('active');
+            setTimeout(() => {
+                cookiesConsent.classList.add('hidden');
+            }, 500);
+        });
+        
+        // Category filtering
+        const categoryButtons = document.querySelectorAll('.category-btn');
+        const blogCards = document.querySelectorAll('.blog-card');
+        
+        categoryButtons.forEach(button => {
+            button.addEventListener('click', () => {
+                // Update active state
+                categoryButtons.forEach(btn => btn.classList.remove('active'));
+                button.classList.add('active');
+                
+                // Filter blog posts
+                const category = button.dataset.category;
+                
+                blogCards.forEach(card => {
+                    if (category === 'all' || card.dataset.categories.includes(category)) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+        
+       
+        
+        // Create particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 30;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Random size between 5 and 15px
+                const size = Math.random() * 10 + 5;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // Random position
+                particle.style.left = `${Math.random() * 100}vw`;
+                particle.style.top = `${Math.random() * 100}vh`;
+                
+                // Animation
+                gsap.to(particle, {
+                    x: `${(Math.random() - 0.5) * 200}px`,
+                    y: `${(Math.random() - 0.5) * 200}px`,
+                    duration: Math.random() * 10 + 10,
+                    repeat: -1,
+                    yoyo: true,
+                    ease: "sine.inOut"
+                });
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        // Initialize particles when DOM is loaded
+        document.addEventListener('DOMContentLoaded', createParticles);
+    </script>
+</body>
+</html>

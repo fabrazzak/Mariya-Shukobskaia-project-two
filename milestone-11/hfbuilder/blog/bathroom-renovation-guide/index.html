@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Complete Bathroom Renovation Guide | House Force</title>
+    <meta name="description" content="Everything you need to know for a successful bathroom renovation - from planning and budgeting to design choices and professional installation.">
+    <meta name="keywords" content="bathroom renovation guide, bathroom remodel tips, Glasgow bathroom specialists, wetroom installation, bathroom design ideas, shower renovation">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/assets/favicon.ico" type="image/x-icon">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://hfbuilder.com/blog/">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollTrigger.min.js"></script>
+    
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <!-- Custom Tailwind Config -->
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        dark: {
+                            900: '#0a0a0a',
+                            800: '#1a1a1a',
+                            700: '#2a2a2a',
+                            600: '#3a3a3a',
+                            500: '#4a4a4a',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Poppins', 'sans-serif'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-reverse': 'float-reverse 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        'float-reverse': {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
+        
+        :root {
+            --color-primary-500: #0ea5e9;
+            --color-primary-600: #0284c7;
+            --color-dark-900: #0a0a0a;
+            --color-dark-800: #1a1a1a;
+        }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--color-dark-900);
+            color: #e5e5e5;
+            overflow-x: hidden;
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, #38bdf8, #0ea5e9, #0284c7);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.1), rgba(2, 132, 199, 0.2));
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: var(--color-primary-500);
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        /* Three.js canvas styling */
+        #threejs-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.3;
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--color-dark-800);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--color-primary-600);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--color-primary-500);
+        }
+        
+        /* Blog content styles */
+        .blog-content h2 {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-top: 2.5rem;
+            margin-bottom: 1.25rem;
+            color: white;
+            line-height: 1.3;
+        }
+        
+        .blog-content h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: white;
+            line-height: 1.3;
+        }
+        
+        .blog-content p {
+            margin-bottom: 1.5rem;
+            line-height: 1.8;
+            color: #d1d5db;
+            font-size: 1.05rem;
+        }
+        
+        .blog-content ul, .blog-content ol {
+            margin-bottom: 1.5rem;
+            padding-left: 1.75rem;
+        }
+        
+        .blog-content ul {
+            list-style-type: disc;
+        }
+        
+        .blog-content ol {
+            list-style-type: decimal;
+        }
+        
+        .blog-content li {
+            margin-bottom: 0.75rem;
+            line-height: 1.8;
+            color: #d1d5db;
+        }
+        
+        .blog-content a {
+            color: var(--color-primary-400);
+            text-decoration: underline;
+        }
+        
+        .blog-content a:hover {
+            color: var(--color-primary-300);
+        }
+        
+        .blog-content blockquote {
+            border-left: 4px solid var(--color-primary-500);
+            padding: 1.25rem 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+            color: #9ca3af;
+            background-color: var(--color-dark-700);
+            border-radius: 0 0.5rem 0.5rem 0;
+        }
+        
+        .blog-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 0.75rem;
+            margin: 2rem 0;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+        }
+        
+        .blog-content .image-caption {
+            text-align: center;
+            font-size: 0.9rem;
+            color: #9ca3af;
+            margin-top: -1.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .blog-content table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+        }
+        
+        .blog-content table th,
+        .blog-content table td {
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--color-dark-600);
+            text-align: left;
+        }
+        
+        .blog-content table th {
+            background-color: var(--color-dark-700);
+            color: white;
+            font-weight: 600;
+        }
+        
+        .blog-content table tr:nth-child(even) {
+            background-color: var(--color-dark-800);
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <!-- Cookie Consent Banner -->
+    <div id="cookie-banner" class="fixed bottom-0 left-0 right-0 bg-dark-700 p-4 shadow-lg z-50 hidden">
+        <div class="container mx-auto flex flex-col md:flex-row items-center justify-between">
+            <div class="mb-4 md:mb-0 md:mr-4">
+                <p class="text-sm text-gray-300">We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies.</p>
+            </div>
+            <div class="flex flex-col sm:flex-row gap-2">
+                <button id="accept-cookies" class="px-4 py-2 bg-primary-600 hover:bg-primary-500 text-white rounded-md transition-colors duration-300 text-sm font-medium">Accept</button>
+                <button id="decline-cookies" class="px-4 py-2 bg-dark-600 hover:bg-dark-500 text-gray-300 rounded-md transition-colors duration-300 text-sm font-medium">Decline</button>
+                <a href="/cookies/" class="px-4 py-2 text-primary-400 hover:text-primary-300 rounded-md transition-colors duration-300 text-sm font-medium text-center">Learn More</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-40 bg-dark-900/90 backdrop-blur-md border-b border-dark-700">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <!-- Logo -->
+             <a href="/" class="flex items-center space-x-2">
+                    <img src="/assets/images/logo.png" class="h-12" alt="logo">
+                </a>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="nav-link text-gray-300 hover:text-white font-medium">Home</a>
+                    <a href="/about/" class="nav-link text-gray-300 hover:text-white font-medium">About</a>
+                    <a href="/projects/" class="nav-link text-gray-300 hover:text-white font-medium">Projects</a>
+                    <a href="/blog/" class="nav-link text-white font-medium">Blog</a>
+                    <a href="/contact/" class="nav-link text-gray-300 hover:text-white font-medium">Contact</a>
+                    <a href="/contact/" class="px-4 py-2 bg-primary-600 hover:bg-primary-500 text-white rounded-md transition-colors duration-300 font-medium">Get a Quote</a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-button" class="md:hidden text-gray-300 hover:text-white focus:outline-none">
+                    <i class="fas fa-bars text-2xl"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-dark-800 border-t border-dark-700">
+            <div class="container mx-auto px-4 py-3 flex flex-col space-y-3">
+                <a href="/" class="text-gray-300 hover:text-white font-medium py-2">Home</a>
+                <a href="/about/" class="text-gray-300 hover:text-white font-medium py-2">About</a>
+                <a href="/projects/" class="text-gray-300 hover:text-white font-medium py-2">Projects</a>
+                <a href="/blog/" class="text-white font-medium py-2">Blog</a>
+                <a href="/contact/" class="text-gray-300 hover:text-white font-medium py-2">Contact</a>
+                <a href="/contact/" class="px-4 py-2 bg-primary-600 hover:bg-primary-500 text-white rounded-md transition-colors duration-300 font-medium text-center mt-2">Get a Quote</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Three.js Background -->
+    <div id="threejs-container" class="fixed top-0 left-0 w-full h-full z-0">
+        <canvas id="threejs-canvas"></canvas>
+    </div>
+
+    <!-- Blog Header -->
+    <section class="relative pt-32 pb-16 overflow-hidden">
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="max-w-4xl mx-auto text-center">
+                <span class="inline-block px-3 py-1 bg-primary-900/30 text-primary-400 rounded-full text-sm font-medium mb-4">Bathroom Renovation</span>
+                <h1 class="text-4xl md:text-5xl font-bold leading-tight mb-6">
+                    The Complete <span class="gradient-text">Bathroom Renovation Guide</span>
+                </h1>
+                <div class="flex items-center justify-center text-sm text-gray-500">
+                    <span>May 28, 2025</span>
+                    <span class="mx-2">•</span>
+                    <span>6 min read</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Content -->
+    <article class="relative py-12">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto">
+                <div class="mb-12 rounded-xl overflow-hidden">
+                    <img src="/assets/images/blog-2.jpg" alt="Modern Bathroom Renovation" class="w-full h-auto">
+                </div>
+                
+                <div class="blog-content">
+                    <p class="text-lg text-gray-300 mb-8">A bathroom renovation is one of the most valuable home improvements you can undertake. Whether you're updating an outdated space or creating your dream bathroom from scratch, this comprehensive guide will walk you through every step of the process to ensure a successful transformation.</p>
+                    
+                    <h2>1. Planning Your Bathroom Renovation</h2>
+                    
+                    <p>Proper planning is the foundation of any successful bathroom renovation. Consider these key factors before starting:</p>
+                    
+                    <h3>Assessing Your Needs</h3>
+                    
+                    <ul>
+                        <li><strong>Who uses the bathroom?</strong> (Master bath, family bathroom, guest powder room)</li>
+                        <li><strong>Current pain points</strong> (Lack of storage, poor lighting, outdated fixtures)</li>
+                        <li><strong>Must-have features</strong> (Double vanity, walk-in shower, freestanding tub)</li>
+                        <li><strong>Future needs</strong> (Aging in place considerations, growing family)</li>
+                    </ul>
+                    
+                    <h3>Setting a Realistic Budget</h3>
+                    
+                    <p>Bathroom renovation costs vary widely based on size, materials, and scope of work. Here's a rough breakdown:</p>
+                    
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Project Scope</th>
+                                <th>Average Cost Range</th>
+                                <th>Duration</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Cosmetic refresh</td>
+                                <td>£2,000 - £5,000</td>
+                                <td>1-2 weeks</td>
+                            </tr>
+                            <tr>
+                                <td>Mid-range renovation</td>
+                                <td>£5,000 - £15,000</td>
+                                <td>2-4 weeks</td>
+                            </tr>
+                            <tr>
+                                <td>Luxury remodel</td>
+                                <td>£15,000 - £30,000+</td>
+                                <td>4-8 weeks</td>
+                            </tr>
+                            <tr>
+                                <td>Wetroom conversion</td>
+                                <td>£7,000 - £20,000</td>
+                                <td>3-5 weeks</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <blockquote>
+                        "Always budget an additional 10-15% for unexpected issues that may arise during renovation, especially in older homes where hidden problems often emerge once walls are opened up."
+                    </blockquote>
+                    
+                    <h2>2. Design Considerations</h2>
+                    
+                    <p>The design phase transforms your vision into a workable plan. Key elements to consider:</p>
+                    
+                    <h3>Layout Options</h3>
+                    
+                   
+                    
+                    <p>Popular layout configurations include:</p>
+                    
+                    <ul>
+                        <li><strong>Three-piece bathroom:</strong> Toilet, sink, and shower/tub combo</li>
+                        <li><strong>Four-piece bathroom:</strong> Toilet, sink, separate shower and tub</li>
+                        <li><strong>Five-piece bathroom:</strong> Double vanity plus toilet, shower, and tub</li>
+                        <li><strong>Wetroom:</strong> Fully waterproofed open space with shower area</li>
+                    </ul>
+                    
+                    <h3>Material Selection</h3>
+                    
+                    <p>Choose materials that balance aesthetics with practicality for wet environments:</p>
+                    
+                    <ul>
+                        <li><strong>Flooring:</strong> Porcelain tile, natural stone, luxury vinyl plank</li>
+                        <li><strong>Wall coverings:</strong> Ceramic tile, waterproof wall panels, moisture-resistant paint</li>
+                        <li><strong>Countertops:</strong> Quartz, granite, solid surface</li>
+                        <li><strong>Cabinetry:</strong> Moisture-resistant MDF or plywood with waterproof finishes</li>
+                    </ul>
+                    
+                    <h2>3. Key Installation Steps</h2>
+                    
+                    <p>Understanding the renovation process helps manage expectations and timelines:</p>
+                    
+                    <h3>Demolition and Preparation</h3>
+                    
+                    <ul>
+                        <li>Remove existing fixtures, tiles, and finishes</li>
+                        <li>Address any structural or plumbing issues</li>
+                        <li>Install new plumbing rough-ins if relocating fixtures</li>
+                        <li>Waterproof shower/wet areas properly</li>
+                    </ul>
+                    
+                     <p class="image-caption">Proper waterproofing is essential to prevent future leaks and damage</p>
+                    
+                    <h3>Installation Sequence</h3>
+                    
+                    <ol>
+                        <li>Plumbing rough-in and electrical work</li>
+                        <li>Wall and floor substrate preparation</li>
+                        <li>Tile installation (floor first, then walls)</li>
+                        <li>Vanity and toilet installation</li>
+                        <li>Shower enclosure or tub installation</li>
+                        <li>Lighting and mirror installation</li>
+                        <li>Final plumbing connections</li>
+                        <li>Grouting and sealing</li>
+                        <li>Final cleaning and inspection</li>
+                    </ol>
+                    
+                    <h2>4. Choosing the Right Fixtures</h2>
+                    
+                    <p>Quality fixtures enhance both functionality and style:</p>
+                    
+                    <h3>Shower Systems</h3>
+                    
+                   
+                    
+                    <ul>
+                        <li><strong>Shower heads:</strong> Rainfall, handheld, or combination</li>
+                        <li><strong>Controls:</strong> Thermostatic valves for safety and comfort</li>
+                        <li><strong>Enclosures:</strong> Frameless glass for modern look, sliding doors for space efficiency</li>
+                        <li><strong>Special features:</strong> Steam showers, body jets, built-in seating</li>
+                    </ul>
+                    
+                    <h3>Bathtub Options</h3>
+                    
+                    <ul>
+                        <li><strong>Freestanding tubs:</strong> Statement pieces with various styles (clawfoot, modern oval)</li>
+                        <li><strong>Built-in tubs:</strong> Space-efficient with surround options</li>
+                        <li><strong>Soaking tubs:</strong> Deeper for full immersion</li>
+                        <li><strong>Whirlpool tubs:</strong> Therapeutic jets for relaxation</li>
+                    </ul>
+                    
+                    <h2>5. Lighting and Ventilation</h2>
+                    
+                    <p>Proper lighting and ventilation are often overlooked but critically important:</p>
+                    
+                    <h3>Lighting Design</h3>
+                    
+                    <ul>
+                        <li><strong>Task lighting:</strong> Around mirrors for grooming (minimum 1500 lumens total)</li>
+                        <li><strong>Ambient lighting:</strong> Ceiling fixtures for overall illumination</li>
+                        <li><strong>Accent lighting:</strong> In shower niches or above bathtubs</li>
+                        <li><strong>Dimmers:</strong> For adjustable mood lighting</li>
+                    </ul>
+                    
+                    <h3>Ventilation Requirements</h3>
+                    
+                    <ul>
+                        <li>Extractor fan with minimum 50 CFM (cubic feet per minute) capacity</li>
+                        <li>Proper ducting to exterior (not just into attic)</li>
+                        <li>Automatic humidity sensors or timer switches</li>
+                        <li>Minimum 1 square foot of openable window area if no mechanical ventilation</li>
+                    </ul>
+                    
+                    
+                    <h2>6. Final Touches and Maintenance</h2>
+                    
+                    <p>Complete your renovation with thoughtful details and learn how to maintain your new bathroom:</p>
+                    
+                    <h3>Accessories and Finishing Touches</h3>
+                    
+                    <ul>
+                        <li>Heated towel rails (minimum 100W for standard bathroom)</li>
+                        <li>Mirrors with integrated lighting or demister pads</li>
+                        <li>Built-in niche storage in showers</li>
+                        <li>Quality hardware (towel bars, robe hooks, toilet paper holders)</li>
+                    </ul>
+                    
+                    <h3>Maintenance Tips</h3>
+                    
+                    <ul>
+                        <li>Regularly reseal grout and natural stone surfaces (annually)</li>
+                        <li>Clean shower screens after each use to prevent water spots</li>
+                        <li>Use pH-neutral cleaners on natural stone and tile</li>
+                        <li>Inspect caulking annually and replace as needed</li>
+                        <li>Clean extractor fan grilles quarterly</li>
+                    </ul>
+                    
+                    <h2>7. Hiring Professionals vs. DIY</h2>
+                    
+                    <p>While some aspects of bathroom renovation can be DIY projects, many require professional expertise:</p>
+                    
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Task</th>
+                                <th>DIY Potential</th>
+                                <th>Professional Recommended</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Demolition</td>
+                                <td>Moderate</td>
+                                <td>For structural elements</td>
+                            </tr>
+                            <tr>
+                                <td>Plumbing</td>
+                                <td>Basic fixture replacement</td>
+                                <td>All new installations/relocations</td>
+                            </tr>
+                            <tr>
+                                <td>Electrical</td>
+                                <td>None (illegal without certification)</td>
+                                <td>Always</td>
+                            </tr>
+                            <tr>
+                                <td>Tiling</td>
+                                <td>Small areas with simple patterns</td>
+                                <td>Large areas, complex designs</td>
+                            </tr>
+                            <tr>
+                                <td>Waterproofing</td>
+                                <td>Not recommended</td>
+                                <td>Critical for preventing leaks</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    
+                    <blockquote>
+                        "A professional bathroom installer can complete the work 3-4 times faster than a DIYer while ensuring all building regulations are met and warranties remain valid."
+                    </blockquote>
+                    
+                    <h2>Conclusion</h2>
+                    
+                    <p>A well-executed bathroom renovation can transform your daily routine while significantly increasing your home's value. By carefully planning your project, selecting quality materials, and working with experienced professionals for critical installations, you'll create a beautiful, functional space that stands the test of time.</p>
+                    
+                    <p>At House Force, we specialize in bathroom renovations that combine exceptional craftsmanship with thoughtful design. Contact us today to discuss how we can bring your dream bathroom to life.</p>
+                </div>
+                
+                <div class="mt-16 pt-8 border-t border-dark-700">
+                    <a href="/blog/" class="inline-flex items-center text-primary-400 hover:text-primary-300 font-medium">
+                        <i class="fas fa-arrow-left mr-2"></i> Back to Blog
+                    </a>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <!-- Footer -->
+    <footer class="relative text-gray-400 pt-16 pb-8 border-t border-dark-700">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+                <!-- Footer Column 1 -->
+                <div>
+                    <a href="/" class="flex items-center space-x-2">
+                    <img src="/assets/images/logo.png" class="h-12 mb-4" alt="logo">
+                </a>
+                    <p class="mb-6">Providing quality workmanship and exceptional customer service for all your property maintenance needs in Glasgow and surrounding areas.</p>
+                    <div class="flex space-x-4">
+                        <a href="https://www.facebook.com/house.force.779" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-dark-700 hover:bg-primary-600 flex items-center justify-center transition-colors duration-300">
+                            <i class="fab fa-facebook-f text-lg"></i>
+                        </a>
+                        <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-full bg-dark-700 hover:bg-primary-600 flex items-center justify-center transition-colors duration-300">
+                            <i class="fab fa-instagram text-lg"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Footer Column 2 -->
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-6">Quick Links</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/" class="hover:text-primary-400 transition-colors duration-300">Home</a></li>
+                        <li><a href="/about/" class="hover:text-primary-400 transition-colors duration-300">About Us</a></li>
+                        <li><a href="/projects/" class="hover:text-primary-400 transition-colors duration-300">Projects</a></li>
+                        <li><a href="/blog/" class="hover:text-primary-400 transition-colors duration-300">Blog</a></li>
+                        <li><a href="/contact/" class="hover:text-primary-400 transition-colors duration-300">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Footer Column 3 -->
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-6">Services</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/services/" class="hover:text-primary-400 transition-colors duration-300">General Maintenance</a></li>
+                        <li><a href="/services/" class="hover:text-primary-400 transition-colors duration-300">Bathroom Renovations</a></li>
+                        <li><a href="/services/" class="hover:text-primary-400 transition-colors duration-300">Kitchen Installations</a></li>
+                        <li><a href="/services/" class="hover:text-primary-400 transition-colors duration-300">Painting & Decorating</a></li>
+                        <li><a href="/services/" class="hover:text-primary-400 transition-colors duration-300">Wetroom Conversions</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Footer Column 4 -->
+                <div>
+                    <h3 class="text-lg font-bold text-white mb-6">Contact Info</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt text-primary-500 mt-1 mr-3"></i>
+                            <span>22 Renfield Ln, Glasgow G2 5AR, UK</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone-alt text-primary-500 mr-3"></i>
+                            <a href="tel:+441412222254" class="hover:text-primary-400 transition-colors duration-300">+44 141 222 2254</a>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope text-primary-500 mr-3"></i>
+                            <a href="mailto:info@hfbuilder.com" class="hover:text-primary-400 transition-colors duration-300">info@hfbuilder.com</a>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-clock text-primary-500 mr-3"></i>
+                            <span>Mon-Fri: 8am - 6pm</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="pt-8 border-t border-dark-700 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-sm mb-4 md:mb-0">© 2025 House Force Ltd. All rights reserved.</p>
+                <div class="flex space-x-6">
+                    <a href="/privacy/" class="text-sm hover:text-primary-400 transition-colors duration-300">Privacy Policy</a>
+                    <a href="/terms/" class="text-sm hover:text-primary-400 transition-colors duration-300">Terms of Service</a>
+                    <a href="/cookies/" class="text-sm hover:text-primary-400 transition-colors duration-300">Cookies Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="fixed bottom-8 right-8 w-12 h-12 bg-primary-600 hover:bg-primary-500 text-white rounded-full shadow-lg flex items-center justify-center transition-all duration-300 opacity-0 invisible">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Back to Top Button
+        const backToTopButton = document.getElementById('back-to-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.remove('opacity-0', 'invisible');
+                backToTopButton.classList.add('opacity-100', 'visible');
+            } else {
+                backToTopButton.classList.remove('opacity-100', 'visible');
+                backToTopButton.classList.add('opacity-0', 'invisible');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        
+        // Cookie Consent Banner
+        const cookieBanner = document.getElementById('cookie-banner');
+        const acceptCookies = document.getElementById('accept-cookies');
+        const declineCookies = document.getElementById('decline-cookies');
+        
+        if (!localStorage.getItem('cookiesAccepted')) {
+            setTimeout(() => {
+                cookieBanner.classList.remove('hidden');
+            }, 1000);
+        }
+        
+        acceptCookies.addEventListener('click', () => {
+            localStorage.setItem('cookiesAccepted', 'true');
+            cookieBanner.classList.add('hidden');
+        });
+        
+        declineCookies.addEventListener('click', () => {
+            localStorage.setItem('cookiesAccepted', 'false');
+            cookieBanner.classList.add('hidden');
+        });
+        
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Animate content sections
+        gsap.utils.toArray('.blog-content h2, .blog-content h3, .blog-content p, .blog-content ul, .blog-content table, .blog-content img').forEach(element => {
+            gsap.from(element, {
+                scrollTrigger: {
+                    trigger: element,
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                },
+                opacity: 0,
+                y: 30,
+                duration: 0.8,
+                ease: "power2.out"
+            });
+        });
+        
+        // Three.js Background Animation
+        const threeContainer = document.getElementById('threejs-container');
+        const canvas = document.getElementById('threejs-canvas');
+        
+        // Only initialize Three.js if the container exists
+        if (threeContainer && canvas) {
+            // Scene setup
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ canvas, alpha: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            
+            // Particles
+            const particlesGeometry = new THREE.BufferGeometry();
+            const particleCount = 1000;
+            
+            const posArray = new Float32Array(particleCount * 3);
+            
+            for (let i = 0; i < particleCount * 3; i++) {
+                posArray[i] = (Math.random() - 0.5) * 10;
+            }
+            
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+            
+            const particlesMaterial = new THREE.PointsMaterial({
+                size: 0.02,
+                color: 0x0ea5e9,
+                transparent: true,
+                opacity: 0.8,
+                blending: THREE.AdditiveBlending
+            });
+            
+            const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+            scene.add(particlesMesh);
+            
+            camera.position.z = 3;
+            
+            // Animation loop
+            function animate() {
+                requestAnimationFrame(animate);
+                
+                particlesMesh.rotation.x += 0.0005;
+                particlesMesh.rotation.y += 0.0005;
+                
+                renderer.render(scene, camera);
+            }
+            
+            animate();
+            
+            // Handle window resize
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        }
+    </script>
+</body>
+</html>

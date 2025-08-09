@@ -1,0 +1,561 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart | Bee Central</title>
+    <meta name="description" content="Review your cart items at Bee Central. Premium active honey products from Western Australia's Wheatbelt region.">
+    <meta name="keywords" content="active honey cart, WA honey purchase, Australian honey products, bee conservation products, Leptospermum honey, sustainable farming products, honey checkout, Western Australia honey shop">
+    
+    <!-- Favicon -->
+   <link rel="icon" href="/assets/images/favicon.png" type="image/x-icon">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            light: '#fbbf24',
+                            DEFAULT: '#d97706',
+                            dark: '#92400e',
+                        },
+                        secondary: {
+                            light: '#a7f3d0',
+                            DEFAULT: '#059669',
+                            dark: '#065f46',
+                        },
+                        accent: {
+                            light: '#fde68a',
+                            DEFAULT: '#f59e0b',
+                            dark: '#b45309',
+                        },
+                        dark: {
+                            100: '#1a1a1a',
+                            200: '#1f1f1f',
+                            300: '#242424',
+                            400: '#2a2a2a',
+                            500: '#2f2f2f',
+                            600: '#343434',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Poppins"', 'sans-serif'],
+                        display: ['"Playfair Display"', 'serif'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 6s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+</head>
+<body class="bg-dark-100 text-gray-200 font-sans antialiased overflow-x-hidden">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 bg-dark-200/90 backdrop-blur-md z-40 border-b border-dark-400">
+        <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+            <!-- Logo -->
+           <a href="/" class="flex items-center gap-2">
+               <img src="/assets/images/logo.png" class="h-16 w-auto" alt="logo"/>
+            </a>
+            
+            <!-- Desktop Menu -->
+            <div class="hidden lg:flex items-center gap-8">
+                <a href="/" class="hover:text-primary transition-colors">Home</a>
+                <a href="/services/" class="hover:text-primary transition-colors">Services</a>
+                <a href="/products/" class="text-primary font-medium hover:text-accent transition-colors">Products</a>
+                <a href="/about/" class="hover:text-primary transition-colors">About</a>
+                <a href="/blog/" class="hover:text-primary transition-colors">Blog</a>
+                <a href="/contact/" class="hover:text-primary transition-colors">Contact</a>
+                
+                <!-- Cart Icon -->
+                <a href="/cart/" class="relative group">
+                    <i class="fas fa-shopping-cart text-xl text-primary transition-colors"></i>
+                    <span id="cartCount" class="absolute -top-2 -right-2 bg-primary text-dark-100 text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">0</span>
+                </a>
+                
+                <!-- Social Links -->
+                <div class="flex gap-4 ml-4">
+                    <a href="https://www.facebook.com/BeeCentralAustralia/" target="_blank" class="hover:text-primary transition-colors"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://x.com/centralbee1" target="_blank" class="hover:text-primary transition-colors"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.instagram.com/BeeCentralAustralia/" target="_blank" class="hover:text-primary transition-colors"><i class="fab fa-instagram"></i></a>
+                    <a href="https://www.youtube.com/channel/UCIkVvpMeMr2oKn1lW7A7CQA" target="_blank" class="hover:text-primary transition-colors"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu Button -->
+            <button id="mobileMenuButton" class="lg:hidden text-2xl">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="lg:hidden hidden absolute top-full left-0 right-0 bg-dark-300 py-4 px-6 shadow-lg">
+            <div class="flex flex-col gap-4">
+                <a href="/" class="hover:text-primary transition-colors">Home</a>
+                <a href="/services/" class="hover:text-primary transition-colors">Services</a>
+                <a href="/products/" class="text-primary font-medium">Products</a>
+                <a href="/about/" class="hover:text-primary transition-colors">About</a>
+                <a href="/blog/" class="hover:text-primary transition-colors">Blog</a>
+                <a href="/contact/" class="hover:text-primary transition-colors">Contact</a>
+                
+                <div class="flex items-center justify-between pt-4 border-t border-dark-400">
+                    <a href="/cart/" class="relative group">
+                        <i class="fas fa-shopping-cart text-xl text-primary"></i>
+                        <span id="mobileCartCount" class="absolute -top-2 -right-2 bg-primary text-dark-100 text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">0</span>
+                    </a>
+                    
+                    <div class="flex gap-4">
+                        <a href="https://www.facebook.com/BeeCentralAustralia/" target="_blank" class="hover:text-primary transition-colors"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://x.com/centralbee1" target="_blank" class="hover:text-primary transition-colors"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.instagram.com/BeeCentralAustralia/" target="_blank" class="hover:text-primary transition-colors"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.youtube.com/channel/UCIkVvpMeMr2oKn1lW7A7CQA" target="_blank" class="hover:text-primary transition-colors"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Cart Section -->
+    <section class="pt-32 pb-16 min-h-screen">
+        <div class="container mx-auto px-4">
+            <div class="mb-12">
+                <h1 class="text-3xl md:text-4xl font-display font-bold mb-2">Your Shopping Cart</h1>
+                <div class="w-20 h-1 bg-gradient-to-r from-primary to-accent"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <!-- Cart Items -->
+                <div class="lg:col-span-2">
+                    <!-- Empty Cart State -->
+                    <div id="emptyCart" class="bg-dark-200 rounded-xl p-8 text-center hidden">
+                        <div class="w-24 h-24 bg-dark-300 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i class="fas fa-shopping-cart text-3xl text-primary"></i>
+                        </div>
+                        <h3 class="text-xl font-display font-bold mb-2">Your cart is empty</h3>
+                        <p class="text-sm opacity-80 mb-6">Looks like you haven't added anything to your cart yet</p>
+                        <a href="/products/" class="inline-block px-6 py-3 bg-gradient-to-r from-primary to-accent rounded-md font-medium hover:opacity-90 transition-opacity">Browse Products</a>
+                    </div>
+                    
+                    <!-- Cart Items Table -->
+                    <div id="cartItems" class="hidden">
+                        <div class="bg-dark-200 rounded-xl overflow-hidden">
+                            <!-- Table Header -->
+                            <div class="grid grid-cols-12 gap-4 p-4 border-b border-dark-400 font-medium">
+                                <div class="col-span-6">Product</div>
+                                <div class="col-span-2 text-center">Price</div>
+                                <div class="col-span-2 text-center">Quantity</div>
+                                <div class="col-span-2 text-right">Total</div>
+                            </div>
+                            
+                            <!-- Cart Items will be inserted here by JavaScript -->
+                            <div id="cartItemsList" class="divide-y divide-dark-400"></div>
+                            
+                            <!-- Cart Actions -->
+                            <div class="p-4 border-t border-dark-400 flex flex-col sm:flex-row justify-between gap-4">
+                                <a href="/products/" class="flex items-center gap-2 text-primary hover:text-accent transition-colors">
+                                    <i class="fas fa-arrow-left"></i>
+                                    Continue Shopping
+                                </a>
+                                <button id="clearCart" class="px-4 py-2 bg-dark-300 hover:bg-dark-400 rounded-md transition-colors">
+                                    <i class="fas fa-trash-alt mr-2"></i>
+                                    Clear Cart
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Order Summary -->
+                <div class="lg:col-span-1">
+                    <div class="bg-dark-200 rounded-xl p-6 sticky top-32">
+                        <h3 class="text-xl font-display font-bold mb-6">Order Summary</h3>
+                        
+                        <div class="space-y-4 mb-6">
+                            <div class="flex justify-between">
+                                <span class="opacity-80">Subtotal</span>
+                                <span id="cartSubtotal">$0.00</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="opacity-80">Shipping</span>
+                                <span id="cartShipping">Calculated at checkout</span>
+                            </div>
+                            <div class="flex justify-between border-t border-dark-400 pt-4">
+                                <span class="font-medium">Estimated Total</span>
+                                <span id="cartTotal" class="text-primary font-bold">$0.00</span>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <label for="discountCode" class="block text-sm opacity-80 mb-2">Discount Code</label>
+                            <div class="flex gap-2">
+                                <input type="text" id="discountCode" placeholder="Enter code" class="flex-1 bg-dark-300 border border-dark-400 rounded-md px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50">
+                                <button id="applyDiscount" class="px-4 py-2 bg-dark-300 hover:bg-dark-400 rounded-md transition-colors">Apply</button>
+                            </div>
+                        </div>
+                        
+                        <a href="/checkout/" id="checkoutBtn" class="block w-full text-center px-6 py-3 bg-gradient-to-r from-primary to-accent rounded-md font-medium hover:opacity-90 transition-opacity disabled:opacity-50 disabled:cursor-not-allowed">
+                            Proceed to Checkout
+                        </a>
+                        
+                        <div class="mt-4 text-xs opacity-60 text-center">
+                            <p>Free shipping on orders over $100</p>
+                            <p>30-day satisfaction guarantee</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Recently Viewed -->
+            <div class="mt-20 hidden" id="recentlyViewedSection" >
+                
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Product 1 -->
+                    
+                    
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark-300 pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+                <!-- About -->
+                <div>
+                    <a href="/" class="flex items-center gap-2">
+               <img src="/assets/images/logo.png" class="h-16 w-auto mb-4" alt="logo"/>
+            </a>
+                    <p class="text-sm opacity-80 mb-4">Building healthy Australian honey bee populations for a better future through sustainable farming partnerships and premium active honey products.</p>
+                    <div class="flex gap-4">
+                        <a href="https://www.facebook.com/BeeCentralAustralia/" target="_blank" class="w-8 h-8 rounded-full bg-dark-400 flex items-center justify-center hover:bg-primary hover:text-dark-100 transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://x.com/centralbee1" target="_blank" class="w-8 h-8 rounded-full bg-dark-400 flex items-center justify-center hover:bg-primary hover:text-dark-100 transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://www.instagram.com/BeeCentralAustralia/" target="_blank" class="w-8 h-8 rounded-full bg-dark-400 flex items-center justify-center hover:bg-primary hover:text-dark-100 transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://www.youtube.com/channel/UCIkVvpMeMr2oKn1lW7A7CQA" target="_blank" class="w-8 h-8 rounded-full bg-dark-400 flex items-center justify-center hover:bg-primary hover:text-dark-100 transition-colors">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-xl font-display font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/" class="text-sm opacity-80 hover:text-primary transition-colors">Home</a></li>
+                        <li><a href="/services/" class="text-sm opacity-80 hover:text-primary transition-colors">Services</a></li>
+                        <li><a href="/products/" class="text-sm opacity-80 hover:text-primary transition-colors">Products</a></li>
+                        <li><a href="/about/" class="text-sm opacity-80 hover:text-primary transition-colors">About Us</a></li>
+                        <li><a href="/blog/" class="text-sm opacity-80 hover:text-primary transition-colors">Blog</a></li>
+                        <li><a href="/contact/" class="text-sm opacity-80 hover:text-primary transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Contact -->
+                <div>
+                    <h3 class="text-xl font-display font-bold mb-4">Contact Us</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-map-marker-alt mt-1 text-primary"></i>
+                            <span class="text-sm opacity-80">170 Yulara Dr, Yulara NT 0872, Australia</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-phone text-primary"></i>
+                            <span class="text-sm opacity-80">+61 8 8957 7036</span>
+                        </li>
+                        <li class="flex items-center gap-3">
+                            <i class="fas fa-envelope text-primary"></i>
+                            <span class="text-sm opacity-80">info@beecentralau.com</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Newsletter -->
+                <div>
+                    <h3 class="text-xl font-display font-bold mb-4">Newsletter</h3>
+                    <p class="text-sm opacity-80 mb-4">Subscribe to our newsletter for the latest updates on bee research, farming opportunities, and product releases.</p>
+                    <form class="flex gap-2">
+                        <input type="email" placeholder="Your email" class="flex-1 bg-dark-400 border border-dark-500 rounded-md px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary/50">
+                        <button type="submit" class="px-4 py-2 bg-primary hover:bg-primary-dark rounded-md text-dark-100 text-sm font-medium transition-colors">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="border-t border-dark-400 pt-8">
+                <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                    <p class="text-sm opacity-70">© 2025 Bee Central. All rights reserved.</p>
+                    <div class="flex gap-6">
+                        <a href="/privacy/" class="text-sm opacity-70 hover:text-primary transition-colors">Privacy Policy</a>
+                        <a href="/terms/" class="text-sm opacity-70 hover:text-primary transition-colors">Terms of Service</a>
+                        <a href="/cookies/" class="text-sm opacity-70 hover:text-primary transition-colors">Cookies Policy</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            mobileMenuButton.innerHTML = mobileMenu.classList.contains('hidden') ? 
+                '<i class="fas fa-bars"></i>' : '<i class="fas fa-times"></i>';
+        });
+        
+        // Cart Functionality
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            
+            document.querySelectorAll('#cartCount, #mobileCartCount').forEach(el => {
+                el.textContent = totalItems;
+                el.classList.toggle('hidden', totalItems === 0);
+            });
+        }
+        
+        function renderCartItems() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartItemsList = document.getElementById('cartItemsList');
+            const emptyCart = document.getElementById('emptyCart');
+            const cartItems = document.getElementById('cartItems');
+            const checkoutBtn = document.getElementById('checkoutBtn');
+            
+            if (cart.length === 0) {
+                emptyCart.classList.remove('hidden');
+                cartItems.classList.add('hidden');
+                checkoutBtn.disabled = true;
+                document.getElementById('recentlyViewedSection').classList.add('hidden');
+                return;
+            }
+            
+            emptyCart.classList.add('hidden');
+            cartItems.classList.remove('hidden');
+            checkoutBtn.disabled = false;
+            document.getElementById('recentlyViewedSection').classList.remove('hidden');
+            
+            // Clear existing items
+            cartItemsList.innerHTML = '';
+            
+            let subtotal = 0;
+            
+            // Add each cart item to the list
+            cart.forEach((item, index) => {
+                const itemTotal = item.price * item.quantity;
+                subtotal += itemTotal;
+                
+                const itemElement = document.createElement('div');
+                itemElement.className = 'grid grid-cols-12 gap-4 p-4 items-center';
+                itemElement.innerHTML = `
+                    <div class="col-span-6 flex items-center gap-4">
+                        <div class="w-16 h-16 rounded-md overflow-hidden bg-dark-300">
+                            <img src="${item.image}" alt="${item.name}" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+                            <h4 class="font-medium">${item.name}</h4>
+                            <button class="remove-item text-xs text-red-400 hover:text-red-300 mt-1" data-index="${index}">
+                                <i class="fas fa-times mr-1"></i>Remove
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-span-2 text-center">$${item.price.toFixed(2)}</div>
+                    <div class="col-span-2 flex items-center justify-center gap-2">
+                        <button class="quantity-btn w-8 h-8 rounded-md bg-dark-300 hover:bg-dark-400 flex items-center justify-center" data-index="${index}" data-action="decrease">
+                            <i class="fas fa-minus text-xs"></i>
+                        </button>
+                        <span class="quantity w-10 text-center">${item.quantity}</span>
+                        <button class="quantity-btn w-8 h-8 rounded-md bg-dark-300 hover:bg-dark-400 flex items-center justify-center" data-index="${index}" data-action="increase">
+                            <i class="fas fa-plus text-xs"></i>
+                        </button>
+                    </div>
+                    <div class="col-span-2 text-right font-medium">$${itemTotal.toFixed(2)}</div>
+                `;
+                
+                cartItemsList.appendChild(itemElement);
+            });
+            
+            // Update totals
+            document.getElementById('cartSubtotal').textContent = `$${subtotal.toFixed(2)}`;
+            document.getElementById('cartTotal').textContent = `$${subtotal.toFixed(2)}`;
+            
+            // Add event listeners to remove buttons
+            document.querySelectorAll('.remove-item').forEach(button => {
+                button.addEventListener('click', function() {
+                    const index = parseInt(this.dataset.index);
+                    removeCartItem(index);
+                });
+            });
+            
+            // Add event listeners to quantity buttons
+            document.querySelectorAll('.quantity-btn').forEach(button => {
+                button.addEventListener('click', function() {
+                    const index = parseInt(this.dataset.index);
+                    const action = this.dataset.action;
+                    updateQuantity(index, action);
+                });
+            });
+        }
+        
+        function removeCartItem(index) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart.splice(index, 1);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            renderCartItems();
+            updateCartCount();
+            
+            // Animation for removal
+            gsap.to(`[data-index="${index}"]`, {
+                opacity: 0,
+                x: -50,
+                duration: 0.3,
+                onComplete: renderCartItems
+            });
+        }
+        
+        function updateQuantity(index, action) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            
+            if (action === 'increase') {
+                cart[index].quantity += 1;
+            } else if (action === 'decrease') {
+                if (cart[index].quantity > 1) {
+                    cart[index].quantity -= 1;
+                } else {
+                    // If quantity would be 0, remove the item
+                    removeCartItem(index);
+                    return;
+                }
+            }
+            
+            localStorage.setItem('cart', JSON.stringify(cart));
+            renderCartItems();
+            updateCartCount();
+        }
+        
+        // Clear cart
+        document.getElementById('clearCart').addEventListener('click', function() {
+            if (confirm('Are you sure you want to clear your cart?')) {
+                localStorage.removeItem('cart');
+                renderCartItems();
+                updateCartCount();
+                
+                // Animation for clearing cart
+                gsap.to("#cartItemsList", {
+                    opacity: 0,
+                    y: -20,
+                    duration: 0.3,
+                    onComplete: renderCartItems
+                });
+            }
+        });
+        
+        // Apply discount code (placeholder functionality)
+        document.getElementById('applyDiscount').addEventListener('click', function() {
+            const code = document.getElementById('discountCode').value.trim();
+            
+            if (code === '') {
+                alert('Please enter a discount code');
+                return;
+            }
+            
+            // This is just a placeholder - in a real app you would validate the code with your backend
+            alert('Discount code applied successfully!');
+        });
+        
+        // Add to cart functionality for recommended products
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', function() {
+                const product = {
+                    id: this.dataset.productId,
+                    name: this.dataset.productName,
+                    price: parseFloat(this.dataset.productPrice),
+                    image: this.dataset.productImage,
+                    quantity: 1
+                };
+                
+                let cart = JSON.parse(localStorage.getItem('cart')) || [];
+                const existingItem = cart.find(item => item.id === product.id);
+                
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    cart.push(product);
+                }
+                
+                localStorage.setItem('cart', JSON.stringify(cart));
+                renderCartItems();
+                updateCartCount();
+                
+                // Add to cart animation
+                const btnRect = this.getBoundingClientRect();
+                const cartIcon = document.querySelector('a[href="/cart/"]');
+                const cartRect = cartIcon.getBoundingClientRect();
+                
+                const flyingItem = document.createElement('div');
+                flyingItem.className = 'fixed w-4 h-4 bg-primary rounded-full pointer-events-none z-50';
+                flyingItem.style.left = `${btnRect.left + btnRect.width/2 - 8}px`;
+                flyingItem.style.top = `${btnRect.top}px`;
+                document.body.appendChild(flyingItem);
+                
+                gsap.to(flyingItem, {
+                    x: cartRect.left - btnRect.left + btnRect.width/2,
+                    y: cartRect.top - btnRect.top,
+                    scale: 0.5,
+                    duration: 0.8,
+                    ease: "power2.out",
+                    onComplete: () => {
+                        document.body.removeChild(flyingItem);
+                        
+                        // Cart icon bounce effect
+                        gsap.to(cartIcon, {
+                            scale: 1.2,
+                            duration: 0.2,
+                            yoyo: true,
+                            repeat: 1,
+                            ease: "power2.out"
+                        });
+                    }
+                });
+            });
+        });
+        
+        // Initialize cart on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCartCount();
+            renderCartItems();
+        });
+    </script>
+</body>
+</html>

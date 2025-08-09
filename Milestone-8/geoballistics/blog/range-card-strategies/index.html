@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Muzzle Velocity Truing Techniques | GeoBallistics Blog</title>
+    <meta name="description" content="Master advanced muzzle velocity truing techniques to improve your long-range shooting accuracy with GeoBallistics' sophisticated tools and methods.">
+    <meta name="keywords" content="muzzle velocity truing, ballistics calibration, long range shooting, velocity correction, GeoBallistics techniques">
+    <link rel="canonical" href="https://geoballistics.app/blog/range-card-strategies/">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/image/logo.webp" type="image/x-icon">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Roboto:wght@300;400;500&family=Orbitron:wght@500&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2A2E35',
+                        secondary: '#4B5320',
+                        accent: '#FFB400',
+                    },
+                    fontFamily: {
+                        heading: ['Rajdhani', 'sans-serif'],
+                        body: ['Roboto', 'sans-serif'],
+                        tactical: ['Orbitron', 'sans-serif'],
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    
+    <!-- Three.js (for potential advanced animations) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body class="bg-primary text-gray-200 font-body antialiased">
+    <!-- Cookie Consent Banner -->
+    <div id="cookieConsent" class="fixed bottom-0 left-0 right-0 bg-primary border-t border-secondary hidden z-50">
+        <div class="container mx-auto px-4 py-3 flex flex-col md:flex-row items-center justify-between">
+            <p class="mb-3 md:mb-0 md:mr-4">We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies.</p>
+            <div class="flex space-x-3">
+                <button id="cookieDecline" class="px-4 py-2 border border-secondary hover:bg-secondary transition-colors">Decline</button>
+                <button id="cookieAccept" class="px-4 py-2 bg-accent text-primary font-heading font-semibold hover:bg-yellow-500 transition-colors">Accept</button>
+                <a href="/cookies/" class="px-4 py-2 border border-accent text-accent hover:bg-opacity-10 hover:bg-accent transition-colors">Learn More</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 bg-primary bg-opacity-90 backdrop-blur-sm z-40 border-b border-secondary">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <a href="/" class="flex items-center space-x-2">
+                    <div class="w-10 h-10 rounded-sm flex items-center justify-center">
+                        <img src="/image/logo.webp" alt="GeoBallistics Logo" class="rounded-full">
+                    </div>
+                    <span class="text-xl font-heading font-bold tracking-tight">GEO<span class="text-accent">BALLISTICS</span></span>
+                </a>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="hover:text-accent transition-colors font-heading">Home</a>
+                    <a href="/games/" class="block px-3 py-2 hover:text-accent transition-colors font-heading">Games</a>
+                    <a href="/about/" class="hover:text-accent transition-colors font-heading">About</a>
+                    <a href="/blog/" class="text-accent font-heading font-medium">Blog</a>
+                    <a href="/contact/" class="hover:text-accent transition-colors font-heading">Contact</a>
+                    <a href="https://play.google.com/store/apps/details?id=com.geoballistics.ballisticsarc" target="_blank" class="bg-accent text-primary px-4 py-2 rounded-sm font-heading font-semibold hover:bg-yellow-500 transition-colors">Download App</a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuButton" class="md:hidden text-gray-300 hover:text-accent focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-primary border-t border-secondary">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="/" class="block px-3 py-2 hover:text-accent transition-colors font-heading">Home</a>
+                <a href="/games/" class="block px-3 py-2 hover:text-accent transition-colors font-heading">Games</a>
+                <a href="/about/" class="block px-3 py-2 hover:text-accent transition-colors font-heading">About</a>
+                <a href="/blog/" class="block px-3 py-2 text-accent font-heading">Blog</a>
+                <a href="/contact/" class="block px-3 py-2 hover:text-accent transition-colors font-heading">Contact</a>
+                <a href="https://play.google.com/store/apps/details?id=com.geoballistics.ballisticsarc" target="_blank" class="block px-3 py-2 bg-accent text-primary rounded-sm text-center font-heading font-semibold">Download App</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 overflow-hidden">
+        <!-- Animated Background Elements -->
+        <div class="absolute top-0 left-0 w-full h-full opacity-10">
+            <div class="absolute top-1/4 left-1/4 w-32 h-32 bg-accent rounded-full filter blur-xl animate-pulse-slow"></div>
+            <div class="absolute top-3/4 right-1/4 w-24 h-24 bg-accent rounded-full filter blur-xl animate-pulse-slow animation-delay-2000"></div>
+        </div>
+        
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="max-w-4xl mx-auto">
+                <div class="flex items-center mb-6">
+                    <a href="/blog/" class="text-accent hover:text-yellow-500 transition-colors flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+                        </svg>
+                        Back to Blog
+                    </a>
+                </div>
+                
+                <div class="flex items-center mb-4">
+                    <span class="text-sm text-accent font-heading">TECHNICAL</span>
+                    <span class="mx-3 text-gray-500">•</span>
+                    <span class="text-sm text-gray-500">June 22, 2025</span>
+                    <span class="mx-3 text-gray-500">•</span>
+                    <span class="text-sm text-gray-500">12 min read</span>
+                </div>
+                
+                <h1 class="text-4xl md:text-5xl font-heading font-bold mb-6 leading-tight">
+                    Advanced Muzzle Velocity Truing Techniques for Precision Shooting
+                </h1>
+                
+                <p class="text-xl text-gray-300 mb-8">Master the science behind velocity correction to achieve unmatched long-range accuracy with your ballistic solutions.</p>
+                
+                <div class="flex items-center">
+                   
+                    <div>
+                        <div class="font-heading font-medium">Mike Ballistics</div>
+                        <div class="text-sm text-gray-500">Senior Ballistics Engineer</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Content -->
+    <article class="relative py-16 overflow-hidden">
+        <!-- Decorative grid pattern -->
+        <div class="absolute inset-0 opacity-5 bg-grid-pattern z-0"></div>
+        
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="max-w-3xl mx-auto">
+                <!-- Featured Image with Parallax Effect -->
+                <div class="relative h-96 mb-16 overflow-hidden rounded-sm border border-secondary group">
+                    <img src="/image/blog3.jpg" alt="Muzzle Velocity Truing Process" 
+                         class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-1000"
+                         id="parallaxImage">
+                    <div class="absolute inset-0 bg-gradient-to-t from-primary to-transparent opacity-70"></div>
+                    <div class="absolute bottom-0 left-0 p-6">
+                        <span class="inline-block px-3 py-1 bg-accent text-primary text-sm font-heading font-semibold">TECHNICAL GUIDE</span>
+                    </div>
+                </div>
+                
+                <!-- Content Sections -->
+                <div class="prose prose-invert max-w-none">
+                    <p class="lead">Muzzle velocity truing is the cornerstone of precision long-range shooting. While most ballistic calculators offer basic truing functions, GeoBallistics' advanced 3DOF solver provides unprecedented control over velocity correction parameters. This guide will walk you through professional-grade techniques used by military snipers and competitive shooters alike.</p>
+                    
+                    <h2 class="text-2xl font-heading font-bold mt-12 mb-6 flex items-center">
+                        <span class="w-3 h-3 bg-accent mr-3"></span>
+                        Understanding Velocity Variance
+                    </h2>
+                    
+                    <p>Before diving into truing methods, it's crucial to understand why muzzle velocity varies:</p>
+                    
+                    <ul>
+                        <li><strong>Chronograph limitations:</strong> Even high-end chronographs have ±1% variance</li>
+                        <li><strong>Temperature sensitivity:</strong> Powder burn rates change with temperature</li>
+                        <li><strong>Barrel wear:</strong> Velocity decreases as the barrel wears in</li>
+                        <li><strong>Atmospheric conditions:</strong> Altitude and humidity affect pressure curves</li>
+                        <li><strong>Lot variations:</strong> Different ammunition batches show velocity differences</li>
+                    </ul>
+                    
+                    <div class="bg-gray-900 border border-secondary p-6 rounded-sm my-8">
+                        <h3 class="text-lg font-heading font-semibold text-accent mb-3">Pro Tip: Establish Baselines</h3>
+                        <p>Always record baseline velocities under controlled conditions (68°F, 29.92 inHg, 50% humidity) before attempting truing. This gives you a reference point for all future adjustments.</p>
+                    </div>
+                    
+                    <h2 class="text-2xl font-heading font-bold mt-12 mb-6 flex items-center">
+                        <span class="w-3 h-3 bg-accent mr-3"></span>
+                        The Three-Point Truing Method
+                    </h2>
+                    
+                    <p>Traditional single-point truing (correcting at one distance) often leads to compounding errors. GeoBallistics implements a sophisticated three-point system:</p>
+                    
+                    <div class="grid md:grid-cols-3 gap-6 my-8">
+                        <div class="bg-primary border border-secondary p-4 rounded-sm">
+                            <div class="text-accent font-heading font-semibold mb-2">1. Short Range (100-300m)</div>
+                            <p>Establishes initial velocity baseline and detects any major anomalies in your chronograph readings.</p>
+                        </div>
+                        <div class="bg-primary border border-secondary p-4 rounded-sm">
+                            <div class="text-accent font-heading font-semibold mb-2">2. Mid Range (500-700m)</div>
+                            <p>Identifies transonic transition effects and verifies drag model performance.</p>
+                        </div>
+                        <div class="bg-primary border border-secondary p-4 rounded-sm">
+                            <div class="text-accent font-heading font-semibold mb-2">3. Long Range (900-1200m)</div>
+                            <p>Confirms stability in subsonic flight and validates environmental compensation.</p>
+                        </div>
+                    </div>
+                    
+                    <p>To implement this in GeoBallistics:</p>
+                    
+                    <ol>
+                        <li>Navigate to <strong>Rifle Profile > Truing</strong></li>
+                        <li>Select <strong>Advanced Multi-Point Truing</strong></li>
+                        <li>Enter your actual impacts at three distinct ranges</li>
+                        <li>The solver will calculate an optimized velocity curve</li>
+                    </ol>
+                    
+                    <div class="relative my-12 h-80 bg-gray-900 rounded-sm overflow-hidden border border-secondary">
+                        <!-- This would be replaced with a dynamic chart component in production -->
+                        <div class="absolute inset-0 flex items-center justify-center">
+                            <div class="text-center p-6">
+                                <div class="text-accent font-heading font-semibold mb-2">VELOCITY TRUING CURVE</div>
+                                <p class="text-gray-400">GeoBallistics generates a polynomial correction curve rather than a simple scalar value for more accurate compensation across all distances.</p>
+                            </div>
+                        </div>
+                        <!-- Grid lines for the chart background -->
+                        <div class="absolute inset-0 opacity-20 bg-chart-grid"></div>
+                    </div>
+                    
+                    <h2 class="text-2xl font-heading font-bold mt-12 mb-6 flex items-center">
+                        <span class="w-3 h-3 bg-accent mr-3"></span>
+                        Temperature-Compensated Truing
+                    </h2>
+                    
+                    <p>Traditional truing assumes constant temperature, but real-world conditions vary. GeoBallistics PRO version introduces temperature-aware truing:</p>
+                    
+                    <div class="my-8 border border-secondary rounded-sm overflow-hidden">
+                        <table class="w-full">
+                            <thead class="bg-gray-900">
+                                <tr>
+                                    <th class="px-4 py-3 text-left font-heading">Temp (°F)</th>
+                                    <th class="px-4 py-3 text-left font-heading">Standard Truing</th>
+                                    <th class="px-4 py-3 text-left font-heading">Temp-Compensated</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-secondary">
+                                <tr>
+                                    <td class="px-4 py-3">20°</td>
+                                    <td class="px-4 py-3">+2.1% error</td>
+                                    <td class="px-4 py-3 text-accent">±0.3% error</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3">50°</td>
+                                    <td class="px-4 py-3">+0.8% error</td>
+                                    <td class="px-4 py-3 text-accent">±0.1% error</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3">80°</td>
+                                    <td class="px-4 py-3">-1.2% error</td>
+                                    <td class="px-4 py-3 text-accent">±0.2% error</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-4 py-3">100°</td>
+                                    <td class="px-4 py-3">-2.5% error</td>
+                                    <td class="px-4 py-3 text-accent">±0.4% error</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <p>To enable this feature:</p>
+                    
+                    <ol>
+                        <li>Record velocity data at multiple temperatures (minimum 3 data points)</li>
+                        <li>In GeoBallistics, go to <strong>Rifle Profile > Advanced > Temp Curve</strong></li>
+                        <li>Enter your temperature-velocity pairs</li>
+                        <li>The system will build a predictive model of your powder's temp sensitivity</li>
+                    </ol>
+                    
+                    <h2 class="text-2xl font-heading font-bold mt-12 mb-6 flex items-center">
+                        <span class="w-3 h-3 bg-accent mr-3"></span>
+                        Barrel Break-In Truing Protocol
+                    </h2>
+                    
+                    <p>New barrels exhibit velocity changes during the first 100-200 rounds. GeoBallistics offers a specialized break-in tracking system:</p>
+                    
+                    <div class="my-8 p-6 bg-gray-900 border-l-4 border-accent rounded-sm">
+                        <h3 class="font-heading font-semibold text-lg mb-3">Barrel Break-In Procedure</h3>
+                        <ol class="list-decimal pl-5 space-y-2">
+                            <li>Clean barrel thoroughly before first use</li>
+                            <li>Shoot 3-round groups, cleaning between each</li>
+                            <li>Record velocity for each group in GeoBallistics</li>
+                            <li>Repeat for first 100 rounds</li>
+                            <li>Enable <strong>Barrel Break-In Compensation</strong> in app settings</li>
+                        </ol>
+                    </div>
+                    
+                    <p>The algorithm will:</p>
+                    
+                    <ul>
+                        <li>Track velocity changes over round count</li>
+                        <li>Predict when your barrel will stabilize</li>
+                        <li>Automatically adjust solutions during the break-in period</li>
+                    </ul>
+                    
+                    <h2 class="text-2xl font-heading font-bold mt-12 mb-6 flex items-center">
+                        <span class="w-3 h-3 bg-accent mr-3"></span>
+                        Ammunition Lot Variance Tracking
+                    </h2>
+                    
+                    <p>Professional shooters know that different ammunition lots can vary by 20-50 fps. GeoBallistics PRO includes lot management:</p>
+                    
+                    <div class="my-8 border border-secondary rounded-sm overflow-hidden">
+                        <!-- This would be an interactive component in the actual app -->
+                        <div class="p-6 bg-gray-900 border-b border-secondary">
+                            <div class="flex justify-between items-center">
+                                <div>
+                                    <div class="font-heading font-semibold">Ammunition Lot Manager</div>
+                                    <div class="text-sm text-gray-500">Track velocity by lot number</div>
+                                </div>
+                                <button class="px-4 py-2 bg-accent text-primary rounded-sm text-sm font-heading font-semibold">+ Add Lot</button>
+                            </div>
+                        </div>
+                        <div class="divide-y divide-secondary">
+                            <div class="p-4 flex justify-between items-center">
+                                <div>
+                                    <div class="font-medium">Lot #22345</div>
+                                    <div class="text-sm text-gray-500">Avg MV: 2750 fps</div>
+                                </div>
+                                <div class="text-accent font-heading">Active</div>
+                            </div>
+                            <div class="p-4 flex justify-between items-center">
+                                <div>
+                                    <div class="font-medium">Lot #19876</div>
+                                    <div class="text-sm text-gray-500">Avg MV: 2735 fps</div>
+                                </div>
+                                <div class="text-gray-500">Archived</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h2 class="text-2xl font-heading font-bold mt-12 mb-6 flex items-center">
+                        <span class="w-3 h-3 bg-accent mr-3"></span>
+                        Field Verification Techniques
+                    </h2>
+                    
+                    <p>After implementing these advanced truing methods, verify your results with these field protocols:</p>
+                    
+                    <div class="grid md:grid-cols-2 gap-6 my-8">
+                        <div class="bg-primary border border-secondary p-6 rounded-sm">
+                            <div class="text-accent font-heading font-semibold mb-3">1. Cold Bore Verification</div>
+                            <p>Shoot one cold bore shot at known distance (300-500m) to confirm first-round accuracy. The cold bore shot often has slightly different velocity than subsequent shots.</p>
+                        </div>
+                        <div class="bg-primary border border-secondary p-6 rounded-sm">
+                            <div class="text-accent font-heading font-semibold mb-3">2. Downrange Validation</div>
+                            <p>Place steel targets at unknown distances (600-1000m) and engage using your trued solution. Measure the miss distance to calculate residual error.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-gray-900 border border-secondary p-6 rounded-sm my-8">
+                        <h3 class="text-lg font-heading font-semibold text-accent mb-3">Military-Grade Validation</h3>
+                        <p>Special operations units use a 10-shot string verification method: shoot 10 rounds at 800m+ and measure the mean point of impact. If it's within 0.2 MIL of predicted, the truing is validated.</p>
+                    </div>
+                    
+                    <h2 class="text-2xl font-heading font-bold mt-12 mb-6 flex items-center">
+                        <span class="w-3 h-3 bg-accent mr-3"></span>
+                        Conclusion
+                    </h2>
+                    
+                    <p>Advanced muzzle velocity truing separates good ballistic solutions from great ones. By implementing these professional techniques in GeoBallistics, you'll achieve:</p>
+                    
+                    <ul>
+                        <li>First-round hits at extreme distances</li>
+                        <li>Reduced vertical dispersion in your groups</li>
+                        <li>Consistent performance across temperature variations</li>
+                        <li>Confidence in your ballistic solutions under all conditions</li>
+                    </ul>
+                    
+                    <p class="mt-6">Remember that truing is an iterative process. As your barrel wears, ammunition changes, or environmental conditions shift, revisit these techniques to maintain peak accuracy.</p>
+                    
+                    <div class="mt-12 pt-8 border-t border-secondary">
+                        <h3 class="text-xl font-heading font-semibold mb-4">Ready to Master Ballistics?</h3>
+                        <p>Download GeoBallistics PRO today to access these advanced truing features and more:</p>
+                        <a href="https://play.google.com/store/apps/details?id=com.geoballistics.ballisticsarc" target="_blank" class="inline-block mt-4 px-6 py-3 bg-accent text-primary rounded-sm font-heading font-semibold hover:bg-yellow-500 transition-colors">
+                            Download GeoBallistics PRO
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <!-- Newsletter Section -->
+    <section class="py-20 bg-gray-900 relative overflow-hidden">
+        <!-- Decorative elements -->
+        <div class="absolute top-0 right-0 w-64 h-64 bg-accent opacity-10 rounded-full transform translate-x-32 -translate-y-32"></div>
+        <div class="absolute bottom-0 left-0 w-96 h-96 bg-accent opacity-5 rounded-full transform -translate-x-64 translate-y-64"></div>
+        
+        <div class="container mx-auto px-4 relative">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="text-3xl md:text-4xl font-heading font-bold mb-6">
+                    STAY <span class="text-accent">UPDATED</span>
+                </h2>
+                <p class="text-xl text-gray-300 mb-8">Subscribe to our newsletter for the latest articles, tips, and GeoBallistics updates.</p>
+                
+                <form class="flex flex-col sm:flex-row gap-4 max-w-xl mx-auto">
+                    <input type="email" placeholder="Your email address" class="flex-grow px-6 py-3 bg-gray-800 border border-gray-700 rounded-sm focus:ring-2 focus:ring-accent focus:border-accent outline-none transition-colors">
+                    <button type="submit" class="px-6 py-3 bg-accent text-primary rounded-sm font-heading font-semibold hover:bg-yellow-500 transition-colors whitespace-nowrap">
+                        Subscribe
+                    </button>
+                </form>
+                
+                <p class="text-sm text-gray-500 mt-4">We respect your privacy. Unsubscribe at any time.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8 mb-12">
+                <!-- About -->
+                <div>
+                    <h3 class="text-lg font-heading font-semibold text-white mb-4">About GeoBallistics</h3>
+                    <p class="mb-4">The most advanced mobile ballistics solution featuring 3DOF calculations, range cards, and hardware integration for precision shooting.</p>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-lg font-heading font-semibold text-white mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/games/" class="hover:text-accent transition-colors">Games</a></li>
+                        <li><a href="/about/" class="hover:text-accent transition-colors">About Us</a></li>
+                        <li><a href="/blog/" class="hover:text-accent transition-colors">Blog</a></li>
+                        <li><a href="/contact/" class="hover:text-accent transition-colors">Contact</a></li>
+                        <li><a href="https://play.google.com/store/apps/details?id=com.geoballistics.ballisticsarc" target="_blank" class="hover:text-accent transition-colors">Download</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Support -->
+                <div>
+                    <h3 class="text-lg font-heading font-semibold text-white mb-4">Support</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/privacy/" class="hover:text-accent transition-colors">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="hover:text-accent transition-colors">Terms of Service</a></li>
+                        <li><a href="/cookies/" class="hover:text-accent transition-colors">Cookies Policy</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Contact -->
+                <div>
+                    <h3 class="text-lg font-heading font-semibold text-white mb-4">Contact Us</h3>
+                    <address class="not-italic">
+                        <div class="mb-2">Sheltered Wings, Inc.</div>
+                        <div class="mb-2">1 Vortex Dr</div>
+                        <div class="mb-2">Barneveld, WI 53507</div>
+                        <div class="mb-2">United States</div>
+                        <div class="mb-2">Phone: <a href="tel:+16086022295" class="hover:text-accent transition-colors">+1 608-602-2295</a></div>
+                        <div class="mb-2">Email: <a href="mailto:info@geoballistics.app" class="hover:text-accent transition-colors">info@geoballistics.app</a></div>
+                    </address>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8 text-sm text-center">
+                <p>&copy; 2025 GeoBallistics by Sheltered Wings, Inc. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Cookie Consent
+        const cookieConsent = document.getElementById('cookieConsent');
+        const cookieAccept = document.getElementById('cookieAccept');
+        const cookieDecline = document.getElementById('cookieDecline');
+        
+        if (!localStorage.getItem('cookieConsent')) {
+            cookieConsent.classList.remove('hidden');
+        }
+        
+        cookieAccept.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'accepted');
+            cookieConsent.classList.add('hidden');
+        });
+        
+        cookieDecline.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'declined');
+            cookieConsent.classList.add('hidden');
+        });
+        
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Parallax effect for featured image
+        gsap.to("#parallaxImage", {
+            yPercent: 20,
+            ease: "none",
+            scrollTrigger: {
+                trigger: "#parallaxImage",
+                start: "top bottom",
+                end: "bottom top",
+                scrub: true
+            }
+        });
+        
+        // Animate content sections on scroll
+        gsap.utils.toArray("h2, .bg-gray-900, table, ol, ul").forEach((element, i) => {
+            gsap.from(element, {
+                scrollTrigger: {
+                    trigger: element,
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                },
+                opacity: 0,
+                y: 30,
+                duration: 0.8,
+                delay: i * 0.1
+            });
+        });
+        
+        // Three.js animation could be added here for more advanced effects
+        // This would require additional setup and is just a placeholder
+        if (typeof THREE !== 'undefined') {
+            // Potential 3D animation setup would go here
+        }
+    </script>
+</body>
+</html>

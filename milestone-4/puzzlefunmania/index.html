@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PuzzleFunMania | Engaging Puzzle Games for All Ages</title>
+    <meta name="description"
+        content="Discover fun and challenging puzzle games from PuzzleFun. Play Bubble Shooter, Tile Troika, Block Breaker and more. Free downloads available!">
+    <meta name="keywords"
+        content="puzzle games, bubble shooter, tile troika, block breaker, flow connect, mobile games, android games, puzzlefun">
+    <link rel="canonical" href="https:/puzzlefunmania.com/">
+    <link rel="icon" href="/images/favicon.png" type="image/x-icon">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        dark: {
+                            900: '#0f0f1a',
+                            800: '#161626',
+                            700: '#1d1d33',
+                            600: '#2a2a4d',
+                            500: '#3a3a66',
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-fast': 'float 3s ease-in-out infinite',
+                        'fade-in': 'fadeIn 1.5s ease-in forwards',
+                        'slide-up': 'slideUp 1s ease-out forwards',
+                        'scale-in': 'scaleIn 0.8s ease-out forwards',
+                        'pulse-slow': 'pulse 6s infinite',
+                        'glow': 'glow 4s ease-in-out infinite alternate',
+                        'wave': 'wave 8s ease-in-out infinite',
+                        'tilt': 'tilt 10s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(40px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        scaleIn: {
+                            '0%': { transform: 'scale(0.95)', opacity: '0' },
+                            '100%': { transform: 'scale(1)', opacity: '1' },
+                        },
+                        glow: {
+                            '0%': { 'box-shadow': '0 0 10px rgba(14, 165, 233, 0)' },
+                            '100%': { 'box-shadow': '0 0 20px rgba(14, 165, 233, 0.6)' },
+                        },
+                        wave: {
+                            '0%, 100%': { transform: 'rotate(-3deg)' },
+                            '50%': { transform: 'rotate(3deg)' },
+                        },
+                        tilt: {
+                            '0%, 100%': { transform: 'rotate(-1deg)' },
+                            '50%': { transform: 'rotate(1deg)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #0f0f1a;
+            color: #e2e8f0;
+        }
+
+        .gradient-text {
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            background-image: linear-gradient(135deg, #38bdf8, #0ea5e9, #7dd3fc);
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #0c4a6e, #075985, #0369a1);
+        }
+
+        .game-card {
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .game-card:hover {
+            transform: translateY(-10px) scale(1.02) rotateX(5deg);
+            box-shadow: 0 25px 50px -12px rgba(14, 165, 233, 0.3);
+        }
+
+        .game-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            border-radius: 0.75rem;
+        }
+
+        .game-card:hover::before {
+            opacity: 1;
+        }
+
+        .blog-card:hover .blog-image {
+            transform: scale(1.1);
+        }
+
+        .parallax-bg {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .text-shadow {
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hover-underline-animation {
+            position: relative;
+        }
+
+        .hover-underline-animation::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #38bdf8;
+            transition: width 0.3s ease;
+        }
+
+        .hover-underline-animation:hover::after {
+            width: 100%;
+        }
+
+        .feature-icon {
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: rotateY(180deg) scale(1.1);
+        }
+
+        @keyframes particle-move {
+            0% { transform: translate(0, 0); opacity: 1; }
+            100% { transform: translate(var(--tx), var(--ty)); opacity: 0; }
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(56, 189, 248, 0.6);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: particle-move 1s forwards;
+        }
+    </style>
+</head>
+
+<body class="bg-dark-900 text-gray-200">
+    <!-- Animated Background Particles -->
+    <div id="particles-container" class="fixed inset-0 overflow-hidden pointer-events-none z-0"></div>
+
+    <!-- Cookies Consent Banner -->
+    <div id="cookies-banner" class="fixed bottom-0 left-0 right-0 bg-dark-800 border-t border-dark-700 p-4 hidden z-50 transform transition-transform duration-300 translate-y-full">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="flex-1">
+                <p class="text-sm">We use cookies to enhance your experience on our website. By continuing to browse,
+                    you agree to our use of cookies. <a href="/privacy/" class="text-primary-400 hover:underline">Learn
+                        more</a></p>
+            </div>
+            <div class="flex gap-3">
+                <button id="decline-cookies"
+                    class="px-4 py-2 text-sm rounded-lg border border-dark-600 hover:bg-dark-700 transition hover:scale-105 active:scale-95">Decline</button>
+                <button id="accept-cookies"
+                    class="px-4 py-2 text-sm rounded-lg bg-primary-600 hover:bg-primary-700 transition hover:scale-105 active:scale-95">Accept</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="sticky top-0 z-40 bg-dark-900/90 backdrop-blur-lg border-b border-dark-700 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="/" class="flex items-center group">
+                        <div class="w-10 h-10 rounded-full bg-primary-600 flex items-center justify-center group-hover:rotate-180 transition-transform duration-500">
+                            <img src="/images/logo.webp" alt="logo-png" class="rounded-lg w-8 h-8" />
+                        </div>
+                        <span class="ml-3 text-xl font-bold gradient-text group-hover:bg-gradient-to-r from-primary-400 to-primary-300 transition-all duration-500">PuzzleFunMania</span>
+                    </a>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="text-primary-400 font-medium hover-underline-animation">Home</a>
+                    <a href="/games" class="hover:text-primary-400 transition hover-underline-animation">Games</a>
+                    <a href="/blog" class="hover:text-primary-400 transition hover-underline-animation">Blog</a>
+                    <a href="/contact/" class="hover:text-primary-400 transition hover-underline-animation">Contact</a>
+                    <a href="https://play.google.com/store/apps/details?id=com.bird.shooter.bubble.puzzle.game" target="_blank" class="px-4 py-2 bg-primary-600 hover:bg-primary-700 rounded-lg font-medium transition hover:scale-105 active:scale-95 flex items-center">
+                        <i class="fas fa-download mr-2"></i> Download
+                    </a>
+                </nav>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-gray-400 hover:text-white focus:outline-none transition-transform hover:rotate-90 duration-300">
+                        <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-dark-800 pb-3 px-4 transform origin-top transition-all duration-300 scale-y-0">
+            <div class="pt-2 space-y-1">
+                <a href="/" class="block px-3 py-3 rounded-md text-base font-medium text-primary-400 border-b border-dark-700">Home</a>
+                <a href="/games"
+                    class="block px-3 py-3 rounded-md text-base font-medium text-gray-300 hover:text-primary-400 border-b border-dark-700">Games</a>
+                <a href="/blog"
+                    class="block px-3 py-3 rounded-md text-base font-medium text-gray-300 hover:text-primary-400 border-b border-dark-700">Blog</a>
+                <a href="/contact/"
+                    class="block px-3 py-3 rounded-md text-base font-medium text-gray-300 hover:text-primary-400">Contact</a>
+                <a href="https://play.google.com/store/apps/details?id=com.bird.shooter.bubble.puzzle.game" target="_blank" class="block px-3 py-3 mt-2 rounded-md text-base font-medium bg-primary-600 hover:bg-primary-700 text-center">
+                    Download Now
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden min-h-screen flex items-center">
+        <div class="absolute inset-0 bg-gradient-to-br from-dark-900 via-dark-800 to-dark-700 opacity-95"></div>
+        <div class="absolute inset-0 opacity-20">
+            <div class="absolute inset-0 bg-[url('/images/game-pattern.png')] opacity-30 animate-wave"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div class="animate-fade-in">
+                    <div class="inline-block mb-6 px-4 py-2 bg-dark-800 rounded-full border border-dark-700 animate-pulse-slow">
+                        <span class="text-primary-400 text-sm font-medium">🎮 New Update Available!</span>
+                    </div>
+                    <h1 class="text-5xl md:text-6xl lg:text-7xl font-bold leading-tight mb-6 text-shadow">
+                        <span class="gradient-text">Unleash Your</span><br>
+                        Puzzle Solving Skills
+                    </h1>
+                    <p class="text-xl text-gray-300 mb-8 max-w-lg leading-relaxed">
+                        Dive into our collection of mind-bending puzzle games designed to challenge your brain while providing endless fun for players of all ages.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="/games/"
+                            class="px-8 py-4 bg-primary-600 hover:bg-primary-700 rounded-xl font-medium transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl flex items-center group">
+                            <span class="mr-2 group-hover:animate-bounce">Explore Games</span>
+                            <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                        </a>
+                        <a href="#games"
+                            class="px-8 py-4 border-2 border-dark-600 hover:bg-dark-800 rounded-xl font-medium transition-all duration-300 hover:-translate-y-1 flex items-center">
+                            <i class="fas fa-play mr-2"></i> Watch Trailer
+                        </a>
+                    </div>
+                    <div class="mt-10 flex items-center space-x-6">
+                        <div class="flex -space-x-3">
+                            <img class="w-10 h-10 rounded-full border-2 border-dark-800" src="https://randomuser.me/api/portraits/women/44.jpg" alt="Player 1">
+                            <img class="w-10 h-10 rounded-full border-2 border-dark-800" src="https://randomuser.me/api/portraits/men/32.jpg" alt="Player 2">
+                            <img class="w-10 h-10 rounded-full border-2 border-dark-800" src="https://randomuser.me/api/portraits/women/68.jpg" alt="Player 3">
+                        </div>
+                        <div>
+                            <p class="text-gray-400 text-sm">Join our</p>
+                            <p class="text-primary-400 font-medium">500K+ Happy Players</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative animate-float">
+                    <div class="absolute -top-10 -left-10 w-32 h-32 bg-primary-600 rounded-full filter blur-3xl opacity-20 animate-pulse-slow"></div>
+                    <div class="absolute -bottom-10 -right-10 w-40 h-40 bg-purple-600 rounded-full filter blur-3xl opacity-20 animate-pulse-slow delay-1000"></div>
+                    <img src="/images/hero-game.png" alt="Bubble Shooter Game Screenshot"
+                        class="w-full max-w-md mx-auto rounded-2xl shadow-2xl border-4 border-dark-700 relative z-10 animate-tilt">
+                    <div class="absolute -z-10 w-full h-full bg-primary-600 rounded-2xl top-4 left-4 opacity-20 blur-lg"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Games Section -->
+    <section id="games" class="py-20 bg-dark-800 relative overflow-hidden">
+        <div class="absolute -top-40 -right-40 w-80 h-80 bg-primary-600 rounded-full filter blur-3xl opacity-10"></div>
+        <div class="absolute -bottom-20 -left-20 w-64 h-64 bg-purple-600 rounded-full filter blur-3xl opacity-10"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="text-center mb-16 animate-fade-in">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6 text-shadow">
+                    <span class="gradient-text">Our Puzzle</span> Collection
+                </h2>
+                <p class="text-gray-400 max-w-2xl mx-auto text-lg">
+                    Each game is crafted with love to provide unique challenges and hours of brain-teasing entertainment.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Game 1 -->
+                <div class="game-card bg-dark-700 rounded-xl overflow-hidden border-2 border-dark-600 hover:border-primary-500 relative">
+                    <div class="absolute -top-4 -right-4 bg-primary-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg z-10">
+                        Popular
+                    </div>
+                    <div class="relative overflow-hidden h-56">
+                        <img src="/images/hero-game.png" alt="Bubble Shooter Game"
+                            class="w-full h-full object-cover transition duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-900/80 via-transparent to-transparent"></div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="text-xl font-bold">Bubble Shooter - Classic Popr</h3>
+                            <span class="text-xs bg-dark-600 text-primary-400 px-2 py-1 rounded">FREE</span>
+                        </div>
+                        <p class="text-gray-400 text-sm mb-4">
+                            Classic bubble popping game with a fun twist. Save baby birds by matching colorful bubbles!
+                        </p>
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center">
+                                <div class="flex text-yellow-400">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star-half-alt"></i>
+                                </div>
+                                <span class="ml-2 text-gray-300 text-sm">4.5</span>
+                            </div>
+                            <a href="https://play.google.com/store/apps/details?id=com.bird.shooter.bubble.puzzle.game"
+                                target="_blank" class="text-primary-400 hover:text-primary-300 text-sm font-medium flex items-center">
+                                Get <i class="fas fa-arrow-right ml-1 text-xs"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Game 2 -->
+                <div class="game-card bg-dark-700 rounded-xl overflow-hidden border-2 border-dark-600 hover:border-primary-500">
+                    <div class="relative overflow-hidden h-56">
+                        <img src="/images/game2.png" alt="Tile Troika Game"
+                            class="w-full h-full object-cover transition duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-900/80 via-transparent to-transparent"></div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="text-xl font-bold">Tile Troika: Triple Match</h3>
+                            <span class="text-xs bg-dark-600 text-primary-400 px-2 py-1 rounded">FREE</span>
+                        </div>
+                        <p class="text-gray-400 text-sm mb-4">
+                            Match three tiles in this exciting puzzle adventure with hundreds of challenging levels.
+                        </p>
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center">
+                                <div class="flex text-yellow-400">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <span class="ml-2 text-gray-300 text-sm">4.3</span>
+                            </div>
+                            <a href="https://play.google.com/store/apps/details?id=com.Puzzlefun.TileTroika"
+                                target="_blank" class="text-primary-400 hover:text-primary-300 text-sm font-medium flex items-center">
+                                Get <i class="fas fa-arrow-right ml-1 text-xs"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Game 3 -->
+                <div class="game-card bg-dark-700 rounded-xl overflow-hidden border-2 border-dark-600 hover:border-primary-500">
+                    <div class="relative overflow-hidden h-56">
+                        <img src="/images/game3.png" alt="Block Breaker Game"
+                            class="w-full h-full object-cover transition duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-900/80 via-transparent to-transparent"></div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="text-xl font-bold">Block Smash: Puzzle Game</h3>
+                            <span class="text-xs bg-dark-600 text-primary-400 px-2 py-1 rounded">FREE</span>
+                        </div>
+                        <p class="text-gray-400 text-sm mb-4">
+                            Classic block breaking game with power-ups and special bricks for extra challenge.
+                        </p>
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center">
+                                <div class="flex text-yellow-400">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <span class="ml-2 text-gray-300 text-sm">4.2</span>
+                            </div>
+                            <a href="https://play.google.com/store/apps/details?id=com.Puzzlefun.BlockBreaker"
+                                target="_blank" class="text-primary-400 hover:text-primary-300 text-sm font-medium flex items-center">
+                                Get <i class="fas fa-arrow-right ml-1 text-xs"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Game 4 -->
+                <div class="game-card bg-dark-700 rounded-xl overflow-hidden border-2 border-dark-600 hover:border-primary-500">
+                    <div class="relative overflow-hidden h-56">
+                        <img src="/images/game4.png" alt="Flow Connect Game"
+                            class="w-full h-full object-cover transition duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-900/80 via-transparent to-transparent"></div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-3">
+                            <h3 class="text-xl font-bold">Block Connect: Fun Puzzle</h3>
+                            <span class="text-xs bg-dark-600 text-primary-400 px-2 py-1 rounded">FREE</span>
+                        </div>
+                        <p class="text-gray-400 text-sm mb-4">
+                            Connect matching colors with pipes to create a flow. Relaxing yet challenging puzzle game.
+                        </p>
+                        <div class="flex justify-between items-center">
+                            <div class="flex items-center">
+                                <div class="flex text-yellow-400">
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="fas fa-star"></i>
+                                    <i class="far fa-star"></i>
+                                </div>
+                                <span class="ml-2 text-gray-300 text-sm">4.4</span>
+                            </div>
+                            <a href="https://play.google.com/store/apps/details?id=com.Puzzlefun.FlowConnect"
+                                target="_blank" class="text-primary-400 hover:text-primary-300 text-sm font-medium flex items-center">
+                                Get <i class="fas fa-arrow-right ml-1 text-xs"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-16">
+                <a href="/games/"
+                    class="inline-flex items-center px-8 py-4 border-2 border-dark-600 hover:bg-dark-800 rounded-xl font-medium transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
+                    View All Games <i class="fas fa-chevron-right ml-2 transition-transform group-hover:translate-x-1"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-20 bg-dark-900 relative overflow-hidden">
+        <div class="absolute -top-20 -left-20 w-64 h-64 bg-primary-600 rounded-full filter blur-3xl opacity-10"></div>
+        <div class="absolute -bottom-20 -right-20 w-64 h-64 bg-purple-600 rounded-full filter blur-3xl opacity-10"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="grid md:grid-cols-2 gap-16 items-center">
+                <div class="animate-slide-up">
+                    <div class="inline-block mb-6 px-4 py-2 bg-dark-800 rounded-full border border-dark-700">
+                        <span class="text-primary-400 text-sm font-medium">🧩 About Us</span>
+                    </div>
+                    <h2 class="text-4xl md:text-5xl font-bold mb-6 text-shadow">
+                        Crafting <span class="gradient-text">Mind-Blowing</span> Puzzles
+                    </h2>
+                    <p class="text-gray-400 text-lg mb-6">
+                        PuzzleFunMania is dedicated to creating fun, engaging, and challenging puzzle games that stimulate your brain while providing hours of entertainment.
+                    </p>
+                    <p class="text-gray-400 text-lg mb-8">
+                        With over 1,000,000+ downloads across our games, we're committed to delivering high-quality mobile gaming experiences that are easy to pick up but hard to put down.
+                    </p>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="/contact/"
+                            class="px-8 py-4 bg-primary-600 hover:bg-primary-700 rounded-xl font-medium transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl">
+                            Contact Our Team
+                        </a>
+                        <a href="#games"
+                            class="px-8 py-4 border-2 border-dark-600 hover:bg-dark-800 rounded-xl font-medium transition-all duration-300 hover:-translate-y-1 flex items-center">
+                            <i class="fas fa-gamepad mr-2"></i> Try Our Games
+                        </a>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="relative rounded-2xl overflow-hidden border-2 border-dark-700 shadow-2xl animate-float">
+                        <img src="/images/hero-game.png" alt="PuzzleFun Gameplay" class="w-full h-auto">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-900/70 via-transparent to-transparent"></div>
+                    </div>
+                    <div class="absolute -bottom-6 -left-6 w-32 h-32 bg-primary-600 rounded-2xl -z-10 opacity-20"></div>
+                    <div class="absolute -top-6 -right-6 w-32 h-32 bg-purple-600 rounded-2xl -z-10 opacity-20"></div>
+                    
+                    <div class="mt-8 grid grid-cols-2 gap-4">
+                        <div class="bg-dark-800 p-4 rounded-xl border-2 border-dark-700 hover:border-primary-500 transition">
+                            <div class="w-12 h-12 bg-primary-600 rounded-lg flex items-center justify-center mb-3 mx-auto">
+                                <i class="fas fa-users text-white text-xl"></i>
+                            </div>
+                            <h3 class="text-center font-bold text-primary-400">Family Friendly</h3>
+                        </div>
+                        <div class="bg-dark-800 p-4 rounded-xl border-2 border-dark-700 hover:border-primary-500 transition">
+                            <div class="w-12 h-12 bg-primary-600 rounded-lg flex items-center justify-center mb-3 mx-auto">
+                                <i class="fas fa-brain text-white text-xl"></i>
+                            </div>
+                            <h3 class="text-center font-bold text-primary-400">Brain Training</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-20 bg-dark-800 relative overflow-hidden">
+        <div class="absolute -top-40 -right-40 w-80 h-80 bg-primary-600 rounded-full filter blur-3xl opacity-10"></div>
+        <div class="absolute -bottom-20 -left-20 w-64 h-64 bg-purple-600 rounded-full filter blur-3xl opacity-10"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6 text-shadow">
+                    Why <span class="gradient-text">Choose Us</span>
+                </h2>
+                <p class="text-gray-400 max-w-2xl mx-auto text-lg">
+                    What makes our puzzle games stand out from the rest
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="feature-card bg-dark-700 p-8 rounded-2xl border-2 border-dark-600 hover:border-primary-500 transition group">
+                    <div class="w-16 h-16 bg-primary-600 rounded-xl flex items-center justify-center mb-6 mx-auto feature-icon">
+                        <i class="fas fa-brain text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-center">Brain Training</h3>
+                    <p class="text-gray-400 text-center">
+                        Our games are scientifically designed to enhance memory, improve problem-solving skills, and boost cognitive abilities through engaging puzzles.
+                    </p>
+                </div>
+
+                <div class="feature-card bg-dark-700 p-8 rounded-2xl border-2 border-dark-600 hover:border-primary-500 transition group">
+                    <div class="w-16 h-16 bg-primary-600 rounded-xl flex items-center justify-center mb-6 mx-auto feature-icon">
+                        <i class="fas fa-child text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-center">Family Friendly</h3>
+                    <p class="text-gray-400 text-center">
+                        All our games are rated for all ages with no inappropriate content, making them perfect for family game nights and kids' screen time.
+                    </p>
+                </div>
+
+                <div class="feature-card bg-dark-700 p-8 rounded-2xl border-2 border-dark-600 hover:border-primary-500 transition group">
+                    <div class="w-16 h-16 bg-primary-600 rounded-xl flex items-center justify-center mb-6 mx-auto feature-icon">
+                        <i class="fas fa-trophy text-white text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-center">Rewarding Gameplay</h3>
+                    <p class="text-gray-400 text-center">
+                        Earn achievements, unlock special levels, and compete with friends globally to make your puzzle-solving journey more exciting.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section id="blog" class="py-20 bg-dark-900 relative overflow-hidden">
+        <div class="absolute -top-20 -left-20 w-64 h-64 bg-primary-600 rounded-full filter blur-3xl opacity-10"></div>
+        <div class="absolute -bottom-20 -right-20 w-64 h-64 bg-purple-600 rounded-full filter blur-3xl opacity-10"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <div class="text-center mb-16">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6 text-shadow">
+                    Latest <span class="gradient-text">News & Tips</span>
+                </h2>
+                <p class="text-gray-400 max-w-2xl mx-auto text-lg">
+                    Stay updated with game releases, updates, and puzzle-solving strategies.
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <!-- Post 1 -->
+                <article class="blog-card bg-dark-800 rounded-2xl overflow-hidden border-2 border-dark-700 transition hover:border-primary-500 group">
+                    <div class="relative overflow-hidden h-56">
+                        <img src="/images/blog-post-2.webp" alt="Puzzle Game Benefits"
+                            class="blog-image w-full h-full object-cover transition duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-900/80 via-transparent to-transparent"></div>
+                        <div class="absolute top-4 left-4">
+                            <span class="inline-block px-3 py-1 bg-primary-600/90 text-white rounded-full text-xs font-medium">HEALTH</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-3 group-hover:text-primary-400 transition">Cognitive Benefits of Puzzle Games</h3>
+                        <p class="text-gray-400 text-sm mb-4">
+                            Discover how playing puzzle games can improve memory, problem-solving skills, and mental agility in players of all ages.
+                        </p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs text-gray-500">May 28, 2025</span>
+                            <a href="/blog/puzzle-game-benefits/"
+                                class="text-primary-400 hover:text-primary-300 text-sm font-medium flex items-center">
+                                Read More <i class="fas fa-arrow-right ml-1 text-xs"></i>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Post 2 -->
+                <article class="blog-card bg-dark-800 rounded-2xl overflow-hidden border-2 border-dark-700 transition hover:border-primary-500 group">
+                    <div class="relative overflow-hidden h-56">
+                        <img src="/images/blog-post-3.webp" alt="Bubble Shooter Tips"
+                            class="blog-image w-full h-full object-cover transition duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-900/80 via-transparent to-transparent"></div>
+                        <div class="absolute top-4 left-4">
+                            <span class="inline-block px-3 py-1 bg-primary-600/90 text-white rounded-full text-xs font-medium">TIPS</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-3 group-hover:text-primary-400 transition">Mastering Bubble Shooter: 5 Pro Tips</h3>
+                        <p class="text-gray-400 text-sm mb-4">
+                            Learn advanced strategies to improve your Bubble Shooter game and save those baby birds faster with these expert tips.
+                        </p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs text-gray-500">May 20, 2025</span>
+                            <a href="/blog/bubble-shooter-tips/"
+                                class="text-primary-400 hover:text-primary-300 text-sm font-medium flex items-center">
+                                Read More <i class="fas fa-arrow-right ml-1 text-xs"></i>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Post 3 -->
+                <article class="blog-card bg-dark-800 rounded-2xl overflow-hidden border-2 border-dark-700 transition hover:border-primary-500 group">
+                    <div class="relative overflow-hidden h-56">
+                        <img src="/images/blog-post-3333.jpg" alt="New Game Announcement"
+                            class="blog-image w-full h-full object-cover transition duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-900/80 via-transparent to-transparent"></div>
+                        <div class="absolute top-4 left-4">
+                            <span class="inline-block px-3 py-1 bg-primary-600/90 text-white rounded-full text-xs font-medium">NEWS</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-3 group-hover:text-primary-400 transition">New Game Coming Soon: Puzzle Quest</h3>
+                        <p class="text-gray-400 text-sm mb-4">
+                            Get a first look at our upcoming puzzle adventure game that combines match-3 mechanics with RPG elements.
+                        </p>
+                        <div class="flex items-center justify-between">
+                            <span class="text-xs text-gray-500">May 12, 2025</span>
+                            <a href="/blog/new-game-announcement/"
+                                class="text-primary-400 hover:text-primary-300 text-sm font-medium flex items-center">
+                                Read More <i class="fas fa-arrow-right ml-1 text-xs"></i>
+                            </a>
+                        </div>
+                    </div>
+                </article>
+            </div>
+
+            <div class="text-center mt-12">
+                <a href="/blog/"
+                    class="inline-flex items-center px-8 py-4 border-2 border-dark-600 hover:bg-dark-800 rounded-xl font-medium transition-all duration-300 hover:-translate-y-1 hover:shadow-lg group">
+                    View All Articles <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 gradient-bg relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute inset-0 bg-[url('/images/game-pattern.png')] opacity-30 animate-wave"></div>
+        </div>
+        
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative">
+            <div class="absolute -top-20 -left-20 w-64 h-64 bg-white rounded-full filter blur-3xl opacity-10"></div>
+            <div class="absolute -bottom-20 -right-20 w-64 h-64 bg-white rounded-full filter blur-3xl opacity-10"></div>
+            
+            <h2 class="text-4xl md:text-5xl font-bold mb-6 text-white text-shadow">Ready to Puzzle Your Brain?</h2>
+            <p class="text-white/90 mb-8 text-xl">
+                Download our games now and start your puzzle-solving adventure today!
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="https://play.google.com/store/apps/details?id=com.bird.shooter.bubble.puzzle.game"
+                    target="_blank"
+                    class="px-8 py-4 bg-white text-dark-900 hover:bg-gray-100 rounded-xl font-bold transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl flex items-center">
+                    <i class="fab fa-google-play text-2xl mr-3"></i>
+                    <div class="text-left">
+                        <div class="text-xs">GET IT ON</div>
+                        <div class="text-lg">Google Play</div>
+                    </div>
+                </a>
+            </div>
+            <div class="mt-8 flex justify-center">
+                <div class="flex items-center text-white/80">
+                    <div class="flex text-yellow-400 mr-2">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <span class="text-sm">4.8/5 from 10K+ reviews</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark-800 pt-16 pb-8 border-t border-dark-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+                <div>
+                    <div class="flex items-center mb-6 group">
+                        <div class="w-12 h-12 rounded-xl bg-primary-600 flex items-center justify-center group-hover:rotate-180 transition-transform duration-500">
+                            <img src="/images/logo.webp" alt="logo-png" class="rounded-lg w-10 h-10" />
+                        </div>
+                        <span class="ml-3 text-2xl font-bold gradient-text group-hover:bg-gradient-to-r from-primary-400 to-primary-300 transition-all duration-500">PuzzleFunMania</span>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-6">
+                        Creating fun and engaging puzzle games that challenge your mind and bring joy to players worldwide.
+                    </p>
+                     
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-4">Games</h3>                    
+                    <ul class="space-y-3">
+                        <li><a href="https://play.google.com/store/apps/details?id=com.bird.shooter.bubble.puzzle.game"
+                                target="_blank" class="text-gray-400 hover:text-primary-400 transition text-sm flex items-center">
+                                <i class="fas fa-arrow-right text-xs mr-2 opacity-0 group-hover:opacity-100 transition"></i> Bubble Shooter</a></li>
+                        <li><a href="https://play.google.com/store/apps/details?id=com.Puzzlefun.TileTroika"
+                                target="_blank" class="text-gray-400 hover:text-primary-400 transition text-sm flex items-center">
+                                <i class="fas fa-arrow-right text-xs mr-2 opacity-0 group-hover:opacity-100 transition"></i> Tile Troika</a></li>
+                        <li><a href="https://play.google.com/store/apps/details?id=com.Puzzlefun.BlockBreaker"
+                                target="_blank" class="text-gray-400 hover:text-primary-400 transition text-sm flex items-center">
+                                <i class="fas fa-arrow-right text-xs mr-2 opacity-0 group-hover:opacity-100 transition"></i> Block Breaker</a></li>
+                        <li><a href="https://play.google.com/store/apps/details?id=com.Puzzlefun.FlowConnect"
+                                target="_blank" class="text-gray-400 hover:text-primary-400 transition text-sm flex items-center">
+                                <i class="fas fa-arrow-right text-xs mr-2 opacity-0 group-hover:opacity-100 transition"></i> Flow Connect</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-4">Company</h3>
+                    <ul class="space-y-3">
+                        <li><a href="#about" class="text-gray-400 hover:text-primary-400 transition text-sm flex items-center">
+                                <i class="fas fa-arrow-right text-xs mr-2 opacity-0 group-hover:opacity-100 transition"></i> About Us</a></li>
+                        <li><a href="/blog/" class="text-gray-400 hover:text-primary-400 transition text-sm flex items-center">
+                                <i class="fas fa-arrow-right text-xs mr-2 opacity-0 group-hover:opacity-100 transition"></i> Blog</a></li>
+                        <li><a href="/contact/" class="text-gray-400 hover:text-primary-400 transition text-sm flex items-center">
+                                <i class="fas fa-arrow-right text-xs mr-2 opacity-0 group-hover:opacity-100 transition"></i> Contact</a></li>
+                        <li><a href="/privacy/" class="text-gray-400 hover:text-primary-400 transition text-sm flex items-center">
+                                <i class="fas fa-arrow-right text-xs mr-2 opacity-0 group-hover:opacity-100 transition"></i> Privacy Policy</a></li>
+                        <li><a href="/terms/" class="text-gray-400 hover:text-primary-400 transition text-sm flex items-center">
+                                <i class="fas fa-arrow-right text-xs mr-2 opacity-0 group-hover:opacity-100 transition"></i> Terms</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-4">Contact Info</h3>
+                    <address class="text-gray-400 text-sm not-italic">
+                        <div class="mb-4 flex items-start">
+                            <i class="fas fa-map-marker-alt text-primary-400 mt-1 mr-3"></i>
+                            <div>
+                                Jl. Sharon Boulevard Tengah No. 11, RT 02 RW 011<br>
+                                Kel. Cipamokolan, Kec. Rancasari<br>
+                                Bandung, Jawa Barat 40292<br>
+                                Indonesia
+                            </div>
+                        </div>
+                        <div class="mb-4 flex items-center">
+                            <i class="fas fa-envelope text-primary-400 mr-3"></i>
+                            <a href="mailto:websiteoffice123@yahoo.com"
+                                class="hover:text-primary-400 transition">websiteoffice123@yahoo.com</a>
+                        </div>
+                    </address>
+                </div>
+            </div>
+
+            <div class="border-t border-dark-700 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-500 text-sm mb-4 md:mb-0">
+                    &copy; 2025 PuzzleFunMania. All rights reserved.
+                </p>
+                <div class="flex space-x-6">
+                    <a href="/privacy/" class="text-gray-500 hover:text-primary-400 transition text-sm">Privacy Policy</a>
+                    <a href="/terms/" class="text-gray-500 hover:text-primary-400 transition text-sm">Terms of Service</a>
+                    <a href="/cookies/" class="text-gray-500 hover:text-primary-400 transition text-sm">Cookies</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="fixed bottom-8 right-8 w-12 h-12 bg-primary-600 rounded-full shadow-lg flex items-center justify-center text-white opacity-0 invisible transition-all duration-300 z-40 hover:bg-primary-700">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script>
+        // Mobile menu toggle with animation
+        document.getElementById('mobile-menu-button').addEventListener('click', function () {
+            const menu = document.getElementById('mobile-menu');
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                setTimeout(() => {
+                    menu.classList.remove('scale-y-0');
+                    menu.classList.add('scale-y-100');
+                }, 10);
+            } else {
+                menu.classList.remove('scale-y-100');
+                menu.classList.add('scale-y-0');
+                setTimeout(() => {
+                    menu.classList.add('hidden');
+                }, 300);
+            }
+        });
+
+        // Cookies consent with animation
+        if (!localStorage.getItem('cookiesAccepted')) {
+            const cookiesBanner = document.getElementById('cookies-banner');
+            setTimeout(() => {
+                cookiesBanner.classList.remove('hidden');
+                setTimeout(() => {
+                    cookiesBanner.classList.remove('translate-y-full');
+                }, 10);
+            }, 2000);
+
+            document.getElementById('accept-cookies').addEventListener('click', function () {
+                localStorage.setItem('cookiesAccepted', 'true');
+                cookiesBanner.classList.add('translate-y-full');
+                setTimeout(() => {
+                    cookiesBanner.classList.add('hidden');
+                }, 300);
+            });
+
+            document.getElementById('decline-cookies').addEventListener('click', function () {
+                cookiesBanner.classList.add('translate-y-full');
+                setTimeout(() => {
+                    cookiesBanner.classList.add('hidden');
+                }, 300);
+            });
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Back to top button
+        const backToTopButton = document.getElementById('back-to-top');
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.remove('opacity-0', 'invisible');
+                backToTopButton.classList.add('opacity-100', 'visible');
+            } else {
+                backToTopButton.classList.remove('opacity-100', 'visible');
+                backToTopButton.classList.add('opacity-0', 'invisible');
+            }
+        });
+
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Animation on scroll
+        const animateOnScroll = function () {
+            const elements = document.querySelectorAll('.animate-slide-up, .animate-fade-in, .animate-scale-in');
+
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+
+                if (elementPosition < windowHeight - 100) {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0) scale(1)';
+                }
+            });
+        };
+
+        // Initialize animations
+        window.addEventListener('load', animateOnScroll);
+        window.addEventListener('scroll', animateOnScroll);
+
+        // Particle animation for background
+        function createParticle(e) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            
+            // Random size between 2px and 6px
+            const size = Math.random() * 4 + 2;
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            
+            // Position at mouse coordinates
+            particle.style.left = `${e.clientX}px`;
+            particle.style.top = `${e.clientY}px`;
+            
+            // Random movement direction and distance
+            const angle = Math.random() * Math.PI * 2;
+            const distance = Math.random() * 100 + 50;
+            const tx = Math.cos(angle) * distance;
+            const ty = Math.sin(angle) * distance;
+            
+            particle.style.setProperty('--tx', `${tx}px`);
+            particle.style.setProperty('--ty', `${ty}px`);
+            
+            document.getElementById('particles-container').appendChild(particle);
+            
+            // Remove particle after animation completes
+            setTimeout(() => {
+                particle.remove();
+            }, 1000);
+        }
+
+        // Add particle effect to clickable elements
+        document.querySelectorAll('a, button').forEach(element => {
+            element.addEventListener('click', function(e) {
+                // Create multiple particles for a better effect
+                for (let i = 0; i < 5; i++) {
+                    setTimeout(() => {
+                        createParticle(e);
+                    }, i * 100);
+                }
+            });
+        });
+
+        // Add hover effect to game cards
+        document.querySelectorAll('.game-card').forEach(card => {
+            card.addEventListener('mousemove', function(e) {
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                this.style.setProperty('--mouse-x', `${x}px`);
+                this.style.setProperty('--mouse-y', `${y}px`);
+            });
+        });
+    </script>
+</body>
+
+</html>

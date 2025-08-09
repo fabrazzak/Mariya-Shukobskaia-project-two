@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jackpotland Games | Vegas Casino Slots Collection</title>
+    <meta name="description" content="Explore our collection of exciting Vegas-style slot games including Mermaid Magic, Power of Zeus, Thor Thunder and more. Free spins and big wins await!">
+    <meta name="keywords" content="vegas slots, free casino games, jackpotland games, slot machines, free spins, progressive jackpot, online slots">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://jackpotlandwins.com/games/">
+     <link rel="icon" href="/images/logo.webp" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap');
+        body {
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            background: #0a0a1a;
+            color: #fff;
+        }
+        .gradient-text {
+            background: linear-gradient(90deg, #f9c846 0%, #e67e22 50%, #e74c3c 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .hero-gradient {
+            background: radial-gradient(circle at 30% 50%, rgba(25, 25, 60, 0.8) 0%, rgba(10, 10, 26, 1) 70%);
+        }
+        .card-gradient {
+            background: linear-gradient(135deg, rgba(25, 25, 60, 0.7) 0%, rgba(40, 40, 90, 0.5) 100%);
+            backdrop-filter: blur(10px);
+        }
+        .btn-glow {
+            box-shadow: 0 0 15px rgba(249, 200, 70, 0.7);
+            transition: all 0.3s ease;
+        }
+        .btn-glow:hover {
+            box-shadow: 0 0 25px rgba(249, 200, 70, 0.9);
+            transform: translateY(-3px);
+        }
+        .threejs-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.3;
+        }
+        .game-card {
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-origin: center;
+        }
+        .game-card:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .floating {
+            animation: floating 6s ease-in-out infinite;
+        }
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        .game-filter {
+            transition: all 0.3s ease;
+        }
+        .game-filter:hover {
+            transform: scale(1.05);
+            background: rgba(249, 200, 70, 0.1);
+        }
+        .game-filter.active {
+            background: rgba(249, 200, 70, 0.2);
+            border-color: #f9c846;
+        }
+        .jackpot-animation {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body class="relative">
+    <!-- Three.js Background -->
+    <div id="threejs-container" class="threejs-container"></div>
+
+     <nav class="fixed w-full z-50 bg-black bg-opacity-80 backdrop-filter backdrop-blur-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center">
+                    <img src="/images/logo.png" alt="logo" class="h-20 mr-2"/>                   
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-center space-x-8">
+                        <a href="/" class="text-gray-300 hover:text-yellow-400 transition duration-300">Home</a>
+                        <a href="/games/" class="text-gray-300 hover:text-yellow-400 transition duration-300">Games</a>
+                        <a href="/how-to-play/" class="text-gray-300 hover:text-yellow-400 transition duration-300">How
+                            to Play</a>
+                        <a href="/responsible-gaming/"
+                            class="text-gray-300 hover:text-yellow-400 transition duration-300">Responsible Gaming</a>
+                        <a href="/contact/"
+                            class="text-gray-300 hover:text-yellow-400 transition duration-300">Contact</a>
+                        <a href="https://play.google.com/store/apps/details?id=com.slots.free.vegas.casino.jackpotland&hl=en"
+                            class="bg-yellow-500 hidden xl:block hover:bg-yellow-600 text-black font-bold py-2 px-6 rounded-full btn-glow transition duration-300">Download
+                            Now</a>
+                    </div>
+                </div>
+
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-white focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu (hidden by default) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-black bg-opacity-95 backdrop-blur-lg px-6 py-4 space-y-4">
+            <a href="/" class="block text-gray-300 hover:text-yellow-400">Home</a>
+            <a href="/games/" class="block text-gray-300 hover:text-yellow-400">Games</a>
+            <a href="/how-to-play/" class="block text-gray-300 hover:text-yellow-400">How to Play</a>
+            <a href="/responsible-gaming/" class="block text-gray-300 hover:text-yellow-400">Responsible Gaming</a>
+            <a href="/contact/" class="block text-gray-300 hover:text-yellow-400">Contact</a>
+            <a href="https://play.google.com/store/apps/details?id=com.slots.free.vegas.casino.jackpotland&hl=en"
+                class="block bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-2 px-4 rounded-full btn-glow">Download
+                Now</a>
+        </div>
+    </nav>
+
+    <!-- Script for toggling mobile menu -->
+    <script>
+        const menuBtn = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+    </script>
+
+    <!-- Hero Section -->
+    <section class="hero-gradient pt-32 pb-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto text-center relative z-10">
+            <h1 class="text-4xl md:text-6xl font-extrabold mb-6">
+                <span class="gradient-text">Jackpotland</span> <span class="text-white">Games</span>
+            </h1>
+            <p class="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto mb-8">
+                Discover our exciting collection of Vegas-style slot games with stunning graphics, thrilling bonus rounds, and massive jackpots!
+            </p>
+            <div class="flex justify-center">
+                <div class="w-16 h-1 bg-gradient-to-r from-yellow-500 to-red-500 rounded-full"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Game Filters -->
+    <section class="py-12 px-4 sm:px-6 lg:px-8 bg-black">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-wrap justify-center gap-4">
+                <button class="game-filter active border border-gray-700 rounded-full px-6 py-2 text-white transition duration-300" data-filter="all">
+                    All Games
+                </button>
+                <button class="game-filter border border-gray-700 rounded-full px-6 py-2 text-gray-300 hover:text-white transition duration-300" data-filter="popular">
+                    Most Popular
+                </button>
+                <button class="game-filter border border-gray-700 rounded-full px-6 py-2 text-gray-300 hover:text-white transition duration-300" data-filter="jackpot">
+                    Jackpot Games
+                </button>
+                <button class="game-filter border border-gray-700 rounded-full px-6 py-2 text-gray-300 hover:text-white transition duration-300" data-filter="new">
+                    New Releases
+                </button>
+                <button class="game-filter border border-gray-700 rounded-full px-6 py-2 text-gray-300 hover:text-white transition duration-300" data-filter="bonus">
+                    Bonus Games
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Games Grid -->
+    <section class="py-16 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-gray-900 to-black">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl font-bold mb-12 gradient-text">Featured Slot Machines</h2>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Game 1 -->
+                <div class="game-card" data-category="popular jackpot">
+                    <div class="bg-gray-900 rounded-xl overflow-hidden border border-gray-800 hover:border-yellow-500 h-full flex flex-col">
+                        <div class="relative">
+                            <img src="/images/mermaid-magic.webp" alt="Mermaid Magic Slot Game" class="w-full h-64 object-cover">
+                            <div class="absolute top-4 right-4 bg-yellow-500 text-black font-bold px-3 py-1 rounded-full text-sm">
+                                HOT
+                            </div>
+                        </div>
+                        <div class="p-6 flex-grow">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="text-2xl font-bold text-white">Solitaire Home Design</h3>
+                                <span class="bg-gray-800 text-yellow-500 text-xs font-bold px-2 py-1 rounded">JACKPOT</span>
+                            </div>
+                            <p class="text-gray-300 mb-4">Solitaire Home Design, a NEW free-to-play challenging solitaire game, has finally arrived! Solve solitaire puzzles to renovate and decorate rooms in the mansion!</p>
+                            <div class="flex items-center mb-4">
+                                <div class="text-yellow-500 mr-2">⭐️⭐️⭐️⭐️⭐️</div>
+                                <span class="text-gray-400 text-sm">4.9 (2.4K)</span>
+                            </div>
+                           
+                        </div>
+                        <div class="px-6 pb-6">
+                            <a href="https://play.google.com/store/apps/details?id=com.island.card" class="block w-full bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-3 px-6 rounded-full text-center transition duration-300">
+                                Play Now
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Game 2 -->
+                <div class="game-card" data-category="popular jackpot">
+                    <div class="bg-gray-900 rounded-xl overflow-hidden border border-gray-800 hover:border-yellow-500 h-full flex flex-col">
+                        <div class="relative">
+                            <img src="/images/power-of-zeus.png" alt="Power of Zeus Slot Game" class="w-full h-64 object-cover">
+                            <div class="absolute top-4 right-4 bg-red-500 text-white font-bold px-3 py-1 rounded-full text-sm">
+                                NEW
+                            </div>
+                        </div>
+                        <div class="p-6 flex-grow">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="text-2xl font-bold text-white">Mergical-Fun Match Island Game</h3>
+                                <span class="bg-gray-800 text-yellow-500 text-xs font-bold px-2 py-1 rounded">JACKPOT</span>
+                            </div>
+                            <p class="text-gray-300 mb-4">Do you know you can restore an enchanted island just by merging? Do you know you can wake up magical creatures and rebuild a paradise lost to time?</p>
+                            <div class="flex items-center mb-4">
+                                <div class="text-yellow-500 mr-2">⭐️⭐️⭐️⭐️⭐️</div>
+                                <span class="text-gray-400 text-sm">4.8 (1.9K)</span>
+                            </div>
+                            
+                        </div>
+                        <div class="px-6 pb-6">
+                            <a href="https://play.google.com/store/apps/details?id=com.fotoable.mergetown" class="block w-full bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-3 px-6 rounded-full text-center transition duration-300">
+                                Play Now
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Game 3 -->
+                <div class="game-card" data-category="popular bonus">
+                    <div class="bg-gray-900 rounded-xl overflow-hidden border border-gray-800 hover:border-yellow-500 h-full flex flex-col">
+                        <img src="/images/thor-thunder.png" alt="Thor Thunder Slot Game" class="w-full h-64 object-cover">
+                        <div class="p-6 flex-grow">
+                            <h3 class="text-2xl font-bold text-white mb-2">Dragon Farm Adventure-Fun Game</h3>
+                            <p class="text-gray-300 mb-4">Welcome to the ultimate experience of farming and adventure! Go on a fantastic adventure with lovely dragons!</p>
+                            <div class="flex items-center mb-4">
+                                <div class="text-yellow-500 mr-2">⭐️⭐️⭐️⭐️</div>
+                                <span class="text-gray-400 text-sm">4.6 (1.2K)</span>
+                            </div>
+                           
+                        </div>
+                        <div class="px-6 pb-6">
+                            <a href="https://play.google.com/store/apps/details?id=com.dragonmonster.idlefarmadventure.free" class="block w-full bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-3 px-6 rounded-full text-center transition duration-300">
+                                Play Now
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Game 4 -->
+                <div class="game-card" data-category="new jackpot">
+                    <div class="bg-gray-900 rounded-xl overflow-hidden border border-gray-800 hover:border-yellow-500 h-full flex flex-col">
+                        <div class="relative">
+                            <img src="/images/egyptian-treasures.png" alt="Egyptian Treasures Slot Game" class="w-full h-64 object-cover">
+                            <div class="absolute top-4 right-4 bg-green-500 text-white font-bold px-3 py-1 rounded-full text-sm">
+                                TRENDING
+                            </div>
+                        </div>
+                        <div class="p-6 flex-grow">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="text-2xl font-bold text-white">Tank Hero - Awesome tank war g</h3>
+                                <span class="bg-gray-800 text-yellow-500 text-xs font-bold px-2 py-1 rounded">JACKPOT</span>
+                            </div>
+                            <p class="text-gray-300 mb-4">The tank war has begun, the enemies are gathered for an attack. All you can do now, is to use your special ability to defend against waves of enemy tanks</p>
+                            <div class="flex items-center mb-4">
+                                <div class="text-yellow-500 mr-2">⭐️⭐️⭐️⭐️⭐️</div>
+                                <span class="text-gray-400 text-sm">4.9 (3.1K)</span>
+                            </div>
+                           
+                        </div>
+                        <div class="px-6 pb-6">
+                            <a href="https://play.google.com/store/apps/details?id=com.tankgame.tankhero.en" class="block w-full bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-3 px-6 rounded-full text-center transition duration-300">
+                                Play Now
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Game 5 -->
+                <div class="game-card" data-category="bonus">
+                    <div class="bg-gray-900 rounded-xl overflow-hidden border border-gray-800 hover:border-yellow-500 h-full flex flex-col">
+                        <img src="/images/dragon-kingdom.png" alt="Dragon Kingdom Slot Game" class="w-full h-64 object-cover">
+                        <div class="p-6 flex-grow">
+                            <h3 class="text-2xl font-bold text-white mb-2">
+Jackpotland-Vegas Casino Slots</h3>
+                            <p class="text-gray-300 mb-4">Bring the newest FREE Las Vegas slots home! Play now and hit a JACKPOT with Jackpotland! We've prepared 2,000,000 FREE COINS WELCOME BONUS for a rich start.
+</p>
+                            <div class="flex items-center mb-4">
+                                <div class="text-yellow-500 mr-2">⭐️⭐️⭐️⭐️</div>
+                                <span class="text-gray-400 text-sm">4.5 (856)</span>
+                            </div>
+                            
+                        </div>
+                        <div class="px-6 pb-6">
+                            <a href="https://play.google.com/store/apps/details?id=com.slots.free.vegas.casino.jackpotland" class="block w-full bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-3 px-6 rounded-full text-center transition duration-300">
+                                Play Now
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Game 6 -->
+                
+            </div>
+
+            <div class="text-center mt-12">
+                <button id="load-more" class="bg-gray-800 hover:bg-gray-700 text-white font-bold py-3 px-8 rounded-full transition duration-300 border border-gray-700">
+                    Load More Games
+                </button>
+            </div>
+        </div>
+    </section>
+
+    
+<!-- CTA Section with Background Image -->
+<section class="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden bg-cover bg-center" style="background-image: url('/images/cta-bg.png');">
+    <!-- Overlay for better text readability -->
+    <div class="absolute inset-0 bg-black/80"></div>
+    
+    <div class="max-w-7xl mx-auto text-center relative z-10">
+        <h2 class="text-4xl md:text-6xl font-bold mb-8 text-white">Ready To Hit The Jackpot?</h2>
+        <p class="text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto mb-12">
+            Join millions of players spinning and winning daily. Download now and claim your 2,000,000 FREE coins!
+        </p>
+        <div class="flex flex-col sm:flex-row justify-center gap-6">
+            <a href="https://play.google.com/store/apps/details?id=com.slots.free.vegas.casino.jackpotland&hl=en" 
+               class="bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-400 hover:to-yellow-500 text-black font-bold py-5 px-10 rounded-full text-xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-xl shadow-yellow-500/30">
+                <div class="flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                    </svg>
+                    Download & Play Free
+                </div>
+            </a>
+          
+        </div>
+        <div class="mt-12 flex justify-center">
+            <div class="flex items-center text-yellow-400 bg-black/30 px-4 py-2 rounded-full backdrop-blur-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                </svg>
+                <span class="text-white">4.8/5 Stars from 250,000+ Players</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- Game Features -->
+    <section class="py-20 px-4 sm:px-6 lg:px-8 bg-black">
+        <div class="max-w-7xl mx-auto">
+            <h2 class="text-3xl font-bold text-center mb-16 gradient-text">Why Play Jackpotland Games?</h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="card-gradient p-8 rounded-xl border border-gray-800 hover:border-yellow-500 transition duration-500">
+                    <div class="text-yellow-500 text-4xl mb-4">🎯</div>
+                    <h3 class="text-2xl font-bold text-white mb-4">High Payout Rates</h3>
+                    <p class="text-gray-300">Our games feature payout rates up to 97%, giving you more chances to win big with every spin.</p>
+                </div>
+                <div class="card-gradient p-8 rounded-xl border border-gray-800 hover:border-yellow-500 transition duration-500">
+                    <div class="text-yellow-500 text-4xl mb-4">✨</div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Stunning Graphics</h3>
+                    <p class="text-gray-300">Immersive 3D graphics and animations bring each game to life with cinematic quality.</p>
+                </div>
+                <div class="card-gradient p-8 rounded-xl border border-gray-800 hover:border-yellow-500 transition duration-500">
+                    <div class="text-yellow-500 text-4xl mb-4">🎁</div>
+                    <h3 class="text-2xl font-bold text-white mb-4">Daily Bonuses</h3>
+                    <p class="text-gray-300">Claim free coins, multipliers and spins every day to keep the reels turning.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-gray-900 to-black">
+        <div class="max-w-4xl mx-auto text-center">
+            <h2 class="text-3xl md:text-5xl font-bold mb-8">Ready to Spin the Reels?</h2>
+            <p class="text-xl text-gray-300 mb-12">Download Jackpotland now and get your 2,000,000 FREE COINS welcome bonus!</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="https://play.google.com/store/apps/details?id=com.slots.free.vegas.casino.jackpotland&hl=en" class="bg-gradient-to-r from-yellow-500 to-orange-500 hover:from-yellow-600 hover:to-orange-600 text-black font-bold py-4 px-8 rounded-full text-lg btn-glow transition duration-300">
+                    Download Now - FREE
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+  <footer class="bg-gray-900 py-12 px-4 sm:px-6 lg:px-8 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+                <div>
+                    <ul class="space-y-2">
+                        <div class=" ">
+                            <img src="/images/logo.png" alt="logo" class="h-20 mr-4" />
+                            <div>                               
+                                <p class="text-gray-300 text-base mt-1 max-w-md">
+                                    Enjoy the thrill of Las Vegas with exciting slot machines, daily bonuses, and huge
+                                    jackpots.
+                                    Download now and start spinning to win big!
+                                </p>
+                            </div>
+                        </div>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-white text-lg font-bold mb-4">Legal</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/terms/" class="text-gray-400 hover:text-yellow-500 transition duration-300">Terms
+                                of Service</a></li>
+                        <li><a href="/privacy/"
+                                class="text-gray-400 hover:text-yellow-500 transition duration-300">Privacy Policy</a>
+                        </li>
+                        <li><a href="/cookies/"
+                                class="text-gray-400 hover:text-yellow-500 transition duration-300">Cookies Policy</a>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-white text-lg font-bold mb-4">Quick View</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/contact/"
+                                class="text-gray-400 hover:text-yellow-500 transition duration-300">Contact Us</a></li>
+                        <li><a href="/responsible-gaming/"
+                                class="text-gray-400 hover:text-yellow-500 transition duration-300">Responsible
+                                Gaming</a>
+
+                        </li>
+                        <li><a href="/games/"
+                                class="text-gray-400 hover:text-yellow-500 transition duration-300">Games</a></li>
+                        <li><a href="/how-to-play/"
+                                class="text-gray-400 hover:text-yellow-500 transition duration-300">How to Play</a></li>
+                        <li><a href="/contact/"
+                                class="text-gray-400 hover:text-yellow-500 transition duration-300">Contact</a></li>
+
+                    </ul>
+                </div>
+                <div>
+                    <h3 class="text-white text-lg font-bold mb-4">Responsible Gaming</h3>
+                    <div class="flex space-x-4  justify-center items-center mb-4 gap-4">
+                        <a href="https://www.gambleaware.org/"> <img src="/images/adiction_begambleaware.svg"
+                                alt="Responsible Gaming Logo" class=""></a>
+                        <a href="https://www.gamcare.org.uk/"> <img src="/images/adiction_gamecare.svg"
+                                alt="Gambling Therapy Logo" class="h-10"></a>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-4">
+                        This game is intended for an adult audience and does not offer "real money gambling". Practice
+                        or success at social gaming does not imply future success at "real money gambling".
+                    </p>
+
+                </div>
+            </div>
+            <div class="pt-8 border-t border-gray-800">
+                <p class="text-gray-500 text-center text-sm">
+                    © 2025 ARK Casino by Betta Games. All rights reserved. | 18+ Only | Play Responsibly | *Powered by
+                    Intel® technology
+                </p>
+                <p class="text-gray-600 text-center text-xs mt-4">
+                    Use of this application is governed by Murka's Terms of Service. Collection and use of personal data
+                    are subject to Murka's Privacy Policy.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cookies Consent -->
+    <div id="cookies-consent" class="fixed bottom-0 left-0 right-0 bg-gray-800 border-t border-gray-700 p-4 hidden">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between">
+            <p class="text-gray-300 mb-4 md:mb-0 md:mr-8">
+                We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies.
+            </p>
+            <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
+                <button id="accept-cookies" class="bg-yellow-500 hover:bg-yellow-600 text-black font-bold py-2 px-6 rounded-full transition duration-300">
+                    Accept
+                </button>
+                <button id="decline-cookies" class="bg-gray-700 hover:bg-gray-600 text-white font-bold py-2 px-6 rounded-full transition duration-300">
+                    Decline
+                </button>
+                <a href="/cookies/" class="bg-transparent hover:bg-gray-700 text-yellow-500 font-bold py-2 px-6 rounded-full transition duration-300 border border-gray-600 text-center">
+                    Learn More
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Three.js Background
+        document.addEventListener('DOMContentLoaded', function() {
+            // Check if cookies consent was already given
+            if (!localStorage.getItem('cookiesAccepted')) {
+                document.getElementById('cookies-consent').classList.remove('hidden');
+            }
+
+            // Cookies consent buttons
+            document.getElementById('accept-cookies').addEventListener('click', function() {
+                localStorage.setItem('cookiesAccepted', 'true');
+                document.getElementById('cookies-consent').classList.add('hidden');
+            });
+
+            document.getElementById('decline-cookies').addEventListener('click', function() {
+                localStorage.setItem('cookiesDeclined', 'true');
+                document.getElementById('cookies-consent').classList.add('hidden');
+            });
+
+            // Three.js setup
+            const container = document.getElementById('threejs-container');
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            container.appendChild(renderer.domElement);
+
+            // Create floating slot symbols
+            const symbols = [];
+            const symbolTextures = [
+                { color: 0xf9c846, shape: 'diamond' }, // Gold diamond
+                { color: 0xe74c3c, shape: 'heart' },    // Red heart
+                { color: 0x3498db, shape: 'spade' },    // Blue spade
+                { color: 0x2ecc71, shape: 'club' },     // Green club
+                { color: 0x9b59b6, shape: 'star' }      // Purple star
+            ];
+
+            const createSymbol = (type) => {
+                let geometry;
+                switch(type.shape) {
+                    case 'diamond':
+                        const diamondShape = new THREE.Shape();
+                        diamondShape.moveTo(0, 1);
+                        diamondShape.lineTo(1, 0);
+                        diamondShape.lineTo(0, -1);
+                        diamondShape.lineTo(-1, 0);
+                        diamondShape.lineTo(0, 1);
+                        geometry = new THREE.ShapeGeometry(diamondShape);
+                        break;
+                    case 'heart':
+                        const heartShape = new THREE.Shape();
+                        heartShape.moveTo(0, 0.5);
+                        heartShape.bezierCurveTo(0.5, 0.5, 1, 0, 1, -0.5);
+                        heartShape.bezierCurveTo(1, -1, 0, -1.5, 0, -0.5);
+                        heartShape.bezierCurveTo(0, -1.5, -1, -1, -1, -0.5);
+                        heartShape.bezierCurveTo(-1, 0, -0.5, 0.5, 0, 0.5);
+                        geometry = new THREE.ShapeGeometry(heartShape);
+                        break;
+                    case 'spade':
+                        const spadeShape = new THREE.Shape();
+                        spadeShape.moveTo(0, 1);
+                        spadeShape.bezierCurveTo(0.5, 1, 1, 0.5, 1, 0);
+                        spadeShape.bezierCurveTo(1, -0.5, 0.5, -1, 0, -1);
+                        spadeShape.bezierCurveTo(-0.5, -1, -1, -0.5, -1, 0);
+                        spadeShape.bezierCurveTo(-1, 0.5, -0.5, 1, 0, 1);
+                        spadeShape.lineTo(0, -0.5);
+                        spadeShape.lineTo(0.5, -1.5);
+                        spadeShape.lineTo(-0.5, -1.5);
+                        spadeShape.lineTo(0, -0.5);
+                        geometry = new THREE.ShapeGeometry(spadeShape);
+                        break;
+                    case 'club':
+                        const clubShape = new THREE.Shape();
+                        clubShape.moveTo(0, 1);
+                        clubShape.bezierCurveTo(0.5, 1, 1, 0.5, 1, 0);
+                        clubShape.bezierCurveTo(1, -0.5, 0.5, -1, 0, -1);
+                        clubShape.bezierCurveTo(-0.5, -1, -1, -0.5, -1, 0);
+                        clubShape.bezierCurveTo(-1, 0.5, -0.5, 1, 0, 1);
+                        clubShape.moveTo(0, -0.5);
+                        clubShape.ellipse(0.5, -1.5, 0.3, 0.5, 0, Math.PI * 2);
+                        clubShape.ellipse(-0.5, -1.5, 0.3, 0.5, 0, Math.PI * 2);
+                        clubShape.ellipse(0, -1.8, 0.3, 0.3, 0, Math.PI * 2);
+                        geometry = new THREE.ShapeGeometry(clubShape);
+                        break;
+                    case 'star':
+                        const starShape = new THREE.Shape();
+                        const starPoints = 5;
+                        const innerRadius = 0.5;
+                        const outerRadius = 1;
+                        for (let i = 0; i <= starPoints * 2; i++) {
+                            const angle = (i / (starPoints * 2)) * Math.PI * 2;
+                            const radius = i % 2 === 0 ? outerRadius : innerRadius;
+                            const x = Math.cos(angle) * radius;
+                            const y = Math.sin(angle) * radius;
+                            if (i === 0) {
+                                starShape.moveTo(x, y);
+                            } else {
+                                starShape.lineTo(x, y);
+                            }
+                        }
+                        geometry = new THREE.ShapeGeometry(starShape);
+                        break;
+                }
+                return geometry;
+            };
+
+            for (let i = 0; i < 30; i++) {
+                const type = symbolTextures[Math.floor(Math.random() * symbolTextures.length)];
+                const geometry = createSymbol(type);
+                const material = new THREE.MeshBasicMaterial({ 
+                    color: type.color,
+                    transparent: true,
+                    opacity: 0.7
+                });
+                const symbol = new THREE.Mesh(geometry, material);
+                
+                // Scale and position randomly
+                const scale = Math.random() * 0.8 + 0.5;
+                symbol.scale.set(scale, scale, scale);
+                symbol.position.x = Math.random() * 100 - 50;
+                symbol.position.y = Math.random() * 100 - 50;
+                symbol.position.z = Math.random() * 100 - 50;
+                
+                // Random rotation
+                symbol.rotation.x = Math.random() * Math.PI;
+                symbol.rotation.y = Math.random() * Math.PI;
+                
+                // Store speed for animation
+                symbol.userData = { 
+                    speed: Math.random() * 0.02 + 0.01,
+                    floatSpeed: Math.random() * 0.02 + 0.01
+                };
+                
+                scene.add(symbol);
+                symbols.push(symbol);
+            }
+
+            camera.position.z = 30;
+
+            // Animation loop
+            function animate() {
+                requestAnimationFrame(animate);
+                
+                symbols.forEach(symbol => {
+                    symbol.rotation.z += symbol.userData.speed;
+                    symbol.position.y -= 0.03;
+                    
+                    // Float up and down slightly
+                    symbol.position.x += Math.sin(Date.now() * symbol.userData.floatSpeed) * 0.01;
+                    
+                    if (symbol.position.y < -50) {
+                        symbol.position.y = 50;
+                        symbol.position.x = Math.random() * 100 - 50;
+                    }
+                });
+
+                renderer.render(scene, camera);
+            }
+            animate();
+
+            // Handle window resize
+            window.addEventListener('resize', function() {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+
+            // Game filter functionality
+            const filterButtons = document.querySelectorAll('.game-filter');
+            const gameCards = document.querySelectorAll('.game-card');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    // Update active button
+                    filterButtons.forEach(btn => btn.classList.remove('active', 'text-white'));
+                    filterButtons.forEach(btn => btn.classList.add('text-gray-300'));
+                    button.classList.add('active', 'text-white');
+                    button.classList.remove('text-gray-300');
+                    
+                    const filter = button.dataset.filter;
+                    
+                    // Filter games
+                    gameCards.forEach(card => {
+                        if (filter === 'all' || card.dataset.category.includes(filter)) {
+                            card.style.display = 'block';
+                            gsap.from(card, {
+                                opacity: 0,
+                                y: 20,
+                                duration: 0.5,
+                                ease: "power2.out"
+                            });
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+
+            // Load more games button
+            document.getElementById('load-more').addEventListener('click', function() {
+                // In a real implementation, this would load more games from an API
+                this.textContent = 'All Games Loaded';
+                this.classList.add('opacity-50', 'cursor-not-allowed');
+            });
+
+            // GSAP Animations
+            gsap.registerPlugin(ScrollTrigger);
+
+            // Animate hero elements
+            gsap.from(".hero-gradient h1", {
+                duration: 1.5,
+                y: 50,
+                opacity: 0,
+                ease: "power3.out"
+            });
+
+            gsap.from(".hero-gradient p", {
+                duration: 1.5,
+                y: 50,
+                opacity: 0,
+                ease: "power3.out",
+                delay: 0.3
+            });
+
+            // Animate game cards on scroll
+            gsap.utils.toArray(".game-card").forEach((card, i) => {
+                gsap.from(card, {
+                    scrollTrigger: {
+                        trigger: card,
+                        start: "top 80%",
+                        toggleActions: "play none none none"
+                    },
+                    y: 50,
+                    opacity: 0,
+                    duration: 0.8,
+                    delay: i * 0.1,
+                    ease: "power2.out"
+                });
+            });
+
+            // Animate features
+            gsap.utils.toArray(".card-gradient").forEach((card, i) => {
+                gsap.from(card, {
+                    scrollTrigger: {
+                        trigger: card,
+                        start: "top 80%",
+                        toggleActions: "play none none none"
+                    },
+                    y: 30,
+                    opacity: 0,
+                    duration: 0.8,
+                    delay: i * 0.2,
+                    ease: "power2.out"
+                });
+            });
+
+            // Animate jackpot banner
+            gsap.from(".jackpot-animation", {
+                scrollTrigger: {
+                    trigger: ".jackpot-animation",
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                },
+                scale: 0.5,
+                opacity: 0,
+                duration: 1,
+                ease: "elastic.out(1, 0.5)"
+            });
+        });
+    </script>
+</body>
+</html>

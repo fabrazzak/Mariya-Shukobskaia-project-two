@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Story | Sumato Coffee Deals</title>
+    <meta name="description" content="Discover the story behind Sumato Coffee - from our founder's passion for quality coffee to our mission of delivering freshly roasted beans to workplaces and homes.">
+    <meta name="keywords" content="sumato coffee story, coffee company history, specialty coffee origins, about our coffee, sumato founders, coffee roasting philosophy">
+    
+    <!-- Favicon -->
+     <link rel="icon" href="/assets/favicon.png" type="image/x-icon">
+
+     <link rel="canonical" href="https://sumatocoffeedeals.com/about/">
+
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6F4E37',
+                        secondary: '#C4A484',
+                        accent: '#E5B880',
+                        dark: '#3E2723',
+                        light: '#F5F5F5'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['"Playfair Display"', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #C4A484;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #6F4E37;
+        }
+        
+        /* Timeline styling */
+        .timeline-item:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 24px;
+            height: calc(100% - 24px);
+            width: 2px;
+            background: #C4A484;
+        }
+    </style>
+</head>
+<body class="font-sans text-dark bg-light overflow-x-hidden">
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-white shadow-md z-40 transition-all duration-300">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+             <a href="/" class="flex items-center">
+               <img src="/assets/logo-header.png" alt="Sumato Coffee Logo" class="h-12 rounded">
+            </a>
+            
+            <div class="hidden lg:flex space-x-8">
+                <a href="/" class="text-dark font-medium hover:text-primary transition">Home</a>
+                <a href="/products/" class="text-dark font-medium hover:text-primary transition">Shop Coffee</a>
+                <a href="/about/" class="text-primary font-medium">Our Story</a>
+                <a href="/blog/" class="text-dark font-medium hover:text-primary transition">Blog</a>
+                <a href="/contact/" class="text-dark font-medium hover:text-primary transition">Contact</a>
+            </div>
+            
+            <div class="flex items-center space-x-4">
+              <button id="searchBtn" class="p-2 text-dark hover:text-primary transition hidden">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                </button>
+                <a href="/cart/" class="p-2 text-dark hover:text-primary transition relative">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                    </svg>
+                    <span id="cartCount" class="absolute -top-1 -right-1 bg-primary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center hidden">0</span>
+                </a>
+                <button id="mobileMenuBtn" class="lg:hidden p-2 text-dark hover:text-primary transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="lg:hidden bg-white absolute top-full left-0 right-0 shadow-lg hidden">
+            <div class="container mx-auto px-4 py-3 flex flex-col space-y-3">
+                <a href="/" class="py-2 text-dark font-medium border-b border-gray-100">Home</a>
+                <a href="/products/" class="py-2 text-dark font-medium border-b border-gray-100">Shop Coffee</a>
+                <a href="/about/" class="py-2 text-primary font-medium border-b border-gray-100">Our Story</a>
+                <a href="/blog/" class="py-2 text-dark font-medium border-b border-gray-100">Blog</a>
+                <a href="/contact/" class="py-2 text-dark font-medium">Contact</a>
+            </div>
+        </div>
+        
+        <!-- Search Bar -->
+        <div id="searchBar" class="absolute top-full left-0 right-0 bg-white shadow-lg hidden">
+            <div class="container mx-auto px-4 py-3">
+                <div class="relative">
+                    <input type="text" placeholder="Search our coffees..." class="w-full p-3 border border-gray-300 rounded pl-10 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 absolute left-3 top-3.5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="pt-32 pb-20 bg-primary text-white">
+        <div class="container mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-6xl font-display font-bold mb-4">Our Coffee Story</h1>
+            <p class="text-xl md:text-2xl max-w-3xl mx-auto">From bad office coffee to specialty roasting - how Sumato Coffee became the fuel for America's workplaces</p>
+        </div>
+    </section>
+    
+    <!-- Founder Section -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col lg:flex-row items-center">
+                <div class="lg:w-1/2 mb-10 lg:mb-0 lg:pr-10">
+                    <h2 class="text-3xl md:text-4xl font-display font-bold mb-6">Meet Ben Martinez</h2>
+                    <p class="text-lg text-gray-600 mb-6">The health-focused executive who carried coffee books in his backpack and filmed his pre-dawn brewing routine. After 20 years of corporate life across six states and six companies, Ben turned his coffee obsession into a mission: bringing specialty coffee culture to the workplace.</p>
+                    <p class="text-lg text-gray-600 mb-6">In 2017, what began as a passion project quickly grew into Sumato Coffee Company. Ben's vision was simple but revolutionary - workplace coffee shouldn't be an afterthought. It should be an experience worth looking forward to, a moment of quality in the daily grind.</p>
+                    <p class="text-lg text-gray-600 mb-8">Today, Ben leads a team of specialty coffee roasters and bean geeks from our headquarters in the mountains of Utah, still cupping every batch and testing every brew method to ensure Sumato meets his exacting standards.</p>
+                    <div class="flex space-x-4">
+                        <a href="/products/" class="px-6 py-3 bg-primary text-white rounded-lg font-medium hover:bg-secondary transition">Our Coffee</a>
+                        <a href="/contact/" class="px-6 py-3 border-2 border-primary text-primary rounded-lg font-medium hover:bg-primary hover:text-white transition">Contact Ben</a>
+                    </div>
+                </div>
+                <div class="lg:w-1/2 relative">
+                    <div class="relative rounded-lg overflow-hidden shadow-xl">
+                        <img src="/assets/about-coffee.webp" alt="Ben Martinez, Founder of Sumato Coffee" class="w-full h-auto">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark to-transparent opacity-70"></div>
+                        <div class="absolute bottom-0 left-0 p-6 text-white">
+                            <h3 class="text-xl font-semibold">Ben Martinez</h3>
+                            <p class="text-secondary">Founder & Chief Coffee Officer</p>
+                        </div>
+                    </div>
+                    <div class="absolute -top-6 -left-6 w-32 h-32 bg-accent rounded-lg z-0"></div>
+                    <div class="absolute -bottom-6 -right-6 w-32 h-32 bg-secondary rounded-lg z-0"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Our Mission -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-display font-bold mb-4">Our Mission</h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">To transform workplace coffee from a caffeine delivery system into a moment of genuine enjoyment and connection</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="bg-white p-8 rounded-lg shadow-sm">
+                    <h3 class="text-xl font-semibold mb-4 text-primary">Quality Without Compromise</h3>
+                    <p class="text-gray-600">We source only specialty-grade Arabica beans, scoring 84 points or above on the SCA scale. Our direct relationships with farmers ensure fair prices and sustainable practices while giving us access to the best harvests.</p>
+                </div>
+                
+                <div class="bg-white p-8 rounded-lg shadow-sm">
+                    <h3 class="text-xl font-semibold mb-4 text-primary">Freshness Guaranteed</h3>
+                    <p class="text-gray-600">Unlike most coffee companies that roast in bulk and let bags sit in warehouses, we roast to order. Every bag shows its roast date proudly because we know coffee peaks 2-14 days after roasting.</p>
+                </div>
+                
+                <div class="bg-white p-8 rounded-lg shadow-sm">
+                    <h3 class="text-xl font-semibold mb-4 text-primary">Workplace Focused</h3>
+                    <p class="text-gray-600">From our subscription models to our packaging sizes, everything we do is designed with workplaces in mind. We understand office coffee needs better than anyone because we lived it for decades.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Our Timeline -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-display font-bold mb-4">Our Journey</h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">From a single frustrated coffee lover to a company serving workplaces across America</p>
+            </div>
+            
+            <div class="max-w-3xl mx-auto">
+                <div class="relative pl-8 timeline-item">
+                    <div class="absolute left-0 w-4 h-4 bg-primary rounded-full mt-1"></div>
+                    <div class="mb-8">
+                        <h3 class="text-xl font-semibold mb-2">2015 - The Breaking Point</h3>
+                        <p class="text-gray-600">After choking down yet another pot of stale, bitter office coffee in Salt Lake City, Ben Martinez decides enough is enough. He begins researching specialty coffee and experimenting with home roasting in his garage.</p>
+                    </div>
+                </div>
+                
+                <div class="relative pl-8 timeline-item">
+                    <div class="absolute left-0 w-4 h-4 bg-primary rounded-full mt-1"></div>
+                    <div class="mb-8">
+                        <h3 class="text-xl font-semibold mb-2">2016 - Coffee Underground</h3>
+                        <p class="text-gray-600">Ben starts bringing his home-roasted coffee to work, sharing it with colleagues. Word spreads through the office, then to neighboring businesses. What begins as a passion project gains unexpected demand.</p>
+                    </div>
+                </div>
+                
+                <div class="relative pl-8 timeline-item">
+                    <div class="absolute left-0 w-4 h-4 bg-primary rounded-full mt-1"></div>
+                    <div class="mb-8">
+                        <h3 class="text-xl font-semibold mb-2">2017 - Official Launch</h3>
+                        <p class="text-gray-600">Sumato Coffee Company is officially founded with a small 5kg roaster and a simple website. The first blends - "The Sender" and "Rise & Grinder" - become instant favorites among Utah offices.</p>
+                    </div>
+                </div>
+                
+                <div class="relative pl-8 timeline-item">
+                    <div class="absolute left-0 w-4 h-4 bg-primary rounded-full mt-1"></div>
+                    <div class="mb-8">
+                        <h3 class="text-xl font-semibold mb-2">2018 - First Warehouse</h3>
+                        <p class="text-gray-600">With demand growing, Sumato moves into a dedicated roasting facility in Park City, Utah. The team grows to include two full-time roasters and a customer service manager.</p>
+                    </div>
+                </div>
+                
+                <div class="relative pl-8 timeline-item">
+                    <div class="absolute left-0 w-4 h-4 bg-primary rounded-full mt-1"></div>
+                    <div class="mb-8">
+                        <h3 class="text-xl font-semibold mb-2">2019 - National Expansion</h3>
+                        <p class="text-gray-600">Sumato begins shipping nationwide, with particular popularity in tech hubs like San Francisco, Austin, and New York. The subscription service launches, solving the "we ran out of coffee" office emergency.</p>
+                    </div>
+                </div>
+                
+                <div class="relative pl-8 timeline-item">
+                    <div class="absolute left-0 w-4 h-4 bg-primary rounded-full mt-1"></div>
+                    <div class="mb-8">
+                        <h3 class="text-xl font-semibold mb-2">2020 - Pandemic Pivot</h3>
+                        <p class="text-gray-600">As offices empty due to COVID-19, Sumato quickly adapts by offering home subscriptions and virtual coffee tastings. Surprisingly, business grows as remote workers seek better home coffee setups.</p>
+                    </div>
+                </div>
+                
+                <div class="relative pl-8 timeline-item">
+                    <div class="absolute left-0 w-4 h-4 bg-primary rounded-full mt-1"></div>
+                    <div class="mb-8">
+                        <h3 class="text-xl font-semibold mb-2">2021 - New Roastery</h3>
+                        <p class="text-gray-600">Sumato upgrades to a 25kg Diedrich roaster and expands the team to 12 employees. The company begins direct trade relationships with farms in Ethiopia and Guatemala.</p>
+                    </div>
+                </div>
+                
+                <div class="relative pl-8 timeline-item">
+                    <div class="absolute left-0 w-4 h-4 bg-primary rounded-full mt-1"></div>
+                    <div class="mb-8">
+                        <h3 class="text-xl font-semibold mb-2">2023 - Retail Launch</h3>
+                        <p class="text-gray-600">After years of focusing on workplaces, Sumato opens its first retail location in Salt Lake City, featuring a tasting room and brewing classes. The "Work From Home" blend becomes a bestseller.</p>
+                    </div>
+                </div>
+                
+                <div class="relative pl-8">
+                    <div class="absolute left-0 w-4 h-4 bg-primary rounded-full mt-1"></div>
+                    <div class="mb-8">
+                        <h3 class="text-xl font-semibold mb-2">Today - Growing Strong</h3>
+                        <p class="text-gray-600">Sumato now serves over 1,200 businesses and 15,000 home subscribers across North America. Despite growth, we still roast in small batches, cup every lot, and maintain our founding belief: great coffee makes work better.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Our Team -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-display font-bold mb-4">Meet The Team</h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">The passionate coffee professionals behind Sumato's success</p>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="bg-white rounded-lg overflow-hidden shadow-sm text-center">
+                    <img src="/assets/team-sarah.webp" alt="Sarah Chen" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold">Sarah Chen</h3>
+                        <p class="text-primary mb-3">Head Roaster</p>
+                        <p class="text-gray-600">Sarah brings 12 years of roasting experience from Portland and San Francisco. She oversees all roast profiles and quality control.</p>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-lg overflow-hidden shadow-sm text-center">
+                    <img src="/assets/team-michael.jpg" alt="Michael Rodriguez" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold">Michael Rodriguez</h3>
+                        <p class="text-primary mb-3">Director of Coffee</p>
+                        <p class="text-gray-600">Michael travels to origin countries to build relationships with farmers and source our green coffee beans.</p>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-lg overflow-hidden shadow-sm text-center">
+                    <img src="/assets/team-jessica.jpg" alt="Jessica Park" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold">Jessica Park</h3>
+                        <p class="text-primary mb-3">Customer Experience</p>
+                        <p class="text-gray-600">Jessica leads our customer service team and ensures every Sumato customer gets white-glove treatment.</p>
+                    </div>
+                </div>
+                
+                <div class="bg-white rounded-lg overflow-hidden shadow-sm text-center">
+                    <img src="/assets/team-david.jpg" alt="David Wilson" class="w-full h-64 object-cover">
+                    <div class="p-6">
+                        <h3 class="text-xl font-semibold">David Wilson</h3>
+                        <p class="text-primary mb-3">Head of Operations</p>
+                        <p class="text-gray-600">David keeps our roasting facility running smoothly and manages inventory and logistics.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Our Process -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-display font-bold mb-4">Our Coffee Process</h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">From seed to cup - how we create exceptional coffee</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-primary rounded-full flex items-center justify-center mx-auto mb-4 text-white text-2xl font-bold">1</div>
+                    <h3 class="text-xl font-semibold mb-3">Sourcing</h3>
+                    <p class="text-gray-600">We build direct relationships with farmers who share our commitment to quality and sustainability. Every lot is cupped and approved by our team before purchase.</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-primary rounded-full flex items-center justify-center mx-auto mb-4 text-white text-2xl font-bold">2</div>
+                    <h3 class="text-xl font-semibold mb-3">Roasting</h3>
+                    <p class="text-gray-600">Our small-batch roasting approach ensures each coffee develops its optimal flavor profile. We roast to order, never to stock.</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-primary rounded-full flex items-center justify-center mx-auto mb-4 text-white text-2xl font-bold">3</div>
+                    <h3 class="text-xl font-semibold mb-3">Quality Control</h3>
+                    <p class="text-gray-600">Every batch is cupped by our Q-certified team. We only ship coffee that meets our strict standards for freshness and flavor.</p>
+                </div>
+                
+                <div class="text-center">
+                    <div class="w-20 h-20 bg-primary rounded-full flex items-center justify-center mx-auto mb-4 text-white text-2xl font-bold">4</div>
+                    <h3 class="text-xl font-semibold mb-3">Delivery</h3>
+                    <p class="text-gray-600">Packaged immediately after roasting and shipped within 24 hours to ensure peak freshness when it reaches you.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+   <!-- CTA Section with Background Image and Full Overlay -->
+<section class="relative py-16 text-white bg-[url('/assets/hero-coffee.webp')] bg-cover bg-center bg-no-repeat">
+    <!-- Full-size overlay -->
+    <div class="absolute inset-0 bg-black/70 w-full h-full z-0"></div>
+
+    <!-- CTA Content -->
+    <div class="relative container mx-auto px-4 text-center z-10">
+        <h2 class="text-3xl md:text-4xl font-display font-bold mb-6">Experience the Sumato Difference</h2>
+        <p class="text-xl mb-8 max-w-2xl mx-auto">Join thousands of businesses and coffee lovers who have upgraded their daily brew.</p>
+        <div class="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4">
+            <a href="/products/" class="px-8 py-3 bg-white text-primary rounded-lg font-medium hover:bg-gray-100 transition">Shop Our Coffee</a>
+            <a href="/contact/" class="px-8 py-3 border-2 border-white text-white rounded-lg font-medium hover:bg-white hover:text-primary transition">Contact Our Team</a>
+        </div>
+    </div>
+</section>
+
+    
+    <!-- Footer -->
+   <footer class="bg-dark text-white pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+                <div>
+               <img src="/assets/logo.png" alt="Sumato Coffee Logo" class="h-16 mb-4  px-2 py-2 rounded">
+                    <p class="text-gray-400 mb-4">Freshly roasted specialty coffee delivered to your doorstep. Because mediocre coffee should never be part of your job description.</p>
+                    <div class="flex space-x-4">
+                        <a href="https://www.facebook.com/sumatocoffee" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition">
+                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                        <a href="https://www.instagram.com/sumatocoffee/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition">
+                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                        <a href="https://x.com/sumatocoffee" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition">
+                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Shop</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/products/" class="text-gray-400 hover:text-white transition">All Coffee</a></li>
+                        <li><a href="/products/" class="text-gray-400 hover:text-white transition">Single Origin</a></li>
+                        <li><a href="/products/" class="text-gray-400 hover:text-white transition">Blends</a></li>
+                        <li><a href="/products/" class="text-gray-400 hover:text-white transition">Decaf</a></li>
+                        <li><a href="/products/" class="text-gray-400 hover:text-white transition">Merchandise</a></li>
+                        <li><a href="/products/" class="text-gray-400 hover:text-white transition">Gift Cards</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Company</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/about/" class="text-gray-400 hover:text-white transition">Our Story</a></li>
+                        <li><a href="/blog/" class="text-gray-400 hover:text-white transition">Blog</a></li>
+                        <li><a href="/contact/" class="text-gray-400 hover:text-white transition">Contact Us</a></li>
+                    
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Help</h3>
+                    <ul class="space-y-2">
+                       
+                        <li><a href="/privacy/" class="text-gray-400 hover:text-white transition">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="text-gray-400 hover:text-white transition">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-400 mb-4 md:mb-0">© 2025 Sumato Coffee Deals. All rights reserved.</p>
+                    <div class="flex space-x-6">
+                        <a href="/privacy/" class="text-gray-400 hover:text-white transition">Privacy Policy</a>
+                        <a href="/terms/" class="text-gray-400 hover:text-white transition">Terms of Service</a>
+                        <a href="/cookies/" class="text-gray-400 hover:text-white transition">Cookies</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Search Toggle
+        const searchBtn = document.getElementById('searchBtn');
+        const searchBar = document.getElementById('searchBar');
+        
+        searchBtn.addEventListener('click', () => {
+            searchBar.classList.toggle('hidden');
+            mobileMenu.classList.add('hidden');
+        });
+        
+        // Cart count
+        const cartCount = document.getElementById('cartCount');
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        
+        function updateCartCount() {
+            const count = cart.reduce((total, item) => total + item.quantity, 0);
+            cartCount.textContent = count;
+            
+            if (count > 0) {
+                cartCount.classList.remove('hidden');
+            } else {
+                cartCount.classList.add('hidden');
+            }
+        }
+        
+        updateCartCount();
+    </script>
+</body>
+</html>

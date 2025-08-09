@@ -1,0 +1,1054 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Account - SGiftCodes | Premium Gaming Gift Cards & Codes</title>
+    <meta name="description" content="Manage your SGiftCodes account, view order history, and update your profile.">
+    <meta name="keywords" content="gaming account, PlayStation codes account, Xbox live codes account, Robux account">
+    <link rel="canonical" href="https://sgiftcodes.com/account/">
+    <link rel="icon" href="/assets/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Oxanium:wght@400;500;600;700&family=Rubik:wght@400;500;600;700&display=swap');
+        
+        :root {
+            --primary: #6c5ce7;
+            --secondary: #a29bfe;
+            --accent: #fd79a8;
+            --dark: #2d3436;
+            --light: #f5f6fa;
+        }
+        
+        body {
+            font-family: 'Rubik', sans-serif;
+            background-color: #0f0f13;
+            color: #e0e0e0;
+            overflow-x: hidden;
+        }
+        
+        .font-gaming {
+            font-family: 'Oxanium', cursive;
+        }
+        
+        .hero-gradient {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+        }
+        
+        .glow-text {
+            text-shadow: 0 0 10px rgba(108, 92, 231, 0.7);
+        }
+        
+        .glow-box {
+            box-shadow: 0 0 15px rgba(108, 92, 231, 0.5);
+        }
+        
+        .hamburger-menu {
+            width: 30px;
+            height: 20px;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .hamburger-menu span {
+            display: block;
+            position: absolute;
+            height: 3px;
+            width: 100%;
+            background: white;
+            border-radius: 3px;
+            opacity: 1;
+            left: 0;
+            transform: rotate(0deg);
+            transition: .25s ease-in-out;
+        }
+        
+        .hamburger-menu span:nth-child(1) {
+            top: 0px;
+        }
+        
+        .hamburger-menu span:nth-child(2), .hamburger-menu span:nth-child(3) {
+            top: 10px;
+        }
+        
+        .hamburger-menu span:nth-child(4) {
+            top: 20px;
+        }
+        
+        .hamburger-menu.open span:nth-child(1) {
+            top: 10px;
+            width: 0%;
+            left: 50%;
+        }
+        
+        .hamburger-menu.open span:nth-child(2) {
+            transform: rotate(45deg);
+        }
+        
+        .hamburger-menu.open span:nth-child(3) {
+            transform: rotate(-45deg);
+        }
+        
+        .hamburger-menu.open span:nth-child(4) {
+            top: 10px;
+            width: 0%;
+            left: 50%;
+        }
+        
+        #particles-js {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+        }
+        
+        .content-over-particle {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .threejs-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .gradient-border {
+            position: relative;
+            border-radius: 12px;
+        }
+        
+        .gradient-border::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #6c5ce7, #fd79a8, #00cec9);
+            border-radius: 14px;
+            z-index: -1;
+            opacity: 0.7;
+        }
+        
+        /* Account specific styles */
+        .account-tab {
+            padding: 12px 20px;
+            border-bottom: 2px solid transparent;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .account-tab.active {
+            border-bottom-color: #6c5ce7;
+            color: #6c5ce7;
+        }
+        
+        .account-tab:hover:not(.active) {
+            border-bottom-color: #a29bfe;
+        }
+        
+        .account-input {
+            background: #2d3436;
+            border: 1px solid #3d4346;
+            border-radius: 8px;
+            padding: 12px 16px;
+            color: white;
+            width: 100%;
+            transition: all 0.3s;
+        }
+        
+        .account-input:focus {
+            outline: none;
+            border-color: #6c5ce7;
+            box-shadow: 0 0 0 2px rgba(108, 92, 231, 0.3);
+        }
+        
+        .account-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        
+        .order-card {
+            background: #2d3436;
+            border-radius: 12px;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+        
+        .order-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
+        
+        .order-status {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        
+        .status-pending {
+            background: rgba(253, 203, 110, 0.1);
+            color: #fdcb6e;
+        }
+        
+        .status-completed {
+            background: rgba(0, 184, 148, 0.1);
+            color: #00b894;
+        }
+        
+        .status-cancelled {
+            background: rgba(214, 48, 49, 0.1);
+            color: #d63031;
+        }
+        
+        .account-btn {
+            transition: all 0.3s;
+        }
+        
+        .account-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(108, 92, 231, 0.4);
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <!-- Header -->
+    <header class="fixed w-full z-50 bg-black bg-opacity-90 backdrop-blur-sm border-b border-gray-800">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <!-- Logo -->
+            <div class="flex items-center">
+                <a href="/" class="flex items-center">
+                    <div class="w-10 h-10 rounded-full bg-gradient-to-r from-purple-600 to-pink-500 flex items-center justify-center mr-2">
+                        <span class="font-gaming font-bold text-white text-xl">SC</span>
+                    </div>
+                    <span class="font-gaming text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-400">SGiftCodes</span>
+                </a>
+            </div>
+            
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex items-center space-x-8">
+                <a href="/" class="text-white hover:text-purple-400 transition font-medium">Home</a>
+                <a href="/shop/" class="text-white hover:text-purple-400 transition font-medium">Shop</a>
+                <a href="/blog/" class="text-white hover:text-purple-400 transition font-medium">Blog</a>
+                <a href="/about/" class="text-white hover:text-purple-400 transition font-medium">About</a>
+                <a href="/contact/" class="text-white hover:text-purple-400 transition font-medium">Contact</a>
+                <div id="account-nav">
+                    <a href="/account/" class="text-white hover:text-purple-400 transition font-medium">Account</a>
+                </div>
+            </nav>
+            
+            <!-- Right Side Icons -->
+            <div class="flex items-center space-x-4">
+                <a href="/cart/" class="relative text-white hover:text-purple-400 transition">
+                    <i class="fas fa-shopping-cart text-xl"></i>
+                    <span id="cart-count" class="absolute -top-2 -right-2 bg-purple-600 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                </a>
+                
+                <button id="logout-btn" class="hidden md:block ml-4 px-4 py-2 bg-gradient-to-r from-purple-600 to-pink-500 text-white rounded-lg font-medium hover:opacity-90 transition">Logout</button>
+                
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden">
+                    <div id="hamburger" class="hamburger-menu">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-gray-900 bg-opacity-95 backdrop-blur-sm w-full absolute top-16 left-0 py-4 px-4 border-t border-gray-800">
+            <div class="flex flex-col space-y-4">
+                <a href="/" class="text-white hover:text-purple-400 transition font-medium py-2">Home</a>
+                <a href="/shop/" class="text-white hover:text-purple-400 transition font-medium py-2">Shop</a>
+                <a href="/blog/" class="text-white hover:text-purple-400 transition font-medium py-2">Blog</a>
+                <a href="/about/" class="text-white hover:text-purple-400 transition font-medium py-2">About</a>
+                <a href="/contact/" class="text-white hover:text-purple-400 transition font-medium py-2">Contact</a>
+                <div id="mobile-account-nav">
+                    <a href="/account/" class="text-white hover:text-purple-400 transition font-medium py-2">Account</a>
+                </div>
+                <button id="mobile-logout-btn" class="mt-4 px-4 py-2 bg-gradient-to-r from-purple-600 to-pink-500 text-white rounded-lg font-medium hover:opacity-90 transition text-center">Logout</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section with Three.js Background -->
+    <section class="relative hero-gradient pt-32 pb-20 overflow-hidden">
+        <div id="particles-js" class="absolute top-0 left-0 w-full h-full"></div>
+        <div class="threejs-container" id="threejs-container"></div>
+        
+        <div class="container mx-auto px-4 content-over-particle">
+            <div class="max-w-4xl mx-auto text-center">
+                <h1 class="font-gaming text-4xl md:text-6xl font-bold text-white mb-6 glow-text">
+                    <span class="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-400">My Account</span>
+                </h1>
+                <p class="text-xl text-gray-300 mb-10 max-w-2xl mx-auto">
+                    Manage your profile, orders, and preferences
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Account Content -->
+    <section class="py-12 bg-gray-900">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col lg:flex-row gap-8">
+                <!-- Account Sidebar -->
+                <div class="lg:w-1/4 mb-8 lg:mb-0">
+                    <div class="bg-gray-800 rounded-xl p-6 sticky top-24">
+                        <div class="flex flex-col items-center mb-6">
+                            <div class="w-24 h-24 rounded-full bg-gradient-to-r from-purple-600 to-pink-500 flex items-center justify-center mb-4">
+                                <span class="font-gaming font-bold text-white text-3xl" id="account-avatar">SC</span>
+                            </div>
+                            <h3 class="text-xl font-bold text-white" id="account-username">Username</h3>
+                            <p class="text-gray-400 text-sm" id="account-email">user@example.com</p>
+                        </div>
+                        
+                        <div class="flex flex-col space-y-2">
+                            <button id="profile-tab" class="account-tab active text-left">
+                                <i class="fas fa-user mr-2"></i> Profile
+                            </button>
+                            <button id="orders-tab" class="account-tab text-left">
+                                <i class="fas fa-shopping-bag mr-2"></i> Orders
+                            </button>
+                            <button id="address-tab" class="account-tab text-left">
+                                <i class="fas fa-map-marker-alt mr-2"></i> Addresses
+                            </button>
+                            <button id="security-tab" class="account-tab text-left">
+                                <i class="fas fa-lock mr-2"></i> Security
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Account Main Content -->
+                <div class="lg:w-3/4">
+                    <!-- Profile Tab Content -->
+                    <div id="profile-content" class="account-content">
+                        <div class="bg-gray-800 rounded-xl p-6 mb-8">
+                            <h3 class="text-xl font-bold text-white mb-6">Profile Information</h3>
+                            
+                            <form id="profile-form">
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                                    <div>
+                                        <label for="first-name" class="account-label">First Name</label>
+                                        <input type="text" id="first-name" class="account-input">
+                                    </div>
+                                    <div>
+                                        <label for="last-name" class="account-label">Last Name</label>
+                                        <input type="text" id="last-name" class="account-input">
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-6">
+                                    <label for="bio" class="account-label">Bio</label>
+                                    <textarea id="bio" class="account-input" rows="3" placeholder="Tell us about yourself..."></textarea>
+                                </div>
+                                
+                                <div class="mb-6">
+                                    <label for="gaming-platforms" class="account-label">Favorite Gaming Platforms</label>
+                                    <select id="gaming-platforms" class="account-input" multiple>
+                                        <option value="playstation">PlayStation</option>
+                                        <option value="xbox">Xbox</option>
+                                        <option value="nintendo">Nintendo</option>
+                                        <option value="pc">PC</option>
+                                        <option value="mobile">Mobile</option>
+                                    </select>
+                                </div>
+                                
+                                <button type="submit" class="px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-500 text-white rounded-lg font-bold account-btn">
+                                    Save Changes
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    
+                    <!-- Orders Tab Content -->
+                    <div id="orders-content" class="account-content hidden">
+                        <div class="bg-gray-800 rounded-xl p-6 mb-8">
+                            <h3 class="text-xl font-bold text-white mb-6">Order History</h3>
+                            
+                            <div id="orders-list">
+                                <!-- Orders will be loaded here via JavaScript -->
+                                <div class="text-center py-10">
+                                    <i class="fas fa-shopping-bag text-4xl text-gray-600 mb-4"></i>
+                                    <p class="text-gray-400">You haven't placed any orders yet.</p>
+                                    <a href="/shop/" class="mt-4 inline-block px-6 py-2 bg-gradient-to-r from-purple-600 to-pink-500 text-white rounded-lg font-medium hover:opacity-90 transition">
+                                        Start Shopping
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Address Tab Content -->
+                    <div id="address-content" class="account-content hidden">
+                        <div class="bg-gray-800 rounded-xl p-6 mb-8">
+                            <h3 class="text-xl font-bold text-white mb-6">Saved Addresses</h3>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6" id="addresses-list">
+                                <!-- Address cards will be loaded here via JavaScript -->
+                                <div class="md:col-span-2 text-center py-10">
+                                    <i class="fas fa-map-marker-alt text-4xl text-gray-600 mb-4"></i>
+                                    <p class="text-gray-400">You don't have any saved addresses yet.</p>
+                                </div>
+                            </div>
+                            
+                            <button id="add-address-btn" class="px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-500 text-white rounded-lg font-bold account-btn">
+                                <i class="fas fa-plus mr-2"></i> Add New Address
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Security Tab Content -->
+                    <div id="security-content" class="account-content hidden">
+                        <div class="bg-gray-800 rounded-xl p-6 mb-8">
+                            <h3 class="text-xl font-bold text-white mb-6">Security Settings</h3>
+                            
+                            <form id="security-form">
+                                <div class="mb-6">
+                                    <label for="current-password" class="account-label">Current Password</label>
+                                    <input type="password" id="current-password" class="account-input" required>
+                                </div>
+                                
+                                <div class="mb-6">
+                                    <label for="new-password" class="account-label">New Password</label>
+                                    <input type="password" id="new-password" class="account-input" required>
+                                    <div class="password-strength mt-2">
+                                        <div class="strength-meter" id="password-strength-meter"></div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-6">
+                                    <label for="confirm-password" class="account-label">Confirm New Password</label>
+                                    <input type="password" id="confirm-password" class="account-input" required>
+                                </div>
+                                
+                                <button type="submit" class="px-6 py-3 bg-gradient-to-r from-purple-600 to-pink-500 text-white rounded-lg font-bold account-btn">
+                                    Update Password
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 pt-20 pb-10 border-t border-gray-800">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+                <div>
+                    <div class="flex items-center mb-6">
+                        <div class="w-10 h-10 rounded-full bg-gradient-to-r from-purple-600 to-pink-500 flex items-center justify-center mr-2">
+                            <span class="font-gaming font-bold text-white text-xl">SC</span>
+                        </div>
+                        <span class="font-gaming text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-400">SGiftCodes</span>
+                    </div>
+                    <p class="text-gray-400 mb-6">
+                        Your premier destination for digital gaming codes, gift cards, skins and mods.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-purple-400 transition">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-purple-400 transition">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-purple-400 transition">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-purple-400 transition">
+                            <i class="fab fa-discord"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="font-gaming text-xl text-white mb-6">Shop</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/shop/playstation/" class="text-gray-400 hover:text-purple-400 transition">PlayStation</a></li>
+                        <li><a href="/shop/xbox/" class="text-gray-400 hover:text-purple-400 transition">Xbox</a></li>
+                        <li><a href="/shop/roblox/" class="text-gray-400 hover:text-purple-400 transition">Roblox</a></li>
+                        <li><a href="/shop/skins/" class="text-gray-400 hover:text-purple-400 transition">Skins</a></li>
+                        <li><a href="/shop/mods/" class="text-gray-400 hover:text-purple-400 transition">Mods</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="font-gaming text-xl text-white mb-6">Company</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/about/" class="text-gray-400 hover:text-purple-400 transition">About Us</a></li>
+                        <li><a href="/blog/" class="text-gray-400 hover:text-purple-400 transition">Blog</a></li>
+                        <li><a href="/contact/" class="text-gray-400 hover:text-purple-400 transition">Contact</a></li>
+                        <li><a href="/careers/" class="text-gray-400 hover:text-purple-400 transition">Careers</a></li>
+                        <li><a href="/press/" class="text-gray-400 hover:text-purple-400 transition">Press</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="font-gaming text-xl text-white mb-6">Support</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/faq/" class="text-gray-400 hover:text-purple-400 transition">FAQ</a></li>
+                        <li><a href="/shipping/" class="text-gray-400 hover:text-purple-400 transition">Shipping & Delivery</a></li>
+                        <li><a href="/returns/" class="text-gray-400 hover:text-purple-400 transition">Returns & Refunds</a></li>
+                        <li><a href="/privacy/" class="text-gray-400 hover:text-purple-400 transition">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="text-gray-400 hover:text-purple-400 transition">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="pt-10 border-t border-gray-800">
+                <p class="text-gray-500 text-center">
+                    &copy; 2025 SGiftCodes. All rights reserved.
+                </p>
+                <p class="text-gray-600 text-center text-sm mt-2">
+                    We are not an affiliate agency. All products are sold independently through our platform.
+                </p>
+                <p class="text-gray-600 text-center text-sm mt-2">
+                    Address: 490 Chem. de Vassan, Val-d'Or, QC J9P 0C1, Canada | Phone: +1 (819) 824-3146 | Email: info@sgiftcodes.com
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cookies Consent -->
+    <div id="cookies-consent" class="hidden fixed bottom-0 left-0 right-0 bg-gray-800 border-t border-gray-700 z-50 p-4">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <div class="mb-4 md:mb-0 md:mr-6">
+                    <p class="text-gray-300">
+                        We use cookies to enhance your experience on our website. By continuing to browse, you agree to our use of cookies.
+                    </p>
+                </div>
+                <div class="flex space-x-4">
+                    <button id="accept-cookies" class="px-6 py-2 bg-purple-600 text-white rounded-lg font-medium hover:bg-purple-700 transition">
+                        Accept
+                    </button>
+                    <a href="/privacy/" class="px-6 py-2 bg-transparent border border-gray-600 text-gray-300 rounded-lg font-medium hover:bg-gray-700 transition">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Check if user is logged in
+        const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+        const currentUser = JSON.parse(localStorage.getItem('currentUser')) || {};
+        
+        if (!isLoggedIn) {
+            window.location.href = '/login/';
+        }
+        
+        // Update UI with user data
+        document.addEventListener('DOMContentLoaded', () => {
+            // Set user info
+            document.getElementById('account-username').textContent = currentUser.username || 'Username';
+            document.getElementById('account-email').textContent = currentUser.email || 'user@example.com';
+            document.getElementById('account-avatar').textContent = currentUser.username ? currentUser.username.charAt(0).toUpperCase() : 'U';
+            
+            // Set profile form values
+            document.getElementById('first-name').value = currentUser.firstName || '';
+            document.getElementById('last-name').value = currentUser.lastName || '';
+            document.getElementById('bio').value = currentUser.bio || '';
+            
+            if (currentUser.gamingPlatforms) {
+                const platforms = document.getElementById('gaming-platforms');
+                Array.from(platforms.options).forEach(option => {
+                    if (currentUser.gamingPlatforms.includes(option.value)) {
+                        option.selected = true;
+                    }
+                });
+            }
+            
+            // Load orders if any
+            if (currentUser.orders && currentUser.orders.length > 0) {
+                renderOrders(currentUser.orders);
+            }
+            
+            // Load addresses if any
+            if (currentUser.addresses && currentUser.addresses.length > 0) {
+                renderAddresses(currentUser.addresses);
+            }
+        });
+        
+        // Tab switching
+        const tabs = ['profile', 'orders', 'address', 'security'];
+        tabs.forEach(tab => {
+            const tabBtn = document.getElementById(`${tab}-tab`);
+            const content = document.getElementById(`${tab}-content`);
+            
+            tabBtn.addEventListener('click', () => {
+                // Remove active class from all tabs
+                document.querySelectorAll('.account-tab').forEach(t => t.classList.remove('active'));
+                // Hide all content
+                document.querySelectorAll('.account-content').forEach(c => c.classList.add('hidden'));
+                // Add active class to clicked tab
+                tabBtn.classList.add('active');
+                // Show corresponding content
+                content.classList.remove('hidden');
+            });
+        });
+        
+        // Render orders
+        function renderOrders(orders) {
+            const ordersList = document.getElementById('orders-list');
+            let html = '';
+            
+            orders.forEach(order => {
+                const orderDate = new Date(order.date).toLocaleDateString();
+                let statusClass = '';
+                let statusText = '';
+                
+                switch(order.status) {
+                    case 'completed':
+                        statusClass = 'status-completed';
+                        statusText = 'Completed';
+                        break;
+                    case 'cancelled':
+                        statusClass = 'status-cancelled';
+                        statusText = 'Cancelled';
+                        break;
+                    default:
+                        statusClass = 'status-pending';
+                        statusText = 'Pending';
+                }
+                
+                html += `
+                    <div class="order-card mb-6">
+                        <div class="p-6">
+                            <div class="flex justify-between items-start mb-4">
+                                <div>
+                                    <h4 class="font-bold text-lg">Order #${order.id}</h4>
+                                    <p class="text-gray-400 text-sm">${orderDate}</p>
+                                </div>
+                                <div>
+                                    <span class="order-status ${statusClass}">${statusText}</span>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-4">
+                                ${order.items.map(item => `
+                                    <div class="flex justify-between items-center py-3 border-b border-gray-700">
+                                        <div class="flex items-center">
+                                            <img src="${item.image}" alt="${item.name}" class="w-12 h-12 object-contain rounded-lg bg-gray-700 mr-3">
+                                            <div>
+                                                <div class="font-medium">${item.name}</div>
+                                                <div class="text-gray-400 text-sm">Qty: ${item.quantity}</div>
+                                            </div>
+                                        </div>
+                                        <div class="text-white font-medium">$${(item.price * item.quantity).toFixed(2)}</div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                            
+                            <div class="flex justify-between items-center pt-4 border-t border-gray-700">
+                                <div>
+                                    <p class="text-gray-400 text-sm">${order.items.length} item(s)</p>
+                                </div>
+                                <div class="text-right">
+                                    <p class="text-gray-400 text-sm">Total</p>
+                                    <p class="text-white font-bold">$${order.total.toFixed(2)}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            ordersList.innerHTML = html;
+        }
+        
+        // Render addresses
+        function renderAddresses(addresses) {
+            const addressesList = document.getElementById('addresses-list');
+            let html = '';
+            
+            addresses.forEach((address, index) => {
+                html += `
+                    <div class="bg-gray-700 rounded-lg p-6">
+                        <div class="flex justify-between items-start mb-4">
+                            <h4 class="font-bold">Address ${index + 1}</h4>
+                            <button class="text-gray-400 hover:text-purple-400" onclick="editAddress(${index})">
+                                <i class="fas fa-edit"></i>
+                            </button>
+                        </div>
+                        <p class="text-gray-300 mb-1">${address.firstName} ${address.lastName}</p>
+                        <p class="text-gray-300 mb-1">${address.address}</p>
+                        <p class="text-gray-300 mb-1">${address.city}, ${address.state} ${address.zip}</p>
+                        <p class="text-gray-300">${address.country}</p>
+                    </div>
+                `;
+            });
+            
+            addressesList.innerHTML = html;
+        }
+        
+        // Add new address
+        document.getElementById('add-address-btn').addEventListener('click', () => {
+            // In a real app, you would show a modal/form to add a new address
+            // For this demo, we'll just add a sample address
+            if (!currentUser.addresses) {
+                currentUser.addresses = [];
+            }
+            
+            const newAddress = {
+                firstName: 'John',
+                lastName: 'Doe',
+                address: '123 Gaming Street',
+                city: 'Val-d\'Or',
+                state: 'QC',
+                zip: 'J9P 0C1',
+                country: 'Canada',
+                isDefault: currentUser.addresses.length === 0
+            };
+            
+            currentUser.addresses.push(newAddress);
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            renderAddresses(currentUser.addresses);
+        });
+        
+        // Edit address (placeholder function)
+        window.editAddress = function(index) {
+            alert(`Editing address ${index + 1}`);
+        };
+        
+        // Profile form submission
+        document.getElementById('profile-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Update user data
+            currentUser.firstName = document.getElementById('first-name').value;
+            currentUser.lastName = document.getElementById('last-name').value;
+            currentUser.bio = document.getElementById('bio').value;
+            
+            const platformsSelect = document.getElementById('gaming-platforms');
+            currentUser.gamingPlatforms = Array.from(platformsSelect.selectedOptions).map(opt => opt.value);
+            
+            // Save to localStorage
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            
+            // Show success message
+            alert('Profile updated successfully!');
+        });
+        
+        // Security form submission
+        document.getElementById('security-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const currentPassword = document.getElementById('current-password').value;
+            const newPassword = document.getElementById('new-password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            
+            // Validate current password (in a real app, you would verify against hashed password)
+            if (currentPassword !== currentUser.password) {
+                alert('Current password is incorrect!');
+                return;
+            }
+            
+            // Validate new passwords match
+            if (newPassword !== confirmPassword) {
+                alert('New passwords do not match!');
+                return;
+            }
+            
+            // Update password (in a real app, you would hash this)
+            currentUser.password = newPassword;
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            
+            // Clear form
+            document.getElementById('current-password').value = '';
+            document.getElementById('new-password').value = '';
+            document.getElementById('confirm-password').value = '';
+            
+            // Show success message
+            alert('Password updated successfully!');
+        });
+        
+        // Password strength indicator
+        document.getElementById('new-password').addEventListener('input', function() {
+            const password = this.value;
+            const strengthMeter = document.getElementById('password-strength-meter');
+            let strength = 0;
+            
+            if (password.length > 0) strength += 1;
+            if (password.length >= 8) strength += 1;
+            if (/[A-Z]/.test(password)) strength += 1;
+            if (/[0-9]/.test(password)) strength += 1;
+            if (/[^A-Za-z0-9]/.test(password)) strength += 1;
+            
+            strengthMeter.style.width = (strength * 20) + '%';
+            
+            // Update color based on strength
+            strengthMeter.className = 'strength-meter';
+            if (strength <= 2) {
+                strengthMeter.classList.add('strength-weak');
+            } else if (strength <= 4) {
+                strengthMeter.classList.add('strength-medium');
+            } else {
+                strengthMeter.classList.add('strength-strong');
+            }
+        });
+        
+        // Logout functionality
+        document.getElementById('logout-btn').addEventListener('click', logout);
+        document.getElementById('mobile-logout-btn').addEventListener('click', logout);
+        
+        function logout() {
+            localStorage.removeItem('isLoggedIn');
+            window.location.href = '/login/';
+        }
+        
+        // Mobile menu toggle
+        const hamburger = document.getElementById('hamburger');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        hamburger.addEventListener('click', () => {
+            hamburger.classList.toggle('open');
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                hamburger.classList.remove('open');
+                mobileMenu.classList.add('hidden');
+            });
+        });
+        
+        // Initialize cart count
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const count = cart.reduce((total, item) => total + item.quantity, 0);
+            document.getElementById('cart-count').textContent = count;
+        }
+        
+        updateCartCount();
+        
+        // Cookies consent
+        const cookiesConsent = document.getElementById('cookies-consent');
+        const acceptCookies = document.getElementById('accept-cookies');
+        
+        if (!localStorage.getItem('cookiesAccepted')) {
+            setTimeout(() => {
+                cookiesConsent.classList.remove('hidden');
+            }, 2000);
+        }
+        
+        acceptCookies.addEventListener('click', () => {
+            localStorage.setItem('cookiesAccepted', 'true');
+            cookiesConsent.classList.add('hidden');
+        });
+        
+        // Three.js background for hero section
+        function initThreeJS() {
+            const container = document.getElementById('threejs-container');
+            if (!container) return;
+            
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+            
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, width / height, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(width, height);
+            container.appendChild(renderer.domElement);
+            
+            // Create floating particles
+            const particlesGeometry = new THREE.BufferGeometry();
+            const particleCount = 500;
+            
+            const posArray = new Float32Array(particleCount * 3);
+            
+            for (let i = 0; i < particleCount * 3; i++) {
+                posArray[i] = (Math.random() - 0.5) * 10;
+            }
+            
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+            
+            const particlesMaterial = new THREE.PointsMaterial({
+                size: 0.02,
+                color: 0x6c5ce7,
+                transparent: true,
+                opacity: 0.8,
+                blending: THREE.AdditiveBlending
+            });
+            
+            const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+            scene.add(particlesMesh);
+            
+            camera.position.z = 3;
+            
+            // Animation loop
+            function animate() {
+                requestAnimationFrame(animate);
+                
+                particlesMesh.rotation.x += 0.0005;
+                particlesMesh.rotation.y += 0.0005;
+                
+                renderer.render(scene, camera);
+            }
+            
+            animate();
+            
+            // Handle resize
+            window.addEventListener('resize', () => {
+                const width = container.clientWidth;
+                const height = container.clientHeight;
+                
+                camera.aspect = width / height;
+                camera.updateProjectionMatrix();
+                renderer.setSize(width, height);
+            });
+        }
+        
+        // Initialize Three.js when DOM is loaded
+        document.addEventListener('DOMContentLoaded', () => {
+            initThreeJS();
+            
+            // Initialize particles.js
+            if (typeof particlesJS !== 'undefined') {
+                particlesJS('particles-js', {
+                    "particles": {
+                        "number": {
+                            "value": 80,
+                            "density": {
+                                "enable": true,
+                                "value_area": 800
+                            }
+                        },
+                        "color": {
+                            "value": "#6c5ce7"
+                        },
+                        "shape": {
+                            "type": "circle",
+                            "stroke": {
+                                "width": 0,
+                                "color": "#000000"
+                            },
+                            "polygon": {
+                                "nb_sides": 5
+                            }
+                        },
+                        "opacity": {
+                            "value": 0.5,
+                            "random": false,
+                            "anim": {
+                                "enable": false,
+                                "speed": 1,
+                                "opacity_min": 0.1,
+                                "sync": false
+                            }
+                        },
+                        "size": {
+                            "value": 3,
+                            "random": true,
+                            "anim": {
+                                "enable": false,
+                                "speed": 40,
+                                "size_min": 0.1,
+                                "sync": false
+                            }
+                        },
+                        "line_linked": {
+                            "enable": true,
+                            "distance": 150,
+                            "color": "#6c5ce7",
+                            "opacity": 0.4,
+                            "width": 1
+                        },
+                        "move": {
+                            "enable": true,
+                            "speed": 2,
+                            "direction": "none",
+                            "random": false,
+                            "straight": false,
+                            "out_mode": "out",
+                            "bounce": false,
+                            "attract": {
+                                "enable": false,
+                                "rotateX": 600,
+                                "rotateY": 1200
+                            }
+                        }
+                    },
+                    "interactivity": {
+                        "detect_on": "canvas",
+                        "events": {
+                            "onhover": {
+                                "enable": true,
+                                "mode": "grab"
+                            },
+                            "onclick": {
+                                "enable": true,
+                                "mode": "push"
+                            },
+                            "resize": true
+                        },
+                        "modes": {
+                            "grab": {
+                                "distance": 140,
+                                "line_linked": {
+                                    "opacity": 1
+                                }
+                            },
+                            "bubble": {
+                                "distance": 400,
+                                "size": 40,
+                                "duration": 2,
+                                "opacity": 8,
+                                "speed": 3
+                            },
+                            "repulse": {
+                                "distance": 200,
+                                "duration": 0.4
+                            },
+                            "push": {
+                                "particles_nb": 4
+                            },
+                            "remove": {
+                                "particles_nb": 2
+                            }
+                        }
+                    },
+                    "retina_detect": true
+                });
+            }
+            
+            // GSAP animations
+            gsap.from(".hero-gradient h1", {
+                duration: 1.5,
+                y: 50,
+                opacity: 0,
+                ease: "power3.out"
+            });
+            
+            gsap.from(".hero-gradient p", {
+                duration: 1.5,
+                y: 50,
+                opacity: 0,
+                ease: "power3.out",
+                delay: 0.3
+            });
+        });
+    </script>
+</body>
+</html>

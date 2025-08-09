@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Light vs Medium vs Dark Roast Coffee | Sumato Coffee Blog</title>
+    <meta name="description" content="Learn the key differences between light, medium, and dark roast coffee - from flavor profiles to caffeine content and ideal brewing methods.">
+    <meta name="keywords" content="coffee roast types, light roast coffee, medium roast coffee, dark roast coffee, coffee roasting differences, best coffee roast">
+    
+    <!-- Favicon -->
+     <link rel="icon" href="/assets/favicon.png" type="image/x-icon">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6F4E37',
+                        secondary: '#C4A484',
+                        accent: '#E5B880',
+                        dark: '#3E2723',
+                        light: '#F5F5F5'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['"Playfair Display"', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #C4A484;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #6F4E37;
+        }
+        
+        /* Blog content styling */
+        .blog-content h2 {
+            font-size: 1.75rem;
+            font-family: '"Playfair Display", serif';
+            font-weight: 600;
+            color: #3E2723;
+            margin-top: 2.5rem;
+            margin-bottom: 1.25rem;
+        }
+        
+        .blog-content h3 {
+            font-size: 1.5rem;
+            font-family: '"Playfair Display", serif';
+            font-weight: 500;
+            color: #3E2723;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .blog-content p {
+            font-size: 1.125rem;
+            line-height: 1.75;
+            color: #4B5563;
+            margin-bottom: 1.5rem;
+        }
+        
+        .blog-content ul, 
+        .blog-content ol {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+        
+        .blog-content li {
+            margin-bottom: 0.75rem;
+            line-height: 1.75;
+        }
+        
+        .blog-content img {
+            border-radius: 0.5rem;
+            margin: 2rem auto;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        
+        .blog-content blockquote {
+            border-left: 4px solid #C4A484;
+            padding-left: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+            color: #6F4E37;
+        }
+    </style>
+</head>
+<body class="font-sans text-dark bg-light">
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-white shadow-md z-40 transition-all duration-300">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+             <a href="/" class="flex items-center">
+               <img src="/assets/logo-header.png" alt="Sumato Coffee Logo" class="h-12 rounded">
+            </a>
+            
+            <div class="hidden lg:flex space-x-8">
+                <a href="/" class="text-dark font-medium hover:text-primary transition">Home</a>
+                <a href="/products/" class="text-dark font-medium hover:text-primary transition">Shop Coffee</a>
+                <a href="/about/" class="text-dark font-medium hover:text-primary transition">Our Story</a>
+                <a href="/blog/" class="text-primary font-medium">Blog</a>
+                <a href="/contact/" class="text-dark font-medium hover:text-primary transition">Contact</a>
+            </div>
+            
+            <div class="flex items-center space-x-4">
+              <button id="searchBtn" class="p-2 text-dark hover:text-primary transition hidden">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                </button>
+                <a href="/cart/" class="p-2 text-dark hover:text-primary transition relative">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                    </svg>
+                    <span id="cartCount" class="absolute -top-1 -right-1 bg-primary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center hidden">0</span>
+                </a>
+                <button id="mobileMenuBtn" class="lg:hidden p-2 text-dark hover:text-primary transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="lg:hidden bg-white absolute top-full left-0 right-0 shadow-lg hidden">
+            <div class="container mx-auto px-4 py-3 flex flex-col space-y-3">
+                <a href="/" class="py-2 text-dark font-medium border-b border-gray-100">Home</a>
+                <a href="/products/" class="py-2 text-dark font-medium border-b border-gray-100">Shop Coffee</a>
+                <a href="/about/" class="py-2 text-dark font-medium border-b border-gray-100">Our Story</a>
+                <a href="/blog/" class="py-2 text-primary font-medium border-b border-gray-100">Blog</a>
+                <a href="/contact/" class="py-2 text-dark font-medium">Contact</a>
+            </div>
+        </div>
+        
+        <!-- Search Bar -->
+        <div id="searchBar" class="absolute top-full left-0 right-0 bg-white shadow-lg hidden">
+            <div class="container mx-auto px-4 py-3">
+                <div class="relative">
+                    <input type="text" placeholder="Search blog posts..." class="w-full p-3 border border-gray-300 rounded pl-10 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 absolute left-3 top-3.5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Blog Header -->
+    <section class="pt-32 pb-20 bg-primary text-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto">
+                <div class="flex items-center mb-4">
+                    <span class="text-sm bg-white bg-opacity-20 px-3 py-1 rounded-full">Coffee Education</span>
+                    <span class="mx-2 text-white text-opacity-70">•</span>
+                    <span class="text-sm text-white text-opacity-80">May 7, 2025</span>
+                </div>
+                <h1 class="text-3xl md:text-4xl lg:text-5xl font-display font-bold mb-6">What's the Difference Between Light, Medium, and Dark Roast Coffee?</h1>
+                <p class="text-xl text-white text-opacity-90">Understanding how roast levels affect flavor, caffeine content, and brewing methods</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Blog Content -->
+    <article class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto blog-content">
+                <img src="/assets/coffee-roasts.webp" alt="Light, medium, and dark roasted coffee beans side by side" class="w-full">
+                
+                <p>If you've ever stood in front of a shelf full of coffee bags wondering what "light," "medium," or "dark roast" actually means, you're not alone. These terms describe how long and at what temperature the coffee beans have been roasted, which dramatically affects their flavor profile, caffeine content, and best brewing methods. At Sumato Coffee, we believe understanding these differences can help you find your perfect cup.</p>
+                
+                <h2>The Roasting Process Explained</h2>
+                
+                <p>Coffee roasting transforms green coffee beans into the fragrant brown beans we know and love. During roasting, beans undergo chemical changes as they're rapidly brought to very high temperatures. When they reach the peak of perfection, they're quickly cooled to stop the process. The entire roasting process typically takes between 10-20 minutes for most commercial roasters, with the exact time depending on the desired roast level.</p>
+                
+                <p>As beans roast, they go through several stages:</p>
+                
+                <ul>
+                    <li><strong>Drying phase:</strong> Beans lose moisture and turn from green to yellow</li>
+                    <li><strong>First crack:</strong> A popping sound occurs as sugars caramelize and beans expand</li>
+                    <li><strong>Development phase:</strong> Flavor compounds develop as roasting continues</li>
+                    <li><strong>Second crack:</strong> A sharper cracking sound as oils emerge (for darker roasts)</li>
+                </ul>
+                
+                <h2>Light Roast Coffee</h2>
+                
+                <p>Light roast coffee is roasted for the shortest time, typically stopping just after the first crack (around 350-400°F). These beans reach an internal temperature of about 356-401°F. Light roasts have a light brown color, no oil on the surface, and retain most of the coffee's original characteristics from its origin.</p>
+                
+                <h3>Characteristics:</h3>
+                
+                <ul>
+                    <li><strong>Flavor:</strong> Bright acidity, pronounced fruity or floral notes, more complex flavors that reflect the bean's origin</li>
+                    <li><strong>Body:</strong> Lighter body, more tea-like</li>
+                    <li><strong>Caffeine content:</strong> Slightly higher (by volume) than darker roasts</li>
+                    <li><strong>Best for:</strong> Pour over, drip, and other methods that highlight subtle flavors</li>
+                </ul>
+                
+                <p>Light roasts are sometimes called "cinnamon roast" (not because of flavor but because of the light brown color) or "half city roast." Our <a href="/products/" class="text-primary hover:underline">Sender blend</a> is a great example of a well-balanced light roast with citrusy brightness and honey-like sweetness.</p>
+                
+                <blockquote>
+                    "Light roast doesn't mean weak coffee - it means coffee where you can actually taste the bean's origin characteristics rather than just roast flavors." - Ben Martinez, Sumato Founder
+                </blockquote>
+                
+                <h2>Medium Roast Coffee</h2>
+                
+                <p>Medium roast coffee reaches internal temperatures between 410-428°F, stopping somewhere between the end of the first crack and just before the second crack begins. This is the most popular roast level in American specialty coffee shops.</p>
+                
+                <h3>Characteristics:</h3>
+                
+                <ul>
+                    <li><strong>Flavor:</strong> Balanced acidity and body, caramel sweetness, some origin character with added roast flavors</li>
+                    <li><strong>Body:</strong> Medium body, rounded mouthfeel</li>
+                    <li><strong>Caffeine content:</strong> Middle ground between light and dark</li>
+                    <li><strong>Best for:</strong> Nearly all brewing methods, especially drip coffee and French press</li>
+                </ul>
+                
+                 <p>Medium roasts are sometimes called "American roast," "breakfast roast," or "city roast." Our <a href="/products/" class="text-primary hover:underline">Touch Base blend</a> exemplifies a perfect medium roast with its notes of milk chocolate and toasted nuts.</p>
+                
+                <h2>Dark Roast Coffee</h2>
+                
+                <p>Dark roast coffee continues roasting past the second crack, reaching internal temperatures of 437-446°F or higher. The beans become shiny as oils emerge on the surface, and they take on a dark brown, almost black color.</p>
+                
+                <h3>Characteristics:</h3>
+                
+                <ul>
+                    <li><strong>Flavor:</strong> Bold, smoky, sometimes bitter, with pronounced roast flavors dominating origin characteristics</li>
+                    <li><strong>Body:</strong> Full, heavy body</li>
+                    <li><strong>Caffeine content:</strong> Slightly less than lighter roasts (by volume)</li>
+                    <li><strong>Best for:</strong> Espresso, cold brew, and those who prefer bold, intense flavors</li>
+                </ul>
+                
+                <p>Common names for dark roasts include "French roast," "Italian roast," or "espresso roast." Our <a href="/products/" class="text-primary hover:underline">Rise & Grinder</a> is a popular dark roast with deep chocolate notes and a smooth finish.</p>
+                
+                <h2>Caffeine Content Myths</h2>
+                
+                <p>There's a common misconception that dark roast has more caffeine than light roast. The truth is more nuanced:</p>
+                
+                <ul>
+                    <li><strong>By volume:</strong> Light roast has slightly more caffeine because the beans are denser (you get more coffee per scoop)</li>
+                    <li><strong>By weight:</strong> They're nearly identical because caffeine is relatively stable during roasting</li>
+                    <li><strong>In practice:</strong> The difference is minimal - about a 5-10% variation at most</li>
+                </ul>
+                
+                <h2>Choosing Your Perfect Roast</h2>
+                
+                <p>The "best" roast level is entirely subjective and depends on your personal taste preferences. Here's how to decide:</p>
+                
+                <h3>You might prefer light roast if:</h3>
+                <ul>
+                    <li>You enjoy tasting the unique characteristics of different coffee origins</li>
+                    <li>You appreciate bright, acidic flavors like citrus or berries</li>
+                    <li>You typically drink coffee black</li>
+                    <li>You use pour over or drip brewing methods</li>
+                </ul>
+                
+                <h3>You might prefer medium roast if:</h3>
+                <ul>
+                    <li>You want balance between origin flavors and roast characteristics</li>
+                    <li>You enjoy notes of caramel, nuts, or milk chocolate</li>
+                    <li>You drink coffee with or without milk</li>
+                    <li>You use a variety of brewing methods</li>
+                </ul>
+                
+                <h3>You might prefer dark roast if:</h3>
+                <ul>
+                    <li>You love bold, intense coffee flavors</li>
+                    <li>You prefer lower acidity</li>
+                    <li>You typically add milk or cream</li>
+                    <li>You make espresso or cold brew</li>
+                </ul>
+                
+                <p>At Sumato, we recommend trying all three roast levels to discover your preference. Our <a href="/products/" class="text-primary hover:underline">Coffee Collection sampler</a> lets you taste test multiple roasts side by side.</p>
+                
+                <h2>Brewing Tips for Each Roast Level</h2>
+                
+                <p>To get the best flavor from each roast type, consider these brewing recommendations:</p>
+                
+                <h3>Light Roast:</h3>
+                <ul>
+                    <li>Use slightly hotter water (205°F) to fully extract flavors</li>
+                    <li>Try a longer brew time (4+ minutes for French press)</li>
+                    <li>Use a finer grind than you would for darker roasts</li>
+                    <li>Best methods: Pour over, Aeropress, siphon</li>
+                </ul>
+                
+                <h3>Medium Roast:</h3>
+                <ul>
+                    <li>Standard brewing parameters work well (200°F water, medium grind)</li>
+                    <li>Very versatile - adapts well to most methods</li>
+                    <li>Excellent for automatic drip machines</li>
+                    <li>Best methods: Drip, French press, Aeropress, pour over</li>
+                </ul>
+                
+                <h3>Dark Roast:</h3>
+                <ul>
+                    <li>Use slightly cooler water (195°F) to avoid over-extraction</li>
+                    <li>Shorter brew times to prevent bitterness</li>
+                    <li>Coarser grind helps balance the intensity</li>
+                    <li>Best methods: Espresso, moka pot, cold brew, French press</li>
+                </ul>
+                
+                <p>Remember that coffee freshness matters just as much as roast level. All our Sumato coffees are roasted to order and stamped with the roast date so you always know you're getting the freshest possible beans.</p>
+                
+                <h2>The Sumato Approach to Roasting</h2>
+                
+                <p>At our Utah roastery, we take a tailored approach to each coffee we roast. Rather than forcing all beans into predetermined roast profiles, we cup test each lot to determine its ideal roast level. Some beans shine as light roasts, others develop beautifully at medium, and a few can handle dark roasting while maintaining complexity.</p>
+                
+                <p>Our roasting team monitors time, temperature, and color development carefully, making adjustments based on the bean's moisture content, density, and origin characteristics. We never roast darker just to cover up inferior beans - when you see a dark roast from Sumato, it's because that coffee tastes its best at that roast level.</p>
+                
+                <p>Ready to explore the world of coffee roasts? Start with our <a href="/products/" class="text-primary hover:underline">Discovery Pack</a> featuring three different roast levels, or dive deeper with single-origin options at each roast level.</p>
+            </div>
+        </div>
+    </article>
+    
+    <!-- Newsletter -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto bg-white rounded-lg shadow-sm p-8 text-center">
+                <h2 class="text-2xl md:text-3xl font-display font-bold mb-4">Enjoyed This Article?</h2>
+                <p class="text-gray-600 mb-6">Subscribe to The Weekly Roast for more coffee education, brewing tips, and exclusive offers.</p>
+                <form class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+                    <input type="email" placeholder="Your email address" class="flex-grow px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-primary">
+                    <button type="submit" class="px-6 py-3 bg-primary text-white rounded font-medium hover:bg-secondary transition whitespace-nowrap">
+                        Subscribe
+                    </button>
+                </form>
+                <p class="text-xs text-gray-500 mt-3">We respect your privacy. Unsubscribe at any time.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <!-- Footer -->
+    <footer class="bg-dark text-white pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+                <div>
+              <img src="/assets/logo.png" alt="Sumato Coffee Logo" class="h-16 mb-4  px-2 py-2 rounded">
+                    <p class="text-gray-400 mb-4">Freshly roasted specialty coffee delivered to your doorstep. Because mediocre coffee should never be part of your job description.</p>
+                    <div class="flex space-x-4">
+                        <a href="https://www.facebook.com/sumatocoffee" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition">
+                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                        <a href="https://www.instagram.com/sumatocoffee/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition">
+                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                        <a href="https://x.com/sumatocoffee" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition">
+                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Shop</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/products/" class="text-gray-400 hover:text-white transition">All Coffee</a></li>
+                        <li><a href="/products/" class="text-gray-400 hover:text-white transition">Single Origin</a></li>
+                        <li><a href="/products/" class="text-gray-400 hover:text-white transition">Blends</a></li>
+                        <li><a href="/products/" class="text-gray-400 hover:text-white transition">Decaf</a></li>
+                        <li><a href="/products/" class="text-gray-400 hover:text-white transition">Merchandise</a></li>
+                        <li><a href="/products/" class="text-gray-400 hover:text-white transition">Gift Cards</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Company</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/about/" class="text-gray-400 hover:text-white transition">Our Story</a></li>
+                        <li><a href="/blog/" class="text-gray-400 hover:text-white transition">Blog</a></li>
+                        <li><a href="/contact/" class="text-gray-400 hover:text-white transition">Contact Us</a></li>                       
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Help</h3>
+                    <ul class="space-y-2">                       
+                        <li><a href="/privacy/" class="text-gray-400 hover:text-white transition">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="text-gray-400 hover:text-white transition">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-400 mb-4 md:mb-0">© 2025 Sumato Coffee Deals. All rights reserved. </p>
+                    <div class="flex space-x-6">
+                        <a href="/privacy/" class="text-gray-400 hover:text-white transition">Privacy Policy</a>
+                        <a href="/terms/" class="text-gray-400 hover:text-white transition">Terms of Service</a>
+                        <a href="/cookies/" class="text-gray-400 hover:text-white transition">Cookies</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Search Toggle
+        const searchBtn = document.getElementById('searchBtn');
+        const searchBar = document.getElementById('searchBar');
+        
+        searchBtn.addEventListener('click', () => {
+            searchBar.classList.toggle('hidden');
+            mobileMenu.classList.add('hidden');
+        });
+        
+        // Cart count
+        const cartCount = document.getElementById('cartCount');
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        
+        function updateCartCount() {
+            const count = cart.reduce((total, item) => total + item.quantity, 0);
+            cartCount.textContent = count;
+            
+            if (count > 0) {
+                cartCount.classList.remove('hidden');
+            } else {
+                cartCount.classList.add('hidden');
+            }
+        }
+        
+        updateCartCount();
+    </script>
+</body>
+</html>

@@ -1,0 +1,609 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>5 Effective Study Techniques Backed by Science | Crash Course Blog</title>
+    <meta name="description" content="Discover research-proven study methods to enhance your learning with Crash Course. These science-backed techniques will help you study smarter, not harder.">
+    <meta name="keywords" content="study techniques, learning methods, crash course education, spaced repetition, active recall, interleaving practice, science-backed learning">
+    <link rel="canonical" href="https://crashcourseapp.com/blog/" />
+    <!-- Favicon -->
+    <link rel="icon" href="/image/logo.webp" type="image/x-icon">
+    
+    <!-- Google Fonts - Rajdhani -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FF5722',
+                        secondary: '#1E1E2F',
+                        accent: '#00FFC6',
+                    },
+                    fontFamily: {
+                        rajdhani: ['Rajdhani', 'sans-serif'],
+                    },
+                    animation: {
+                        blob: "blob 7s infinite",
+                    },
+                    keyframes: {
+                        blob: {
+                            "0%": {
+                                transform: "translate(0px, 0px) scale(1)",
+                            },
+                            "33%": {
+                                transform: "translate(30px, -50px) scale(1.1)",
+                            },
+                            "66%": {
+                                transform: "translate(-20px, 20px) scale(0.9)",
+                            },
+                            "100%": {
+                                transform: "translate(0px, 0px) scale(1)",
+                            },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    
+    <style>
+        .scrollbar-hide::-webkit-scrollbar {
+            display: none;
+        }
+        .scrollbar-hide {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+        .gradient-text {
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .prose {
+            max-width: 65ch;
+        }
+        .prose h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-top: 2.5rem;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .prose h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 0.75rem;
+            line-height: 1.3;
+        }
+        .prose p {
+            margin-bottom: 1.25rem;
+            line-height: 1.7;
+        }
+        .prose ul {
+            list-style-type: disc;
+            padding-left: 1.5rem;
+            margin-bottom: 1.25rem;
+        }
+        .prose li {
+            margin-bottom: 0.5rem;
+        }
+        .prose img {
+            border-radius: 0.5rem;
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .prose blockquote {
+            border-left: 4px solid #00FFC6;
+            padding-left: 1.5rem;
+            margin-left: 0;
+            font-style: italic;
+            color: #cbd5e1;
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+    </style>
+</head>
+<body class="font-rajdhani bg-secondary text-white antialiased overflow-x-hidden">
+    <!-- Cookie Consent Banner -->
+    <div id="cookieConsent" class="fixed bottom-0 left-0 right-0 bg-secondary border-t border-accent z-50 hidden">
+        <div class="container mx-auto px-4 py-3 flex flex-col md:flex-row items-center justify-between">
+            <div class="mb-3 md:mb-0 md:mr-4">
+                <p class="text-sm">We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies.</p>
+            </div>
+            <div class="flex space-x-2">
+                <button id="learnMoreBtn" class="px-3 py-1 text-sm border border-accent text-accent rounded hover:bg-accent hover:text-secondary transition">Learn More</button>
+                <button id="declineCookies" class="px-3 py-1 text-sm border border-gray-500 text-gray-300 rounded hover:bg-gray-700 transition">Decline</button>
+                <button id="acceptCookies" class="px-3 py-1 text-sm bg-accent text-secondary rounded hover:bg-opacity-90 transition">Accept</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 bg-secondary bg-opacity-90 backdrop-blur-md z-40 border-b border-gray-800">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                 <a href="/" class="flex items-center">
+                    <div class="  flex items-center justify-center mr-2">
+                        <img src="/image/logo.png" alt="logo" class="h-14 rounded-full">
+                    </div>                   
+                </a>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="text-white hover:text-accent transition">Home</a>
+                    <a href="/courses/" class="text-white hover:text-accent transition">Courses</a>
+                    <a href="/about/" class="text-white hover:text-accent transition">About</a>
+                    <a href="/blog/" class="text-white font-semibold text-accent transition">Blog</a>
+                    <a href="/contact/" class="text-white hover:text-accent transition">Contact</a>
+                    <a href="https://play.google.com/store/apps/details?id=com.complexly.thecrashcourse&hl=en" 
+                       class="px-4 py-2 bg-primary rounded-md hover:bg-opacity-90 transition font-medium">
+                        Download
+                    </a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuButton" class="md:hidden text-white focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="md:hidden hidden bg-secondary border-t border-gray-800">
+            <div class="container mx-auto px-4 py-3 flex flex-col space-y-3">
+                <a href="/" class="py-2 text-white hover:text-accent transition">Home</a>
+                <a href="/courses/" class="py-2 text-white hover:text-accent transition">Courses</a>
+                <a href="/about/" class="py-2 text-white hover:text-accent transition">About</a>
+                <a href="/blog/" class="py-2 text-accent font-semibold transition">Blog</a>
+                <a href="/contact/" class="py-2 text-white hover:text-accent transition">Contact</a>
+                <a href="https://play.google.com/store/apps/details?id=com.complexly.thecrashcourse&hl=en" 
+                   class="px-4 py-2 bg-primary rounded-md hover:bg-opacity-90 transition font-medium text-center my-2">
+                    Download App
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Blog Post Hero Section -->
+    <section class="relative pt-32 pb-20 bg-gradient-to-b from-gray-900 to-secondary overflow-hidden">
+        <div class="container mx-auto px-4 z-10">
+            <div class="max-w-4xl mx-auto">
+                <div class="mb-6">
+                    <span class="inline-block px-3 py-1 bg-accent text-secondary text-sm font-bold rounded-full">Learning Tips</span>
+                </div>
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+                    5 Effective Study Techniques Backed by Science
+                </h1>
+                <p class="text-xl text-gray-300 mb-8">
+                    Research-proven methods to enhance your learning and retention using the Crash Course app.
+                </p>
+                <div class="flex items-center text-gray-400">
+                    <span>July 5, 2025</span>
+                    <span class="mx-2">•</span>
+                    <span>5 min read</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Animated Background Elements -->
+        <div class="absolute -bottom-20 -left-20 w-64 h-64 bg-primary rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob"></div>
+        <div class="absolute top-1/3 right-0 w-96 h-96 bg-accent rounded-full mix-blend-multiply filter blur-3xl opacity-10 animate-blob animation-delay-2000"></div>
+    </section>
+
+    <!-- Blog Post Content -->
+    <article class="py-16 bg-secondary">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto prose">
+                <img src="/image/blog/blog-study-techniques.jpg" alt="Student studying with Crash Course app" class="w-full h-auto rounded-xl">
+                
+                <p class="text-lg font-medium">
+                    In today's fast-paced educational environment, students need study methods that deliver maximum results with minimum wasted effort. Cognitive scientists have spent decades researching how we learn best, and their findings can revolutionize your study sessions with the Crash Course app.
+                </p>
+                
+                <h2>1. Spaced Repetition: The Key to Long-Term Retention</h2>
+                
+                <p>
+                    Spaced repetition is arguably the most powerful study technique identified by learning science. This method involves reviewing information at gradually increasing intervals, which has been shown to dramatically improve long-term retention compared to cramming.
+                </p>
+                
+                <p>
+                    The Crash Course app implements spaced repetition through its flashcard system. When you mark a flashcard as "easy," the app will schedule it for review at a later date than if you mark it as "hard." This algorithm, based on the forgetting curve discovered by psychologist Hermann Ebbinghaus, ensures you review material just as you're about to forget it.
+                </p>
+                
+                <p>
+                    Research published in the journal <em>Psychological Science</em> found that students using spaced repetition retained information for years, while those using traditional study methods forgot most material within weeks. To maximize this technique:
+                </p>
+                
+                <ul>
+                    <li>Use the app's flashcards daily, even if just for 10-15 minutes</li>
+                    <li>Don't skip scheduled review sessions</li>
+                    <li>Be honest when rating your confidence with each card</li>
+                    <li>Combine with other subjects for better time management</li>
+                </ul>
+                
+                <h2>2. Active Recall: Testing Yourself to Strengthen Memory</h2>
+                
+                <p>
+                    Active recall is the practice of actively trying to remember information without looking at the source. A 2013 study in <em>Science</em> showed that students who practiced active recall performed significantly better than those who simply re-read material.
+                </p>
+                
+                <p>
+                    The Crash Course app facilitates active recall through its quiz features. Before watching a video, try to recall what you know about the topic. After watching, use the app's quizzes to test your understanding without referring back to the video.
+                </p>
+                
+                <blockquote>
+                    "Active recall creates stronger memory traces than passive review because it forces your brain to reconstruct knowledge, making future retrieval easier." - Dr. Henry Roediger, Memory Researcher
+                </blockquote>
+                
+                <p>
+                    For even better results, create your own questions based on video content and test yourself later. This dual-layer of active recall (app quizzes plus your own questions) creates robust neural pathways for the information.
+                </p>
+                
+                <h2>3. Interleaving: Mixing Subjects for Deeper Learning</h2>
+                
+                <p>
+                    Interleaving involves mixing different topics or subjects during study sessions, rather than focusing on one topic at a time (blocking). A University of South Florida study found interleaving improved test performance by 25% compared to blocked study.
+                </p>
+                
+               
+                
+                <p>
+                    With Crash Course's diverse content library, you can easily practice interleaving:
+                </p>
+                
+                <ul>
+                    <li>Alternate between science and humanities videos</li>
+                    <li>Mix flashcard decks from different subjects</li>
+                    <li>Create study sessions combining chemistry and anatomy concepts</li>
+                </ul>
+                
+                <p>
+                    This technique works because it forces your brain to continually retrieve different types of information, strengthening your ability to discriminate between concepts and apply knowledge flexibly.
+                </p>
+                
+                <h2>4. Elaborative Interrogation: The Power of "Why?"</h2>
+                
+                <p>
+                    Elaborative interrogation involves asking "why" questions about the material you're studying. This technique, validated by research from the University of Memphis, helps you connect new information to existing knowledge.
+                </p>
+                
+                <p>
+                    While watching Crash Course videos, pause periodically to ask:
+                </p>
+                
+                <ul>
+                    <li>Why does this concept make sense?</li>
+                    <li>Why would this process work this way?</li>
+                    <li>Why is this information important?</li>
+                </ul>
+                
+                <p>
+                    The app's discussion prompts after each video are perfect for this technique. Don't just answer them literally—dig deeper into the underlying principles. This creates meaningful connections that make recall easier during exams.
+                </p>
+                
+                <h2>5. Dual Coding: Combining Visual and Verbal Learning</h2>
+                
+                <p>
+                    Dual coding theory suggests that combining verbal and visual information creates two memory pathways instead of one. Research from the University of Waterloo shows this can improve retention by up to 40%.
+                </p>
+                
+                <p>
+                    Crash Course videos naturally employ dual coding with their animated explanations. To enhance this effect:
+                </p>
+                
+                <ul>
+                    <li>Pause videos to sketch diagrams of key concepts</li>
+                    <li>Create mind maps connecting video content to your notes</li>
+                    <li>Use the app's image-based flashcards whenever available</li>
+                    <li>Explain concepts aloud while viewing relevant visuals</li>
+                </ul>
+                
+               
+                
+                <h2>Implementing These Techniques with Crash Course</h2>
+                
+                <p>
+                    To integrate all five techniques into your Crash Course study routine:
+                </p>
+                
+                <ol>
+                    <li><strong>Start with active recall</strong>: Before a video, test what you already know</li>
+                    <li><strong>Watch with dual coding</strong>: Take visual and verbal notes</li>
+                    <li><strong>Use elaborative interrogation</strong>: Pause to ask "why" questions</li>
+                    <li><strong>Practice interleaving</strong>: Mix subjects in each study session</li>
+                    <li><strong>Apply spaced repetition</strong>: Use flashcards and quizzes regularly</li>
+                </ol>
+                
+                <p>
+                    A 2020 study tracking 1,200 students found that those combining these techniques improved their test scores by an average of 1.5 letter grades compared to traditional study methods.
+                </p>
+                
+                <h2>The Science Behind the Success</h2>
+                
+                <p>
+                    These techniques work because they align with how human memory functions. Our brains evolved to remember:
+                </p>
+                
+                <ul>
+                    <li>Information recalled frequently (spaced repetition)</li>
+                    <li>Knowledge tested in different contexts (interleaving)</li>
+                    <li>Concepts connected to existing understanding (elaborative interrogation)</li>
+                    <li>Experiences engaging multiple senses (dual coding)</li>
+                </ul>
+                
+                <p>
+                    By leveraging these natural memory mechanisms through the Crash Course app, you're not just studying harder—you're studying smarter. The app's features are specifically designed to facilitate these evidence-based techniques, making it easier than ever to implement them in your daily study routine.
+                </p>
+                
+                <h2>Common Mistakes to Avoid</h2>
+                
+                <p>
+                    Even with these powerful techniques, students often undermine their own efforts through these common errors:
+                </p>
+                
+                <ul>
+                    <li><strong>Passive watching</strong>: Just letting videos play without engagement</li>
+                    <li><strong>Over-reliance on one technique</strong>: Using only flashcards without video review</li>
+                    <li><strong>Inconsistent scheduling</strong>: Irregular study sessions that disrupt spaced repetition</li>
+                    <li><strong>Ignoring weak areas</strong>: Avoiding subjects you find difficult</li>
+                </ul>
+                
+                <p>
+                    Remember that effective learning often feels more challenging than passive review—that discomfort is a sign your brain is building new connections.
+                </p>
+                
+                <h2>Measuring Your Progress</h2>
+                
+                <p>
+                    The Crash Course app tracks your quiz scores and flashcard performance, giving you concrete data on your improvement. Monitor these metrics to see which techniques work best for you:
+                </p>
+                
+                <ul>
+                    <li>Note score improvements after implementing a new technique</li>
+                    <li>Track how quickly you recall information after spaced intervals</li>
+                    <li>Compare performance between interleaved and blocked study sessions</li>
+                </ul>
+                
+                <p>
+                    This data-driven approach lets you refine your methods for maximum efficiency.
+                </p>
+                
+                <h2>Conclusion: Building Better Learning Habits</h2>
+                
+                <p>
+                    Incorporating these five science-backed techniques into your Crash Course study routine can transform your learning efficiency. Start with one method, master it, then gradually add others. Within weeks, you'll notice significant improvements in:
+                </p>
+                
+                <ul>
+                    <li>Retention of complex information</li>
+                    <li>Speed of recall during exams</li>
+                    <li>Ability to connect concepts across subjects</li>
+                    <li>Overall confidence in your knowledge</li>
+                </ul>
+                
+                <p>
+                    The best part? These techniques actually reduce total study time while improving results. By working with your brain's natural learning systems through the Crash Course app, you're setting yourself up for academic success that lasts far beyond your next exam.
+                </p>
+                
+                <div class="bg-gray-800 rounded-xl p-6 border border-gray-700 mt-10">
+                    <h3 class="text-xl font-bold mb-4 text-accent">Ready to Transform Your Learning?</h3>
+                    <p class="mb-4">Download the Crash Course app now to start implementing these science-backed techniques:</p>
+                    <a href="https://play.google.com/store/apps/details?id=com.complexly.thecrashcourse&hl=en" 
+                       class="inline-block px-6 py-3 bg-primary rounded-md hover:bg-opacity-90 transition font-medium">
+                        Download on Google Play
+                    </a>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <!-- Newsletter Section -->
+    <section class="py-16 bg-gray-900 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-r from-primary to-accent opacity-10"></div>
+        <div class="container mx-auto px-4 relative">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="text-2xl md:text-3xl font-bold mb-4">Want More Learning Tips?</h2>
+                <p class="text-lg text-gray-300 mb-8">
+                    Subscribe to our newsletter for regular study strategies, app updates, and educational insights.
+                </p>
+                <form class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+                    <input type="email" placeholder="Your email address" class="flex-grow bg-gray-800 border border-gray-700 rounded-md py-3 px-4 text-white focus:outline-none focus:ring-2 focus:ring-accent">
+                    <button type="submit" class="px-6 py-3 bg-accent text-secondary rounded-md hover:bg-opacity-90 transition font-medium">
+                        Subscribe
+                    </button>
+                </form>
+                <p class="text-sm text-gray-500 mt-3">
+                    We'll never share your email. Unsubscribe anytime.
+                </p>
+            </div>
+        </div>
+    </section>
+
+   <!-- Footer -->
+<footer class="bg-gray-900 pt-20 pb-10 border-t border-gray-800 text-gray-400">
+    <div class="container mx-auto px-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+            <!-- Footer Column 1 -->
+            <div>
+                 <a href="/" class="flex items-center">
+                    <div class="  flex items-center justify-center mr-2">
+                        <img src="/image/logo.png" alt="logo" class="h-14 rounded-full">
+                    </div>                   
+                </a>
+                <p>
+                    Making high-quality education accessible and engaging for everyone, everywhere.
+                </p>
+            </div>
+
+            <!-- Footer Column 2 -->
+            <div>
+                <h3 class="text-lg font-bold text-white mb-4">Quick Links</h3>
+                <ul class="space-y-2">
+                    <li><a href="/" class="hover:text-accent transition">Home</a></li>
+                    <li><a href="/courses/" class="hover:text-accent transition">Courses</a></li>
+                    <li><a href="/about/" class="hover:text-accent transition">About Us</a></li>
+                    <li><a href="/blog/" class="hover:text-accent transition">Blog</a></li>
+                    <li><a href="/contact/" class="hover:text-accent transition">Contact</a></li>
+                </ul>
+            </div>
+
+            <!-- Footer Column 3 -->
+            <div>
+                <h3 class="text-lg font-bold text-white mb-4">Legal</h3>
+                <ul class="space-y-2">
+                    <li><a href="/privacy/" class="hover:text-accent transition">Privacy Policy</a></li>
+                    <li><a href="/terms/" class="hover:text-accent transition">Terms of Service</a></li>
+                    <li><a href="/cookies/" class="hover:text-accent transition">Cookie Policy</a></li>
+                    <li><a href="/responsible-courses/" class="hover:text-accent transition">Responsible Courses</a></li>
+                </ul>
+            </div>
+
+            <!-- Footer Column 4 -->
+            <div>
+                <h3 class="text-lg font-bold text-white mb-4">Contact Us</h3>
+                <ul class="space-y-4">
+                    <li class="flex items-start">
+                        <svg class="w-5 h-5 mr-2 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                        <span>info@crashcourseapp.com</span>
+                    </li>
+                    <li class="flex items-start">
+                        <svg class="w-5 h-5 mr-2 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                        </svg>
+                        <span>+441138688187</span>
+                    </li>
+                    <li class="flex items-start">
+                        <svg class="w-5 h-5 mr-2 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                        <span> Whitehall Rd, off Spence Ln, Holbeck, Leeds LS12 1EF, United Kingdom</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Footer Bottom -->
+        <div class="border-t border-gray-800 pt-6 mt-10 text-center text-sm text-gray-500">
+            <p>© 2025 Crash Course by Complexly LLC. All rights reserved.</p>
+            <p class="mt-2">Google Play and the Google Play logo are trademarks of Google LLC.</p>
+        </div>
+    </div>
+</footer>
+
+
+    <!-- Scripts -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Cookie Consent
+        const cookieConsent = document.getElementById('cookieConsent');
+        const acceptCookies = document.getElementById('acceptCookies');
+        const declineCookies = document.getElementById('declineCookies');
+        const learnMoreBtn = document.getElementById('learnMoreBtn');
+        
+        if (!localStorage.getItem('cookieConsent')) {
+            cookieConsent.classList.remove('hidden');
+        }
+        
+        acceptCookies.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'accepted');
+            cookieConsent.classList.add('hidden');
+        });
+        
+        declineCookies.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'declined');
+            cookieConsent.classList.add('hidden');
+        });
+        
+        learnMoreBtn.addEventListener('click', () => {
+            window.location.href = '/cookies/';
+        });
+        
+        // Initialize GSAP animations
+        document.addEventListener('DOMContentLoaded', () => {
+            // Hero section animation
+            gsap.from('nav', {
+                opacity: 0,
+                y: -20,
+                duration: 0.8,
+                ease: 'power2.out'
+            });
+            
+            gsap.from('section:first-of-type h1', {
+                opacity: 0,
+                y: 20,
+                duration: 0.8,
+                delay: 0.3,
+                ease: 'power2.out'
+            });
+            
+            gsap.from('section:first-of-type p', {
+                opacity: 0,
+                y: 20,
+                duration: 0.8,
+                delay: 0.5,
+                ease: 'power2.out'
+            });
+            
+            // Content animations
+            gsap.utils.toArray('article h2, article h3, article p, article ul, article ol, article blockquote, article img').forEach((element, i) => {
+                ScrollTrigger.create({
+                    trigger: element,
+                    start: "top 80%",
+                    onEnter: () => {
+                        gsap.from(element, {
+                            opacity: 0,
+                            y: 20,
+                            duration: 0.6,
+                            delay: i * 0.05,
+                            ease: "power2.out"
+                        });
+                    }
+                });
+            });
+            
+            // CTA animation
+            ScrollTrigger.create({
+                trigger: ".bg-gray-800.rounded-xl",
+                start: "top 70%",
+                onEnter: () => {
+                    gsap.from(".bg-gray-800.rounded-xl", {
+                        opacity: 0,
+                        y: 40,
+                        duration: 0.8,
+                        ease: "power2.out"
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

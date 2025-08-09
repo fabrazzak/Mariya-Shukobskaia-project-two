@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What's New in GeoBallistics V6 | Advanced Ballistics App Updates</title>
+    <meta name="description" content="Discover the groundbreaking features in GeoBallistics V6 update including the HDZ calculator, enhanced hardware integration, and improved ballistics solver.">
+    <meta name="keywords" content="GeoBallistics update, V6 features, ballistics calculator, precision shooting app, HDZ calculator">
+    <link rel="canonical" href="https://geoballistics.app/blog/geoballistics-v6-update/">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/image/logo.webp" type="image/x-icon">
+    
+    <!-- Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Roboto:wght@300;400;500&family=Orbitron:wght@500&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#2A2E35',
+                        secondary: '#4B5320',
+                        accent: '#FFB400',
+                    },
+                    fontFamily: {
+                        heading: ['Rajdhani', 'sans-serif'],
+                        body: ['Roboto', 'sans-serif'],
+                        tactical: ['Orbitron', 'sans-serif'],
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    
+    <!-- Three.js (for advanced animations) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+</head>
+<body class="bg-primary text-gray-200 font-body antialiased">
+    <!-- Cookie Consent Banner -->
+    <div id="cookieConsent" class="fixed bottom-0 left-0 right-0 bg-primary border-t border-secondary hidden z-50">
+        <div class="container mx-auto px-4 py-3 flex flex-col md:flex-row items-center justify-between">
+            <p class="mb-3 md:mb-0 md:mr-4">We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies.</p>
+            <div class="flex space-x-3">
+                <button id="cookieDecline" class="px-4 py-2 border border-secondary hover:bg-secondary transition-colors">Decline</button>
+                <button id="cookieAccept" class="px-4 py-2 bg-accent text-primary font-heading font-semibold hover:bg-yellow-500 transition-colors">Accept</button>
+                <a href="/cookies/" class="px-4 py-2 border border-accent text-accent hover:bg-opacity-10 hover:bg-accent transition-colors">Learn More</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 bg-primary bg-opacity-90 backdrop-blur-sm z-40 border-b border-secondary">
+        <div class="container mx-auto px-4">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <a href="/" class="flex items-center space-x-2">
+                    <div class="w-10 h-10 rounded-sm flex items-center justify-center">
+                        <img src="/image/logo.webp" alt="GeoBallistics Logo" class="rounded-full">
+                    </div>
+                    <span class="text-xl font-heading font-bold tracking-tight">GEO<span class="text-accent">BALLISTICS</span></span>
+                </a>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="hover:text-accent transition-colors font-heading">Home</a>
+                    <a href="/games/" class="hover:text-accent transition-colors font-heading">Games</a>
+                    <a href="/about/" class="hover:text-accent transition-colors font-heading">About</a>
+                    <a href="/blog/" class="text-accent font-heading font-medium">Blog</a>
+                    <a href="/contact/" class="hover:text-accent transition-colors font-heading">Contact</a>
+                    <a href="https://play.google.com/store/apps/details?id=com.geoballistics.ballisticsarc" target="_blank" class="bg-accent text-primary px-4 py-2 rounded-sm font-heading font-semibold hover:bg-yellow-500 transition-colors">Download App</a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button id="mobileMenuButton" class="md:hidden text-gray-300 hover:text-accent focus:outline-none">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-primary border-t border-secondary">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="/" class="block px-3 py-2 hover:text-accent transition-colors font-heading">Home</a>
+                <a href="/games/" class="block px-3 py-2 hover:text-accent transition-colors font-heading">Games</a>
+                <a href="/about/" class="block px-3 py-2 hover:text-accent transition-colors font-heading">About</a>
+                <a href="/blog/" class="block px-3 py-2 text-accent font-heading">Blog</a>
+                <a href="/contact/" class="block px-3 py-2 hover:text-accent transition-colors font-heading">Contact</a>
+                <a href="https://play.google.com/store/apps/details?id=com.geoballistics.ballisticsarc" target="_blank" class="block px-3 py-2 bg-accent text-primary rounded-sm text-center font-heading font-semibold">Download App</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 overflow-hidden">
+        <!-- Three.js Background Animation -->
+        <div id="threejs-bg" class="absolute top-0 left-0 w-full h-full opacity-20 z-0"></div>
+        
+        <!-- Grid Overlay -->
+        <div class="absolute top-0 left-0 w-full h-full bg-grid-pattern opacity-5 z-0"></div>
+        
+        <div class="container mx-auto px-4 relative z-10">
+            <div class="max-w-4xl mx-auto">
+                <div class="inline-block mb-6">
+                    <span class="inline-flex items-center px-3 py-1 rounded-sm text-sm font-heading bg-accent bg-opacity-10 text-accent">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 20H5a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v1m2 13a2 2 0 01-2-2V7m2 13a2 2 0 002-2V9a2 2 0 00-2-2h-2m-4-3H9M7 16h6M7 8h6v4H7V8z" />
+                        </svg>
+                        NEWS UPDATE
+                    </span>
+                </div>
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-heading font-bold mb-6 leading-tight">
+                    <span class="text-accent">GeoBallistics V6</span>: The Most Advanced Update Yet
+                </h1>
+                <div class="flex items-center text-gray-400 mb-8">
+                    <span>April 30, 2025</span>
+                    <span class="mx-3">•</span>
+                    <span>8 min read</span>
+                </div>
+                <div class="w-full h-96 md:h-[500px] bg-gray-800 rounded-sm overflow-hidden mb-8">
+                    <img src="/image/blog4.jpg" alt="GeoBallistics V6 Interface" class="w-full h-full object-cover">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Content -->
+    <section class="relative py-16 bg-gray-900">
+        <div class="container mx-auto px-4">
+            <div class="max-w-4xl mx-auto">
+                <article class="prose prose-invert prose-lg max-w-none">
+                    <p class="lead text-xl text-gray-300 mb-8">
+                        The GeoBallistics team is proud to announce our most significant update yet - Version 6 brings groundbreaking features that redefine mobile ballistics calculations. With the new HDZ calculator, enhanced hardware integration, and improved solver algorithms, V6 delivers unmatched precision for competitive shooters and hunters alike.
+                    </p>
+                    
+                    <h2 class="text-3xl font-heading font-bold mb-6 text-accent border-b border-secondary pb-2">HDZ Calculator: A First-in-Class Feature</h2>
+                    
+                    <p>The Holdover Data Zero (HDZ) calculator represents a paradigm shift in how shooters establish their zeros. Traditional zeroing methods often leave shooters with suboptimal trajectories for holdover stages in competition or hunting scenarios.</p>
+                    
+                    <div class="my-8 p-6 bg-primary border border-secondary rounded-sm relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-1 h-full bg-accent"></div>
+                        <h3 class="text-xl font-heading font-semibold mb-4 text-accent">How HDZ Works</h3>
+                        <p>The HDZ calculator analyzes your specific:</p>
+                        <ul class="list-disc pl-6 space-y-2 mt-3">
+                            <li>Rifle and ammunition combination</li>
+                            <li>Typical engagement distances</li>
+                            <li>Environmental conditions</li>
+                            <li>Target sizes at various ranges</li>
+                        </ul>
+                        <p class="mt-4">It then calculates the optimal zero distance that minimizes holdover adjustments across your entire expected engagement envelope.</p>
+                    </div>
+                    
+                    <p>During field testing with competitive PRS shooters, the HDZ calculator reduced holdover adjustments by an average of 23% across typical match stages. Hunters reported similar benefits when engaging game at varying distances in mountainous terrain.</p>
+                    
+                    <h2 class="text-3xl font-heading font-bold mb-6 text-accent border-b border-secondary pb-2 mt-12">Enhanced Hardware Integration</h2>
+                    
+                    <p>V6 expands our industry-leading hardware compatibility with several key improvements:</p>
+                    
+                    <div class="grid md:grid-cols-2 gap-6 my-8">
+                        <div class="bg-primary border border-secondary rounded-sm p-6 hover:border-accent transition-colors group">
+                            <div class="w-12 h-12 bg-accent bg-opacity-10 rounded-sm flex items-center justify-center mb-4 group-hover:bg-opacity-20 transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z" />
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-heading font-semibold mb-3">Kestrel LiNK 2.0 Support</h3>
+                            <p class="text-gray-400">Faster data transfer rates and improved connection stability with the latest Kestrel weather meters.</p>
+                        </div>
+                        
+                        <div class="bg-primary border border-secondary rounded-sm p-6 hover:border-accent transition-colors group">
+                            <div class="w-12 h-12 bg-accent bg-opacity-10 rounded-sm flex items-center justify-center mb-4 group-hover:bg-opacity-20 transition-colors">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-accent" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z" />
+                                </svg>
+                            </div>
+                            <h3 class="text-xl font-heading font-semibold mb-3">WeatherFlow Smart Integration</h3>
+                            <p class="text-gray-400">Now supports WeatherFlow's full line of weather stations with automatic environmental data updates.</p>
+                        </div>
+                    </div>
+                    
+                    <p>The update also introduces Bluetooth 5.2 support, reducing power consumption during extended field use while maintaining robust connections in challenging environments.</p>
+                    
+                    <h2 class="text-3xl font-heading font-bold mb-6 text-accent border-b border-secondary pb-2 mt-12">Improved 3DOF Solver Algorithms</h2>
+                    
+                    <p>Our BallisticsARC solver has been refined with:</p>
+                    
+                    <div class="my-8">
+                        <div class="relative overflow-x-auto">
+                            <table class="w-full text-sm text-left text-gray-400 border border-secondary">
+                                <thead class="text-xs text-gray-200 uppercase bg-gray-800">
+                                    <tr>
+                                        <th scope="col" class="px-6 py-3 font-heading">Feature</th>
+                                        <th scope="col" class="px-6 py-3 font-heading">Improvement</th>
+                                        <th scope="col" class="px-6 py-3 font-heading">Impact</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="bg-primary border-b border-secondary">
+                                        <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">Gyroscopic Drift</th>
+                                        <td class="px-6 py-4">Improved modeling</td>
+                                        <td class="px-6 py-4">+12% accuracy</td>
+                                    </tr>
+                                    <tr class="bg-primary border-b border-secondary">
+                                        <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">Coriolis Effect</th>
+                                        <td class="px-6 py-4">Real-time position updates</td>
+                                        <td class="px-6 py-4">+8% accuracy</td>
+                                    </tr>
+                                    <tr class="bg-primary">
+                                        <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">Wind Influence</th>
+                                        <td class="px-6 py-4">Multi-layer modeling</td>
+                                        <td class="px-6 py-4">+15% accuracy</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <p>These improvements are particularly noticeable at extreme ranges (1000+ yards) where small calculation errors compound significantly. Field tests showed a 22% reduction in vertical dispersion at 1500 yards compared to V5 calculations.</p>
+                    
+                    <h2 class="text-3xl font-heading font-bold mb-6 text-accent border-b border-secondary pb-2 mt-12">Redesigned User Interface</h2>
+                    
+                    <p>While maintaining the tactical feel professionals expect, we've streamlined the interface based on thousands of hours of user testing:</p>
+                    
+                    <div class="my-8 bg-primary border border-secondary rounded-sm overflow-hidden">
+                        
+                        <div class="p-6">
+                            <h3 class="text-xl font-heading font-semibold mb-3">Key UI Improvements</h3>
+                            <ul class="list-disc pl-6 space-y-2">
+                                <li>Redesigned HUD Mode with customizable data fields</li>
+                                <li>One-tap access to frequently used functions</li>
+                                <li>Improved contrast for low-light conditions</li>
+                                <li>Streamlined profile management</li>
+                                <li>Enhanced map pin functionality</li>
+                            </ul>
+                        </div>
+                    </div>
+                    
+                    <p>The interface now adapts dynamically to lighting conditions, automatically adjusting contrast and color temperature based on ambient light sensors.</p>
+                    
+                    <h2 class="text-3xl font-heading font-bold mb-6 text-accent border-b border-secondary pb-2 mt-12">New PRO Features</h2>
+                    
+                    <p>V6 introduces several exclusive PRO features that push mobile ballistics to new heights:</p>
+                    
+                    <div class="my-8">
+                        <div class="relative">
+                            <!-- Animated timeline -->
+                            <div class="absolute left-5 top-0 h-full w-0.5 bg-accent transform -translate-x-1/2 z-0"></div>
+                            
+                            <div class="space-y-8 relative">
+                                <!-- Timeline item 1 -->
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-accent flex items-center justify-center text-primary font-heading font-bold z-10 mr-4">
+                                        1
+                                    </div>
+                                    <div class="flex-grow pt-1">
+                                        <h3 class="text-xl font-heading font-semibold mb-2">Multi-Rifle Ballistic Comparison</h3>
+                                        <p class="text-gray-400">Compare trajectories, wind drift, and energy retention across multiple rifle profiles simultaneously. Essential for competitors deciding which rifle to use for specific stages or hunters choosing between different cartridges.</p>
+                                    </div>
+                                </div>
+                                
+                                <!-- Timeline item 2 -->
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-accent flex items-center justify-center text-primary font-heading font-bold z-10 mr-4">
+                                        2
+                                    </div>
+                                    <div class="flex-grow pt-1">
+                                        <h3 class="text-xl font-heading font-semibold mb-2">Advanced Environmental Modeling</h3>
+                                        <p class="text-gray-400">Create custom environmental profiles that account for elevation changes along the bullet path. Particularly valuable in mountainous terrain where air density changes significantly with elevation.</p>
+                                    </div>
+                                </div>
+                                
+                                <!-- Timeline item 3 -->
+                                <div class="flex items-start">
+                                    <div class="flex-shrink-0 w-10 h-10 rounded-full bg-accent flex items-center justify-center text-primary font-heading font-bold z-10 mr-4">
+                                        3
+                                    </div>
+                                    <div class="flex-grow pt-1">
+                                        <h3 class="text-xl font-heading font-semibold mb-2">Cloud Sync & Backup</h3>
+                                        <p class="text-gray-400">Securely store all rifle profiles, range cards, and environmental data in the cloud. Access your data from multiple devices or recover instantly if your phone is lost or damaged.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <h2 class="text-3xl font-heading font-bold mb-6 text-accent border-b border-secondary pb-2 mt-12">Upgrade Path & Compatibility</h2>
+                    
+                    <p>GeoBallistics V6 is available now as a free update for all existing users. PRO features remain available through our one-time purchase option (no subscriptions).</p>
+                    
+                    <div class="my-8 p-6 bg-primary border border-accent border-opacity-30 rounded-sm">
+                        <h3 class="text-xl font-heading font-semibold mb-3 text-accent">System Requirements</h3>
+                        <ul class="space-y-3">
+                            <li class="flex items-start">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-accent mr-2 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                                <span>Android 7.0 or later</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-accent mr-2 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                                <span>Minimum 2GB RAM for optimal performance</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-accent mr-2 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                                <span>Bluetooth 4.0+ for hardware integration</span>
+                            </li>
+                            <li class="flex items-start">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-accent mr-2 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                                </svg>
+                                <span>GPS for location-based calculations</span>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <p class="mt-8 text-xl text-gray-300">The GeoBallistics V6 update represents our commitment to pushing the boundaries of mobile ballistics technology. Whether you're a competitive shooter, hunter, or long-range enthusiast, these new features will help you make more precise shots in more challenging conditions.</p>
+                    
+                    <div class="mt-12 bg-primary border border-secondary rounded-sm p-6 text-center">
+                        <h3 class="text-2xl font-heading font-bold mb-4">Ready to Experience V6?</h3>
+                        <p class="mb-6">Download the latest version from Google Play today</p>
+                        <a href="https://play.google.com/store/apps/details?id=com.geoballistics.ballisticsarc" target="_blank" class="inline-block bg-accent text-primary px-8 py-3 rounded-sm font-heading font-semibold hover:bg-yellow-500 transition-colors">Update Now</a>
+                    </div>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid md:grid-cols-4 gap-8 mb-12">
+                <!-- About -->
+                <div>
+                    <h3 class="text-lg font-heading font-semibold text-white mb-4">About GeoBallistics</h3>
+                    <p class="mb-4">The most advanced mobile ballistics solution featuring 3DOF calculations, range cards, and hardware integration for precision shooting.</p>
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-lg font-heading font-semibold text-white mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/games/" class="hover:text-accent transition-colors">Games</a></li>
+                        <li><a href="/about/" class="hover:text-accent transition-colors">About Us</a></li>
+                        <li><a href="/blog/" class="hover:text-accent transition-colors">Blog</a></li>
+                        <li><a href="/contact/" class="hover:text-accent transition-colors">Contact</a></li>
+                        <li><a href="https://play.google.com/store/apps/details?id=com.geoballistics.ballisticsarc" target="_blank" class="hover:text-accent transition-colors">Download</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Support -->
+                <div>
+                    <h3 class="text-lg font-heading font-semibold text-white mb-4">Support</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/privacy/" class="hover:text-accent transition-colors">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="hover:text-accent transition-colors">Terms of Service</a></li>
+                        <li><a href="/cookies/" class="hover:text-accent transition-colors">Cookies Policy</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Contact -->
+                <div>
+                    <h3 class="text-lg font-heading font-semibold text-white mb-4">Contact Us</h3>
+                    <address class="not-italic">
+                        <div class="mb-2">Sheltered Wings, Inc.</div>
+                        <div class="mb-2">1 Vortex Dr</div>
+                        <div class="mb-2">Barneveld, WI 53507</div>
+                        <div class="mb-2">United States</div>
+                        <div class="mb-2">Phone: <a href="tel:+16086022295" class="hover:text-accent transition-colors">+1 608-602-2295</a></div>
+                        <div class="mb-2">Email: <a href="mailto:info@geoballistics.app" class="hover:text-accent transition-colors">info@geoballistics.app</a></div>
+                    </address>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8 text-sm text-center">
+                <p>&copy; 2025 GeoBallistics by Sheltered Wings, Inc. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Cookie Consent
+        const cookieConsent = document.getElementById('cookieConsent');
+        const cookieAccept = document.getElementById('cookieAccept');
+        const cookieDecline = document.getElementById('cookieDecline');
+        
+        if (!localStorage.getItem('cookieConsent')) {
+            cookieConsent.classList.remove('hidden');
+        }
+        
+        cookieAccept.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'accepted');
+            cookieConsent.classList.add('hidden');
+        });
+        
+        cookieDecline.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'declined');
+            cookieConsent.classList.add('hidden');
+        });
+        
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Animate elements on scroll
+        gsap.utils.toArray('h2, .lead, table, .bg-primary').forEach((element, i) => {
+            gsap.from(element, {
+                scrollTrigger: {
+                    trigger: element,
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                },
+                opacity: 0,
+                y: 50,
+                duration: 0.8,
+                delay: i * 0.1
+            });
+        });
+        
+        // Three.js Background Animation
+        const threejsBg = document.getElementById('threejs-bg');
+        if (threejsBg) {
+            // Set up Three.js scene
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, threejsBg.clientWidth / threejsBg.clientHeight, 0.1, 1000);
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(threejsBg.clientWidth, threejsBg.clientHeight);
+            renderer.setClearColor(0x000000, 0);
+            threejsBg.appendChild(renderer.domElement);
+            
+            // Create particles
+            const particlesGeometry = new THREE.BufferGeometry();
+            const particleCount = 500;
+            
+            const posArray = new Float32Array(particleCount * 3);
+            for (let i = 0; i < particleCount * 3; i++) {
+                posArray[i] = (Math.random() - 0.5) * 10;
+            }
+            
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+            
+            const particlesMaterial = new THREE.PointsMaterial({
+                size: 0.02,
+                color: 0xFFB400,
+                transparent: true,
+                opacity: 0.8
+            });
+            
+            const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+            scene.add(particlesMesh);
+            
+            camera.position.z = 3;
+            
+            // Animation loop
+            function animate() {
+                requestAnimationFrame(animate);
+                
+                particlesMesh.rotation.x += 0.0005;
+                particlesMesh.rotation.y += 0.0005;
+                
+                renderer.render(scene, camera);
+            }
+            
+            animate();
+            
+            // Handle resize
+            window.addEventListener('resize', () => {
+                camera.aspect = threejsBg.clientWidth / threejsBg.clientHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(threejsBg.clientWidth, threejsBg.clientHeight);
+            });
+        }
+    </script>
+</body>
+</html>

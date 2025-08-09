@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | Outsiders Store</title>
+    <meta name="description" content="Complete your purchase at Outsiders Store. Premium outdoor footwear including KEEN shoes and sandals.">
+    <meta name="keywords" content="KEEN shoes checkout, outdoor footwear, hiking boots, sandals, payment, Zoetermeer, Netherlands">
+    
+    <!-- Favicon -->
+  <link rel="icon" href="/assets/logo.png" type="image/x-icon">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1a1a1a',
+                        secondary: '#333333',
+                        accent: '#e63946',
+                        light: '#f8f9fa',
+                        dark: '#212529',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Custom CSS -->
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        
+        .checkout-step {
+            transition: all 0.3s ease;
+        }
+        
+        .checkout-step.active {
+            border-left: 4px solid #e63946;
+        }
+        
+        .payment-method {
+            transition: all 0.3s ease;
+        }
+        
+        .payment-method:hover {
+            border-color: #e63946;
+        }
+        
+        .payment-method.selected {
+            border-color: #e63946;
+            background-color: rgba(230, 57, 70, 0.05);
+        }
+        
+        input:checked + .checkmark {
+            background-color: #e63946;
+            border-color: #e63946;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 text-primary">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-md sticky top-0 z-40">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <a href="/" class="text-2xl font-bold flex items-center">
+                     <img src="/assets/logo.png" alt="Outsiders Store Logo" class="h-14 mr-2">
+                     
+                </a>
+            </div>
+            
+            <div class="hidden md:flex space-x-6">
+                <a href="/" class="hover:text-accent transition">Home</a>
+                <a href="/shop/" class="hover:text-accent transition">Shop</a>
+                <a href="/blog/" class="hover:text-accent transition">Blog</a>
+                <a href="/about/" class="hover:text-accent transition">About</a>
+                <a href="/contact/" class="hover:text-accent transition">Contact</a>
+            </div>
+            
+            <div class="flex items-center space-x-4">
+                <a href="/cart/" class="relative">
+                    <i class="fas fa-shopping-bag text-xl"></i>
+                    <span id="cart-count" class="absolute -top-2 -right-2 bg-accent text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                </a>
+                <button id="mobile-menu-button" class="md:hidden text-xl">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-white absolute left-0 right-0 shadow-lg">
+            <div class="container mx-auto px-4 py-3 flex flex-col space-y-3">
+                <a href="/" class="py-2 hover:text-accent transition">Home</a>
+                <a href="/shop/" class="py-2 hover:text-accent transition">Shop</a>
+                <a href="/blog/" class="py-2 hover:text-accent transition">Blog</a>
+                <a href="/about/" class="py-2 hover:text-accent transition">About</a>
+                <a href="/contact/" class="py-2 hover:text-accent transition">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Checkout Progress -->
+    <div class="bg-white shadow-sm">
+        <div class="container mx-auto px-4">
+            <div class="hidden md:flex justify-center space-x-8 py-4">
+                <div class="checkout-step active flex items-center">
+                    <div class="w-8 h-8 rounded-full bg-accent text-white flex items-center justify-center mr-2">1</div>
+                    <span class="font-medium">Shipping</span>
+                </div>
+                <div class="checkout-step flex items-center text-gray-400">
+                    <div class="w-8 h-8 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center mr-2">2</div>
+                    <span>Payment</span>
+                </div>
+                <div class="checkout-step flex items-center text-gray-400">
+                    <div class="w-8 h-8 rounded-full bg-gray-200 text-gray-600 flex items-center justify-center mr-2">3</div>
+                    <span>Review</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Section -->
+    <section class="py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                <div class="lg:col-span-2">
+                    <h1 class="text-2xl font-bold mb-6">Shipping Information</h1>
+                    
+                    <form id="shipping-form" class="bg-white rounded-lg shadow-md p-6">
+                        <div class="mb-6">
+                            <h2 class="text-lg font-semibold mb-4">Contact Information</h2>
+                            <div class="mb-4">
+                                <label for="email" class="block text-sm font-medium mb-1">Email Address *</label>
+                                <input type="email" id="email" name="email" required class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <h2 class="text-lg font-semibold mb-4">Shipping Address</h2>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                                <div>
+                                    <label for="first-name" class="block text-sm font-medium mb-1">First Name *</label>
+                                    <input type="text" id="first-name" name="first-name" required class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent">
+                                </div>
+                                <div>
+                                    <label for="last-name" class="block text-sm font-medium mb-1">Last Name *</label>
+                                    <input type="text" id="last-name" name="last-name" required class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent">
+                                </div>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label for="address" class="block text-sm font-medium mb-1">Address *</label>
+                                <input type="text" id="address" name="address" required class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent">
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label for="apartment" class="block text-sm font-medium mb-1">Apartment, suite, etc. (optional)</label>
+                                <input type="text" id="apartment" name="apartment" class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent">
+                            </div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                                <div>
+                                    <label for="city" class="block text-sm font-medium mb-1">City *</label>
+                                    <input type="text" id="city" name="city" required class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent">
+                                </div>
+                                <div>
+                                    <label for="postal-code" class="block text-sm font-medium mb-1">Postal Code *</label>
+                                    <input type="text" id="postal-code" name="postal-code" required class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent">
+                                </div>
+                                <div>
+                                    <label for="country" class="block text-sm font-medium mb-1">Country *</label>
+                                    <select id="country" name="country" required class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent">
+                                        <option value="Netherlands" selected>Netherlands</option>
+                                        <option value="Belgium">Belgium</option>
+                                        <option value="Germany">Germany</option>
+                                        <option value="France">France</option>
+                                        <option value="United Kingdom">United Kingdom</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-4">
+                                <label for="phone" class="block text-sm font-medium mb-1">Phone (optional)</label>
+                                <input type="tel" id="phone" name="phone" class="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent">
+                            </div>
+                        </div>
+                        
+                        <div class="mb-6">
+                            <h2 class="text-lg font-semibold mb-4">Shipping Method</h2>
+                            <div class="space-y-3">
+                                <label class="flex items-center p-4 border rounded cursor-pointer">
+                                    <input type="radio" name="shipping-method" value="standard" class="hidden" checked>
+                                    <div class="w-5 h-5 rounded-full border border-gray-400 mr-3 flex-shrink-0 flex items-center justify-center">
+                                        <div class="checkmark w-3 h-3 rounded-full bg-white"></div>
+                                    </div>
+                                    <div class="flex-grow">
+                                        <div class="font-medium">Standard Shipping</div>
+                                        <div class="text-sm text-gray-500">3-5 business days</div>
+                                    </div>
+                                    <div class="font-medium">€5.99</div>
+                                </label>
+                                
+                                <label class="flex items-center p-4 border rounded cursor-pointer">
+                                    <input type="radio" name="shipping-method" value="express" class="hidden">
+                                    <div class="w-5 h-5 rounded-full border border-gray-400 mr-3 flex-shrink-0 flex items-center justify-center">
+                                        <div class="checkmark w-3 h-3 rounded-full bg-white"></div>
+                                    </div>
+                                    <div class="flex-grow">
+                                        <div class="font-medium">Express Shipping</div>
+                                        <div class="text-sm text-gray-500">1-2 business days</div>
+                                    </div>
+                                    <div class="font-medium">€12.99</div>
+                                </label>
+                                
+                                <label class="flex items-center p-4 border rounded cursor-pointer">
+                                    <input type="radio" name="shipping-method" value="pickup" class="hidden">
+                                    <div class="w-5 h-5 rounded-full border border-gray-400 mr-3 flex-shrink-0 flex items-center justify-center">
+                                        <div class="checkmark w-3 h-3 rounded-full bg-white"></div>
+                                    </div>
+                                    <div class="flex-grow">
+                                        <div class="font-medium">Store Pickup</div>
+                                        <div class="text-sm text-gray-500">Pick up at Argonstraat 11, Zoetermeer</div>
+                                    </div>
+                                    <div class="font-medium">Free</div>
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="flex justify-between items-center">
+                            <a href="/cart/" class="text-accent hover:text-opacity-80 transition">
+                                <i class="fas fa-arrow-left mr-2"></i>
+                                Return to Cart
+                            </a>
+                            <button type="submit" class="bg-accent text-white px-6 py-3 rounded hover:bg-opacity-90 transition font-medium">
+                                Continue to Payment
+                                <i class="fas fa-arrow-right ml-2"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                
+                <!-- Order Summary -->
+                <div>
+                    <div class="bg-white rounded-lg shadow-md p-6 sticky top-4">
+                        <h2 class="text-xl font-bold mb-6">Order Summary</h2>
+                        
+                        <div id="checkout-items" class="space-y-4 max-h-96 overflow-y-auto mb-6">
+                            <!-- Cart items will be dynamically inserted here -->
+                        </div>
+                        
+                        <div class="border-t border-gray-200 pt-4 space-y-3">
+                            <div class="flex justify-between">
+                                <span>Subtotal</span>
+                                <span id="checkout-subtotal">£0.00</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span>Shipping</span>
+                                <span id="checkout-shipping">€5.99</span>
+                            </div>
+                            
+                            <div class="border-t border-gray-200 my-2"></div>
+                            
+                            <div class="flex justify-between font-bold text-lg">
+                                <span>Total</span>
+                                <span id="checkout-total">£0.00</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-lg shadow-md p-6 mt-6">
+                        <h3 class="font-semibold mb-4">Have a coupon code?</h3>
+                        <div class="flex">
+                            <input type="text" placeholder="Enter coupon code" class="flex-grow border rounded-l px-4 py-2 focus:outline-none focus:ring-2 focus:ring-accent focus:border-transparent">
+                            <button class="bg-dark text-white px-4 py-2 rounded-r hover:bg-opacity-90 transition">Apply</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-12">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div>
+                      <a href="/" class="text-2xl font-bold flex items-center">
+                    <img src="/assets/logo-fotter.png" alt="Outsiders Store Logo" class="h-14 mb-4">
+                </a>
+                    <p class="text-gray-400 mb-4">Premium outdoor footwear for adventurers and urban explorers.</p>
+                     
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4">Shop</h4>
+                  <ul class="space-y-2">
+                        <li><a href="/shop/" class="text-gray-400 hover:text-white transition">Men's Collection</a></li>
+                        <li><a href="/shop/" class="text-gray-400 hover:text-white transition">Women's Collection</a></li>
+                        <li><a href="/shop/" class="text-gray-400 hover:text-white transition">Sandals</a></li>
+                        <li><a href="/shop/" class="text-gray-400 hover:text-white transition">New Arrivals</a></li>
+                        <li><a href="/shop/" class="text-gray-400 hover:text-white transition">Sale</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4">Information</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/about/" class="text-gray-400 hover:text-white transition">About Us</a></li>
+                        <li><a href="/blog/" class="text-gray-400 hover:text-white transition">Blog</a></li>
+                        <li><a href="/contact/" class="text-gray-400 hover:text-white transition">Contact Us</a></li>
+                       
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4">Legal</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/privacy/" class="text-gray-400 hover:text-white transition">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="text-gray-400 hover:text-white transition">Terms of Service</a></li>
+                        <li><a href="/cookies/" class="text-gray-400 hover:text-white transition">Cookies Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 Outsiders Store. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Thank You Modal -->
+    <div id="thank-you-modal" class="fixed inset-0 bg-black bg-opacity-75 z-50 flex items-center justify-center hidden">
+        <div class="bg-white rounded-lg max-w-md w-full p-8 text-center">
+            <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-check text-green-500 text-2xl"></i>
+            </div>
+            <h2 class="text-2xl font-bold mb-2">Thank You for Your Order!</h2>
+            <p class="text-gray-600 mb-6">Your order has been placed successfully. We've sent a confirmation email to your address.</p>
+            <div class="bg-gray-100 p-4 rounded mb-6">
+                <p class="font-medium">Order #<span id="order-number">12345</span></p>
+                <p class="text-sm text-gray-500">Estimated delivery: <span id="delivery-date">June 15, 2025</span></p>
+            </div>
+            <div class="flex space-x-4">
+                <a href="/shop/" class="flex-1 border border-dark text-dark py-2 rounded hover:bg-gray-50 transition text-center">
+                    Continue Shopping
+                </a>
+                
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Update cart count
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            document.getElementById('cart-count').textContent = totalItems;
+        }
+        
+        // Display order summary
+        function displayOrderSummary() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const checkoutItemsContainer = document.getElementById('checkout-items');
+            const subtotalElement = document.getElementById('checkout-subtotal');
+            const shippingElement = document.getElementById('checkout-shipping');
+            const totalElement = document.getElementById('checkout-total');
+            
+            // Clear existing items
+            checkoutItemsContainer.innerHTML = '';
+            
+            if (cart.length === 0) {
+                window.location.href = '/cart/';
+                return;
+            }
+            
+            // Add cart items to display
+            let subtotal = 0;
+            
+            cart.forEach(item => {
+                // Extract numeric price value
+                const priceValue = parseFloat(item.price.replace(/[^0-9.]/g, ''));
+                const itemTotal = priceValue * item.quantity;
+                subtotal += itemTotal;
+                
+                // Create cart item element
+                const cartItem = document.createElement('div');
+                cartItem.className = 'flex items-start';
+                cartItem.innerHTML = `
+                    <img src="${item.image}" alt="${item.title}" class="w-16 h-16 object-cover rounded mr-4">
+                    <div class="flex-grow">
+                        <h3 class="font-medium">${item.title}</h3>
+                        <p class="text-sm text-gray-500">Qty: ${item.quantity}</p>
+                    </div>
+                    <div class="font-medium">£${itemTotal.toFixed(2)}</div>
+                `;
+                
+                checkoutItemsContainer.appendChild(cartItem);
+            });
+            
+            // Calculate shipping (default to standard shipping)
+            const shippingMethod = document.querySelector('input[name="shipping-method"]:checked').value;
+            let shippingCost = 5.99; // Default standard shipping
+            
+            if (shippingMethod === 'express') {
+                shippingCost = 12.99;
+            } else if (shippingMethod === 'pickup') {
+                shippingCost = 0;
+            }
+            
+            // Update totals
+            subtotalElement.textContent = `£${subtotal.toFixed(2)}`;
+            shippingElement.textContent = shippingCost === 0 ? 'Free' : `€${shippingCost.toFixed(2)}`;
+            
+            // Convert shipping to pounds for total calculation (assuming 1 EUR = 0.86 GBP)
+            const shippingInPounds = shippingCost * 0.86;
+            const total = subtotal + shippingInPounds;
+            totalElement.textContent = `£${total.toFixed(2)}`;
+        }
+        
+        // Handle shipping method changes
+        document.querySelectorAll('input[name="shipping-method"]').forEach(radio => {
+            radio.addEventListener('change', displayOrderSummary);
+        });
+        
+        // Form submission
+        document.getElementById('shipping-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // In a real application, you would process the payment here
+            // For this demo, we'll just show the thank you modal
+            
+            // Generate random order number
+            const orderNumber = Math.floor(10000 + Math.random() * 90000);
+            document.getElementById('order-number').textContent = orderNumber;
+            
+            // Calculate delivery date (3-5 days from now)
+            const deliveryDate = new Date();
+            deliveryDate.setDate(deliveryDate.getDate() + 3 + Math.floor(Math.random() * 3));
+            
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('delivery-date').textContent = deliveryDate.toLocaleDateString('en-US', options);
+            
+            // Show thank you modal
+            document.getElementById('thank-you-modal').classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
+            
+            // Clear the cart
+            localStorage.removeItem('cart');
+            updateCartCount();
+        });
+        
+        // Close thank you modal
+        document.getElementById('thank-you-modal').addEventListener('click', (e) => {
+            if (e.target === document.getElementById('thank-you-modal')) {
+                document.getElementById('thank-you-modal').classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        // Initialize
+        updateCartCount();
+        displayOrderSummary();
+        
+        // Style radio buttons when selected
+        document.querySelectorAll('input[name="shipping-method"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                document.querySelectorAll('input[name="shipping-method"]').forEach(r => {
+                    const parent = r.parentElement;
+                    if (r.checked) {
+                        parent.classList.add('border-accent', 'bg-accent', 'bg-opacity-5');
+                    } else {
+                        parent.classList.remove('border-accent', 'bg-accent', 'bg-opacity-5');
+                    }
+                });
+            });
+            
+            // Trigger change event for initial state
+            if (radio.checked) {
+                radio.dispatchEvent(new Event('change'));
+            }
+        });
+    </script>
+</body>
+</html>

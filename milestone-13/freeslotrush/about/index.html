@@ -1,0 +1,1092 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About FreeSlotRush | Social Casino Platform</title>
+    <meta name="description" content="Learn about FreeSlotRush - the premier social casino platform offering free-to-play games with no real money involved. Our mission, vision, and team.">
+    <meta name="keywords" content="about social casino, free slots platform, no real money gambling, casino entertainment, gaming community">
+    <link rel="canonical"     href="https://freeslotrush.org/about/">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/assets/favicon.ico" type="image/x-icon">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FF6B35',
+                        secondary: '#004E89',
+                        accent: '#00A6FB',
+                        dark: '#1A1A2E',
+                        light: '#F8F9FA',
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                        display: ['Barlow', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollTrigger.min.js"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Barlow:wght@700;800;900&family=Poppins:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            overflow-x: hidden;
+            font-family: 'Poppins', sans-serif;
+            background-color: #0F0F1B;
+            color: #F8F9FA;
+        }
+        
+        .hero-gradient {
+            background: radial-gradient(ellipse at top, #1A1A2E, #0F0F1B);
+        }
+        
+        .hamburger {
+            width: 30px;
+            height: 20px;
+            position: relative;
+            transform: rotate(0deg);
+            transition: .5s ease-in-out;
+            cursor: pointer;
+        }
+        
+        .hamburger span {
+            display: block;
+            position: absolute;
+            height: 3px;
+            width: 100%;
+            background: #FF6B35;
+            border-radius: 3px;
+            opacity: 1;
+            left: 0;
+            transform: rotate(0deg);
+            transition: .25s ease-in-out;
+        }
+        
+        .hamburger span:nth-child(1) {
+            top: 0px;
+        }
+        
+        .hamburger span:nth-child(2), .hamburger span:nth-child(3) {
+            top: 10px;
+        }
+        
+        .hamburger span:nth-child(4) {
+            top: 20px;
+        }
+        
+        .hamburger.open span:nth-child(1) {
+            top: 10px;
+            width: 0%;
+            left: 50%;
+        }
+        
+        .hamburger.open span:nth-child(2) {
+            transform: rotate(45deg);
+        }
+        
+        .hamburger.open span:nth-child(3) {
+            transform: rotate(-45deg);
+        }
+        
+        .hamburger.open span:nth-child(4) {
+            top: 10px;
+            width: 0%;
+            left: 50%;
+        }
+        
+        .age-verification {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(10, 10, 20, 0.95);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(10px);
+        }
+        
+        .game-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(10, 10, 20, 0.95);
+            z-index: 999;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            height: 100vh;
+        }
+        
+        .login-modal, .register-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(10, 10, 20, 0.95);
+            z-index: 999;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(10px);
+        }
+        
+        .team-card {
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+        
+        .team-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .value-card {
+            transition: all 0.3s ease;
+        }
+        
+        .value-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+        }
+        
+        .glow-text {
+            text-shadow: 0 0 10px rgba(255, 107, 53, 0.7);
+        }
+        
+        .glow-box {
+            box-shadow: 0 0 20px rgba(0, 166, 251, 0.5);
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        .timeline-item:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            left: 7px;
+            top: 24px;
+            height: calc(100% - 24px);
+            width: 2px;
+            background: #FF6B35;
+        }
+    </style>
+</head>
+<body class="relative">
+    <!-- Age Verification Modal -->
+    <div class="age-verification">
+        <div class="bg-dark p-8 rounded-xl max-w-md w-full mx-4 text-center relative z-10">
+            <div class="mb-6">
+                <h2 class="text-3xl font-bold text-primary mb-2">Age Verification Required</h2>
+                <p class="text-light">You must be 18 years or older to access this social casino platform. Please confirm your age to continue and enjoy our premium gaming experience.</p>
+            </div>
+            
+            <div class="flex flex-col space-y-4">
+                <button id="confirmAge" class="bg-primary hover:bg-opacity-90 text-white font-bold py-3 px-6 rounded-full text-lg transition-all duration-300 transform hover:scale-105">
+                    <i class="fas fa-check-circle mr-2"></i> I am 18 or older
+                </button>
+                <button id="denyAge" class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-6 rounded-full text-lg transition-all duration-300">
+                    <i class="fas fa-times-circle mr-2"></i> I am under 18
+                </button>
+            </div>
+            
+            <p class="text-sm text-gray-400 mt-6">Important: This platform is for entertainment only. No real money gambling is involved.</p>
+        </div>
+    </div>
+    
+    <!-- Login Modal -->
+    <div class="login-modal">
+        <div class="bg-dark p-8 rounded-xl max-w-md w-full mx-4 relative z-10 border border-gray-700">
+            <button class="close-modal absolute top-4 right-4">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="text-center mb-6">
+                <h2 class="text-2xl font-bold text-white mb-2">Welcome Back!</h2>
+                <p class="text-gray-400">Login to access your account and continue playing</p>
+            </div>
+            
+            <form id="loginForm" class="space-y-4">
+                <div>
+                    <label for="loginEmail" class="block text-gray-400 mb-2">Email</label>
+                    <input type="email" id="loginEmail" required class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary">
+                </div>
+                
+                <div>
+                    <label for="loginPassword" class="block text-gray-400 mb-2">Password</label>
+                    <input type="password" id="loginPassword" required class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary">
+                </div>
+                
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <input type="checkbox" id="rememberMe" class="h-4 w-4 text-primary focus:ring-primary border-gray-600 rounded">
+                        <label for="rememberMe" class="ml-2 block text-sm text-gray-400">Remember me</label>
+                    </div>
+                    <a href="javascript:void(0)" class="text-sm text-primary hover:text-opacity-80">Forgot password?</a>
+                </div>
+                
+                <button type="submit" class="w-full bg-primary hover:bg-opacity-90 text-white font-bold py-3 px-4 rounded-lg transition-all duration-300">
+                    Log In
+                </button>
+                
+                <div class="text-center text-gray-400">
+                    Don't have an account? <button id="switchToRegister" class="text-primary hover:text-opacity-80">Register</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Register Modal -->
+    <div class="register-modal">
+        <div class="bg-dark p-8 rounded-xl max-w-md w-full mx-4 relative z-10 border border-gray-700">
+            <button class="close-modal absolute top-4 right-4">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="text-center mb-6">
+                <h2 class="text-2xl font-bold text-white mb-2">Create Your Account</h2>
+                <p class="text-gray-400">Register now and get 5,000 free points!</p>
+            </div>
+            
+            <form id="registerForm" class="space-y-4">
+                <div>
+                    <label for="registerUsername" class="block text-gray-400 mb-2">Username</label>
+                    <input type="text" id="registerUsername" required class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary">
+                </div>
+                
+                <div>
+                    <label for="registerEmail" class="block text-gray-400 mb-2">Email</label>
+                    <input type="email" id="registerEmail" required class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary">
+                </div>
+                
+                <div>
+                    <label for="registerPassword" class="block text-gray-400 mb-2">Password</label>
+                    <input type="password" id="registerPassword" required class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary">
+                </div>
+                
+                <div>
+                    <label for="registerConfirmPassword" class="block text-gray-400 mb-2">Confirm Password</label>
+                    <input type="password" id="registerConfirmPassword" required class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary">
+                </div>
+                
+                <div class="flex items-center">
+                    <input type="checkbox" id="acceptTerms" required class="h-4 w-4 text-primary focus:ring-primary border-gray-600 rounded">
+                    <label for="acceptTerms" class="ml-2 block text-sm text-gray-400">
+                        I agree to the <a href="/terms/" class="text-primary hover:text-opacity-80">Terms of Service</a> and <a href="/privacy/" class="text-primary hover:text-opacity-80">Privacy Policy</a>
+                    </label>
+                </div>
+                
+                <button type="submit" class="w-full bg-primary hover:bg-opacity-90 text-white font-bold py-3 px-4 rounded-lg transition-all duration-300">
+                    Register Now
+                </button>
+                
+                <div class="text-center text-gray-400">
+                    Already have an account? <button id="switchToLogin" class="text-primary hover:text-opacity-80">Log In</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-dark bg-opacity-90 backdrop-filter backdrop-blur-md border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="/" class="text-2xl font-bold text-white flex items-center">
+                       <img src="/assets/logo.png" class="h-14" alt="logo"/>
+                    </a>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="/" class="text-white hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">Home</a>
+                    <a href="/games/" class="text-white hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">Games</a>
+                    <a href="/about/" class="text-primary px-3 py-2 rounded-md text-sm font-medium">About Us</a>
+                    <a href="/responsible-gaming/" class="text-white hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">Responsible Gaming</a>
+                    <a href="/contact/" class="text-white hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">Contact</a>
+                    
+                    <div class="ml-4 flex items-center space-x-4" id="authButtons">
+                        <button id="loginBtn" class="text-white hover:text-primary px-4 py-2 rounded-md text-sm font-medium transition-colors">
+                            <i class="fas fa-sign-in-alt mr-1"></i> Log In
+                        </button>
+                        <button id="registerBtn" class="bg-primary hover:bg-opacity-90 text-white px-4 py-2 rounded-full text-sm font-bold transition-colors transform hover:scale-105">
+                            <i class="fas fa-user-plus mr-1"></i> Register
+                        </button>
+                    </div>
+                    
+                    <div class="ml-4 flex items-center space-x-4 hidden" id="userInfo">
+                        <div class="text-white flex flex-col items-center justify-center border p-1 px-3 rounded-lg">
+                            <div class="flex item items-center justify-center gap-2">
+                            <i class="fas fa-coins text-yellow-400 mr-1"></i>
+                            <span id="userCoins">0</span> Coins
+                            </div>
+                             <span id="usernameDisplay" class="font-medium">Guest</span>
+                        </div>
+                        <div class="flex items-center">
+                           
+                        </div>
+                        <button id="mobileLogoutBtn" class="w-full text-left px-3 py-2 rounded-md text-base font-medium text-white hover:text-primary">
+                        <i class="fas fa-sign-out-alt mr-2"></i> Log Out
+                    </button>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobileMenuBtn" class="hamburger">
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                        <span></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-dark border-t border-gray-800">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="/" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-primary">Home</a>
+                <a href="/games/" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-primary">Games</a>
+                <a href="/about/" class="block px-3 py-2 rounded-md text-base font-medium text-primary">About Us</a>
+                <a href="/responsible-gaming/" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-primary">Responsible Gaming</a>
+                <a href="/contact/" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-primary">Contact</a>
+                
+                <div class="pt-4 border-t border-gray-800" id="mobileAuthButtons">
+                    <button id="mobileLoginBtn" class="w-full text-left px-3 py-2 rounded-md text-base font-medium text-white hover:text-primary">
+                        <i class="fas fa-sign-in-alt mr-2"></i> Log In
+                    </button>
+                    <button id="mobileRegisterBtn" class="w-full mt-2 bg-primary hover:bg-opacity-90 text-white px-3 py-2 rounded-full text-base font-bold">
+                        <i class="fas fa-user-plus mr-2"></i> Register
+                    </button>
+                </div>
+                
+                <div class="pt-4 border-t border-gray-800 hidden" id="mobileUserInfo">
+                    <div class="px-3 py-2 text-white">
+                        <i class="fas fa-user mr-2"></i>
+                        <span id="mobileUsernameDisplay">Guest</span>
+                    </div>
+                    <div class="px-3 py-2 text-white">
+                        <i class="fas fa-coins text-yellow-400 mr-2"></i>
+                        <span id="mobileUserCoins">0</span> Coins
+                    </div>
+                    <button id="mobileLogoutBtn" class="w-full text-left px-3 py-2 rounded-md text-base font-medium text-white hover:text-primary">
+                        <i class="fas fa-sign-out-alt mr-2"></i> Log Out
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="hero-gradient pt-24 pb-16 md:pt-32 md:pb-20 relative overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+                    About <span class="text-primary">FreeSlotRush</span>
+                </h1>
+                <p class="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
+                    The premier social casino platform offering the best free-to-play gaming experience with no real money involved.
+                </p>
+                
+                <div class="flex justify-center">
+                    <a href="/games/" class="bg-primary hover:bg-opacity-90 text-white font-bold py-4 px-8 rounded-full text-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center">
+                        <i class="fas fa-gamepad mr-2"></i> Explore Our Games
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Our Story Section -->
+    <section class="py-16 bg-dark">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="lg:grid lg:grid-cols-2 lg:gap-12 items-center">
+                <div class="mb-12 lg:mb-0">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6">
+                        Our <span class="text-primary">Story</span>
+                    </h2>
+                    <p class="text-gray-400 mb-4">
+                        FreeSlotRush was founded in 2023 with a simple mission: to create the most entertaining social casino platform without any real money gambling. Our team of gaming enthusiasts recognized the need for a safe, fun environment where players could enjoy casino-style games purely for entertainment.
+                    </p>
+                    <p class="text-gray-400 mb-4">
+                        Starting with just a handful of games, we've grown to become one of the most popular social casino platforms, offering a diverse collection of premium games from top providers like Pragmatic Play, Hacksaw Gaming, and Nolimit City.
+                    </p>
+                    <p class="text-gray-400">
+                        What sets us apart is our commitment to responsible gaming and our vibrant community of players who enjoy the thrill of casino games without any financial risk.
+                    </p>
+                </div>
+                
+                <div class="relative">
+                    <img src="/assets/about-story.webp" alt="Our Story" class="w-full rounded-xl border border-gray-700">
+                    <div class="absolute -bottom-4 -left-4 w-full h-full border-2 border-primary rounded-xl -z-10"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Our Mission Section -->
+    <section class="py-16 bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                    Our <span class="text-primary">Mission</span> & <span class="text-accent">Vision</span>
+                </h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">
+                    Driving everything we do at FreeSlotRush
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-8 max-w-4xl mx-auto">
+                <div class="bg-dark p-8 rounded-xl border border-gray-800 glow-box">
+                    <div class="w-14 h-14 bg-primary bg-opacity-20 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-bullseye text-2xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-white">Mission</h3>
+                    <p class="text-gray-400">
+                        To provide the most entertaining social casino experience with premium games, innovative features, and a vibrant community - all without any real money gambling or financial risk.
+                    </p>
+                </div>
+                
+                <div class="bg-dark p-8 rounded-xl border border-gray-800 glow-box">
+                    <div class="w-14 h-14 bg-accent bg-opacity-20 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-eye text-2xl text-accent"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-white">Vision</h3>
+                    <p class="text-gray-400">
+                        To become the global leader in social casino entertainment by setting new standards for game quality, user experience, and responsible gaming practices.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Our Values Section -->
+    <section class="py-16 bg-dark">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                    Our <span class="text-primary">Core</span> Values
+                </h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">
+                    The principles that guide our decisions and actions
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="value-card bg-gray-900 p-6 rounded-xl border border-gray-800 hover:border-primary transition-all duration-300">
+                    <div class="w-12 h-12 bg-primary bg-opacity-20 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-laugh-beam text-xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-white">Entertainment First</h3>
+                    <p class="text-gray-400">
+                        We prioritize fun and enjoyment above all else, creating engaging experiences that keep players coming back.
+                    </p>
+                </div>
+                
+                <div class="value-card bg-gray-900 p-6 rounded-xl border border-gray-800 hover:border-accent transition-all duration-300">
+                    <div class="w-12 h-12 bg-accent bg-opacity-20 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-shield-alt text-xl text-accent"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-white">Responsible Gaming</h3>
+                    <p class="text-gray-400">
+                        We're committed to promoting healthy gaming habits and providing tools to help players stay in control.
+                    </p>
+                </div>
+                
+                <div class="value-card bg-gray-900 p-6 rounded-xl border border-gray-800 hover:border-primary transition-all duration-300">
+                    <div class="w-12 h-12 bg-primary bg-opacity-20 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-lightbulb text-xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-white">Innovation</h3>
+                    <p class="text-gray-400">
+                        We constantly push boundaries to deliver fresh, exciting gaming experiences with cutting-edge features.
+                    </p>
+                </div>
+                
+                <div class="value-card bg-gray-900 p-6 rounded-xl border border-gray-800 hover:border-accent transition-all duration-300">
+                    <div class="w-12 h-12 bg-accent bg-opacity-20 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-users text-xl text-accent"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-white">Community</h3>
+                    <p class="text-gray-400">
+                        We foster a welcoming, inclusive environment where players can connect and share their passion for games.
+                    </p>
+                </div>
+                
+                <div class="value-card bg-gray-900 p-6 rounded-xl border border-gray-800 hover:border-primary transition-all duration-300">
+                    <div class="w-12 h-12 bg-primary bg-opacity-20 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-star text-xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-white">Quality</h3>
+                    <p class="text-gray-400">
+                        We maintain the highest standards in game selection, platform performance, and user experience.
+                    </p>
+                </div>
+                
+                <div class="value-card bg-gray-900 p-6 rounded-xl border border-gray-800 hover:border-accent transition-all duration-300">
+                    <div class="w-12 h-12 bg-accent bg-opacity-20 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-hand-holding-heart text-xl text-accent"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-white">Integrity</h3>
+                    <p class="text-gray-400">
+                        We operate with transparency and honesty, building trust with our players through clear communication.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Our Team Section -->
+    
+    
+    <!-- Our Timeline Section -->
+    <section class="py-16 bg-dark">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                    Our <span class="text-primary">Journey</span>
+                </h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">
+                    Key milestones in the FreeSlotRush story
+                </p>
+            </div>
+            
+            <div class="max-w-3xl mx-auto">
+                <div class="space-y-8 relative">
+                    <!-- Timeline Item 1 -->
+                    <div class="timeline-item relative pl-8">
+                        <div class="absolute left-0 w-4 h-4 bg-primary rounded-full mt-1"></div>
+                        <div class="bg-gray-900 p-6 rounded-xl border border-gray-800">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="text-xl font-bold text-white">FreeSlotRush Founded</h3>
+                                <span class="bg-primary text-white text-xs font-bold px-2 py-1 rounded">2023</span>
+                            </div>
+                            <p class="text-gray-400">
+                                Our journey began with a small team of gaming enthusiasts determined to create a different kind of casino platform.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- Timeline Item 2 -->
+                    <div class="timeline-item relative pl-8">
+                        <div class="absolute left-0 w-4 h-4 bg-accent rounded-full mt-1"></div>
+                        <div class="bg-gray-900 p-6 rounded-xl border border-gray-800">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="text-xl font-bold text-white">First Games Launched</h3>
+                                <span class="bg-accent text-white text-xs font-bold px-2 py-1 rounded">2023</span>
+                            </div>
+                            <p class="text-gray-400">
+                                Released our initial collection of 10 premium slot games, all available for free play.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- Timeline Item 3 -->
+                    <div class="timeline-item relative pl-8">
+                        <div class="absolute left-0 w-4 h-4 bg-primary rounded-full mt-1"></div>
+                        <div class="bg-gray-900 p-6 rounded-xl border border-gray-800">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="text-xl font-bold text-white">10,000 Registered Users</h3>
+                                <span class="bg-primary text-white text-xs font-bold px-2 py-1 rounded">2024</span>
+                            </div>
+                            <p class="text-gray-400">
+                                Reached our first major milestone with 10,000 registered players enjoying our platform.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- Timeline Item 4 -->
+                    <div class="timeline-item relative pl-8">
+                        <div class="absolute left-0 w-4 h-4 bg-accent rounded-full mt-1"></div>
+                        <div class="bg-gray-900 p-6 rounded-xl border border-gray-800">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="text-xl font-bold text-white">Mobile App Released</h3>
+                                <span class="bg-accent text-white text-xs font-bold px-2 py-1 rounded">2024</span>
+                            </div>
+                            <p class="text-gray-400">
+                                Launched our iOS and Android apps, making FreeSlotRush accessible anywhere.
+                            </p>
+                        </div>
+                    </div>
+                    
+                    <!-- Timeline Item 5 -->
+                    <div class="timeline-item relative pl-8">
+                        <div class="absolute left-0 w-4 h-4 bg-primary rounded-full mt-1"></div>
+                        <div class="bg-gray-900 p-6 rounded-xl border border-gray-800">
+                            <div class="flex justify-between items-start mb-2">
+                                <h3 class="text-xl font-bold text-white">50+ Games Available</h3>
+                                <span class="bg-primary text-white text-xs font-bold px-2 py-1 rounded">2025</span>
+                            </div>
+                            <p class="text-gray-400">
+                                Expanded our game library to over 50 titles from multiple top-tier providers.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA Section -->
+    <section class="py-16 bg-gradient-to-r from-primary to-accent">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6 text-white">
+                Ready to Join Our Community?
+            </h2>
+            <p class="text-white text-xl mb-8 max-w-2xl mx-auto">
+                Register now and get 5,000 free points to start playing today!
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                <button id="bottomAboutRegisterBtn" class="bg-white hover:bg-opacity-90 text-primary font-bold py-4 px-8 rounded-full text-lg transition-all duration-300 transform hover:scale-105">
+                    <i class="fas fa-user-plus mr-2"></i> Register Now
+                </button>
+                <a href="/contact/" class="bg-transparent hover:bg-white hover:bg-opacity-20 text-white font-bold py-4 px-8 rounded-full text-lg border-2 border-white transition-all duration-300">
+                    <i class="fas fa-envelope mr-2"></i> Contact Us
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Responsible Gaming Section -->
+    <section class="py-12 bg-dark border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="md:col-span-2">
+                    <h3 class="text-xl font-bold mb-4 text-white">
+                        <i class="fas fa-shield-alt text-primary mr-2"></i> Responsible Gaming Commitment
+                    </h3>
+                    <p class="text-gray-400 mb-4">
+                        FreeSlotRush is committed to promoting responsible gaming practices. We provide comprehensive tools and resources to help players maintain control over their gaming habits and ensure a safe, enjoyable experience for all users.
+                    </p>
+                    <p class="text-gray-400 font-semibold">
+                        Important Notice: This is a social casino platform for entertainment only. No real money gambling or payouts are involved. All coins are virtual and have no monetary value.
+                    </p>
+                </div>
+                <div class="flex flex-col md:items-end justify-center space-y-3">
+                    <a href="https://www.gamcare.org.uk/" target="_blank" class="text-primary hover:text-opacity-80 flex items-center">
+                        <i class="fas fa-external-link-alt mr-2"></i> GamCare
+                    </a>
+                    <a href="https://www.gambleaware.org/" target="_blank" class="text-primary hover:text-opacity-80 flex items-center">
+                        <i class="fas fa-external-link-alt mr-2"></i> GambleAware
+                    </a>
+                    <a href="/responsible-gaming/" class="text-primary hover:text-opacity-80 flex items-center">
+                        <i class="fas fa-file-alt mr-2"></i> Responsible Gaming Policy
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div>
+                    <a href="/" class="text-2xl font-bold text-white flex items-center mb-4">
+                       <img src="/assets/logo.png" class="h-14" alt="logo"/>
+                    </a>
+                    <p class="mb-4">
+                        The premier social casino platform offering the best free-to-play casino games with no real money involved.
+                    </p>
+                    
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-bold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/" class="hover:text-primary transition-colors">Home</a></li>
+                        <li><a href="/games/" class="hover:text-primary transition-colors">Games</a></li>
+                        <li><a href="/about/" class="text-primary">About Us</a></li>
+                        <li><a href="/responsible-gaming/" class="hover:text-primary transition-colors">Responsible Gaming</a></li>
+                        <li><a href="/contact/" class="hover:text-primary transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-bold mb-4">Legal</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/privacy/" class="hover:text-primary transition-colors">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="hover:text-primary transition-colors">Terms of Service</a></li>
+                        <li><a href="/cookies/" class="hover:text-primary transition-colors">Cookies Policy</a></li>
+                        <li><a href="/responsible-gaming/" class="hover:text-primary transition-colors">Responsible Gaming</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="text-white font-bold mb-4">Contact Us</h4>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-envelope text-primary mr-2 mt-1"></i>
+                            <a href="mailto:info@freeslotrush.org" class="hover:text-primary transition-colors">info@freeslotrush.org</a>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-phone-alt text-primary mr-2 mt-1"></i>
+                            <a href="tel:+18198243146" class="hover:text-primary transition-colors">+1 (819) 824-3146</a>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt text-primary mr-2 mt-1"></i>
+                            <span>490 Chem. de Vassan, Val-d'Or, QC J9P 0C1, Canada</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8 text-sm">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p>
+                        &copy; 2025 FreeSlotRush. All rights reserved.
+                    </p>
+                    <div class="flex flex-wrap justify-center md:justify-end gap-x-4 gap-y-2 mt-4 md:mt-0">
+                        <span>18+ Only</span>
+                        <span>•</span>
+                        <span>Social Casino Platform</span>
+                        <span>•</span>
+                        <span>No Real Money Gambling</span>
+                    </div>
+                </div>
+                
+                <p class="mt-4 text-xs text-gray-600">
+                    This website operates as a social casino platform for entertainment purposes only. No real money gambling, betting, or wagering is involved. Virtual coins and winnings have no cash value and cannot be exchanged for real money, prizes, or any monetary compensation. Success in social casino games does not guarantee future success at real money gambling activities.
+                </p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // User Management System
+        class UserManager {
+            constructor() {
+                this.currentUser = null;
+                this.loadUser();
+            }
+            
+            loadUser() {
+                const userData = localStorage.getItem('currentUser');
+                if (userData) {
+                    this.currentUser = JSON.parse(userData);
+                    this.updateUI();
+                }
+            }
+            
+            register(username, email, password) {
+                // Check if user already exists
+                const users = JSON.parse(localStorage.getItem('users') )|| [];
+                const userExists = users.some(user => user.email === email);
+                
+                if (userExists) {
+                    return { success: false, message: 'Email already registered' };
+                }
+                
+                // Create new user
+                const newUser = {
+                    id: Date.now().toString(),
+                    username,
+                    email,
+                    password, // Note: In a real app, you would hash the password
+                    coins: 5000, // Starting bonus
+                    joinDate: new Date().toISOString(),
+                    lastLogin: new Date().toISOString()
+                };
+                
+                users.push(newUser);
+                localStorage.setItem('users', JSON.stringify(users));
+                
+                // Log the user in
+                return this.login(email, password);
+            }
+            
+            login(email, password) {
+                const users = JSON.parse(localStorage.getItem('users')) || [];
+                const user = users.find(u => u.email === email && u.password === password);
+                
+                if (user) {
+                    // Update last login
+                    user.lastLogin = new Date().toISOString();
+                    localStorage.setItem('users', JSON.stringify(users));
+                    
+                    // Set current user
+                    this.currentUser = user;
+                    localStorage.setItem('currentUser', JSON.stringify(user));
+                    
+                    this.updateUI();
+                    return { success: true, user };
+                }
+                
+                return { success: false, message: 'Invalid email or password' };
+            }
+            
+            logout() {
+                this.currentUser = null;
+                localStorage.removeItem('currentUser');
+                this.updateUI();
+            }
+            
+            updateUI() {
+                const authButtons = document.getElementById('authButtons');
+                const userInfo = document.getElementById('userInfo');
+                const usernameDisplay = document.getElementById('usernameDisplay');
+                const userCoins = document.getElementById('userCoins');
+                
+                const mobileAuthButtons = document.getElementById('mobileAuthButtons');
+                const mobileUserInfo = document.getElementById('mobileUserInfo');
+                const mobileUsernameDisplay = document.getElementById('mobileUsernameDisplay');
+                const mobileUserCoins = document.getElementById('mobileUserCoins');
+                
+                if (this.currentUser) {
+                    // Desktop UI
+                    if (authButtons) authButtons.classList.add('hidden');
+                    if (userInfo) userInfo.classList.remove('hidden');
+                    if (usernameDisplay) usernameDisplay.textContent = this.currentUser.username;
+                    if (userCoins) userCoins.textContent = this.currentUser.coins.toLocaleString();
+                    
+                    // Mobile UI
+                    if (mobileAuthButtons) mobileAuthButtons.classList.add('hidden');
+                    if (mobileUserInfo) mobileUserInfo.classList.remove('hidden');
+                    if (mobileUsernameDisplay) mobileUsernameDisplay.textContent = this.currentUser.username;
+                    if (mobileUserCoins) mobileUserCoins.textContent = this.currentUser.coins.toLocaleString();
+                } else {
+                    // Desktop UI
+                    if (authButtons) authButtons.classList.remove('hidden');
+                    if (userInfo) userInfo.classList.add('hidden');
+                    
+                    // Mobile UI
+                    if (mobileAuthButtons) mobileAuthButtons.classList.remove('hidden');
+                    if (mobileUserInfo) mobileUserInfo.classList.add('hidden');
+                }
+            }
+            
+            isLoggedIn() {
+                return this.currentUser !== null;
+            }
+        }
+        
+        // Initialize User Manager
+        const userManager = new UserManager();
+        
+        // Age Verification
+        document.addEventListener('DOMContentLoaded', function() {
+            const ageVerified = localStorage.getItem('ageVerified');
+            
+            if (ageVerified === 'true') {
+                document.querySelector('.age-verification').style.display = 'none';
+            } else {
+                document.querySelector('.age-verification').style.display = 'flex';
+            }
+            
+            document.getElementById('confirmAge').addEventListener('click', function() {
+                localStorage.setItem('ageVerified', 'true');
+                document.querySelector('.age-verification').style.display = 'none';
+                gsap.from('nav', { y: -50, opacity: 0, duration: 0.5 });
+                gsap.from('section', { y: 50, opacity: 0, duration: 0.5, stagger: 0.1 });
+            });
+            
+            document.getElementById('denyAge').addEventListener('click', function() {
+                window.location.href = 'https://www.google.com/';
+            });
+            
+            // Mobile Menu Toggle
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            
+            if (mobileMenuBtn && mobileMenu) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    this.classList.toggle('open');
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+            
+            // Register Buttons
+            const registerButtons = [
+                document.getElementById('registerBtn'),
+                document.getElementById('bottomAboutRegisterBtn'),
+                document.getElementById('mobileRegisterBtn')
+            ];
+            
+            registerButtons.forEach(button => {
+                if (button) {
+                    button.addEventListener('click', function() {
+                        document.querySelector('.register-modal').style.display = 'flex';
+                        document.querySelector('.login-modal').style.display = 'none';
+                    });
+                }
+            });
+            
+            // Login Buttons
+            const loginButtons = [
+                document.getElementById('loginBtn'),
+                document.getElementById('mobileLoginBtn')
+            ];
+            
+            loginButtons.forEach(button => {
+                if (button) {
+                    button.addEventListener('click', function() {
+                        document.querySelector('.login-modal').style.display = 'flex';
+                        document.querySelector('.register-modal').style.display = 'none';
+                    });
+                }
+            });
+            
+            // Close modals
+            const closeModal = document.querySelectorAll('.close-modal');
+            closeModal.forEach(button => {
+                button.addEventListener('click', function() {
+                    document.querySelectorAll('.login-modal, .register-modal').forEach(modal => {
+                        modal.style.display = 'none';
+                    });
+                });
+            });
+            
+            // Close modal when clicking outside
+            document.querySelectorAll('.login-modal, .register-modal').forEach(modal => {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === modal) {
+                        modal.style.display = 'none';
+                    }
+                });
+            });
+            
+            // Switch between login and register forms
+            const switchToRegister = document.getElementById('switchToRegister');
+            if (switchToRegister) {
+                switchToRegister.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    document.querySelector('.login-modal').style.display = 'none';
+                    document.querySelector('.register-modal').style.display = 'flex';
+                });
+            }
+            
+            const switchToLogin = document.getElementById('switchToLogin');
+            if (switchToLogin) {
+                switchToLogin.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    document.querySelector('.register-modal').style.display = 'none';
+                    document.querySelector('.login-modal').style.display = 'flex';
+                });
+            }
+            
+            // Login form submission
+            const loginForm = document.getElementById('loginForm');
+            if (loginForm) {
+                loginForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const email = document.getElementById('loginEmail').value;
+                    const password = document.getElementById('loginPassword').value;
+                    
+                    const result = userManager.login(email, password);
+                    if (result.success) {
+                        
+                        document.querySelector('.login-modal').style.display = 'none';
+                    } else {
+                        
+                    }
+                });
+            }
+            
+            // Register form submission
+            const registerForm = document.getElementById('registerForm');
+            if (registerForm) {
+                registerForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const username = document.getElementById('registerUsername').value;
+                    const email = document.getElementById('registerEmail').value;
+                    const password = document.getElementById('registerPassword').value;
+                    const confirmPassword = document.getElementById('registerConfirmPassword').value;
+                    
+                    if (password !== confirmPassword) {
+                         
+                        return;
+                    }
+                    
+                    const result = userManager.register(username, email, password);
+                    if (result.success) {
+                        
+                        document.querySelector('.register-modal').style.display = 'none';
+                    } else {
+                        
+                    }
+                });
+            }
+            
+            // Logout buttons
+            const logoutBtn = document.getElementById('logoutBtn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', function() {
+                    userManager.logout();
+                     
+                });
+            }
+            
+            const mobileLogoutBtn = document.getElementById('mobileLogoutBtn');
+            if (mobileLogoutBtn) {
+                mobileLogoutBtn.addEventListener('click', function() {
+                    userManager.logout();
+                     
+                });
+            }
+            
+            // GSAP Animations
+            if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+                gsap.registerPlugin(ScrollTrigger);
+                
+                gsap.utils.toArray('.team-card, .value-card').forEach(card => {
+                    gsap.from(card, {
+                        scrollTrigger: {
+                            trigger: card,
+                            start: "top 80%",
+                            toggleActions: "play none none none"
+                        },
+                        y: 50,
+                        opacity: 0,
+                        duration: 0.8
+                    });
+                });
+                
+                gsap.utils.toArray('.timeline-item').forEach(item => {
+                    gsap.from(item, {
+                        scrollTrigger: {
+                            trigger: item,
+                            start: "top 80%",
+                            toggleActions: "play none none none"
+                        },
+                        x: -50,
+                        opacity: 0,
+                        duration: 0.8
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>

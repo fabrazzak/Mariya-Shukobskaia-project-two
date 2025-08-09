@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What Is Single Origin Coffee? | Sumato Coffee Blog</title>
+    <meta name="description" content="Learn what single origin coffee means, how it differs from blends, and why it offers unique flavor experiences from specific growing regions.">
+    <meta name="keywords" content="single origin coffee, coffee origins, specialty coffee, coffee terroir, coffee regions, Ethiopian coffee, Guatemalan coffee, Costa Rican coffee">
+    
+    <!-- Favicon -->
+     <link rel="icon" href="/assets/favicon.png" type="image/x-icon">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6F4E37',
+                        secondary: '#C4A484',
+                        accent: '#E5B880',
+                        dark: '#3E2723',
+                        light: '#F5F5F5'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['"Playfair Display"', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #C4A484;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #6F4E37;
+        }
+        
+        /* Blog content styling */
+        .blog-content h2 {
+            font-size: 1.75rem;
+            font-family: '"Playfair Display", serif';
+            font-weight: 600;
+            color: #3E2723;
+            margin-top: 2.5rem;
+            margin-bottom: 1.25rem;
+        }
+        
+        .blog-content h3 {
+            font-size: 1.5rem;
+            font-family: '"Playfair Display", serif';
+            font-weight: 500;
+            color: #3E2723;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+        
+        .blog-content p {
+            font-size: 1.125rem;
+            line-height: 1.75;
+            color: #4B5563;
+            margin-bottom: 1.5rem;
+        }
+        
+        .blog-content ul, 
+        .blog-content ol {
+            margin-bottom: 1.5rem;
+            padding-left: 1.5rem;
+        }
+        
+        .blog-content li {
+            margin-bottom: 0.75rem;
+            line-height: 1.75;
+        }
+        
+        .blog-content img {
+            border-radius: 0.5rem;
+            margin: 2rem auto;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+        }
+        
+        .blog-content blockquote {
+            border-left: 4px solid #C4A484;
+            padding-left: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+            color: #6F4E37;
+        }
+    </style>
+</head>
+<body class="font-sans text-dark bg-light">
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-white shadow-md z-40 transition-all duration-300">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+             <a href="/" class="flex items-center">
+               <img src="/assets/logo-header.png" alt="Sumato Coffee Logo" class="h-12 rounded">
+            </a>
+            
+            <div class="hidden lg:flex space-x-8">
+                <a href="/" class="text-dark font-medium hover:text-primary transition">Home</a>
+                <a href="/products/" class="text-dark font-medium hover:text-primary transition">Shop Coffee</a>
+                <a href="/about/" class="text-dark font-medium hover:text-primary transition">Our Story</a>
+                <a href="/blog/" class="text-primary font-medium">Blog</a>
+                <a href="/contact/" class="text-dark font-medium hover:text-primary transition">Contact</a>
+            </div>
+            
+            <div class="flex items-center space-x-4">
+              <button id="searchBtn" class="p-2 text-dark hover:text-primary transition hidden">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                </button>
+                <a href="/cart/" class="p-2 text-dark hover:text-primary transition relative">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                    </svg>
+                    <span id="cartCount" class="absolute -top-1 -right-1 bg-primary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center hidden">0</span>
+                </a>
+                <button id="mobileMenuBtn" class="lg:hidden p-2 text-dark hover:text-primary transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="lg:hidden bg-white absolute top-full left-0 right-0 shadow-lg hidden">
+            <div class="container mx-auto px-4 py-3 flex flex-col space-y-3">
+                <a href="/" class="py-2 text-dark font-medium border-b border-gray-100">Home</a>
+                <a href="/products/" class="py-2 text-dark font-medium border-b border-gray-100">Shop Coffee</a>
+                <a href="/about/" class="py-2 text-dark font-medium border-b border-gray-100">Our Story</a>
+                <a href="/blog/" class="py-2 text-primary font-medium border-b border-gray-100">Blog</a>
+                <a href="/contact/" class="py-2 text-dark font-medium">Contact</a>
+            </div>
+        </div>
+        
+        <!-- Search Bar -->
+        <div id="searchBar" class="absolute top-full left-0 right-0 bg-white shadow-lg hidden">
+            <div class="container mx-auto px-4 py-3">
+                <div class="relative">
+                    <input type="text" placeholder="Search blog posts..." class="w-full p-3 border border-gray-300 rounded pl-10 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 absolute left-3 top-3.5 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Blog Header -->
+    <section class="pt-32 pb-20 bg-primary text-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto">
+                <div class="flex items-center mb-4">
+                    <span class="text-sm bg-white bg-opacity-20 px-3 py-1 rounded-full">Coffee Education</span>
+                    <span class="mx-2 text-white text-opacity-70">•</span>
+                    <span class="text-sm text-white text-opacity-80">April 24, 2025</span>
+                </div>
+                <h1 class="text-3xl md:text-4xl lg:text-5xl font-display font-bold mb-6">What Is Single Origin Coffee?</h1>
+                <p class="text-xl text-white text-opacity-90">Understanding the unique characteristics of coffee from specific regions and farms</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Blog Content -->
+    <article class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto blog-content">
+                <img src="/assets/single-origin-coffee.jpg" alt="Single origin coffee beans from different regions" class="w-full">
+                
+                <p>When browsing coffee options, you've likely seen the term "single origin" - but what does it actually mean? Single origin coffee comes from one specific geographic region or farm. This contrasts with blends, which combine beans from multiple locations. At Sumato Coffee, we believe single origin coffees offer a unique opportunity to taste the distinct characteristics that different growing regions impart to the beans.</p>
+                
+                <h2>Defining Single Origin Coffee</h2>
+                
+                <p>Single origin coffee refers to beans that come from a single producer, crop, or region in one country. The exact definition can vary, but generally it means:</p>
+                
+                <ul>
+                    <li><strong>Single farm or estate:</strong> Coffee from one specific farm (sometimes called "single estate")</li>
+                    <li><strong>Single region:</strong> Coffee from multiple farms in a defined geographic area (like Yirgacheffe in Ethiopia)</li>
+                    <li><strong>Single country:</strong> Coffee from multiple regions within one country (less specific but still considered single origin)</li>
+                </ul>
+                
+                <p>The key is traceability - knowing exactly where your coffee comes from allows you to appreciate how factors like soil, altitude, and processing methods affect flavor.</p>
+                
+                <h2>Why Choose Single Origin Coffee?</h2>
+                
+                <p>Single origin coffees showcase the unique characteristics of their growing region, much like wine varietals express their terroir. Here's why coffee enthusiasts seek them out:</p>
+                
+                <h3>1. Distinct Flavor Profiles</h3>
+                
+                <p>Each coffee-growing region produces beans with unique flavor characteristics:</p>
+                
+                <ul>
+                    <li><strong>Ethiopian coffees</strong> often have floral, tea-like qualities with bright citrus acidity (try our <a href="/products/" class="text-primary hover:underline">Founder blend</a>)</li>
+                    <li><strong>Guatemalan coffees</strong> tend toward chocolatey, nutty flavors with balanced acidity (like our <a href="/products/" class="text-primary hover:underline">Work From Home</a> roast)</li>
+                    <li><strong>Costa Rican coffees</strong> frequently exhibit honey-like sweetness and red fruit notes (featured in our <a href="/products/" class="text-primary hover:underline">Sender blend</a>)</li>
+                </ul>
+                
+                <h3>2. Seasonal Freshness</h3>
+                
+                <p>Single origin coffees are typically harvested seasonally, meaning you get them at peak freshness. We roast our single origin coffees to order within days of receiving the green beans, preserving their vibrant flavors.</p>
+                
+                <h3>3. Direct Trade Potential</h3>
+                
+                <p>Single origin coffees often come with better traceability, allowing roasters like us to build direct relationships with farmers. This ensures fair compensation and often higher quality beans.</p>
+                
+                <blockquote>
+                    "Single origin coffee is like a passport to different coffee-growing regions. Each cup tells the story of its origin through unique flavors and aromas." - Ben Martinez, Sumato Founder
+                </blockquote>
+                
+                <h2>Single Origin vs. Blends</h2>
+                
+                <p>While single origin coffees highlight specific regional characteristics, blends combine beans from different origins to create balanced, consistent flavor profiles. Here's how they compare:</p>
+                
+                <div class="overflow-x-auto">
+                    <table class="min-w-full bg-white border border-gray-200 my-6">
+                        <thead>
+                            <tr class="bg-gray-50">
+                                <th class="py-3 px-4 border-b text-left font-medium text-gray-700">Feature</th>
+                                <th class="py-3 px-4 border-b text-left font-medium text-gray-700">Single Origin</th>
+                                <th class="py-3 px-4 border-b text-left font-medium text-gray-700">Blends</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="py-3 px-4 border-b">Flavor Profile</td>
+                                <td class="py-3 px-4 border-b">Unique, varies by origin</td>
+                                <td class="py-3 px-4 border-b">Consistent, balanced</td>
+                            </tr>
+                            <tr class="bg-gray-50">
+                                <td class="py-3 px-4 border-b">Complexity</td>
+                                <td class="py-3 px-4 border-b">High (distinct characteristics)</td>
+                                <td class="py-3 px-4 border-b">Moderate (harmonized flavors)</td>
+                            </tr>
+                            <tr>
+                                <td class="py-3 px-4 border-b">Seasonality</td>
+                                <td class="py-3 px-4 border-b">Available seasonally</td>
+                                <td class="py-3 px-4 border-b">Available year-round</td>
+                            </tr>
+                            <tr class="bg-gray-50">
+                                <td class="py-3 px-4 border-b">Best For</td>
+                                <td class="py-3 px-4 border-b">Exploring regional differences</td>
+                                <td class="py-3 px-4 border-b">Everyday drinking</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <p>At Sumato, we offer both single origin coffees for those who want to explore regional differences and expertly crafted blends like our <a href="/products/" class="text-primary hover:underline">Rise & Grinder</a> for those seeking consistent, balanced flavors.</p>
+                
+                <h2>Major Single Origin Coffee Regions</h2>
+                
+                <p>While coffee grows in over 70 countries, these regions produce some of the most distinctive single origin coffees:</p>
+                
+                <h3>Latin America</h3>
+                
+                <ul>
+                    <li><strong>Colombia:</strong> Balanced, medium body with nutty and caramel notes</li>
+                    <li><strong>Guatemala:</strong> Chocolatey with bright acidity and sometimes smoky notes</li>
+                    <li><strong>Costa Rica:</strong> Clean, bright, with fruity and honey-like sweetness</li>
+                    <li><strong>Brazil:</strong> Nutty, chocolatey, with low acidity - great for espresso</li>
+                </ul>
+                
+                <h3>Africa</h3>
+                
+                <ul>
+                    <li><strong>Ethiopia:</strong> Birthplace of coffee, known for floral, tea-like qualities and bright citrus notes</li>
+                    <li><strong>Kenya:</strong> Bright acidity with berry and wine-like flavors</li>
+                    <li><strong>Rwanda:</strong> Sweet, fruity, with sometimes floral characteristics</li>
+                </ul>
+                
+                <h3>Asia-Pacific</h3>
+                
+                <ul>
+                    <li><strong>Sumatra (Indonesia):</strong> Earthy, full-bodied, with low acidity</li>
+                    <li><strong>Papua New Guinea:</strong> Balanced, with fruity and earthy notes</li>
+                    <li><strong>Vietnam:</strong> Often used for robusta beans - strong, bold, with higher caffeine</li>
+                </ul>
+                
+                <h2>How to Brew Single Origin Coffee</h2>
+                
+                <p>To best appreciate the unique characteristics of single origin coffees, consider these brewing tips:</p>
+                
+                <h3>1. Choose the Right Method</h3>
+                
+                <p>Some brewing methods better highlight single origin characteristics:</p>
+                
+                <ul>
+                    <li><strong>Pour over:</strong> Excellent for highlighting delicate floral and fruity notes</li>
+                    <li><strong>French press:</strong> Great for fuller-bodied coffees to experience mouthfeel</li>
+                    <li><strong>Aeropress:</strong> Versatile method that can emphasize different characteristics</li>
+                    <li><strong>Espresso:</strong> Works well with certain single origins (like our <a href="/products/" class="text-primary hover:underline">Side Hustle espresso blend</a>)</li>
+                </ul>
+                
+                <h3>2. Adjust Your Parameters</h3>
+                
+                <p>Tailor your brewing to the coffee's characteristics:</p>
+                
+                <ul>
+                    <li><strong>Light, delicate coffees:</strong> Use slightly cooler water (195-200°F) to avoid over-extraction</li>
+                    <li><strong>Bright, acidic coffees:</strong> Try a slightly finer grind to balance acidity</li>
+                    <li><strong>Full-bodied coffees:</strong> Use a coarser grind to prevent bitterness</li>
+                </ul>
+                
+                <h3>3. Taste Mindfully</h3>
+                
+                <p>When trying a new single origin coffee:</p>
+                
+                <ul>
+                    <li>Smell the dry grounds to appreciate the aroma</li>
+                    <li>Take small sips, letting the coffee cover your whole palate</li>
+                    <li>Note how the flavor changes as it cools</li>
+                    <li>Compare with other origins to understand differences</li>
+                </ul>
+                
+                <h2>The Sumato Single Origin Selection</h2>
+                
+                <p>We carefully select our single origin coffees based on quality, flavor profile, and sustainable farming practices. Our current offerings include:</p>
+                
+                <h3>The Founder - Single Origin Ethiopian</h3>
+                
+                <p>From the birthplace of coffee comes this floral, tea-like coffee with notes of bergamot and blueberry. Grown at high altitudes in Yirgacheffe, this heirloom variety is processed using traditional methods.</p>
+                
+                <h3>Work From Home - Single Origin Guatemalan</h3>
+                
+                <p>Grown on the volcanic slopes of Antigua, this coffee offers a perfect balance of chocolatey richness and bright acidity with hints of caramel and citrus.</p>
+                
+                <h3>The Sender - Single Origin Costa Rican</h3>
+                
+                <p>From the Tarrazú region, this honey-processed coffee delivers exceptional sweetness with notes of red apple, brown sugar, and a velvety mouthfeel.</p>
+                
+                <p>Ready to explore the world of single origin coffees? Try our <a href="/products/" class="text-primary hover:underline">Discovery Pack</a> featuring three different single origin options, or dive deeper with our rotating seasonal selections.</p>
+            </div>
+        </div>
+    </article>
+    
+    <!-- Newsletter -->
+    <section class="py-16 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto bg-white rounded-lg shadow-sm p-8 text-center">
+                <h2 class="text-2xl md:text-3xl font-display font-bold mb-4">Enjoyed This Article?</h2>
+                <p class="text-gray-600 mb-6">Subscribe to The Weekly Roast for more coffee education, brewing tips, and exclusive offers.</p>
+                <form class="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+                    <input type="email" placeholder="Your email address" class="flex-grow px-4 py-3 border border-gray-300 rounded focus:outline-none focus:ring-1 focus:ring-primary">
+                    <button type="submit" class="px-6 py-3 bg-primary text-white rounded font-medium hover:bg-secondary transition whitespace-nowrap">
+                        Subscribe
+                    </button>
+                </form>
+                <p class="text-xs text-gray-500 mt-3">We respect your privacy. Unsubscribe at any time.</p>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+   <!-- Footer -->
+    <footer class="bg-dark text-white pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+                <div>
+              <img src="/assets/logo.png" alt="Sumato Coffee Logo" class="h-16 mb-4  px-2 py-2 rounded">
+                    <p class="text-gray-400 mb-4">Freshly roasted specialty coffee delivered to your doorstep. Because mediocre coffee should never be part of your job description.</p>
+                    <div class="flex space-x-4">
+                        <a href="https://www.facebook.com/sumatocoffee" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition">
+                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                        <a href="https://www.instagram.com/sumatocoffee/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition">
+                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                        <a href="https://x.com/sumatocoffee" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition">
+                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Shop</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/products/" class="text-gray-400 hover:text-white transition">All Coffee</a></li>
+                        <li><a href="/products/" class="text-gray-400 hover:text-white transition">Single Origin</a></li>
+                        <li><a href="/products/" class="text-gray-400 hover:text-white transition">Blends</a></li>
+                        <li><a href="/products/" class="text-gray-400 hover:text-white transition">Decaf</a></li>
+                        <li><a href="/products/" class="text-gray-400 hover:text-white transition">Merchandise</a></li>
+                        <li><a href="/products/" class="text-gray-400 hover:text-white transition">Gift Cards</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Company</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/about/" class="text-gray-400 hover:text-white transition">Our Story</a></li>
+                        <li><a href="/blog/" class="text-gray-400 hover:text-white transition">Blog</a></li>
+                        <li><a href="/contact/" class="text-gray-400 hover:text-white transition">Contact Us</a></li>                       
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Help</h3>
+                    <ul class="space-y-2">                       
+                        <li><a href="/privacy/" class="text-gray-400 hover:text-white transition">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="text-gray-400 hover:text-white transition">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-400 mb-4 md:mb-0">© 2025 Sumato Coffee Deals. All rights reserved. </p>
+                    <div class="flex space-x-6">
+                        <a href="/privacy/" class="text-gray-400 hover:text-white transition">Privacy Policy</a>
+                        <a href="/terms/" class="text-gray-400 hover:text-white transition">Terms of Service</a>
+                        <a href="/cookies/" class="text-gray-400 hover:text-white transition">Cookies</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Search Toggle
+        const searchBtn = document.getElementById('searchBtn');
+        const searchBar = document.getElementById('searchBar');
+        
+        searchBtn.addEventListener('click', () => {
+            searchBar.classList.toggle('hidden');
+            mobileMenu.classList.add('hidden');
+        });
+        
+        // Cart count
+        const cartCount = document.getElementById('cartCount');
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        
+        function updateCartCount() {
+            const count = cart.reduce((total, item) => total + item.quantity, 0);
+            cartCount.textContent = count;
+            
+            if (count > 0) {
+                cartCount.classList.remove('hidden');
+            } else {
+                cartCount.classList.add('hidden');
+            }
+        }
+        
+        updateCartCount();
+    </script>
+</body>
+</html>

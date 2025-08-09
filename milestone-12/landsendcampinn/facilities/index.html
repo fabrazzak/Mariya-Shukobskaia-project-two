@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facilities at Land's End Camping & Glamping | Cornwall Campsite Amenities</title>
+    <meta name="description" content="Explore our excellent facilities at Land's End Camping & Glamping. Modern shower block, campfire area, washing up stations, charging points, and more to make your stay comfortable.">
+    <meta name="keywords" content="Land's End camping facilities, Cornwall campsite amenities, glamping showers, campfire area Cornwall, campsite washing up, camping charging points, dog-friendly camping Cornwall">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/assets/images/logo.png" type="image/x-icon">
+     <link rel="canonical" href="https://landsendcampinn.com" />
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            light: '#3b82f6',
+                            DEFAULT: '#2563eb',
+                            dark: '#1d4ed8',
+                        },
+                        secondary: {
+                            light: '#f59e0b',
+                            DEFAULT: '#d97706',
+                            dark: '#b45309',
+                        },
+                        dark: {
+                            100: '#1e293b',
+                            200: '#1a202c',
+                            300: '#171923',
+                            400: '#0f172a',
+                        },
+                        accent: {
+                            light: '#10b981',
+                            DEFAULT: '#059669',
+                            dark: '#047857',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Montserrat', 'sans-serif'],
+                        serif: ['Playfair Display', 'serif'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-reverse': 'float-reverse 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        'float-reverse': {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollTrigger.min.js"></script>
+    
+    <style>
+        .parallax-bg {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+        
+        .gradient-text {
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+        
+        .card-hover-effect {
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+        }
+        
+        .card-hover-effect:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #f59e0b;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .btn-hover-effect {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-hover-effect::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: all 0.5s ease;
+        }
+        
+        .btn-hover-effect:hover::before {
+            left: 100%;
+        }
+        
+        .glow-effect {
+            box-shadow: 0 0 15px rgba(245, 158, 11, 0.5);
+        }
+        
+        .glow-effect:hover {
+            box-shadow: 0 0 25px rgba(245, 158, 11, 0.8);
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #3b82f6;
+            border-radius: 5px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #2563eb;
+        }
+        
+        .facility-icon {
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1) 0%, rgba(245, 158, 11, 0.1) 100%);
+        }
+        
+        .timeline {
+            position: relative;
+            padding-left: 3rem;
+        }
+        
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 1.25rem;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, #3b82f6, #f59e0b);
+        }
+        
+        .timeline-item {
+            position: relative;
+            padding-bottom: 2.5rem;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -3rem;
+            top: 0.25rem;
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: 50%;
+            background: #f59e0b;
+            border: 4px solid #1e293b;
+        }
+    </style>
+</head>
+<body class="bg-dark-400 text-gray-200 font-sans antialiased">
+    <!-- Cookie Consent Banner -->
+    <div id="cookieConsent" class="fixed bottom-0 left-0 right-0 bg-dark-300 z-50 p-4 shadow-lg hidden">
+        <div class="container mx-auto flex flex-col md:flex-row items-center justify-between">
+            <div class="mb-4 md:mb-0 md:mr-4">
+                <p class="text-sm">We use cookies to enhance your experience on our website. By continuing to browse, you agree to our use of cookies. <a href="/privacy/" class="text-secondary-light hover:underline">Learn more</a></p>
+            </div>
+            <div class="flex space-x-3">
+                <button id="declineCookies" class="px-4 py-2 bg-dark-200 text-gray-300 rounded-lg hover:bg-dark-100 transition">Decline</button>
+                <button id="acceptCookies" class="px-4 py-2 bg-secondary-light text-dark-400 rounded-lg hover:bg-secondary-dark transition">Accept</button>
+            </div>
+        </div>
+    </div>
+
+  <!-- Navigation -->
+<nav class="fixed w-full z-40 bg-dark-400 bg-opacity-90 backdrop-blur-md shadow-md transition-all duration-300">
+    <div class="container mx-auto px-6 py-3">
+        <div class="flex justify-between items-center">
+            <!-- Logo -->
+            <div class="flex items-center">
+                <a href="/" class="flex items-center">
+                    <img src="/assets/images/logo.png" class="h-16" alt="Land's End Camping & Glamping Logo" />
+                    
+                </a>
+            </div>
+
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="/" class="nav-link text-gray-300 font-medium">Home</a>
+                <a href="/about/" class="nav-link text-gray-300 hover:text-white font-medium">About</a>
+                <div class="relative group">
+                    <button class="nav-link text-gray-300 hover:text-white font-medium flex items-center">
+                        Accommodation <i class="fas fa-chevron-down ml-1 text-xs transition-transform group-hover:rotate-180"></i>
+                    </button>
+                    <div class="absolute left-0 mt-2 w-48 bg-dark-300 rounded-md shadow-lg py-1 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform group-hover:translate-y-0 -translate-y-2">
+                        <a href="/camping/" class="block px-4 py-2 text-gray-300 hover:bg-dark-200 hover:text-white flex items-center"><i class="fas fa-campground mr-2 text-secondary-light"></i> Camping</a>
+                        <a href="/glamping-pods/" class="block px-4 py-2 text-gray-300 hover:bg-dark-200 hover:text-white flex items-center"><i class="fas fa-cube mr-2 text-secondary-light"></i> Glamping Pods</a>
+                        <a href="/showmans-wagon/" class="block px-4 py-2 text-gray-300 hover:bg-dark-200 hover:text-white flex items-center"><i class="fas fa-caravan mr-2 text-secondary-light"></i> Showman's Wagon</a>
+                    </div>
+                </div>
+                <a href="/facilities/" class="nav-link text-white hover:text-white font-medium">Facilities</a>
+                <a href="/blog/" class="nav-link text-gray-300 hover:text-white font-medium">Blog</a>
+                <a href="/contact/" class="nav-link text-gray-300 hover:text-white font-medium">Contact</a>
+                <a href="/book-online/" class="btn-hover-effect px-6 py-2 bg-secondary-light text-dark-400 font-semibold rounded-full transition hover:bg-secondary-dark shadow-lg hover:shadow-secondary-light/30">Book Now</a>
+            </div>
+
+            <!-- Mobile menu button - Custom Design -->
+            <div class="md:hidden flex items-center">
+                <button id="mobileMenuButton" class="relative w-10 h-10 flex flex-col items-center justify-center group focus:outline-none">
+                    <span class="block w-6 h-0.5 bg-white mb-1.5 transition-all duration-300 transform" id="topBar"></span>
+                    <span class="block w-6 h-0.5 bg-white mb-1.5 transition-all duration-300" id="middleBar"></span>
+                    <span class="block w-6 h-0.5 bg-white transition-all duration-300 transform" id="bottomBar"></span>
+                    <span class="absolute inset-0 border-2 border-transparent rounded-full opacity-0 group-hover:opacity-100 group-hover:border-secondary-light transition-all duration-500"></span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Menu - Enhanced Design -->
+    <div id="mobileMenu" class="md:hidden hidden bg-gradient-to-b from-dark-300 to-dark-400 px-6 py-4 shadow-inner">
+        <div class="flex flex-col space-y-6">
+            <a href="/" class="text-gray-300 font-medium text-lg border-b border-dark-200 pb-2 flex items-center"><i class="fas fa-home mr-3 text-secondary-light"></i> Home</a>
+            <a href="/about/" class="text-gray-300 hover:text-white font-medium text-lg border-b border-dark-200 pb-2 flex items-center"><i class="fas fa-info-circle mr-3 text-secondary-light"></i> About</a>
+            
+            <div class="border-b border-dark-200 pb-2">
+                <button id="mobileAccommodationToggle" class="w-full flex justify-between items-center text-gray-300 hover:text-white font-medium text-lg">
+                    <span class="flex items-center"><i class="fas fa-campground mr-3 text-secondary-light"></i> Accommodation</span>
+                    <i class="fas fa-chevron-down text-xs transition-transform" id="mobileAccommodationArrow"></i>
+                </button>
+                <div id="mobileAccommodationMenu" class="hidden pl-8 mt-2 space-y-3">
+                    <a href="/camping/" class="block text-gray-400 hover:text-white"><i class="fas fa-arrow-right mr-2 text-xs text-secondary-light"></i> Camping</a>
+                    <a href="/glamping-pods/" class="block text-gray-400 hover:text-white"><i class="fas fa-arrow-right mr-2 text-xs text-secondary-light"></i> Glamping Pods</a>
+                    <a href="/showmans-wagon/" class="block text-gray-400 hover:text-white"><i class="fas fa-arrow-right mr-2 text-xs text-secondary-light"></i> Showman's Wagon</a>
+                </div>
+            </div>
+            
+            <a href="/facilities/" class="text-white hover:text-white font-medium text-lg border-b border-dark-200 pb-2 flex items-center"><i class="fas fa-shower mr-3 text-secondary-light"></i> Facilities</a>
+            <a href="/blog/" class="text-gray-300 hover:text-white font-medium text-lg border-b border-dark-200 pb-2 flex items-center"><i class="fas fa-newspaper mr-3 text-secondary-light"></i> Blog</a>
+            <a href="/contact/" class="text-gray-300 hover:text-white font-medium text-lg border-b border-dark-200 pb-2 flex items-center"><i class="fas fa-envelope mr-3 text-secondary-light"></i> Contact</a>
+            <a href="/book-online/" class="btn-hover-effect px-6 py-3 bg-secondary-light text-dark-400 font-semibold rounded-full text-center transition hover:bg-secondary-dark mt-4 shadow-lg">
+                <i class="fas fa-calendar-check mr-2"></i> Book Now
+            </a>
+        </div>
+    </div>
+</nav>
+
+<script>
+    // Mobile Menu Toggle with Animation
+    const mobileMenuButton = document.getElementById('mobileMenuButton');
+    const mobileMenu = document.getElementById('mobileMenu');
+    const topBar = document.getElementById('topBar');
+    const middleBar = document.getElementById('middleBar');
+    const bottomBar = document.getElementById('bottomBar');
+    
+    // Mobile Accommodation Toggle
+    const mobileAccommodationToggle = document.getElementById('mobileAccommodationToggle');
+    const mobileAccommodationMenu = document.getElementById('mobileAccommodationMenu');
+    const mobileAccommodationArrow = document.getElementById('mobileAccommodationArrow');
+
+    mobileMenuButton.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+        topBar.classList.toggle('rotate-45');
+        topBar.classList.toggle('translate-y-2');
+        middleBar.classList.toggle('opacity-0');
+        bottomBar.classList.toggle('-rotate-45');
+        bottomBar.classList.toggle('-translate-y-2');
+    });
+
+    mobileAccommodationToggle.addEventListener('click', () => {
+        mobileAccommodationMenu.classList.toggle('hidden');
+        mobileAccommodationArrow.classList.toggle('rotate-180');
+    });
+</script>
+
+    <!-- Hero Section -->
+    <section class="relative h-96 flex items-center justify-center overflow-hidden pt-16 bg-dark-300">
+        <div class="absolute inset-0 bg-gradient-to-r from-dark-400 to-transparent opacity-90 z-10"></div>
+        <img src="/assets/images/camping-gallery-1.jpg" alt="Facilities at Land's End Camping" class="absolute inset-0 w-full h-full object-cover">
+        <div class="container mx-auto px-6 z-20 text-center">
+            <h1 class="text-4xl md:text-5xl font-serif font-bold mb-4">
+                <span class="text-white">Our</span>
+                <span class="bg-gradient-to-r from-primary-light via-secondary-light to-accent-light gradient-text"> Facilities</span>
+            </h1>
+            <p class="text-xl text-gray-300 max-w-2xl mx-auto">
+                Modern amenities designed to make your camping or glamping experience comfortable and memorable
+            </p>
+        </div>
+    </section>
+
+    <!-- Breadcrumbs -->
+    <div class="bg-dark-300 py-3 border-b border-dark-200">
+        <div class="container mx-auto px-6">
+            <div class="flex items-center space-x-2 text-sm">
+                <a href="/" class="text-gray-400 hover:text-white transition">Home</a>
+                <span class="text-gray-500">/</span>
+                <span class="text-secondary-light">Facilities</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <section class="py-16 bg-dark-400">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-serif font-bold mb-4">
+                    <span class="text-white">Everything You Need for a</span>
+                    <span class="bg-gradient-to-r from-primary-light to-secondary-light gradient-text"> Comfortable Stay</span>
+                </h2>
+                <p class="text-gray-400 max-w-3xl mx-auto text-lg">
+                    We've designed our facilities to enhance your camping experience while maintaining the natural beauty of our location. From our modern shower block to the communal campfire area, every amenity has been thoughtfully planned.
+                </p>
+            </div>
+            
+            <!-- Main Facilities Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+                <!-- Shower Block -->
+                <div class="bg-dark-300 rounded-xl overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl">
+                    <div class="relative overflow-hidden h-48">
+                        <img src="/assets/images/shower-block.webp" alt="Modern shower block" class="w-full h-full object-cover transition duration-500 hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-400 to-transparent opacity-70"></div>
+                    </div>
+                    <div class="p-6">
+                        <div class="facility-icon mx-auto">
+                            <i class="fas fa-shower text-2xl text-secondary-light"></i>
+                        </div>
+                        <h3 class="text-2xl font-serif font-bold mb-3 text-white text-center">Shower & Toilet Block</h3>
+                        <p class="text-gray-400 mb-4 text-center">
+                            Our newly built shower and toilet facilities are kept spotlessly clean and include:
+                        </p>
+                        <ul class="text-gray-300 space-y-2">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-secondary-light mt-1 mr-2"></i>
+                                <span>Spacious showers with plenty of hot water</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-secondary-light mt-1 mr-2"></i>
+                                <span>Hair dryers and shaving points</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-secondary-light mt-1 mr-2"></i>
+                                <span>Separate accessible shower/toilet</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-secondary-light mt-1 mr-2"></i>
+                                <span>Free shower tokens provided on arrival</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Washing Up -->
+                <div class="bg-dark-300 rounded-xl overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl">
+                    <div class="relative overflow-hidden h-48">
+                        <img src="/assets/images/washing-up.webp" alt="Washing up area" class="w-full h-full object-cover transition duration-500 hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-400 to-transparent opacity-70"></div>
+                    </div>
+                    <div class="p-6">
+                        <div class="facility-icon mx-auto">
+                            <i class="fas fa-utensils text-2xl text-secondary-light"></i>
+                        </div>
+                        <h3 class="text-2xl font-serif font-bold mb-3 text-white text-center">Washing Up Area</h3>
+                        <p class="text-gray-400 mb-4 text-center">
+                            Our covered dish washing area makes cleaning up after meals easy:
+                        </p>
+                        <ul class="text-gray-300 space-y-2">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-secondary-light mt-1 mr-2"></i>
+                                <span>Hot and cold running water</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-secondary-light mt-1 mr-2"></i>
+                                <span>Access to fridge and freezer for food storage</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-secondary-light mt-1 mr-2"></i>
+                                <span>Microwave available for guest use</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-secondary-light mt-1 mr-2"></i>
+                                <span>Drying racks and waste disposal</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <!-- Campfire Area -->
+                <div class="bg-dark-300 rounded-xl overflow-hidden shadow-lg transition-all duration-300 hover:shadow-xl">
+                    <div class="relative overflow-hidden h-48">
+                        <img src="/assets/images/campfire.jpg" alt="Communal campfire area" class="w-full h-full object-cover transition duration-500 hover:scale-110">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-400 to-transparent opacity-70"></div>
+                    </div>
+                    <div class="p-6">
+                        <div class="facility-icon mx-auto">
+                            <i class="fas fa-fire text-2xl text-secondary-light"></i>
+                        </div>
+                        <h3 class="text-2xl font-serif font-bold mb-3 text-white text-center">Communal Campfire</h3>
+                        <p class="text-gray-400 mb-4 text-center">
+                            The heart of our campsite where guests can gather in the evenings:
+                        </p>
+                        <ul class="text-gray-300 space-y-2">
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-secondary-light mt-1 mr-2"></i>
+                                <span>Seating area around a large fire pit</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-secondary-light mt-1 mr-2"></i>
+                                <span>Firewood and kindling available to purchase</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-secondary-light mt-1 mr-2"></i>
+                                <span>Perfect for stargazing (we're in a Dark Sky Park)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check text-secondary-light mt-1 mr-2"></i>
+                                <span>Great for meeting fellow campers</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                
+                
+            </div>
+            
+            <!-- Additional Facilities -->
+            <div class="bg-dark-300 rounded-xl p-8 mb-16">
+                <h2 class="text-3xl font-serif font-bold mb-6 text-white text-center">
+                    <span class="bg-gradient-to-r from-primary-light to-secondary-light gradient-text">More</span> Useful Facilities
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <div class="flex items-start">
+                        <div class="w-12 h-12 bg-primary-light bg-opacity-20 rounded-full flex items-center justify-center mr-4 mt-1">
+                            <i class="fas fa-snowflake text-primary-light"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-semibold text-white mb-1">Drying Room</h4>
+                            <p class="text-gray-400">Space to dry wet walking/cycling gear</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="w-12 h-12 bg-secondary-light bg-opacity-20 rounded-full flex items-center justify-center mr-4 mt-1">
+                            <i class="fas fa-ice-cream text-secondary-light"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-semibold text-white mb-1">Ice Pack Freezing</h4>
+                            <p class="text-gray-400">Freeze ice packs for your cool box</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="w-12 h-12 bg-accent-light bg-opacity-20 rounded-full flex items-center justify-center mr-4 mt-1">
+                            <i class="fas fa-baby text-accent-light"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-semibold text-white mb-1">Baby Changing</h4>
+                            <p class="text-gray-400">Facilities in accessible toilet</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start">
+                        <div class="w-12 h-12 bg-primary-light bg-opacity-20 rounded-full flex items-center justify-center mr-4 mt-1">
+                            <i class="fas fa-bicycle text-primary-light"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-lg font-semibold text-white mb-1">Bike Storage</h4>
+                            <p class="text-gray-400">Secure area for bicycles</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Camping Essentials -->
+            <div class="mb-16">
+                <h2 class="text-3xl font-serif font-bold mb-8 text-white text-center">
+                    <span class="bg-gradient-to-r from-primary-light to-secondary-light gradient-text">Camping</span> Essentials
+                </h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div class="bg-dark-300 rounded-xl p-8">
+                        <h3 class="text-2xl font-serif font-bold mb-4 text-white">
+                            <i class="fas fa-campground text-secondary-light mr-3"></i>
+                            What We Provide
+                        </h3>
+                        <ul class="text-gray-300 space-y-3">
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-secondary-light mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="font-medium text-white">Chimineas</h4>
+                                    <p class="text-gray-400 text-sm">Free to borrow (first come, first served)</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-secondary-light mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="font-medium text-white">Firewood & Kindling</h4>
+                                    <p class="text-gray-400 text-sm">Available to purchase on site</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-secondary-light mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="font-medium text-white">Fresh Eggs</h4>
+                                    <p class="text-gray-400 text-sm">From our free-range chickens</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-check-circle text-secondary-light mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="font-medium text-white">Tourist Information</h4>
+                                    <p class="text-gray-400 text-sm">Maps and local attraction guides</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                    
+                    <div class="bg-dark-300 rounded-xl p-8">
+                        <h3 class="text-2xl font-serif font-bold mb-4 text-white">
+                            <i class="fas fa-suitcase text-secondary-light mr-3"></i>
+                            What to Bring
+                        </h3>
+                        <ul class="text-gray-300 space-y-3">
+                            <li class="flex items-start">
+                                <i class="fas fa-exclamation-circle text-red-400 mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="font-medium text-white">Torch</h4>
+                                    <p class="text-gray-400 text-sm">Essential as we minimize light pollution</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-exclamation-circle text-red-400 mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="font-medium text-white">Warm Layers</h4>
+                                    <p class="text-gray-400 text-sm">Evenings can be cool by the coast</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-exclamation-circle text-red-400 mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="font-medium text-white">Sturdy Footwear</h4>
+                                    <p class="text-gray-400 text-sm">For coastal path walking</p>
+                                </div>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-exclamation-circle text-red-400 mt-1 mr-3"></i>
+                                <div>
+                                    <h4 class="font-medium text-white">Reusable Water Bottle</h4>
+                                    <p class="text-gray-400 text-sm">Water fill points available</p>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Rules & Guidelines -->
+            <div class="bg-dark-300 rounded-xl p-8 mb-16">
+                <h2 class="text-3xl font-serif font-bold mb-6 text-white text-center">
+                    <span class="bg-gradient-to-r from-primary-light to-secondary-light gradient-text">Site</span> Rules & Guidelines
+                </h2>
+                <div class="max-w-3xl mx-auto">
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <h3 class="text-xl font-semibold text-white mb-2">Check-In/Out Times</h3>
+                            <p class="text-gray-400">Check-in between 12:00pm and 7:00pm. Check-out by 11:00am.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h3 class="text-xl font-semibold text-white mb-2">Quiet Hours</h3>
+                            <p class="text-gray-400">Please keep noise to a minimum between 10:00pm and 8:00am.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h3 class="text-xl font-semibold text-white mb-2">Dogs</h3>
+                            <p class="text-gray-400">Must be kept on leads at all times due to free-range animals.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h3 class="text-xl font-semibold text-white mb-2">Fires</h3>
+                            <p class="text-gray-400">Only wood purchased on site may be burned in fire pits/chimineas.</p>
+                        </div>
+                        <div class="timeline-item">
+                            <h3 class="text-xl font-semibold text-white mb-2">Recycling</h3>
+                            <p class="text-gray-400">Please use our recycling bins appropriately.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="text-center mt-8">
+                        <a href="/camping-rules/" class="btn-hover-effect inline-block px-6 py-3 border border-secondary-light text-secondary-light rounded-full font-medium transition hover:bg-secondary-light hover:text-dark-400">
+                            View Full Site Rules
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- CTA -->
+            <div class="bg-gradient-to-r from-primary-dark to-secondary-dark rounded-xl p-12 text-center">
+                <h2 class="text-3xl font-serif font-bold mb-4 text-white">Ready to Experience Our Facilities?</h2>
+                <p class="text-xl text-gray-200 mb-8 max-w-2xl mx-auto">
+                    Book your stay at Land's End Camping & Glamping and enjoy our excellent facilities in Cornwall's most beautiful setting.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center gap-4">
+                    <a href="/book-online/" class="btn-hover-effect px-8 py-3 bg-white text-dark-400 font-semibold rounded-full transition hover:bg-gray-200 transform hover:scale-105">
+                        Book Your Stay Now
+                    </a>
+                    <a href="/contact/" class="btn-hover-effect px-8 py-3 border-2 border-white text-white font-semibold rounded-full transition hover:bg-white hover:text-dark-400 transform hover:scale-105">
+                        Contact Us
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark-300 pt-16 pb-8">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+                <!-- About Column -->
+                <div>
+                    <h3 class="text-white text-lg font-semibold mb-4">About Us</h3>
+                    <p class="text-gray-400 mb-4">
+                        Family-run campsite located on Cornwall's most westerly point, offering traditional camping and luxury glamping experiences.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="https://www.facebook.com/Lands-End-Camping-and-Glamping-102767561478786/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-primary-light transition">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.instagram.com/p/CBS9vKdDFj5/?igshid=1i6ooga7jr4gu" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-pink-500 transition">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links Column -->
+                <div>
+                    <h3 class="text-white text-lg font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/" class="text-gray-400 hover:text-white transition">Home</a></li>
+                        <li><a href="/about/" class="text-gray-400 hover:text-white transition">About Us</a></li>
+                        <li><a href="/camping/" class="text-gray-400 hover:text-white transition">Camping</a></li>
+                        <li><a href="/glamping-pods/" class="text-gray-400 hover:text-white transition">Glamping Pods</a></li>
+                        <li><a href="/showmans-wagon/" class="text-gray-400 hover:text-white transition">Showman's Wagon</a></li>
+                        <li><a href="/facilities/" class="text-white">Facilities</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Contact Column -->
+                <div>
+                    <h3 class="text-white text-lg font-semibold mb-4">Contact Us</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt text-secondary-light mt-1 mr-3"></i>
+                            <span class="text-gray-400">22 Renfield Ln, Glasgow G2 5AR, UK</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone-alt text-secondary-light mr-3"></i>
+                            <span class="text-gray-400">+44 141 222 2254</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope text-secondary-light mr-3"></i>
+                            <span class="text-gray-400">info@landsendcampinn.com</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Newsletter Column -->
+                <div>
+                    <h3 class="text-white text-lg font-semibold mb-4">Newsletter</h3>
+                    <p class="text-gray-400 mb-4">
+                        Subscribe to receive updates, special offers, and camping tips.
+                    </p>
+                    <form class="flex">
+                        <input type="email" placeholder="Your email" class="px-4 py-2 bg-dark-400 text-white rounded-l-lg focus:outline-none focus:ring-2 focus:ring-secondary-light w-full">
+                        <button type="submit" class="px-4 py-2 bg-secondary-light text-dark-400 font-semibold rounded-r-lg hover:bg-secondary-dark transition">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="border-t border-dark-200 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <div class="mb-4 md:mb-0">
+                        <p class="text-gray-500 text-sm">
+                            &copy; 2025 Land's End Camping & Glamping. All rights reserved.
+                        </p>
+                    </div>
+                    <div class="flex flex-wrap gap-4">
+                        <a href="/privacy/" class="text-gray-500 hover:text-white text-sm transition">Privacy Policy</a>
+                        <a href="/terms/" class="text-gray-500 hover:text-white text-sm transition">Terms of Service</a>
+                        <a href="/cookies/" class="text-gray-500 hover:text-white text-sm transition">Cookies Policy</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="fixed bottom-8 right-8 w-12 h-12 bg-primary-light bg-opacity-80 text-white rounded-full shadow-lg flex items-center justify-center transition opacity-0 invisible hover:bg-opacity-100">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script>
+       
+        // Back to Top Button
+        const backToTopButton = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.remove('opacity-0', 'invisible');
+                backToTopButton.classList.add('opacity-100', 'visible');
+            } else {
+                backToTopButton.classList.remove('opacity-100', 'visible');
+                backToTopButton.classList.add('opacity-0', 'invisible');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Cookie Consent
+        const cookieConsent = document.getElementById('cookieConsent');
+        const acceptCookies = document.getElementById('acceptCookies');
+        const declineCookies = document.getElementById('declineCookies');
+        
+        // Check if user has already made a choice
+        if (!localStorage.getItem('cookieConsent')) {
+            setTimeout(() => {
+                cookieConsent.classList.remove('hidden');
+            }, 2000);
+        }
+        
+        acceptCookies.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'accepted');
+            cookieConsent.classList.add('hidden');
+        });
+        
+        declineCookies.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'declined');
+            cookieConsent.classList.add('hidden');
+        });
+        
+        // Initialize GSAP animations
+        document.addEventListener('DOMContentLoaded', function() {
+            if (typeof gsap !== 'undefined') {
+                // Animate elements on scroll
+                gsap.registerPlugin(ScrollTrigger);
+                
+                // Animate all sections
+                gsap.utils.toArray('section').forEach(section => {
+                    gsap.from(section, {
+                        scrollTrigger: {
+                            trigger: section,
+                            start: "top 80%",
+                            toggleActions: "play none none none"
+                        },
+                        opacity: 0,
+                        y: 50,
+                        duration: 1
+                    });
+                });
+                
+                // Animate facility cards
+                gsap.utils.toArray('.card-hover-effect').forEach((card, i) => {
+                    gsap.from(card, {
+                        scrollTrigger: {
+                            trigger: card,
+                            start: "top 80%",
+                            toggleActions: "play none none none"
+                        },
+                        opacity: 0,
+                        y: 30,
+                        duration: 0.8,
+                        delay: i * 0.1
+                    });
+                });
+                
+                // Animate timeline items
+                gsap.utils.toArray('.timeline-item').forEach((item, i) => {
+                    gsap.from(item, {
+                        scrollTrigger: {
+                            trigger: item,
+                            start: "top 80%",
+                            toggleActions: "play none none none"
+                        },
+                        opacity: 0,
+                        x: -30,
+                        duration: 0.6,
+                        delay: i * 0.15
+                    });
+                });
+            }
+        });
+    </script>
+</body>
+</html>

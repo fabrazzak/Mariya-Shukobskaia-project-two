@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Behind-the-scenes look at how Weasel Warrior Studios created Popcorn Invasion's addictive gameplay and satisfying physics.">
+    <meta name="keywords" content="game development, popcorn invasion making, mobile game creation, physics simulation, game design">
+    <meta name="author" content="Weasel Warrior Studios">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://popcorninvasiontap.com/blog/behind-the-scenes/">
+    <title>Behind the Scenes | Popcorn Invasion Blog</title>
+    
+    <!-- Favicon -->
+   <link rel="icon" href="/assets/favicon.png" type="image/x-icon">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        popcorn: {
+                            light: '#FFF4D9',
+                            DEFAULT: '#FFD166',
+                            dark: '#E6B000',
+                        },
+                        butter: '#FFEE93',
+                        burnt: '#D8572A',
+                        alien: '#06D6A0',
+                        theater: '#1A1A2E',
+                    },
+                    fontFamily: {
+                        arcade: ['"Press Start 2P"', 'cursive'],
+                        fun: ['"Bangers"', 'cursive'],
+                    },
+                    animation: {
+                        'pop': 'pop 0.5s ease-out',
+                        'float': 'float 3s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        pop: {
+                            '0%': { transform: 'scale(0.5)', opacity: '0' },
+                            '80%': { transform: 'scale(1.1)', opacity: '1' },
+                            '100%': { transform: 'scale(1)', opacity: '1' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Press+Start+2P&display=swap" rel="stylesheet">
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+</head>
+<body class="bg-theater text-white font-sans overflow-x-hidden">
+    <!-- Cookie Consent Banner -->
+    <div id="cookieConsent" class="fixed bottom-0 left-0 right-0 bg-gray-900 text-white p-4 hidden z-50">
+        <div class="container mx-auto flex flex-col md:flex-row items-center justify-between">
+            <p class="mb-4 md:mb-0">We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies.</p>
+            <div class="flex space-x-4">
+                <button id="acceptCookies" class="bg-alien hover:bg-green-600 px-4 py-2 rounded">Accept</button>
+                <button id="declineCookies" class="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded">Decline</button>
+                <a href="/cookies/" class="bg-popcorn-dark hover:bg-popcorn-darker text-black px-4 py-2 rounded">Learn More</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 bg-black bg-opacity-90 z-40 backdrop-blur-md shadow-lg">
+       <div class="container mx-auto px-6 ">
+            <div class="flex justify-between items-center">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="/" class="flex items-center">
+                        <img src="/assets/logo.png" alt="Popcorn Invasion Logo" class="h-20 w-auto mr-3">                      
+                    </a>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button id="mobileMenuButton" class="text-popcorn focus:outline-none">
+                        <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="text-white hover:text-butter">Home</a>
+                    <a href="/how-to-play/" class="text-white hover:text-butter">How to Play</a>
+                    <a href="/responsible-gaming/" class="text-white hover:text-butter">Responsible Gaming</a>
+                    <a href="/blog/" class="text-popcorn hover:text-butter font-bold">Blog</a>
+                    <a href="/contact/" class="text-white hover:text-butter">Contact</a>
+                    <a href="https://play.google.com/store/apps/details?id=com.WeaselWarriorStudios.PopcornInvasion" class="bg-popcorn hover:bg-popcorn-dark text-black font-bold px-6 py-2 rounded-full transition-all transform hover:scale-105 shadow-lg hover:shadow-popcorn/50">Download</a>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobileMenu" class="hidden md:hidden mt-4 pb-4">
+                <a href="/" class="block py-2 text-white">Home</a>
+                <a href="/how-to-play/" class="block py-2 text-white">How to Play</a>
+                <a href="/responsible-gaming/" class="block py-2 text-white">Responsible Gaming</a>
+                <a href="/blog/" class="block py-2 text-popcorn font-bold">Blog</a>
+                <a href="/contact/" class="block py-2 text-white">Contact</a>
+                <a href="https://play.google.com/store/apps/details?id=com.WeaselWarriorStudios.PopcornInvasion" class="mt-3 inline-block bg-popcorn hover:bg-popcorn-dark text-black font-bold px-6 py-2 rounded-full transition-all transform hover:scale-105">Download</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Blog Post Header -->
+    <section class="pt-32 pb-20 relative overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-black to-transparent opacity-70 z-0"></div>
+        <div class="absolute inset-0 z-0">
+            <img src="/assets//blog-development.avif" alt="Development Header" class="w-full h-full object-cover">
+        </div>
+        
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="max-w-4xl mx-auto">
+                <div class="mb-6">
+                    <a href="/blog/" class="inline-flex items-center text-popcorn hover:text-butter">
+                        <svg class="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M9.707 16.707a1 1 0 01-1.414 0l-6-6a1 1 0 010-1.414l6-6a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l4.293 4.293a1 1 0 010 1.414z" clip-rule="evenodd"></path>
+                        </svg>
+                        Back to Blog
+                    </a>
+                </div>
+                
+                <div class="bg-black bg-opacity-50 backdrop-blur-sm p-6 rounded-xl border border-gray-700">
+                    <span class="bg-burnt text-black text-sm font-bold px-4 py-1 rounded-full inline-block mb-4">Development</span>
+                    <h1 class="text-4xl md:text-5xl font-fun text-butter mb-6">The Making of Popcorn Invasion</h1>
+                    <div class="flex items-center text-gray-300">
+                        <span class="text-sm">February 22, 2025</span>
+                        <span class="mx-3">•</span>
+                        <span class="text-sm">12 min read</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Post Content -->
+    <article class="py-16 bg-gray-900 relative">
+        <div class="container mx-auto px-6">
+            <div class="max-w-3xl mx-auto">
+                <!-- Introduction -->
+                <div class="prose prose-invert max-w-none mb-16">
+                    <p class="text-xl text-butter mb-6">Ever wondered what goes into creating an addictive tapping game with realistic physics? Today we're pulling back the curtain on Popcorn Invasion's development process - from initial concept to the satisfying final product.</p>
+                    
+                    <p>This two-year journey involved physics experiments, sound design sessions, and countless iterations to create that perfect "pop." Here's how we did it.</p>
+                </div>
+                
+                <!-- Concept -->
+                <div class="mb-20">
+                    <div class="flex flex-col md:flex-row gap-8 items-center mb-8">
+                        
+                        <div class="md:w-full">
+                            <h2 class="text-3xl font-fun text-popcorn mb-4">1. The Original Concept</h2>
+                            <p class="text-lg text-gray-300 mb-4">It all started with a simple observation: people love popping bubble wrap. Could we recreate that satisfaction in a game?</p>
+                            
+                            <div class="bg-gray-800 rounded-lg p-4 border-l-4 border-popcorn">
+                                <h4 class="font-bold text-butter mb-2">Core Design Pillars:</h4>
+                                <ul class="list-disc pl-5 space-y-2 text-gray-300">
+                                    <li>Satisfying tactile feedback</li>
+                                    <li>Simple but deep mechanics</li>
+                                    <li>Realistic physics with a fun twist</li>
+                                    <li>Universal appeal across ages</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="prose prose-invert max-w-none">
+                        <p>The initial concept was straightforward - tap popcorn to make it pop. But we quickly realized the game needed more depth to sustain interest. That's when the alien invasion theme emerged.</p>
+                        
+                        <p>Early prototypes had generic circular enemies, but our art director suggested making them popcorn-shaped for visual consistency. This led to the "aliens disguised as popcorn" narrative that ties everything together.</p>
+                        
+                        <p>We tested dozens of themes before landing on the movie theater setting:</p>
+                        
+                        <ul>
+                            <li><strong>Kitchen Counter:</strong> Too limiting for powerups</li>
+                            <li><strong>Science Lab:</strong> Too serious for our tone</li>
+                            <li><strong>Farm Field:</strong> Didn't explain the technology</li>
+                        </ul>
+                        
+                        <p>The theater provided the perfect backdrop - it's where you'd naturally find popcorn, it allows for fun powerups (projector, seats, screens), and it creates a clear defensive objective (protect your workplace).</p>
+                    </div>
+                </div>
+                
+                <!-- Physics -->
+                <div class="mb-20">
+                    <div class="flex flex-col md:flex-row gap-8 items-center mb-8">
+                        
+                        <div class="md:w-full">
+                            <h2 class="text-3xl font-fun text-popcorn mb-4">2. Perfecting the Physics</h2>
+                            <p class="text-lg text-gray-300 mb-4">The popcorn physics went through 47 iterations before we got it just right. Here's what we learned.</p>
+                            
+                            <div class="bg-gray-800 rounded-lg p-4 border-l-4 border-burnt">
+                                <h4 class="font-bold text-butter mb-2">Key Physics Parameters:</h4>
+                                <ul class="list-disc pl-5 space-y-2 text-gray-300">
+                                    <li>Bounciness: 0.4-0.7 (varies by alien type)</li>
+                                    <li>Mass: 0.8-1.2 units</li>
+                                    <li>Drag coefficient: 0.2</li>
+                                    <li>Pop force: 3.5 Newtons</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="prose prose-invert max-w-none">
+                        <p>Creating realistic yet fun popcorn physics was our biggest technical challenge. Real popcorn obeys physics laws in boring ways - we needed exaggerated but believable behavior.</p>
+                        
+                        <p>Early versions were either too floaty (like balloons) or too heavy (like rocks). The sweet spot came when we:</p>
+                        
+                        <ul>
+                            <li>Added slight randomness to each kernel's physical properties</li>
+                            <li>Created different material types for buttered vs. dry popcorn</li>
+                            <li>Implemented proper collision detection between kernels</li>
+                        </ul>
+                        
+                        <p>The "pop" mechanic went through particular scrutiny. We recorded slow-motion videos of actual popcorn popping to study:</p>
+                        
+                        <ul>
+                            <li>The initial burst acceleration</li>
+                            <li>The tumbling motion mid-air</li>
+                            <li>The way pieces separate</li>
+                        </ul>
+                        
+                        <p>Our breakthrough came when we implemented "burst particles" - tiny fragments that fly out during a pop but quickly disappear. These don't interact physically but add visual excitement.</p>
+                        
+                        <p>Pro Tip: Tilt your device to see how the motion controls affect the physics in subtle ways!</p>
+                    </div>
+                </div>
+                
+                <!-- Sound Design -->
+                <div class="mb-20">
+                    <div class="flex flex-col md:flex-row gap-8 items-center mb-8">
+                        
+                        <div class="md:w-full">
+                            <h2 class="text-3xl font-fun text-popcorn mb-4">3. Crafting the Perfect Pop</h2>
+                            <p class="text-lg text-gray-300 mb-4">We recorded over 200 popping sounds before finding the right ones. Here's what makes the audio so satisfying.</p>
+                            
+                            <div class="bg-gray-800 rounded-lg p-4 border-l-4 border-alien">
+                                <h4 class="font-bold text-butter mb-2">Sound Design Layers:</h4>
+                                <ul class="list-disc pl-5 space-y-2 text-gray-300">
+                                    <li>Base pop (actual popcorn recording)</li>
+                                    <li>Mid-range crunch (celery snaps)</li>
+                                    <li>High-end sizzle (bacon grease)</li>
+                                    <li>Alien squeak (modified toy sounds)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="prose prose-invert max-w-none">
+                        <p>Surprisingly, real popcorn popping sounds underwhelming in a game context. We needed something more exaggerated and varied.</p>
+                        
+                        <p>Our sound designer spent weeks recording and mixing layers to create the perfect pop:</p>
+                        
+                        <p><strong>Base Layer:</strong> Actual popcorn pops recorded in an anechoic chamber. These provided authenticity but lacked punch.</p>
+                        
+                        <p><strong>Crunch Layer:</strong> Snapping celery stalks gave that satisfying mid-range crackle. We pitch-shifted multiple recordings to create variety.</p>
+                        
+                        <p><strong>Sizzle Layer:</strong> Bacon frying provided high-frequency energy that makes pops feel more "present."</p>
+                        
+                        <p><strong>Alien Layer:</strong> Modified squeaky toy sounds give each alien type personality when they pop.</p>
+                        
+                        <p>The final sound randomizes between 12 variations to prevent repetition. We also implemented a system where buttered popcorn has a slightly deeper, oilier sound.</p>
+                        
+                        <p>Haptic feedback was equally important. After testing dozens of vibration patterns, we settled on a quick "snap" vibration that perfectly syncs with the audio.</p>
+                    </div>
+                </div>
+                
+                <!-- Progression -->
+                <div class="mb-20">
+                    <div class="flex flex-col md:flex-row gap-8 items-center mb-8">
+                       
+                        <div class="md:w-full">
+                            <h2 class="text-3xl font-fun text-popcorn mb-4">4. Designing the Progression</h2>
+                            <p class="text-lg text-gray-300 mb-4">How we balanced difficulty curves and reward systems to keep players engaged.</p>
+                            
+                            <div class="bg-gray-800 rounded-lg p-4 border-l-4 border-butter">
+                                <h4 class="font-bold text-butter mb-2">Progression Elements:</h4>
+                                <ul class="list-disc pl-5 space-y-2 text-gray-300">
+                                    <li>5 theaters with unique challenges</li>
+                                    <li>18 upgradeable powerups</li>
+                                    <li>7 alien types introduced gradually</li>
+                                    <li>Dynamic difficulty adjustment</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="prose prose-invert max-w-none">
+                        <p>The core popping mechanic is simple, so we needed layered progression systems to maintain long-term engagement.</p>
+                        
+                        <p><strong>Theater Unlocks:</strong> Each new theater introduces:</p>
+                        <ul>
+                            <li>A visual theme (Drive-In, IMAX, etc.)</li>
+                            <li>New environmental hazards</li>
+                            <li>Unique background music</li>
+                            <li>Higher base difficulty</li>
+                        </ul>
+                        
+                        <p><strong>Powerup System:</strong> We designed upgrades to:</p>
+                        <ul>
+                            <li>Feel impactful immediately</li>
+                            <li>Have clear visual feedback</li>
+                            <li>Encourage different playstyles</li>
+                            <li>Scale well with upgrades</li>
+                        </ul>
+                        
+                        <p><strong>Alien Introduction:</strong> New alien types appear based on:</p>
+                        <ul>
+                            <li>Player skill level (calculated by average score)</li>
+                            <li>Theater progression</li>
+                            <li>Session length (longer games get harder)</li>
+                        </ul>
+                        
+                        <p>The dynamic difficulty system was particularly tricky. It monitors:</p>
+                        <ul>
+                            <li>Tap accuracy (hits vs. misses)</li>
+                            <li>Combo frequency</li>
+                            <li>Powerup usage efficiency</li>
+                            <li>Score growth rate</li>
+                        </ul>
+                        
+                        <p>This data adjusts alien spawn rates and speeds to keep players in their "challenge zone" - not too easy, not too frustrating.</p>
+                    </div>
+                </div>
+                
+                <!-- Development Insights -->
+                <div class="mb-16 bg-gray-800 rounded-xl p-8 border-2 border-popcorn">
+                    <h2 class="text-3xl font-fun text-popcorn mb-6 text-center">Fun Development Facts</h2>
+                    
+                    <div class="grid grid-cols-1 gap-6">
+                        <div>
+                            <h3 class="text-xl font-bold text-butter mb-3">The Butter Incident</h3>
+                            <p class="text-gray-300">Early butter physics were too realistic - it made kernels stick permanently to the screen. We had to tone down the stickiness by 60% for playability.</p>
+                        </div>
+                        
+                        <div>
+                            <h3 class="text-xl font-bold text-butter mb-3">Armored Alien Origin</h3>
+                            <p class="text-gray-300">The armored alien type was added after testers complained the game became too easy. Its design was inspired by a popcorn kernel still in its hull.</p>
+                        </div>
+                        
+                        <div>
+                            <h3 class="text-xl font-bold text-butter mb-3">Scoop Mechanics</h3>
+                            <p class="text-gray-300">The scoop powerup went through 12 iterations before we got the "just right" feeling of weight and momentum.</p>
+                        </div>
+                        
+                        <div>
+                            <h3 class="text-xl font-bold text-butter mb-3">Name Evolution</h3>
+                            <p class="text-gray-300">The game was originally called "Popcorn Panic" until we settled on "Invasion" to better reflect the alien theme.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Conclusion -->
+                <div class="prose prose-invert max-w-none mb-16">
+                    <h2 class="text-3xl font-fun text-popcorn mb-6">Lessons Learned</h2>
+                    
+                    <p>Developing Popcorn Invasion taught us valuable lessons about casual game design:</p>
+                    
+                    <p><strong>Satisfaction First:</strong> Every mechanic was judged by how satisfying it felt, not just how it worked technically. We cut several "clever" features that didn't feel good.</p>
+                    
+                    <p><strong>Physics Needs Personality:</strong> Realistic physics are boring without exaggeration. Finding the right balance between realism and fun was crucial.</p>
+                    
+                    <p><strong>Sound is Half the Experience:</strong> Players consistently rated versions with better sound as "more fun" even when gameplay was identical.</p>
+                    
+                    <p><strong>Progression is Key:</strong> Simple mechanics need deep progression systems to maintain engagement over time.</p>
+                    
+                    <p>We're incredibly proud of how Popcorn Invasion turned out, and we're thrilled to see so many players enjoying it. This is just the beginning - we have many more theaters, aliens, and powerups planned for future updates!</p>
+                    
+                    <p class="text-xl text-butter mt-8">Happy popping!</p>
+                    <p>- The Weasel Warrior Studios Team</p>
+                </div>
+                
+                <!-- CTA -->
+                <div class="text-center">
+                    <a href="https://play.google.com/store/apps/details?id=com.WeaselWarriorStudios.PopcornInvasion" class="inline-block bg-popcorn hover:bg-popcorn-dark text-black font-bold px-8 py-4 rounded-full text-lg transition-all transform hover:scale-105 shadow-lg hover:shadow-popcorn/50 mb-6">
+                        Experience the Results
+                    </a>
+                    <p class="text-gray-400">Download now and see how all these elements come together!</p>
+                </div>
+            </div>
+        </div>
+    </article>
+
+    <!-- Footer -->
+    <footer class="bg-black text-gray-400 py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="md:col-span-2">
+                     <a href="/" class="flex items-center">
+                        <img src="/assets/logo.png" alt="Popcorn Invasion Logo" class="h-24 w-auto mr-3">                      
+                    </a>
+                    <p class="mb-4">Defend your movie theater from alien popcorn invaders in this exciting tapping game with realistic physics and addictive gameplay.</p>
+                    <p>© 2025 Weasel Warrior Studios. All rights reserved.</p>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold text-butter mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/" class="hover:text-popcorn">Home</a></li>
+                        <li><a href="/how-to-play/" class="hover:text-popcorn">How to Play</a></li>
+                        <li><a href="/responsible-gaming/" class="hover:text-popcorn">Responsible Gaming</a></li>
+                        <li><a href="/blog/" class="hover:text-popcorn">Blog</a></li>
+                        <li><a href="/contact/" class="hover:text-popcorn">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold text-butter mb-4">Legal</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/privacy/" class="hover:text-popcorn">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="hover:text-popcorn">Terms of Service</a></li>
+                        <li><a href="/cookies/" class="hover:text-popcorn">Cookies Policy</a></li>
+                    </ul>
+                    
+                    <h3 class="text-lg font-bold text-butter mt-6 mb-4">Contact</h3>
+                    <address class="not-italic">
+                        <p>36 St Andrews Gardens</p>
+                        <p>Toronto, ON M4W 2E1</p>
+                        <p>Canada</p>
+                        <p class="mt-2">Phone: +1 647 997 7626</p>
+                        <p>Email: info@popcorninvasiontap.com</p>
+                    </address>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center">
+                <p>Popcorn Invasion: Tapping Game is rated for ages 3+ and contains in-app purchases.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- GSAP Animations -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Mobile menu toggle
+            const mobileMenuButton = document.getElementById('mobileMenuButton');
+            const mobileMenu = document.getElementById('mobileMenu');
+            
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            // Cookie consent
+            const cookieConsent = document.getElementById('cookieConsent');
+            const acceptCookies = document.getElementById('acceptCookies');
+            const declineCookies = document.getElementById('declineCookies');
+            
+            if (!localStorage.getItem('cookiesAccepted')) {
+                setTimeout(() => {
+                    cookieConsent.classList.remove('hidden');
+                    gsap.from(cookieConsent, {
+                        y: 100,
+                        opacity: 0,
+                        duration: 0.5,
+                        ease: 'power2.out'
+                    });
+                }, 2000);
+            }
+            
+            acceptCookies.addEventListener('click', () => {
+                localStorage.setItem('cookiesAccepted', 'true');
+                gsap.to(cookieConsent, {
+                    y: 100,
+                    opacity: 0,
+                    duration: 0.3,
+                    ease: 'power2.in',
+                    onComplete: () => cookieConsent.classList.add('hidden')
+                });
+            });
+            
+            declineCookies.addEventListener('click', () => {
+                gsap.to(cookieConsent, {
+                    y: 100,
+                    opacity: 0,
+                    duration: 0.3,
+                    ease: 'power2.in',
+                    onComplete: () => cookieConsent.classList.add('hidden')
+                });
+            });
+            
+            // Scroll animations
+            gsap.registerPlugin(ScrollTrigger);
+            
+            // Animate development sections
+            gsap.utils.toArray('.dev-section').forEach((section, i) => {
+                gsap.from(section, {
+                    scrollTrigger: {
+                        trigger: section,
+                        start: 'top 80%',
+                        toggleActions: 'play none none none'
+                    },
+                    y: 50,
+                    opacity: 0,
+                    duration: 0.8,
+                    delay: i * 0.2,
+                    ease: 'power2.out'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

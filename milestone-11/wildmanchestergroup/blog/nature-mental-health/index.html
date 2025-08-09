@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Science Behind Nature's Healing Power | Wild Manchester Group</title>
+    <meta name="description" content="Explore the scientific evidence for nature's impact on mental health. How wilderness experiences reduce stress, improve cognition, and enhance emotional wellbeing.">
+    <meta name="keywords" content="nature and mental health, ecotherapy, forest bathing, nature therapy, wilderness wellbeing, stress reduction, Manchester outdoors">
+    
+    <!-- Favicon -->
+   <link rel="icon" href="/assets/logo.png" type="image/x-icon">
+    <link rel="canonical" href="https://wildmanchestergroup.com/blog/" />
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            200: '#bbf7d0',
+                            300: '#86efac',
+                            400: '#4ade80',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                        },
+                        dark: {
+                            900: '#0a0a0a',
+                            800: '#1a1a1a',
+                            700: '#2a2a2a',
+                            600: '#3a3a3a',
+                            500: '#4a4a4a',
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-reverse': 'float-reverse 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 8s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        'float-reverse': {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollTrigger.min.js"></script>
+    
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            background-color: #0a0a0a;
+            color: #f8fafc;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        .gradient-text {
+            background: linear-gradient(90deg, #4ade80, #3b82f6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, rgba(20, 83, 45, 0.2), rgba(30, 64, 175, 0.2));
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+        }
+        .card-hover:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+        .glow-hover:hover {
+            filter: drop-shadow(0 0 8px rgba(74, 222, 128, 0.7));
+        }
+        .text-stroke {
+            -webkit-text-stroke: 1px #f8fafc;
+            color: transparent;
+        }
+        .noise-bg::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: -1;
+        }
+        .prose {
+            max-width: 65ch;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .prose h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-top: 2.5rem;
+            margin-bottom: 1.25rem;
+            line-height: 1.3;
+        }
+        .prose h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+        .prose p {
+            margin-bottom: 1.25rem;
+            line-height: 1.7;
+        }
+        .prose ul {
+            margin-bottom: 1.25rem;
+            padding-left: 1.5rem;
+            list-style-type: disc;
+        }
+        .prose li {
+            margin-bottom: 0.5rem;
+        }
+        .prose img {
+            border-radius: 0.75rem;
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .prose a {
+            color: #4ade80;
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .prose a:hover {
+            text-decoration: underline;
+        }
+        .prose blockquote {
+            border-left: 4px solid #4ade80;
+            padding-left: 1.5rem;
+            margin-left: 0;
+            font-style: italic;
+            color: #a3a3a3;
+            margin-top: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        .study-card {
+            background: rgba(30, 64, 175, 0.1);
+            border: 1px solid rgba(74, 222, 128, 0.2);
+            transition: all 0.3s ease;
+        }
+        .study-card:hover {
+            background: rgba(30, 64, 175, 0.2);
+            transform: translateY(-5px);
+        }
+    </style>
+</head>
+<body class="noise-bg">
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-40 bg-dark-900/80 backdrop-blur-md border-b border-dark-700">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="/" class="flex items-center space-x-2 glow-hover">
+                       <img src="/assets/logo.png" class="h-16" alt="logo" />
+                    </a>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="text-gray-300 hover:text-primary-400 transition-colors">Home</a>
+                    <a href="/about/" class="text-gray-300 hover:text-primary-400 transition-colors">About</a>
+                      <a href="/blog/" class="text-white hover:text-primary-400 transition-colors font-medium">Blog</a>
+                    <a href="/camping/" class="text-gray-300  hover:text-primary-400 transition-colors ">Camping</a>
+                    <a href="/contact/" class="text-gray-300 hover:text-primary-400 transition-colors">Contact</a>
+                    <a href="/gallery/" class="block px-4 py-2 text-sm text-gray-300 hover:bg-dark-700 hover:text-white">Gallery</a>
+                </div>
+
+                <!-- CTA and Mobile Menu Button -->
+                <div class="flex items-center space-x-4">
+                    <a href="/contact/" class="hidden md:block px-4 py-2 bg-primary-600 hover:bg-primary-700 rounded-md text-sm font-medium transition-colors">
+                        Book Adventure
+                    </a>
+                    <button id="mobileMenuButton" class="md:hidden text-gray-300 hover:text-white focus:outline-none">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="md:hidden hidden bg-dark-800 border-t border-dark-700">
+            <div class="container mx-auto px-6 py-4 flex flex-col space-y-4">
+                <a href="/" class="text-gray-300 hover:text-primary-400 transition-colors">Home</a>
+                <a href="/about/" class="text-gray-300 hover:text-primary-400 transition-colors">About</a>
+              <a href="/blog/" class="text-gray-300 hover:text-primary-400 transition-colors">Blog</a>
+                    <a href="/camping/" class="text-gray-300  hover:text-primary-400 transition-colors ">Camping</a>
+                <a href="/contact/" class="text-gray-300 hover:text-primary-400 transition-colors">Contact</a>
+                <a href="/gallery/" class="text-gray-300 hover:text-primary-400 transition-colors">Gallery</a>
+                
+                
+                <a href="/contact/" class="mt-2 px-4 py-2 bg-primary-600 hover:bg-primary-700 rounded-md text-sm font-medium text-center transition-colors">
+                    Book Adventure
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Blog Header -->
+    <header class="pt-32 pb-20 relative overflow-hidden">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto">
+                <div class="flex items-center text-sm text-gray-500 mb-6">
+                    <a href="/blog/" class="hover:text-primary-400 transition-colors">Blog</a>
+                    <span class="mx-2">/</span>
+                    
+                </div>
+                <h1 class="text-4xl md:text-5xl font-bold mb-6 leading-tight">
+                    The Science Behind Nature's Healing Power
+                </h1>
+                <div class="flex flex-wrap items-center text-sm text-gray-500 gap-4 mb-8">
+                    <span><i class="far fa-clock mr-1"></i> 10 min read</span>
+                    <span><i class="far fa-calendar mr-1"></i> Published: March 22, 2025</span>
+                </div>
+                <div class="flex flex-wrap gap-2 mb-8">
+                    <span class="px-3 py-1 bg-dark-700 rounded-full text-sm text-gray-300">#mentalhealth</span>
+                    <span class="px-3 py-1 bg-dark-700 rounded-full text-sm text-gray-300">#ecotherapy</span>
+                    <span class="px-3 py-1 bg-dark-700 rounded-full text-sm text-gray-300">#naturetherapy</span>
+                </div>
+                <div class="relative rounded-xl overflow-hidden h-96">
+                    <img src="/assets/blog4.jpg" alt="Person meditating in Manchester woodland" class="w-full h-full object-cover">
+                    <div class="absolute inset-0 bg-gradient-to-t from-dark-900/30 via-transparent to-transparent"></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Blog Content -->
+    <main class="pb-20">
+        <article class="max-w-5xl mx-auto px-6">
+            <div class="prose prose-invert max-w-none">
+                <p class="lead">Modern research confirms what we've intuitively known - nature has profound healing effects on the human mind. This article examines the scientific evidence behind nature's impact on mental health, focusing on studies relevant to Manchester's urban population and accessible wilderness areas.</p>
+
+                <h2>The Biophilia Hypothesis</h2>
+                
+                <p>Harvard biologist E.O. Wilson proposed that humans have an innate tendency to seek connections with nature:</p>
+                
+                <ul>
+                    <li><strong>Evolutionary roots:</strong> Our brains developed in natural environments over millennia</li>
+                    <li><strong>Physiological responses:</strong> Natural settings trigger relaxation responses</li>
+                    <li><strong>Attention restoration:</strong> Nature provides effortless fascination</li>
+                    <li><strong>Stress reduction:</strong> Natural environments lower cortisol levels</li>
+                </ul>
+                
+                <blockquote>
+                    "We are not outside of nature, but part of it - our mental health reflects this fundamental connection."
+                </blockquote>
+                
+                <h2>Key Scientific Findings</h2>
+                
+                <p>Dozens of peer-reviewed studies demonstrate nature's mental health benefits:</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
+                    <div class="study-card p-6 rounded-xl">
+                        <h4 class="font-bold text-lg mb-3 text-primary-400">University of Exeter Study</h4>
+                        <p>People living near green spaces reported lower mental distress, even when controlling for income and education. Manchester's parks showed similar effects to rural areas.</p>
+                    </div>
+                    <div class="study-card p-6 rounded-xl">
+                        <h4 class="font-bold text-lg mb-3 text-primary-400">Stanford Research</h4>
+                        <p>90-minute walks in nature decreased rumination (repetitive negative thoughts) compared to urban walks. Brain scans showed reduced activity in the subgenual prefrontal cortex.</p>
+                    </div>
+                </div>
+                
+                <h3>Manchester-Specific Research</h3>
+                
+                <p>Studies focusing on Greater Manchester found:</p>
+                
+                <ul>
+                    <li>Patients with views of trees recovered faster than those facing brick walls (Manchester Royal Infirmary study)</li>
+                    <li>Office workers with plants in their workspace reported 15% higher wellbeing</li>
+                    <li>Children in greener neighborhoods showed better cognitive development</li>
+                    <li>Elderly residents near parks had lower depression rates</li>
+                </ul>
+                
+                <h2>Physiological Mechanisms</h2>
+                
+                <p>Nature's benefits occur through multiple biological pathways:</p>
+                
+                <div class="study-card p-6 rounded-xl my-6">
+                    <h4 class="font-bold text-lg mb-3 text-primary-400">How Nature Affects Your Biology</h4>
+                    <ul class="space-y-2">
+                        <li><strong>Cortisol reduction:</strong> Forest environments lower stress hormones by 16% on average</li>
+                        <li><strong>Heart rate variability:</strong> Natural settings improve parasympathetic nervous system function</li>
+                        <li><strong>Inflammation reduction:</strong> Regular nature exposure lowers pro-inflammatory cytokines</li>
+                        <li><strong>Brain waves:</strong> Alpha waves increase in natural environments, indicating relaxed alertness</li>
+                    </ul>
+                </div>
+                
+                <h2>Nature Prescriptions in Manchester</h2>
+                
+                
+                <p>Manchester's NHS has pioneered "green prescriptions":</p>
+                
+                <ul>
+                    <li><strong>Park walks:</strong> Recommended for mild depression and anxiety</li>
+                    <li><strong>Community gardening:</strong> For social isolation and dementia</li>
+                    <li><strong>Woodland therapy:</strong> Structured programs in Chorlton Water Park</li>
+                    <li><strong>Wild swimming:</strong> At Hatchmere and other approved sites</li>
+                </ul>
+                
+                <blockquote>
+                    "Our pilot program showed 40% reduction in antidepressant prescriptions among patients who regularly visited Heaton Park." - Manchester GP
+                </blockquote>
+                
+                <h2>Practical Ways to Harness Nature's Benefits</h2>
+                
+                <p>You don't need wilderness expeditions - try these Manchester-accessible practices:</p>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 my-8">
+                    <div class="study-card p-6 rounded-xl">
+                        <h4 class="font-bold text-lg mb-3 text-primary-400">Microdosing Nature</h4>
+                        <ul class="space-y-2">
+                            <li>5-minute "awe walks" noticing small natural details</li>
+                            <li>Lunch breaks in cathedral gardens or tiny parks</li>
+                            <li>Indoor plants and nature sounds at work</li>
+                            <li>Walking meetings along the canal</li>
+                        </ul>
+                    </div>
+                    <div class="study-card p-6 rounded-xl">
+                        <h4 class="font-bold text-lg mb-3 text-primary-400">Deep Nature Immersion</h4>
+                        <ul class="space-y-2">
+                            <li>Weekly 2-hour walks in Fletcher Moss or Worsley Woods</li>
+                            <li>Monthly wild swimming at approved sites</li>
+                            <li>Seasonal foraging courses</li>
+                            <li>Guided forest bathing sessions</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <h2>Urban Nature vs. Wilderness</h2>
+                
+                <p>Research shows even small urban nature exposures provide benefits:</p>
+                
+                <table class="w-full my-6 border border-dark-700">
+                    <thead>
+                        <tr class="bg-dark-800">
+                            <th class="p-3 text-left">Environment</th>
+                            <th class="p-3 text-left">Minimum Effective Dose</th>
+                            <th class="p-3 text-left">Key Benefits</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-t border-dark-700">
+                            <td class="p-3">Urban parks</td>
+                            <td class="p-3">20-30 minutes</td>
+                            <td class="p-3">Stress reduction, mood boost</td>
+                        </tr>
+                        <tr class="border-t border-dark-700 bg-dark-800/50">
+                            <td class="p-3">Woodlands</td>
+                            <td class="p-3">2 hours weekly</td>
+                            <td class="p-3">Improved focus, lower anxiety</td>
+                        </tr>
+                        <tr class="border-t border-dark-700">
+                            <td class="p-3">Wilderness areas</td>
+                            <td class="p-3">Overnight stays</td>
+                            <td class="p-3">Deep restoration, perspective shifts</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <h2>Making Nature Accessible</h2>
+                
+                <p>Barriers to nature access in Manchester include:</p>
+                
+                <ul>
+                    <li><strong>Perceived safety:</strong> Especially for women and minority groups</li>
+                    <li><strong>Transportation:</strong> Reaching green spaces without a car</li>
+                    <li><strong>Knowledge:</strong> Not knowing where to go or what to do</li>
+                    <li><strong>Time pressure:</strong> Feeling too busy for nature time</li>
+                </ul>
+                
+                <div class="study-card p-6 rounded-xl my-6">
+                    <h4 class="font-bold text-lg mb-3 text-primary-400">Solutions We're Implementing</h4>
+                    <ul class="space-y-2">
+                        <li>Women-only nature walks in safe, well-lit parks</li>
+                        <li>Community minibuses to beauty spots</li>
+                        <li>Free maps of accessible green spaces</li>
+                        <li>Lunchtime "nature snack" guides</li>
+                    </ul>
+                </div>
+                
+                <h2>Final Thoughts</h2>
+                
+                <p>The scientific evidence is clear: regular contact with nature significantly improves mental health and cognitive function. Manchester's blend of urban green spaces and accessible wilderness makes it possible to reap these benefits regardless of your schedule or experience level.</p>
+                
+                <p>Start small if needed - even a daily 10-minute pause in a pocket park can yield measurable benefits. As you build the habit, consider deeper immersion through our guided wilderness experiences designed specifically for mental restoration.</p>
+                
+               
+            </div>
+        </article>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark-900 border-t border-dark-800 pt-20 pb-10">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+                <div>
+                   <a href="/" class="flex items-center space-x-2 glow-hover">
+                       <img src="/assets/logo.png" class="h-16 mb-6" alt="logo" />
+                    </a>
+                    <p class="text-gray-400 mb-6">
+                        Reconnecting people with nature through wild camping adventures, foraging experiences, and wilderness survival training in Manchester.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="https://www.facebook.com/Wildmanc.nature" target="_blank" class="w-10 h-10 rounded-full bg-dark-800 hover:bg-dark-700 flex items-center justify-center text-gray-400 hover:text-primary-400 transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.instagram.com/wild.manchester/" target="_blank" class="w-10 h-10 rounded-full bg-dark-800 hover:bg-dark-700 flex items-center justify-center text-gray-400 hover:text-primary-400 transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://x.com/ManchesterWild" target="_blank" class="w-10 h-10 rounded-full bg-dark-800 hover:bg-dark-700 flex items-center justify-center text-gray-400 hover:text-primary-400 transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://www.youtube.com/channel/UCGXyESNY94ItxqJOdyszYgQ" target="_blank" class="w-10 h-10 rounded-full bg-dark-800 hover:bg-dark-700 flex items-center justify-center text-gray-400 hover:text-primary-400 transition-colors">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-6">Quick Links</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/" class="text-gray-400 hover:text-primary-400 transition-colors">Home</a></li>
+                        <li><a href="/about/" class="text-gray-400 hover:text-primary-400 transition-colors">About Us</a></li>
+                        <li><a href="/blog/" class="text-gray-400 hover:text-primary-400 transition-colors">Blog</a></li>
+                        <li><a href="/gallery/" class="text-gray-400 hover:text-primary-400 transition-colors">Gallery</a></li>
+                        <li><a href="/contact/" class="text-gray-400 hover:text-primary-400 transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-6">Experiences</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/camping/" class="text-gray-400 hover:text-primary-400 transition-colors">Beginner Camping</a></li>
+                        <li><a href="/camping/" class="text-gray-400 hover:text-primary-400 transition-colors">Foraging Adventures</a></li>
+                        <li><a href="/camping/" class="text-gray-400 hover:text-primary-400 transition-colors">Survival Training</a></li>
+                        <li><a href="/camping/" class="text-gray-400 hover:text-primary-400 transition-colors">Family Camping</a></li>
+                        <li><a href="/camping/" class="text-gray-400 hover:text-primary-400 transition-colors">Wildlife Photography</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-6">Legal</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/privacy/" class="text-gray-400 hover:text-primary-400 transition-colors">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="text-gray-400 hover:text-primary-400 transition-colors">Terms of Service</a></li>
+                        <li><a href="/cookies/" class="text-gray-400 hover:text-primary-400 transition-colors">Cookies Policy</a></li>
+                        <li><a href="/faq/" class="text-gray-400 hover:text-primary-400 transition-colors">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-dark-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-500 text-sm mb-4 md:mb-0">
+                    &copy; 2025 Wild Manchester Group. All rights reserved.
+                </p>
+              <div class="flex space-x-6">
+                    <a href="/privacy/" class="text-gray-500 hover:text-gray-400 text-sm transition-colors">Privacy
+                                Policy</a>
+                    <a href="/terms/" class="text-gray-500 hover:text-gray-400 text-sm transition-colors">Terms of
+                                Service</a>
+                    <a href="/cookies/" class="text-gray-500 hover:text-gray-400 text-sm transition-colors">Cookies
+                                Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="fixed bottom-8 right-8 w-12 h-12 rounded-full bg-primary-600 hover:bg-primary-700 text-white shadow-lg flex items-center justify-center transition-opacity duration-300 opacity-0 invisible">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Back to Top Button
+        const backToTopButton = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.remove('opacity-0', 'invisible');
+                backToTopButton.classList.add('opacity-100', 'visible');
+            } else {
+                backToTopButton.classList.remove('opacity-100', 'visible');
+                backToTopButton.classList.add('opacity-0', 'invisible');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Animate content on scroll
+        gsap.utils.toArray('.prose h2, .prose h3, .prose p, .prose ul, .prose img, .study-card, table').forEach((element, i) => {
+            gsap.from(element, {
+                scrollTrigger: {
+                    trigger: element,
+                    start: "top 90%",
+                    toggleActions: "play none none none"
+                },
+                y: 30,
+                opacity: 0,
+                duration: 0.8,
+                delay: i * 0.05,
+                ease: "power3.out"
+            });
+        });
+    </script>
+</body>
+</html>

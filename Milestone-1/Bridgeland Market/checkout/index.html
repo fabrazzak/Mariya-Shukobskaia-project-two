@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Secure checkout for your gifts at Bridgeland Market Gifts - Calgary's premier destination for artisanal gifts.">
+    <meta name="keywords" content="Calgary gifts, gift checkout, secure payment, gift delivery Calgary, artisanal cheese, floral arrangements">
+    <meta name="author" content="Bridgeland Market Gifts">
+    <link rel="canonical" href="https://bridgelandmarketgifts.com/checkout/">
+    <title>Checkout | Bridgeland Market Gifts | Calgary</title>
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600&family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
+     <link rel="icon" type="image/png" href="/assets/favicon.png">
+    <style>
+        /* Checkout Page Specific Styles */
+        .checkout-hero {
+            background-color: #f8f5f2;
+            padding: 4rem 0;
+            text-align: center;
+        }
+
+        .checkout-hero h1 {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+        }
+
+        .checkout-hero p {
+            font-size: 1.1rem;
+            color: var(--dark-gray);
+        }
+
+        .checkout-section {
+            padding: 4rem 0;
+        }
+
+        .checkout-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .checkout-form {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .checkout-summary {
+            width: 350px;
+            background-color: #f9f9f9;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-section {
+            margin-bottom: 2.5rem;
+        }
+
+        .form-section h3 {
+            font-family: var(--font-heading);
+            font-size: 1.5rem;
+            margin-bottom: 1.5rem;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .form-row {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-row label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-row input,
+        .form-row select,
+        .form-row textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--light-gray);
+            border-radius: 4px;
+            font-family: var(--font-body);
+            font-size: 1rem;
+            transition: var(--transition);
+        }
+
+        .form-row input:focus,
+        .form-row select:focus,
+        .form-row textarea:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(139, 90, 43, 0.2);
+        }
+
+        .form-row textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .checkbox-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .checkbox-row input {
+            width: auto;
+            margin-right: 10px;
+        }
+
+        .payment-method {
+            display: none;
+        }
+
+        .payment-method.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .payment-options {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 1.5rem;
+        }
+
+        .payment-option {
+            flex: 1;
+            text-align: center;
+        }
+
+        .payment-option input {
+            display: none;
+        }
+
+        .payment-option label {
+            display: block;
+            padding: 15px;
+            border: 1px solid var(--light-gray);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .payment-option input:checked + label {
+            border-color: var(--primary-color);
+            background-color: rgba(139, 90, 43, 0.05);
+        }
+
+        .payment-option i {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            display: block;
+            color: var(--primary-color);
+        }
+
+        .order-summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        .order-summary-item:last-child {
+            border-bottom: none;
+        }
+
+        .order-summary-item img {
+            width: 60px;
+            height: 60px;
+            object-fit: cover;
+            border-radius: 4px;
+            margin-right: 15px;
+        }
+
+        .order-summary-item .item-details {
+            flex: 1;
+        }
+
+        .order-summary-item .item-name {
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        .order-summary-item .item-price {
+            color: var(--primary-color);
+        }
+
+        .order-summary-total {
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid var(--light-gray);
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        .secure-checkout {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-top: 2rem;
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        .secure-checkout i {
+            color: #28a745;
+            font-size: 1.2rem;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .checkout-container {
+                flex-direction: column;
+            }
+
+            .checkout-summary {
+                width: 100%;
+                order: -1;
+            }
+
+            .payment-options {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Cookies Consent Popup -->
+    <div id="cookieConsent" class="cookie-consent">
+        <div class="cookie-content">
+            <p>We use cookies to enhance your experience on our website. By continuing to browse, you agree to our use of cookies.</p>
+            <div class="cookie-buttons">
+                <button id="acceptCookies" class="btn btn-primary">Accept</button>
+                <button id="declineCookies" class="btn btn-secondary">Decline</button>
+                <a href="/cookies/" class="cookie-link">Learn More</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header Section -->
+    <header class="header">
+        <div class="header-top">
+            <div class="container">
+                <div class="header-contact">
+                    <span><i class="fas fa-phone-alt"></i> (403) 555-0123</span>
+                    <span><i class="fas fa-map-marker-alt"></i> 110 1 Ave NE, Calgary, AB</span>
+                </div>
+                <div class="social-links">
+                    <a href="https://www.facebook.com/bridgelandmarket/" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="https://x.com/bridgelandmrkt" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="https://www.instagram.com/bridgelandmarket/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="header-main">
+            <div class="container">
+                <div class="logo">
+                    <a href="/">
+                        <img src="/assets/logo.png" alt="Bridgeland Market Gifts" width="220" height="80">
+                    </a>
+                </div>
+                <nav class="main-nav">
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/shop/">Shop</a></li>
+                        <li><a href="/about/">About</a></li>
+                        <li><a href="/blog/">Blog</a></li>
+                        <li><a href="/contact/">Contact</a></li>
+                        <li class="cart-icon"><a href="/cart/"><i class="fas fa-shopping-basket"></i> <span id="cartCount">0</span></a></li>
+                    </ul>
+                </nav>
+                <button class="mobile-menu-toggle" aria-label="Toggle navigation">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Checkout Hero Section -->
+    <section class="checkout-hero">
+        <div class="container">
+            <h1>Secure Checkout</h1>
+            <p>Complete your purchase with confidence</p>
+        </div>
+    </section>
+
+    <!-- Checkout Section -->
+    <section class="checkout-section">
+        <div class="container">
+            <div class="checkout-container">
+                <form class="checkout-form" id="checkoutForm">
+                    <div class="form-section">
+                        <h3>Contact Information</h3>
+                        <div class="form-row">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" required>
+                        </div>
+                        <div class="checkbox-row">
+                            <input type="checkbox" id="subscribe" name="subscribe" checked>
+                            <label for="subscribe">Subscribe to our newsletter for updates and special offers</label>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Shipping Address</h3>
+                        <div class="form-row">
+                            <label for="shipping-name">Full Name</label>
+                            <input type="text" id="shipping-name" name="shipping-name" required>
+                        </div>
+                        <div class="form-row">
+                            <label for="shipping-address">Address</label>
+                            <input type="text" id="shipping-address" name="shipping-address" required>
+                        </div>
+                        <div class="form-row">
+                            <label for="shipping-address2">Apartment, suite, etc. (optional)</label>
+                            <input type="text" id="shipping-address2" name="shipping-address2">
+                        </div>
+                        <div class="form-grid">
+                            <div class="form-row">
+                                <label for="shipping-city">City</label>
+                                <input type="text" id="shipping-city" name="shipping-city" required>
+                            </div>
+                            <div class="form-row">
+                                <label for="shipping-province">Province</label>
+                                <select id="shipping-province" name="shipping-province" required>
+                                    <option value="">Select Province</option>
+                                    <option value="AB">Alberta</option>
+                                    <option value="BC">British Columbia</option>
+                                    <option value="MB">Manitoba</option>
+                                    <option value="NB">New Brunswick</option>
+                                    <option value="NL">Newfoundland and Labrador</option>
+                                    <option value="NT">Northwest Territories</option>
+                                    <option value="NS">Nova Scotia</option>
+                                    <option value="NU">Nunavut</option>
+                                    <option value="ON">Ontario</option>
+                                    <option value="PE">Prince Edward Island</option>
+                                    <option value="QC">Quebec</option>
+                                    <option value="SK">Saskatchewan</option>
+                                    <option value="YT">Yukon</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-grid">
+                            <div class="form-row">
+                                <label for="shipping-postal">Postal Code</label>
+                                <input type="text" id="shipping-postal" name="shipping-postal" required>
+                            </div>
+                            <div class="form-row">
+                                <label for="shipping-phone">Phone</label>
+                                <input type="tel" id="shipping-phone" name="shipping-phone" required>
+                            </div>
+                        </div>
+                        <div class="checkbox-row">
+                            <input type="checkbox" id="billing-same" name="billing-same" checked>
+                            <label for="billing-same">Billing address is the same as shipping address</label>
+                        </div>
+                    </div>
+
+                    <div class="form-section" id="billing-section" style="display: none;">
+                        <h3>Billing Address</h3>
+                        <div class="form-row">
+                            <label for="billing-name">Full Name</label>
+                            <input type="text" id="billing-name" name="billing-name">
+                        </div>
+                        <div class="form-row">
+                            <label for="billing-address">Address</label>
+                            <input type="text" id="billing-address" name="billing-address">
+                        </div>
+                        <div class="form-row">
+                            <label for="billing-address2">Apartment, suite, etc. (optional)</label>
+                            <input type="text" id="billing-address2" name="billing-address2">
+                        </div>
+                        <div class="form-grid">
+                            <div class="form-row">
+                                <label for="billing-city">City</label>
+                                <input type="text" id="billing-city" name="billing-city">
+                            </div>
+                            <div class="form-row">
+                                <label for="billing-province">Province</label>
+                                <select id="billing-province" name="billing-province">
+                                    <option value="">Select Province</option>
+                                    <option value="AB">Alberta</option>
+                                    <option value="BC">British Columbia</option>
+                                    <option value="MB">Manitoba</option>
+                                    <option value="NB">New Brunswick</option>
+                                    <option value="NL">Newfoundland and Labrador</option>
+                                    <option value="NT">Northwest Territories</option>
+                                    <option value="NS">Nova Scotia</option>
+                                    <option value="NU">Nunavut</option>
+                                    <option value="ON">Ontario</option>
+                                    <option value="PE">Prince Edward Island</option>
+                                    <option value="QC">Quebec</option>
+                                    <option value="SK">Saskatchewan</option>
+                                    <option value="YT">Yukon</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-grid">
+                            <div class="form-row">
+                                <label for="billing-postal">Postal Code</label>
+                                <input type="text" id="billing-postal" name="billing-postal">
+                            </div>
+                            <div class="form-row">
+                                <label for="billing-phone">Phone</label>
+                                <input type="tel" id="billing-phone" name="billing-phone">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Payment Method</h3>
+                        <div class="payment-options">
+                            <div class="payment-option">
+                                <input type="radio" id="payment-credit" name="payment-method" value="credit" checked>
+                                <label for="payment-credit">
+                                    <i class="far fa-credit-card"></i>
+                                    Credit Card
+                                </label>
+                            </div>
+                            <div class="payment-option">
+                                <input type="radio" id="payment-paypal" name="payment-method" value="paypal">
+                                <label for="payment-paypal">
+                                    <i class="fab fa-paypal"></i>
+                                    PayPal
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="payment-method active" id="credit-card-method">
+                            <div class="form-row">
+                                <label for="card-number">Card Number</label>
+                                <input type="text" id="card-number" name="card-number" placeholder="1234 5678 9012 3456">
+                            </div>
+                            <div class="form-row">
+                                <label for="card-name">Name on Card</label>
+                                <input type="text" id="card-name" name="card-name">
+                            </div>
+                            <div class="form-grid">
+                                <div class="form-row">
+                                    <label for="card-expiry">Expiration Date</label>
+                                    <input type="text" id="card-expiry" name="card-expiry" placeholder="MM/YY">
+                                </div>
+                                <div class="form-row">
+                                    <label for="card-cvc">Security Code</label>
+                                    <input type="text" id="card-cvc" name="card-cvc" placeholder="CVC">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="payment-method" id="paypal-method">
+                            <div class="form-row">
+                                <p>You'll be redirected to PayPal to complete your purchase securely.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h3>Gift Message (Optional)</h3>
+                        <div class="form-row">
+                            <label for="gift-message">Add a personal message to include with your gift</label>
+                            <textarea id="gift-message" name="gift-message"></textarea>
+                        </div>
+                        <div class="checkbox-row">
+                            <input type="checkbox" id="gift-wrap" name="gift-wrap">
+                            <label for="gift-wrap">Add premium gift wrapping (+$7.99)</label>
+                        </div>
+                    </div>
+                </form>
+
+                <div class="checkout-summary">
+                    <h3>Order Summary</h3>
+                    <div id="orderSummaryItems">
+                        <!-- Order items will be loaded dynamically here -->
+                    </div>
+                    <div class="order-summary-item">
+                        <span>Subtotal</span>
+                        <span id="orderSubtotal">$0.00</span>
+                    </div>
+                    <div class="order-summary-item">
+                        <span>Shipping</span>
+                        <span>Free</span>
+                    </div>
+                    <div class="order-summary-item">
+                        <span>Tax (5%)</span>
+                        <span id="orderTax">$0.00</span>
+                    </div>
+                    <div class="order-summary-item order-summary-total">
+                        <span>Total</span>
+                        <span id="orderTotal">$0.00</span>
+                    </div>
+                    <button type="submit" form="checkoutForm" class="btn btn-primary btn-block">
+                        Complete Order <i class="fas fa-lock"></i>
+                    </button>
+                    <div class="secure-checkout">
+                        <i class="fas fa-lock"></i>
+                        <span>Secure SSL encrypted checkout</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter-content">
+                <div class="newsletter-text">
+                    <h3>Join Our Community</h3>
+                    <p>Subscribe to our newsletter for exclusive offers, seasonal updates, and gift ideas straight to your inbox.</p>
+                </div>
+                <form class="newsletter-form" id="newsletterForm">
+                    <input type="email" placeholder="Your email address" required>
+                    <button type="submit" class="btn btn-primary bg-black">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col footer-about">
+                    <div class="footer-logo">
+                        <img src="assets/logo-white.png" alt="Bridgeland Market Gifts" width="180" height="65">
+                    </div>
+                    <p>Bridgeland Market Gifts is Calgary's premier destination for handcrafted gift baskets, artisanal cheeses, and beautiful floral arrangements.</p>
+                    <div class="footer-social">
+                        <a href="https://www.facebook.com/bridgelandmarket/" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://x.com/bridgelandmrkt" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                        <a href="https://www.instagram.com/bridgelandmarket/" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="/">Home</a></li>
+                        <li><a href="/shop/">Shop</a></li>
+                        <li><a href="/about/">About Us</a></li>
+                        <li><a href="/blog/">Blog</a></li>
+                        <li><a href="/contact/">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col footer-links">
+                    <h4>Customer Service</h4>
+                    <ul>
+                        <li><a href="/contact/">Contact Us</a></li>
+                     
+                        <li><a href="/privacy/">Privacy Policy</a></li>
+                        <li><a href="/terms/">Terms of Service</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col footer-contact">
+                    <h4>Contact Us</h4>
+                    <address>
+                        <p><i class="fas fa-map-marker-alt"></i> 110 1 Ave NE, Calgary, AB T2E 0A6</p>
+                        <p><i class="fas fa-phone-alt"></i> (403) 555-0123</p>
+                        <p><i class="fas fa-envelope"></i> info@bridgelandmarketgifts.com</p>
+                    </address>
+                    <div class="payment-methods">
+                        <i class="fab fa-cc-visa"></i>
+                        <i class="fab fa-cc-mastercard"></i>
+                        <i class="fab fa-cc-amex"></i>
+                        <i class="fab fa-cc-paypal"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <div class="copyright">
+                    <p>&copy; 2025 Bridgeland Market Gifts. All rights reserved.</p>
+                </div>
+                <div class="footer-legal">
+                    <a href="/privacy/">Privacy Policy</a>
+                    <a href="/terms/">Terms of Service</a>
+                    <a href="/cookies/">Cookies Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="js/main.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Load cart items and calculate totals
+        loadOrderSummary();
+        
+        // Update cart count display
+        updateCartCount();
+        
+        // Toggle billing address section
+        document.getElementById('billing-same').addEventListener('change', function() {
+            document.getElementById('billing-section').style.display = this.checked ? 'none' : 'block';
+        });
+        
+        // Toggle payment methods
+        document.querySelectorAll('input[name="payment-method"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                document.querySelectorAll('.payment-method').forEach(method => {
+                    method.classList.remove('active');
+                });
+                document.getElementById(`${this.value}-method`).classList.add('active');
+            });
+        });
+        
+        // Form submission
+        document.getElementById('checkoutForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            processOrder();
+        });
+        
+        // Check cookies consent
+        if (!localStorage.getItem('cookiesAccepted')) {
+            document.getElementById('cookieConsent').style.display = 'block';
+        }
+    });
+    
+    // Cookies consent
+    document.getElementById('acceptCookies')?.addEventListener('click', function() {
+        localStorage.setItem('cookiesAccepted', 'true');
+        document.getElementById('cookieConsent').style.display = 'none';
+    });
+    
+    document.getElementById('declineCookies')?.addEventListener('click', function() {
+        document.getElementById('cookieConsent').style.display = 'none';
+    });
+    
+    // Function to update cart count display
+    function updateCartCount() {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+        document.getElementById('cartCount').textContent = totalItems;
+    }
+    
+    // Function to load order summary
+    function loadOrderSummary() {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const orderSummary = document.getElementById('orderSummaryItems');
+        
+        if (cart.length === 0) {
+            window.location.href = '/cart/';
+            return;
+        }
+        
+        // Generate order items HTML
+        let itemsHTML = '';
+        cart.forEach(item => {
+            itemsHTML += `
+                <div class="order-summary-item">
+                    <img src="${item.image}" alt="${item.name}">
+                    <div class="item-details">
+                        <div class="item-name">${item.name}</div>
+                        <div class="item-price">$${(item.price * item.quantity).toFixed(2)}</div>
+                        <div class="item-quantity">Qty: ${item.quantity}</div>
+                    </div>
+                </div>
+            `;
+        });
+        
+        orderSummary.innerHTML = itemsHTML;
+        
+        // Calculate totals
+        const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+        const tax = subtotal * 0.05; // 5% tax
+        const total = subtotal + tax;
+        
+        // Update totals display
+        document.getElementById('orderSubtotal').textContent = `$${subtotal.toFixed(2)}`;
+        document.getElementById('orderTax').textContent = `$${tax.toFixed(2)}`;
+        document.getElementById('orderTotal').textContent = `$${total.toFixed(2)}`;
+    }
+    
+    // Function to process order
+    function processOrder() {
+        const cart = JSON.parse(localStorage.getItem('cart')) || [];
+        if (cart.length === 0) {
+            alert('Your cart is empty. Please add items before checking out.');
+            window.location.href = '/shop/';
+            return;
+        }
+        
+        // In a real implementation, you would send the order to your server here
+        // This is just a simulation for the demo
+        
+        // Create order object
+        const order = {
+            id: 'ORD-' + Date.now().toString().slice(-6),
+            date: new Date().toISOString(),
+            items: cart,
+            customer: {
+                email: document.getElementById('email').value,
+                shipping: {
+                    name: document.getElementById('shipping-name').value,
+                    address: document.getElementById('shipping-address').value,
+                    address2: document.getElementById('shipping-address2').value,
+                    city: document.getElementById('shipping-city').value,
+                    province: document.getElementById('shipping-province').value,
+                    postal: document.getElementById('shipping-postal').value,
+                    phone: document.getElementById('shipping-phone').value
+                },
+                billing: document.getElementById('billing-same').checked ? null : {
+                    name: document.getElementById('billing-name').value,
+                    address: document.getElementById('billing-address').value,
+                    address2: document.getElementById('billing-address2').value,
+                    city: document.getElementById('billing-city').value,
+                    province: document.getElementById('billing-province').value,
+                    postal: document.getElementById('billing-postal').value,
+                    phone: document.getElementById('billing-phone').value
+                }
+            },
+            payment: {
+                method: document.querySelector('input[name="payment-method"]:checked').value,
+                details: document.querySelector('input[name="payment-method"]:checked').value === 'credit' ? {
+                    card: document.getElementById('card-number').value.replace(/\s/g, ''),
+                    name: document.getElementById('card-name').value,
+                    expiry: document.getElementById('card-expiry').value,
+                    cvc: document.getElementById('card-cvc').value
+                } : null
+            },
+            gift: {
+                message: document.getElementById('gift-message').value,
+                wrap: document.getElementById('gift-wrap').checked
+            },
+            subtotal: parseFloat(document.getElementById('orderSubtotal').textContent.replace('$', '')),
+            tax: parseFloat(document.getElementById('orderTax').textContent.replace('$', '')),
+            total: parseFloat(document.getElementById('orderTotal').textContent.replace('$', ''))
+        };
+        
+        // For demo purposes, we'll store the order in localStorage
+        localStorage.setItem('currentOrder', JSON.stringify(order));
+        
+        // Clear the cart
+        localStorage.setItem('cart', JSON.stringify([]));
+        updateCartCount();
+        
+        // Redirect to confirmation page
+        window.location.href = '/order-confirmation/';
+    }
+    </script>
+</body>
+</html>

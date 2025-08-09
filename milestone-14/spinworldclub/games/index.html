@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium Casino Games | SpinWorldClub</title>
+    <meta name="description"
+        content="Explore our collection of premium social casino games. Play for fun with no real money involved. Enjoy slots, table games and more from top providers.">
+    <meta name="keywords"
+        content="social casino games, free slots, play for fun, virtual casino, online slots, no risk gaming">
+    <link rel="canonical" href="https://spinworldclub.org/games/">
+   <link rel="icon" href="/images/favicon.png" type="image/x-icon">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FF6B35',
+                        secondary: '#004E89',
+                        accent: '#00A6FB',
+                        dark: '#1A1A2E',
+                        light: '#F7F7FF',
+                    },
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                        display: ['Montserrat', 'sans-serif'],
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollTrigger.min.js"></script>
+
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- particles.js -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&family=Poppins:wght@400;500;600;700&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #0F0F1B;
+            color: #F7F7FF;
+            overflow-x: hidden;
+        }
+
+        .hero-gradient {
+            background: radial-gradient(ellipse at top, #1A1A2E, #0F0F1B);
+        }
+
+        .game-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .hamburger-menu {
+            width: 30px;
+            height: 20px;
+            position: relative;
+            transform: rotate(0deg);
+            transition: .5s ease-in-out;
+            cursor: pointer;
+        }
+
+        .hamburger-menu span {
+            display: block;
+            position: absolute;
+            height: 3px;
+            width: 100%;
+            background: #FF6B35;
+            border-radius: 3px;
+            opacity: 1;
+            left: 0;
+            transform: rotate(0deg);
+            transition: .25s ease-in-out;
+        }
+
+        .hamburger-menu span:nth-child(1) {
+            top: 0px;
+        }
+
+        .hamburger-menu span:nth-child(2),
+        .hamburger-menu span:nth-child(3) {
+            top: 10px;
+        }
+
+        .hamburger-menu span:nth-child(4) {
+            top: 20px;
+        }
+
+        .hamburger-menu.open span:nth-child(1) {
+            top: 10px;
+            width: 0%;
+            left: 50%;
+        }
+
+        .hamburger-menu.open span:nth-child(2) {
+            transform: rotate(45deg);
+        }
+
+        .hamburger-menu.open span:nth-child(3) {
+            transform: rotate(-45deg);
+        }
+
+        .hamburger-menu.open span:nth-child(4) {
+            top: 10px;
+            width: 0%;
+            left: 50%;
+        }
+
+        .game-iframe-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 9999;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .game-iframe {
+            width: 90%;
+            height: 80%;
+            border: none;
+            border-radius: 10px;
+        }
+
+        .close-game {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: white;
+            font-size: 30px;
+            cursor: pointer;
+            z-index: 10000;
+        }
+
+        .login-required {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 9999;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .testimonial-card {
+            background: linear-gradient(145deg, #1A1A2E, #16213E);
+            box-shadow: 20px 20px 60px #0d0d16, -20px -20px 60px #272746;
+        }
+
+        .age-verification {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0F0F1B, #1A1A2E);
+            z-index: 99999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(90deg, #FF6B35, #FF8C42);
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(255, 107, 53, 0.3);
+        }
+
+        .btn-secondary {
+            background: linear-gradient(90deg, #004E89, #0066B3);
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 78, 137, 0.3);
+        }
+
+        .particles-js-canvas-el {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        .content-overlay {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* User dropdown styles */
+        .user-dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .user-dropdown-btn {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .user-dropdown-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: #1A1A2E;
+            min-width: 200px;
+            box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+            z-index: 1;
+            border-radius: 8px;
+            border: 1px solid #2d2d42;
+            overflow: hidden;
+        }
+
+        .user-dropdown-content a {
+            color: #F7F7FF;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s;
+        }
+
+        .user-dropdown-content a:hover {
+            background-color: #2d2d42;
+        }
+
+        .user-dropdown:hover .user-dropdown-content {
+            display: block;
+        }
+
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: #FF6B35;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 8px;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* Game categories */
+        .category-btn {
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category-btn::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 3px;
+            background: #FF6B35;
+            transition: width 0.3s ease;
+        }
+
+        .category-btn.active::after {
+            width: 100%;
+        }
+
+        .category-btn:hover::after {
+            width: 100%;
+        }
+
+        /* Game search */
+        .game-search {
+            position: relative;
+        }
+
+        .game-search input {
+            padding-right: 40px;
+        }
+
+        .game-search i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #FF6B35;
+        }
+
+        @media (max-width: 768px) {
+            .game-iframe {
+                width: 100%;
+                height: 70%;
+            }
+
+            .user-dropdown-content {
+                position: static;
+                background-color: transparent;
+                box-shadow: none;
+                border: none;
+            }
+        }
+    </style>
+</head>
+
+<body class="relative">
+    <!-- Age Verification Modal -->
+    <div id="ageVerification" class="age-verification" style="display: none;">
+        <div class="max-w-2xl mx-auto p-8 rounded-xl bg-dark bg-opacity-90">
+            <h1 class="text-4xl md:text-5xl font-bold mb-6 text-primary font-display">Age Verification Required</h1>
+            <p class="text-xl mb-8">You must be 18 years or older to access this social casino platform. Please confirm
+                your age to continue and enjoy our premium gaming experience.</p>
+
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <button id="confirmAge" class="btn-primary text-white font-bold py-3 px-8 rounded-full text-lg">
+                    I am 18 or older
+                </button>
+                <button id="denyAge" class="btn-secondary text-white font-bold py-3 px-8 rounded-full text-lg">
+                    I am under 18
+                </button>
+            </div>
+
+            <p class="mt-8 text-sm opacity-80">Important: This platform is for entertainment only. No real money
+                gambling is involved.</p>
+        </div>
+    </div>
+
+    <!-- Game Iframe Popup -->
+    <div class="game-iframe-container" id="gamePopup">
+        <span class="close-game" id="closeGame"><i class="fas fa-times"></i></span>
+        <iframe class="game-iframe" id="gameIframe" allowfullscreen></iframe>
+    </div>
+
+    <!-- Login Required Popup -->
+    <div class="login-required" id="loginRequired">
+        <div class="bg-gray-900 rounded-xl p-8 max-w-md mx-4">
+            <h2 class="text-2xl font-bold mb-4 text-white">Login Required</h2>
+            <p class="text-gray-300 mb-6">Please register or login to access this premium game. Join now and get 5,000
+                free points!</p>
+            <div class="flex flex-col sm:flex-row gap-4">
+                <a href="/register/" class="btn-primary text-white font-bold py-3 px-6 rounded-full text-center">
+                    Register Now
+                </a>
+                <a href="/login/" class="btn-secondary text-white font-bold py-3 px-6 rounded-full text-center">
+                    Login
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="fixed w-full z-50 bg-dark bg-opacity-90 backdrop-blur-md">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <div class="flex items-center">
+                <a href="/" class="flex items-center z-50">
+                    <img src="/images/logo.png" alt="SpinWorldClub Logo" class="h-12 mr-2">
+                </a>
+            </div>
+
+            <div class="hidden lg:flex items-center space-x-8">
+                <nav>
+                    <ul class="flex space-x-8">
+                        <li><a href="/" class="text-white hover:text-primary transition">Home</a></li>
+                        <li><a href="/games/" class="text-primary font-bold transition">Games</a></li>
+                        <li><a href="/responsible-gaming/" class="text-white hover:text-primary transition">Responsible
+                                Gaming</a></li>
+                        <li><a href="/about/" class="text-white hover:text-primary transition">About</a></li>
+                        <li><a href="/contact/" class="text-white hover:text-primary transition">Contact</a></li>
+
+                    </ul>
+                </nav>
+
+                <div class="flex items-center space-x-4">
+                    <div id="userInfo" class="hidden">
+                        <div class="user-dropdown">
+                            <div class="user-dropdown-btn">
+                                <div class="user-avatar" id="userAvatar">U</div>
+                                <span class="text-white"><span id="usernameDisplay">User</span> • <span
+                                        id="coinsDisplay">5,000</span> Coins <i
+                                        class="fas fa-chevron-down ml-1"></i></span>
+                            </div>
+                            <div class="user-dropdown-content">
+                                <a href="#" id="logoutBtn"><i class="fas fa-sign-out-alt mr-2"></i> Logout</a>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="/login/" class="text-white hover:text-primary transition" id="loginLink">Login</a>
+                    <a href="/register/" class="btn-primary text-white font-bold py-2 px-6 rounded-full"
+                        id="registerLink">
+                        Register
+                    </a>
+                </div>
+            </div>
+
+            <div class="lg:hidden z-50">
+                <div class="hamburger-menu" id="mobileMenuBtn">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div class="lg:hidden fixed inset-0   z-40 pt-20 px-4 transform translate-x-full transition-transform duration-300"
+            id="mobileMenu">
+            <nav class="bg-black  bg-black  rounded-lg p-6">
+                <ul class="space-y-6">
+                    <li><a href="/" class="block text-2xl text-white hover:text-primary transition py-2">Home</a></li>
+                    <li><a href="/games/" class="block text-2xl text-primary font-bold transition py-2">Games</a></li>
+
+                    <li><a href="/responsible-gaming/"
+                            class="block text-2xl text-white hover:text-primary transition py-2">Responsible Gaming</a>
+                    </li>
+                    <li><a href="/about/" class="block text-2xl text-white hover:text-primary transition py-2">About</a></li>
+                    <li><a href="/contact/"
+                            class="block text-2xl text-white hover:text-primary transition py-2">Contact</a></li>
+                </ul>
+            </nav>
+
+            <div class="space-y-4 bg-black  rounded-b-lg p-6">
+                <div id="mobileUserInfo" class="hidden text-center">
+                    <p class="text-white text-xl">Welcome, <span id="mobileUsernameDisplay">User</span></p>
+                    <p class="text-primary text-xl"><span id="mobileCoinsDisplay">5,000</span> Coins</p>
+                    <div class="mt-4 flex flex-col space-y-3">
+                        <a href="#" id="mobileLogoutBtn"
+                            class="btn-primary text-white font-bold py-3 px-6 rounded-full text-center text-lg">
+                            Logout
+                        </a>
+                    </div>
+                </div>
+              <a href="/login/" class="block text-xl text-center text-white hover:text-primary transition py-3 border-primary border rounded-full" id="mobileLoginLink">Login</a>
+                <a href="/register/"
+                    class="block btn-primary text-white font-bold py-3 px-6 rounded-full text-center text-xl"
+                    id="mobileRegisterLink">
+                    Register
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-gradient pt-32 pb-20 relative overflow-hidden">
+        <div id="particles-js" class="absolute inset-0"></div>
+
+        <div class="container mx-auto px-4 relative content-overlay">
+            <div class="text-center">
+                <h1 class="text-4xl md:text-6xl font-bold mb-6 text-white font-display leading-tight">
+                    Premium Casino <span class="text-primary">Games</span>
+                </h1>
+                <p class="text-xl mb-8 text-gray-300 max-w-3xl mx-auto">
+                    Explore our exciting collection of social casino games. Play for fun with no real money involved -
+                    just pure entertainment!
+                </p>
+
+                <!-- Game Search -->
+                <div class="max-w-2xl mx-auto game-search mb-8 hidden">
+                    <input type="text" placeholder="Search games..."
+                        class="w-full bg-gray-800 bg-opacity-50 border border-gray-700 rounded-full py-3 px-6 text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                    <i class="fas fa-search"></i>
+                </div>
+
+                <!-- Game Categories -->
+                <div class="flex flex-wrap justify-center gap-3 mb-12 hidden">
+                    <button
+                        class="category-btn active text-white font-medium py-2 px-6 rounded-full bg-gray-800 bg-opacity-50 hover:bg-opacity-70">
+                        All Games
+                    </button>
+                    <button
+                        class="category-btn text-white font-medium py-2 px-6 rounded-full bg-gray-800 bg-opacity-50 hover:bg-opacity-70">
+                        Slots
+                    </button>
+                    <button
+                        class="category-btn text-white font-medium py-2 px-6 rounded-full bg-gray-800 bg-opacity-50 hover:bg-opacity-70">
+                        Table Games
+                    </button>
+                    <button
+                        class="category-btn text-white font-medium py-2 px-6 rounded-full bg-gray-800 bg-opacity-50 hover:bg-opacity-70">
+                        Live Casino
+                    </button>
+                    <button
+                        class="category-btn text-white font-medium py-2 px-6 rounded-full bg-gray-800 bg-opacity-50 hover:bg-opacity-70">
+                        Popular
+                    </button>
+                    <button
+                        class="category-btn text-white font-medium py-2 px-6 rounded-full bg-gray-800 bg-opacity-50 hover:bg-opacity-70">
+                        New Releases
+                    </button>
+                </div>
+
+                <div id="registerCta" class="flex flex-col sm:flex-row gap-4 justify-center">
+                    <a href="/register/"
+                        class="btn-primary text-white font-bold py-4 px-8 rounded-full text-lg text-center">
+                        Register & Get 5,000 Points
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- All Games Section -->
+    <section class="py-16 bg-dark">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-white font-display">All Games</h2>
+                <div class="mt-4 md:mt-0">
+                    <div class="flex items-center hidden" >
+                        <span class="text-gray-400 mr-2">Sort by:</span>
+                        <select
+                            class="bg-gray-800 border border-gray-700 text-white rounded-full py-2 px-4 focus:outline-none focus:ring-2 focus:ring-primary">
+                            <option>Most Popular</option>
+                            <option>Newest First</option>
+                            <option>A-Z</option>
+                            <option>Provider</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                <!-- Game 1 -->
+                <div
+                    class="game-card bg-gray-900 rounded-xl overflow-hidden border border-gray-800 transition duration-300 hover:border-primary">
+                    <div class="relative overflow-hidden h-48">
+                        <img src="/images/Featured-Games/game1.avif" alt="Xmas Drop" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
+                        <div class="absolute bottom-0 left-0 p-4 w-full">
+                            <h3 class="text-xl font-bold text-white">Xmas Drop</h3>
+                            <p class="text-gray-300 text-sm">Hacksaw Gaming</p>
+                        </div>
+                        <div class="absolute top-2 right-2 bg-primary text-white text-xs font-bold px-2 py-1 rounded">
+                            FREE PLAY
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <button class="play-now-btn w-full btn-primary text-white font-bold py-2 px-4 rounded-full"
+                            data-game="Xmas Drop">
+                            Play Now
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Game 2 -->
+                <div
+                    class="game-card bg-gray-900 rounded-xl overflow-hidden border border-gray-800 transition duration-300 hover:border-primary">
+                    <div class="relative overflow-hidden h-48">
+                        <img src="/images/Featured-Games/game2.avif" alt="Ze Zeus" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
+                        <div class="absolute bottom-0 left-0 p-4 w-full">
+                            <h3 class="text-xl font-bold text-white">Ze Zeus</h3>
+                            <p class="text-gray-300 text-sm">Hacksaw Gaming</p>
+                        </div>
+                        <div class="absolute top-2 right-2 bg-primary text-white text-xs font-bold px-2 py-1 rounded">
+                            FREE PLAY
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <button class="play-now-btn w-full btn-primary text-white font-bold py-2 px-4 rounded-full"
+                            data-game="Ze Zeus">
+                            Play Now
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Game 3 -->
+                <div
+                    class="game-card bg-gray-900 rounded-xl overflow-hidden border border-gray-800 transition duration-300 hover:border-primary">
+                    <div class="relative overflow-hidden h-48">
+                        <img src="/images/Featured-Games/game3.avif" alt="Magic Piggy" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
+                        <div class="absolute bottom-0 left-0 p-4 w-full">
+                            <h3 class="text-xl font-bold text-white">Magic Piggy</h3>
+                            <p class="text-gray-300 text-sm">Pragmatic Play</p>
+                        </div>
+                        <div class="absolute top-2 right-2 bg-secondary text-white text-xs font-bold px-2 py-1 rounded">
+                            PREMIUM
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <button class="play-now-btn w-full btn-primary text-white font-bold py-2 px-4 rounded-full"
+                            data-game="Magic Piggy" data-requires-login="true">
+                            Play Now
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Game 4 -->
+                <div
+                    class="game-card bg-gray-900 rounded-xl overflow-hidden border border-gray-800 transition duration-300 hover:border-primary">
+                    <div class="relative overflow-hidden h-48">
+                        <img src="/images/Featured-Games/game4.avif" alt="Itero" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
+                        <div class="absolute bottom-0 left-0 p-4 w-full">
+                            <h3 class="text-xl font-bold text-white">Itero</h3>
+                            <p class="text-gray-300 text-sm">Pragmatic Play</p>
+                        </div>
+                        <div class="absolute top-2 right-2 bg-secondary text-white text-xs font-bold px-2 py-1 rounded">
+                            PREMIUM
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <button class="play-now-btn w-full btn-primary text-white font-bold py-2 px-4 rounded-full"
+                            data-game="Itero" data-requires-login="true">
+                            Play Now
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Game 5 -->
+                <div
+                    class="game-card bg-gray-900 rounded-xl overflow-hidden border border-gray-800 transition duration-300 hover:border-primary">
+                    <div class="relative overflow-hidden h-48">
+                        <img src="/images/Featured-Games/game5.avif" alt="2WildDi" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
+                        <div class="absolute bottom-0 left-0 p-4 w-full">
+                            <h3 class="text-xl font-bold text-white">2WildDi</h3>
+                            <p class="text-gray-300 text-sm">Pragmatic Play</p>
+                        </div>
+                        <div class="absolute top-2 right-2 bg-secondary text-white text-xs font-bold px-2 py-1 rounded">
+                            PREMIUM
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <button class="play-now-btn w-full btn-primary text-white font-bold py-2 px-4 rounded-full"
+                            data-game="2WildDi" data-requires-login="true">
+                            Play Now
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Game 6 -->
+                <div
+                    class="game-card bg-gray-900 rounded-xl overflow-hidden border border-gray-800 transition duration-300 hover:border-primary">
+                    <div class="relative overflow-hidden h-48">
+                        <img src="/images/Featured-Games/game6.avif" alt="Gladiator Legends" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
+                        <div class="absolute bottom-0 left-0 p-4 w-full">
+                            <h3 class="text-xl font-bold text-white">Gladiator Legends</h3>
+                            <p class="text-gray-300 text-sm">Pragmatic Play</p>
+                        </div>
+                        <div class="absolute top-2 right-2 bg-secondary text-white text-xs font-bold px-2 py-1 rounded">
+                            PREMIUM
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <button class="play-now-btn w-full btn-primary text-white font-bold py-2 px-4 rounded-full"
+                            data-game="Gladiator Legends" data-requires-login="true">
+                            Play Now
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Game 7 -->
+                <div
+                    class="game-card bg-gray-900 rounded-xl overflow-hidden border border-gray-800 transition duration-300 hover:border-primary">
+                    <div class="relative overflow-hidden h-48">
+                        <img src="/images/Featured-Games/game7.avif" alt="Dropem" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
+                        <div class="absolute bottom-0 left-0 p-4 w-full">
+                            <h3 class="text-xl font-bold text-white">Dropem</h3>
+                            <p class="text-gray-300 text-sm">Pragmatic Play</p>
+                        </div>
+                        <div class="absolute top-2 right-2 bg-secondary text-white text-xs font-bold px-2 py-1 rounded">
+                            PREMIUM
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <button class="play-now-btn w-full btn-primary text-white font-bold py-2 px-4 rounded-full"
+                            data-game="Dropem" data-requires-login="true">
+                            Play Now
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Game 8 -->
+                <div
+                    class="game-card bg-gray-900 rounded-xl overflow-hidden border border-gray-800 transition duration-300 hover:border-primary">
+                    <div class="relative overflow-hidden h-48">
+                        <img src="/images/Featured-Games/game8.avif" alt="Cursed Seas" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
+                        <div class="absolute bottom-0 left-0 p-4 w-full">
+                            <h3 class="text-xl font-bold text-white">Cursed Seas</h3>
+                            <p class="text-gray-300 text-sm">Pragmatic Play</p>
+                        </div>
+                        <div class="absolute top-2 right-2 bg-secondary text-white text-xs font-bold px-2 py-1 rounded">
+                            PREMIUM
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <button class="play-now-btn w-full btn-primary text-white font-bold py-2 px-4 rounded-full"
+                            data-game="Cursed Seas" data-requires-login="true">
+                            Play Now
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Game 9 -->
+                <div
+                    class="game-card bg-gray-900 rounded-xl overflow-hidden border border-gray-800 transition duration-300 hover:border-primary">
+                    <div class="relative overflow-hidden h-48">
+                        <img src="/images/Featured-Games/game9.png" alt="Wanted Boosted" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
+                        <div class="absolute bottom-0 left-0 p-4 w-full">
+                            <h3 class="text-xl font-bold text-white">Wanted Boosted</h3>
+                            <p class="text-gray-300 text-sm">Nolimit City</p>
+                        </div>
+                        <div class="absolute top-2 right-2 bg-secondary text-white text-xs font-bold px-2 py-1 rounded">
+                            PREMIUM
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <button class="play-now-btn w-full btn-primary text-white font-bold py-2 px-4 rounded-full"
+                            data-game="Wanted Boosted" data-requires-login="true">
+                            Play Now
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Game 10 -->
+                <div
+                    class="game-card bg-gray-900 rounded-xl overflow-hidden border border-gray-800 transition duration-300 hover:border-primary">
+                    <div class="relative overflow-hidden h-48">
+                        <img src="/images/Featured-Games/game10.png" alt="The Bowery Boys" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
+                        <div class="absolute bottom-0 left-0 p-4 w-full">
+                            <h3 class="text-xl font-bold text-white">The Bowery Boys</h3>
+                            <p class="text-gray-300 text-sm">Nolimit City</p>
+                        </div>
+                        <div class="absolute top-2 right-2 bg-secondary text-white text-xs font-bold px-2 py-1 rounded">
+                            PREMIUM
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <button class="play-now-btn w-full btn-primary text-white font-bold py-2 px-4 rounded-full"
+                            data-game="The Bowery Boys" data-requires-login="true">
+                            Play Now
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Game 11 -->
+                <div
+                    class="game-card bg-gray-900 rounded-xl overflow-hidden border border-gray-800 transition duration-300 hover:border-primary">
+                    <div class="relative overflow-hidden h-48">
+                        <img src="/images/Featured-Games/game11.png" alt="Pug Life" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
+                        <div class="absolute bottom-0 left-0 p-4 w-full">
+                            <h3 class="text-xl font-bold text-white">Pug Life</h3>
+                            <p class="text-gray-300 text-sm">Peter & Sons</p>
+                        </div>
+                        <div class="absolute top-2 right-2 bg-secondary text-white text-xs font-bold px-2 py-1 rounded">
+                            PREMIUM
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <button class="play-now-btn w-full btn-primary text-white font-bold py-2 px-4 rounded-full"
+                            data-game="Pug Life" data-requires-login="true">
+                            Play Now
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Game 12 -->
+                <div
+                    class="game-card bg-gray-900 rounded-xl overflow-hidden border border-gray-800 transition duration-300 hover:border-primary">
+                    <div class="relative overflow-hidden h-48">
+                        <img src="/images/Featured-Games/game12.png" alt="Densho" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
+                        <div class="absolute bottom-0 left-0 p-4 w-full">
+                            <h3 class="text-xl font-bold text-white">Densho</h3>
+                            <p class="text-gray-300 text-sm">Evolution Gaming</p>
+                        </div>
+                        <div class="absolute top-2 right-2 bg-secondary text-white text-xs font-bold px-2 py-1 rounded">
+                            PREMIUM
+                        </div>
+                    </div>
+                    <div class="p-4">
+                        <button class="play-now-btn w-full btn-primary text-white font-bold py-2 px-4 rounded-full"
+                            data-game="Densho" data-requires-login="true">
+                            Play Now
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+
+        </div>
+    </section>
+
+
+
+    <!-- CTA Section -->
+    <section class="py-16 bg-fixed bg-center bg-cover relative" style="background-image: url('/images/background-image.webp');">
+    <!-- Overlay -->
+    <div class="absolute inset-0 bg-black bg-opacity-60 z-0"></div>
+
+    <!-- Content -->
+    <div class="container mx-auto px-4 text-center relative z-10">
+        <h2 class="text-3xl md:text-4xl font-bold mb-6 text-white font-display">Ready to Join the Fun?</h2>
+        <p class="text-xl mb-8 text-white max-w-2xl mx-auto">Register now and get 5,000 free points to start playing our exciting games!</p>
+        
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+            <a href="/register/" class="bg-white text-primary font-bold py-4 px-8 rounded-full text-lg hover:bg-gray-100 transition">
+                Sign Up Free <i class="fas fa-arrow-right ml-2"></i>
+            </a>
+            <a href="/games/" class="bg-black bg-opacity-20 text-white font-bold py-4 px-8 rounded-full text-lg border border-white hover:bg-opacity-30 transition">
+                Explore Games
+            </a>
+        </div>
+    </div>
+</section>
+
+    <!-- Responsible Gaming -->
+    <section class="py-12 bg-dark">
+        <div class="container mx-auto px-4">
+            <div class="bg-gray-900 rounded-xl p-8">
+                <h3 class="text-2xl font-bold mb-4 text-white font-display">Responsible Gaming Commitment</h3>
+                <p class="text-gray-300 mb-4">SpinWorldClub is committed to promoting responsible gaming practices. We
+                    provide comprehensive tools and resources to help players maintain control over their gaming habits
+                    and ensure a safe, enjoyable experience for all users.</p>
+                <p class="text-gray-300 font-bold mb-6">Important Notice: This is a social casino platform for
+                    entertainment only. No real money gambling or payouts are involved. All coins are virtual and have
+                    no monetary value.</p>
+
+                <div class="flex flex-wrap gap-4">
+                    <a href="https://www.gamcare.org.uk/" class="text-primary hover:underline flex items-center">
+                        <i class="fas fa-external-link-alt mr-2"></i> GamCare
+                    </a>
+                    <a href="https://www.begambleaware.org/" class="text-primary hover:underline flex items-center">
+                        <i class="fas fa-external-link-alt mr-2"></i> GambleAware
+                    </a>
+                    <a href="/responsible-gaming/" class="text-primary hover:underline flex items-center">
+                        <i class="fas fa-file-alt mr-2"></i> Responsible Gaming Policy
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 pt-12 pb-6">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-8">
+                <div>
+                    <img src="/images/logo.png" alt="SpinWorldClub Logo" class="h-12 mr-2">
+                    <p class="mb-4">The premier social casino platform offering exciting games with no real money
+                        involved. Pure entertainment, zero risk.</p>
+
+                </div>
+
+                <div>
+                    <h4 class="text-white text-lg font-bold mb-4">Quick Links</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/" class="hover:text-primary transition">Home</a></li>
+                        <li><a href="/games/" class="hover:text-primary transition">Games</a></li>
+                        <li><a href="/responsible-gaming/" class="hover:text-primary transition">Responsible Gaming</a>
+                        </li>
+                        <li><a href="/about/" class="hover:text-primary transition">About</a></li>
+                        <li><a href="/contact/" class="hover:text-primary transition">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white text-lg font-bold mb-4">Legal</h4>
+                    <ul class="space-y-2">
+                        <li><a href="/privacy/" class="hover:text-primary transition">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="hover:text-primary transition">Terms of Service</a></li>
+                        <li><a href="/cookies/" class="hover:text-primary transition">Cookies Policy</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white text-lg font-bold mb-4">Contact Us</h4>
+                    <ul class="space-y-2">
+                        <li class="flex items-start">
+                            <i class="fas fa-map-marker-alt mt-1 mr-3 text-primary"></i>
+                            <span>Estre Ringvei 5, 1831 Askim, Norway</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-phone-alt mr-3 text-primary"></i>
+                            <span>+47 406 96 111</span>
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-envelope mr-3 text-primary"></i>
+                            <span>info@spinworldclub.org</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 pt-6 text-center">
+                <p class="mb-2">18+ Only | Social Casino Platform | No Real Money Gambling</p>
+                <p class="text-sm">This website operates as a social casino platform for entertainment purposes only. No
+                    real money gambling, betting, or wagering is involved. Virtual coins and winnings have no cash value
+                    and cannot be exchanged for real money, prizes, or any monetary compensation. Success in social
+                    casino games does not guarantee future success at real money gambling activities.</p>
+                <p class="mt-4 text-sm">© 2025 SpinWorldClub. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cookies Consent -->
+    <div id="cookiesConsent" class="fixed bottom-0 left-0 right-0 bg-gray-800 text-white p-4 hidden z-50">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row items-center justify-between gap-4">
+                <div class="mb-4 md:mb-0 md:mr-4 flex-1">
+                    <p class="text-sm md:text-base">We use cookies to enhance your experience. By continuing to browse,
+                        you agree to our use of cookies.</p>
+                </div>
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <a href="/cookies/"
+                        class="btn-secondary text-white font-bold py-2 px-4 rounded-full whitespace-nowrap text-center text-sm md:text-base">
+                        Learn More
+                    </a>
+                    <button id="declineCookies"
+                        class="bg-transparent border border-gray-500 text-white font-bold py-2 px-4 rounded-full whitespace-nowrap hover:bg-gray-700 transition text-sm md:text-base">
+                        Decline
+                    </button>
+                    <button id="acceptCookies"
+                        class="btn-primary text-white font-bold py-2 px-4 rounded-full whitespace-nowrap text-sm md:text-base">
+                        Accept
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Game iframe sources
+        const gameIframeSources = {
+            'Xmas Drop': 'https://d2q0k52vlk25jc.cloudfront.net/launcher/static-launcher.html?gameid=1396&channel=desktop&language=en&currency=USD&partner=gamdom_prod&mode=demo&token=&lobbyurl=http%3A%2F%2Fgamdom.com/casino',
+            'Ze Zeus': 'https://d2q0k52vlk25jc.cloudfront.net/launcher/static-launcher.html?gameid=1508&channel=desktop&language=en&currency=USD&partner=gamdom_prod&mode=demo&token=&lobbyurl=http%3A%2F%2Fgamdom.com/casino',
+            'Magic Piggy': 'https://d2q0k52vlk25jc.cloudfront.net/launcher/static-launcher.html?gameid=1247&channel=desktop&language=en&currency=USD&partner=gamdom_prod&mode=demo&token=&lobbyurl=http%3A%2F%2Fgamdom.com/casino',
+            'Itero': 'https://d2q0k52vlk25jc.cloudfront.net/launcher/static-launcher.html?gameid=1168&channel=desktop&language=en&currency=USD&partner=gamdom_prod&mode=demo&token=&lobbyurl=http%3A%2F%2Fgamdom.com/casino',
+            '2WildDi': 'https://d2q0k52vlk25jc.cloudfront.net/launcher/static-launcher.html?gameid=1400&channel=desktop&language=en&currency=USD&partner=gamdom_prod&mode=demo&token=&lobbyurl=http%3A%2F%2Fgamdom.com/casino',
+            'Gladiator Legends': 'https://d2q0k52vlk25jc.cloudfront.net/launcher/static-launcher.html?gameid=1160&channel=desktop&language=en&currency=USD&partner=gamdom_prod&mode=demo&token=&lobbyurl=http%3A%2F%2Fgamdom.com/casino',
+            'Dropem': 'https://d2q0k52vlk25jc.cloudfront.net/launcher/static-launcher.html?gameid=1314&channel=desktop&language=en&currency=USD&partner=gamdom_prod&mode=demo&token=&lobbyurl=http%3A%2F%2Fgamdom.com/casino',
+            'Cursed Seas': 'https://d2q0k52vlk25jc.cloudfront.net/launcher/static-launcher.html?gameid=1263&channel=desktop&language=en&currency=USD&partner=gamdom_prod&mode=demo&token=&lobbyurl=http%3A%2F%2Fgamdom.com/casino',
+            'Wanted Boosted': 'https://d2q0k52vlk25jc.cloudfront.net/launcher/static-launcher-gamdom.html?gameid=1547&channel=desktop&language=en&currency=USD&partner=gamdom_prod&mode=demo&token=&lobbyurl=http%3A%2F%2Fgamdom.com/casino',
+            'The Bowery Boys': 'https://d2q0k52vlk25jc.cloudfront.net/launcher/static-launcher.html?gameid=1135&channel=desktop&language=en&currency=USD&partner=gamdom_prod&mode=demo&token=&lobbyurl=http%3A%2F%2Fgamdom.com/casino',
+            'Pug Life': 'https://d2q0k52vlk25jc.cloudfront.net/launcher/static-launcher.html?gameid=1217&channel=desktop&language=en&currency=USD&partner=gamdom_prod&mode=demo&token=&lobbyurl=http%3A%2F%2Fgamdom.com/casino',
+            'Densho': 'https://d2q0k52vlk25jc.cloudfront.net/launcher/static-launcher.html?gameid=1348&channel=desktop&language=en&currency=USD&partner=gamdom_prod&mode=demo&token=&lobbyurl=http%3A%2F%2Fgamdom.com/casino'
+        };
+
+        // Check login state and update UI
+        function checkLoginState() {
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+
+            console.log('Login state checked. Logged in:', isLoggedIn); // Debug log
+
+            if (isLoggedIn) {
+                // Show user info and hide login/register buttons
+                 if (registerCta) registerCta.style.display = 'none';
+
+                document.getElementById('userInfo').classList.remove('hidden');
+                document.getElementById('mobileUserInfo').classList.remove('hidden');
+                document.getElementById('loginLink').classList.add('hidden');
+                document.getElementById('registerLink').classList.add('hidden');
+                document.getElementById('mobileLoginLink').classList.add('hidden');
+                document.getElementById('mobileRegisterLink').classList.add('hidden');
+
+                // Set username and avatar
+                const username = localStorage.getItem('username') || 'User';
+                console.log('Username:', username); // Debug log
+
+                // Update all username display elements
+                document.getElementById('usernameDisplay').textContent = username;
+                document.getElementById('mobileUsernameDisplay').textContent = username;
+                document.getElementById('userAvatar').textContent = username.charAt(0).toUpperCase();
+
+                // Set coins
+                const coins = localStorage.getItem('coins') || '5,000';
+                document.getElementById('coinsDisplay').textContent = coins;
+                document.getElementById('mobileCoinsDisplay').textContent = coins;
+            } else {
+                // Hide user info and show login/register buttons
+                document.getElementById('userInfo').classList.add('hidden');
+                document.getElementById('mobileUserInfo').classList.add('hidden');
+                document.getElementById('loginLink').classList.remove('hidden');
+                document.getElementById('registerLink').classList.remove('hidden');
+                document.getElementById('mobileLoginLink').classList.remove('hidden');
+                document.getElementById('mobileRegisterLink').classList.remove('hidden');
+            }
+        }
+
+        // Age Verification
+        document.addEventListener('DOMContentLoaded', function () {
+            const ageVerified = localStorage.getItem('ageVerified');
+            const ageVerification = document.getElementById('ageVerification');
+
+            // Only show age verification if not previously confirmed
+            if (ageVerified !== 'true') {
+                ageVerification.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            }
+
+            document.getElementById('confirmAge').addEventListener('click', function () {
+                localStorage.setItem('ageVerified', 'true');
+                ageVerification.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            });
+
+            document.getElementById('denyAge').addEventListener('click', function () {
+                window.location.href = 'https://www.google.com/';
+            });
+
+            // Mobile Menu
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+
+            mobileMenuBtn.addEventListener('click', function () {
+                this.classList.toggle('open');
+                mobileMenu.classList.toggle('translate-x-full');
+            });
+
+            // Game Popup
+            const playNowBtns = document.querySelectorAll('.play-now-btn');
+            const gamePopup = document.getElementById('gamePopup');
+            const gameIframe = document.getElementById('gameIframe');
+            const closeGame = document.getElementById('closeGame');
+            const loginRequired = document.getElementById('loginRequired');
+
+            playNowBtns.forEach(btn => {
+                btn.addEventListener('click', function () {
+                    const gameName = this.getAttribute('data-game');
+                    const requiresLogin = this.getAttribute('data-requires-login') === 'true';
+                    const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+
+                    // Games that don't require login: 'Xmas Drop' and 'Ze Zeus'
+                    const freeGames = ['Xmas Drop', 'Ze Zeus'];
+
+                    if (requiresLogin && !isLoggedIn && !freeGames.includes(gameName)) {
+                        loginRequired.style.display = 'flex';
+                        document.body.style.overflow = 'hidden';
+                    } else {
+                        const gameUrl = gameIframeSources[gameName];
+                        if (gameUrl) {
+                            gameIframe.src = gameUrl;
+                            gamePopup.style.display = 'flex';
+                            document.body.style.overflow = 'hidden';
+                        }
+                    }
+                });
+            });
+
+            closeGame.addEventListener('click', function () {
+                gamePopup.style.display = 'none';
+                gameIframe.src = '';
+                document.body.style.overflow = 'auto';
+            });
+
+            // Close login required popup when clicking outside
+            loginRequired.addEventListener('click', function (e) {
+                if (e.target === this) {
+                    this.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                }
+            });
+
+            // Logout functionality
+            document.getElementById('logoutBtn').addEventListener('click', function (e) {
+                e.preventDefault();
+                localStorage.removeItem('isLoggedIn');
+                localStorage.removeItem('username');
+                checkLoginState();
+
+                // Close mobile menu if open
+                mobileMenuBtn.classList.remove('open');
+                mobileMenu.classList.add('translate-x-full');
+            });
+
+            document.getElementById('mobileLogoutBtn').addEventListener('click', function (e) {
+                e.preventDefault();
+                localStorage.removeItem('isLoggedIn');
+                localStorage.removeItem('username');
+                checkLoginState();
+
+                // Close mobile menu
+                mobileMenuBtn.classList.remove('open');
+                mobileMenu.classList.add('translate-x-full');
+            });
+
+            // Game category filtering
+            const categoryBtns = document.querySelectorAll('.category-btn');
+            categoryBtns.forEach(btn => {
+                btn.addEventListener('click', function () {
+                    categoryBtns.forEach(b => b.classList.remove('active', 'bg-primary', 'bg-opacity-20'));
+                    this.classList.add('active', 'bg-primary', 'bg-opacity-20');
+                    // In a real implementation, you would filter games here
+                });
+            });
+
+            // Simulate login state (for demo purposes)
+            // In a real app, this would be set after actual login
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('login')) {
+                localStorage.setItem('isLoggedIn', 'true');
+                localStorage.setItem('username', 'DemoUser');
+                localStorage.setItem('coins', '15,750');
+            }
+
+            // Check login state on page load
+            checkLoginState();
+
+            // Initialize particles.js
+            particlesJS('particles-js', {
+                "particles": {
+                    "number": {
+                        "value": 80,
+                        "density": {
+                            "enable": true,
+                            "value_area": 800
+                        }
+                    },
+                    "color": {
+                        "value": "#FF6B35"
+                    },
+                    "shape": {
+                        "type": "circle",
+                        "stroke": {
+                            "width": 0,
+                            "color": "#000000"
+                        },
+                        "polygon": {
+                            "nb_sides": 5
+                        }
+                    },
+                    "opacity": {
+                        "value": 0.5,
+                        "random": false,
+                        "anim": {
+                            "enable": false,
+                            "speed": 1,
+                            "opacity_min": 0.1,
+                            "sync": false
+                        }
+                    },
+                    "size": {
+                        "value": 3,
+                        "random": true,
+                        "anim": {
+                            "enable": false,
+                            "speed": 40,
+                            "size_min": 0.1,
+                            "sync": false
+                        }
+                    },
+                    "line_linked": {
+                        "enable": true,
+                        "distance": 150,
+                        "color": "#FF6B35",
+                        "opacity": 0.4,
+                        "width": 1
+                    },
+                    "move": {
+                        "enable": true,
+                        "speed": 2,
+                        "direction": "none",
+                        "random": false,
+                        "straight": false,
+                        "out_mode": "out",
+                        "bounce": false,
+                        "attract": {
+                            "enable": false,
+                            "rotateX": 600,
+                            "rotateY": 1200
+                        }
+                    }
+                },
+                "interactivity": {
+                    "detect_on": "canvas",
+                    "events": {
+                        "onhover": {
+                            "enable": true,
+                            "mode": "grab"
+                        },
+                        "onclick": {
+                            "enable": true,
+                            "mode": "push"
+                        },
+                        "resize": true
+                    },
+                    "modes": {
+                        "grab": {
+                            "distance": 140,
+                            "line_linked": {
+                                "opacity": 1
+                            }
+                        },
+                        "bubble": {
+                            "distance": 400,
+                            "size": 40,
+                            "duration": 2,
+                            "opacity": 8,
+                            "speed": 3
+                        },
+                        "repulse": {
+                            "distance": 200,
+                            "duration": 0.4
+                        },
+                        "push": {
+                            "particles_nb": 4
+                        },
+                        "remove": {
+                            "particles_nb": 2
+                        }
+                    }
+                },
+                "retina_detect": true
+            });
+
+            // GSAP Animations
+            gsap.registerPlugin(ScrollTrigger);
+
+            gsap.from(".hero-gradient h1", {
+                duration: 1,
+                y: 50,
+                opacity: 0,
+                ease: "power3.out"
+            });
+
+            gsap.from(".hero-gradient p", {
+                duration: 1,
+                y: 50,
+                opacity: 0,
+                delay: 0.2,
+                ease: "power3.out"
+            });
+
+            gsap.utils.toArray(".game-card").forEach((card, i) => {
+                gsap.from(card, {
+                    scrollTrigger: {
+                        trigger: card,
+                        start: "top 80%",
+                        toggleActions: "play none none none"
+                    },
+                    y: 50,
+                    opacity: 0,
+                    duration: 0.5,
+                    delay: i * 0.1
+                });
+            });
+
+            // Cookies Consent
+            const cookiesConsent = document.getElementById('cookiesConsent');
+            const acceptCookies = document.getElementById('acceptCookies');
+            const declineCookies = document.getElementById('declineCookies');
+
+            // For testing - uncomment to reset cookie choice
+            // localStorage.removeItem('cookiesAccepted');
+
+            // Check if user has made a choice before
+            const hasCookieChoice = localStorage.getItem('cookiesAccepted') !== null;
+
+            if (!hasCookieChoice) {
+                // Only show if user hasn't made a choice
+                setTimeout(() => {
+                    cookiesConsent.classList.remove('hidden');
+                    console.log('Showing cookies consent');
+                }, 1000); // Reduced delay for testing
+            } else {
+                console.log('User has already made cookie choice:', localStorage.getItem('cookiesAccepted'));
+            }
+
+            acceptCookies.addEventListener('click', function () {
+                localStorage.setItem('cookiesAccepted', 'true');
+                cookiesConsent.classList.add('hidden');
+                console.log('Cookies accepted');
+                // Set necessary cookies here
+            });
+
+            declineCookies.addEventListener('click', function () {
+                localStorage.setItem('cookiesAccepted', 'false');
+                cookiesConsent.classList.add('hidden');
+                console.log('Cookies declined');
+                // Remove non-essential cookies here
+            });
+        });
+    </script>
+</body>
+
+</html>

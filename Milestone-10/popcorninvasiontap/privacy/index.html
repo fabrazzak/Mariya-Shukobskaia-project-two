@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Privacy Policy for Popcorn Invasion: Tapping Game. Learn how we collect, use, and protect your personal data.">
+    <meta name="keywords" content="popcorn invasion privacy, game data collection, personal data protection, mobile app privacy">
+    <meta name="author" content="Weasel Warrior Studios">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://popcorninvasiontap.com/privacy/">
+    <title>Privacy Policy | Popcorn Invasion: Tapping Game</title>
+    
+    <!-- Favicon -->
+   <link rel="icon" href="/assets/favicon.png" type="image/x-icon">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        popcorn: {
+                            light: '#FFF4D9',
+                            DEFAULT: '#FFD166',
+                            dark: '#E6B000',
+                        },
+                        butter: '#FFEE93',
+                        burnt: '#D8572A',
+                        alien: '#06D6A0',
+                        theater: '#1A1A2E',
+                    },
+                    fontFamily: {
+                        arcade: ['"Press Start 2P"', 'cursive'],
+                        fun: ['"Bangers"', 'cursive'],
+                    },
+                    animation: {
+                        'pop': 'pop 0.5s ease-out',
+                        'float': 'float 3s ease-in-out infinite',
+                        'pulse-slow': 'pulse 5s infinite',
+                        'text-shine': 'text-shine 2s ease-in-out infinite alternate',
+                    },
+                    keyframes: {
+                        pop: {
+                            '0%': { transform: 'scale(0.5)', opacity: '0' },
+                            '80%': { transform: 'scale(1.1)', opacity: '1' },
+                            '100%': { transform: 'scale(1)', opacity: '1' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        'text-shine': {
+                            '0%': { 'text-shadow': '0 0 8px rgba(255, 209, 102, 0)' },
+                            '100%': { 'text-shadow': '0 0 16px rgba(255, 209, 102, 0.8)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Press+Start+2P&display=swap" rel="stylesheet">
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollToPlugin.min.js"></script>
+</head>
+<body class="bg-theater text-white font-sans overflow-x-hidden">
+    <!-- Cookie Consent Banner -->
+    <div id="cookieConsent" class="fixed bottom-0 left-0 right-0 bg-gray-900 text-white p-4 hidden z-50">
+        <div class="container mx-auto flex flex-col md:flex-row items-center justify-between">
+            <p class="mb-4 md:mb-0">We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies.</p>
+            <div class="flex space-x-4">
+                <button id="acceptCookies" class="bg-alien hover:bg-green-600 px-4 py-2 rounded">Accept</button>
+                <button id="declineCookies" class="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded">Decline</button>
+                <a href="/cookies/" class="bg-popcorn-dark hover:bg-popcorn-darker text-black px-4 py-2 rounded">Learn More</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 bg-black bg-opacity-90 z-40 backdrop-blur-md shadow-lg">
+       <div class="container mx-auto px-6 ">
+            <div class="flex justify-between items-center">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="/" class="flex items-center">
+                        <img src="/assets/logo.png" alt="Popcorn Invasion Logo" class="h-20 w-auto mr-3">                      
+                    </a>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button id="mobileMenuButton" class="text-popcorn focus:outline-none">
+                        <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="text-white hover:text-butter">Home</a>
+                    <a href="/how-to-play/" class="text-white hover:text-butter">How to Play</a>
+                    <a href="/responsible-gaming/" class="text-white hover:text-butter">Responsible Gaming</a>
+                    <a href="/blog/" class="text-white hover:text-butter">Blog</a>
+                    <a href="/contact/" class="text-white hover:text-butter">Contact</a>
+                    <a href="https://play.google.com/store/apps/details?id=com.WeaselWarriorStudios.PopcornInvasion" class="bg-popcorn hover:bg-popcorn-dark text-black font-bold px-6 py-2 rounded-full transition-all transform hover:scale-105 shadow-lg hover:shadow-popcorn/50">Download</a>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobileMenu" class="hidden md:hidden mt-4 pb-4">
+                <a href="/" class="block py-2 text-white">Home</a>
+                <a href="/how-to-play/" class="block py-2 text-white">How to Play</a>
+                <a href="/responsible-gaming/" class="block py-2 text-white">Responsible Gaming</a>
+                <a href="/blog/" class="block py-2 text-white">Blog</a>
+                <a href="/contact/" class="block py-2 text-white">Contact</a>
+                <a href="https://play.google.com/store/apps/details?id=com.WeaselWarriorStudios.PopcornInvasion" class="mt-3 inline-block bg-popcorn hover:bg-popcorn-dark text-black font-bold px-6 py-2 rounded-full transition-all transform hover:scale-105">Download</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 bg-gradient-to-b from-black to-theater overflow-hidden">
+        <!-- Decorative elements -->
+        <div class="absolute top-0 left-0 w-full h-full opacity-10 bg-[url('/assets/features-1.png')] bg-repeat"></div>
+        <div class="absolute -top-20 -left-20 w-64 h-64 bg-popcorn rounded-full filter blur-3xl opacity-10"></div>
+        <div class="absolute -bottom-20 -right-20 w-64 h-64 bg-alien rounded-full filter blur-3xl opacity-10"></div>
+        
+        <div class="container mx-auto px-6 relative">
+            <div class="max-w-4xl mx-auto text-center">
+                <h1 class="text-4xl md:text-6xl font-fun mb-6 text-popcorn animate-pop">
+                    PRIVACY POLICY
+                </h1>
+                <p class="text-xl md:text-2xl mb-8 text-butter">
+                    Last Updated: March 16, 2025
+                </p>
+                <div class="flex justify-center space-x-4">
+                    <a href="#data-collection" class="bg-popcorn hover:bg-popcorn-dark text-black font-bold px-6 py-3 rounded-full text-lg transition-all transform hover:scale-105 shadow-lg hover:shadow-popcorn/50">
+                        Data Collection
+                    </a>
+                    <a href="#data-usage" class="bg-burnt hover:bg-red-700 text-white font-bold px-6 py-3 rounded-full text-lg transition-all transform hover:scale-105 shadow-lg hover:shadow-burnt/50">
+                        Data Usage
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Privacy Content -->
+    <section class="py-20 bg-theater relative">
+        <div class="container mx-auto px-6">
+            <div class="max-w-4xl mx-auto">
+                <div class="bg-gray-800 bg-opacity-50 rounded-xl p-8 backdrop-blur-sm border border-gray-700">
+                    <!-- Introduction -->
+                    <div class="mb-12">
+                        <p class="text-gray-300 mb-6">At Weasel Warrior Studios, we take your privacy seriously. This Privacy Policy describes how we collect, use, and protect your personal information when you use Popcorn Invasion: Tapping Game ("Game"). By using our Game, you agree to the collection and use of information in accordance with this policy.</p>
+                        <p class="text-gray-300">If you have any questions about this Privacy Policy, please contact us at <a href="mailto:info@popcorninvasiontap.com" class="text-popcorn hover:underline">info@popcorninvasiontap.com</a>.</p>
+                    </div>
+                    
+                    <!-- Quick Navigation -->
+                    <div class="mb-12 bg-gray-900 bg-opacity-50 p-6 rounded-lg border border-gray-700 sticky top-4 z-10 backdrop-blur-md">
+                        <h3 class="text-xl font-bold text-butter mb-4">Quick Navigation</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <a href="#interpretation" class="bg-gray-700 hover:bg-gray-600 px-3 py-1 rounded-full text-sm">Interpretation</a>
+                            <a href="#data-collection" class="bg-gray-700 hover:bg-gray-600 px-3 py-1 rounded-full text-sm">Data Collection</a>
+                            <a href="#data-usage" class="bg-gray-700 hover:bg-gray-600 px-3 py-1 rounded-full text-sm">Data Usage</a>
+                            <a href="#data-sharing" class="bg-gray-700 hover:bg-gray-600 px-3 py-1 rounded-full text-sm">Data Sharing</a>
+                            <a href="#data-security" class="bg-gray-700 hover:bg-gray-600 px-3 py-1 rounded-full text-sm">Security</a>
+                            <a href="#children-privacy" class="bg-gray-700 hover:bg-gray-600 px-3 py-1 rounded-full text-sm">Children</a>
+                            <a href="#changes" class="bg-gray-700 hover:bg-gray-600 px-3 py-1 rounded-full text-sm">Changes</a>
+                        </div>
+                    </div>
+                    
+                    <!-- Privacy Sections -->
+                    <div class="space-y-16">
+                        <!-- Interpretation -->
+                        <div id="interpretation" class="scroll-mt-20">
+                            <h2 class="text-2xl md:text-3xl font-bold text-butter mb-6 border-b border-butter pb-2">Interpretation and Definitions</h2>
+                            
+                            <h3 class="text-xl font-bold text-popcorn mt-8 mb-4">Interpretation</h3>
+                            <p class="text-gray-300 mb-6">The words of which the initial letter is capitalized have meanings defined under the following conditions. The following definitions shall have the same meaning regardless of whether they appear in singular or in plural.</p>
+                            
+                            <h3 class="text-xl font-bold text-popcorn mt-8 mb-4">Definitions</h3>
+                            <p class="text-gray-300 mb-6">For the purposes of this Privacy Policy:</p>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="bg-gray-900 bg-opacity-50 p-4 rounded-lg border border-gray-700">
+                                    <h4 class="font-bold text-popcorn mb-2">Account</h4>
+                                    <p class="text-gray-300">A unique account created for you to access our Game or parts of our Game.</p>
+                                </div>
+                                <div class="bg-gray-900 bg-opacity-50 p-4 rounded-lg border border-gray-700">
+                                    <h4 class="font-bold text-popcorn mb-2">Application</h4>
+                                    <p class="text-gray-300">Popcorn Invasion: Tapping Game, the software program provided by Weasel Warrior Studios.</p>
+                                </div>
+                                <div class="bg-gray-900 bg-opacity-50 p-4 rounded-lg border border-gray-700">
+                                    <h4 class="font-bold text-popcorn mb-2">Personal Data</h4>
+                                    <p class="text-gray-300">Any information that relates to an identified or identifiable individual.</p>
+                                </div>
+                                <div class="bg-gray-900 bg-opacity-50 p-4 rounded-lg border border-gray-700">
+                                    <h4 class="font-bold text-popcorn mb-2">Service Provider</h4>
+                                    <p class="text-gray-300">Third-party companies or individuals employed to facilitate our Game, provide the Game on our behalf, or assist in analyzing how our Game is used.</p>
+                                </div>
+                                <div class="bg-gray-900 bg-opacity-50 p-4 rounded-lg border border-gray-700">
+                                    <h4 class="font-bold text-popcorn mb-2">Usage Data</h4>
+                                    <p class="text-gray-300">Data collected automatically, either generated by the use of the Game or from the Game infrastructure itself.</p>
+                                </div>
+                                <div class="bg-gray-900 bg-opacity-50 p-4 rounded-lg border border-gray-700">
+                                    <h4 class="font-bold text-popcorn mb-2">You</h4>
+                                    <p class="text-gray-300">The individual accessing or using the Game, or the company or other legal entity on behalf of which such individual is accessing or using the Game.</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Data Collection -->
+                        <div id="data-collection" class="scroll-mt-20">
+                            <h2 class="text-2xl md:text-3xl font-bold text-butter mb-6 border-b border-butter pb-2">Collecting and Using Your Personal Data</h2>
+                            
+                            <h3 class="text-xl font-bold text-popcorn mt-8 mb-4">Types of Data Collected</h3>
+                            
+                            <h4 class="text-lg font-bold text-butter mt-6 mb-3">Personal Data</h4>
+                            <p class="text-gray-300 mb-6">While using our Game, we may ask you to provide certain personally identifiable information that can be used to contact or identify you. This may include, but is not limited to:</p>
+                            <ul class="list-disc pl-5 space-y-2 text-gray-300 mb-6">
+                                <li>Email address</li>
+                                <li>First name and last name</li>
+                                <li>Phone number</li>
+                                <li>Usage data</li>
+                            </ul>
+                            
+                            <h4 class="text-lg font-bold text-butter mt-6 mb-3">Usage Data</h4>
+                            <p class="text-gray-300 mb-4">Usage Data is collected automatically when using the Game and may include:</p>
+                            <div class="bg-gray-900 bg-opacity-50 p-4 rounded-lg border border-gray-700 mb-6">
+                                <ul class="grid grid-cols-1 md:grid-cols-2 gap-2">
+                                    <li class="flex items-start">
+                                        <span class="text-popcorn mr-2">•</span>
+                                        <span>Device's IP address</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <span class="text-popcorn mr-2">•</span>
+                                        <span>Browser type and version</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <span class="text-popcorn mr-2">•</span>
+                                        <span>Pages visited and time spent</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <span class="text-popcorn mr-2">•</span>
+                                        <span>Unique device identifiers</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <span class="text-popcorn mr-2">•</span>
+                                        <span>Diagnostic data</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <span class="text-popcorn mr-2">•</span>
+                                        <span>Mobile device information</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <div class="bg-alien bg-opacity-10 p-4 rounded-lg border border-alien mb-6">
+                                <h4 class="font-bold text-alien mb-2">Mobile Device Data</h4>
+                                <p class="text-gray-300">When accessing the Game through a mobile device, we may collect additional information including the type of mobile device, mobile device unique ID, mobile operating system, and mobile Internet browser type.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Data Usage -->
+                        <div id="data-usage" class="scroll-mt-20">
+                            <h2 class="text-2xl md:text-3xl font-bold text-butter mb-6 border-b border-butter pb-2">Use of Your Personal Data</h2>
+                            
+                            <p class="text-gray-300 mb-6">We may use your Personal Data for the following purposes:</p>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+                                <div class="bg-gray-900 bg-opacity-50 p-4 rounded-lg border border-gray-700 hover:border-popcorn transition-colors">
+                                    <h4 class="font-bold text-popcorn mb-2">Service Provision</h4>
+                                    <p class="text-gray-300">To provide and maintain our Game, including monitoring usage.</p>
+                                </div>
+                                <div class="bg-gray-900 bg-opacity-50 p-4 rounded-lg border border-gray-700 hover:border-popcorn transition-colors">
+                                    <h4 class="font-bold text-popcorn mb-2">Account Management</h4>
+                                    <p class="text-gray-300">To manage your registration and provide access to Game functionalities.</p>
+                                </div>
+                                <div class="bg-gray-900 bg-opacity-50 p-4 rounded-lg border border-gray-700 hover:border-popcorn transition-colors">
+                                    <h4 class="font-bold text-popcorn mb-2">Contract Performance</h4>
+                                    <p class="text-gray-300">For the development and undertaking of purchase contracts.</p>
+                                </div>
+                                <div class="bg-gray-900 bg-opacity-50 p-4 rounded-lg border border-gray-700 hover:border-popcorn transition-colors">
+                                    <h4 class="font-bold text-popcorn mb-2">Communication</h4>
+                                    <p class="text-gray-300">To contact you with updates, security alerts, and support messages.</p>
+                                </div>
+                                <div class="bg-gray-900 bg-opacity-50 p-4 rounded-lg border border-gray-700 hover:border-popcorn transition-colors">
+                                    <h4 class="font-bold text-popcorn mb-2">Marketing</h4>
+                                    <p class="text-gray-300">To provide news, offers, and information about similar products.</p>
+                                </div>
+                                <div class="bg-gray-900 bg-opacity-50 p-4 rounded-lg border border-gray-700 hover:border-popcorn transition-colors">
+                                    <h4 class="font-bold text-popcorn mb-2">Business Transfers</h4>
+                                    <p class="text-gray-300">To evaluate or conduct mergers, acquisitions, or asset sales.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="bg-popcorn bg-opacity-10 p-4 rounded-lg border border-popcorn">
+                                <h4 class="font-bold text-popcorn mb-2">Other Purposes</h4>
+                                <p class="text-gray-300">We may use your information for data analysis, identifying usage trends, determining campaign effectiveness, and to evaluate and improve our Game, marketing, and your experience.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Data Sharing -->
+                        <div id="data-sharing" class="scroll-mt-20">
+                            <h2 class="text-2xl md:text-3xl font-bold text-butter mb-6 border-b border-butter pb-2">Sharing Your Personal Data</h2>
+                            
+                            <p class="text-gray-300 mb-6">We may share your personal information in the following situations:</p>
+                            
+                            <div class="space-y-6">
+                                <div class="flex items-start">
+                                    <div class="bg-burnt text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 mr-4 mt-1">1</div>
+                                    <div>
+                                        <h4 class="font-bold text-butter mb-2">With Service Providers</h4>
+                                        <p class="text-gray-300">To monitor and analyze Game usage, for payment processing, or to contact you.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start">
+                                    <div class="bg-burnt text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 mr-4 mt-1">2</div>
+                                    <div>
+                                        <h4 class="font-bold text-butter mb-2">For Business Transfers</h4>
+                                        <p class="text-gray-300">In connection with any merger, sale of company assets, financing, or acquisition.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start">
+                                    <div class="bg-burnt text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 mr-4 mt-1">3</div>
+                                    <div>
+                                        <h4 class="font-bold text-butter mb-2">With Affiliates</h4>
+                                        <p class="text-gray-300">With our parent company, subsidiaries, or other companies under common control.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start">
+                                    <div class="bg-burnt text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 mr-4 mt-1">4</div>
+                                    <div>
+                                        <h4 class="font-bold text-butter mb-2">With Business Partners</h4>
+                                        <p class="text-gray-300">To offer you certain products, services or promotions.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start">
+                                    <div class="bg-burnt text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 mr-4 mt-1">5</div>
+                                    <div>
+                                        <h4 class="font-bold text-butter mb-2">With Other Users</h4>
+                                        <p class="text-gray-300">When you interact in public areas that may be viewed by all users.</p>
+                                    </div>
+                                </div>
+                                
+                                <div class="flex items-start">
+                                    <div class="bg-burnt text-white rounded-full w-8 h-8 flex items-center justify-center flex-shrink-0 mr-4 mt-1">6</div>
+                                    <div>
+                                        <h4 class="font-bold text-butter mb-2">With Your Consent</h4>
+                                        <p class="text-gray-300">For any other purpose disclosed by us when you provide the information.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Data Retention -->
+                        <div id="data-retention" class="scroll-mt-20">
+                            <h2 class="text-2xl md:text-3xl font-bold text-butter mb-6 border-b border-butter pb-2">Retention of Your Personal Data</h2>
+                            
+                            <p class="text-gray-300 mb-6">We will retain your Personal Data only for as long as necessary for the purposes set out in this Privacy Policy. We will retain and use your data to the extent necessary to:</p>
+                            
+                            <div class="bg-gray-900 bg-opacity-50 p-6 rounded-lg border border-gray-700 mb-6">
+                                <ul class="space-y-3">
+                                    <li class="flex items-start">
+                                        <span class="text-popcorn mr-2">•</span>
+                                        <span>Comply with our legal obligations</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <span class="text-popcorn mr-2">•</span>
+                                        <span>Resolve disputes and enforce our policies</span>
+                                    </li>
+                                    <li class="flex items-start">
+                                        <span class="text-popcorn mr-2">•</span>
+                                        <span>Maintain security and improve functionality</span>
+                                    </li>
+                                </ul>
+                            </div>
+                            
+                            <p class="text-gray-300">Usage Data is generally retained for a shorter period, except when used to strengthen security or improve functionality, or when legally required.</p>
+                        </div>
+                        
+                        <!-- Data Transfer -->
+                        <div id="data-transfer" class="scroll-mt-20">
+                            <h2 class="text-2xl md:text-3xl font-bold text-butter mb-6 border-b border-butter pb-2">Transfer of Your Personal Data</h2>
+                            
+                            <p class="text-gray-300 mb-6">Your information, including Personal Data, may be transferred to — and maintained on — computers located outside of your state, province, country or other governmental jurisdiction where data protection laws may differ.</p>
+                            
+                            <div class="bg-alien bg-opacity-10 p-4 rounded-lg border border-alien mb-6">
+                                <h4 class="font-bold text-alien mb-2">Your Consent</h4>
+                                <p class="text-gray-300">By submitting your information, you agree to this transfer. We will take all reasonably necessary steps to ensure your data is treated securely and in accordance with this Privacy Policy.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Data Deletion -->
+                        <div id="data-deletion" class="scroll-mt-20">
+                            <h2 class="text-2xl md:text-3xl font-bold text-butter mb-6 border-b border-butter pb-2">Delete Your Personal Data</h2>
+                            
+                            <p class="text-gray-300 mb-6">You have the right to delete or request assistance in deleting Personal Data we have collected about you.</p>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div class="bg-gray-900 bg-opacity-50 p-4 rounded-lg border border-gray-700">
+                                    <h4 class="font-bold text-popcorn mb-2">Through the Game</h4>
+                                    <p class="text-gray-300">You may delete certain information directly within the Game through your account settings.</p>
+                                </div>
+                                <div class="bg-gray-900 bg-opacity-50 p-4 rounded-lg border border-gray-700">
+                                    <h4 class="font-bold text-popcorn mb-2">By Contacting Us</h4>
+                                    <p class="text-gray-300">You may contact us to request access to, correct, or delete any personal information provided.</p>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-6 bg-gray-900 bg-opacity-50 p-4 rounded-lg border border-gray-700">
+                                <h4 class="font-bold text-butter mb-2">Note:</h4>
+                                <p class="text-gray-300">We may retain certain information when legally obligated or when we have a lawful basis to do so.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Data Disclosure -->
+                        <div id="data-disclosure" class="scroll-mt-20">
+                            <h2 class="text-2xl md:text-3xl font-bold text-butter mb-6 border-b border-butter pb-2">Disclosure of Your Personal Data</h2>
+                            
+                            <h3 class="text-xl font-bold text-popcorn mt-8 mb-4">Business Transactions</h3>
+                            <p class="text-gray-300 mb-6">If we are involved in a merger, acquisition or asset sale, your Personal Data may be transferred. We will provide notice before your data becomes subject to a different Privacy Policy.</p>
+                            
+                            <h3 class="text-xl font-bold text-popcorn mt-8 mb-4">Law Enforcement</h3>
+                            <p class="text-gray-300 mb-6">Under certain circumstances, we may be required to disclose your Personal Data if required by law or in response to valid requests by public authorities.</p>
+                            
+                            <h3 class="text-xl font-bold text-popcorn mt-8 mb-4">Other Legal Requirements</h3>
+                            <p class="text-gray-300 mb-6">We may disclose your Personal Data in good faith when necessary to:</p>
+                            <ul class="list-disc pl-5 space-y-2 text-gray-300 mb-6">
+                                <li>Comply with a legal obligation</li>
+                                <li>Protect and defend our rights or property</li>
+                                <li>Prevent or investigate possible wrongdoing</li>
+                                <li>Protect personal safety of users or the public</li>
+                                <li>Protect against legal liability</li>
+                            </ul>
+                        </div>
+                        
+                        <!-- Data Security -->
+                        <div id="data-security" class="scroll-mt-20">
+                            <h2 class="text-2xl md:text-3xl font-bold text-butter mb-6 border-b border-butter pb-2">Security of Your Personal Data</h2>
+                            
+                            <p class="text-gray-300 mb-6">We use commercially acceptable means to protect your Personal Data, but remember no method of transmission over the Internet or electronic storage is 100% secure.</p>
+                            
+                            <div class="bg-popcorn bg-opacity-10 p-6 rounded-lg border border-popcorn">
+                                <div class="flex items-start">
+                                    <div class="text-popcorn text-2xl mr-4">⚠️</div>
+                                    <div>
+                                        <h4 class="font-bold text-popcorn mb-2">Important Notice</h4>
+                                        <p class="text-gray-300">While we strive to protect your Personal Data, we cannot guarantee its absolute security. You provide your Personal Data at your own risk.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Children's Privacy -->
+                        <div id="children-privacy" class="scroll-mt-20">
+                            <h2 class="text-2xl md:text-3xl font-bold text-butter mb-6 border-b border-butter pb-2">Children's Privacy</h2>
+                            
+                            <p class="text-gray-300 mb-6">Our Game does not address anyone under the age of 13. We do not knowingly collect personally identifiable information from children under 13.</p>
+                            
+                            <div class="bg-alien bg-opacity-10 p-6 rounded-lg border border-alien">
+                                <div class="flex items-start">
+                                    <div class="text-alien text-2xl mr-4">👶</div>
+                                    <div>
+                                        <h4 class="font-bold text-alien mb-2">Parental Notice</h4>
+                                        <p class="text-gray-300">If you are a parent or guardian and aware your child has provided us with Personal Data, please contact us. If we discover we've collected data from a child under 13 without parental consent, we will take steps to remove that information.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Links to Other Sites -->
+                        <div id="external-links" class="scroll-mt-20">
+                            <h2 class="text-2xl md:text-3xl font-bold text-butter mb-6 border-b border-butter pb-2">Links to Other Websites</h2>
+                            
+                            <p class="text-gray-300 mb-6">Our Game may contain links to other sites not operated by us. We strongly advise reviewing the Privacy Policy of every site you visit.</p>
+                            
+                            <div class="bg-gray-900 bg-opacity-50 p-4 rounded-lg border border-gray-700">
+                                <h4 class="font-bold text-butter mb-2">Disclaimer</h4>
+                                <p class="text-gray-300">We have no control over and assume no responsibility for the content, privacy policies or practices of any third-party sites or services.</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Policy Changes -->
+                        <div id="changes" class="scroll-mt-20">
+                            <h2 class="text-2xl md:text-3xl font-bold text-butter mb-6 border-b border-butter pb-2">Changes to this Privacy Policy</h2>
+                            
+                            <p class="text-gray-300 mb-6">We may update our Privacy Policy from time to time. We will notify you of changes by posting the new policy on this page and updating the "Last updated" date.</p>
+                            
+                            <div class="bg-popcorn bg-opacity-10 p-6 rounded-lg border border-popcorn">
+                                <div class="flex items-start">
+                                    <div class="text-popcorn text-2xl mr-4">🔔</div>
+                                    <div>
+                                        <h4 class="font-bold text-popcorn mb-2">Notification</h4>
+                                        <p class="text-gray-300">We may let you know via email and/or a prominent notice in our Game prior to changes becoming effective. You're advised to review this policy periodically for any changes.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Contact -->
+                        <div id="contact" class="scroll-mt-20">
+                            <h2 class="text-2xl md:text-3xl font-bold text-butter mb-6 border-b border-butter pb-2">Contact Us</h2>
+                            
+                            <p class="text-gray-300 mb-6">If you have any questions about this Privacy Policy, you can contact us:</p>
+                            
+                            <div class="bg-gray-900 bg-opacity-50 p-6 rounded-lg border border-gray-700">
+                                <address class="not-italic">
+                                    <div class="mb-4">
+                                        <h4 class="font-bold text-popcorn mb-1">By email:</h4>
+                                        <a href="mailto:info@popcorninvasiontap.com" class="text-butter hover:underline">info@popcorninvasiontap.com</a>
+                                    </div>
+                                    <div class="mb-4">
+                                        <h4 class="font-bold text-popcorn mb-1">By phone:</h4>
+                                        <a href="tel:+16479977626" class="text-butter hover:underline">+1 647 997 7626</a>
+                                    </div>
+                                    <div>
+                                        <h4 class="font-bold text-popcorn mb-1">By mail:</h4>
+                                        <p>Weasel Warrior Studios<br>
+                                        36 St Andrews Gardens<br>
+                                        Toronto, ON M4W 2E1<br>
+                                        Canada</p>
+                                    </div>
+                                </address>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Final Acknowledgement -->
+                    <div class="mt-12 pt-6 border-t border-gray-700">
+                        <p class="text-gray-300">By using Popcorn Invasion: Tapping Game, you acknowledge that you have read this Privacy Policy, understand it, and agree to its terms. If you do not agree with this policy, please do not use our Game.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-r from-popcorn-dark to-burnt relative overflow-hidden">
+        <!-- Decorative elements -->
+        <div class="absolute -top-20 left-0 w-64 h-64 bg-white rounded-full filter blur-3xl opacity-10"></div>
+        <div class="absolute -bottom-20 right-0 w-64 h-64 bg-alien rounded-full filter blur-3xl opacity-20"></div>
+        
+        <div class="container mx-auto px-6 relative">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="text-4xl md:text-5xl font-fun text-black mb-6">Ready to Defend Your Theater?</h2>
+                <p class="text-xl text-black mb-10">Download Popcorn Invasion now and start popping alien popcorn!</p>
+                <div class="flex justify-center">
+                    <a href="https://play.google.com/store/apps/details?id=com.WeaselWarriorStudios.PopcornInvasion" class="bg-black hover:bg-gray-900 text-popcorn font-bold px-8 py-4 rounded-full text-lg transition-all transform hover:scale-105 shadow-lg hover:shadow-black/50">
+                        Download Now - It's Free!
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black text-gray-400 py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="md:col-span-2">
+                     <a href="/" class="flex items-center">
+                        <img src="/assets/logo.png" alt="Popcorn Invasion Logo" class="h-24 w-auto mr-3">                      
+                    </a>
+                    <p class="mb-4">Defend your movie theater from alien popcorn invaders in this exciting tapping game with realistic physics and addictive gameplay.</p>
+                    <p>© 2025 Weasel Warrior Studios. All rights reserved.</p>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold text-butter mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/" class="hover:text-popcorn">Home</a></li>
+                        <li><a href="/how-to-play/" class="hover:text-popcorn">How to Play</a></li>
+                        <li><a href="/responsible-gaming/" class="hover:text-popcorn">Responsible Gaming</a></li>
+                        <li><a href="/blog/" class="hover:text-popcorn">Blog</a></li>
+                        <li><a href="/contact/" class="hover:text-popcorn">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold text-butter mb-4">Legal</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/privacy/" class="hover:text-popcorn">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="hover:text-popcorn">Terms of Service</a></li>
+                        <li><a href="/cookies/" class="hover:text-popcorn">Cookies Policy</a></li>
+                    </ul>
+                    
+                    <h3 class="text-lg font-bold text-butter mt-6 mb-4">Contact</h3>
+                    <address class="not-italic">
+                        <p>36 St Andrews Gardens</p>
+                        <p>Toronto, ON M4W 2E1</p>
+                        <p>Canada</p>
+                        <p class="mt-2">Phone: +1 647 997 7626</p>
+                        <p>Email: info@popcorninvasiontap.com</p>
+                    </address>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center">
+                <p>Popcorn Invasion: Tapping Game is rated for ages 3+ and contains in-app purchases.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- GSAP Animations -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Mobile menu toggle
+            const mobileMenuButton = document.getElementById('mobileMenuButton');
+            const mobileMenu = document.getElementById('mobileMenu');
+            
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+                
+                // Animate mobile menu
+                if (!mobileMenu.classList.contains('hidden')) {
+                    gsap.from(mobileMenu, {
+                        height: 0,
+                        opacity: 0,
+                        duration: 0.3,
+                        ease: 'power2.out'
+                    });
+                }
+            });
+            
+            // Cookie consent
+            const cookieConsent = document.getElementById('cookieConsent');
+            const acceptCookies = document.getElementById('acceptCookies');
+            const declineCookies = document.getElementById('declineCookies');
+            
+            if (!localStorage.getItem('cookiesAccepted')) {
+                setTimeout(() => {
+                    cookieConsent.classList.remove('hidden');
+                    gsap.from(cookieConsent, {
+                        y: 100,
+                        opacity: 0,
+                        duration: 0.5,
+                        ease: 'power2.out'
+                    });
+                }, 2000);
+            }
+            
+            acceptCookies.addEventListener('click', () => {
+                localStorage.setItem('cookiesAccepted', 'true');
+                gsap.to(cookieConsent, {
+                    y: 100,
+                    opacity: 0,
+                    duration: 0.3,
+                    ease: 'power2.in',
+                    onComplete: () => cookieConsent.classList.add('hidden')
+                });
+            });
+            
+            declineCookies.addEventListener('click', () => {
+                gsap.to(cookieConsent, {
+                    y: 100,
+                    opacity: 0,
+                    duration: 0.3,
+                    ease: 'power2.in',
+                    onComplete: () => cookieConsent.classList.add('hidden')
+                });
+            });
+            
+            // Smooth scrolling for anchor links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 100,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+            
+            // Scroll animations
+            gsap.registerPlugin(ScrollTrigger);
+            
+            // Animate sections as they come into view
+            gsap.utils.toArray('.scroll-mt-20').forEach((section, i) => {
+                gsap.from(section, {
+                    scrollTrigger: {
+                        trigger: section,
+                        start: 'top 80%',
+                        toggleActions: 'play none none none'
+                    },
+                    y: 50,
+                    opacity: 0,
+                    duration: 0.6,
+                    delay: i * 0.1,
+                    ease: 'power2.out'
+                });
+            });
+            
+            // Highlight current section in quick nav
+            const sections = document.querySelectorAll('.scroll-mt-20');
+            const navLinks = document.querySelectorAll('[href^="#"]');
+            
+            function updateActiveNav() {
+                let currentSection = '';
+                
+                sections.forEach(section => {
+                    const sectionTop = section.offsetTop;
+                    const sectionHeight = section.clientHeight;
+                    
+                    if (window.scrollY >= sectionTop - 200 && window.scrollY < sectionTop + sectionHeight - 200) {
+                        currentSection = '#' + section.id;
+                    }
+                });
+                
+                navLinks.forEach(link => {
+                    link.classList.remove('bg-popcorn', 'text-black');
+                    link.classList.add('bg-gray-700', 'text-white');
+                    
+                    if (link.getAttribute('href') === currentSection) {
+                        link.classList.remove('bg-gray-700', 'text-white');
+                        link.classList.add('bg-popcorn', 'text-black');
+                    }
+                });
+            }
+            
+            window.addEventListener('scroll', updateActiveNav);
+            updateActiveNav();
+            
+            // Interactive hover effects for data usage cards
+            const usageCards = document.querySelectorAll('#data-usage .hover\\:border-popcorn');
+            usageCards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    gsap.to(card, {
+                        y: -5,
+                        duration: 0.3,
+                        ease: 'power2.out'
+                    });
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    gsap.to(card, {
+                        y: 0,
+                        duration: 0.3,
+                        ease: 'power2.out'
+                    });
+                });
+            });
+            
+            // Text shine animation for important notices
+            gsap.to('.animate-text-shine', {
+                textShadow: '0 0 16px rgba(255, 209, 102, 0.8)',
+                duration: 2,
+                repeat: -1,
+                yoyo: true,
+                ease: 'power1.inOut'
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Learn how to play Popcorn Invasion: Tapping Game - master the controls, power-ups, and strategies to defend your theater from alien popcorn!">
+    <meta name="keywords" content="popcorn game how to play, tapping game tutorial, popcorn invasion guide, game controls, power-ups guide">
+    <meta name="author" content="Weasel Warrior Studios">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://popcorninvasiontap.com/how-to-play/">
+    <title>How to Play Popcorn Invasion | Game Guide & Tutorial</title>
+    
+    <!-- Favicon -->
+   <link rel="icon" href="/assets/favicon.png" type="image/x-icon">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        popcorn: {
+                            light: '#FFF4D9',
+                            DEFAULT: '#FFD166',
+                            dark: '#E6B000',
+                        },
+                        butter: '#FFEE93',
+                        burnt: '#D8572A',
+                        alien: '#06D6A0',
+                        theater: '#1A1A2E',
+                    },
+                    fontFamily: {
+                        arcade: ['"Press Start 2P"', 'cursive'],
+                        fun: ['"Bangers"', 'cursive'],
+                    },
+                    animation: {
+                        'pop': 'pop 0.5s ease-out',
+                        'float': 'float 3s ease-in-out infinite',
+                        'pulse-slow': 'pulse 5s infinite',
+                    },
+                    keyframes: {
+                        pop: {
+                            '0%': { transform: 'scale(0.5)', opacity: '0' },
+                            '80%': { transform: 'scale(1.1)', opacity: '1' },
+                            '100%': { transform: 'scale(1)', opacity: '1' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Press+Start+2P&display=swap" rel="stylesheet">
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+</head>
+<body class="bg-theater text-white font-sans overflow-x-hidden">
+    <!-- Cookie Consent Banner -->
+    <div id="cookieConsent" class="fixed bottom-0 left-0 right-0 bg-gray-900 text-white p-4 hidden z-50">
+        <div class="container mx-auto flex flex-col md:flex-row items-center justify-between">
+            <p class="mb-4 md:mb-0">We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies.</p>
+            <div class="flex space-x-4">
+                <button id="acceptCookies" class="bg-alien hover:bg-green-600 px-4 py-2 rounded">Accept</button>
+                <button id="declineCookies" class="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded">Decline</button>
+                <a href="/cookies/" class="bg-popcorn-dark hover:bg-popcorn-darker text-black px-4 py-2 rounded">Learn More</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 bg-black bg-opacity-90 z-40 backdrop-blur-md shadow-lg">
+       <div class="container mx-auto px-6 ">
+            <div class="flex justify-between items-center">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="/" class="flex items-center">
+                        <img src="/assets/logo.png" alt="Popcorn Invasion Logo" class="h-20 w-auto mr-3">                      
+                    </a>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button id="mobileMenuButton" class="text-popcorn focus:outline-none">
+                        <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="text-white hover:text-butter">Home</a>
+                    <a href="/how-to-play/" class="text-popcorn hover:text-butter font-bold">How to Play</a>
+                    <a href="/responsible-gaming/" class="text-white hover:text-butter">Responsible Gaming</a>
+                    <a href="/blog/" class="text-white hover:text-butter">Blog</a>
+                    <a href="/contact/" class="text-white hover:text-butter">Contact</a>
+                    <a href="https://play.google.com/store/apps/details?id=com.WeaselWarriorStudios.PopcornInvasion" class="bg-popcorn hover:bg-popcorn-dark text-black font-bold px-6 py-2 rounded-full transition-all transform hover:scale-105 shadow-lg hover:shadow-popcorn/50">Download</a>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobileMenu" class="hidden md:hidden mt-4 pb-4">
+                <a href="/" class="block py-2 text-white">Home</a>
+                <a href="/how-to-play/" class="block py-2 text-popcorn font-bold">How to Play</a>
+                <a href="/responsible-gaming/" class="block py-2 text-white">Responsible Gaming</a>
+                <a href="/blog/" class="block py-2 text-white">Blog</a>
+                <a href="/contact/" class="block py-2 text-white">Contact</a>
+                <a href="https://play.google.com/store/apps/details?id=com.WeaselWarriorStudios.PopcornInvasion" class="mt-3 inline-block bg-popcorn hover:bg-popcorn-dark text-black font-bold px-6 py-2 rounded-full transition-all transform hover:scale-105">Download</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 bg-gradient-to-b from-black to-theater overflow-hidden">
+        <!-- Decorative elements -->
+        <div class="absolute top-0 left-0 w-full h-full opacity-10 bg-[url('/assets/features-1.png')] bg-repeat"></div>
+        <div class="absolute -top-20 -left-20 w-64 h-64 bg-popcorn rounded-full filter blur-3xl opacity-10"></div>
+        <div class="absolute -bottom-20 -right-20 w-64 h-64 bg-alien rounded-full filter blur-3xl opacity-10"></div>
+        
+        <div class="container mx-auto px-6 relative">
+            <div class="max-w-4xl mx-auto text-center">
+                <h1 class="text-4xl md:text-6xl font-fun mb-6 text-popcorn animate-pop">
+                    HOW TO PLAY
+                </h1>
+                <p class="text-xl md:text-2xl mb-8 text-butter">
+                    Master the art of popcorn popping and defend your theater from alien invaders!
+                </p>
+                <div class="flex justify-center">
+                    <a href="https://play.google.com/store/apps/details?id=com.WeaselWarriorStudios.PopcornInvasion" class="bg-popcorn hover:bg-popcorn-dark text-black font-bold px-8 py-4 rounded-full text-lg transition-all transform hover:scale-105 shadow-lg hover:shadow-popcorn/50">
+                        Download & Start Playing
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Basics Section -->
+    <section class="py-20 bg-theater relative">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-fun text-popcorn mb-4">Game Basics</h2>
+                <div class="w-24 h-1 bg-butter mx-auto"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 lg:grid-cols-5 gap-12 items-center mb-20">
+                <div class="order-2 lg:order-1 md:col-span-3">
+                    <h3 class="text-2xl font-bold text-butter mb-6">Your Mission</h3>
+                    <p class="text-gray-300 mb-6">Aliens have invaded your movie theater, disguising themselves as innocent popcorn kernels. As the theater's employee, it's your job to pop these alien imposters before they can escape!</p>
+                    
+                    <div class="space-y-4 ">
+                        <div class="flex items-start bg-gray-800 bg-opacity-50 p-4 rounded-lg border border-gray-700">
+                            <div class="flex-shrink-0 mt-1">
+                                <div class="w-8 h-8 rounded-full bg-popcorn text-black flex items-center justify-center font-bold">1</div>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="font-bold text-butter mb-1">Tap to Pop</h4>
+                                <p class="text-gray-300">Simply tap on popcorn kernels to pop them. Each successful pop earns you points!</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start bg-gray-800 bg-opacity-50 p-4 rounded-lg border border-gray-700">
+                            <div class="flex-shrink-0 mt-1">
+                                <div class="w-8 h-8 rounded-full bg-popcorn text-black flex items-center justify-center font-bold">2</div>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="font-bold text-butter mb-1">Watch for Aliens</h4>
+                                <p class="text-gray-300">Some kernels will reveal their true alien form - these are worth extra points!</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start bg-gray-800 bg-opacity-50 p-4 rounded-lg border border-gray-700">
+                            <div class="flex-shrink-0 mt-1">
+                                <div class="w-8 h-8 rounded-full bg-popcorn text-black flex items-center justify-center font-bold">3</div>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="font-bold text-butter mb-1">Avoid Mistakes</h4>
+                                <p class="text-gray-300">Don't tap too quickly - hitting empty space will cost you points!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="order-1 lg:order-2 relative md:col-span-2">
+                    <div class="bg-gray-800 rounded-xl p-2 border border-gray-700 shadow-lg transform rotate-1">
+                        <img src="/assets/gameplay-screenshot-1.webp" alt="Popcorn Invasion gameplay basics" class="rounded-lg w-full h-auto">
+                    </div>
+                    <div class="absolute -top-6 -left-6 w-24 h-24 bg-alien rounded-full filter blur-xl opacity-20 z-0"></div>
+                    <div class="absolute -bottom-6 -right-6 w-24 h-24 bg-burnt rounded-full filter blur-xl opacity-20 z-0"></div>
+                </div>
+            </div>
+            
+            <!-- Controls Section -->
+            <div class="grid grid-cols-1 lg:grid-cols-5 gap-12 items-center">
+                <div class="relative md:col-span-2">
+                    <div class="bg-gray-800 rounded-xl p-2 border border-gray-700 shadow-lg transform -rotate-1">
+                        <img src="/assets/game-controls.webp" alt="Popcorn Invasion game controls" class="rounded-lg w-full h-auto">
+                    </div>
+                    <div class="absolute -top-6 -right-6 w-24 h-24 bg-popcorn rounded-full filter blur-xl opacity-20 z-0"></div>
+                    <div class="absolute -bottom-6 -left-6 w-24 h-24 bg-butter rounded-full filter blur-xl opacity-20 z-0"></div>
+                </div>
+                
+                <div class="md:col-span-3">
+                    <h3 class="text-2xl font-bold text-butter mb-6">Controls & Mechanics</h3>
+                    <p class="text-gray-300 mb-6">Popcorn Invasion offers intuitive controls with depth for advanced players:</p>
+                    
+                    <div class="space-y-4">
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 mt-1">
+                                <div class="w-8 h-8 rounded-full bg-butter text-black flex items-center justify-center">
+                                    <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="font-bold text-butter mb-1">Simple Tapping</h4>
+                                <p class="text-gray-300">Tap anywhere on the screen to pop popcorn. The game automatically detects kernels under your finger.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 mt-1">
+                                <div class="w-8 h-8 rounded-full bg-butter text-black flex items-center justify-center">
+                                    <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="font-bold text-butter mb-1">Motion Controls</h4>
+                                <p class="text-gray-300">Tilt your device to make kernels slide around - great for grouping them together!</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 mt-1">
+                                <div class="w-8 h-8 rounded-full bg-butter text-black flex items-center justify-center">
+                                    <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="font-bold text-butter mb-1">Haptic Feedback</h4>
+                                <p class="text-gray-300">Feel satisfying vibrations with each pop (enable in settings if not active by default).</p>
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-start">
+                            <div class="flex-shrink-0 mt-1">
+                                <div class="w-8 h-8 rounded-full bg-butter text-black flex items-center justify-center">
+                                    <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="ml-4">
+                                <h4 class="font-bold text-butter mb-1">Multi-Touch</h4>
+                                <p class="text-gray-300">Use multiple fingers to pop several kernels at once for combo bonuses!</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Power-Ups Section -->
+    <section class="py-20 bg-gradient-to-b from-theater to-gray-900 relative overflow-hidden">
+        <!-- Decorative elements -->
+        <div class="absolute -top-20 left-0 w-64 h-64 bg-popcorn rounded-full filter blur-3xl opacity-10"></div>
+        <div class="absolute -bottom-20 right-0 w-64 h-64 bg-burnt rounded-full filter blur-3xl opacity-10"></div>
+        
+        <div class="container mx-auto px-6 relative">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-fun text-popcorn mb-4">Power-Ups & Tools</h2>
+                <div class="w-24 h-1 bg-butter mx-auto"></div>
+                <p class="text-xl text-butter mt-4 max-w-3xl mx-auto">Unlock and master these special tools to boost your score and become Employee of the Month!</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Power-Up 1 -->
+                <div class="bg-gray-800 bg-opacity-50 rounded-xl p-8 backdrop-blur-sm border border-gray-700 hover:border-popcorn transition-all transform hover:-translate-y-2 hover:shadow-lg hover:shadow-popcorn/20">
+                    
+                    <h3 class="text-2xl font-bold text-butter mb-3 text-center">Butter Blast</h3>
+                    <p class="text-gray-300 mb-4 text-center">Covers the entire screen in delicious butter, making all popcorn easier to pop for 10 seconds.</p>
+                    <div class="text-center">
+                        <span class="inline-block bg-popcorn-dark text-black text-sm font-bold px-3 py-1 rounded-full">Unlocks at 5,000 points</span>
+                    </div>
+                </div>
+                
+                <!-- Power-Up 2 -->
+                <div class="bg-gray-800 bg-opacity-50 rounded-xl p-8 backdrop-blur-sm border border-gray-700 hover:border-popcorn transition-all transform hover:-translate-y-2 hover:shadow-lg hover:shadow-popcorn/20">
+                    
+                    <h3 class="text-2xl font-bold text-butter mb-3 text-center">Flame Thrower</h3>
+                    <p class="text-gray-300 mb-4 text-center">Instantly pops all popcorn in a straight line across your screen. Perfect for clustered kernels!</p>
+                    <div class="text-center">
+                        <span class="inline-block bg-burnt text-black text-sm font-bold px-3 py-1 rounded-full">Unlocks at 10,000 points</span>
+                    </div>
+                </div>
+                
+                <!-- Power-Up 3 -->
+                <div class="bg-gray-800 bg-opacity-50 rounded-xl p-8 backdrop-blur-sm border border-gray-700 hover:border-popcorn transition-all transform hover:-translate-y-2 hover:shadow-lg hover:shadow-popcorn/20">
+                   
+                    <h3 class="text-2xl font-bold text-butter mb-3 text-center">Super Scoop</h3>
+                    <p class="text-gray-300 mb-4 text-center">Gathers all popcorn to the center of the screen for massive combo opportunities.</p>
+                    <div class="text-center">
+                        <span class="inline-block bg-alien text-black text-sm font-bold px-3 py-1 rounded-full">Unlocks at 20,000 points</span>
+                    </div>
+                </div>
+                
+                <!-- Power-Up 4 -->
+                <div class="bg-gray-800 bg-opacity-50 rounded-xl p-8 backdrop-blur-sm border border-gray-700 hover:border-popcorn transition-all transform hover:-translate-y-2 hover:shadow-lg hover:shadow-popcorn/20">
+                   
+                    <h3 class="text-2xl font-bold text-butter mb-3 text-center">Double Points</h3>
+                    <p class="text-gray-300 mb-4 text-center">Doubles all points earned for 15 seconds. Activate when you see many alien kernels!</p>
+                    <div class="text-center">
+                        <span class="inline-block bg-butter text-black text-sm font-bold px-3 py-1 rounded-full">Unlocks at 15,000 points</span>
+                    </div>
+                </div>
+                
+                <!-- Power-Up 5 -->
+                <div class="bg-gray-800 bg-opacity-50 rounded-xl p-8 backdrop-blur-sm border border-gray-700 hover:border-popcorn transition-all transform hover:-translate-y-2 hover:shadow-lg hover:shadow-popcorn/20">
+                   
+                    <h3 class="text-2xl font-bold text-butter mb-3 text-center">Time Freeze</h3>
+                    <p class="text-gray-300 mb-4 text-center">Stops popcorn from moving for 5 seconds, giving you perfect popping conditions.</p>
+                    <div class="text-center">
+                        <span class="inline-block bg-popcorn text-black text-sm font-bold px-3 py-1 rounded-full">Unlocks at 25,000 points</span>
+                    </div>
+                </div>
+                
+                <!-- Power-Up 6 -->
+                <div class="bg-gray-800 bg-opacity-50 rounded-xl p-8 backdrop-blur-sm border border-gray-700 hover:border-popcorn transition-all transform hover:-translate-y-2 hover:shadow-lg hover:shadow-popcorn/20">
+                   
+                    <h3 class="text-2xl font-bold text-butter mb-3 text-center">Mega Pop</h3>
+                    <p class="text-gray-300 mb-4 text-center">Creates a chain reaction that pops all connected popcorn kernels at once.</p>
+                    <div class="text-center">
+                        <span class="inline-block bg-burnt text-black text-sm font-bold px-3 py-1 rounded-full">Unlocks at 30,000 points</span>
+                    </div>
+                </div>
+            </div>
+            
+            
+        </div>
+    </section>
+
+    <!-- Scoring System -->
+    <section class="py-20 bg-theater relative">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-fun text-popcorn mb-4">Scoring System</h2>
+                <div class="w-24 h-1 bg-butter mx-auto"></div>
+                <p class="text-xl text-butter mt-4 max-w-3xl mx-auto">Maximize your points with these scoring opportunities</p>
+            </div>
+            
+            <div class="max-w-4xl mx-auto">
+                <div class="bg-gray-800 bg-opacity-50 rounded-xl p-8 backdrop-blur-sm border border-gray-700">
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-700">
+                            <thead>
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-bold text-butter uppercase tracking-wider">Action</th>
+                                    <th class="px-6 py-3 text-left text-xs font-bold text-butter uppercase tracking-wider">Points</th>
+                                    <th class="px-6 py-3 text-left text-xs font-bold text-butter uppercase tracking-wider">Bonus</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-700">
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">Regular popcorn pop</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-popcorn">10</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">-</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">Alien popcorn pop</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-popcorn">50</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">+5 for each consecutive alien</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">Multi-pop (2+ at once)</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-popcorn">15 each</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">+2 for each additional kernel</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">Power-up activation</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-popcorn">100</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">Varies by power-up</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">Perfect streak (10+ without miss)</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-popcorn">-</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">2x multiplier for duration</td>
+                                </tr>
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">Employee of the Minute</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-bold text-popcorn">1,000</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-300">Every 60 seconds of active play</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="mt-8 bg-gray-900 bg-opacity-50 p-4 rounded-lg border border-gray-700">
+                        <h4 class="text-lg font-bold text-butter mb-2">Pro Tip:</h4>
+                        <p class="text-gray-300">Combine the Double Points power-up with an alien streak for massive scoring potential! A single alien during double points with a 5-streak bonus can be worth up to 150 points!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Advanced Tips -->
+    <section class="py-20 bg-gradient-to-b from-theater to-black relative overflow-hidden">
+        <!-- Decorative elements -->
+        <div class="absolute -top-20 right-0 w-64 h-64 bg-popcorn rounded-full filter blur-3xl opacity-10"></div>
+        <div class="absolute -bottom-20 left-0 w-64 h-64 bg-alien rounded-full filter blur-3xl opacity-10"></div>
+        
+        <div class="container mx-auto px-6 relative">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-fun text-popcorn mb-4">Advanced Tips</h2>
+                <div class="w-24 h-1 bg-butter mx-auto"></div>
+                <p class="text-xl text-butter mt-4 max-w-3xl mx-auto">Take your popcorn popping to the next level with these pro strategies</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
+                <!-- Tip 1 -->
+                <div class="bg-gray-800 bg-opacity-50 rounded-xl p-6 backdrop-blur-sm border border-gray-700">
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 mt-1">
+                            <div class="w-10 h-10 rounded-full bg-popcorn text-black flex items-center justify-center font-bold">1</div>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-xl font-bold text-butter mb-2">The Butterfly Technique</h3>
+                            <p class="text-gray-300">Use two fingers alternately in a butterfly motion to maximize your popping speed without triggering the anti-spam system.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tip 2 -->
+                <div class="bg-gray-800 bg-opacity-50 rounded-xl p-6 backdrop-blur-sm border border-gray-700">
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 mt-1">
+                            <div class="w-10 h-10 rounded-full bg-popcorn text-black flex items-center justify-center font-bold">2</div>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-xl font-bold text-butter mb-2">Power-Up Sequencing</h3>
+                            <p class="text-gray-300">Activate Butter Blast first, then Double Points, and finish with Mega Pop for the ultimate scoring combination.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tip 3 -->
+                <div class="bg-gray-800 bg-opacity-50 rounded-xl p-6 backdrop-blur-sm border border-gray-700">
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 mt-1">
+                            <div class="w-10 h-10 rounded-full bg-popcorn text-black flex items-center justify-center font-bold">3</div>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-xl font-bold text-butter mb-2">Alien Baiting</h3>
+                            <p class="text-gray-300">Let regular popcorn bounce a few times - aliens often reveal themselves after 2-3 bounces for extra points.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tip 4 -->
+                <div class="bg-gray-800 bg-opacity-50 rounded-xl p-6 backdrop-blur-sm border border-gray-700">
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 mt-1">
+                            <div class="w-10 h-10 rounded-full bg-popcorn text-black flex items-center justify-center font-bold">4</div>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-xl font-bold text-butter mb-2">Tilt Control</h3>
+                            <p class="text-gray-300">Gently tilt your device to group popcorn together before using the Flame Thrower for maximum efficiency.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tip 5 -->
+                <div class="bg-gray-800 bg-opacity-50 rounded-xl p-6 backdrop-blur-sm border border-gray-700">
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 mt-1">
+                            <div class="w-10 h-10 rounded-full bg-popcorn text-black flex items-center justify-center font-bold">5</div>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-xl font-bold text-butter mb-2">Sound Cues</h3>
+                            <p class="text-gray-300">Listen for the distinct "alien squeak" sound that plays when disguised aliens appear on screen.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tip 6 -->
+                <div class="bg-gray-800 bg-opacity-50 rounded-xl p-6 backdrop-blur-sm border border-gray-700">
+                    <div class="flex items-start">
+                        <div class="flex-shrink-0 mt-1">
+                            <div class="w-10 h-10 rounded-full bg-popcorn text-black flex items-center justify-center font-bold">6</div>
+                        </div>
+                        <div class="ml-4">
+                            <h3 class="text-xl font-bold text-butter mb-2">Strategic Misses</h3>
+                            <p class="text-gray-300">Intentionally miss 1-2 taps to reset your combo timer just before big point opportunities appear.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            
+        </div>
+    </section>
+
+    
+   <!-- CTA Section -->
+<section class="py-20 bg-gradient-to-r from-popcorn-dark to-burnt relative overflow-hidden bg-cover bg-center" style="background-image: url('/assets/features-2.png');">
+    <!-- Decorative elements -->
+     <div class="absolute inset-0 bg-black/50"></div>
+    <div class="absolute -top-20 left-0 w-64 h-64 bg-white rounded-full filter blur-3xl opacity-10"></div>
+    <div class="absolute -bottom-20 right-0 w-64 h-64 bg-alien rounded-full filter blur-3xl opacity-20"></div>
+    
+    <div class="container mx-auto px-6 relative">
+        <div class="max-w-3xl mx-auto text-center bg-white/80 p-8 rounded-xl shadow-lg">
+            <h2 class="text-4xl md:text-5xl font-fun text-black mb-6">Ready to Defend Your Theater?</h2>
+            <p class="text-xl text-black mb-10">Join over 10,000 players in the most satisfying popcorn-popping adventure!</p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="https://play.google.com/store/apps/details?id=com.WeaselWarriorStudios.PopcornInvasion" class="bg-black hover:bg-gray-900 text-popcorn font-bold px-8 py-4 rounded-full text-lg transition-all transform hover:scale-105 shadow-lg hover:shadow-black/50">
+                    Download Now - It's Free!
+                </a>
+                <a href="/how-to-play/" class="bg-white hover:bg-gray-100 text-black font-bold px-8 py-4 rounded-full text-lg transition-all transform hover:scale-105">
+                    Learn How to Play
+                </a>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <!-- Footer -->
+    <footer class="bg-black text-gray-400 py-12">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="md:col-span-2">
+                     <a href="/" class="flex items-center">
+                        <img src="/assets/logo.png" alt="Popcorn Invasion Logo" class="h-24 w-auto mr-3">                      
+                    </a>
+                    <p class="mb-4">Defend your movie theater from alien popcorn invaders in this exciting tapping game with realistic physics and addictive gameplay.</p>
+                    <p>© 2025 Weasel Warrior Studios. All rights reserved.</p>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold text-butter mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/" class="hover:text-popcorn">Home</a></li>
+                        <li><a href="/how-to-play/" class="hover:text-popcorn">How to Play</a></li>
+                        <li><a href="/responsible-gaming/" class="hover:text-popcorn">Responsible Gaming</a></li>
+                        <li><a href="/blog/" class="hover:text-popcorn">Blog</a></li>
+                        <li><a href="/contact/" class="hover:text-popcorn">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold text-butter mb-4">Legal</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/privacy/" class="hover:text-popcorn">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="hover:text-popcorn">Terms of Service</a></li>
+                        <li><a href="/cookies/" class="hover:text-popcorn">Cookies Policy</a></li>
+                    </ul>
+                    
+                    <h3 class="text-lg font-bold text-butter mt-6 mb-4">Contact</h3>
+                    <address class="not-italic">
+                        <p>36 St Andrews Gardens</p>
+                        <p>Toronto, ON M4W 2E1</p>
+                        <p>Canada</p>
+                        <p class="mt-2">Phone: +1 647 997 7626</p>
+                        <p>Email: info@popcorninvasiontap.com</p>
+                    </address>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center">
+                <p>Popcorn Invasion: Tapping Game is rated for ages 3+ and contains in-app purchases.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- GSAP Animations -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Mobile menu toggle
+            const mobileMenuButton = document.getElementById('mobileMenuButton');
+            const mobileMenu = document.getElementById('mobileMenu');
+            
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+            
+            // Cookie consent
+            const cookieConsent = document.getElementById('cookieConsent');
+            const acceptCookies = document.getElementById('acceptCookies');
+            const declineCookies = document.getElementById('declineCookies');
+            
+            if (!localStorage.getItem('cookiesAccepted')) {
+                setTimeout(() => {
+                    cookieConsent.classList.remove('hidden');
+                    gsap.from(cookieConsent, {
+                        y: 100,
+                        opacity: 0,
+                        duration: 0.5,
+                        ease: 'power2.out'
+                    });
+                }, 2000);
+            }
+            
+            acceptCookies.addEventListener('click', () => {
+                localStorage.setItem('cookiesAccepted', 'true');
+                gsap.to(cookieConsent, {
+                    y: 100,
+                    opacity: 0,
+                    duration: 0.3,
+                    ease: 'power2.in',
+                    onComplete: () => cookieConsent.classList.add('hidden')
+                });
+            });
+            
+            declineCookies.addEventListener('click', () => {
+                gsap.to(cookieConsent, {
+                    y: 100,
+                    opacity: 0,
+                    duration: 0.3,
+                    ease: 'power2.in',
+                    onComplete: () => cookieConsent.classList.add('hidden')
+                });
+            });
+            
+            // Scroll animations
+            gsap.registerPlugin(ScrollTrigger);
+            
+            // Animate game basics section
+            gsap.utils.toArray('.game-basics-step').forEach((step, i) => {
+                gsap.from(step, {
+                    scrollTrigger: {
+                        trigger: step,
+                        start: 'top 80%',
+                        toggleActions: 'play none none none'
+                    },
+                    x: i % 2 === 0 ? -50 : 50,
+                    opacity: 0,
+                    duration: 0.8,
+                    delay: i * 0.1,
+                    ease: 'power2.out'
+                });
+            });
+            
+            // Animate power-ups
+            gsap.utils.toArray('.power-up-card').forEach((card, i) => {
+                gsap.from(card, {
+                    scrollTrigger: {
+                        trigger: card,
+                        start: 'top 80%',
+                        toggleActions: 'play none none none'
+                    },
+                    y: 50,
+                    opacity: 0,
+                    duration: 0.8,
+                    delay: i * 0.1,
+                    ease: 'back.out'
+                });
+            });
+            
+            // Animate scoring table
+            gsap.from('.scoring-table', {
+                scrollTrigger: {
+                    trigger: '.scoring-table',
+                    start: 'top 80%',
+                    toggleActions: 'play none none none'
+                },
+                y: 50,
+                opacity: 0,
+                duration: 1,
+                ease: 'power2.out'
+            });
+            
+            // Animate advanced tips
+            gsap.utils.toArray('.advanced-tip').forEach((tip, i) => {
+                gsap.from(tip, {
+                    scrollTrigger: {
+                        trigger: tip,
+                        start: 'top 80%',
+                        toggleActions: 'play none none none'
+                    },
+                    scale: 0.8,
+                    opacity: 0,
+                    duration: 0.6,
+                    delay: i * 0.1,
+                    ease: 'back.out'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog | PuzzleFunMania | Game Tips, News & Updates</title>
+    <meta name="description" content="Read the latest news, game updates, and puzzle-solving tips from PuzzleFunMania. Stay informed about our newest releases and features.">
+    <meta name="keywords" content="puzzle game blog, bubble shooter tips, game updates, puzzle strategies, mobile gaming news">
+    <link rel="canonical" href="https://PuzzleFunMania.com/blog/">
+    <link rel="icon" href="/images/favicon.png" type="image/x-icon">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        dark: {
+                            900: '#0f0f1a',
+                            800: '#161626',
+                            700: '#1d1d33',
+                            600: '#2a2a4d',
+                            500: '#3a3a66',
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-fast': 'float 3s ease-in-out infinite',
+                        'fade-in': 'fadeIn 1.5s ease-in forwards',
+                        'slide-up': 'slideUp 1s ease-out forwards',
+                        'scale-in': 'scaleIn 0.8s ease-out forwards',
+                        'pulse-slow': 'pulse 6s infinite',
+                        'glow': 'glow 4s ease-in-out infinite alternate',
+                        'wave': 'wave 8s ease-in-out infinite',
+                        'tilt': 'tilt 10s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(40px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        },
+                        scaleIn: {
+                            '0%': { transform: 'scale(0.95)', opacity: '0' },
+                            '100%': { transform: 'scale(1)', opacity: '1' },
+                        },
+                        glow: {
+                            '0%': { 'box-shadow': '0 0 10px rgba(14, 165, 233, 0)' },
+                            '100%': { 'box-shadow': '0 0 20px rgba(14, 165, 233, 0.6)' },
+                        },
+                        wave: {
+                            '0%, 100%': { transform: 'rotate(-3deg)' },
+                            '50%': { transform: 'rotate(3deg)' },
+                        },
+                        tilt: {
+                            '0%, 100%': { transform: 'rotate(-1deg)' },
+                            '50%': { transform: 'rotate(1deg)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #0f0f1a;
+            color: #e2e8f0;
+        }
+
+        .gradient-text {
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            background-image: linear-gradient(135deg, #38bdf8, #0ea5e9, #7dd3fc);
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, #0c4a6e, #075985, #0369a1);
+        }
+
+        .blog-card {
+            transform-style: preserve-3d;
+            perspective: 1000px;
+            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .blog-card:hover {
+            transform: translateY(-10px) scale(1.02) rotateX(5deg);
+            box-shadow: 0 25px 50px -12px rgba(14, 165, 233, 0.3);
+        }
+
+        .blog-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(14, 165, 233, 0.1), transparent);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            border-radius: 0.75rem;
+        }
+
+        .blog-card:hover::before {
+            opacity: 1;
+        }
+
+        .blog-card:hover .blog-image {
+            transform: scale(1.1);
+        }
+
+        .category-tag {
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+        }
+
+        .category-tag:hover {
+            transform: translateY(-5px) rotateX(10deg);
+            box-shadow: 0 10px 15px -3px rgba(14, 165, 233, 0.2);
+        }
+
+        .active-category {
+            background-color: #0ea5e9;
+            color: white;
+        }
+
+        .hover-underline-animation {
+            position: relative;
+        }
+
+        .hover-underline-animation::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #38bdf8;
+            transition: width 0.3s ease;
+        }
+
+        .hover-underline-animation:hover::after {
+            width: 100%;
+        }
+
+        .text-shadow {
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        @keyframes particle-move {
+            0% { transform: translate(0, 0); opacity: 1; }
+            100% { transform: translate(var(--tx), var(--ty)); opacity: 0; }
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(56, 189, 248, 0.6);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: particle-move 1s forwards;
+        }
+    </style>
+</head>
+
+<body class="bg-dark-900 text-gray-200">
+    <!-- Animated Background Particles -->
+    <div id="particles-container" class="fixed inset-0 overflow-hidden pointer-events-none z-0"></div>
+
+    <!-- Cookies Consent Banner -->
+    <div id="cookies-banner" class="fixed bottom-0 left-0 right-0 bg-dark-800 border-t border-dark-700 p-4 hidden z-50 transform transition-transform duration-300 translate-y-full">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
+            <div class="flex-1">
+                <p class="text-sm">We use cookies to enhance your experience on our website. By continuing to browse,
+                    you agree to our use of cookies. <a href="/privacy/" class="text-primary-400 hover:underline">Learn
+                        more</a></p>
+            </div>
+            <div class="flex gap-3">
+                <button id="decline-cookies"
+                    class="px-4 py-2 text-sm rounded-lg border border-dark-600 hover:bg-dark-700 transition hover:scale-105 active:scale-95">Decline</button>
+                <button id="accept-cookies"
+                    class="px-4 py-2 text-sm rounded-lg bg-primary-600 hover:bg-primary-700 transition hover:scale-105 active:scale-95">Accept</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="sticky top-0 z-40 bg-dark-900/90 backdrop-blur-lg border-b border-dark-700 shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-16">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="/" class="flex items-center group">
+                        <div class="w-10 h-10 rounded-full bg-primary-600 flex items-center justify-center group-hover:rotate-180 transition-transform duration-500">
+                            <img src="/images/logo.webp" alt="logo-png" class="rounded-lg w-8 h-8" />
+                        </div>
+                        <span class="ml-3 text-xl font-bold gradient-text group-hover:bg-gradient-to-r from-primary-400 to-primary-300 transition-all duration-500">PuzzleFunMania</span>
+                    </a>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="hover:text-primary-400 transition hover-underline-animation">Home</a>
+                    <a href="/games" class="hover:text-primary-400 transition hover-underline-animation">Games</a>
+                    <a href="/blog" class="text-primary-400 font-medium hover-underline-animation">Blog</a>
+                    <a href="/contact/" class="hover:text-primary-400 transition hover-underline-animation">Contact</a>
+                    <a href="https://play.google.com/store/apps/details?id=com.bird.shooter.bubble.puzzle.game" target="_blank" class="px-4 py-2 bg-primary-600 hover:bg-primary-700 rounded-lg font-medium transition hover:scale-105 active:scale-95 flex items-center">
+                        <i class="fas fa-download mr-2"></i> Download
+                    </a>
+                </nav>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-button" class="text-gray-400 hover:text-white focus:outline-none transition-transform hover:rotate-90 duration-300">
+                        <svg class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-dark-800 pb-3 px-4 transform origin-top transition-all duration-300 scale-y-0">
+            <div class="pt-2 space-y-1">
+                <a href="/" class="block px-3 py-3 rounded-md text-base font-medium text-gray-300 border-b border-dark-700">Home</a>
+                <a href="/games"
+                    class="block px-3 py-3 rounded-md text-base font-medium text-gray-300 hover:text-primary-400 border-b border-dark-700">Games</a>
+                <a href="/blog"
+                    class="block px-3 py-3 rounded-md text-base font-medium text-primary-400 border-b border-dark-700">Blog</a>
+                <a href="/contact/"
+                    class="block px-3 py-3 rounded-md text-base font-medium text-gray-300 hover:text-primary-400">Contact</a>
+                <a href="https://play.google.com/store/apps/details?id=com.bird.shooter.bubble.puzzle.game" target="_blank" class="block px-3 py-3 mt-2 rounded-md text-base font-medium bg-primary-600 hover:bg-primary-700 text-center">
+                    Download Now
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden min-h-[50vh] flex items-center">
+        <div class="absolute inset-0 bg-gradient-to-br from-dark-900 via-dark-800 to-dark-700 opacity-95"></div>
+        <div class="absolute inset-0 opacity-20">
+            <div class="absolute inset-0 bg-[url('/images/blog-post-1.jpg')] opacity-30 animate-wave"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative z-10">
+            <div class="text-center animate-fade-in">
+                <div class="inline-block mb-6 px-4 py-2 bg-dark-800 rounded-full border border-dark-700 animate-pulse-slow">
+                    <span class="text-primary-400 text-sm font-medium">📰 Latest News & Updates</span>
+                </div>
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight mb-6 text-shadow">
+                    <span class="gradient-text">PuzzleFun</span> Blog
+                </h1>
+                <p class="text-xl text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed">
+                    Game updates, puzzle strategies, and behind-the-scenes insights from our team.
+                </p>
+                <div class="animate-slide-up">
+                    <a href="#latest-posts"
+                        class="px-8 py-4 bg-primary-600 hover:bg-primary-700 rounded-xl font-medium transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl flex items-center justify-center mx-auto w-fit">
+                        <span class="mr-2 group-hover:animate-bounce">Explore Articles</span>
+                        <i class="fas fa-arrow-down group-hover:translate-y-1 transition-transform"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Content -->
+    <section id="latest-posts" class="py-20 bg-dark-800 relative overflow-hidden">
+        <div class="absolute -top-40 -right-40 w-80 h-80 bg-primary-600 rounded-full filter blur-3xl opacity-10"></div>
+        <div class="absolute -bottom-20 -left-20 w-64 h-64 bg-purple-600 rounded-full filter blur-3xl opacity-10"></div>
+        
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+            <!-- Featured Post -->
+            <div class="mb-20 animate-slide-up">
+                <div class="blog-card bg-dark-700 rounded-2xl overflow-hidden border-2 border-dark-600 hover:border-primary-500 relative">
+                    <div class="absolute -top-4 -right-4 bg-primary-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg z-10">
+                        Featured
+                    </div>
+                    <div class="relative overflow-hidden h-64 md:h-96">
+                        <img src="/images/blog-post-1.jpg" alt="Featured Blog Post" 
+                             class="blog-image w-full h-full object-cover transition duration-700">
+                        <div class="absolute inset-0 bg-gradient-to-t from-dark-900/80 via-transparent to-transparent"></div>
+                    </div>
+                    <div class="p-8">
+                        <div class="flex flex-wrap gap-3 mb-6">
+                            <span class="category-tag px-4 py-2 bg-primary-600/20 text-primary-400 rounded-xl text-sm font-medium hover:bg-primary-600 hover:text-white">
+                                <i class="fas fa-gamepad mr-2"></i> Game Updates
+                            </span>
+                            <span class="category-tag px-4 py-2 bg-primary-600/20 text-primary-400 rounded-xl text-sm font-medium hover:bg-primary-600 hover:text-white">
+                                <i class="fas fa-newspaper mr-2"></i> News
+                            </span>
+                        </div>
+                        <h2 class="text-3xl md:text-4xl font-bold mb-6">Bubble Shooter 2.0: What's New in the Latest Update</h2>
+                        <p class="text-gray-400 text-lg mb-8">
+                            We're excited to announce the biggest update yet for Bubble Shooter! Version 2.0 brings new levels, power-ups, and quality of life improvements based on your feedback.
+                        </p>
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <div class="w-10 h-10 rounded-full bg-dark-600 flex items-center justify-center mr-4">
+                                    <i class="fas fa-user text-primary-400"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-medium">PuzzleFun Team</p>
+                                    <p class="text-xs text-gray-500">June 5, 2025 · 8 min read</p>
+                                </div>
+                            </div>
+                            <a href="/blog/bubble-shooter-update/" 
+                               class="px-6 py-3 bg-primary-600 hover:bg-primary-700 z-50 rounded-lg font-medium transition-all duration-300 hover:-translate-y-1 hover:shadow-lg flex items-center">
+                                Read More <i class="fas fa-arrow-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Latest Articles -->
+            <div class="mb-12">
+                <h2 class="text-3xl font-bold mb-8 text-center animate-fade-in">
+                    <span class="gradient-text">Latest</span> Articles
+                </h2>
+                
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Post 1 -->
+                    <article class="blog-card bg-dark-700 rounded-2xl overflow-hidden border-2 border-dark-600 hover:border-primary-500 animate-scale-in">
+                        <div class="relative overflow-hidden h-56">
+                            <img src="/images/blog-post-2.webp" alt="Puzzle Game Benefits" 
+                                 class="blog-image w-full h-full object-cover transition duration-700">
+                            <div class="absolute inset-0 bg-gradient-to-t from-dark-900/80 via-transparent to-transparent"></div>
+                            <div class="absolute top-4 left-4">
+                                <span class="category-tag px-3 py-1 bg-primary-600/90 text-white rounded-full text-xs font-medium">
+                                    <i class="fas fa-brain mr-1"></i> Health
+                                </span>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-4 group-hover:text-primary-400 transition">Cognitive Benefits of Puzzle Games</h3>
+                            <p class="text-gray-400 text-sm mb-6">
+                                Discover how playing puzzle games can improve memory, problem-solving skills, and mental agility in players of all ages.
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs text-gray-500">May 28, 2025 · 6 min read</span>
+                                <a href="/blog/puzzle-game-benefits/" 
+                                   class="text-primary-400 hover:text-primary-300 z-50 text-sm font-medium flex items-center">
+                                    Read More <i class="fas fa-arrow-right ml-1 text-xs"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+                    
+                    <!-- Post 2 -->
+                    <article class="blog-card bg-dark-700 rounded-2xl overflow-hidden border-2 border-dark-600 hover:border-primary-500 animate-scale-in" style="animation-delay: 0.2s;">
+                        <div class="relative overflow-hidden h-56">
+                            <img src="/images/blog-post-3.webp" alt="Bubble Shooter Tips" 
+                                 class="blog-image w-full h-full object-cover transition duration-700">
+                            <div class="absolute inset-0 bg-gradient-to-t from-dark-900/80 via-transparent to-transparent"></div>
+                            <div class="absolute top-4 left-4">
+                                <span class="category-tag px-3 py-1 bg-primary-600/90 text-white rounded-full text-xs font-medium">
+                                    <i class="fas fa-lightbulb mr-1"></i> Tips
+                                </span>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-4 group-hover:text-primary-400 transition">Mastering Bubble Shooter: 5 Pro Tips</h3>
+                            <p class="text-gray-400 text-sm mb-6">
+                                Learn advanced strategies to improve your Bubble Shooter game and save those baby birds faster with these expert tips.
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs text-gray-500">May 20, 2025 · 5 min read</span>
+                                <a href="/blog/bubble-shooter-tips/" 
+                                   class="text-primary-400 hover:text-primary-300 z-50  text-sm font-medium flex items-center">
+                                    Read More <i class="fas fa-arrow-right ml-1 text-xs"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+                    
+                    <!-- Post 3 -->
+                    <article class="blog-card bg-dark-700 rounded-2xl overflow-hidden border-2 border-dark-600 hover:border-primary-500 animate-scale-in" style="animation-delay: 0.4s;">
+                        <div class="relative overflow-hidden h-56">
+                            <img src="/images/blog-post-3333.jpg" alt="New Game Announcement" 
+                                 class="blog-image w-full h-full object-cover transition duration-700">
+                            <div class="absolute inset-0 bg-gradient-to-t from-dark-900/80 via-transparent to-transparent"></div>
+                            <div class="absolute top-4 left-4">
+                                <span class="category-tag px-3 py-1 bg-primary-600/90 text-white rounded-full text-xs font-medium">
+                                    <i class="fas fa-bullhorn mr-1"></i> Announcement
+                                </span>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-4 group-hover:text-primary-400 transition">New Game Coming Soon: Puzzle Quest</h3>
+                            <p class="text-gray-400 text-sm mb-6">
+                                Get a first look at our upcoming puzzle adventure game that combines match-3 mechanics with RPG elements.
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs text-gray-500">May 12, 2025 · 4 min read</span>
+                                <a href="/blog/new-game-announcement/" 
+                                   class="text-primary-400 hover:text-primary-300 z-50 text-sm font-medium flex items-center">
+                                    Read More <i class="fas fa-arrow-right ml-1 text-xs"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+                    
+                    <!-- Post 4 -->
+                    <article class="blog-card bg-dark-700 rounded-2xl overflow-hidden border-2 border-dark-600 hover:border-primary-500 animate-scale-in" style="animation-delay: 0.6s;">
+                        <div class="relative overflow-hidden h-56">
+                            <img src="/images/blog-post-4.jpg" alt="Family Gaming" 
+                                 class="blog-image w-full h-full object-cover transition duration-700">
+                            <div class="absolute inset-0 bg-gradient-to-t from-dark-900/80 via-transparent to-transparent"></div>
+                            <div class="absolute top-4 left-4">
+                                <span class="category-tag px-3 py-1 bg-primary-600/90 z-50 text-white rounded-full text-xs font-medium">
+                                    <i class="fas fa-users mr-1"></i> Family
+                                </span>
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-4 group-hover:text-primary-400 transition">Best Puzzle Games for Family Game Night</h3>
+                            <p class="text-gray-400 text-sm mb-6">
+                                Discover our top picks for puzzle games that the whole family can enjoy together, fostering teamwork and fun.
+                            </p>
+                            <div class="flex items-center justify-between">
+                                <span class="text-xs text-gray-500">May 5, 2025 · 7 min read</span>
+                                <a href="/blog/family-puzzle-games/" 
+                                   class="text-primary-400 hover:text-primary-300 z-50 text-sm font-medium flex items-center">
+                                    Read More <i class="fas fa-arrow-right ml-1 text-xs"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+                    
+                   
+                </div>
+            </div>
+            
+            
+            
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="py-20 bg-dark-900 relative overflow-hidden">
+        <div class="absolute -top-20 -left-20 w-64 h-64 bg-primary-600 rounded-full filter blur-3xl opacity-10"></div>
+        <div class="absolute -bottom-20 -right-20 w-64 h-64 bg-purple-600 rounded-full filter blur-3xl opacity-10"></div>
+        
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative">
+            <div class="bg-dark-800 rounded-2xl p-8 md:p-12 border-2 border-dark-700 shadow-xl animate-float">
+                <div class="absolute -top-4 -right-4 w-16 h-16 bg-primary-600 rounded-full flex items-center justify-center text-white text-2xl">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <h2 class="text-3xl font-bold mb-6 text-shadow">
+                    <span class="gradient-text">Stay Updated</span>
+                </h2>
+                <p class="text-gray-400 mb-8 max-w-2xl mx-auto text-lg">
+                    Subscribe to our newsletter to receive the latest game updates, blog posts, and exclusive offers.
+                </p>
+                <form class="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
+                    <input type="email" placeholder="Your email address" 
+                           class="flex-grow px-6 py-4 bg-dark-700 border-2 border-dark-600 rounded-xl focus:outline-none focus:border-primary-500 transition" required>
+                    <button type="submit" 
+                            class="px-8 py-4 bg-primary-600 hover:bg-primary-700 rounded-xl font-medium transition-all duration-300 transform hover:-translate-y-1 hover:shadow-lg whitespace-nowrap">
+                        Subscribe
+                    </button>
+                </form>
+                <p class="text-xs text-gray-500 mt-6">
+                    We respect your privacy. Unsubscribe at any time.
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 gradient-bg relative overflow-hidden">
+        <div class="absolute inset-0 opacity-10">
+            <div class="absolute inset-0 bg-[url('/images/blog-post-1.jpg')] opacity-30 animate-wave"></div>
+        </div>
+        
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative">
+            <div class="absolute -top-20 -left-20 w-64 h-64 bg-white rounded-full filter blur-3xl opacity-10"></div>
+            <div class="absolute -bottom-20 -right-20 w-64 h-64 bg-white rounded-full filter blur-3xl opacity-10"></div>
+            
+            <h2 class="text-4xl md:text-5xl font-bold mb-6 text-white text-shadow">Ready to Puzzle Your Brain?</h2>
+            <p class="text-white/90 mb-8 text-xl">
+                Download our games now and start your puzzle-solving adventure today!
+            </p>
+            <div class="flex flex-wrap justify-center gap-4">
+                <a href="https://play.google.com/store/apps/details?id=com.bird.shooter.bubble.puzzle.game"
+                    target="_blank"
+                    class="px-8 py-4 bg-white text-dark-900 hover:bg-gray-100 rounded-xl font-bold transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl flex items-center">
+                    <i class="fab fa-google-play text-2xl mr-3"></i>
+                    <div class="text-left">
+                        <div class="text-xs">GET IT ON</div>
+                        <div class="text-lg">Google Play</div>
+                    </div>
+                </a>
+            </div>
+            <div class="mt-8 flex justify-center">
+                <div class="flex items-center text-white/80">
+                    <div class="flex text-yellow-400 mr-2">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <span class="text-sm">4.8/5 from 10K+ reviews</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark-800 pt-16 pb-8 border-t border-dark-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+                <div>
+                    <div class="flex items-center mb-6 group">
+                        <div class="w-12 h-12 rounded-xl bg-primary-600 flex items-center justify-center group-hover:rotate-180 transition-transform duration-500">
+                            <img src="/images/logo.webp" alt="logo-png" class="rounded-lg w-10 h-10" />
+                        </div>
+                        <span class="ml-3 text-2xl font-bold gradient-text group-hover:bg-gradient-to-r from-primary-400 to-primary-300 transition-all duration-500">PuzzleFunMania</span>
+                    </div>
+                    <p class="text-gray-400 text-sm mb-6">
+                        Creating fun and engaging puzzle games that challenge your mind and bring joy to players worldwide.
+                    </p>
+                     
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-4">Games</h3>                    
+                    <ul class="space-y-3">
+                        <li><a href="https://play.google.com/store/apps/details?id=com.bird.shooter.bubble.puzzle.game"
+                                target="_blank" class="text-gray-400 hover:text-primary-400 transition text-sm flex items-center">
+                                <i class="fas fa-arrow-right text-xs mr-2 opacity-0 group-hover:opacity-100 transition"></i> Bubble Shooter</a></li>
+                        <li><a href="https://play.google.com/store/apps/details?id=com.Puzzlefun.TileTroika"
+                                target="_blank" class="text-gray-400 hover:text-primary-400 transition text-sm flex items-center">
+                                <i class="fas fa-arrow-right text-xs mr-2 opacity-0 group-hover:opacity-100 transition"></i> Tile Troika</a></li>
+                        <li><a href="https://play.google.com/store/apps/details?id=com.Puzzlefun.BlockBreaker"
+                                target="_blank" class="text-gray-400 hover:text-primary-400 transition text-sm flex items-center">
+                                <i class="fas fa-arrow-right text-xs mr-2 opacity-0 group-hover:opacity-100 transition"></i> Block Breaker</a></li>
+                        <li><a href="https://play.google.com/store/apps/details?id=com.Puzzlefun.FlowConnect"
+                                target="_blank" class="text-gray-400 hover:text-primary-400 transition text-sm flex items-center">
+                                <i class="fas fa-arrow-right text-xs mr-2 opacity-0 group-hover:opacity-100 transition"></i> Flow Connect</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-4">Company</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/#about" class="text-gray-400 hover:text-primary-400 transition text-sm flex items-center">
+                                <i class="fas fa-arrow-right text-xs mr-2 opacity-0 group-hover:opacity-100 transition"></i> About Us</a></li>
+                        <li><a href="/blog/" class="text-gray-400 hover:text-primary-400 transition text-sm flex items-center">
+                                <i class="fas fa-arrow-right text-xs mr-2 opacity-0 group-hover:opacity-100 transition"></i> Blog</a></li>
+                        <li><a href="/contact/" class="text-gray-400 hover:text-primary-400 transition text-sm flex items-center">
+                                <i class="fas fa-arrow-right text-xs mr-2 opacity-0 group-hover:opacity-100 transition"></i> Contact</a></li>
+                        <li><a href="/privacy/" class="text-gray-400 hover:text-primary-400 transition text-sm flex items-center">
+                                <i class="fas fa-arrow-right text-xs mr-2 opacity-0 group-hover:opacity-100 transition"></i> Privacy Policy</a></li>
+                        <li><a href="/terms/" class="text-gray-400 hover:text-primary-400 transition text-sm flex items-center">
+                                <i class="fas fa-arrow-right text-xs mr-2 opacity-0 group-hover:opacity-100 transition"></i> Terms</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-4">Contact Info</h3>
+                    <address class="text-gray-400 text-sm not-italic">
+                        <div class="mb-4 flex items-start">
+                            <i class="fas fa-map-marker-alt text-primary-400 mt-1 mr-3"></i>
+                            <div>
+                              999 Canada Pl, Vancouver, BC V6C 3T4, Canada
+                            </div>
+                        </div>
+                        <div class="mb-4 flex items-center">
+                            <i class="fas fa-envelope text-primary-400 mr-3"></i>
+                            <a href="mailto:info@puzzlefunmania.com"
+                                class="hover:text-primary-400 transition">info@puzzlefunmania.com</a>
+                        </div>
+                    </address>
+                </div>
+            </div>
+
+            <div class="border-t border-dark-700 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-500 text-sm mb-4 md:mb-0">
+                    &copy; 2025 PuzzleFunMania. All rights reserved.
+                </p>
+                <div class="flex space-x-6">
+                    <a href="/privacy/" class="text-gray-500 hover:text-primary-400 transition text-sm">Privacy Policy</a>
+                    <a href="/terms/" class="text-gray-500 hover:text-primary-400 transition text-sm">Terms of Service</a>
+                    <a href="/cookies/" class="text-gray-500 hover:text-primary-400 transition text-sm">Cookies</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="fixed bottom-8 right-8 w-12 h-12 bg-primary-600 rounded-full shadow-lg flex items-center justify-center text-white opacity-0 invisible transition-all duration-300 z-40 hover:bg-primary-700">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script>
+        // Mobile menu toggle with animation
+        document.getElementById('mobile-menu-button').addEventListener('click', function () {
+            const menu = document.getElementById('mobile-menu');
+            if (menu.classList.contains('hidden')) {
+                menu.classList.remove('hidden');
+                setTimeout(() => {
+                    menu.classList.remove('scale-y-0');
+                    menu.classList.add('scale-y-100');
+                }, 10);
+            } else {
+                menu.classList.remove('scale-y-100');
+                menu.classList.add('scale-y-0');
+                setTimeout(() => {
+                    menu.classList.add('hidden');
+                }, 300);
+            }
+        });
+
+        // Cookies consent with animation
+        if (!localStorage.getItem('cookiesAccepted')) {
+            const cookiesBanner = document.getElementById('cookies-banner');
+            setTimeout(() => {
+                cookiesBanner.classList.remove('hidden');
+                setTimeout(() => {
+                    cookiesBanner.classList.remove('translate-y-full');
+                }, 10);
+            }, 2000);
+
+            document.getElementById('accept-cookies').addEventListener('click', function () {
+                localStorage.setItem('cookiesAccepted', 'true');
+                cookiesBanner.classList.add('translate-y-full');
+                setTimeout(() => {
+                    cookiesBanner.classList.add('hidden');
+                }, 300);
+            });
+
+            document.getElementById('decline-cookies').addEventListener('click', function () {
+                cookiesBanner.classList.add('translate-y-full');
+                setTimeout(() => {
+                    cookiesBanner.classList.add('hidden');
+                }, 300);
+            });
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Back to top button
+        const backToTopButton = document.getElementById('back-to-top');
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.remove('opacity-0', 'invisible');
+                backToTopButton.classList.add('opacity-100', 'visible');
+            } else {
+                backToTopButton.classList.remove('opacity-100', 'visible');
+                backToTopButton.classList.add('opacity-0', 'invisible');
+            }
+        });
+
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Animation on scroll
+        const animateOnScroll = function () {
+            const elements = document.querySelectorAll('.animate-slide-up, .animate-fade-in, .animate-scale-in');
+
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+
+                if (elementPosition < windowHeight - 100) {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translateY(0) scale(1)';
+                }
+            });
+        };
+
+        // Initialize animations
+        window.addEventListener('load', animateOnScroll);
+        window.addEventListener('scroll', animateOnScroll);
+
+        // Particle animation for background
+        function createParticle(e) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            
+            // Random size between 2px and 6px
+            const size = Math.random() * 4 + 2;
+            particle.style.width = `${size}px`;
+            particle.style.height = `${size}px`;
+            
+            // Position at mouse coordinates
+            particle.style.left = `${e.clientX}px`;
+            particle.style.top = `${e.clientY}px`;
+            
+            // Random movement direction and distance
+            const angle = Math.random() * Math.PI * 2;
+            const distance = Math.random() * 100 + 50;
+            const tx = Math.cos(angle) * distance;
+            const ty = Math.sin(angle) * distance;
+            
+            particle.style.setProperty('--tx', `${tx}px`);
+            particle.style.setProperty('--ty', `${ty}px`);
+            
+            document.getElementById('particles-container').appendChild(particle);
+            
+            // Remove particle after animation completes
+            setTimeout(() => {
+                particle.remove();
+            }, 1000);
+        }
+
+        // Add particle effect to clickable elements
+        document.querySelectorAll('a, button').forEach(element => {
+            element.addEventListener('click', function(e) {
+                // Create multiple particles for a better effect
+                for (let i = 0; i < 5; i++) {
+                    setTimeout(() => {
+                        createParticle(e);
+                    }, i * 100);
+                }
+            });
+        });
+
+        // Add hover effect to blog cards
+        document.querySelectorAll('.blog-card').forEach(card => {
+            card.addEventListener('mousemove', function(e) {
+                const rect = this.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                
+                this.style.setProperty('--mouse-x', `${x}px`);
+                this.style.setProperty('--mouse-y', `${y}px`);
+            });
+        });
+    </script>
+</body>
+</html>

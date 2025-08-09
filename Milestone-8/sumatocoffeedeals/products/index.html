@@ -1,0 +1,989 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop Coffee | Sumato Coffee Deals</title>
+    <meta name="description" content="Browse our premium selection of specialty coffees. Single origin, blends, and decaf options freshly roasted to order.">
+    <meta name="keywords" content="buy specialty coffee, fresh roasted coffee beans, single origin coffee, coffee blends, decaf coffee, sumato coffee shop, premium coffee online">
+    
+    <!-- Favicon -->
+     <link rel="icon" href="/assets/favicon.png" type="image/x-icon">
+     <link rel="canonical" href="https://sumatocoffeedeals.com/products/">
+
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6F4E37',
+                        secondary: '#C4A484',
+                        accent: '#E5B880',
+                        dark: '#3E2723',
+                        light: '#F5F5F5'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['"Playfair Display"', 'serif']
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-reverse': 'float-reverse 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        'float-reverse': {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    
+    <style>
+        /* Custom cursor */
+        .cursor {
+            position: fixed;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: rgba(111, 78, 55, 0.5);
+            pointer-events: none;
+            mix-blend-mode: multiply;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: transform 0.1s ease, width 0.3s ease, height 0.3s ease;
+        }
+        
+        .cursor-follower {
+            position: fixed;
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(111, 78, 55, 0.3);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9998;
+            transform: translate(-50%, -50%);
+            transition: transform 0.4s ease, width 0.4s ease, height 0.4s ease;
+        }
+        
+        .cursor.active {
+            transform: translate(-50%, -50%) scale(1.5);
+            background-color: rgba(111, 78, 55, 0.8);
+        }
+        
+        .cursor-follower.active {
+            transform: translate(-50%, -50%) scale(0.5);
+            background-color: rgba(196, 164, 132, 0.2);
+        }
+        
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #C4A484;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #6F4E37;
+        }
+        
+        /* Product card hover effect */
+        .product-card {
+            transition: all 0.3s ease;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        /* Button hover effect */
+        .btn-hover {
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn-hover:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+            z-index: -1;
+        }
+        
+        .btn-hover:hover:before {
+            left: 100%;
+        }
+        
+        /* Quick view modal */
+        .modal-overlay {
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+        }
+        
+        .modal-content {
+            animation: modalFadeIn 0.3s ease-out;
+        }
+        
+        @keyframes modalFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Filter sidebar */
+        .filter-option {
+            transition: all 0.3s ease;
+        }
+        
+        .filter-option:hover {
+            color: #6F4E37;
+            transform: translateX(5px);
+        }
+        
+        /* Active filter */
+        .active-filter {
+            color: #6F4E37;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body class="font-sans text-dark bg-light">
+    <!-- Custom Cursor -->
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+    
+    <!-- Cookie Consent -->
+    <div id="cookieConsent" class="fixed bottom-0 left-0 right-0 bg-dark text-white p-4 hidden z-50">
+        <div class="container mx-auto flex flex-col md:flex-row items-center justify-between">
+            <p class="mb-4 md:mb-0 md:mr-4">We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies.</p>
+            <div class="flex space-x-2">
+                <button id="declineCookies" class="px-4 py-2 border border-white rounded hover:bg-white hover:text-dark transition">Decline</button>
+                <button id="acceptCookies" class="px-4 py-2 bg-primary text-white rounded hover:bg-secondary transition">Accept</button>
+                <a href="/privacy/" class="px-4 py-2 border border-white rounded hover:bg-white hover:text-dark transition">Learn More</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-white shadow-md z-40 transition-all duration-300">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+             <a href="/" class="flex items-center">
+               <img src="/assets/logo-header.png" alt="Sumato Coffee Logo" class="h-12 rounded">
+            </a>
+            
+            <div class="hidden lg:flex space-x-8">
+                <a href="/" class="text-dark font-medium hover:text-primary transition">Home</a>
+                <a href="/products/" class="text-primary font-medium">Shop Coffee</a>
+                <a href="/about/" class="text-dark font-medium hover:text-primary transition">Our Story</a>
+                <a href="/blog/" class="text-dark font-medium hover:text-primary transition">Blog</a>
+                <a href="/contact/" class="text-dark font-medium hover:text-primary transition">Contact</a>
+            </div>
+            
+            <div class="flex items-center space-x-4">
+                <button id="searchBtn" class="p-2 text-dark hover:text-primary transition hidden">
+                    <i class="fas fa-search"></i>
+                </button>
+                <a href="/cart/" class="p-2 text-dark hover:text-primary transition relative">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cartCount" class="absolute -top-1 -right-1 bg-primary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center hidden">0</span>
+                </a>
+                <button id="mobileMenuBtn" class="lg:hidden p-2 text-dark hover:text-primary transition">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="lg:hidden bg-white absolute top-full left-0 right-0 shadow-lg hidden">
+            <div class="container mx-auto px-4 py-3 flex flex-col space-y-3">
+                <a href="/" class="py-2 text-dark font-medium border-b border-gray-100">Home</a>
+                <a href="/products/" class="py-2 text-primary font-medium border-b border-gray-100">Shop Coffee</a>
+                <a href="/about/" class="py-2 text-dark font-medium border-b border-gray-100">Our Story</a>
+                <a href="/blog/" class="py-2 text-dark font-medium border-b border-gray-100">Blog</a>
+                <a href="/contact/" class="py-2 text-dark font-medium">Contact</a>
+            </div>
+        </div>
+        
+        <!-- Search Bar -->
+        <div id="searchBar" class="absolute top-full left-0 right-0 bg-white shadow-lg hidden">
+            <div class="container mx-auto px-4 py-3">
+                <div class="relative">
+                    <input type="text" placeholder="Search our coffees..." class="w-full p-3 border border-gray-300 rounded pl-10 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                    <i class="fas fa-search absolute left-3 top-3.5 text-gray-400"></i>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-20 bg-primary text-white">
+        <div class="max-w-7xl mx-auto px-4 text-center">
+            <h1 class="text-4xl md:text-5xl font-display font-bold mb-4">Our Coffee Collection</h1>
+            <p class="text-xl max-w-2xl mx-auto">Freshly roasted specialty coffee from around the world. Each batch is roasted to order for maximum freshness.</p>
+        </div>
+        
+        <!-- Coffee bean decorative elements -->
+        <div class="absolute top-10 left-10 w-8 h-8 opacity-10">
+            <i class="fas fa-coffee"></i>
+        </div>
+        <div class="absolute bottom-10 right-10 w-12 h-12 opacity-10">
+            <i class="fas fa-coffee"></i>
+        </div>
+    </section>
+    
+    <!-- Shop Content -->
+    <section class="py-12 bg-white">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex flex-col lg:flex-row gap-8">
+                <!-- Sidebar Filters -->
+          
+                
+                <!-- Product Grid -->
+                <div class="lg:w-4/4">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-8">
+                        <p class="text-gray-600 mb-4 sm:mb-0">Showing 9 of 9 products</p>                        
+                    </div>
+                    
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Product 1 -->
+                        <div class="product-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 relative">
+                            <div class="relative overflow-hidden">
+                                <img src="/assets/the-sender-coffee.avif" alt="The Sender - Single Origin Costa Rican Coffee" class="w-full h-64 object-cover transition duration-500 hover:scale-105">
+                                <button class="quick-view-btn absolute bottom-4 right-4 bg-primary text-white px-3 py-1 rounded-full text-sm font-medium hover:bg-secondary transition" data-product="the-sender">
+                                    Quick View
+                                </button>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-semibold mb-2">The Sender - Single Origin Costa Rican</h3>
+                                <div class="flex items-center mb-3">
+                                    <div class="flex text-yellow-400">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    <span class="text-gray-600 text-sm ml-2">(24 reviews)</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-xl font-bold text-primary">From $19.65</span>
+                                    <button class="add-to-cart-btn px-4 py-2 bg-primary text-white rounded hover:bg-secondary transition" data-product="the-sender" data-price="19.65">
+                                        Add to Cart
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Product 2 -->
+                        <div class="product-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 relative">
+                            <div class="relative overflow-hidden">
+                                <img src="/assets/rise-grinder-coffee.avif" alt="The Rise & Grinder Dark Roast Coffee" class="w-full h-64 object-cover transition duration-500 hover:scale-105">
+                                <button class="quick-view-btn absolute bottom-4 right-4 bg-primary text-white px-3 py-1 rounded-full text-sm font-medium hover:bg-secondary transition" data-product="rise-grinder">
+                                    Quick View
+                                </button>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-semibold mb-2">The Rise & Grinder (Dark Roast)</h3>
+                                <div class="flex items-center mb-3">
+                                    <div class="flex text-yellow-400">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    <span class="text-gray-600 text-sm ml-2">(32 reviews)</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-xl font-bold text-primary">From $18.65</span>
+                                    <button class="add-to-cart-btn px-4 py-2 bg-primary text-white rounded hover:bg-secondary transition" data-product="rise-grinder" data-price="18.65">
+                                        Add to Cart
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Product 3 -->
+                        <div class="product-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 relative">
+                            <div class="relative overflow-hidden">
+                                <img src="/assets/the-founder-coffee.avif" alt="The Founder - Single Origin Ethiopian Coffee" class="w-full h-64 object-cover transition duration-500 hover:scale-105">
+                                <button class="quick-view-btn absolute bottom-4 right-4 bg-primary text-white px-3 py-1 rounded-full text-sm font-medium hover:bg-secondary transition" data-product="the-founder">
+                                    Quick View
+                                </button>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-semibold mb-2">The Founder - Single Origin Ethiopian</h3>
+                                <div class="flex items-center mb-3">
+                                    <div class="flex text-yellow-400">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    <span class="text-gray-600 text-sm ml-2">(18 reviews)</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-xl font-bold text-primary">From $21.59</span>
+                                    <button class="add-to-cart-btn px-4 py-2 bg-primary text-white rounded hover:bg-secondary transition" data-product="the-founder" data-price="21.59">
+                                        Add to Cart
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Product 4 -->
+                        <div class="product-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 relative">
+                            <div class="relative overflow-hidden">
+                                <img src="/assets/the-culture-coffe.avif" alt="Touch Base Light Roast Coffee" class="w-full h-64 object-cover transition duration-500 hover:scale-105">
+                                <button class="quick-view-btn absolute bottom-4 right-4 bg-primary text-white px-3 py-1 rounded-full text-sm font-medium hover:bg-secondary transition" data-product="touch-base">
+                                    Quick View
+                                </button>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-semibold mb-2">Touch Base (Light Roast)</h3>
+                                <div class="flex items-center mb-3">
+                                    <div class="flex text-yellow-400">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    <span class="text-gray-600 text-sm ml-2">(15 reviews)</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-xl font-bold text-primary">From $18.65</span>
+                                    <button class="add-to-cart-btn px-4 py-2 bg-primary text-white rounded hover:bg-secondary transition" data-product="touch-base" data-price="18.65">
+                                        Add to Cart
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Product 5 -->
+                        <div class="product-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 relative">
+                            <div class="relative overflow-hidden">
+                                <img src="/assets/sumato-enamel-camping-mug-12oz.webp" alt="Sumato Adventurer's Mug" class="w-full h-64 object-cover transition duration-500 hover:scale-105">
+                                <button class="quick-view-btn absolute bottom-4 right-4 bg-primary text-white px-3 py-1 rounded-full text-sm font-medium hover:bg-secondary transition" data-product="adventurers-mug">
+                                    Quick View
+                                </button>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-semibold mb-2">Sumato Adventurer's Mug - 12oz Enamel Companion</h3>
+                                <div class="flex items-center mb-3">
+                                    <div class="flex text-yellow-400">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    <span class="text-gray-600 text-sm ml-2">(22 reviews)</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-xl font-bold text-primary">From $20.65</span>
+                                    <button class="add-to-cart-btn px-4 py-2 bg-primary text-white rounded hover:bg-secondary transition" data-product="adventurers-mug" data-price="20.65">
+                                        Add to Cart
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Product 6 -->
+                        <div class="product-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 relative">
+                            <div class="relative overflow-hidden">
+                                <img src="/assets/side-hustle-coffee.webp" alt="Sumato Executive Mug" class="w-full h-64 object-cover transition duration-500 hover:scale-105">
+                                <button class="quick-view-btn absolute bottom-4 right-4 bg-primary text-white px-3 py-1 rounded-full text-sm font-medium hover:bg-secondary transition" data-product="executive-mug">
+                                    Quick View
+                                </button>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-semibold mb-2">Sumato Executive Mug - 15oz of Pure Clarity</h3>
+                                <div class="flex items-center mb-3">
+                                    <div class="flex text-yellow-400">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    <span class="text-gray-600 text-sm ml-2">(19 reviews)</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-xl font-bold text-primary">From $19.65</span>
+                                    <button class="add-to-cart-btn px-4 py-2 bg-primary text-white rounded hover:bg-secondary transition" data-product="executive-mug" data-price="19.65">
+                                        Add to Cart
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Product 7 -->
+                        <div class="product-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 relative">
+                            <div class="relative overflow-hidden">
+                                <img src="/assets/sumato-coffee-blue-bags-product-photo.webp" alt="Sumato Power Move Mug" class="w-full h-64 object-cover transition duration-500 hover:scale-105">
+                                <button class="quick-view-btn absolute bottom-4 right-4 bg-primary text-white px-3 py-1 rounded-full text-sm font-medium hover:bg-secondary transition" data-product="power-move-mug">
+                                    Quick View
+                                </button>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-semibold mb-2">Sumato Power Move Mug - 15oz of Pure Potential</h3>
+                                <div class="flex items-center mb-3">
+                                    <div class="flex text-yellow-400">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    <span class="text-gray-600 text-sm ml-2">(27 reviews)</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-xl font-bold text-primary">From $19.65</span>
+                                    <button class="add-to-cart-btn px-4 py-2 bg-primary text-white rounded hover:bg-secondary transition" data-product="power-move-mug" data-price="19.65">
+                                        Add to Cart
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Product 8 -->
+                        <div class="product-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 relative">
+                            <div class="relative overflow-hidden">
+                                <img src="/assets/sumato-coffee-collection-brown-bags.webp" alt="Coffee Collection" class="w-full h-64 object-cover transition duration-500 hover:scale-105">
+                                <button class="quick-view-btn absolute bottom-4 right-4 bg-primary text-white px-3 py-1 rounded-full text-sm font-medium hover:bg-secondary transition" data-product="coffee-collection">
+                                    Quick View
+                                </button>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-semibold mb-2">The Coffee Collection - Discovery Pack</h3>
+                                <div class="flex items-center mb-3">
+                                    <div class="flex text-yellow-400">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    <span class="text-gray-600 text-sm ml-2">(14 reviews)</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-xl font-bold text-primary">From $17.65</span>
+                                    <button class="add-to-cart-btn px-4 py-2 bg-primary text-white rounded hover:bg-secondary transition" data-product="coffee-collection" data-price="17.65">
+                                        Add to Cart
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Product 9 -->
+                        <div class="product-card bg-white rounded-lg overflow-hidden shadow-md transition-all duration-300 relative">
+                            <div class="relative overflow-hidden">
+                                <img src="/assets/coffee-collection.webp" alt="Work From Home Coffee" class="w-full h-64 object-cover transition duration-500 hover:scale-105">
+                                <button class="quick-view-btn absolute bottom-4 right-4 bg-primary text-white px-3 py-1 rounded-full text-sm font-medium hover:bg-secondary transition" data-product="work-from-home">
+                                    Quick View
+                                </button>
+                            </div>
+                            <div class="p-6">
+                                <h3 class="text-xl font-semibold mb-2">Work From Home - Single Origin Guatemalan</h3>
+                                <div class="flex items-center mb-3">
+                                    <div class="flex text-yellow-400">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    <span class="text-gray-600 text-sm ml-2">(36 reviews)</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-xl font-bold text-primary">$33.83</span>
+                                    <button class="add-to-cart-btn px-4 py-2 bg-primary text-white rounded hover:bg-secondary transition" data-product="work-from-home" data-price="33.83">
+                                        Add to Cart
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>                  
+                  
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+    
+   <section class="relative py-16 text-white bg-[url('/assets/hero-coffee.webp')] bg-cover bg-center bg-no-repeat">
+        <!-- Full-size overlay -->
+        <div class="absolute inset-0 bg-black/70 w-full h-full"></div>
+
+        <!-- Content above overlay -->
+        <div class="relative container mx-auto px-4 text-center">
+            <h2 class="text-3xl md:text-4xl font-display font-bold mb-6">Ready to Experience Better Coffee?</h2>
+            <p class="text-xl mb-8 max-w-2xl mx-auto">Join thousands of coffee lovers who have upgraded their daily
+                grind with Sumato Coffee.</p>
+            <div class="flex flex-col sm:flex-row justify-center space-y-3 sm:space-y-0 sm:space-x-4">
+                <a href="/products/"
+                    class="px-8 py-3 bg-white text-primary rounded-lg font-medium hover:bg-gray-100 ">Shop Now</a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="bg-dark text-white pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+                <div>
+               <img src="/assets/logo.png" alt="Sumato Coffee Logo" class="h-16 mb-4  px-2 py-2 rounded">
+                    <p class="text-gray-400 mb-4">Freshly roasted specialty coffee delivered to your doorstep. Because mediocre coffee should never be part of your job description.</p>
+                    <div class="flex space-x-4">
+                        <a href="https://www.facebook.com/sumatocoffee" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.instagram.com/sumatocoffee/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://x.com/sumatocoffee" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Shop</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/products/" class="text-gray-400 hover:text-white transition">All Coffee</a></li>
+                        <li><a href="/products/" class="text-gray-400 hover:text-white transition">Single Origin</a></li>
+                        <li><a href="/products/" class="text-gray-400 hover:text-white transition">Blends</a></li>
+                        <li><a href="/products/" class="text-gray-400 hover:text-white transition">Decaf</a></li>
+                        <li><a href="/products/" class="text-gray-400 hover:text-white transition">Merchandise</a></li>
+                        <li><a href="/products/" class="text-gray-400 hover:text-white transition">Gift Cards</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Company</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/about/" class="text-gray-400 hover:text-white transition">Our Story</a></li>
+                        <li><a href="/blog/" class="text-gray-400 hover:text-white transition">Blog</a></li>
+                        <li><a href="/contact/" class="text-gray-400 hover:text-white transition">Contact Us</a></li>
+                    
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Help</h3>
+                    <ul class="space-y-2">
+                       
+                        <li><a href="/privacy/" class="text-gray-400 hover:text-white transition">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="text-gray-400 hover:text-white transition">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-400 mb-4 md:mb-0">© 2025 Sumato Coffee Deals. All rights reserved.</p>
+                    <div class="flex space-x-6">
+                        <a href="/privacy/" class="text-gray-400 hover:text-white transition">Privacy Policy</a>
+                        <a href="/terms/" class="text-gray-400 hover:text-white transition">Terms of Service</a>
+                        <a href="/cookies/" class="text-gray-400 hover:text-white transition">Cookies</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Quick View Modal -->
+    <div id="quickViewModal" class="fixed inset-0 z-50 hidden">
+     
+        <div class="modal-overlay absolute w-full h-full "></div>
+        <div class="flex items-center justify-center min-h-screen">
+            <div class="modal-content relative bg-white rounded-lg max-w-4xl w-full mx-4 max-h-screen overflow-y-auto">
+                <button id="closeModal" class="absolute top-4 right-4 text-gray-500 hover:text-gray-700">
+                    <i class="fas fa-times"></i>
+                </button>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 p-8">
+                    <div>
+                        <img id="modalProductImage" src="" alt=" product img" class="w-full rounded-lg">
+                        
+                    </div>
+                    
+                    <div>
+                        <h2 id="modalProductTitle" class="text-2xl font-bold mb-2"></h2>
+                        <div class="flex items-center mb-4">
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="text-gray-600 text-sm ml-2">(24 reviews)</span>
+                        </div>
+                        
+                        <p id="modalProductDescription" class="text-gray-700 mb-6"></p>
+                        
+                      
+                        
+                        <div class="mb-6">
+                            <h3 class="font-semibold mb-2">Quantity</h3>
+                            <div class="flex items-center">
+                                
+                                <input type="number" value="1" min="1" class="w-16 py-1 border-t border-b border-gray-300 text-center">
+                           
+                            </div>
+                        </div>
+                        
+                        <div class="flex items-center justify-between">
+                            <span id="modalProductPrice" class="text-2xl font-bold text-primary"></span>
+                            <button id="modalAddToCart" class="px-6 py-3 bg-primary text-white rounded-lg font-medium hover:bg-secondary transition">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+   
+    <script>
+        // Custom Cursor
+        const cursor = document.querySelector('.cursor');
+        const cursorFollower = document.querySelector('.cursor-follower');
+        
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+            
+            setTimeout(() => {
+                cursorFollower.style.left = e.clientX + 'px';
+                cursorFollower.style.top = e.clientY + 'px';
+            }, 100);
+        });
+        
+        document.querySelectorAll('a, button, input, textarea, .product-card').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                cursor.classList.add('active');
+                cursorFollower.classList.add('active');
+            });
+            
+            el.addEventListener('mouseleave', () => {
+                cursor.classList.remove('active');
+                cursorFollower.classList.remove('active');
+            });
+        });
+        
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Search Toggle
+        const searchBtn = document.getElementById('searchBtn');
+        const searchBar = document.getElementById('searchBar');
+        
+        searchBtn.addEventListener('click', () => {
+            searchBar.classList.toggle('hidden');
+            mobileMenu.classList.add('hidden');
+        });
+        
+        // Quick View Modal
+        const quickViewBtns = document.querySelectorAll('.quick-view-btn');
+        const quickViewModal = document.getElementById('quickViewModal');
+        const closeModal = document.getElementById('closeModal');
+        const modalProductImage = document.getElementById('modalProductImage');
+        const modalProductTitle = document.getElementById('modalProductTitle');
+        const modalProductDescription = document.getElementById('modalProductDescription');
+        const modalProductPrice = document.getElementById('modalProductPrice');
+        const modalAddToCart = document.getElementById('modalAddToCart');
+        
+        quickViewBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const product = btn.getAttribute('data-product');
+                const productCard = btn.closest('.product-card');
+                const productImg = productCard.querySelector('img');
+                
+                // Set modal content based on product
+                if (product === 'the-sender') {
+                    modalProductImage.src = productImg.src;
+                    modalProductImage.alt = 'The Sender - Single Origin Costa Rican Coffee';
+                    modalProductTitle.textContent = 'The Sender - Single Origin Costa Rican';
+                    modalProductDescription.textContent = 'Medium roast featuring a confident badger in a suit and red tie holding a coffee cup, surrounded by whole roasted beans. This single-origin coffee from Costa Rica offers bright acidity with notes of citrus and brown sugar, perfect for those who appreciate a clean, vibrant cup.';
+                    modalProductPrice.textContent = '$19.65';
+                    modalAddToCart.setAttribute('data-product', 'the-sender');
+                    modalAddToCart.setAttribute('data-price', '19.65');
+                } else if (product === 'rise-grinder') {
+                    modalProductImage.src = productImg.src;
+                    modalProductImage.alt = 'The Rise & Grinder Dark Roast Coffee';
+                    modalProductTitle.textContent = 'The Rise & Grinder (Dark Roast)';
+                    modalProductDescription.textContent = 'Bold Colombian-Guatemalan blend in packaging with jacked badger art, ideal for strong mornings and deep focus. This dark roast combines beans from Colombia and Guatemala for a full-bodied cup with deep chocolate notes and a smooth finish.';
+                    modalProductPrice.textContent = '$18.65';
+                    modalAddToCart.setAttribute('data-product', 'rise-grinder');
+                    modalAddToCart.setAttribute('data-price', '18.65');
+                } else if (product === 'the-founder') {
+                    modalProductImage.src = productImg.src;
+                    modalProductImage.alt = 'The Founder - Single Origin Ethiopian Coffee';
+                    modalProductTitle.textContent = 'The Founder - Single Origin Ethiopian';
+                    modalProductDescription.textContent = 'Featuring a business-suited badger illustration, surrounded by roasted coffee beans on a wooden table. This Ethiopian coffee is naturally processed, offering intense berry flavors and floral aromas with a wine-like complexity.';
+                    modalProductPrice.textContent = '$21.59';
+                    modalAddToCart.setAttribute('data-product', 'the-founder');
+                    modalAddToCart.setAttribute('data-price', '21.59');
+                } else if (product === 'touch-base') {
+                    modalProductImage.src = productImg.src;
+                    modalProductImage.alt = 'Touch Base Light Roast Coffee';
+                    modalProductTitle.textContent = 'Touch Base (Light Roast)';
+                    modalProductDescription.textContent = 'Illustrated badger in a black blazer holding a branded coffee mug, surrounded by roasted beans with "Touch Base" text on the bag. This light roast offers delicate floral notes with a crisp, tea-like body and bright citrus acidity.';
+                    modalProductPrice.textContent = '$18.65';
+                    modalAddToCart.setAttribute('data-product', 'touch-base');
+                    modalAddToCart.setAttribute('data-price', '18.65');
+                } else if (product === 'adventurers-mug') {
+                    modalProductImage.src = productImg.src;
+                    modalProductImage.alt = 'Sumato Adventurer\'s Mug';
+                    modalProductTitle.textContent = 'Sumato Adventurer\'s Mug - 12oz Enamel Companion';
+                    modalProductDescription.textContent = 'Our classic enamel camping mug with the Sumato logo. Perfect for your outdoor adventures or daily commute. Holds 12oz of your favorite beverage and features a comfortable handle.';
+                    modalProductPrice.textContent = '$20.65';
+                    modalAddToCart.setAttribute('data-product', 'adventurers-mug');
+                    modalAddToCart.setAttribute('data-price', '20.65');
+                } else if (product === 'executive-mug') {
+                    modalProductImage.src = productImg.src;
+                    modalProductImage.alt = 'Sumato Executive Mug';
+                    modalProductTitle.textContent = 'Sumato Executive Mug - 15oz of Pure Clarity';
+                    modalProductDescription.textContent = 'Premium ceramic mug with a sleek design and comfortable grip. Holds 15oz of your favorite coffee and features a chip-resistant finish. Microwave and dishwasher safe.';
+                    modalProductPrice.textContent = '$19.65';
+                    modalAddToCart.setAttribute('data-product', 'executive-mug');
+                    modalAddToCart.setAttribute('data-price', '19.65');
+                } else if (product === 'power-move-mug') {
+                    modalProductImage.src = productImg.src;
+                    modalProductImage.alt = 'Sumato Power Move Mug';
+                    modalProductTitle.textContent = 'Sumato Power Move Mug - 15oz of Pure Potential';
+                    modalProductDescription.textContent = 'Our premium insulated travel mug keeps your coffee hot for hours. Features a leak-proof lid and comfortable grip. Holds 15oz and comes with the Sumato logo prominently displayed.';
+                    modalProductPrice.textContent = '$19.65';
+                    modalAddToCart.setAttribute('data-product', 'power-move-mug');
+                    modalAddToCart.setAttribute('data-price', '19.65');
+                } else if (product === 'coffee-collection') {
+                    modalProductImage.src = productImg.src;
+                    modalProductImage.alt = 'The Coffee Collection - Discovery Pack';
+                    modalProductTitle.textContent = 'The Coffee Collection - Discovery Pack';
+                    modalProductDescription.textContent = 'Overhead view of brown kraft coffee bags surrounded by roasted beans with bold white text reading "Coffee Collection". Sample five of our most popular coffees in one convenient pack. Perfect for exploring new flavors or finding your new favorite.';
+                    modalProductPrice.textContent = '$17.65';
+                    modalAddToCart.setAttribute('data-product', 'coffee-collection');
+                    modalAddToCart.setAttribute('data-price', '17.65');
+                } else if (product === 'work-from-home') {
+                    modalProductImage.src = productImg.src;
+                    modalProductImage.alt = 'Work From Home - Single Origin Guatemalan Coffee';
+                    modalProductTitle.textContent = 'Work From Home - Single Origin Guatemalan';
+                    modalProductDescription.textContent = 'Work-from-home themed illustration of a badger in a blazer and pajama pants, sipping Sumato Coffee at a laptop with houseplants, desk lamp, and branded mug. This Guatemalan coffee offers a balanced profile with notes of milk chocolate, apple, and a hint of spice.';
+                    modalProductPrice.textContent = '$33.83';
+                    modalAddToCart.setAttribute('data-product', 'work-from-home');
+                    modalAddToCart.setAttribute('data-price', '33.83');
+                }
+                
+                quickViewModal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+        
+        closeModal.addEventListener('click', () => {
+            quickViewModal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        });
+        
+        // Click outside modal to close
+        quickViewModal.addEventListener('click', (e) => {
+            if (e.target === quickViewModal) {
+                quickViewModal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        // Cart functionality
+        const addToCartBtns = document.querySelectorAll('.add-to-cart-btn, #modalAddToCart');
+        const cartCount = document.getElementById('cartCount');
+        
+        // Initialize cart
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        updateCartCount();
+        
+        addToCartBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const product = btn.getAttribute('data-product');
+                const price = parseFloat(btn.getAttribute('data-price'));
+                const productCard = btn.closest('.product-card');
+                const productImg = productCard ? productCard.querySelector('img').src : '';
+                
+                // Check if product already in cart
+                const existingItem = cart.find(item => item.product === product);
+                
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    cart.push({
+                        product: product,
+                        name: getProductName(product),
+                        price: price,
+                        quantity: 1,
+                        image: productImg || getProductImage(product)
+                    });
+                }
+                
+                // Save to localStorage
+                localStorage.setItem('cart', JSON.stringify(cart));
+                updateCartCount();
+                
+                // Close modal if adding from modal
+                if (btn.id === 'modalAddToCart') {
+                    quickViewModal.classList.add('hidden');
+                    document.body.style.overflow = 'auto';
+                }
+                
+                // Show added to cart feedback
+                const originalText = btn.textContent;
+                btn.textContent = 'Added to Cart!';
+                btn.classList.add('bg-green-600');
+                btn.classList.remove('bg-primary', 'hover:bg-secondary');
+                
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                    btn.classList.remove('bg-green-600');
+                    btn.classList.add('bg-primary', 'hover:bg-secondary');
+                }, 2000);
+            });
+        });
+        
+        function getProductName(product) {
+            switch(product) {
+                case 'the-sender': return 'The Sender - Single Origin Costa Rican';
+                case 'rise-grinder': return 'The Rise & Grinder (Dark Roast)';
+                case 'the-founder': return 'The Founder - Single Origin Ethiopian';
+                case 'touch-base': return 'Touch Base (Light Roast)';
+                case 'adventurers-mug': return 'Sumato Adventurer\'s Mug - 12oz Enamel Companion';
+                case 'executive-mug': return 'Sumato Executive Mug - 15oz of Pure Clarity';
+                case 'power-move-mug': return 'Sumato Power Move Mug - 15oz of Pure Potential';
+                case 'coffee-collection': return 'The Coffee Collection - Discovery Pack';
+                case 'work-from-home': return 'Work From Home - Single Origin Guatemalan';
+                default: return 'Coffee Product';
+            }
+        }
+        
+        function getProductImage(product) {
+            switch(product) {
+                case 'the-sender': return '/assets/the-sender-coffee.avif';
+                case 'rise-grinder': return '/assets/rise-grinder-coffee.avif';
+                case 'the-founder': return '/assets/the-founder-coffee.avif';
+                case 'touch-base': return '/assets/the-culture-coffe.avif';
+                case 'adventurers-mug': return '/assets/sumato-enamel-camping-mug-12oz.webp';
+                case 'executive-mug': return '/assets/side-hustle-coffee.webp';
+                case 'power-move-mug': return '/assets/sumato-coffee-blue-bags-product-photo.webp';
+                case 'coffee-collection': return '/assets/sumato-coffee-collection-brown-bags.webp';
+                case 'work-from-home': return '/assets/coffee-collection.webp';
+                default: return '/assets/coffee-placeholder.jpg';
+            }
+        }
+        
+        function updateCartCount() {
+            const count = cart.reduce((total, item) => total + item.quantity, 0);
+            cartCount.textContent = count;
+            
+            if (count > 0) {
+                cartCount.classList.remove('hidden');
+            } else {
+                cartCount.classList.add('hidden');
+            }
+        }
+        
+        // Cookie Consent
+        const cookieConsent = document.getElementById('cookieConsent');
+        const acceptCookies = document.getElementById('acceptCookies');
+        const declineCookies = document.getElementById('declineCookies');
+        
+        if (!localStorage.getItem('cookieConsent')) {
+            setTimeout(() => {
+                cookieConsent.classList.remove('hidden');
+            }, 2000);
+        }
+        
+        acceptCookies.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'accepted');
+            cookieConsent.classList.add('hidden');
+        });
+        
+        declineCookies.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'declined');
+            cookieConsent.classList.add('hidden');
+        });
+        
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Animate elements on scroll
+        gsap.utils.toArray('.product-card, .btn-hover').forEach(element => {
+            gsap.from(element, {
+                opacity: 0,
+                y: 50,
+                duration: 0.8,
+                scrollTrigger: {
+                    trigger: element,
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                }
+            });
+        });
+        
+        // Section title animations
+        gsap.utils.toArray('section h2').forEach(title => {
+            gsap.from(title, {
+                opacity: 0,
+                y: 50,
+                duration: 0.8,
+                scrollTrigger: {
+                    trigger: title,
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                }
+            });
+        });
+    </script>
+</body>
+</html>

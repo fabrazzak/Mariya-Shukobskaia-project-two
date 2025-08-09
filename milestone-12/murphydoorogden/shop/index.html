@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop Hidden Doors | Murphy Door Ogden</title>
+    <meta name="description" content="Browse our premium collection of hidden doors including bookcase doors, mirror doors, and custom solutions. Transform your space with our innovative designs.">
+    <meta name="keywords" content="hidden doors for sale, bookcase doors, mirror doors, secret doors, Murphy doors, space-saving doors, custom hidden doors">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/image/logo.png" type="image/x-icon">
+    <!-- Shop Page -->
+<link rel="canonical" href="https://murphydoorogden.com/shop/" />
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap');
+        
+        :root {
+            --primary: #1a365d;
+            --secondary: #cba052;
+            --accent: #2d3748;
+            --light: #f7fafc;
+            --dark: #1a202c;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .product-card {
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-10px) rotateY(5deg);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(45deg, #cba052, #8a6d3b);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .filter-section {
+            transition: all 0.3s ease;
+            max-height: 0;
+            overflow: hidden;
+        }
+        
+        .filter-section.open {
+            max-height: 500px;
+        }
+        
+        .price-slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 8px;
+            border-radius: 4px;
+            background: #d1d5db;
+            outline: none;
+        }
+        
+        .price-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #cba052;
+            cursor: pointer;
+        }
+        
+        .price-slider::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: #cba052;
+            cursor: pointer;
+        }
+        
+        .checkbox-custom {
+            position: relative;
+            padding-left: 30px;
+            cursor: pointer;
+        }
+        
+        .checkbox-custom input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+        }
+        
+        .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 20px;
+            width: 20px;
+            background-color: #f3f4f6;
+            border: 2px solid #d1d5db;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+        
+        .checkbox-custom:hover input ~ .checkmark {
+            background-color: #e5e7eb;
+        }
+        
+        .checkbox-custom input:checked ~ .checkmark {
+            background-color: #cba052;
+            border-color: #cba052;
+        }
+        
+        .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+        }
+        
+        .checkbox-custom input:checked ~ .checkmark:after {
+            display: block;
+        }
+        
+        .checkbox-custom .checkmark:after {
+            left: 6px;
+            top: 2px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 2px 2px 0;
+            transform: rotate(45deg);
+        }
+        
+        .pagination .active {
+            background-color: #cba052;
+            color: white;
+        }
+    </style>
+</head>
+<body class="relative">
+    <!-- Toast Notification -->
+    <div id="toast" class="toast p-4 bg-green-600 text-white rounded-lg shadow-lg">
+        <div class="flex items-center">
+            <i class="fas fa-check-circle mr-2"></i>
+            <span id="toastMessage">Product added to cart!</span>
+        </div>
+    </div>
+    
+   <!-- Navigation -->
+<nav class="bg-white shadow-lg sticky top-0 z-50">
+    <div class="container mx-auto px-4">
+        <div class="flex justify-between items-center py-4">
+            <div class="flex items-center">
+                <a href="/" class="flex items-center">
+                    <img src="/image/logo.png" alt="Murphy Door Ogden Logo" class="h-10 w-24 object-cover mr-2">
+                </a>
+            </div>
+            
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="/" class="text-gray-800 hover:text-amber-600 transition">Home</a>
+                <a href="/shop/" class="text-amber-600 hover:text-amber-600 transition">Shop</a>
+                <a href="/about/" class="text-gray-800 hover:text-amber-600 transition">About</a>
+                <a href="/blog/" class="text-gray-800 hover:text-amber-600 transition">Blog</a>
+                <a href="/contact/" class="text-gray-800 hover:text-amber-600 transition">Contact</a>
+                <div class="relative">
+                    <button id="cartButton" class="text-gray-800 hover:text-amber-600 transition relative">
+                        <i class="fas fa-shopping-cart text-xl"></i>
+                        <span id="cartCount" class="absolute -top-2 -right-2 bg-amber-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                    </button>
+                    <div id="cartDropdown" class="hidden absolute right-0 mt-2 w-72 bg-white rounded-md shadow-lg z-50 p-4">
+                        <div id="cartItems" class="max-h-60 overflow-y-auto">
+                            <p class="text-gray-500 text-center py-4">Your cart is empty</p>
+                        </div>
+                        <div class="border-t mt-2 pt-2">
+                            <a href="/cart/" class="block text-center bg-amber-600 text-white py-2 rounded hover:bg-amber-700 transition">View Cart</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu Button - Custom door icon -->
+            <button id="mobileMenuButton" class="md:hidden text-gray-800 focus:outline-none">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<!-- Mobile Menu Panel - Unique sliding door design -->
+<div id="mobileMenu" class="hidden fixed inset-0 z-50 overflow-hidden">
+    <div class="absolute inset-0 overflow-hidden">
+        <!-- Background overlay with fade animation -->
+        <div id="menuOverlay" class="absolute inset-0 bg-black bg-opacity-50 transition-opacity duration-300 opacity-0"></div>
+        
+        <!-- Menu panel with sliding door effect -->
+        <div id="menuPanel" class="fixed inset-y-0 right-0 max-w-full flex transform transition-all duration-500 translate-x-full">
+            <div class="relative w-screen max-w-xs">
+                <div class="h-full flex flex-col bg-gradient-to-b from-amber-800 to-amber-900 shadow-xl overflow-y-auto">
+                    <!-- Decorative door handle -->
+                    <div class="absolute left-0 top-1/2 -ml-2 w-6 h-12 bg-amber-600 rounded-l-lg shadow-lg transform -translate-y-1/2 hidden"></div>
+                    
+                    <!-- Menu header with close button -->
+                    <div class="flex items-center justify-between px-6 py-2 border-b border-amber-700">
+                        <img src="/image/logo-white.png" alt="Murphy Door Ogden Logo" class="h-14">
+                        <button id="closeMobileMenu" class="text-amber-200 hover:text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <!-- Menu navigation links -->
+                    <div class="flex-1 px-6 py-8">
+                        <nav class="space-y-6">
+                            <a href="/" class="flex items-center text-amber-100 hover:text-white group">
+                                <span class="mr-3 h-1 w-6 bg-amber-600 group-hover:bg-white transition-all duration-300"></span>
+                                Home
+                            </a>
+                            <a href="/shop/" class="flex font-bold items-center text-amber-100 hover:text-white group">
+                                <span class="mr-3 h-1 w-6 bg-amber-600 group-hover:bg-white transition-all duration-300"></span>
+                                Shop
+                            </a>
+                            <a href="/about/" class="flex items-center text-amber-100 hover:text-white group">
+                                <span class="mr-3 h-1 w-6 bg-amber-600 group-hover:bg-white transition-all duration-300"></span>
+                                About
+                            </a>
+                            <a href="/blog/" class="flex items-center text-amber-100 hover:text-white group">
+                                <span class="mr-3 h-1 w-6 bg-amber-600 group-hover:bg-white transition-all duration-300"></span>
+                                Blog
+                            </a>
+                            <a href="/contact/" class="flex items-center text-amber-100 hover:text-white group">
+                                <span class="mr-3 h-1 w-6 bg-amber-600 group-hover:bg-white transition-all duration-300"></span>
+                                Contact
+                            </a>
+                            <a href="/cart/" class="flex items-center text-amber-100 hover:text-white group mt-10 pt-6 border-t border-amber-700">
+                                <i class="fas fa-shopping-cart mr-3"></i> 
+                                Cart (<span id="mobileCartCount">0</span>)
+                            </a>
+                        </nav>
+                    </div>
+                    
+                    <!-- Menu footer with tagline -->
+                    <div class="px-6 py-4 border-t border-amber-700 text-center">
+                        <p class="text-xs text-amber-300">"Opening doors to hidden possibilities"</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Mobile Menu Toggle - Enhanced with door animation
+    document.getElementById('mobileMenuButton').addEventListener('click', function() {
+        const menu = document.getElementById('mobileMenu');
+        const overlay = document.getElementById('menuOverlay');
+        const panel = document.getElementById('menuPanel');
+        
+        menu.classList.remove('hidden');
+        setTimeout(() => {
+            overlay.classList.add('opacity-100');
+            panel.classList.remove('translate-x-full');
+        }, 20);
+    });
+
+    // Close mobile menu
+    document.getElementById('closeMobileMenu').addEventListener('click', function() {
+        closeMobileMenu();
+    });
+
+    // Close when clicking overlay
+    document.getElementById('menuOverlay').addEventListener('click', function() {
+        closeMobileMenu();
+    });
+
+    function closeMobileMenu() {
+        const menu = document.getElementById('mobileMenu');
+        const overlay = document.getElementById('menuOverlay');
+        const panel = document.getElementById('menuPanel');
+        
+        overlay.classList.remove('opacity-100');
+        panel.classList.add('translate-x-full');
+        
+        setTimeout(() => {
+            menu.classList.add('hidden');
+        }, 500);
+    }
+
+    // Cart Dropdown Toggle (unchanged from original)
+    document.getElementById('cartButton').addEventListener('click', function(e) {
+        e.stopPropagation();
+        const dropdown = document.getElementById('cartDropdown');
+        dropdown.classList.toggle('hidden');
+    });
+    
+    // Close cart dropdown when clicking outside
+    document.addEventListener('click', function() {
+        const dropdown = document.getElementById('cartDropdown');
+        if (!dropdown.classList.contains('hidden')) {
+            dropdown.classList.add('hidden');
+        }
+    });
+</script>
+    
+   <!-- Shop Header with Background Image -->
+<section class="relative bg-cover bg-center bg-no-repeat text-white py-16" style="background-image: url('/image/blog/design-ideas.jpg');">
+    <!-- Dark overlay -->
+    <div class="absolute inset-0 bg-black opacity-60"></div>
+
+    <!-- Content -->
+    <div class="container mx-auto px-4 relative z-10">
+        <div class="text-center">
+            <h1 class="text-4xl md:text-5xl font-bold mb-4">Our Hidden Door Collection</h1>
+            <p class="text-xl text-gray-300 max-w-2xl mx-auto">Discover innovative space-saving solutions that blend seamlessly with your home's design.</p>
+        </div>
+    </div>
+</section>
+
+    
+    <!-- Shop Content -->
+    <section class="py-12 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col lg:flex-row gap-8">
+                <!-- Filters Sidebar -->
+                <div class="lg:w-1/4">
+                    <div class="bg-white p-6 rounded-lg shadow-sm sticky top-24">
+                        <div class="flex justify-between items-center mb-6">
+                            <h2 class="text-xl font-bold">Filters</h2>
+                            <button id="clearFilters" class="text-sm text-amber-600 hover:text-amber-700">Clear All</button>
+                        </div>
+                        
+                        <!-- Search -->
+                        <div class="mb-6">
+                            <input type="text" id="searchInput" placeholder="Search products..." class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-amber-500">
+                        </div>
+                        
+                        <!-- Categories Filter -->
+                        <div class="mb-6 border-b pb-6">
+                            <button class="filter-toggle flex justify-between items-center w-full text-left font-medium">
+                                <span>Categories</span>
+                                <i class="fas fa-chevron-down transition-transform"></i>
+                            </button>
+                            <div class="filter-section mt-4">
+                                <div class="space-y-2">
+                                    <label class="checkbox-custom block">All Products
+                                        <input type="checkbox" checked="checked" class="category-filter" value="all">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    <label class="checkbox-custom block">Bookcase Doors
+                                        <input type="checkbox" class="category-filter" value="bookcase">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    <label class="checkbox-custom block">Mirror Doors
+                                        <input type="checkbox" class="category-filter" value="mirror">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    <label class="checkbox-custom block">Cabinet Doors
+                                        <input type="checkbox" class="category-filter" value="cabinet">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    <label class="checkbox-custom block">Specialty Doors
+                                        <input type="checkbox" class="category-filter" value="specialty">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Price Filter -->
+                        <div class="mb-6 border-b pb-6">
+                            <button class="filter-toggle flex justify-between items-center w-full text-left font-medium">
+                                <span>Price Range</span>
+                                <i class="fas fa-chevron-down transition-transform"></i>
+                            </button>
+                            <div class="filter-section mt-4">
+                                <div class="mb-4">
+                                    <div class="flex justify-between mb-2">
+                                        <span id="minPriceValue">$500</span>
+                                        <span id="maxPriceValue">$10,000</span>
+                                    </div>
+                                    <div class="flex space-x-4">
+                                        <input type="range" min="500" max="10000" value="500" class="price-slider" id="minPrice">
+                                        <input type="range" min="500" max="10000" value="10000" class="price-slider" id="maxPrice">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Features Filter -->
+                        <div class="mb-6">
+                            <button class="filter-toggle flex justify-between items-center w-full text-left font-medium">
+                                <span>Features</span>
+                                <i class="fas fa-chevron-down transition-transform"></i>
+                            </button>
+                            <div class="filter-section mt-4">
+                                <div class="space-y-2">
+                                    <label class="checkbox-custom block">Ready to Ship
+                                        <input type="checkbox" class="feature-filter" value="ready">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    <label class="checkbox-custom block">Customizable
+                                        <input type="checkbox" class="feature-filter" value="custom">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    <label class="checkbox-custom block">Bestseller
+                                        <input type="checkbox" class="feature-filter" value="bestseller">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                    <label class="checkbox-custom block">New Arrival
+                                        <input type="checkbox" class="feature-filter" value="new">
+                                        <span class="checkmark"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Products Grid -->
+                <div class="lg:w-3/4">
+                    <div class="flex flex-col sm:flex-row justify-between items-center mb-8">
+                        <div class="mb-4 sm:mb-0">
+                            <span id="productCount" class="text-gray-600">35 products</span>
+                        </div>
+                        <div class="flex items-center">
+                            <span class="mr-2 text-gray-600">Sort by:</span>
+                            <select id="sortSelect" class="border border-gray-300 rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-amber-500">
+                                <option value="default">Default</option>
+                                <option value="price-asc">Price: Low to High</option>
+                                <option value="price-desc">Price: High to Low</option>
+                                <option value="name-asc">Name: A to Z</option>
+                                <option value="name-desc">Name: Z to A</option>
+                                <option value="popular">Most Popular</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <div id="productsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                        <!-- Product cards will be dynamically inserted here -->
+                    </div>
+                    
+                  
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Featured Collection -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold mb-4">Bestselling Collections</h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">Explore our most popular hidden door designs loved by customers</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <a href="/shop/?category=bookcase" class="group relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transition h-64">
+                    <img src="/image/Featured Collection/bookcase.jpg" alt="Bookcase Doors" class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+                        <h3 class="text-2xl font-bold text-white">Bookcase Doors</h3>
+                    </div>
+                </a>
+                
+                <a href="/shop/?category=mirror" class="group relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transition h-64">
+                    <img src="/image/Featured Collection/mirror.jpg" alt="Mirror Doors" class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+                        <h3 class="text-2xl font-bold text-white">Mirror Doors</h3>
+                    </div>
+                </a>
+                
+                <a href="/shop/?category=cabinet" class="group relative overflow-hidden rounded-lg shadow-md hover:shadow-xl transition h-64">
+                    <img src="/image/Featured Collection/cabinet.jpg" alt="Cabinet Doors" class="w-full h-full object-cover transition duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+                        <h3 class="text-2xl font-bold text-white">Cabinet Doors</h3>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+    
+   <!-- CTA Section with Background Image -->
+<section class="py-20 bg-cover bg-center bg-no-repeat text-white relative" style="background-image: url('/image/blog/diy-installation.webp');">
+    <!-- Dark overlay for better readability -->
+    <div class="absolute inset-0 bg-black opacity-60"></div>
+
+    <!-- CTA Content -->
+    <div class="container mx-auto px-4 text-center relative z-10">
+        <h2 class="text-3xl md:text-4xl font-bold mb-6">
+            Ready to Transform Your Space?
+        </h2>
+        <p class="text-xl mb-8 max-w-2xl mx-auto">
+            Schedule a free consultation with our hidden door experts today and discover the perfect solution for your home.
+        </p>
+        <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+            <a href="/contact/" class="bg-white hover:bg-gray-100 text-amber-800 font-bold py-3 px-8 rounded-full transition transform hover:scale-105">
+                Get Started
+            </a>
+            <a href="tel:+61290117626" class="bg-transparent hover:bg-white hover:text-amber-800 border-2 border-white text-white font-bold py-3 px-8 rounded-full transition">
+                Call Us: +61 2 9011 7626
+            </a>
+        </div>
+    </div>
+</section>
+    
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+                <div>
+                    <a href="/" class="flex items-center mb-6">
+                        <img src="/image/logo-white.png" alt="Murphy Door Ogden Logo" class="h-16 w-24 object-cover mr-2">
+                    </a>
+                    <p class="text-gray-400 mb-4">Innovative hidden door solutions that combine functionality with elegant design for modern living spaces.</p>
+                    <div class="flex space-x-4">
+                        <a href="https://www.facebook.com/MurphyDoor/" class="text-gray-400 hover:text-white transition"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/murphydoor/" class="text-gray-400 hover:text-white transition"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.pinterest.com/murphydoor/" class="text-gray-400 hover:text-white transition"><i class="fab fa-pinterest"></i></a>
+                        <a href="https://www.youtube.com/@murphydoor" class="text-gray-400 hover:text-white transition"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/" class="text-gray-400 hover:text-white transition">Home</a></li>
+                        <li><a href="/shop/" class="text-gray-400 hover:text-white transition">Shop</a></li>
+                        <li><a href="/about/" class="text-gray-400 hover:text-white transition">About Us</a></li>
+                        <li><a href="/blog/" class="text-gray-400 hover:text-white transition">Blog</a></li>
+                        <li><a href="/contact/" class="text-gray-400 hover:text-white transition">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Customer Service</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/cookies/" class="text-gray-400 hover:text-white transition">Cookies</a></li>
+                        <li><a href="/privacy/" class="text-gray-400 hover:text-white transition">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="text-gray-400 hover:text-white transition">Terms of Service</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Contact Us</h3>
+                    <address class="not-italic text-gray-400">
+                        <p class="mb-2">36 Darlinghurst Road,</p>
+                        <p class="mb-2">Sydney, NSW 2010,</p>
+                        <p class="mb-4">Australia</p>
+                        <p class="mb-2"><a href="tel:+61290117626" class="hover:text-white transition">+61 2 9011 7626</a></p>
+                        <p class="mb-4"><a href="mailto:info@murphydoorogden.com" class="hover:text-white transition">info@murphydoorogden.com</a></p>
+                        <p>Mon-Fri: 9am-5pm</p>
+                        <p>Sat: 10am-2pm</p>
+                    </address>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 pt-8 text-center text-gray-400 text-sm">
+                <p>&copy; 2025 Murphy Door Ogden. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        
+        
+        // Cart Dropdown Toggle
+        document.getElementById('cartButton').addEventListener('click', function(e) {
+            e.stopPropagation();
+            const dropdown = document.getElementById('cartDropdown');
+            dropdown.classList.toggle('hidden');
+        });
+        
+        // Close cart dropdown when clicking outside
+        document.addEventListener('click', function() {
+            const dropdown = document.getElementById('cartDropdown');
+            if (!dropdown.classList.contains('hidden')) {
+                dropdown.classList.add('hidden');
+            }
+        });
+        
+        // Cart functionality
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        
+        function updateCartCount() {
+            const count = cart.reduce((total, item) => total + item.quantity, 0);
+            document.getElementById('cartCount').textContent = count;
+            document.getElementById('mobileCartCount').textContent = count;
+        }
+        
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            
+            toastMessage.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+        
+        function updateCartDropdown() {
+            const cartItems = document.getElementById('cartItems');
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p class="text-gray-500 text-center py-4">Your cart is empty</p>';
+                return;
+            }
+            
+            let html = '';
+            cart.forEach(item => {
+                html += `
+                    <div class="flex items-center py-2 border-b">
+                        <img src="${item.image}" alt="${item.name}" class="w-12 h-12 object-cover rounded mr-3">
+                        <div class="flex-grow">
+                            <h4 class="text-sm font-medium">${item.name}</h4>
+                            <p class="text-xs text-gray-500">$${item.price.toFixed(2)} x ${item.quantity}</p>
+                        </div>
+                        <button class="remove-from-cart text-red-500 hover:text-red-700" data-id="${item.id}">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                `;
+            });
+            
+            cartItems.innerHTML = html;
+            
+            // Add event listeners to remove buttons
+            document.querySelectorAll('.remove-from-cart').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const id = this.getAttribute('data-id');
+                    removeFromCart(id);
+                });
+            });
+        }
+        
+        function addToCart(product) {
+            const existingItem = cart.find(item => item.id === product.id);
+            
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({
+                    ...product,
+                    quantity: 1
+                });
+            }
+            
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+            updateCartDropdown();
+            showToast(`${product.name} added to cart!`);
+        }
+        
+        function removeFromCart(id) {
+            cart = cart.filter(item => item.id !== id);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+            updateCartDropdown();
+            showToast('Item removed from cart');
+        }
+        
+        // Initialize cart
+        updateCartCount();
+        updateCartDropdown();
+        
+        // Product data
+        const products = [
+            {
+                id: "1",
+                name: "Flush Mount Bookcase Door",
+                price: 1341.12,
+                image: "/image/Product/flush-mount.webp",
+                category: "bookcase",
+                features: ["bestseller", "custom"],
+                description: "A seamless hidden door that blends perfectly with your bookcase for a discreet passage."
+            },
+            {
+                id: "2",
+                name: "Hanging Mirror Murphy Door",
+                price: 1958.09,
+                image: "/image/Product/hanging-mirror.webp",
+                category: "mirror",
+                features: ["bestseller"],
+                description: "A functional mirror that transforms into a hidden doorway, perfect for bedrooms and dressing rooms."
+            },
+            {
+                id: "3",
+                name: "Signature Speakeasy Murphy Door",
+                price: 3004.40,
+                image: "/image/Product/liquor-cabinet.webp",
+                category: "cabinet",
+                features: ["new", "custom"],
+                description: "A stylish liquor cabinet that reveals a hidden passage, inspired by classic speakeasy designs."
+            },
+            {
+                id: "4",
+                name: "Quick Kit - Primed Only",
+                price: 1258.40,
+                image: "/image/Product/quick-kit.webp",
+                category: "bookcase",
+                features: ["ready"],
+                description: "Our ready-to-ship kit that makes installation quick and easy for standard door openings."
+            },
+            {
+                id: "5",
+                name: "Slideaway Murphy Bookcase",
+                price: 1640.23,
+                image: "/image/Product/slideaway.webp",
+                category: "bookcase",
+                features: ["custom"],
+                description: "A sliding bookcase door that saves space while providing access to hidden rooms."
+            },
+            {
+                id: "6",
+                name: "Archway Bookcase Door",
+                price: 2762.50,
+                image: "/image/Product/archway.webp",
+                category: "bookcase",
+                features: ["custom"],
+                description: "An elegant arched-top bookcase that conceals a doorway with timeless style."
+            },
+            {
+                id: "7",
+                name: "Tactical Murphy Door",
+                price: 5461.50,
+                image: "/image/Product/tactical.webp",
+                category: "specialty",
+                features: ["custom"],
+                description: "A secure hidden gun cabinet with pegboard interior and tactical storage solutions."
+            },
+            {
+                id: "8",
+                name: "Gilded Shoe Rack Murphy Door",
+                price: 2492.13,
+                image: "/image/Product/shoe-rack.webp",
+                category: "specialty",
+                features: ["bestseller"],
+                description: "Discreet shoe storage hidden behind an elegant door, perfect for entryways and closets."
+            },
+            {
+                id: "9",
+                name: "Dutch Pantry Door",
+                price: 3661.50,
+                image: "/image/Product/pantry.webp",
+                category: "cabinet",
+                features: ["custom"],
+                description: "A charming pantry door with glass panes that conceals your kitchen storage in style."
+            },
+            {
+                id: "10",
+                name: "Archway Bookcase Door",
+                price: 2762.50,
+                image: "/image/Product/bookcase.webp",
+                category: "cabinet",
+                features: ["custom"],
+                description: "An arched faceframe gives our Archway Bookcase Door a more considered aesthetic for spaces with a more contemporary design scheme."
+            },
+             {
+                id: "11",
+                name: "Hidden Panel Murphy Door Kit",
+                price: 945.96,
+                image: "/image/Product/panel-murphy.webp",
+                category: "specialty",
+                features: ["custom"],
+                description: "An arched faceframe gives our Archway Bookcase Door a more considered aesthetic for spaces with a more contemporary design scheme."
+            },
+             {
+                id: "12",
+                name: "Signature Speakeasy Murphy Door",
+                price: 3004.40,
+                image: "/image/Product/signature.webp",
+                category: "specialty",
+                features: ["custom"],
+                description: "Step into the world of refined taste with our Signature Speakeasy Murphy Door, the epitome of discreet luxury for the spirit."
+            }
+        ];
+        
+        // Filter toggle functionality
+        document.querySelectorAll('.filter-toggle').forEach(button => {
+            button.addEventListener('click', function() {
+                const icon = this.querySelector('i');
+                const section = this.nextElementSibling;
+                
+                icon.classList.toggle('rotate-180');
+                section.classList.toggle('open');
+            });
+        });
+        
+        // Price slider functionality
+        const minPriceSlider = document.getElementById('minPrice');
+        const maxPriceSlider = document.getElementById('maxPrice');
+        const minPriceValue = document.getElementById('minPriceValue');
+        const maxPriceValue = document.getElementById('maxPriceValue');
+        
+        minPriceSlider.addEventListener('input', function() {
+            if (parseInt(this.value) > parseInt(maxPriceSlider.value)) {
+                maxPriceSlider.value = this.value;
+                maxPriceValue.textContent = `$${this.value}`;
+            }
+            minPriceValue.textContent = `$${this.value}`;
+            filterProducts();
+        });
+        
+        maxPriceSlider.addEventListener('input', function() {
+            if (parseInt(this.value) < parseInt(minPriceSlider.value)) {
+                minPriceSlider.value = this.value;
+                minPriceValue.textContent = `$${this.value}`;
+            }
+            maxPriceValue.textContent = `$${this.value}`;
+            filterProducts();
+        });
+        
+        // Filter functionality
+        function filterProducts() {
+            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+            const minPrice = parseInt(minPriceSlider.value);
+            const maxPrice = parseInt(maxPriceSlider.value);
+            
+            // Get selected categories
+            const selectedCategories = [];
+            document.querySelectorAll('.category-filter:checked').forEach(checkbox => {
+                if (checkbox.value !== 'all') {
+                    selectedCategories.push(checkbox.value);
+                }
+            });
+            
+            // Get selected features
+            const selectedFeatures = [];
+            document.querySelectorAll('.feature-filter:checked').forEach(checkbox => {
+                selectedFeatures.push(checkbox.value);
+            });
+            
+            // Get sort option
+            const sortOption = document.getElementById('sortSelect').value;
+            
+            // Filter products
+            let filteredProducts = products.filter(product => {
+                // Search term
+                const matchesSearch = product.name.toLowerCase().includes(searchTerm) || 
+                                     product.description.toLowerCase().includes(searchTerm);
+                
+                // Price range
+                const matchesPrice = product.price >= minPrice && product.price <= maxPrice;
+                
+                // Categories
+                const matchesCategory = selectedCategories.length === 0 || 
+                                       selectedCategories.includes(product.category);
+                
+                // Features
+                const matchesFeatures = selectedFeatures.length === 0 || 
+                                       selectedFeatures.every(feat => product.features.includes(feat));
+                
+                return matchesSearch && matchesPrice && matchesCategory && matchesFeatures;
+            });
+            
+            // Sort products
+            switch(sortOption) {
+                case 'price-asc':
+                    filteredProducts.sort((a, b) => a.price - b.price);
+                    break;
+                case 'price-desc':
+                    filteredProducts.sort((a, b) => b.price - a.price);
+                    break;
+                case 'name-asc':
+                    filteredProducts.sort((a, b) => a.name.localeCompare(b.name));
+                    break;
+                case 'name-desc':
+                    filteredProducts.sort((a, b) => b.name.localeCompare(a.name));
+                    break;
+                case 'popular':
+                    // In a real app, you might sort by sales or popularity
+                    filteredProducts.sort((a, b) => {
+                        const aPopular = a.features.includes('bestseller') ? 1 : 0;
+                        const bPopular = b.features.includes('bestseller') ? 1 : 0;
+                        return bPopular - aPopular;
+                    });
+                    break;
+                default:
+                    // Default sorting (perhaps by ID or as they come from the database)
+                    break;
+            }
+            
+            // Display filtered products
+            displayProducts(filteredProducts);
+        }
+        
+        // Display products
+        function displayProducts(productsToDisplay) {
+            const productsGrid = document.getElementById('productsGrid');
+            const productCount = document.getElementById('productCount');
+            
+            productCount.textContent = `${productsToDisplay.length} ${productsToDisplay.length === 1 ? 'product' : 'products'}`;
+            
+            if (productsToDisplay.length === 0) {
+                productsGrid.innerHTML = `
+                    <div class="col-span-full text-center py-12">
+                        <i class="fas fa-search text-4xl text-gray-400 mb-4"></i>
+                        <h3 class="text-xl font-bold mb-2">No products found</h3>
+                        <p class="text-gray-600">Try adjusting your filters or search term</p>
+                    </div>
+                `;
+                return;
+            }
+            
+            let html = '';
+            productsToDisplay.forEach(product => {
+                const isBestseller = product.features.includes('bestseller');
+                const isNew = product.features.includes('new');
+                const isReady = product.features.includes('ready');
+                
+                html += `
+                    <div class="product-card bg-white rounded-lg overflow-hidden shadow-sm hover:shadow-md transition">
+                        <div class="relative overflow-hidden h-64">
+                            <img src="${product.image}" alt="${product.name}" class="w-full h-full object-cover transition duration-500 hover:scale-110">
+                            ${isBestseller ? '<div class="absolute top-2 right-2 bg-amber-600 text-white px-2 py-1 rounded text-xs font-bold">BESTSELLER</div>' : ''}
+                            ${isNew ? '<div class="absolute top-2 right-2 bg-green-600 text-white px-2 py-1 rounded text-xs font-bold">NEW</div>' : ''}
+                            ${isReady ? '<div class="absolute bottom-2 left-2 bg-blue-600 text-white px-2 py-1 rounded text-xs font-bold">READY TO SHIP</div>' : ''}
+                        </div>
+                        <div class="p-6">
+                            <h3 class="text-xl font-bold mb-2">${product.name}</h3>
+                            <p class="text-gray-600 mb-4">${product.description}</p>
+                            <div class="flex justify-between items-center">
+                                <span class="text-xl font-bold">$${product.price.toFixed(2)}</span>
+                                <button class="add-to-cart bg-amber-600 hover:bg-amber-700 text-white px-4 py-2 rounded transition" 
+                                    data-id="${product.id}" 
+                                    data-name="${product.name}" 
+                                    data-price="${product.price}" 
+                                    data-image="${product.image}">
+                                    Add to Cart
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            productsGrid.innerHTML = html;
+            
+            // Add event listeners to new add to cart buttons
+            document.querySelectorAll('.add-to-cart').forEach(button => {
+                button.addEventListener('click', function() {
+                    const product = {
+                        id: this.getAttribute('data-id'),
+                        name: this.getAttribute('data-name'),
+                        price: parseFloat(this.getAttribute('data-price')),
+                        image: this.getAttribute('data-image')
+                    };
+                    
+                    addToCart(product);
+                });
+            });
+        }
+        
+        // Initialize filters
+        document.getElementById('searchInput').addEventListener('input', filterProducts);
+        document.querySelectorAll('.category-filter, .feature-filter').forEach(checkbox => {
+            checkbox.addEventListener('change', filterProducts);
+        });
+        document.getElementById('sortSelect').addEventListener('change', filterProducts);
+        document.getElementById('clearFilters').addEventListener('click', function() {
+            // Reset all filters
+            document.getElementById('searchInput').value = '';
+            document.querySelectorAll('.category-filter, .feature-filter').forEach(checkbox => {
+                checkbox.checked = false;
+            });
+            document.querySelector('.category-filter[value="all"]').checked = true;
+            minPriceSlider.value = 500;
+            maxPriceSlider.value = 10000;
+            minPriceValue.textContent = '$500';
+            maxPriceValue.textContent = '$10,000';
+            document.getElementById('sortSelect').value = 'default';
+            
+            filterProducts();
+        });
+        
+        // Initial display of all products
+        filterProducts();
+        
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Animate elements on scroll
+        gsap.utils.toArray('.product-card').forEach((element, i) => {
+            gsap.from(element, {
+                scrollTrigger: {
+                    trigger: element,
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                },
+                y: 50,
+                opacity: 0,
+                duration: 0.8,
+                ease: "power2.out",
+                delay: i * 0.1
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JustCoolBlast - Exciting Mobile Games</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="/images/favicon.png" type="image/x-icon">
+    <link rel="icon" href="/images/favicon.png" type="image/x-icon">
+
+    <!-- Meta Tags -->
+    <meta name="description"
+        content="JustCoolBlast creates thrilling mobile games like Boat Attack. Experience high-speed boat racing with stunning visuals and immersive gameplay.">
+    <meta name="keywords"
+        content="mobile games, boat racing, android games, JustCool, Boat Attack, racing games, action games">
+    <meta name="author" content="JustCool">
+    <link rel="canonical" href="https://justcoolblast.app/" />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Custom Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6366F1',  // Indigo
+                        secondary: '#8B5CF6',  // Violet
+                        accent: '#EC4899',  // Pink
+                        dark: '#1F2937',
+                        light: '#F9FAFB',
+                        surface: '#FFFFFF',
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-fast': 'float 4s ease-in-out infinite',
+                        'pulse-slow': 'pulse 5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #F9FAFB;
+            color: #1F2937;
+        }
+
+        .hero-gradient {
+            background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 50%, #EC4899 100%);
+        }
+
+        .nav-blur {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .text-gradient {
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .section-title {
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 50%;
+            height: 4px;
+            background: linear-gradient(90deg, #6366F1, #EC4899);
+            border-radius: 2px;
+        }
+    </style>
+</head>
+
+<body class="antialiased">
+    <!-- Cookies Consent Banner -->
+    <div id="cookies-banner"
+        class="fixed bottom-4 left-4 right-4 max-w-2xl mx-auto bg-surface rounded-xl shadow-xl p-6 z-50 hidden border border-gray-200">
+        <div class="flex flex-col md:flex-row items-start md:items-center">
+            <div class="mb-4 md:mb-0 md:mr-6 flex-1">
+                <h4 class="font-semibold text-lg mb-1">We value your privacy</h4>
+                <p class="text-gray-600 text-sm">We use cookies to enhance your experience on our website. By continuing
+                    to browse,
+                    you agree to our use of cookies.</p>
+            </div>
+            <div class="flex flex-col sm:flex-row w-full md:w-auto space-y-2 sm:space-y-0 sm:space-x-2">
+                <button id="accept-cookies"
+                    class="px-4 py-2 bg-primary hover:bg-indigo-600 rounded-lg transition duration-300 text-sm font-medium text-white shadow-sm">
+                    Accept
+                </button>
+                <button id="decline-cookies"
+                    class="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition duration-300 text-sm font-medium text-gray-800">
+                    Decline
+                </button>
+                <a href="/privacy/"
+                    class="px-4 py-2 bg-transparent hover:bg-gray-100 border border-gray-200 rounded-lg transition duration-300 text-sm font-medium text-gray-700">
+                    Learn More
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-40 nav-blur bg-white/80 border-b border-gray-100">
+        <div class="container mx-auto px-6">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center space-x-2">
+                    <a href="/" class="flex items-center space-x-3">
+                        <img src="/images/logo.png" alt="JustCoolBlast Logo" class="h-12  rounded-xl">                       
+                    </a>
+                </div>
+
+                <div class="hidden lg:flex items-center space-x-8">
+                    <a href="/" class="text-gray-800 hover:text-primary font-medium transition duration-300">Home</a>
+                    <a href="/games" class="text-gray-600 hover:text-primary transition duration-300">Games</a>
+                    <a href="/about" class="text-gray-600 hover:text-primary transition duration-300">About</a>
+                    <a href="/blog" class="text-gray-600 hover:text-primary transition duration-300">Blog</a>
+                    <a href="/contact/" class="text-gray-600 hover:text-primary transition duration-300">Contact</a>
+                </div>
+
+                <div class="flex items-center space-x-4">
+                    <a href="https://play.google.com/store/apps/details?id=com.justcool.boatattack" target="_blank"
+                        class="hidden md:flex items-center bg-gradient-to-r from-primary to-accent hover:from-indigo-600 hover:to-pink-500 text-white px-5 py-2.5 rounded-lg font-medium transition duration-300 shadow-md">
+                        <i class="fab fa-google-play mr-2"></i> Download
+                    </a>
+                    <button id="mobile-menu-button"
+                        class="lg:hidden text-gray-600 hover:text-gray-900 focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="lg:hidden hidden bg-white border-t border-gray-100 shadow-lg">
+            <div class="container mx-auto px-6 py-4 flex flex-col space-y-3">
+                <a href="/" class="py-3 px-4 rounded-lg hover:bg-gray-50 font-medium">Home</a>
+                <a href="/games" class="py-3 px-4 rounded-lg hover:bg-gray-50">Games</a>
+                <a href="/about/" class="py-3 px-4 rounded-lg hover:bg-gray-50">About</a>
+                <a href="/blog" class="py-3 px-4 rounded-lg hover:bg-gray-50">Blog</a>
+                <a href="/contact/" class="py-3 px-4 rounded-lg hover:bg-gray-50">Contact</a>
+                <a href="https://play.google.com/store/apps/details?id=com.justcool.boatattack" target="_blank"
+                    class="flex items-center justify-center bg-gradient-to-r from-primary to-accent hover:from-indigo-600 hover:to-pink-500 text-white px-5 py-3 rounded-lg font-medium transition duration-300 mt-2 shadow-md">
+                    <i class="fab fa-google-play mr-2"></i> Download Now
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative pt-32 pb-24 overflow-hidden">
+        <div class="absolute inset-0 hero-gradient opacity-95"></div>
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="flex flex-col lg:flex-row items-center">
+                <div class="lg:w-1/2 mb-12 lg:mb-0">
+                    <h1 class="text-4xl md:text-4xl lg:text-5xl font-bold leading-tight mb-6 text-white">
+                        Experience <span
+                            class="text-gradient bg-gradient-to-r from-accent to-yellow-300">Thrilling</span>
+                        <br>Boat Racing Adventures
+                    </h1>
+                    <p class="text-xl text-gray-100 max-w-xl mb-8">
+                        Dive into the action with Boat Attack - the ultimate boat racing game with stunning visuals and
+                        immersive gameplay.
+                    </p>
+                    <div class="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                       <a href="https://play.google.com/store/apps/details?id=com.justcool.boatattack" target="_blank">
+                        <img src="/images/playstore.png" alt="Google Play" class="h-14 mr-4">
+                    </a>
+                        <a href="/games"
+                            class="flex items-center justify-center bg-transparent hover:bg-white/10 text-white border-2 border-white px-8 py-3 rounded-xl font-bold text-lg transition duration-300">
+                            Explore Games
+                        </a>
+                    </div>
+                    <div class="mt-12 flex items-center space-x-6">
+                        <div class="flex -space-x-2">
+                            <img src="/images/avater-1.png" class="w-10 h-10 rounded-full border-2 border-white" alt="">
+                            <img src="/images/avater-2.jpeg" class="w-10 h-10 rounded-full border-2 border-white"
+                                alt="">
+                            <img src="/images/avater-3.jpg" class="w-10 h-10 rounded-full border-2 border-white" alt="">
+                        </div>
+                        <div>
+                            <div class="flex items-center text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <p class="text-white text-sm mt-1">Rated 4.8 by 10k+ players</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="lg:w-1/2 lg:pl-12">
+                    <!-- Replace the image in the hero section with this video element -->
+                    <div class="relative rounded-2xl overflow-hidden shadow-2xl border-4 border-white aspect-video">
+                        <video autoplay muted loop playsinline class="w-full h-full object-cover">
+                            <source src="https://play-games.googleusercontent.com/vp/mp4/1280x720/W-brU3k3vik.mp4" type="video/mp4">
+                            <!-- Fallback image if video doesn't load -->
+                            <img src="/images/boat-attack-gameplay1.webp" alt="Boat Attack Gameplay"
+                                class="w-full h-full object-cover">
+                        </video>
+                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
+                            <div class="flex items-center">
+                                <img src="/images/boat-attack-icon.webp" alt="Boat Attack"
+                                    class="w-12 h-12 rounded-lg mr-3">
+                                <div>
+                                    <h3 class="text-white font-bold">Boat Attack</h3>
+                                    <p class="text-gray-300 text-sm">High-speed water racing</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Games Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 section-title inline-block">Our Exciting Games</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto mt-6">
+                    Discover our collection of thrilling mobile games designed to provide endless entertainment.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Boat Attack Card -->
+                <div class="card-hover bg-surface rounded-2xl overflow-hidden shadow-md border border-gray-100">
+                    <div class="relative h-60 overflow-hidden">
+                        <img src="/images/boat-attack-gameplay1.webp" alt="Boat Attack Gameplay"
+                            class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+                        <div class="absolute top-4 left-4">
+                            <span class="bg-primary text-white text-xs font-semibold px-3 py-1 rounded-full">NEW</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-start mb-4">
+                            <img src="/images/boat-attack-icon.webp" alt="Boat Attack"
+                                class="w-14 h-14 rounded-xl mr-4">
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-900">Boat Attack</h3>
+                                <div class="flex items-center mt-1">
+                                    <div class="flex items-center text-yellow-400 text-sm">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star-half-alt"></i>
+                                    </div>
+                                    <span class="text-gray-500 text-sm ml-2">4.5 (2.4k)</span>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-5">
+                            Experience high-speed boat racing through stunning tropical locations with realistic water
+                            physics and challenging opponents.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="bg-gray-100 text-gray-700 text-xs px-3 py-1 rounded-full">Racing</span>
+                            <span class="bg-gray-100 text-gray-700 text-xs px-3 py-1 rounded-full">Action</span>
+                            <span class="bg-gray-100 text-gray-700 text-xs px-3 py-1 rounded-full">3D</span>
+                        </div>
+                        <a href="https://play.google.com/store/apps/details?id=com.justcool.boatattack" target="_blank"
+                            class="block w-full bg-gradient-to-r from-primary to-accent hover:from-indigo-600 hover:to-pink-500 text-white text-center py-3 rounded-lg font-medium transition duration-300 shadow-md">
+                            Download Now
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Make Fresh - Match 3 Card -->
+                <div class="card-hover bg-surface rounded-2xl overflow-hidden shadow-md border border-gray-100">
+                    <div class="relative h-60 overflow-hidden">
+                        <img src="/images/boat-attack-icon.webp" alt="Make Fresh Gameplay"
+                            class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+                        <div class="absolute top-4 left-4">
+                            <span
+                                class="bg-green-500 text-white text-xs font-semibold px-3 py-1 rounded-full">POPULAR</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-start mb-4">
+                            <img src="/images/boat-attack-icon.webp" alt="Make Fresh" class="w-14 h-14 rounded-xl mr-4">
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-900">Make Fresh - Match 3</h3>
+                                <div class="flex items-center mt-1">
+                                    <div class="flex items-center text-yellow-400 text-sm">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                    <span class="text-gray-500 text-sm ml-2">5.0 (1.2k)</span>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-5">
+                            Experience high-speed boat racing through stunning tropical locations with realistic water
+                            physics and challenging opponents.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="bg-gray-100 text-gray-700 text-xs px-3 py-1 rounded-full">Puzzle</span>
+                            <span class="bg-gray-100 text-gray-700 text-xs px-3 py-1 rounded-full">Casual</span>
+                            <span class="bg-gray-100 text-gray-700 text-xs px-3 py-1 rounded-full">Match-3</span>
+                        </div>
+                        <a href="https://play.google.com/store/apps/details?id=com.JustcCool.MakeFreshMatchThree"
+                            target="_blank"
+                            class="block w-full bg-gradient-to-r from-primary to-accent hover:from-indigo-600 hover:to-pink-500 text-white text-center py-3 rounded-lg font-medium transition duration-300 shadow-md">
+                            Download Now
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Basketball School Card -->
+                <div class="card-hover bg-surface rounded-2xl overflow-hidden shadow-md border border-gray-100">
+                    <div class="relative h-60 overflow-hidden">
+                        <img src="/images/boat-attack-gameplay.webp" alt="Basketball School Gameplay"
+                            class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+                        <div class="absolute top-4 left-4">
+                            <span
+                                class="bg-blue-500 text-white text-xs font-semibold px-3 py-1 rounded-full">TRENDING</span>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-start mb-4">
+                            <img src="/images/boat-attack-icon1.webp" alt="Basketball School"
+                                class="w-14 h-14 rounded-xl mr-4">
+                            <div>
+                                <h3 class="text-xl font-bold text-gray-900">Basketball School</h3>
+                                <div class="flex items-center mt-1">
+                                    <div class="flex items-center text-yellow-400 text-sm">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="far fa-star"></i>
+                                    </div>
+                                    <span class="text-gray-500 text-sm ml-2">4.0 (856)</span>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 mb-5">
+                            Experience high-speed boat racing through stunning tropical locations with realistic water
+                            physics and challenging opponents.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mb-6">
+                            <span class="bg-gray-100 text-gray-700 text-xs px-3 py-1 rounded-full">Sports</span>
+                            <span class="bg-gray-100 text-gray-700 text-xs px-3 py-1 rounded-full">Arcade</span>
+                            <span class="bg-gray-100 text-gray-700 text-xs px-3 py-1 rounded-full">3D</span>
+                        </div>
+                        <a href="https://play.google.com/store/apps/details?id=com.GameBeetle.basketball"
+                            target="_blank"
+                            class="block w-full bg-gradient-to-r from-primary to-accent hover:from-indigo-600 hover:to-pink-500 text-white text-center py-3 rounded-lg font-medium transition duration-300 shadow-md">
+                            Download Now
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-12">
+                <a href="/games/"
+                    class="inline-flex items-center px-6 py-3 border border-primary text-primary hover:bg-primary hover:text-white rounded-lg font-medium transition duration-300">
+                    View All Games <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 section-title inline-block">Why Choose Boat Attack?</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto mt-6">
+                    Experience the ultimate boat racing game with features designed to immerse you in the action.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div
+                    class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 transition duration-300 hover:shadow-md">
+                    <div class="w-14 h-14 rounded-xl bg-indigo-50 text-primary flex items-center justify-center mb-6">
+                        <i class="fas fa-water text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Realistic Water Physics</h3>
+                    <p class="text-gray-600">
+                        Feel every wave and current with our advanced water physics engine that makes racing more
+                        challenging and realistic.
+                    </p>
+                </div>
+
+                <!-- Feature 2 -->
+                <div
+                    class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 transition duration-300 hover:shadow-md">
+                    <div class="w-14 h-14 rounded-xl bg-purple-50 text-secondary flex items-center justify-center mb-6">
+                        <i class="fas fa-palette text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Customizable Boats</h3>
+                    <p class="text-gray-600">
+                        Choose from different boat types and customize their appearance with various colors and decals
+                        to make them your own.
+                    </p>
+                </div>
+
+                <!-- Feature 3 -->
+                <div
+                    class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100 transition duration-300 hover:shadow-md">
+                    <div class="w-14 h-14 rounded-xl bg-pink-50 text-accent flex items-center justify-center mb-6">
+                        <i class="fas fa-trophy text-2xl"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-gray-900 mb-3">Challenging Tracks</h3>
+                    <p class="text-gray-600">
+                        Race through diverse tracks with narrow turns, obstacles, and dynamic weather conditions that
+                        test your skills.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 section-title inline-block">What Players Say</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto mt-6">
+                    Don't just take our word for it. Here's what our players think about Boat Attack.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+                    <div class="flex items-center mb-4">
+                        <div class="flex items-center text-yellow-400 mr-3">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <span class="text-gray-500 text-sm">5/5</span>
+                    </div>
+                    <p class="text-gray-700 mb-6 italic">
+                        "The graphics are amazing! The water effects are so realistic, it feels like I'm actually racing
+                        on the ocean. Best boat racing game I've played on mobile."
+                    </p>
+                    <div class="flex items-center">
+                        <img src="/images/avater-1.png" alt="Oleksandr" class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-medium text-gray-900">Oleksandr Shevchenko</h4>
+                            <p class="text-gray-500 text-sm">Verified Player</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+                    <div class="flex items-center mb-4">
+                        <div class="flex items-center text-yellow-400 mr-3">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                        </div>
+                        <span class="text-gray-500 text-sm">4.5/5</span>
+                    </div>
+                    <p class="text-gray-700 mb-6 italic">
+                        "Love the customization options for the boats. The controls are smooth and responsive. Can't
+                        wait for more tracks in future updates!"
+                    </p>
+                    <div class="flex items-center">
+                        <img src="/images/avater-2.jpeg" alt="Andriy" class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-medium text-gray-900">Andriy Kovalchuk</h4>
+                            <p class="text-gray-500 text-sm">Verified Player</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+                    <div class="flex items-center mb-4">
+                        <div class="flex items-center text-yellow-400 mr-3">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                        <span class="text-gray-500 text-sm">5/5</span>
+                    </div>
+                    <p class="text-gray-700 mb-6 italic">
+                        "The attention to detail is incredible. From the boat physics to the tropical environments,
+                        everything feels premium. Worth every penny!"
+                    </p>
+                    <div class="flex items-center">
+                        <img src="/images/avater-3.jpg" alt="Dmytro" class="w-12 h-12 rounded-full mr-4">
+                        <div>
+                            <h4 class="font-medium text-gray-900">Dmytro Bondarenko</h4>
+                            <p class="text-gray-500 text-sm">Verified Player</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="py-20 bg-gray-50">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col lg:flex-row items-center">
+                <div class="lg:w-1/2 mb-12 lg:mb-0 lg:pr-12">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6 section-title inline-block">About JustCool</h2>
+                    <p class="text-gray-600 mb-6">
+                        JustCool is an independent game development studio dedicated to creating high-quality mobile
+                        gaming experiences. Founded by passionate developers, we strive to deliver games that combine
+                        stunning visuals with engaging gameplay.
+                    </p>
+                    <p class="text-gray-600 mb-8">
+                        Our team is based in Kyiv, Ukraine, and we're committed to pushing the boundaries of mobile
+                        gaming. Boat Attack is our first release, with more exciting titles coming soon.
+                    </p>
+                    <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
+                        <a href="mailto:gamebeetlestudio@gmail.com"
+                            class="bg-primary hover:bg-indigo-600 text-white px-6 py-3 rounded-lg font-medium transition duration-300 flex items-center justify-center shadow-md">
+                            <i class="fas fa-envelope mr-2"></i> Contact Us
+                        </a>
+                        <a href="/privacy/"
+                            class="bg-white hover:bg-gray-100 text-gray-800 px-6 py-3 rounded-lg font-medium transition duration-300 border border-gray-300 flex items-center justify-center">
+                            <i class="fas fa-shield-alt mr-2"></i> Privacy Policy
+                        </a>
+                    </div>
+                </div>
+                <div class="lg:w-1/2">
+                    <div class="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+                        <div class="flex items-center mb-6">
+                            <div
+                                class="w-16 h-16 rounded-xl bg-indigo-50 text-primary flex items-center justify-center mr-5">
+                                <i class="fas fa-info-circle text-2xl"></i>
+                            </div>
+                            <h3 class="text-xl font-bold text-gray-900">Developer Information</h3>
+                        </div>
+                        <div class="space-y-5">
+                            <div class="flex items-start">
+                                <div class="text-primary mr-4 mt-1">
+                                    <i class="fas fa-user"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-gray-700 mb-1">Developer</h4>
+                                    <p class="text-gray-600">Yevhen Dubinin</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="text-primary mr-4 mt-1">
+                                    <i class="fas fa-envelope"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-gray-700 mb-1">Email</h4>
+                                    <p class="text-gray-600">gamebeetlestudio@gmail.com</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <div class="text-primary mr-4 mt-1">
+                                    <i class="fas fa-map-marker-alt"></i>
+                                </div>
+                                <div>
+                                    <h4 class="font-medium text-gray-700 mb-1">Address</h4>
+                                    <p class="text-gray-600">01001, Ukraine, Kyiv, avenue Lisovyi, building 18</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4 section-title inline-block">Latest News & Updates</h2>
+                <p class="text-gray-600 max-w-2xl mx-auto mt-6">
+                    Stay updated with the latest news, tips, and announcements from JustCool.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Blog Post 1 -->
+                <div class="card-hover bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100">
+                    <a href="/blog/tips-for-boat-racing-beginners/" class="block">
+                        <div class="relative h-48 overflow-hidden">
+                            <img src="/images/blog-tips.webp" alt="Boat Racing Tips" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+                            <div class="absolute bottom-4 left-4">
+                                <span
+                                    class="bg-green-500 text-white text-xs font-semibold px-3 py-1 rounded-full">GUIDE</span>
+                            </div>
+                        </div>
+                    </a>
+                    <div class="p-6">
+                        <div class="flex items-center text-gray-500 text-sm mb-3">
+                            <span>May 15, 2025</span>
+                            <span class="mx-2">•</span>
+                            <span>4 min read</span>
+                        </div>
+                        <a href="/blog/tips-for-boat-racing-beginners/">
+                            <h3 class="text-xl font-bold mb-3 text-gray-900 hover:text-primary transition duration-300">
+                                5 Essential Tips for Boat Racing Beginners</h3>
+                        </a>
+                        <p class="text-gray-600 mb-5">
+                            New to boat racing games? Check out these essential tips to improve your skills, master the
+                            controls, and start winning races in Boat Attack.
+                        </p>
+                        <a href="/blog/tips-for-boat-racing-beginners/"
+                            class="text-primary hover:text-indigo-600 font-medium inline-flex items-center transition duration-300">
+                            Read More <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Blog Post 2 -->
+                <div class="card-hover bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100">
+                    <a href="/blog/behind-the-scenes-boat-attack/" class="block">
+                        <div class="relative h-48 overflow-hidden">
+                            <img src="/images/blog-behind-scenes.jpg" alt="Behind the Scenes"
+                                class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+                            <div class="absolute bottom-4 left-4">
+                                <span
+                                    class="bg-purple-500 text-white text-xs font-semibold px-3 py-1 rounded-full">DEVELOPMENT</span>
+                            </div>
+                        </div>
+                    </a>
+                    <div class="p-6">
+                        <div class="flex items-center text-gray-500 text-sm mb-3">
+                            <span>April 30, 2025</span>
+                            <span class="mx-2">•</span>
+                            <span>7 min read</span>
+                        </div>
+                        <a href="/blog/behind-the-scenes-boat-attack/">
+                            <h3 class="text-xl font-bold mb-3 text-gray-900 hover:text-primary transition duration-300">
+                                Behind the Scenes: Creating Boat Attack</h3>
+                        </a>
+                        <p class="text-gray-600 mb-5">
+                            Take a look at the development process of Boat Attack, from initial concept to final
+                            release, and learn about the challenges we faced creating the water physics system.
+                        </p>
+                        <a href="/blog/behind-the-scenes-boat-attack/"
+                            class="text-primary hover:text-indigo-600 font-medium inline-flex items-center transition duration-300">
+                            Read More <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Blog Post 3 -->
+                <div class="card-hover bg-white rounded-2xl overflow-hidden shadow-sm border border-gray-100">
+                    <a href="/blog/mobile-gaming-trends-2025/" class="block">
+                        <div class="relative h-48 overflow-hidden">
+                            <img src="/images/blog-trends.jpg" alt="Mobile Trends" class="w-full h-full object-cover">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+                            <div class="absolute bottom-4 left-4">
+                                <span
+                                    class="bg-blue-500 text-white text-xs font-semibold px-3 py-1 rounded-full">INDUSTRY</span>
+                            </div>
+                        </div>
+                    </a>
+                    <div class="p-6">
+                        <div class="flex items-center text-gray-500 text-sm mb-3">
+                            <span>April 15, 2025</span>
+                            <span class="mx-2">•</span>
+                            <span>6 min read</span>
+                        </div>
+                        <a href="/blog/mobile-gaming-trends-2025/">
+                            <h3 class="text-xl font-bold mb-3 text-gray-900 hover:text-primary transition duration-300">
+                                Mobile Gaming Trends to Watch in 2025</h3>
+                        </a>
+                        <p class="text-gray-600 mb-5">
+                            We analyze the most exciting trends shaping the mobile gaming industry this year and how
+                            they might influence future game development.
+                        </p>
+                        <a href="/blog/mobile-gaming-trends-2025/"
+                            class="text-primary hover:text-indigo-600 font-medium inline-flex items-center transition duration-300">
+                            Read More <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-12">
+                <a href="/blog/"
+                    class="inline-flex items-center px-6 py-3 border border-primary text-primary hover:bg-primary hover:text-white rounded-lg font-medium transition duration-300">
+                    View All Articles <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-r from-primary to-accent">
+        <div class="container mx-auto px-6 text-center">
+            <div class="max-w-3xl mx-auto">
+                <h2 class="text-3xl md:text-4xl font-bold mb-6 text-white">Ready to Race?</h2>
+                <p class="text-xl text-gray-100 mb-8">
+                    Download Boat Attack now and experience the thrill of high-speed boat racing on your mobile device.
+                </p>
+                <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+                    <a href="https://play.google.com/store/apps/details?id=com.justcool.boatattack" target="_blank"
+                        class="flex items-center justify-center bg-white hover:bg-gray-100 text-primary px-8 py-4 rounded-xl font-bold text-lg transition duration-300 shadow-lg">
+                        <i class="fab fa-google-play mr-3 text-xl"></i> Google Play
+                    </a>
+                    <a href="/games"
+                        class="flex items-center justify-center bg-transparent hover:bg-white/10 text-white border-2 border-white px-8 py-4 rounded-xl font-bold text-lg transition duration-300">
+                        Explore Games
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-300 pt-16 pb-8">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mb-12">
+                <div>
+                   <a href="/" class="flex items-center space-x-3">
+                        <img src="/images/logo-bottom.png" alt="JustCoolBlast Logo" class="h-14 max-w-2xl mb-4 rounded-xl">                       
+                    </a>
+                    <p class="text-gray-400 mb-6">
+                        Creating exciting mobile gaming experiences with stunning visuals and immersive gameplay.
+                    </p>
+                    
+                </div>
+
+               
+
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-5">Company</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/about" class="text-gray-400 hover:text-white transition duration-300">About Us</a>
+                        </li>
+                        <li><a href="/blog" class="text-gray-400 hover:text-white transition duration-300">Blog</a></li>
+                        
+                        <li><a href="/contact"
+                                class="text-gray-400 hover:text-white transition duration-300">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-5">Legal</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/privacy" class="text-gray-400 hover:text-white transition duration-300">Privacy
+                                Policy</a></li>
+                        <li><a href="/terms" class="text-gray-400 hover:text-white transition duration-300">Terms of
+                                Service</a></li>
+                        <li><a href="/cookies" class="text-gray-400 hover:text-white transition duration-300">Cookie
+                                Policy</a></li>
+                         
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-500 text-sm mb-4 md:mb-0">
+                    &copy; 2025 JustCool. All rights reserved.
+                </p>
+                <div class="flex items-center">
+                    <a href="https://play.google.com/store/apps/details?id=com.justcool.boatattack" target="_blank">
+                        <img src="/images/playstore.png" alt="Google Play" class="h-10 mr-4">
+                    </a>
+                    
+                    <a href="mailto:gamebeetlestudio@gmail.com"
+                        class="text-gray-400 hover:text-white transition duration-300">
+                        <i class="fas fa-envelope text-xl"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Cookies Banner
+        const cookiesBanner = document.getElementById('cookies-banner');
+        const acceptCookies = document.getElementById('accept-cookies');
+        const declineCookies = document.getElementById('decline-cookies');
+
+        // Check if user has already made a choice
+        if (!localStorage.getItem('cookiesAccepted')) {
+            cookiesBanner.classList.remove('hidden');
+        }
+
+        acceptCookies.addEventListener('click', () => {
+            localStorage.setItem('cookiesAccepted', 'true');
+            cookiesBanner.classList.add('hidden');
+        });
+
+        declineCookies.addEventListener('click', () => {
+            localStorage.setItem('cookiesAccepted', 'false');
+            cookiesBanner.classList.add('hidden');
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // Animation on scroll
+        const animateOnScroll = () => {
+            const elements = document.querySelectorAll('.animate-fade-in');
+
+            elements.forEach(element => {
+                const elementPosition = element.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight / 1.2;
+
+                if (elementPosition < screenPosition) {
+                    element.classList.add('opacity-100', 'translate-y-0');
+                }
+            });
+        };
+
+        // Initialize elements with starting state
+        document.querySelectorAll('.animate-fade-in').forEach(element => {
+            element.classList.add('opacity-0', 'translate-y-10', 'transition', 'duration-500', 'ease-out');
+        });
+
+        window.addEventListener('load', animateOnScroll);
+        window.addEventListener('scroll', animateOnScroll);
+    </script>
+</body>
+
+</html>

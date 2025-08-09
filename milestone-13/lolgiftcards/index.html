@@ -1,0 +1,1187 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Buy League of Legends gift cards, skins, and in-game currency at the best prices. Instant delivery to your email for NA and EU servers.">
+    <meta name="keywords" content="League of Legends gift cards, LoL RP cards, Riot Points, LoL skins, Valorant points, gaming gift cards">
+    <meta name="author" content="LOLGiftCards">
+    <title>LOLGiftCards.com | Official League of Legends Gift Cards & Skins</title>
+    <link rel="canonical" href="https://lolgiftcards.com/" />
+    <link rel="icon" href="/image/logo.png" type="image/x-icon" class="w-40 h-40 object-cover">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#0f1923',
+                        secondary: '#1a2a3a',
+                        accent: '#ff4655',
+                        riot: '#ce3e3e',
+                        dark: '#0a0e12',
+                        light: '#f8f9fa',
+                    },
+                    fontFamily: {
+                        sans: ['Beaufort', 'Helvetica', 'Arial', 'sans-serif'],
+                        beaufort: ['Beaufort', 'serif'],
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Beaufort+Pro:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollTrigger.min.js"></script>
+    
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <style>
+        body {
+            font-family: 'Beaufort Pro', serif;
+            background-color: #0a0e12;
+            color: #f8f9fa;
+            overflow-x: hidden;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, #ff4655, #ce3e3e);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #0f1923 0%, #1a2a3a 100%);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 25px 50px -12px rgba(255, 70, 85, 0.25);
+        }
+        
+        .nav-link {
+            position: relative;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #ff4655;
+            transition: width 0.3s ease;
+        }
+        
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        
+        .btn-accent {
+            background: linear-gradient(135deg, #ff4655 0%, #ce3e3e 100%);
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 70, 85, 0.3);
+        }
+        
+        .btn-accent:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 70, 85, 0.4);
+        }
+        
+        .particles-container {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+        }
+        
+        .hero-gradient {
+            background: radial-gradient(circle at 20% 50%, rgba(255, 70, 85, 0.15) 0%, rgba(15, 25, 35, 0) 50%);
+        }
+        
+        .glow {
+            filter: drop-shadow(0 0 8px rgba(255, 70, 85, 0.7));
+        }
+        
+        .feature-icon {
+            transition: all 0.3s ease;
+        }
+        
+        .feature-card:hover .feature-icon {
+            transform: scale(1.1) rotate(5deg);
+            color: #ff4655;
+        }
+        
+        .scroll-down {
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-20px);
+            }
+            60% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        .ripple {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .ripple:after {
+            content: "";
+            display: block;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            background-image: radial-gradient(circle, #fff 10%, transparent 10.01%);
+            background-repeat: no-repeat;
+            background-position: 50%;
+            transform: scale(10, 10);
+            opacity: 0;
+            transition: transform .5s, opacity 1s;
+        }
+        
+        .ripple:active:after {
+            transform: scale(0, 0);
+            opacity: .3;
+            transition: 0s;
+        }
+        
+        .tilt-hover {
+            transition: transform 0.3s ease;
+        }
+        
+        .tilt-hover:hover {
+            transform: rotateY(10deg) rotateX(5deg);
+        }
+        
+        .parallax-bg {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+    </style>
+</head>
+<body class="antialiased">
+    <!-- Particles Background -->
+    <div id="particles-js" class="particles-container fixed inset-0 w-full h-full"></div>
+    
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-primary/90 backdrop-blur-md border-b border-secondary">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="/" class="flex items-center">
+                        <img src="/image/logo.png" alt="LOLGiftCards Logo" class="h-20 w-30 object-cover glow">
+                       
+                    </a>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="nav-link text-light hover:text-accent font-medium">Home</a>
+                    <a href="/shop/" class="nav-link text-light hover:text-accent font-medium">Shop</a>
+                    
+                    <a href="/blog/" class="nav-link text-light hover:text-accent font-medium">Blog</a>
+                    <a href="/about/" class="nav-link text-light hover:text-accent font-medium">About</a>
+                    <a href="/contact/" class="nav-link text-light hover:text-accent font-medium">Contact</a>
+                    
+                    <!-- Cart Icon -->
+                    <a href="/cart/" class="relative p-2 text-light hover:text-accent">
+                        <i class="fas fa-shopping-cart text-xl"></i>
+                        <span id="cart-count" class="absolute -top-1 -right-1 bg-accent text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                    </a>
+                    
+                    <!-- Auth Buttons -->
+                     <a href="/login/" class="text-white hover:text-accent">
+                        <i class="fas fa-user"></i>
+                    </a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-button" class="text-light hover:text-accent focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-primary border-t border-secondary">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="/" class="block px-3 py-2 text-light hover:text-accent font-medium">Home</a>
+                <a href="/shop/" class="block px-3 py-2 text-light hover:text-accent font-medium">Shop</a>
+               
+                <a href="/about/" class="block px-3 py-2 text-light hover:text-accent font-medium">About</a>
+                <a href="/blog/" class="block px-3 py-2 text-light hover:text-accent font-medium">Blog</a>
+                <a href="/contact/" class="block px-3 py-2 text-light hover:text-accent font-medium">Contact</a>
+                <a href="/cart/" class="block px-3 py-2 text-light hover:text-accent font-medium">
+                    <span>Cart</span>
+                    <span id="mobile-cart-count" class="ml-2 bg-accent text-white text-xs font-bold rounded-full h-5 w-5 inline-flex items-center justify-center">0</span>
+                </a>
+                <a href="/login/" class="text-white hover:text-accent">
+                        <i class="fas fa-user"></i>
+                    </a>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="relative pt-24 pb-20 md:pt-32 md:pb-28 hero-gradient overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+                <div class="text-center md:text-left">
+                    <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+                        <span class="gradient-text">League of Legends</span><br>
+                        Gift Cards & Skins
+                    </h1>
+                    <p class="text-lg md:text-xl text-gray-300 mb-8 max-w-lg">
+                        Get instant access to RP, skins, and exclusive content for League of Legends. 
+                        Perfect gift for any summoner or treat yourself to that skin you've been wanting!
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
+                        <a href="/shop/" class="btn-accent px-8 py-4 rounded-md text-white font-bold text-lg ripple transform hover:scale-105 transition-transform duration-300">
+                            Shop Now <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                        <a href="/register/" class="bg-secondary hover:bg-secondary/80 px-8 py-4 rounded-md text-white font-bold text-lg border border-accent/50 ripple transform hover:scale-105 transition-transform duration-300">
+                            Register for Bonus <i class="fas fa-gift ml-2"></i>
+                        </a>
+                    </div>
+                    <div class="mt-8 flex items-center justify-center md:justify-start space-x-6">
+                        <div class="flex items-center">
+                            <div class="flex -space-x-2">
+                                <img class="h-10 w-10 object-cover rounded-full border-2 border-secondary" src="/image/Testimonials/avatar1.jpg" alt="Customer avatar">
+                                <img class="h-10 w-10 object-cover rounded-full border-2 border-secondary" src="/image/Testimonials/avatar2.jpg" alt="Customer avatar">
+                                <img class="h-10 w-10 object-cover rounded-full border-2 border-secondary" src="/image/Testimonials/avatar3.jpg" alt="Customer avatar" >
+                            </div>
+                            <div class="ml-3">
+                                <p class="text-sm font-medium text-light">Trusted by 10k+ players</p>
+                                <div class="flex items-center">
+                                    <i class="fas fa-star text-yellow-400"></i>
+                                    <span class="ml-1 text-sm text-gray-300">4.9/5 (2,458 reviews)</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="relative">
+                    <div class="absolute inset-0 bg-accent/20 rounded-3xl blur-3xl -z-10"></div>
+                    <div class="relative tilt-hover">
+                        <img src="/image/hero-image.jpg" alt="League of Legends Champions" class="w-full h-auto md:h-[500px] object-cover  rounded-3xl object-cover glow transform transition-all duration-500 hover:rotate-1 hover:scale-105">
+                        <div class="absolute -bottom-6 -right-6 bg-accent px-6 py-3 rounded-full shadow-lg">
+                            <span class="font-bold text-white">INSTANT DELIVERY</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+     
+        
+        <!-- Scroll Down Indicator -->
+        <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 scroll-down">
+            <a href="#featured" class="text-gray-400 hover:text-accent">
+                <i class="fas fa-chevron-down text-2xl"></i>
+            </a>
+        </div>
+    </section>
+    
+    <!-- Featured Products -->
+    <section id="featured" class="py-16 bg-gradient-to-b from-primary to-secondary">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                    <span class="gradient-text">Featured Products</span>
+                </h2>
+                <p class="text-lg text-gray-300 max-w-2xl mx-auto">
+                    Browse our most popular League of Legends gift cards and skins. Instant delivery guaranteed!
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Product 1 -->
+                <div class="card-hover bg-secondary rounded-xl overflow-hidden border border-gray-800 hover:border-accent/50 transition-all duration-300">
+                    <div class="relative overflow-hidden h-64">
+                        <img src="/image/Products/valorant-25-card.jpg" alt="League of Legends $25 Gift Card" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                        <div class="absolute top-4 right-4 bg-accent text-white text-xs font-bold px-2 py-1 rounded">
+                            BEST SELLER
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">League of Legends $25 Gift Card</h3>
+                        <div class="flex items-center mb-3">
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span class="text-gray-400 text-sm ml-2">(3,663 reviews)</span>
+                        </div>
+                        <p class="text-gray-300 text-sm mb-4">NA Server Only - Instant Delivery</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-2xl font-bold text-accent">$25.00</span>
+                            <button class="add-to-cart btn-accent px-4 py-2 rounded-md text-white font-medium ripple" data-id="1" data-name="League of Legends $25 Gift Card" data-price="25.00" data-image="/image/Products/valorant-25-card.jpg">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 2 -->
+                <div class="card-hover bg-secondary rounded-xl overflow-hidden border border-gray-800 hover:border-accent/50 transition-all duration-300">
+                    <div class="relative overflow-hidden h-64">
+                        <img src="/image/Products/valorant-10-card.jpg" alt="League of Legends $10 Gift Card" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">League of Legends $10 Gift Card</h3>
+                        <div class="flex items-center mb-3">
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="text-gray-400 text-sm ml-2">(3,939 reviews)</span>
+                        </div>
+                        <p class="text-gray-300 text-sm mb-4">NA Server Only - Instant Delivery</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-2xl font-bold text-accent">$10.00</span>
+                            <button class="add-to-cart btn-accent px-4 py-2 rounded-md text-white font-medium ripple" data-id="2" data-name="League of Legends $10 Gift Card" data-price="10.00" data-image="/image/Products/valorant-10-card.jpg">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 3 -->
+                <div class="card-hover bg-secondary rounded-xl overflow-hidden border border-gray-800 hover:border-accent/50 transition-all duration-300">
+                    <div class="relative overflow-hidden h-64">
+                        <img src="/image/Products/valorant-50-card.jpg" alt="League of Legends $50 Gift Card" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                        <div class="absolute top-4 right-4 bg-accent text-white text-xs font-bold px-2 py-1 rounded">
+                            POPULAR
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">League of Legends $50 Gift Card</h3>
+                        <div class="flex items-center mb-3">
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="text-gray-400 text-sm ml-2">(1,404 reviews)</span>
+                        </div>
+                        <p class="text-gray-300 text-sm mb-4">NA Server Only - Instant Delivery</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-2xl font-bold text-accent">$50.00</span>
+                            <button class="add-to-cart btn-accent px-4 py-2 rounded-md text-white font-medium ripple" data-id="3" data-name="League of Legends $50 Gift Card" data-price="50.00" data-image="/image/Products/valorant-50-card.jpg">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Product 4 -->
+                <div class="card-hover bg-secondary rounded-xl overflow-hidden border border-gray-800 hover:border-accent/50 transition-all duration-300">
+                    <div class="relative overflow-hidden h-64">
+                        <img src="/image/Products/lol-100-card.jpg" alt="League of Legends $100 Gift Card" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-xl font-bold mb-2">League of Legends $100 Gift Card</h3>
+                        <div class="flex items-center mb-3">
+                            <div class="flex text-yellow-400">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span class="text-gray-400 text-sm ml-2">(514 reviews)</span>
+                        </div>
+                        <p class="text-gray-300 text-sm mb-4">NA Server Only - Instant Delivery</p>
+                        <div class="flex justify-between items-center">
+                            <span class="text-2xl font-bold text-accent">$100.00</span>
+                            <button class="add-to-cart btn-accent px-4 py-2 rounded-md text-white font-medium ripple" data-id="4" data-name="League of Legends $100 Gift Card" data-price="100.00" data-image="/image/Products/lol-100-card.jpg">
+                                Add to Cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="/shop/" class="inline-flex items-center px-6 py-3 border border-accent text-accent font-bold rounded-md hover:bg-accent hover:text-white transition-colors duration-300">
+                    View All Products <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Features Section -->
+    <section class="py-16 bg-dark">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                    Why Choose <span class="gradient-text">LOLGiftCards</span>
+                </h2>
+                <p class="text-lg text-gray-300 max-w-2xl mx-auto">
+                    We provide the fastest and most reliable way to get your League of Legends gift cards and skins
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Feature 1 -->
+                <div class="feature-card bg-secondary rounded-xl p-8 border border-gray-800 hover:border-accent/50 transition-all duration-300">
+                    <div class="feature-icon text-accent text-4xl mb-6">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Instant Delivery</h3>
+                    <p class="text-gray-300">
+                        Receive your digital code immediately after purchase via email. No waiting, just instant gaming!
+                    </p>
+                </div>
+                
+                <!-- Feature 2 -->
+                <div class="feature-card bg-secondary rounded-xl p-8 border border-gray-800 hover:border-accent/50 transition-all duration-300">
+                    <div class="feature-icon text-accent text-4xl mb-6">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">100% Secure</h3>
+                    <p class="text-gray-300">
+                        Our platform uses advanced encryption to ensure all transactions are safe and secure.
+                    </p>
+                </div>
+                
+                <!-- Feature 3 -->
+                <div class="feature-card bg-secondary rounded-xl p-8 border border-gray-800 hover:border-accent/50 transition-all duration-300">
+                    <div class="feature-icon text-accent text-4xl mb-6">
+                        <i class="fas fa-headset"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">24/7 Support</h3>
+                    <p class="text-gray-300">
+                        Our dedicated support team is available around the clock to assist with any issues.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Categories Section -->
+    <section class="py-16 bg-gradient-to-b from-dark to-primary">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                    Shop by <span class="gradient-text">Category</span>
+                </h2>
+                <p class="text-lg text-gray-300 max-w-2xl mx-auto">
+                    Browse our wide selection of League of Legends products and services
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <!-- Category 1 -->
+                <a href="/shop/" class="group relative overflow-hidden rounded-xl h-48">
+                    <img src="/image/gift-cards.jpg" alt="Gift Cards" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-6">
+                        <div>
+                            <h3 class="text-xl font-bold text-white">Gift Cards</h3>
+                            <p class="text-gray-300">RP for all servers</p>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- Category 2 -->
+                <a href="/shop/" class="group relative overflow-hidden rounded-xl h-48">
+                    <img src="/image/skins.jpg" alt="Skins" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-6">
+                        <div>
+                            <h3 class="text-xl font-bold text-white">Skins</h3>
+                            <p class="text-gray-300">Legendary & Epic skins</p>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- Category 3 -->
+                <a href="/shop/" class="group relative overflow-hidden rounded-xl h-48">
+                    <img src="/image/champions.jpg" alt="Champions" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-6">
+                        <div>
+                            <h3 class="text-xl font-bold text-white">Champions</h3>
+                            <p class="text-gray-300">Unlock all champions</p>
+                        </div>
+                    </div>
+                </a>
+                
+                <!-- Category 4 -->
+                <a href="/shop/" class="group relative overflow-hidden rounded-xl h-48">
+                    <img src="/image/bundles.jpg" alt="Bundles" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-6">
+                        <div>
+                            <h3 class="text-xl font-bold text-white">Bundles</h3>
+                            <p class="text-gray-300">Exclusive deals</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Testimonials -->
+    <section class="py-16 bg-secondary">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                    What Our <span class="gradient-text">Customers Say</span>
+                </h2>
+                <p class="text-lg text-gray-300 max-w-2xl mx-auto">
+                    Don't just take our word for it - hear from our satisfied customers
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="bg-primary rounded-xl p-8 border border-gray-800">
+                    <div class="flex items-center mb-4">
+                        <div class="flex text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-6">
+                        "Got my RP code instantly after purchase! Was able to buy the new skin I wanted right away. Will definitely be using this service again."
+                    </p>
+                    <div class="flex items-center">
+                        <img src="/image/Testimonials/avatar1.jpg" alt="Christina" class="h-10 w-10 rounded-full">
+                        <div class="ml-3">
+                            <h4 class="font-bold text-light">Christina</h4>
+                            <p class="text-sm text-gray-400">Verified Buyer</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 2 -->
+                <div class="bg-primary rounded-xl p-8 border border-gray-800">
+                    <div class="flex items-center mb-4">
+                        <div class="flex text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-6">
+                        "Super fast delivery and great customer service when I had a question. The $50 gift card was perfect for my brother's birthday gift!"
+                    </p>
+                    <div class="flex items-center">
+                        <img src="/image/Testimonials/avatar2.jpg" alt="GeekyPanda404" class="h-10 w-10 rounded-full">
+                        <div class="ml-3">
+                            <h4 class="font-bold text-light">GeekyPanda404</h4>
+                            <p class="text-sm text-gray-400">Verified Buyer</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Testimonial 3 -->
+                <div class="bg-primary rounded-xl p-8 border border-gray-800">
+                    <div class="flex items-center mb-4">
+                        <div class="flex text-yellow-400">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-6">
+                        "I was skeptical at first but the code worked perfectly. Received it in my email within minutes of ordering. Will be back for more!"
+                    </p>
+                    <div class="flex items-center">
+                        <img src="/image/Testimonials/avatar3.jpg" alt="Arianna" class="h-10 w-10 object-cover rounded-full">
+                        <div class="ml-3">
+                            <h4 class="font-bold text-light">Arianna</h4>
+                            <p class="text-sm text-gray-400">Verified Buyer</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-r from-primary to-accent/20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6 text-light">
+                Ready to Enhance Your <span class="gradient-text">Gaming Experience</span>?
+            </h2>
+            <p class="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+                Join thousands of players who trust us for their League of Legends gift cards and skins.
+            </p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="/shop/" class="bg-white text-primary px-8 py-4 rounded-md font-bold text-lg ripple transform hover:scale-105 transition-transform duration-300">
+                    Shop Now <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+                <a href="/register/" class="bg-accent hover:bg-accent/90 text-white px-8 py-4 rounded-md font-bold text-lg border border-white/20 ripple transform hover:scale-105 transition-transform duration-300">
+                    Register for 10% Bonus <i class="fas fa-gift ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Blog Preview -->
+    <section class="py-16 bg-dark">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                    Latest <span class="gradient-text">News & Guides</span>
+                </h2>
+                <p class="text-lg text-gray-300 max-w-2xl mx-auto">
+                    Stay updated with the latest League of Legends news, updates, and skin spotlights
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Blog Post 1 -->
+                <article class="bg-secondary rounded-xl overflow-hidden border border-gray-800 hover:border-accent/50 transition-all duration-300">
+                    <a href="/blog/new-skins-july-2025/">
+                        <div class="relative overflow-hidden h-48">
+                            <img src="/image/Blog/new-skins.jpeg" alt="New Skins July 2025" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                        </div>
+                    </a>
+                    <div class="p-6">
+                        <div class="flex items-center text-sm text-gray-400 mb-3">
+                            <span>July 15, 2025</span>
+                            <span class="mx-2">•</span>
+                            <span>5 min read</span>
+                        </div>
+                        <a href="/blog/new-skins-july-2025/">
+                            <h3 class="text-xl font-bold mb-3 hover:text-accent transition-colors">New Skins Coming in July 2025 - Full Preview</h3>
+                        </a>
+                        <p class="text-gray-300 mb-4">Check out all the new skins coming to League of Legends this month, including the highly anticipated Star Guardian event skins.</p>
+                        <a href="/blog/new-skins-july-2025/" class="inline-flex items-center text-accent font-medium hover:text-accent/80 transition-colors">
+                            Read More <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </article>
+                
+                <!-- Blog Post 2 -->
+                <article class="bg-secondary rounded-xl overflow-hidden border border-gray-800 hover:border-accent/50 transition-all duration-300">
+                    <a href="/blog/best-rp-deals/">
+                        <div class="relative overflow-hidden h-48">
+                            <img src="/image/Blog/rp-deals.jpg" alt="Best RP Deals" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                        </div>
+                    </a>
+                    <div class="p-6">
+                        <div class="flex items-center text-sm text-gray-400 mb-3">
+                            <span>July 8, 2025</span>
+                            <span class="mx-2">•</span>
+                            <span>4 min read</span>
+                        </div>
+                        <a href="/blog/best-rp-deals/">
+                            <h3 class="text-xl font-bold mb-3 hover:text-accent transition-colors">How to Get the Most RP for Your Money</h3>
+                        </a>
+                        <p class="text-gray-300 mb-4">Discover the best ways to maximize your RP purchases and get the most value when buying gift cards and skins.</p>
+                        <a href="/blog/best-rp-deals/" class="inline-flex items-center text-accent font-medium hover:text-accent/80 transition-colors">
+                            Read More <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </article>
+                
+                <!-- Blog Post 3 -->
+                <article class="bg-secondary rounded-xl overflow-hidden border border-gray-800 hover:border-accent/50 transition-all duration-300">
+                    <a href="/blog/champion-guide-2025/">
+                        <div class="relative overflow-hidden h-48">
+                            <img src="/image/Blog/champion-guide.webp" alt="Champion Guide 2025" class="w-full h-full object-cover transition-transform duration-500 hover:scale-110">
+                            <div class="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                        </div>
+                    </a>
+                    <div class="p-6">
+                        <div class="flex items-center text-sm text-gray-400 mb-3">
+                            <span>July 1, 2025</span>
+                            <span class="mx-2">•</span>
+                            <span>8 min read</span>
+                        </div>
+                        <a href="/blog/champion-guide-2025/">
+                            <h3 class="text-xl font-bold mb-3 hover:text-accent transition-colors">Top 5 Champions to Master in 2025</h3>
+                        </a>
+                        <p class="text-gray-300 mb-4">Our comprehensive guide to the most powerful and meta-defining champions in the current season.</p>
+                        <a href="/blog/champion-guide-2025/" class="inline-flex items-center text-accent font-medium hover:text-accent/80 transition-colors">
+                            Read More <i class="fas fa-arrow-right ml-2"></i>
+                        </a>
+                    </div>
+                </article>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="/blog/" class="inline-flex items-center px-6 py-3 border border-accent text-accent font-bold rounded-md hover:bg-accent hover:text-white transition-colors duration-300">
+                    View All Articles <i class="fas fa-arrow-right ml-2"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+    
+    <!-- FAQ Section -->
+    <section class="py-16 bg-primary">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                    Frequently Asked <span class="gradient-text">Questions</span>
+                </h2>
+                <p class="text-lg text-gray-300 max-w-2xl mx-auto">
+                    Find answers to common questions about our gift cards and services
+                </p>
+            </div>
+            
+            <div class="space-y-4">
+                <!-- FAQ Item 1 -->
+                <div class="bg-secondary rounded-xl overflow-hidden border border-gray-800">
+                    <button class="faq-toggle w-full text-left p-6 flex justify-between items-center hover:bg-secondary/80 transition-colors">
+                        <h3 class="text-lg font-bold">How quickly will I receive my gift card after purchase?</h3>
+                        <i class="fas fa-chevron-down text-accent transition-transform"></i>
+                    </button>
+                    <div class="faq-content px-6 pb-6 hidden">
+                        <p class="text-gray-300">
+                            All gift cards are delivered instantly via email after your payment is processed. Typically, you'll receive your code within 1-5 minutes of completing your purchase. If you don't see it in your inbox, please check your spam folder.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 2 -->
+                <div class="bg-secondary rounded-xl overflow-hidden border border-gray-800">
+                    <button class="faq-toggle w-full text-left p-6 flex justify-between items-center hover:bg-secondary/80 transition-colors">
+                        <h3 class="text-lg font-bold">Which servers are supported for League of Legends gift cards?</h3>
+                        <i class="fas fa-chevron-down text-accent transition-transform"></i>
+                    </button>
+                    <div class="faq-content px-6 pb-6 hidden">
+                        <p class="text-gray-300">
+                            We currently offer gift cards for the North America (NA) server. We're working on expanding to other regions soon. Please ensure you're purchasing the correct server version for your account.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 3 -->
+                <div class="bg-secondary rounded-xl overflow-hidden border border-gray-800">
+                    <button class="faq-toggle w-full text-left p-6 flex justify-between items-center hover:bg-secondary/80 transition-colors">
+                        <h3 class="text-lg font-bold">Can I use these gift cards for Valorant as well?</h3>
+                        <i class="fas fa-chevron-down text-accent transition-transform"></i>
+                    </button>
+                    <div class="faq-content px-6 pb-6 hidden">
+                        <p class="text-gray-300">
+                            Our League of Legends gift cards are specifically for LoL RP. However, we do offer separate Valorant gift cards that can be used to purchase Valorant Points (VP) for that game.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 4 -->
+                <div class="bg-secondary rounded-xl overflow-hidden border border-gray-800">
+                    <button class="faq-toggle w-full text-left p-6 flex justify-between items-center hover:bg-secondary/80 transition-colors">
+                        <h3 class="text-lg font-bold">What payment methods do you accept?</h3>
+                        <i class="fas fa-chevron-down text-accent transition-transform"></i>
+                    </button>
+                    <div class="faq-content px-6 pb-6 hidden">
+                        <p class="text-gray-300">
+                            We accept all major credit cards (Visa, MasterCard, American Express), PayPal, and select cryptocurrencies. All transactions are securely processed with encryption.
+                        </p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 5 -->
+                <div class="bg-secondary rounded-xl overflow-hidden border border-gray-800">
+                    <button class="faq-toggle w-full text-left p-6 flex justify-between items-center hover:bg-secondary/80 transition-colors">
+                        <h3 class="text-lg font-bold">What if my code doesn't work?</h3>
+                        <i class="fas fa-chevron-down text-accent transition-transform"></i>
+                    </button>
+                    <div class="faq-content px-6 pb-6 hidden">
+                        <p class="text-gray-300">
+                            In the rare event that a code doesn't work, please contact our 24/7 support team immediately with your order details. We'll verify the issue and provide a replacement code if necessary.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer class="bg-dark pt-16 pb-8 border-t border-secondary">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12">
+                <!-- Column 1 -->
+                <div>
+                    <a href="/" class="flex items-center mb-6">
+                       <img src="/image/logo.png" alt="LOLGiftCards Logo" class="h-20 w-30 object-cover glow">
+                       
+                    </a>
+                    <p class="text-gray-400 mb-6">
+                        Your trusted source for League of Legends gift cards, skins, and in-game content. Instant delivery guaranteed.
+                    </p>
+                   
+                </div>
+                
+                <!-- Column 2 -->
+                <div>
+                    <h3 class="text-lg font-bold text-light mb-6">Shop</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/shop/" class="text-gray-400 hover:text-accent transition-colors">Gift Cards</a></li>
+                        <li><a href="/shop/" class="text-gray-400 hover:text-accent transition-colors">Skins</a></li>
+                        <li><a href="/shop/" class="text-gray-400 hover:text-accent transition-colors">Champions</a></li>
+                        <li><a href="/shop/" class="text-gray-400 hover:text-accent transition-colors">Bundles</a></li>
+                        <li><a href="/shop/" class="text-gray-400 hover:text-accent transition-colors">Sales & Deals</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Column 3 -->
+                <div>
+                    <h3 class="text-lg font-bold text-light mb-6">Company</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/about/" class="text-gray-400 hover:text-accent transition-colors">About Us</a></li>
+                        <li><a href="/blog/" class="text-gray-400 hover:text-accent transition-colors">Blog</a></li>
+                        <li><a href="/contact/" class="text-gray-400 hover:text-accent transition-colors">Contact Us</a></li>
+                       
+                    </ul>
+                </div>
+                
+                <!-- Column 4 -->
+                <div>
+                    <h3 class="text-lg font-bold text-light mb-6">Support</h3>
+                    <ul class="space-y-3">
+                        
+                        <li><a href="/privacy/" class="text-gray-400 hover:text-accent transition-colors">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="text-gray-400 hover:text-accent transition-colors">Terms of Service</a></li>
+                        <li><a href="/cookies/" class="text-gray-400 hover:text-accent transition-colors">Cookies</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-secondary mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-500 text-sm mb-4 md:mb-0">
+                    &copy; 2025 LOLGiftCards.com. All rights reserved.
+                </p>
+                <p class="text-gray-500 text-sm text-center">
+                    We are not an affiliate agency. All products are sold independently through our platform.
+                </p>
+               
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Cookies Consent -->
+    <div id="cookies-consent" class="hidden fixed bottom-0 left-0 right-0 bg-primary border-t border-secondary p-4 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <div class="mb-4 md:mb-0">
+                    <p class="text-gray-300">
+                        We use cookies to enhance your experience on our website. By continuing to browse, you agree to our use of cookies.
+                    </p>
+                </div>
+                <div class="flex space-x-4">
+                    <button id="accept-cookies" class="btn-accent px-6 py-2 rounded-md text-white font-medium ripple">
+                        Accept
+                    </button>
+                    <button id="decline-cookies" class="bg-secondary hover:bg-secondary/80 px-6 py-2 rounded-md text-white font-medium border border-gray-700 ripple">
+                        Decline
+                    </button>
+                    <a href="/privacy/" class="bg-transparent hover:bg-secondary/50 px-6 py-2 rounded-md text-accent font-medium border border-accent ripple">
+                        Learn More
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script>
+        // Mobile Menu Toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        });
+        
+        // FAQ Toggle
+        document.querySelectorAll('.faq-toggle').forEach(button => {
+            button.addEventListener('click', () => {
+                const content = button.nextElementSibling;
+                const icon = button.querySelector('i');
+                
+                content.classList.toggle('hidden');
+                icon.classList.toggle('transform');
+                icon.classList.toggle('rotate-180');
+            });
+        });
+        
+        // Initialize Particles.js
+        particlesJS('particles-js', {
+            "particles": {
+                "number": {
+                    "value": 80,
+                    "density": {
+                        "enable": true,
+                        "value_area": 800
+                    }
+                },
+                "color": {
+                    "value": "#ff4655"
+                },
+                "shape": {
+                    "type": "circle",
+                    "stroke": {
+                        "width": 0,
+                        "color": "#000000"
+                    },
+                    "polygon": {
+                        "nb_sides": 5
+                    }
+                },
+                "opacity": {
+                    "value": 0.3,
+                    "random": false,
+                    "anim": {
+                        "enable": false,
+                        "speed": 1,
+                        "opacity_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "size": {
+                    "value": 3,
+                    "random": true,
+                    "anim": {
+                        "enable": false,
+                        "speed": 40,
+                        "size_min": 0.1,
+                        "sync": false
+                    }
+                },
+                "line_linked": {
+                    "enable": true,
+                    "distance": 150,
+                    "color": "#ff4655",
+                    "opacity": 0.2,
+                    "width": 1
+                },
+                "move": {
+                    "enable": true,
+                    "speed": 2,
+                    "direction": "none",
+                    "random": false,
+                    "straight": false,
+                    "out_mode": "out",
+                    "bounce": false,
+                    "attract": {
+                        "enable": false,
+                        "rotateX": 600,
+                        "rotateY": 1200
+                    }
+                }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": {
+                    "onhover": {
+                        "enable": true,
+                        "mode": "grab"
+                    },
+                    "onclick": {
+                        "enable": true,
+                        "mode": "push"
+                    },
+                    "resize": true
+                },
+                "modes": {
+                    "grab": {
+                        "distance": 140,
+                        "line_linked": {
+                            "opacity": 1
+                        }
+                    },
+                    "bubble": {
+                        "distance": 400,
+                        "size": 40,
+                        "duration": 2,
+                        "opacity": 8,
+                        "speed": 3
+                    },
+                    "repulse": {
+                        "distance": 200,
+                        "duration": 0.4
+                    },
+                    "push": {
+                        "particles_nb": 4
+                    },
+                    "remove": {
+                        "particles_nb": 2
+                    }
+                }
+            },
+            "retina_detect": true
+        });
+        
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+        
+        gsap.from(".hero-gradient", {
+            duration: 1.5,
+            opacity: 0,
+            y: 50,
+            ease: "power3.out"
+        });
+        
+        gsap.utils.toArray(".card-hover").forEach(card => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                },
+                opacity: 0,
+                y: 50,
+                duration: 0.8,
+                ease: "power2.out"
+            });
+        });
+        
+        gsap.utils.toArray(".feature-card").forEach(card => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                },
+                opacity: 0,
+                x: -50,
+                duration: 0.8,
+                ease: "power2.out"
+            });
+        });
+        
+        // Cart functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize cart count
+            updateCartCount();
+            
+            // Add to cart buttons
+            document.querySelectorAll('.add-to-cart').forEach(button => {
+                button.addEventListener('click', function() {
+                    const product = {
+                        id: this.getAttribute('data-id'),
+                        name: this.getAttribute('data-name'),
+                        price: this.getAttribute('data-price'),
+                        image: this.getAttribute('data-image'),
+                        quantity: 1
+                    };
+                    
+                    addToCart(product);
+                    
+                    // Animation feedback
+                    const originalText = this.innerHTML;
+                    this.innerHTML = '<i class="fas fa-check"></i> Added!';
+                    this.classList.add('bg-green-500');
+                    this.classList.remove('btn-accent');
+                    
+                    setTimeout(() => {
+                        this.innerHTML = originalText;
+                        this.classList.remove('bg-green-500');
+                        this.classList.add('btn-accent');
+                    }, 2000);
+                });
+            });
+        });
+        
+        function addToCart(product) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            
+            // Check if product already exists in cart
+            const existingProduct = cart.find(item => item.id === product.id);
+            
+            if (existingProduct) {
+                existingProduct.quantity += 1;
+            } else {
+                cart.push(product);
+            }
+            
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+        }
+        
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            
+            document.getElementById('cart-count').textContent = totalItems;
+            document.getElementById('mobile-cart-count').textContent = totalItems;
+        }
+        
+        // Cookies Consent
+        if (!localStorage.getItem('cookiesAccepted')) {
+            document.getElementById('cookies-consent').classList.remove('hidden');
+        }
+        
+        document.getElementById('accept-cookies').addEventListener('click', function() {
+            localStorage.setItem('cookiesAccepted', 'true');
+            document.getElementById('cookies-consent').classList.add('hidden');
+        });
+        
+        document.getElementById('decline-cookies').addEventListener('click', function() {
+            localStorage.setItem('cookiesDeclined', 'true');
+            document.getElementById('cookies-consent').classList.add('hidden');
+        });
+    </script>
+</body>
+</html>

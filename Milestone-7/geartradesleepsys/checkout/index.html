@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout | GearTrade Sleep Systems</title>
+    <meta name="description" content="Complete your order with GearTrade Sleep Systems. Premium ultralight sleeping bags, pads, and quilts for backpackers.">
+    <meta name="keywords" content="checkout, cash on delivery, camping gear, outdoor equipment, sleeping bags Canada">
+    
+    <!-- Favicon -->
+<link rel="icon" href="/assets/logo.avif" type="image/x-icon">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            DEFAULT: '#3a5a78',
+                            light: '#4a6a88',
+                            dark: '#2a4a68'
+                        },
+                        dark: {
+                            DEFAULT: '#121212',
+                            100: '#1e1e1e',
+                            200: '#2a2a2a',
+                            300: '#363636',
+                            400: '#424242',
+                            500: '#4e4e4e',
+                            600: '#5a5a5a',
+                        },
+                        accent: '#f59e0b',
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'slide-up': 'slideUp 0.5s ease-out',
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' },
+                        },
+                        slideUp: {
+                            '0%': { transform: 'translateY(20px)', opacity: '0' },
+                            '100%': { transform: 'translateY(0)', opacity: '1' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            background-color: #121212;
+            color: #e0e0e0;
+        }
+        .dark-card {
+            background-color: #1e1e1e;
+            border: 1px solid #2a2a2a;
+        }
+        .dark-border {
+            border-color: #2a2a2a;
+        }
+        .cart-badge {
+            top: -0.5rem;
+            right: -0.5rem;
+        }
+        .checkout-input {
+            background-color: #1e1e1e;
+            border-color: #2a2a2a;
+        }
+        .checkout-input:focus {
+            outline: none;
+            border-color: #f59e0b;
+            box-shadow: 0 0 0 1px #f59e0b;
+        }
+        @media (max-width: 640px) {
+            .checkout-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body class="font-sans antialiased">
+    <!-- Header -->
+    <header class="bg-dark-200 shadow-sm sticky top-0 z-40 border-b border-dark-300">
+        <div class="container mx-auto px-4">
+            <!-- Top Bar -->
+            <div class="flex items-center justify-between py-4">
+                <!-- Logo -->
+                <a href="/" class="flex items-center">
+                   <img src="/assets/logo.avif" alt="GearTrade Sleep Systems" class="w-32">
+                </a>
+                
+                <!-- Navigation Icons -->
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <a href="/cart/" class="p-2 text-gray-400 hover:text-white relative">
+                            <i class="fas fa-shopping-cart text-lg"></i>
+                            <span id="cartCount" class="cart-badge absolute bg-accent text-dark-100 text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center hidden">0</span>
+                        </a>
+                    </div>
+                    <button id="mobileMenuButton" class="p-2 text-gray-400 hover:text-white md:hidden">
+                        <i class="fas fa-bars text-lg"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Main Navigation -->
+            <nav class="hidden md:block border-t border-dark-300">
+                <ul class="flex space-x-8 py-3">
+                    <li><a href="/" class="text-gray-400 hover:text-white transition">Home</a></li>
+                    <li><a href="/shop/" class="text-gray-400 hover:text-white transition">Shop</a></li>
+                    <li><a href="/cart/" class="text-gray-400 hover:text-white transition">Cart</a></li>
+                    <li><a href="/about/" class="text-gray-400 hover:text-white transition">About Us</a></li>
+                    <li><a href="/contact/" class="text-gray-400 hover:text-white transition">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-dark-200 border-t border-dark-300 absolute w-full left-0 z-50 shadow-lg">
+            <div class="container mx-auto px-4 py-3">
+                <ul class="space-y-2">
+                    <li><a href="/" class="block py-2 text-white font-medium">Home</a></li>
+                    <li><a href="/shop/" class="block py-2 text-gray-400 hover:text-white transition">Shop</a></li>
+                    <li><a href="/cart/" class="block py-2 text-gray-400 hover:text-white transition">Cart</a></li>
+                    <li><a href="/about/" class="block py-2 text-gray-400 hover:text-white transition">About Us</a></li>
+                    <li><a href="/contact/" class="block py-2 text-gray-400 hover:text-white transition">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="min-h-screen py-12 bg-dark-100">
+        <div class="container mx-auto px-4">
+            <h1 class="text-3xl md:text-4xl font-bold mb-8 text-white">Checkout</h1>
+            
+            <div class="grid checkout-grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Shipping & Payment -->
+                <div>
+                    <form id="checkoutForm">
+                        <!-- Contact Information -->
+                        <div class="dark-card rounded-xl shadow-md p-6 mb-6">
+                            <h2 class="text-xl font-bold mb-6 text-white">Contact Information</h2>
+                            <div class="space-y-4">
+                                <div>
+                                    <label for="email" class="block text-sm font-medium text-gray-400 mb-1">Email Address</label>
+                                    <input type="email" id="email" name="email" required class="w-full checkout-input px-4 py-2 rounded-lg border focus:border-accent">
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Shipping Address -->
+                        <div class="dark-card rounded-xl shadow-md p-6 mb-6">
+                            <h2 class="text-xl font-bold mb-6 text-white">Shipping Address</h2>
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                <div>
+                                    <label for="firstName" class="block text-sm font-medium text-gray-400 mb-1">First Name</label>
+                                    <input type="text" id="firstName" name="firstName" required class="w-full checkout-input px-4 py-2 rounded-lg border">
+                                </div>
+                                <div>
+                                    <label for="lastName" class="block text-sm font-medium text-gray-400 mb-1">Last Name</label>
+                                    <input type="text" id="lastName" name="lastName" required class="w-full checkout-input px-4 py-2 rounded-lg border">
+                                </div>
+                            </div>
+                            
+                            <div class="mt-4">
+                                <label for="address" class="block text-sm font-medium text-gray-400 mb-1">Address</label>
+                                <input type="text" id="address" name="address" required class="w-full checkout-input px-4 py-2 rounded-lg border">
+                            </div>
+                            
+                            <div class="mt-4">
+                                <label for="apartment" class="block text-sm font-medium text-gray-400 mb-1">Apartment, suite, etc. (optional)</label>
+                                <input type="text" id="apartment" name="apartment" class="w-full checkout-input px-4 py-2 rounded-lg border">
+                            </div>
+                            
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+                                <div>
+                                    <label for="city" class="block text-sm font-medium text-gray-400 mb-1">City</label>
+                                    <input type="text" id="city" name="city" required class="w-full checkout-input px-4 py-2 rounded-lg border">
+                                </div>
+                                <div>
+                                    <label for="province" class="block text-sm font-medium text-gray-400 mb-1">Province</label>
+                                    <select id="province" name="province" required class="w-full checkout-input px-4 py-2 rounded-lg border">
+                                        <option value="">Select Province</option>
+                                        <option value="AB">Alberta</option>
+                                        <option value="BC">British Columbia</option>
+                                        <option value="MB">Manitoba</option>
+                                        <option value="NB">New Brunswick</option>
+                                        <option value="NL">Newfoundland and Labrador</option>
+                                        <option value="NT">Northwest Territories</option>
+                                        <option value="NS">Nova Scotia</option>
+                                        <option value="NU">Nunavut</option>
+                                        <option value="ON">Ontario</option>
+                                        <option value="PE">Prince Edward Island</option>
+                                        <option value="QC">Quebec</option>
+                                        <option value="SK">Saskatchewan</option>
+                                        <option value="YT">Yukon</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label for="postalCode" class="block text-sm font-medium text-gray-400 mb-1">Postal Code</label>
+                                    <input type="text" id="postalCode" name="postalCode" required class="w-full checkout-input px-4 py-2 rounded-lg border">
+                                </div>
+                            </div>
+                            
+                            <div class="mt-4">
+                                <label for="phone" class="block text-sm font-medium text-gray-400 mb-1">Phone</label>
+                                <input type="tel" id="phone" name="phone" required class="w-full checkout-input px-4 py-2 rounded-lg border">
+                                <p class="text-xs text-gray-500 mt-1">For delivery updates</p>
+                            </div>
+                        </div>
+                        
+                        <!-- Payment Method - Cash on Delivery Only -->
+                        <div class="dark-card rounded-xl shadow-md p-6">
+                            <h2 class="text-xl font-bold mb-6 text-white">Payment Method</h2>
+                            <div class="border border-accent rounded-lg p-4">
+                                <div class="flex items-center">
+                                    <input type="radio" id="cashOnDelivery" name="paymentMethod" value="cashOnDelivery" checked class="h-4 w-4 text-accent focus:ring-accent border-gray-300">
+                                    <label for="cashOnDelivery" class="ml-3 block text-sm font-medium text-white">
+                                        Cash on Delivery
+                                    </label>
+                                </div>
+                                <p class="text-sm text-gray-400 mt-2 ml-7">Pay with cash when your order is delivered</p>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                
+                <!-- Order Summary -->
+                <div>
+                    <div class="dark-card rounded-xl shadow-md p-6 sticky top-6">
+                        <h2 class="text-xl font-bold mb-6 text-white">Order Summary</h2>
+                        
+                        <div id="orderItemsContainer" class="space-y-4 mb-6 max-h-96 overflow-y-auto">
+                            <!-- Order items will be dynamically inserted here -->
+                        </div>
+                        
+                        <div class="border-t border-dark-300 pt-4 space-y-4">
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Subtotal</span>
+                                <span id="subtotal" class="font-medium">$0.00 CAD</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-400">Shipping</span>
+                                <span id="shipping" class="font-medium">$0.00 CAD</span>
+                            </div>
+                            <div class="border-t border-dark-300 pt-4 flex justify-between">
+                                <span class="text-lg font-semibold text-white">Total</span>
+                                <span id="total" class="text-lg font-bold text-accent">$0.00 CAD</span>
+                            </div>
+                        </div>
+                        
+                        <button id="placeOrderBtn" class="w-full bg-accent text-dark-100 py-3 rounded-lg font-medium hover:bg-opacity-90 transition mt-8">
+                            Place Order
+                        </button>
+                        
+                        <p class="text-xs text-gray-500 mt-4">By placing your order, you agree to our <a href="/terms/" class="text-accent hover:underline">Terms of Service</a> and <a href="/privacy/" class="text-accent hover:underline">Privacy Policy</a>.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark-200 text-gray-400 pt-12 pb-6 border-t border-dark-300">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+                <!-- About -->
+                <div>
+                    <h3 class="text-white text-lg font-semibold mb-4">About GearTrade</h3>
+                    <p class="mb-4">Canadian specialists in ultralight sleep systems for backpackers and outdoor enthusiasts since 2012.</p>
+                    <div class="flex space-x-4">
+                        <a href="https://www.facebook.com/Geartrade.ca/" class="text-gray-400 hover:text-white transition">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.instagram.com/geartrade.ca/" class="text-gray-400 hover:text-white transition">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                    </div>
+                </div>
+                
+             <div>
+                    <h3 class="text-white text-lg font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/shop/" class="hover:text-white transition">Shop All</a></li>                      
+                        <li><a href="/about/" class="hover:text-white transition">About Us</a></li>
+                        <li><a href="/blog/" class="hover:text-white transition">Blog</a></li>
+                         <li><a href="/contact/" class="hover:text-white transition">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Customer Service -->
+                <div>
+                    <h3 class="text-white text-lg font-semibold mb-4">Customer Service</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/cookies/" class="hover:text-white transition">Cookies</a></li>
+                        <li><a href="/privacy/" class="hover:text-white transition">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="hover:text-white transition">Terms of Service</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Contact Info -->
+                <div>
+                    <h3 class="text-white text-lg font-semibold mb-4">Contact Info</h3>
+                    <address class="not-italic">
+                        <p class="mb-2"><i class="fas fa-map-marker-alt mr-2"></i> 999 Canada Pl, Vancouver, BC V6C 3T4, Canada</p>
+                        <p class="mb-2"><i class="fas fa-phone-alt mr-2"></i> +16047757200</p>
+                        <p class="mb-2"><i class="fas fa-envelope mr-2"></i> info@geartradesleepsys.com</p>
+                        <p><i class="fas fa-clock mr-2"></i> Mon-Fri: 9am-5pm MT</p>
+                    </address>
+                </div>
+            </div>
+            
+            <!-- Copyright -->
+            <div class="border-t border-dark-300 pt-6 text-center text-sm">
+                <p>&copy; 2025 GearTrade Sleep Systems. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Order Confirmation Modal -->
+    <div id="orderConfirmationModal" class="fixed inset-0 flex items-center justify-center z-50 hidden">
+        <div class="bg-dark-200 rounded-xl shadow-2xl max-w-md w-full mx-4 p-6 text-center animate-slide-up border border-dark-300">
+            <div class="w-16 h-16 bg-green-900 rounded-full flex items-center justify-center mx-auto mb-4">
+                <i class="fas fa-check text-green-500 text-2xl"></i>
+            </div>
+            <h3 class="text-2xl font-bold mb-2 text-white">Order Confirmed!</h3>
+            <p class="text-gray-400 mb-6">Thank you for your order. We've sent a confirmation to your email.</p>
+            <p class="text-gray-400 mb-6">Your order will be shipped within 2-3 business days.</p>
+            <div class="flex flex-col space-y-3">
+                <a href="/" class="w-full bg-accent text-dark-100 py-3 rounded-lg font-medium hover:bg-opacity-90 transition">
+                    Back to Home
+                </a>
+                <a href="/shop/" class="w-full border border-gray-600 text-white py-3 rounded-lg font-medium hover:bg-dark-300 transition">
+                    Continue Shopping
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Cart Functionality
+        const cartCount = document.getElementById('cartCount');
+        const orderItemsContainer = document.getElementById('orderItemsContainer');
+        const subtotalElement = document.getElementById('subtotal');
+        const shippingElement = document.getElementById('shipping');
+        const totalElement = document.getElementById('total');
+        const placeOrderBtn = document.getElementById('placeOrderBtn');
+        const orderConfirmationModal = document.getElementById('orderConfirmationModal');
+        
+        // Initialize cart from localStorage
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        
+        // Format price
+        function formatPrice(price) {
+            return new Intl.NumberFormat('en-CA', { style: 'currency', currency: 'CAD' }).format(price);
+        }
+        
+        // Calculate shipping (simple flat rate for demo)
+        function calculateShipping() {
+            return cart.length > 0 ? 12.99 : 0;
+        }
+        
+        // Calculate cart totals
+        function calculateTotals() {
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const shipping = calculateShipping();
+            const total = subtotal + shipping;
+            
+            subtotalElement.textContent = formatPrice(subtotal);
+            shippingElement.textContent = formatPrice(shipping);
+            totalElement.textContent = formatPrice(total);
+            
+            return { subtotal, shipping, total };
+        }
+        
+        // Render order items
+        function renderOrderItems() {
+            if (cart.length === 0) {
+                orderItemsContainer.innerHTML = '<p class="text-gray-400">Your cart is empty</p>';
+                return;
+            }
+            
+            orderItemsContainer.innerHTML = cart.map(item => `
+                <div class="flex justify-between items-center">
+                    <div class="flex items-center">
+                        <img src="${item.image}" alt="${item.name}" class="w-16 h-16 object-contain bg-white rounded-lg mr-4">
+                        <div>
+                            <h4 class="text-white">${item.name}</h4>
+                            <p class="text-sm text-gray-400">${item.variant}</p>
+                            <p class="text-sm text-gray-400">Qty: ${item.quantity}</p>
+                        </div>
+                    </div>
+                    <span class="font-medium">${formatPrice(item.price * item.quantity)}</span>
+                </div>
+            `).join('');
+        }
+        
+        // Place order
+        placeOrderBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            
+            // Simple form validation
+            const form = document.getElementById('checkoutForm');
+            const requiredFields = form.querySelectorAll('[required]');
+            let isValid = true;
+            
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    field.classList.add('border-red-500');
+                    isValid = false;
+                } else {
+                    field.classList.remove('border-red-500');
+                }
+            });
+            
+            if (!isValid) {
+                alert('Please fill in all required fields');
+                return;
+            }
+            
+            // In a real app, you would send this data to your backend
+            const orderData = {
+                customer: {
+                    email: document.getElementById('email').value,
+                    firstName: document.getElementById('firstName').value,
+                    lastName: document.getElementById('lastName').value,
+                    address: document.getElementById('address').value,
+                    apartment: document.getElementById('apartment').value,
+                    city: document.getElementById('city').value,
+                    province: document.getElementById('province').value,
+                    postalCode: document.getElementById('postalCode').value,
+                    phone: document.getElementById('phone').value
+                },
+                paymentMethod: document.querySelector('input[name="paymentMethod"]:checked').value,
+                items: cart,
+                totals: calculateTotals(),
+                orderDate: new Date().toISOString(),
+                orderNumber: 'GT-' + Math.floor(Math.random() * 1000000)
+            };
+            
+            // For demo purposes, we'll just show the confirmation
+            console.log('Order submitted:', orderData);
+            
+            // Show confirmation modal
+            orderConfirmationModal.classList.remove('hidden');
+            
+            // Clear cart
+            cart = [];
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+        });
+        
+        // Update cart count display
+        function updateCartCount() {
+            const count = cart.reduce((total, item) => total + item.quantity, 0);
+            if (count > 0) {
+                cartCount.textContent = count;
+                cartCount.classList.remove('hidden');
+            } else {
+                cartCount.classList.add('hidden');
+            }
+        }
+        
+        // Initialize page
+        updateCartCount();
+        calculateTotals();
+        renderOrderItems();
+    </script>
+</body>
+</html>

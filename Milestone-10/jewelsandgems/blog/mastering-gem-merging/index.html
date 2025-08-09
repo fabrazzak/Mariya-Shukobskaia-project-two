@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mastering Gem Merging: Advanced Strategies | Jewels & Gems Blog</title>
+    <meta name="description" content="Learn professional techniques to maximize your gem combinations in Jewels & Gems: Drop Game and uncover hidden treasures faster than ever before.">
+    <meta name="keywords" content="Jewels and Gems strategies, gem merging tips, puzzle game techniques, mobile game guide, merge game tactics">
+    <link rel="canonical" href="https://jewelsandgems.app/blog/mastering-gem-merging/" />
+    <link rel="icon" href="/assets/favicon.png" type="image/x-icon">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            100: '#f0e6ff',
+                            200: '#d9b3ff',
+                            300: '#c280ff',
+                            400: '#ab4dff',
+                            500: '#941aff',
+                            600: '#7a00e6',
+                            700: '#5c00b3',
+                            800: '#3d0080',
+                            900: '#1f004d',
+                        },
+                        secondary: {
+                            100: '#e6f9ff',
+                            200: '#b3ecff',
+                            300: '#80e0ff',
+                            400: '#4dd3ff',
+                            500: '#1ac6ff',
+                            600: '#00ace6',
+                            700: '#0085b3',
+                            800: '#005d80',
+                            900: '#00364d',
+                        },
+                        jewel: {
+                            ruby: '#ff3366',
+                            sapphire: '#3366ff',
+                            emerald: '#33ff66',
+                            topaz: '#ffcc33',
+                            amethyst: '#cc33ff',
+                            diamond: '#e6f9ff'
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-2': 'float 8s ease-in-out infinite',
+                        'float-3': 'float 10s ease-in-out infinite',
+                        'pulse-slow': 'pulse 5s ease-in-out infinite',
+                        'glow': 'glow 2s ease-in-out infinite alternate',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        glow: {
+                            '0%': { 'box-shadow': '0 0 5px rgba(148, 26, 255, 0.5)' },
+                            '100%': { 'box-shadow': '0 0 20px rgba(148, 26, 255, 0.9)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/ScrollTrigger.min.js"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            overflow-x: hidden;
+            background: #0f0c29;
+            color: #fff;
+        }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+        }
+        
+        .jewel-shape {
+            clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%);
+        }
+        
+        .blog-content h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-top: 2.5rem;
+            margin-bottom: 1.25rem;
+            color: white;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+        
+        .blog-content h2::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.6em;
+            height: 0.4em;
+            width: 0.4em;
+            background: linear-gradient(45deg, #ff3366, #cc33ff);
+            border-radius: 50%;
+        }
+        
+        .blog-content h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: white;
+        }
+        
+        .blog-content p {
+            margin-bottom: 1.25rem;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .blog-content ul, .blog-content ol {
+            margin-bottom: 1.25rem;
+            padding-left: 1.5rem;
+        }
+        
+        .blog-content li {
+            margin-bottom: 0.5rem;
+            line-height: 1.7;
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .blog-content a {
+            color: #941aff;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        
+        .blog-content a:hover {
+            color: #c280ff;
+        }
+        
+        .blog-content img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 0.75rem;
+            margin: 1.5rem 0;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .feature-image {
+            position: relative;
+            overflow: hidden;
+            border-radius: 1rem;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+        
+        .feature-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(148, 26, 255, 0.2) 0%, rgba(31, 38, 135, 0.1) 100%);
+        }
+        
+        .tag {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .tag-guide {
+            background-color: rgba(204, 51, 255, 0.2);
+            color: #cc33ff;
+        }
+        
+        .author-card {
+            transition: all 0.3s ease;
+        }
+        
+        .author-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .highlight-box {
+            background: linear-gradient(135deg, rgba(148, 26, 255, 0.1) 0%, rgba(31, 38, 135, 0.2) 100%);
+            border-left: 4px solid #941aff;
+            padding: 1.5rem;
+            border-radius: 0 0.5rem 0.5rem 0;
+            margin: 2rem 0;
+        }
+        
+        .strategy-step {
+            position: relative;
+            padding-left: 3rem;
+            margin-bottom: 2rem;
+            counter-increment: step-counter;
+        }
+        
+        .strategy-step::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 2.5rem;
+            height: 2.5rem;
+            background: linear-gradient(135deg, #ff3366, #cc33ff);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .scroll-progress {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #ff3366, #cc33ff);
+            z-index: 100;
+            width: 0%;
+            transition: width 0.1s linear;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+        }
+        
+        .comparison-table th {
+            background: rgba(148, 26, 255, 0.2);
+            padding: 1rem;
+            text-align: left;
+        }
+        
+        .comparison-table td {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .comparison-table tr:nth-child(even) {
+            background: rgba(255, 255, 255, 0.03);
+        }
+    </style>
+</head>
+<body class="gradient-bg">
+    <!-- Scroll Progress Indicator -->
+    <div class="scroll-progress" id="scroll-progress"></div>
+    
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 glass-card">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-20 items-center">
+                <div class="flex items-center">
+                    <a href="/">  <img alt="logo" src="/assets/logo.png" class="h-16 w-auto"></a>
+                </div>
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-center space-x-8">
+                        <a href="/" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-all duration-300">Home</a>
+                        <a href="/how-to-play/" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-all duration-300">How to Play</a>
+                        <a href="/responsible-gaming/" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-all duration-300">Responsible Gaming</a>
+                        <a href="/blog/" class="text-white px-3 py-2 rounded-md text-sm font-medium transition-all duration-300">Blog</a>
+                        <a href="/contact/" class="text-gray-300 hover:text-white px-3 py-2 rounded-md text-sm font-medium transition-all duration-300">Contact</a>
+                        <a href="https://play.google.com/store/apps/details?id=com.gamed.jewels.merge" class="bg-primary-600 hover:bg-primary-700 text-white px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 shadow-lg hover:shadow-xl">Download</a>
+                    </div>
+                </div>
+                <div class="-mr-2 flex md:hidden">
+                    <button type="button" id="mobile-menu-button" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                        <span class="sr-only">Open main menu</span>
+                        <svg class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div class="hidden md:hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 glass-card">
+                <a href="/" class="text-white block px-3 py-2 rounded-md text-base font-medium">Home</a>
+                <a href="/how-to-play/" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">How to Play</a>
+                <a href="/responsible-gaming/" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Responsible Gaming</a>
+                <a href="/blog/" class="text-white block px-3 py-2 rounded-md text-base font-medium">Blog</a>
+                <a href="/contact/" class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">Contact</a>
+                <a href="https://play.google.com/store/apps/details?id=com.gamed.jewels.merge" class="bg-primary-600 hover:bg-primary-700 text-white block px-3 py-2 rounded-md text-base font-medium text-center">Download</a>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Blog Header -->
+    <header class="relative pt-32 pb-20 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-8">
+                <span class="tag tag-guide mb-4">Strategy Guide</span>
+                <h1 class="text-4xl md:text-5xl font-extrabold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-jewel-ruby via-jewel-topaz to-jewel-sapphire">
+                    Mastering Gem Merging: Advanced Strategies
+                </h1>
+                <div class="flex flex-col sm:flex-row justify-center items-center space-y-2 sm:space-y-0 sm:space-x-8 text-gray-300">
+                    <div class="flex items-center">
+                        <span class="mr-2">📅</span> Jan 28, 2025
+                    </div>
+                    <div class="flex items-center">
+                        <span class="mr-2">⏱️</span> 7 min read
+                    </div>
+                    <div class="flex items-center">
+                        <span class="mr-2">👁️</span> <span id="view-count">2,847</span> views
+                    </div>
+                </div>
+            </div>
+            
+            <div class="feature-image max-w-4xl mx-auto">
+                <img src="/assets/blog/merging-strategies.png" alt="Advanced gem merging strategies in Jewels & Gems" class="w-full h-auto">
+            </div>
+        </div>
+        
+        <!-- Floating Jewels -->
+        <div class="absolute top-1/4 left-1/4 w-16 h-16 jewel-shape bg-jewel-ruby opacity-70 animate-float"></div>
+        <div class="absolute top-1/3 right-1/4 w-20 h-20 jewel-shape bg-jewel-sapphire opacity-70 animate-float-2"></div>
+        <div class="absolute bottom-1/4 left-1/3 w-14 h-14 jewel-shape bg-jewel-emerald opacity-70 animate-float-3"></div>
+    </header>
+    
+    <!-- Blog Content -->
+    <article class="py-12 relative">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="glass-card rounded-2xl p-8 md:p-12 blog-content">
+                <p class="text-xl mb-6">
+                    Unlock the full potential of Jewels & Gems with these professional merging techniques. Whether you're a casual player looking to improve or aiming for the top of the leaderboards, these advanced strategies will help you maximize your gem combinations and uncover hidden treasures faster than ever before.
+                </p>
+                
+                <div class="highlight-box">
+                    <h3 class="text-xl font-bold mb-2 text-white">Key Takeaways</h3>
+                    <ul class="space-y-2">
+                        <li class="gem-feature">The 3-2-1 merging pattern for optimal board control</li>
+                        <li class="gem-feature">How to create and utilize cascading combos</li>
+                        <li class="gem-feature">Strategic gem placement for maximum efficiency</li>
+                        <li class="gem-feature">When to hold vs. when to merge</li>
+                        <li class="gem-feature">Advanced booster combinations</li>
+                    </ul>
+                </div>
+                
+                <h2>The 3-2-1 Merging Pattern</h2>
+                
+                <p>
+                    Most players merge gems as soon as they see a match, but top players use the 3-2-1 pattern to maintain board control:
+                </p>
+                
+                <div class="strategy-step">
+                    <h3>Step 1: Build Three of a Kind</h3>
+                    <p>
+                        Instead of merging two gems immediately, wait until you have three of the same type. This creates a more valuable merged gem while leaving one original gem to continue the chain.
+                    </p>
+                     </div>
+                
+                <div class="strategy-step">
+                    <h3>Step 2: Create Two Pairs</h3>
+                    <p>
+                        After your first merge, you'll have two gems left. Position these strategically to create two separate merging opportunities rather than one.
+                    </p>
+                    </div>
+                
+                <div class="strategy-step">
+                    <h3>Step 3: Single Gem Placement</h3>
+                    <p>
+                        The remaining single gem should be placed where it can form the start of your next 3-2-1 sequence. This creates a continuous merging cycle.
+                    </p>
+                    </div>
+                
+                <h2>Cascading Combos</h2>
+                
+                <p>
+                    Cascading occurs when one merge triggers another, which triggers another, creating a chain reaction. Here's how to set them up:
+                </p>
+                
+                <h3>Vertical vs. Horizontal Cascades</h3>
+                
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>How to Create</th>
+                            <th>Best Use</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Vertical Cascades</td>
+                            <td>Merge gems in columns, allowing new gems to fall into existing matches</td>
+                            <td>When you need to clear the bottom of the board</td>
+                        </tr>
+                        <tr>
+                            <td>Horizontal Cascades</td>
+                            <td>Create matches that push gems sideways into other matches</td>
+                            <td>For clearing specific rows or creating space</td>
+                        </tr>
+                        <tr>
+                            <td>Diagonal Cascades</td>
+                            <td>Position gems so matches create diagonal reactions</td>
+                            <td>Advanced technique for maximum point combos</td>
+                        </tr>
+                    </tbody>
+                </table>
+                 <h2>Strategic Gem Placement</h2>
+                
+                <p>
+                    Where you place your gems is just as important as what you merge:
+                </p>
+                
+                <h3>Corner Strategy</h3>
+                <p>
+                    The corners are powerful positions. Place higher-level gems here where they're less likely to be disturbed by random drops.
+                </p>
+                
+                <h3>Center Control</h3>
+                <p>
+                    The center of the board offers the most merging opportunities. Keep this area clear for maximum flexibility.
+                </p>
+                
+                <h3>Edge Play</h3>
+                <p>
+                    Use the edges to store gems you're building toward while working on other matches in the center.
+                </p>
+                
+                <div class="highlight-box">
+                    <h3 class="text-xl font-bold mb-2 text-white">Pro Tip</h3>
+                    <p>
+                        Try to always leave at least one empty space near your highest-level gem. This gives you room to maneuver when you're close to creating a special combination.
+                    </p>
+                </div>
+                
+                <h2>When to Hold vs. When to Merge</h2>
+                
+                <p>
+                    One of the most subtle but important skills is knowing when to merge immediately versus when to wait:
+                </p>
+                
+                <h3>Merge Immediately When:</h3>
+                <ul>
+                    <li>You need to clear space to prevent a board lock</li>
+                    <li>The merge will trigger a valuable cascade</li>
+                    <li>You're about to receive a new gem that would disrupt your setup</li>
+                </ul>
+                
+                <h3>Hold Your Merge When:</h3>
+                <ul>
+                    <li>You're one gem away from a higher-value combination</li>
+                    <li>The current merge won't significantly improve your position</li>
+                    <li>You're setting up a special gem combination</li>
+                </ul>
+                
+                 <h2>Advanced Booster Combinations</h2>
+                
+                <p>
+                    Boosters are powerful, but combined they're unstoppable:
+                </p>
+                
+                <h3>Rainbow + Bomb</h3>
+                <p>
+                    Using a rainbow gem to create multiple bombs can clear entire sections of the board.
+                </p>
+                
+                <h3>Lightning + Multiplier</h3>
+                <p>
+                    Chain lightning through multiplier gems for exponential point gains.
+                </p>
+                
+                <h3>Time Freeze + Any Booster</h3>
+                <p>
+                    Gives you unlimited moves to set up the perfect combination.
+                </p>
+                
+              
+                
+                
+            </div>
+        </div>
+    </article>
+    
+   <!-- Related Posts -->
+    <section class="relative py-20  overflow-hidden">
+        <!-- Background Image -->
+        <div class="absolute inset-0 z-0">
+            <img src="/assets/slider-img-1.webp" alt="Gem Adventure Background" class="w-full h-full object-cover">
+            <!-- Keep your gradient overlay -->
+            <div class="absolute inset-0 bg-black/80"></div>
+        </div>
+
+        <!-- Content stays untouched -->
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl md:text-5xl font-bold mb-6 text-white">Ready for the Ultimate Gem Adventure?</h2>
+            <p class="text-xl text-gray-200 max-w-3xl mx-auto mb-10">
+                Download Jewels & Gems now and start your journey to discover the hidden treasure!
+            </p>
+            <a href="https://play.google.com/store/apps/details?id=com.gamed.jewels.merge"
+                class="download-btn inline-block bg-white text-primary-700 px-10 py-3 rounded-full text-xl font-bold shadow-2xl hover:shadow-3xl hover:scale-105 transition-transform duration-300">
+                Download Now - It's Free!
+            </a>
+            <p class="text-gray-300 mt-6 text-sm">
+                Rated for 3+ • Contains ads • In-app purchases
+            </p>
+        </div>
+    </section>
+    
+    
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
+                <div class="md:col-span-2">
+                        <a href="/">  <img alt="logo" src="/assets/logo.png" class="h-16 w-auto mb-4"></a>
+                    <p class="text-gray-400 mb-4">
+                        A fresh and exciting puzzle adventure where you merge dazzling jewels to uncover stunning combinations and find the hidden treasure!
+                    </p>
+                    <p class="text-gray-400">
+                        © 2025 PikehuntDev. All rights reserved.
+                    </p>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/how-to-play/" class="text-gray-400 hover:text-white transition-colors duration-300">How to Play</a></li>
+                        <li><a href="/responsible-gaming/" class="text-gray-400 hover:text-white transition-colors duration-300">Responsible Gaming</a></li>
+                        <li><a href="/blog/" class="text-gray-400 hover:text-white transition-colors duration-300">Blog</a></li>
+                        <li><a href="/contact/" class="text-gray-400 hover:text-white transition-colors duration-300">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Legal</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/privacy/" class="text-gray-400 hover:text-white transition-colors duration-300">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="text-gray-400 hover:text-white transition-colors duration-300">Terms of Service</a></li>
+                        <li><a href="/cookies/" class="text-gray-400 hover:text-white transition-colors duration-300">Cookies Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <p class="text-gray-400 flex items-center">
+                            <span class="mr-2">📍</span> C. Emilio Castelar, 51, 13600 Alcázar de San Juan, Ciudad Real, Spain
+                        </p>
+                    </div>
+                    <div>
+                        <p class="text-gray-400 flex items-center">
+                            <span class="mr-2">📞</span> +34926581499
+                        </p>
+                    </div>
+                    <div>
+                        <p class="text-gray-400 flex items-center">
+                            <span class="mr-2">✉️</span> info@jewelsandgems.app
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Cookies Consent -->
+    <div id="cookies-consent" class="fixed bottom-0 left-0 right-0 bg-gray-800 text-white p-4 hidden z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row items-center justify-between">
+                <div class="mb-4 md:mb-0 md:mr-8">
+                    <p class="text-sm">
+                        We use cookies to enhance your experience on our website. By continuing to browse, you agree to our use of cookies.
+                    </p>
+                </div>
+                <div class="flex space-x-4">
+                    <button id="cookies-learn-more" class="text-sm text-primary-400 hover:text-primary-300">
+                        Learn More
+                    </button>
+                    <button id="cookies-decline" class="text-sm bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded">
+                        Decline
+                    </button>
+                    <button id="cookies-accept" class="text-sm bg-primary-600 hover:bg-primary-500 px-4 py-2 rounded">
+                        Accept
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Scripts -->
+    <script>
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Animate elements on scroll
+        gsap.utils.toArray('.glass-card').forEach((card, i) => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                },
+                y: 50,
+                opacity: 0,
+                duration: 0.8,
+                delay: i * 0.1,
+                ease: "power2.out"
+            });
+        });
+        
+        // Hero text animation
+        gsap.from("h1", {
+            duration: 1.5,
+            y: -50,
+            opacity: 0,
+            ease: "back.out(1.7)"
+        });
+        
+        // Floating jewels animation
+        gsap.to(".jewel-shape", {
+            y: "+=20",
+            repeat: -1,
+            yoyo: true,
+            ease: "sine.inOut",
+            duration: 3,
+            stagger: 0.2
+        });
+        
+        // Scroll progress indicator
+        const scrollProgress = document.getElementById('scroll-progress');
+        window.addEventListener('scroll', () => {
+            const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrollPercent = (scrollTop / scrollHeight) * 100;
+            scrollProgress.style.width = scrollPercent + '%';
+        });
+        
+        // View counter simulation
+        const viewCount = document.getElementById('view-count');
+        let views = 2847;
+        
+        // Simulate view count increasing while on page
+        setInterval(() => {
+            views += Math.floor(Math.random() * 3);
+            viewCount.textContent = views.toLocaleString();
+        }, 10000);
+        
+        // Like button interaction
+        const likeCount = document.getElementById('like-count');
+        let likes = 587;
+        let liked = false;
+        
+       
+        
+        // Cookies consent
+        const cookiesConsent = document.getElementById('cookies-consent');
+        const cookiesAccept = document.getElementById('cookies-accept');
+        const cookiesDecline = document.getElementById('cookies-decline');
+        const cookiesLearnMore = document.getElementById('cookies-learn-more');
+        
+        if (!localStorage.getItem('cookiesAccepted')) {
+            setTimeout(() => {
+                cookiesConsent.classList.remove('hidden');
+                gsap.from(cookiesConsent, {
+                    y: 100,
+                    opacity: 0,
+                    duration: 0.5,
+                    ease: "power2.out"
+                });
+            }, 2000);
+        }
+        
+        cookiesAccept.addEventListener('click', () => {
+            localStorage.setItem('cookiesAccepted', 'true');
+            gsap.to(cookiesConsent, {
+                y: 100,
+                opacity: 0,
+                duration: 0.3,
+                ease: "power2.in",
+                onComplete: () => cookiesConsent.classList.add('hidden')
+            });
+        });
+        
+        cookiesDecline.addEventListener('click', () => {
+            localStorage.setItem('cookiesAccepted', 'false');
+            gsap.to(cookiesConsent, {
+                y: 100,
+                opacity: 0,
+                duration: 0.3,
+                ease: "power2.in",
+                onComplete: () => cookiesConsent.classList.add('hidden')
+            });
+        });
+        
+        cookiesLearnMore.addEventListener('click', () => {
+            window.location.href = '/cookies/';
+        });
+    </script>
+</body>
+</html>

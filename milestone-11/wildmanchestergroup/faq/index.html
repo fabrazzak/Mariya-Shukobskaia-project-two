@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frequently Asked Questions | Wild Manchester Group</title>
+    <meta name="description" content="Find answers to common questions about wild camping, foraging, and nature adventures with Wild Manchester Group.">
+    <meta name="keywords" content="wild camping FAQ, foraging questions, nature adventures Manchester, camping gear queries, wilderness survival tips, outdoor activities questions, wild camping UK">
+    
+    <!-- Favicon -->
+   <link rel="icon" href="/assets/logo.png" type="image/x-icon">
+    <link rel="canonical" href="https://wildmanchestergroup.com/faq/" />
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0fdf4',
+                            100: '#dcfce7',
+                            200: '#bbf7d0',
+                            300: '#86efac',
+                            400: '#4ade80',
+                            500: '#22c55e',
+                            600: '#16a34a',
+                            700: '#15803d',
+                            800: '#166534',
+                            900: '#14532d',
+                        },
+                        dark: {
+                            900: '#0a0a0a',
+                            800: '#1a1a1a',
+                            700: '#2a2a2a',
+                            600: '#3a3a3a',
+                            500: '#4a4a4a',
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-reverse': 'float-reverse 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 8s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        },
+                        'float-reverse': {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollTrigger.min.js"></script>
+    
+    <style>
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            background-color: #0a0a0a;
+            color: #f8fafc;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+        .gradient-text {
+            background: linear-gradient(90deg, #4ade80, #3b82f6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .gradient-bg {
+            background: linear-gradient(135deg, rgba(20, 83, 45, 0.2), rgba(30, 64, 175, 0.2));
+        }
+        .card-hover {
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+        }
+        .card-hover:hover {
+            transform: translateY(-10px) rotateX(5deg);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+        .glow-hover:hover {
+            filter: drop-shadow(0 0 8px rgba(74, 222, 128, 0.7));
+        }
+        .noise-bg::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%' height='100%' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: -1;
+        }
+        .faq-item {
+            border-bottom: 1px solid #2a2a2a;
+        }
+        .faq-question {
+            transition: all 0.3s ease;
+        }
+        .faq-question:hover {
+            color: #86efac;
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        .faq-item.active .faq-answer {
+            max-height: 500px; /* Adjust based on your content */
+        }
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+    </style>
+</head>
+<body class="noise-bg">
+    <!-- Cookie Consent Banner -->
+    <div id="cookieConsent" class="fixed bottom-0 left-0 right-0 bg-dark-800 p-4 shadow-lg z-50 hidden">
+        <div class="container mx-auto flex flex-col md:flex-row items-center justify-between">
+            <p class="text-sm text-gray-300 mb-4 md:mb-0 md:mr-4">
+                We use cookies to enhance your experience. By continuing to visit this site you agree to our use of cookies.
+                <a href="/privacy/" class="text-primary-400 hover:underline">Learn more</a>
+            </p>
+            <div class="flex space-x-3">
+                <button id="acceptCookies" class="px-4 py-2 bg-primary-600 hover:bg-primary-700 rounded-md text-sm font-medium transition-colors">
+                    Accept
+                </button>
+                <button id="declineCookies" class="px-4 py-2 bg-dark-700 hover:bg-dark-600 rounded-md text-sm font-medium transition-colors">
+                    Decline
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed top-0 left-0 right-0 z-40 bg-dark-900/80 backdrop-blur-md border-b border-dark-700">
+        <div class="container mx-auto px-6 py-4">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <a href="/" class="flex items-center space-x-2 glow-hover">
+                       <img src="/assets/logo.png" class="h-16" alt="logo" />
+                    </a>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="text-gray-300 hover:text-primary-400 transition-colors">Home</a>
+                    <a href="/about/" class="text-gray-300 hover:text-primary-400 transition-colors">About</a>
+                     <a href="/blog/" class="text-gray-300 hover:text-primary-400 transition-colors">Blog</a>
+                    <a href="/camping/" class="text-gray-300  hover:text-primary-400 transition-colors ">Camping</a>
+                    <a href="/contact/" class="text-gray-300 hover:text-primary-400 transition-colors">Contact</a>
+                    <a href="/faq/" class="text-white hover:text-primary-400 transition-colors font-medium">FAQ</a>
+                    <div class="relative group">
+                        <button class="flex items-center text-gray-300 hover:text-primary-400 transition-colors">
+                            <span>More</span>
+                            <i class="fas fa-chevron-down ml-1 text-xs transition-transform group-hover:rotate-180"></i>
+                        </button>
+                        <div class="absolute right-0 mt-2 w-48 bg-dark-800 rounded-md shadow-lg py-1 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 transform translate-y-1 group-hover:translate-y-0">
+                            <a href="/gallery/" class="block px-4 py-2 text-sm text-gray-300 hover:bg-dark-700 hover:text-white">Gallery</a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CTA and Mobile Menu Button -->
+                <div class="flex items-center space-x-4">
+                    <a href="/contact/" class="hidden md:block px-4 py-2 bg-primary-600 hover:bg-primary-700 rounded-md text-sm font-medium transition-colors">
+                        Book Adventure
+                    </a>
+                    <button id="mobileMenuButton" class="md:hidden text-gray-300 hover:text-white focus:outline-none">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="md:hidden hidden bg-dark-800 border-t border-dark-700">
+            <div class="container mx-auto px-6 py-4 flex flex-col space-y-4">
+                <a href="/" class="text-white hover:text-primary-400 transition-colors">Home</a>
+                <a href="/about/" class="text-gray-300 hover:text-primary-400 transition-colors">About</a>
+                 <a href="/blog/" class="text-gray-300 hover:text-primary-400 transition-colors">Blog</a>
+                    <a href="/camping/" class="text-gray-300  hover:text-primary-400 transition-colors ">Camping</a>
+                <a href="/contact/" class="text-gray-300 hover:text-primary-400 transition-colors">Contact</a>
+                <a href="/faq/" class="text-white hover:text-primary-400 transition-colors">FAQ</a>
+                <a href="/gallery/" class="text-gray-300 hover:text-primary-400 transition-colors">Gallery</a>
+                
+                <a href="/contact/" class="mt-2 px-4 py-2 bg-primary-600 hover:bg-primary-700 rounded-md text-sm font-medium text-center transition-colors">
+                    Book Adventure
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- FAQ Hero Section -->
+    <section class="relative pt-32 pb-20 overflow-hidden">
+        <div class="absolute inset-0 bg-gradient-to-b from-dark-900/70 via-dark-900/30 to-dark-900/70 z-10"></div>
+        <div class="absolute inset-0 bg-[url('/assets/gallery/featured-photo.jpeg')] bg-cover bg-center opacity-30"></div>
+        
+        <div class="container mx-auto px-6 relative z-20">
+            <div class="max-w-4xl mx-auto text-center">
+                <h1 class="text-5xl md:text-6xl font-bold mb-6 leading-tight">
+                    <span class="gradient-text">Frequently Asked</span> Questions
+                </h1>
+                <p class="text-xl text-gray-300 mb-10 max-w-3xl mx-auto">
+                    Find answers to common questions about our wild camping adventures, foraging experiences, and nature immersion programs.
+                </p>
+                <div class="relative max-w-xl mx-auto">
+                    <input type="text" placeholder="Search FAQs..." class="w-full px-6 py-4 bg-dark-800 border border-dark-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-transparent text-white placeholder-gray-500">
+                    <button class="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-primary-400">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Content Section -->
+    <section class="py-20 relative">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col lg:flex-row gap-12">
+                <!-- FAQ Categories -->
+                <div class="lg:w-1/4">
+                    <div class="sticky top-32">
+                        <h3 class="text-2xl font-bold mb-6">Categories</h3>
+                        <ul class="space-y-3">
+                            <li>
+                                <a href="#general" class="block px-4 py-2 bg-dark-800 hover:bg-dark-700 rounded-lg font-medium transition-colors">
+                                    General Questions
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#camping" class="block px-4 py-2 bg-dark-800 hover:bg-dark-700 rounded-lg font-medium transition-colors">
+                                    Wild Camping
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#foraging" class="block px-4 py-2 bg-dark-800 hover:bg-dark-700 rounded-lg font-medium transition-colors">
+                                    Foraging
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#booking" class="block px-4 py-2 bg-dark-800 hover:bg-dark-700 rounded-lg font-medium transition-colors">
+                                    Booking & Payments
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#safety" class="block px-4 py-2 bg-dark-800 hover:bg-dark-700 rounded-lg font-medium transition-colors">
+                                    Safety & Equipment
+                                </a>
+                            </li>
+                            <li>
+                                <a href="#other" class="block px-4 py-2 bg-dark-800 hover:bg-dark-700 rounded-lg font-medium transition-colors">
+                                    Other Questions
+                                </a>
+                            </li>
+                        </ul>
+                        
+                        <div class="mt-12 gradient-bg rounded-xl p-6 border border-dark-700">
+                            <h4 class="text-xl font-bold mb-4">Still have questions?</h4>
+                            <p class="text-gray-400 mb-4">
+                                Can't find what you're looking for? Our team is happy to help with any questions you might have.
+                            </p>
+                            <a href="/contact/" class="inline-block px-6 py-3 bg-primary-600 hover:bg-primary-700 rounded-lg font-medium transition-colors">
+                                Contact Us
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- FAQ Items -->
+                <div class="lg:w-3/4">
+                    <!-- General Questions -->
+                    <div id="general" class="mb-16">
+                        <h2 class="text-3xl font-bold mb-8 flex items-center">
+                            <i class="fas fa-question-circle text-primary-400 mr-3"></i>
+                            <span>General Questions</span>
+                        </h2>
+                        
+                        <div class="space-y-6">
+                            <div class="faq-item bg-dark-800 rounded-xl p-6 border border-dark-700">
+                                <div class="faq-question flex justify-between items-center cursor-pointer">
+                                    <h3 class="text-xl font-semibold">What is Wild Manchester Group?</h3>
+                                    <i class="fas fa-chevron-down text-primary-400 transition-transform"></i>
+                                </div>
+                                <div class="faq-answer mt-4 text-gray-400">
+                                    <p>
+                                        Wild Manchester Group is an organization dedicated to helping people reconnect with nature through wild camping adventures, foraging experiences, and wilderness survival training. We operate in and around Manchester, offering guided experiences for all skill levels.
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <div class="faq-item bg-dark-800 rounded-xl p-6 border border-dark-700">
+                                <div class="faq-question flex justify-between items-center cursor-pointer">
+                                    <h3 class="text-xl font-semibold">Where are you located?</h3>
+                                    <i class="fas fa-chevron-down text-primary-400 transition-transform"></i>
+                                </div>
+                                <div class="faq-answer mt-4 text-gray-400">
+                                    <p>
+                                        Our base camp is located at 22 Renfield Ln, Glasgow G2 5AR, United Kingdom. However, our wilderness experiences take place in various locations around Manchester and the surrounding areas. Each adventure has its own meeting point which we provide upon booking.
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <div class="faq-item bg-dark-800 rounded-xl p-6 border border-dark-700">
+                                <div class="faq-question flex justify-between items-center cursor-pointer">
+                                    <h3 class="text-xl font-semibold">Do I need any prior experience?</h3>
+                                    <i class="fas fa-chevron-down text-primary-400 transition-transform"></i>
+                                </div>
+                                <div class="faq-answer mt-4 text-gray-400">
+                                    <p>
+                                        Not at all! We offer experiences for all skill levels, from complete beginners to seasoned outdoors enthusiasts. Our beginner-friendly trips provide all the instruction and support you'll need to have a safe and enjoyable experience in nature.
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <div class="faq-item bg-dark-800 rounded-xl p-6 border border-dark-700">
+                                <div class="faq-question flex justify-between items-center cursor-pointer">
+                                    <h3 class="text-xl font-semibold">What's the best season for wild camping?</h3>
+                                    <i class="fas fa-chevron-down text-primary-400 transition-transform"></i>
+                                </div>
+                                <div class="faq-answer mt-4 text-gray-400">
+                                    <p>
+                                        Each season offers a unique experience. Spring brings new growth and wildlife, summer offers warm nights, autumn provides beautiful foliage, and winter offers a serene, quiet landscape. We operate year-round and provide season-appropriate gear and guidance.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Wild Camping -->
+                    <div id="camping" class="mb-16">
+                        <h2 class="text-3xl font-bold mb-8 flex items-center">
+                            <i class="fas fa-campground text-primary-400 mr-3"></i>
+                            <span>Wild Camping</span>
+                        </h2>
+                        
+                        <div class="space-y-6">
+                            <div class="faq-item bg-dark-800 rounded-xl p-6 border border-dark-700">
+                                <div class="faq-question flex justify-between items-center cursor-pointer">
+                                    <h3 class="text-xl font-semibold">Is wild camping legal in the UK?</h3>
+                                    <i class="fas fa-chevron-down text-primary-400 transition-transform"></i>
+                                </div>
+                                <div class="faq-answer mt-4 text-gray-400">
+                                    <p>
+                                        Wild camping laws vary across the UK. In England and Wales, you generally need landowner permission. In Scotland, the Right to Roam laws make wild camping legal in most unenclosed areas. We only operate in legal locations and always obtain necessary permissions.
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <div class="faq-item bg-dark-800 rounded-xl p-6 border border-dark-700">
+                                <div class="faq-question flex justify-between items-center cursor-pointer">
+                                    <h3 class="text-xl font-semibold">What facilities are available during camping?</h3>
+                                    <i class="fas fa-chevron-down text-primary-400 transition-transform"></i>
+                                </div>
+                                <div class="faq-answer mt-4 text-gray-400">
+                                    <p>
+                                        True wild camping means minimal facilities. We teach you how to be self-sufficient in nature. However, our beginner trips often have access to basic composting toilets and fresh water sources. There are no showers or electricity at our wild campsites.
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <div class="faq-item bg-dark-800 rounded-xl p-6 border border-dark-700">
+                                <div class="faq-question flex justify-between items-center cursor-pointer">
+                                    <h3 class="text-xl font-semibold">What should I bring for a wild camping trip?</h3>
+                                    <i class="fas fa-chevron-down text-primary-400 transition-transform"></i>
+                                </div>
+                                <div class="faq-answer mt-4 text-gray-400">
+                                    <p>
+                                        We provide a detailed packing list when you book, but essentials include: a good quality tent, sleeping bag suitable for the season, sleeping mat, waterproof clothing, sturdy footwear, headtorch, water bottle, and personal items. For beginner trips, we provide most camping equipment.
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <div class="faq-item bg-dark-800 rounded-xl p-6 border border-dark-700">
+                                <div class="faq-question flex justify-between items-center cursor-pointer">
+                                    <h3 class="text-xl font-semibold">Can I bring my children wild camping?</h3>
+                                    <i class="fas fa-chevron-down text-primary-400 transition-transform"></i>
+                                </div>
+                                <div class="faq-answer mt-4 text-gray-400">
+                                    <p>
+                                        Absolutely! We offer family-friendly camping experiences designed to introduce children to nature safely. The minimum age varies by trip (typically 6+ for most experiences), and we adjust activities to be engaging for younger participants. Family bookings receive special considerations.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Foraging -->
+                    <div id="foraging" class="mb-16">
+                        <h2 class="text-3xl font-bold mb-8 flex items-center">
+                            <i class="fas fa-leaf text-primary-400 mr-3"></i>
+                            <span>Foraging</span>
+                        </h2>
+                        
+                        <div class="space-y-6">
+                            <div class="faq-item bg-dark-800 rounded-xl p-6 border border-dark-700">
+                                <div class="faq-question flex justify-between items-center cursor-pointer">
+                                    <h3 class="text-xl font-semibold">Is foraging safe?</h3>
+                                    <i class="fas fa-chevron-down text-primary-400 transition-transform"></i>
+                                </div>
+                                <div class="faq-answer mt-4 text-gray-400">
+                                    <p>
+                                        When done correctly with proper knowledge, foraging is very safe. Our expert guides teach you how to positively identify edible plants and avoid dangerous lookalikes. We follow the rule: "If in doubt, leave it out." Never eat anything you're not 100% certain about.
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <div class="faq-item bg-dark-800 rounded-xl p-6 border border-dark-700">
+                                <div class="faq-question flex justify-between items-center cursor-pointer">
+                                    <h3 class="text-xl font-semibold">What can I expect to find foraging in Manchester?</h3>
+                                    <i class="fas fa-chevron-down text-primary-400 transition-transform"></i>
+                                </div>
+                                <div class="faq-answer mt-4 text-gray-400">
+                                    <p>
+                                        The Manchester area offers a surprising variety of wild edibles including wild garlic, nettles, elderflowers, blackberries, mushrooms (in season), rosehips, and many more. What's available depends on the season - we'll help you discover what's at its peak during your visit.
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <div class="faq-item bg-dark-800 rounded-xl p-6 border border-dark-700">
+                                <div class="faq-question flex justify-between items-center cursor-pointer">
+                                    <h3 class="text-xl font-semibold">Do I need special equipment for foraging?</h3>
+                                    <i class="fas fa-chevron-down text-primary-400 transition-transform"></i>
+                                </div>
+                                <div class="faq-answer mt-4 text-gray-400">
+                                    <p>
+                                        Basic foraging requires very little equipment. We recommend: comfortable walking shoes, weather-appropriate clothing, a basket or cloth bag, small knife, notebook, and a field guide (we provide these). For certain trips, we may recommend additional items which we'll specify when you book.
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <div class="faq-item bg-dark-800 rounded-xl p-6 border border-dark-700">
+                                <div class="faq-question flex justify-between items-center cursor-pointer">
+                                    <h3 class="text-xl font-semibold">Is foraging legal in the UK?</h3>
+                                    <i class="fas fa-chevron-down text-primary-400 transition-transform"></i>
+                                </div>
+                                <div class="faq-answer mt-4 text-gray-400">
+                                    <p>
+                                        Foraging is legal in the UK for personal use if done responsibly. We follow the Wildlife and Countryside Act which allows foraging of the "Four F's" - fruit, foliage, flowers, and fungi - as long as it's for personal consumption and doesn't damage the plant or environment. We always obtain landowner permission.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Booking & Payments -->
+                    <div id="booking" class="mb-16">
+                        <h2 class="text-3xl font-bold mb-8 flex items-center">
+                            <i class="fas fa-calendar-check text-primary-400 mr-3"></i>
+                            <span>Booking & Payments</span>
+                        </h2>
+                        
+                        <div class="space-y-6">
+                            <div class="faq-item bg-dark-800 rounded-xl p-6 border border-dark-700">
+                                <div class="faq-question flex justify-between items-center cursor-pointer">
+                                    <h3 class="text-xl font-semibold">How do I book an experience?</h3>
+                                    <i class="fas fa-chevron-down text-primary-400 transition-transform"></i>
+                                </div>
+                                <div class="faq-answer mt-4 text-gray-400">
+                                    <p>
+                                        You can book directly through our website by visiting the "Book Adventure" page, or contact us via phone or email. We recommend booking at least 2-4 weeks in advance for weekend trips, especially during peak seasons (spring and summer).
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <div class="faq-item bg-dark-800 rounded-xl p-6 border border-dark-700">
+                                <div class="faq-question flex justify-between items-center cursor-pointer">
+                                    <h3 class="text-xl font-semibold">What payment methods do you accept?</h3>
+                                    <i class="fas fa-chevron-down text-primary-400 transition-transform"></i>
+                                </div>
+                                <div class="faq-answer mt-4 text-gray-400">
+                                    <p>
+                                        We accept all major credit/debit cards (Visa, Mastercard, American Express), PayPal, and bank transfers. Payment is required in full at time of booking to secure your spot. For private group bookings, we may offer payment plans - please inquire.
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <div class="faq-item bg-dark-800 rounded-xl p-6 border border-dark-700">
+                                <div class="faq-question flex justify-between items-center cursor-pointer">
+                                    <h3 class="text-xl font-semibold">What is your cancellation policy?</h3>
+                                    <i class="fas fa-chevron-down text-primary-400 transition-transform"></i>
+                                </div>
+                                <div class="faq-answer mt-4 text-gray-400">
+                                    <p>
+                                        We offer full refunds for cancellations made at least 14 days before the experience date. Cancellations 7-14 days prior receive a 50% refund. Within 7 days, we cannot offer refunds but may reschedule you if possible. In case of extreme weather, we may reschedule or refund.
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <div class="faq-item bg-dark-800 rounded-xl p-6 border border-dark-700">
+                                <div class="faq-question flex justify-between items-center cursor-pointer">
+                                    <h3 class="text-xl font-semibold">Do you offer gift certificates?</h3>
+                                    <i class="fas fa-chevron-down text-primary-400 transition-transform"></i>
+                                </div>
+                                <div class="faq-answer mt-4 text-gray-400">
+                                    <p>
+                                        Yes! Our experiences make wonderful gifts. You can purchase digital gift certificates for specific amounts or particular experiences. Certificates are valid for 12 months from purchase date. Visit our "Gift Certificates" page or contact us to arrange one.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Safety & Equipment -->
+                    <div id="safety" class="mb-16">
+                        <h2 class="text-3xl font-bold mb-8 flex items-center">
+                            <i class="fas fa-shield-alt text-primary-400 mr-3"></i>
+                            <span>Safety & Equipment</span>
+                        </h2>
+                        
+                        <div class="space-y-6">
+                            <div class="faq-item bg-dark-800 rounded-xl p-6 border border-dark-700">
+                                <div class="faq-question flex justify-between items-center cursor-pointer">
+                                    <h3 class="text-xl font-semibold">How do you ensure participant safety?</h3>
+                                    <i class="fas fa-chevron-down text-primary-400 transition-transform"></i>
+                                </div>
+                                <div class="faq-answer mt-4 text-gray-400">
+                                    <p>
+                                        Safety is our top priority. All guides are first aid certified, carry emergency communication devices, and are trained in wilderness first response. We maintain small group sizes, conduct thorough briefings, carry first aid kits, and choose locations with emergency access. Our risk assessments are regularly updated.
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <div class="faq-item bg-dark-800 rounded-xl p-6 border border-dark-700">
+                                <div class="faq-question flex justify-between items-center cursor-pointer">
+                                    <h3 class="text-xl font-semibold">What happens in case of bad weather?</h3>
+                                    <i class="fas fa-chevron-down text-primary-400 transition-transform"></i>
+                                </div>
+                                <div class="faq-answer mt-4 text-gray-400">
+                                    <p>
+                                        We monitor weather closely and will contact you if conditions may affect the experience. Light rain doesn't usually cancel trips - we provide guidance on appropriate clothing. For severe weather (high winds, storms), we may reschedule or offer alternative activities/refunds. Your safety is our priority.
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <div class="faq-item bg-dark-800 rounded-xl p-6 border border-dark-700">
+                                <div class="faq-question flex justify-between items-center cursor-pointer">
+                                    <h3 class="text-xl font-semibold">Do you provide camping equipment?</h3>
+                                    <i class="fas fa-chevron-down text-primary-400 transition-transform"></i>
+                                </div>
+                                <div class="faq-answer mt-4 text-gray-400">
+                                    <p>
+                                        For beginner experiences, we provide all major camping equipment (tents, sleeping mats, cooking gear). For advanced trips, participants typically bring their own gear (with our guidance). We have rental equipment available if needed - inquire when booking.
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <div class="faq-item bg-dark-800 rounded-xl p-6 border border-dark-700">
+                                <div class="faq-question flex justify-between items-center cursor-pointer">
+                                    <h3 class="text-xl font-semibold">What about insects and wildlife?</h3>
+                                    <i class="fas fa-chevron-down text-primary-400 transition-transform"></i>
+                                </div>
+                                <div class="faq-answer mt-4 text-gray-400">
+                                    <p>
+                                        Insects are part of the wilderness experience! We recommend bringing insect repellent. The UK has no dangerous wildlife, but we teach how to store food properly to avoid attracting animals. We've never had any dangerous encounters - most wildlife avoids humans.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Other Questions -->
+                    <div id="other">
+                        <h2 class="text-3xl font-bold mb-8 flex items-center">
+                            <i class="fas fa-ellipsis-h text-primary-400 mr-3"></i>
+                            <span>Other Questions</span>
+                        </h2>
+                        
+                        <div class="space-y-6">
+                            <div class="faq-item bg-dark-800 rounded-xl p-6 border border-dark-700">
+                                <div class="faq-question flex justify-between items-center cursor-pointer">
+                                    <h3 class="text-xl font-semibold">Can I bring my dog?</h3>
+                                    <i class="fas fa-chevron-down text-primary-400 transition-transform"></i>
+                                </div>
+                                <div class="faq-answer mt-4 text-gray-400">
+                                    <p>
+                                        We love dogs but generally don't allow them on group experiences due to potential distractions and wildlife interactions. However, we can sometimes arrange private experiences where dogs are welcome - please inquire. Assistance dogs are always welcome with prior notice.
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <div class="faq-item bg-dark-800 rounded-xl p-6 border border-dark-700">
+                                <div class="faq-question flex justify-between items-center cursor-pointer">
+                                    <h3 class="text-xl font-semibold">Are your experiences accessible?</h3>
+                                    <i class="fas fa-chevron-down text-primary-400 transition-transform"></i>
+                                </div>
+                                <div class="faq-answer mt-4 text-gray-400">
+                                    <p>
+                                        Some experiences can be adapted for different mobility levels, but true wilderness locations often have uneven terrain. Please contact us to discuss specific needs - we'll do our best to accommodate or suggest suitable alternatives. We're committed to making nature accessible to everyone.
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <div class="faq-item bg-dark-800 rounded-xl p-6 border border-dark-700">
+                                <div class="faq-question flex justify-between items-center cursor-pointer">
+                                    <h3 class="text-xl font-semibold">Do you offer corporate or team-building experiences?</h3>
+                                    <i class="fas fa-chevron-down text-primary-400 transition-transform"></i>
+                                </div>
+                                <div class="faq-answer mt-4 text-gray-400">
+                                    <p>
+                                        Yes! We design custom wilderness experiences for corporate groups focused on team building, leadership development, and stress reduction. These can range from half-day foraging workshops to multi-day survival challenges. Contact us to discuss your group's needs and objectives.
+                                    </p>
+                                </div>
+                            </div>
+                            
+                            <div class="faq-item bg-dark-800 rounded-xl p-6 border border-dark-700">
+                                <div class="faq-question flex justify-between items-center cursor-pointer">
+                                    <h3 class="text-xl font-semibold">How can I become a guide for Wild Manchester?</h3>
+                                    <i class="fas fa-chevron-down text-primary-400 transition-transform"></i>
+                                </div>
+                                <div class="faq-answer mt-4 text-gray-400">
+                                    <p>
+                                        We're always interested in passionate, knowledgeable individuals. Requirements include: wilderness first aid certification, extensive outdoor experience, teaching ability, and passion for nature. Formal qualifications (e.g., Mountain Leader) are preferred. Send your CV and cover letter to our contact email.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+  <!-- CTA Section -->
+    <section class="py-20 relative overflow-hidden bg-[url('/assets/advanced-survival.jpg')] bg-cover bg-center">
+        <div class="absolute inset-0 bg-gradient-to-b from-dark-900/80 to-dark-900/90 z-0"></div>
+
+        <!-- Floating blurred shapes -->
+        <div class="absolute inset-0 opacity-10 z-0">
+            <div class="absolute top-1/4 left-1/4 w-64 h-64 rounded-full bg-primary-500/30 blur-3xl animate-float">
+            </div>
+            <div
+                class="absolute bottom-1/3 right-1/4 w-64 h-64 rounded-full bg-blue-500/30 blur-3xl animate-float-reverse">
+            </div>
+        </div>
+
+        <!-- Main content -->
+        <div class="container mx-auto px-6 relative z-10">
+            <div class="max-w-4xl mx-auto text-center">
+                <h2 class="text-4xl md:text-5xl font-bold mb-6">
+                    Ready for Your <span class="gradient-text">Wild Adventure</span>?
+                </h2>
+                <p class="text-xl text-gray-300 mb-10 max-w-3xl mx-auto">
+                    Whether you're a seasoned outdoors enthusiast or a complete beginner, we have the perfect experience
+                    to help you reconnect with nature.
+                </p>
+                <div class="flex flex-col z-50 sm:flex-row justify-center gap-4 relative">
+                    <a href="/contact/"
+                        class="px-8 py-4 bg-white hover:bg-gray-100 text-dark-900 rounded-lg text-lg font-semibold  shadow-lg  hover:scale-105 ">
+                        Book Your Trip Now
+                    </a>
+                    <a href="tel:+441412222254"
+                        class="px-8 py-4 bg-dark-800 hover:bg-dark-700 rounded-lg text-lg font-semibold  shadow-lg  hover:scale-105 flex items-center justify-center">
+                        <i class="fas fa-phone mr-2"></i> Call Us
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Footer -->
+    <footer class="bg-dark-900 border-t border-dark-800 pt-20 pb-10">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+                <div>
+                   <a href="/" class="flex items-center space-x-2 glow-hover">
+                       <img src="/assets/logo.png" class="h-16 mb-6" alt="logo" />
+                    </a>
+                    <p class="text-gray-400 mb-6">
+                        Reconnecting people with nature through wild camping adventures, foraging experiences, and wilderness survival training in Manchester.
+                    </p>
+                    <div class="flex space-x-4">
+                        <a href="https://www.facebook.com/Wildmanc.nature" target="_blank" class="w-10 h-10 rounded-full bg-dark-800 hover:bg-dark-700 flex items-center justify-center text-gray-400 hover:text-primary-400 transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="https://www.instagram.com/wild.manchester/" target="_blank" class="w-10 h-10 rounded-full bg-dark-800 hover:bg-dark-700 flex items-center justify-center text-gray-400 hover:text-primary-400 transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://x.com/ManchesterWild" target="_blank" class="w-10 h-10 rounded-full bg-dark-800 hover:bg-dark-700 flex items-center justify-center text-gray-400 hover:text-primary-400 transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="https://www.youtube.com/channel/UCGXyESNY94ItxqJOdyszYgQ" target="_blank" class="w-10 h-10 rounded-full bg-dark-800 hover:bg-dark-700 flex items-center justify-center text-gray-400 hover:text-primary-400 transition-colors">
+                            <i class="fab fa-youtube"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-6">Quick Links</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/" class="text-gray-400 hover:text-primary-400 transition-colors">Home</a></li>
+                        <li><a href="/about/" class="text-gray-400 hover:text-primary-400 transition-colors">About Us</a></li>
+                        <li><a href="/blog/" class="text-gray-400 hover:text-primary-400 transition-colors">Blog</a></li>
+                        <li><a href="/gallery/" class="text-gray-400 hover:text-primary-400 transition-colors">Gallery</a></li>
+                        <li><a href="/contact/" class="text-gray-400 hover:text-primary-400 transition-colors">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-6">Experiences</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/camping/" class="text-gray-400 hover:text-primary-400 transition-colors">Beginner Camping</a></li>
+                        <li><a href="/camping/" class="text-gray-400 hover:text-primary-400 transition-colors">Foraging Adventures</a></li>
+                        <li><a href="/camping/" class="text-gray-400 hover:text-primary-400 transition-colors">Survival Training</a></li>
+                        <li><a href="/camping/" class="text-gray-400 hover:text-primary-400 transition-colors">Family Camping</a></li>
+                        <li><a href="/camping/" class="text-gray-400 hover:text-primary-400 transition-colors">Wildlife Photography</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-6">Legal</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/privacy/" class="text-gray-400 hover:text-primary-400 transition-colors">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="text-gray-400 hover:text-primary-400 transition-colors">Terms of Service</a></li>
+                        <li><a href="/cookies/" class="text-gray-400 hover:text-primary-400 transition-colors">Cookies Policy</a></li>
+                        <li><a href="/faq/" class="text-white hover:text-primary-400 transition-colors">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-dark-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-500 text-sm mb-4 md:mb-0">
+                    &copy; 2025 Wild Manchester Group. All rights reserved.
+                </p>
+              <div class="flex space-x-6">
+                    <a href="/privacy/" class="text-gray-500 hover:text-gray-400 text-sm transition-colors">Privacy
+                                Policy</a>
+                    <a href="/terms/" class="text-gray-500 hover:text-gray-400 text-sm transition-colors">Terms of
+                                Service</a>
+                    <a href="/cookies/" class="text-gray-500 hover:text-gray-400 text-sm transition-colors">Cookies
+                                Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="backToTop" class="fixed bottom-8 right-8 w-12 h-12 rounded-full bg-primary-600 hover:bg-primary-700 text-white shadow-lg flex items-center justify-center transition-opacity duration-300 opacity-0 invisible">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+
+    <!-- Scripts -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobileMenuButton');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Back to Top Button
+        const backToTopButton = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.remove('opacity-0', 'invisible');
+                backToTopButton.classList.add('opacity-100', 'visible');
+            } else {
+                backToTopButton.classList.remove('opacity-100', 'visible');
+                backToTopButton.classList.add('opacity-0', 'invisible');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // Cookie Consent
+        const cookieConsent = document.getElementById('cookieConsent');
+        const acceptCookies = document.getElementById('acceptCookies');
+        const declineCookies = document.getElementById('declineCookies');
+        
+        if (!localStorage.getItem('cookieConsent')) {
+            setTimeout(() => {
+                cookieConsent.classList.remove('hidden');
+            }, 2000);
+        }
+        
+        acceptCookies.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'accepted');
+            cookieConsent.classList.add('hidden');
+        });
+        
+        declineCookies.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'declined');
+            cookieConsent.classList.add('hidden');
+        });
+
+        // FAQ Accordion Functionality
+        const faqItems = document.querySelectorAll('.faq-item');
+        
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            
+            question.addEventListener('click', () => {
+                // Close all other items
+                faqItems.forEach(otherItem => {
+                    if (otherItem !== item && otherItem.classList.contains('active')) {
+                        otherItem.classList.remove('active');
+                    }
+                });
+                
+                // Toggle current item
+                item.classList.toggle('active');
+            });
+        });
+
+        // Smooth scrolling for category links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                
+                if (targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 120,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Animate FAQ items on scroll
+        gsap.utils.toArray('.faq-item').forEach((item, i) => {
+            gsap.from(item, {
+                scrollTrigger: {
+                    trigger: item,
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                },
+                y: 50,
+                opacity: 0,
+                duration: 0.5,
+                ease: "power3.out",
+                delay: i * 0.1
+            });
+        });
+        
+        // Animate category sections
+        gsap.utils.toArray('#general, #camping, #foraging, #booking, #safety, #other').forEach(section => {
+            gsap.from(section, {
+                scrollTrigger: {
+                    trigger: section,
+                    start: "top 70%",
+                    toggleActions: "play none none none"
+                },
+                y: 50,
+                opacity: 0,
+                duration: 1,
+                ease: "power3.out"
+            });
+        });
+    </script>
+</body>
+</html>

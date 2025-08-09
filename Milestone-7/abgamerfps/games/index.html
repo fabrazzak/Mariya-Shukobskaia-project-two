@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>FPS Game Demos | ABGamerFPS - Alpha & Beta FPS Game Tests</title>
+    <meta name="description" content="Browse and download the latest FPS alpha and beta game demos. Test upcoming first-person shooter games before their official release. Filter by genre, platform, and release date.">
+    <meta name="keywords" content="FPS demos, alpha games, beta games, first-person shooter downloads, upcoming FPS games, indie FPS, Steam demos, horror FPS, multiplayer FPS">
+    <link rel="canonical" href="https://www.abgamerfps.com/games/" />
+    <!-- Favicon -->
+    <link rel="icon" href="/assets/favicon.ico" type="image/x-icon">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FF5A5F',
+                        secondary: '#00A699',
+                        dark: '#1A1A1A',
+                        light: '#F5F5F5',
+                        accent: '#FC642D'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Space Mono', 'monospace'],
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <!-- Touch icons -->
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head>
+<body class="bg-dark text-light font-sans antialiased">
+    <!-- Cookie Consent Banner -->
+    <div id="cookie-banner" class="fixed bottom-0 left-0 right-0 bg-dark border-t border-gray-800 p-4 z-50 hidden">
+        <div class="container mx-auto flex flex-col md:flex-row items-center justify-between">
+            <p class="text-sm mb-4 md:mb-0 md:mr-8">We use cookies to enhance your experience. By continuing to visit this site, you agree to our use of cookies.</p>
+            <div class="flex space-x-3">
+                <button id="cookie-decline" class="px-4 py-2 text-sm border border-gray-700 rounded hover:bg-gray-800 transition">Decline</button>
+                <button id="cookie-learn" class="px-4 py-2 text-sm border border-gray-700 rounded hover:bg-gray-800 transition">Learn More</button>
+                <button id="cookie-accept" class="px-4 py-2 text-sm bg-primary text-white rounded hover:bg-opacity-90 transition">Accept</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="bg-dark bg-opacity-90 backdrop-blur-md border-b border-gray-800 fixed w-full z-40">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <!-- Logo -->
+               <a href="/" class="flex items-center space-x-2">
+                    <img src="/assets/logo.png" alt="logo" class="h-16" />
+                </a>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="/" class="text-gray-400 hover:text-primary transition">Home</a>
+                    <a href="/games/" class="text-white hover:text-primary transition">Games</a>
+                    <a href="/blog/" class="text-gray-400 hover:text-primary transition">Blog</a> 
+                    <a href="/about/" class="text-gray-400 hover:text-primary transition">About</a>
+                    <a href="/contact/" class="text-gray-400 hover:text-primary transition">Contact</a>
+                </div>
+                
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-button" class="md:hidden text-gray-400 hover:text-white focus:outline-none" aria-label="Toggle menu">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="md:hidden hidden bg-dark border-t border-gray-800">
+            <div class="container mx-auto px-4 py-3 flex flex-col space-y-3">
+                <a href="/" class="text-gray-400 hover:text-primary transition py-2">Home</a>
+                <a href="/games/" class="text-white hover:text-primary transition py-2">Games</a>
+                <a href="/blog/" class="text-gray-400 hover:text-primary transition py-2">Blog</a>
+                <a href="/about/" class="text-gray-400 hover:text-primary transition py-2">About</a>
+                <a href="/contact/" class="text-gray-400 hover:text-primary transition py-2">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Header -->
+    <header class="pt-32 pb-20 bg-gradient-to-b from-gray-900 to-dark">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-10">
+                <h1 class="text-4xl md:text-5xl font-bold mb-6">FPS <span class="text-primary">Game Demos</span></h1>
+                <p class="text-xl text-gray-400 max-w-3xl mx-auto px-2">Browse and download the latest alpha and beta first-person shooter games. Test upcoming titles before their official release.</p>
+            </div>
+            
+            <!-- Search and Filter Bar -->
+            <div class="bg-gray-900 rounded-xl p-4 sm:p-6 border border-gray-800 mb-10">
+                <div class="flex flex-col md:flex-row md:items-end gap-4 sm:gap-6">
+                    <!-- Search Input -->
+                    <div class="flex-1">
+                        <label for="game-search" class="block text-sm font-medium text-gray-400 mb-2">Search Games</label>
+                        <div class="relative">
+                            <input type="text" id="game-search" placeholder="Search by game name, developer..." 
+                                   class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                            <button class="absolute right-3 top-3 text-gray-400 hover:text-primary">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <!-- Category Filter -->
+                    <div class="w-full md:w-auto">
+                        <label for="game-category" class="block text-sm font-medium text-gray-400 mb-2">Category</label>
+                        <select id="game-category" class="w-full bg-gray-800 border border-gray-700 text-white rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                            <option value="">All Categories</option>
+                            <option value="horror">Horror</option>
+                            <option value="multiplayer">Multiplayer</option>
+                            <option value="indie">Indie</option>
+                            <option value="steam">Steam</option>
+                            <option value="arcade">Arcade</option>
+                            <option value="roguelike">Roguelike</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Status Filter -->
+                    <div class="w-full md:w-auto">
+                        <label for="game-status" class="block text-sm font-medium text-gray-400 mb-2">Status</label>
+                        <select id="game-status" class="w-full bg-gray-800 border border-gray-700 text-white rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                            <option value="">All Statuses</option>
+                            <option value="alpha">Alpha</option>
+                            <option value="beta">Beta</option>
+                            <option value="demo">Demo</option>
+                            <option value="prototype">Prototype</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Sort By -->
+                    <div class="w-full md:w-auto">
+                        <label for="game-sort" class="block text-sm font-medium text-gray-400 mb-2">Sort By</label>
+                        <select id="game-sort" class="w-full bg-gray-800 border border-gray-700 text-white rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                            <option value="newest">Newest First</option>
+                            <option value="oldest">Oldest First</option>
+                            <option value="popular">Most Popular</option>
+                            <option value="az">A-Z</option>
+                            <option value="za">Z-A</option>
+                        </select>
+                    </div>
+                    
+                    <!-- Reset Button -->
+                    <button id="reset-filters" class="w-full md:w-auto px-4 py-3 text-sm text-gray-400 hover:text-primary transition">Reset</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="pb-20">
+        <div class="container mx-auto px-4">
+            <!-- Active Filters -->
+            <div id="active-filters" class="flex flex-wrap gap-2 mb-8 hidden">
+                <span class="text-sm text-gray-400 mr-2">Active filters:</span>
+            </div>
+            
+            <!-- Games Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8" id="games-container">
+                <!-- Game cards will be dynamically inserted here -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Latest News Section -->
+    <section class="py-16 sm:py-20 bg-gray-900">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12 sm:mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Latest <span class="text-primary">News</span></h2>
+                <p class="text-gray-400 max-w-2xl mx-auto px-2">Stay updated with the newest developments in FPS gaming</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
+                <!-- News Item 1 -->
+                <article class="bg-gray-900 rounded-xl overflow-hidden border border-gray-800 hover:border-primary transition group">
+                    <div class="relative h-48">
+                        <img src="/assets/article1.webp" alt="Psychological Horror in FPS Games" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-70"></div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center text-xs text-gray-400 mb-3">
+                            <span>Reviews</span>
+                            <span class="mx-2">•</span>
+                            <span>June 22, 2025</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 group-hover:text-primary transition">Mastering Psychological Horror in FPS Games: Analysis of 工廈 Warehouse</h3>
+                        <p class="text-gray-400 mb-4">How the indie horror FPS creates tension through environmental storytelling and innovative ghost mechanics.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded">Horror</span>
+                            <span class="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded">Indie</span>
+                            <span class="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded">Review</span>
+                        </div>
+                        <a href="/blog/psychological-horror-fps/" class="inline-flex items-center text-primary text-sm hover:underline">
+                            Read More
+                            <svg class="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </article>
+                
+                <!-- Article 2 -->
+                <article class="bg-gray-900 rounded-xl overflow-hidden border border-gray-800 hover:border-primary transition group">
+                    <div class="relative h-48">
+                        <img src="/assets/article2.png" alt="Social Dynamics in Multiplayer FPS" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-70"></div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center text-xs text-gray-400 mb-3">
+                            <span>Development</span>
+                            <span class="mx-2">•</span>
+                            <span>June 18, 2025</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 group-hover:text-primary transition">Emergent Social Dynamics in Enginefall: A New Era for Multiplayer FPS</h3>
+                        <p class="text-gray-400 mb-4">Examining how the social sandbox mechanics create unique player-driven narratives in this Snowpiercer-inspired FPS.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded">Multiplayer</span>
+                            <span class="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded">Social</span>
+                            <span class="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded">Design</span>
+                        </div>
+                        <a href="/blog/social-dynamics-fps/" class="inline-flex items-center text-primary text-sm hover:underline">
+                            Read More
+                            <svg class="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </article>
+                
+                <!-- Article 3 -->
+                <article class="bg-gray-900 rounded-xl overflow-hidden border border-gray-800 hover:border-primary transition group">
+                    <div class="relative h-48">
+                        <img src="/assets/article3.jpg" alt="Fast-Paced FPS Design" class="w-full h-full object-cover">
+                        <div class="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-70"></div>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center text-xs text-gray-400 mb-3">
+                            <span>Guides</span>
+                            <span class="mx-2">•</span>
+                            <span>June 15, 2025</span>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 group-hover:text-primary transition">The Art of Fast-Paced FPS: What Makes TAMASHIKA So Addictive</h3>
+                        <p class="text-gray-400 mb-4">Breaking down the bullet deflection mechanics and visual design that create the game's intense flow state.</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded">Gameplay</span>
+                            <span class="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded">Mechanics</span>
+                            <span class="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded">Arcade</span>
+                        </div>
+                        <a href="/blog/fast-paced-fps-design/" class="inline-flex items-center text-primary text-sm hover:underline">
+                            Read More
+                            <svg class="w-3 h-3 ml-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path>
+                            </svg>
+                        </a>
+                    </div>
+                </article> 
+            </div>
+        </div>
+    </section>
+
+    <!-- Hardware Requirements Section -->
+    <section class="py-16 sm:py-20 bg-dark">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-12 sm:mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Recommended <span class="text-primary">Hardware</span></h2>
+                <p class="text-gray-400 max-w-2xl mx-auto px-2">Get the best experience with these system specifications</p>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8 max-w-4xl mx-auto">
+                <!-- Minimum Requirements -->
+                <div class="bg-gray-900 rounded-xl p-6 sm:p-8 border border-gray-800">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 rounded-full bg-primary bg-opacity-20 flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold">Minimum Requirements</h3>
+                    </div>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-primary mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-gray-400">Windows 10 64-bit</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-primary mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-gray-400">Intel i5-4460 or AMD FX-8350</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-primary mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-gray-400">NVIDIA GTX 960 or AMD R9 280</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-primary mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-gray-400">8GB RAM</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-primary mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-gray-400">30GB available space</span>
+                        </li>
+                    </ul>
+                </div>
+                
+                <!-- Recommended Requirements -->
+                <div class="bg-gray-900 rounded-xl p-6 sm:p-8 border border-gray-800">
+                    <div class="flex items-center mb-6">
+                        <div class="w-12 h-12 rounded-full bg-secondary bg-opacity-20 flex items-center justify-center mr-4">
+                            <svg class="w-6 h-6 text-secondary" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path>
+                            </svg>
+                        </div>
+                        <h3 class="text-xl font-bold">Recommended Specs</h3>
+                    </div>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-secondary mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-gray-400">Windows 10/11 64-bit</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-secondary mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-gray-400">Intel i7-9700K or AMD Ryzen 7 3700X</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-secondary mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-gray-400">NVIDIA RTX 2070 or AMD RX 5700 XT</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-secondary mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-gray-400">16GB RAM</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 text-secondary mr-2 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                            </svg>
+                            <span class="text-gray-400">50GB available space (SSD recommended)</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   <!-- CTA Section -->
+<section class="py-20 bg-gradient-to-r from-primary to-secondary relative bg-cover bg-center bg-no-repeat" style="background-image: url('/assets/article3.jpg')">
+    <!-- Overlay -->
+    <div class="absolute inset-0 bg-black bg-opacity-60 z-0"></div>
+
+    <!-- Content -->
+    <div class="container mx-auto px-4 text-center relative z-10">
+        <h2 class="text-3xl md:text-4xl font-bold mb-6 text-white">Ready to Test the Latest FPS Games?</h2>
+        <p class="text-xl text-white opacity-90 mb-8 max-w-2xl mx-auto">
+            Join our community of beta testers and get early access to groundbreaking first-person shooter games.
+        </p>
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+            <a href="/contact/" class="bg-white text-primary hover:bg-gray-100 px-8 py-3 rounded-lg font-medium transition transform hover:scale-105">
+                Contact Us
+            </a>
+            <a href="/games/" class="bg-transparent hover:bg-black hover:bg-opacity-20 border border-white text-white px-8 py-3 rounded-lg font-medium transition transform hover:scale-105">
+                Browse Games
+            </a>
+        </div>
+    </div>
+</section>
+
+
+    <!-- Newsletter Section -->
+    <section class="py-12 sm:py-16 bg-gray-900 border-t border-b border-gray-800">
+        <div class="container mx-auto px-4 text-center">
+            <h2 class="text-2xl md:text-3xl font-bold mb-4">Get New Game Alerts</h2>
+            <p class="text-gray-400 max-w-2xl mx-auto mb-6 sm:mb-8 px-2">Subscribe to our newsletter and be the first to know about new FPS alpha and beta tests.</p>
+            <form class="max-w-md mx-auto flex flex-col sm:flex-row">
+                <input type="email" placeholder="Your email address" class="flex-1 bg-gray-800 text-white px-4 py-3 rounded sm:rounded-r-none border border-gray-700 focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent mb-2 sm:mb-0">
+                <button type="submit" class="bg-primary text-white px-6 py-3 rounded sm:rounded-l-none hover:bg-opacity-90 transition">Subscribe</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 border-t border-gray-800">
+        <div class="container mx-auto px-4 py-12">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div>
+                     <a href="/" class="flex items-center space-x-2">
+                    <img src="/assets/logo.png" alt="logo" class="h-16" />
+                </a>
+                    <p class="text-gray-400 mb-6">Discover and play the latest alpha and beta FPS games before they're released.</p>
+                </div>
+                
+                <div>
+                    <h3 class="text-white font-bold text-lg mb-6">Quick Links</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/" class="text-gray-400 hover:text-primary transition">Home</a></li>
+                        <li><a href="/games/" class="text-gray-400 hover:text-primary transition">Games</a></li>
+                        <li><a href="/about/" class="text-gray-400 hover:text-primary transition">About Us</a></li>
+                        <li><a href="/contact/" class="text-gray-400 hover:text-primary transition">Contact</a></li>
+                        <li><a href="/privacy/" class="text-gray-400 hover:text-primary transition">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-white font-bold text-lg mb-6">Game Categories</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/games/" class="text-gray-400 hover:text-primary transition">FPS</a></li>
+                        <li><a href="/games/" class="text-gray-400 hover:text-primary transition">Horror</a></li>
+                        <li><a href="/games/" class="text-gray-400 hover:text-primary transition">Indie</a></li>
+                        <li><a href="/games/" class="text-gray-400 hover:text-primary transition">Multiplayer</a></li>
+                        <li><a href="/games/" class="text-gray-400 hover:text-primary transition">Steam</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-white font-bold text-lg mb-6">Contact Us</h3>
+                    <ul class="space-y-3 text-gray-400">
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                            </svg>
+                            <span>info@abgamerfps.com</span>
+                        </li>
+                        <li class="flex items-start">
+                            <svg class="w-5 h-5 mr-3 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                            <span>999 Canada Pl, Vancouver, BC V6C 3T4, Canada</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-400 text-sm mb-4 md:mb-0">© 2025 ABGamerFPS. All rights reserved.</p>
+                <div class="flex space-x-6">
+                    <a href="/terms/" class="text-gray-400 hover:text-primary text-sm transition">Terms of Service</a>
+                    <a href="/privacy/" class="text-gray-400 hover:text-primary text-sm transition">Privacy Policy</a>
+                    <a href="/cookies/" class="text-gray-400 hover:text-primary text-sm transition">Cookies Policy</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="fixed bottom-6 right-6 bg-primary text-white p-3 rounded-full shadow-lg opacity-0 invisible transition-all duration-300 hover:bg-opacity-90" aria-label="Back to top">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path>
+        </svg>
+    </button>
+
+    <!-- JavaScript -->
+    <script>
+
+        // Mobile Menu Toggle - Fixed Version
+const mobileMenuButton = document.getElementById('mobile-menu-button');
+const mobileMenu = document.getElementById('mobile-menu');
+
+mobileMenuButton.addEventListener('click', (e) => {
+    e.stopPropagation(); // Prevent this click from bubbling up to document
+    mobileMenu.classList.toggle('hidden');
+    const isExpanded = !mobileMenu.classList.contains('hidden');
+    mobileMenuButton.setAttribute('aria-expanded', isExpanded);
+});
+
+// Close mobile menu when clicking outside
+document.addEventListener('click', (e) => {
+    if (!mobileMenu.contains(e.target) && e.target !== mobileMenuButton) {
+        mobileMenu.classList.add('hidden');
+        mobileMenuButton.setAttribute('aria-expanded', 'false');
+    }
+});
+        // Sample game data (in a real app, this would come from an API)
+        const gamesData = [
+            {
+                id: 1,
+                title: "工廈 Warehouse",
+                slug: "https://www.alphabetagamer.com/warehouse-beta-demo/",
+                excerpt: "A tense psychological horror FPS where a slum landlord discovers his building is haunted by freaky ghosts.",
+                date: "June 20, 2025",
+                author: "KJ Robertson",
+                status: "beta",
+                categories: ["horror", "indie", "steam"],
+                tags: ["beta", "Warehouse", "warehouse game", "工廈 Warehouse"],
+                videoUrl: "https://www.alphabetagamer.com/wp-content/uploads/2025/06/warehouse-gaem-download.mp4",
+                featured: true
+            },
+            {
+                id: 2,
+                title: "Enginefall",
+                slug: "https://www.alphabetagamer.com/enginefall-open-beta/",
+                excerpt: "A Snowpiercer-inspired multiplayer social sandbox set in a post-apocalyptic world with massive trains as moving societies.",
+                date: "June 13, 2025",
+                author: "KJ Robertson",
+                status: "beta",
+                categories: ["multiplayer", "fps", "steam"],
+                tags: ["Enginefall", "Enginefall game", "indie game", "playtest"],
+                videoUrl: "https://www.alphabetagamer.com/wp-content/uploads/2025/02/enginefall-beta-sign-up.mp4",
+                featured: true
+            },
+            {
+                id: 3,
+                title: "TAMASHIKA",
+                slug: "https://www.alphabetagamer.com/tamashika-beta-demo/",
+                excerpt: "A fast-paced psychedelic corridor shooter set within a recursive labyrinth of your mind.",
+                date: "June 11, 2025",
+                author: "Calum Fraser",
+                status: "beta",
+                categories: ["arcade", "fps", "indie"],
+                tags: ["beta", "indie game", "TAMASHIKA", "TAMASHIKA download", "TAMASHIKA game"],
+                videoUrl: "https://www.alphabetagamer.com/wp-content/uploads/2025/06/TAMASHIKA-game-download.mp4",
+                featured: true
+            },
+            {
+                id: 4,
+                title: "DAVY x JONES",
+                slug: "https://www.alphabetagamer.com/category/download-2/",
+                excerpt: "A supernatural pirate FPS where you control the headless body of Davy Jones.",
+                date: "June 10, 2025",
+                author: "Calum Fraser",
+                status: "beta",
+                categories: ["fps", "indie", "steam"],
+                tags: ["beta", "DAVY x JONES", "DAVY x JONES game", "indie games"],
+                videoUrl: "https://www.alphabetagamer.com/wp-content/uploads/2025/06/davy-x-jones-game-download.mp4",
+                featured: false
+            },
+            {
+                id: 5,
+                title: "PIGFACE",
+                slug: "https://www.alphabetagamer.com/pigface-beta-demo/",
+                excerpt: "An ultra-violent FPS where a deadly killer with a terrible past is forced to fulfil contracts.",
+                date: "June 6, 2025",
+                author: "Calum Fraser",
+                status: "beta",
+                categories: ["fps", "horror", "steam"],
+                tags: ["beta", "indie games", "Pigface", "Pigface download", "Pigface game"],
+                videoUrl: "https://www.alphabetagamer.com/wp-content/uploads/2025/06/PIGFACE-game-download.mp4",
+                featured: false
+            },
+            {
+                id: 6,
+                title: "Athanasia",
+                slug: "https://www.alphabetagamer.com/athanasia-beta-sign-up/",
+                excerpt: "Blends classic survival horror with immersive sim FPS gameplay in an abandoned research facility.",
+                date: "June 6, 2025",
+                author: "KJ Robertson",
+                status: "beta",
+                categories: ["adventure", "fps", "horror", "indie"],
+                tags: ["Athanasia", "Athanasia beta sign up", "Athanasia game", "indie game"],
+                videoUrl: "https://www.alphabetagamer.com/wp-content/uploads/2025/05/Athanasia-beta-sign-up.mp4",
+                featured: false
+            },
+            {
+                id: 7,
+                title: "DOOM SPIRAL",
+                slug: "https://www.alphabetagamer.com/category/download-2/",
+                excerpt: "A very intense first person corridor shooter where a hacker blasts through glitchy layers of consciousness.",
+                date: "June 4, 2025",
+                author: "Calum Fraser",
+                status: "alpha",
+                categories: ["fps", "indie"],
+                tags: ["alpha", "DOOM SPIRAL", "DOOM SPIRAL download", "DOOM SPIRAL game", "indie games"],
+                videoUrl: "https://www.alphabetagamer.com/wp-content/uploads/2025/06/DOOM-SPIRAL-Game-Download.mp4",
+                featured: false
+            },
+            {
+                id: 8,
+                title: "Putt Down",
+                slug: "https://www.alphabetagamer.com/category/download-2/",
+                excerpt: "A high-stakes mini-golf horror game where your club is a double-barrel shotgun.",
+                date: "June 1, 2025",
+                author: "Calum Fraser",
+                status: "alpha",
+                categories: ["fps", "horror", "indie"],
+                tags: ["alpha", "download", "indie games", "Putt Down", "Putt Down game"],
+                videoUrl: "https://www.alphabetagamer.com/wp-content/uploads/2025/06/Outt-Down-Game-Download.mp4",
+                featured: false
+            },
+            {
+                id: 9,
+                title: "Bullet Yeeters",
+                slug: "https://www.alphabetagamer.com/category/download-2/",
+                excerpt: "A fast paced PvP third person shooter that transforms everyday household spaces into epic battlegrounds.",
+                date: "May 31, 2025",
+                author: "KJ Robertson",
+                status: "beta",
+                categories: ["fps", "indie", "multiplayer"],
+                tags: ["beta", "Bullet Yeeters", "Bullet Yeeters beta sign up", "Bullet Yeeters game", "indie game"],
+                videoUrl: "https://www.alphabetagamer.com/wp-content/uploads/2025/05/Bullet-Yeeters-beta-sign-up.mp4",
+                featured: false
+            }
+        ];
+
+        // DOM Elements
+        const gamesContainer = document.getElementById('games-container');
+        const gameSearch = document.getElementById('game-search');
+        const gameCategory = document.getElementById('game-category');
+        const gameStatus = document.getElementById('game-status');
+        const gameSort = document.getElementById('game-sort');
+        const resetFilters = document.getElementById('reset-filters');
+        const activeFilters = document.getElementById('active-filters');
+        
+      
+        
+        // Back to Top Button
+        const backToTopButton = document.getElementById('back-to-top');
+        
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 300) {
+                backToTopButton.classList.remove('opacity-0', 'invisible');
+                backToTopButton.classList.add('opacity-100', 'visible');
+            } else {
+                backToTopButton.classList.remove('opacity-100', 'visible');
+                backToTopButton.classList.add('opacity-0', 'invisible');
+            }
+        });
+        
+        backToTopButton.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        
+        // Cookie Consent
+        const cookieBanner = document.getElementById('cookie-banner');
+        const cookieAccept = document.getElementById('cookie-accept');
+        const cookieDecline = document.getElementById('cookie-decline');
+        const cookieLearn = document.getElementById('cookie-learn');
+        
+        if (!localStorage.getItem('cookieConsent')) {
+            cookieBanner.classList.remove('hidden');
+        }
+        
+        cookieAccept.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'accepted');
+            cookieBanner.classList.add('hidden');
+        });
+        
+        cookieDecline.addEventListener('click', () => {
+            localStorage.setItem('cookieConsent', 'declined');
+            cookieBanner.classList.add('hidden');
+        });
+        
+        cookieLearn.addEventListener('click', () => {
+            window.location.href = '/cookies/';
+        });
+        
+        // Render Games
+        function renderGames(games) {
+            gamesContainer.innerHTML = '';
+            
+            if (games.length === 0) {
+                gamesContainer.innerHTML = `
+                    <div class="col-span-full text-center py-12">
+                        <svg class="w-16 h-16 mx-auto text-gray-600 mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <h3 class="text-xl font-medium text-gray-400 mb-2">No games found</h3>
+                        <p class="text-gray-600">Try adjusting your search or filter criteria</p>
+                        <button id="reset-filters" class="mt-4 px-4 py-2 text-sm bg-primary text-white rounded hover:bg-opacity-90 transition">Reset Filters</button>
+                    </div>
+                `;
+                return;
+            }
+            
+            games.forEach(game => {
+                const statusColor = game.status === 'alpha' ? 'bg-accent' : game.status === 'beta' ? 'bg-secondary' : 'bg-primary';
+                const statusText = game.status === 'alpha' ? 'Alpha Demo' : game.status === 'beta' ? 'Beta Demo' : 'Demo';
+                
+                const gameCard = document.createElement('div');
+                gameCard.className = 'bg-gray-900 rounded-xl overflow-hidden border border-gray-800 hover:border-primary transition group';
+                gameCard.innerHTML = `
+                    <div class="relative overflow-hidden h-48">
+                        ${game.videoUrl ? `
+                            <video class="w-full h-full object-cover" autoplay loop muted playsinline>
+                                <source src="${game.videoUrl}" type="video/mp4">
+                            </video>
+                        ` : `
+                            <div class="w-full h-full bg-gray-800 flex items-center justify-center">
+                                <svg class="w-16 h-16 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 4v16M17 4v16M3 8h4m10 0h4M3 12h18M3 16h4m10 0h4M4 20h16a1 1 0 001-1V5a1 1 0 00-1-1H4a1 1 0 00-1 1v14a1 1 0 001 1z"></path>
+                                </svg>
+                            </div>
+                        `}
+                        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-70"></div>
+                        <span class="absolute top-4 left-4 ${statusColor} text-white text-xs px-2 py-1 rounded">${statusText}</span>
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="text-xl font-bold group-hover:text-primary transition">${game.title}</h3>
+                            <span class="text-xs text-gray-400">${game.date}</span>
+                        </div>
+                        <p class="text-gray-400 mb-4">${game.excerpt}</p>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            ${game.categories.map(cat => `
+                                <span class="text-xs bg-gray-800 text-gray-300 px-2 py-1 rounded">${cat}</span>
+                            `).join('')}
+                        </div>
+                        <a href="${game.slug}/" class="inline-block text-primary hover:underline">Read More & Download</a>
+                    </div>
+                `;
+                
+                gamesContainer.appendChild(gameCard);
+            });
+        }
+        
+        // Filter Games
+        function filterGames() {
+            const searchTerm = gameSearch.value.toLowerCase();
+            const categoryFilter = gameCategory.value;
+            const statusFilter = gameStatus.value;
+            const sortBy = gameSort.value;
+            
+            let filteredGames = [...gamesData];
+            
+            // Apply search filter
+            if (searchTerm) {
+                filteredGames = filteredGames.filter(game => 
+                    game.title.toLowerCase().includes(searchTerm) || 
+                    game.excerpt.toLowerCase().includes(searchTerm) ||
+                    game.tags.some(tag => tag.toLowerCase().includes(searchTerm))
+                );
+            }
+            
+            // Apply category filter
+            if (categoryFilter) {
+                filteredGames = filteredGames.filter(game => 
+                    game.categories.includes(categoryFilter)
+                );
+            }
+            
+            // Apply status filter
+            if (statusFilter) {
+                filteredGames = filteredGames.filter(game => 
+                    game.status === statusFilter
+                );
+            }
+            
+            // Apply sorting
+            switch (sortBy) {
+                case 'newest':
+                    filteredGames.sort((a, b) => new Date(b.date) - new Date(a.date));
+                    break;
+                case 'oldest':
+                    filteredGames.sort((a, b) => new Date(a.date) - new Date(b.date));
+                    break;
+                case 'az':
+                    filteredGames.sort((a, b) => a.title.localeCompare(b.title));
+                    break;
+                case 'za':
+                    filteredGames.sort((a, b) => b.title.localeCompare(a.title));
+                    break;
+                case 'popular':
+                    // In a real app, this would use actual popularity data
+                    filteredGames.sort((a, b) => b.featured - a.featured);
+                    break;
+            }
+            
+            // Update active filters display
+            updateActiveFilters(searchTerm, categoryFilter, statusFilter);
+            
+            // Render filtered games
+            renderGames(filteredGames);
+        }
+        
+        // Update active filters display
+        function updateActiveFilters(searchTerm, categoryFilter, statusFilter) {
+            activeFilters.innerHTML = '<span class="text-sm text-gray-400 mr-2">Active filters:</span>';
+            
+            if (searchTerm) {
+                const searchBadge = document.createElement('span');
+                searchBadge.className = 'text-sm bg-gray-800 text-white px-3 py-1 rounded-full flex items-center';
+                searchBadge.innerHTML = `
+                    Search: "${searchTerm}"
+                    <button class="ml-2 text-gray-400 hover:text-white" data-filter="search">
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                `;
+                activeFilters.appendChild(searchBadge);
+            }
+            
+            if (categoryFilter) {
+                const categoryBadge = document.createElement('span');
+                categoryBadge.className = 'text-sm bg-gray-800 text-white px-3 py-1 rounded-full flex items-center';
+                categoryBadge.innerHTML = `
+                    Category: ${categoryFilter}
+                    <button class="ml-2 text-gray-400 hover:text-white" data-filter="category">
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                `;
+                activeFilters.appendChild(categoryBadge);
+            }
+            
+            if (statusFilter) {
+                const statusBadge = document.createElement('span');
+                statusBadge.className = 'text-sm bg-gray-800 text-white px-3 py-1 rounded-full flex items-center';
+                statusBadge.innerHTML = `
+                    Status: ${statusFilter}
+                    <button class="ml-2 text-gray-400 hover:text-white" data-filter="status">
+                        <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+                        </svg>
+                    </button>
+                `;
+                activeFilters.appendChild(statusBadge);
+            }
+            
+            if (searchTerm || categoryFilter || statusFilter) {
+                activeFilters.classList.remove('hidden');
+            } else {
+                activeFilters.classList.add('hidden');
+            }
+        }
+        
+        // Reset filters
+        function resetAllFilters() {
+            gameSearch.value = '';
+            gameCategory.value = '';
+            gameStatus.value = '';
+            gameSort.value = 'newest';
+            filterGames();
+        }
+        
+        // Event Listeners
+        gameSearch.addEventListener('input', filterGames);
+        gameCategory.addEventListener('change', filterGames);
+        gameStatus.addEventListener('change', filterGames);
+        gameSort.addEventListener('change', filterGames);
+        resetFilters.addEventListener('click', resetAllFilters);
+        
+        // Handle clicking on active filter remove buttons
+        activeFilters.addEventListener('click', (e) => {
+            if (e.target.tagName === 'BUTTON') {
+                const filterType = e.target.getAttribute('data-filter');
+                
+                switch (filterType) {
+                    case 'search':
+                        gameSearch.value = '';
+                        break;
+                    case 'category':
+                        gameCategory.value = '';
+                        break;
+                    case 'status':
+                        gameStatus.value = '';
+                        break;
+                }
+                
+                filterGames();
+            }
+        });
+        
+        // Initial render
+        renderGames(gamesData);
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,2669 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillNext Course | Premium Digital Learning Platform</title>
+    <meta name="description"
+        content="SkillNext Course offers premium online courses, digital tools, and memberships. Learn from expert instructors with flexible learning options.">
+    <meta name="keywords"
+        content="online courses, digital templates, premium memberships, video editing courses, marketing courses, content creation, digital tools">
+    <link rel="canonical" href="https://skillnextcourse.online/">
+    <link rel="icon" href="/assets/favicon.png" type="image/x-icon">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#3B82F6',
+                        secondary: '#10B981',
+                        accent: '#F59E0B',
+                        dark: {
+                            900: '#0F172A',
+                            800: '#1E293B',
+                            700: '#334155',
+                            600: '#475569',
+                            500: '#64748B',
+                        },
+                        light: '#F8FAFC',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <style>
+        body {
+            background-color: #0F172A;
+            color: #F8FAFC;
+        }
+
+        .parallax {
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }
+
+        .mobile-menu {
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+            background-color: #1E293B;
+        }
+
+        .mobile-menu.open {
+            transform: translateX(0);
+        }
+
+        .course-card {
+            background-color: #1E293B;
+            border: 1px solid #334155;
+        }
+
+        .course-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.25), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .testimonial-card {
+            background-color: #1E293B;
+            border: 1px solid #334155;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.25), 0 2px 4px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .booking-tab.active {
+            background-color: #3B82F6;
+            color: white;
+        }
+
+        #datePicker .booked {
+            background-color: #EF4444;
+            color: white;
+            cursor: not-allowed;
+        }
+
+        #datePicker .available {
+            background-color: #10B981;
+            color: white;
+            cursor: pointer;
+        }
+
+        .instructor-option {
+            background-color: #1E293B;
+            border: 1px solid #334155;
+        }
+
+        .instructor-option.selected {
+            border-color: #3B82F6;
+            background-color: rgba(59, 130, 246, 0.2);
+        }
+
+        .modal-content {
+            background-color: #1E293B;
+            border: 1px solid #334155;
+        }
+
+        input,
+        textarea,
+        select {
+            background-color: #1E293B;
+            border-color: #334155;
+            color: #F8FAFC;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: #3B82F6;
+            box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.5);
+        }
+
+        .category-btn {
+            background-color: #1E293B;
+            border-color: #334155;
+            color: #F8FAFC;
+        }
+
+        .category-btn.active {
+            background-color: #3B82F6;
+            color: white;
+        }
+
+        .category-btn.active[data-category="all"] {
+            background-color: #3B82F6;
+            /* blue */
+            color: white;
+        }
+
+        .category-btn.active[data-category="marketing"] {
+            background-color: #10B981;
+            /* green */
+            color: white;
+        }
+
+        .category-btn.active[data-category="video"] {
+            background-color: #F59E0B;
+            /* amber */
+            color: white;
+        }
+
+        .category-btn.active[data-category="content"] {
+            background-color: #8B5CF6;
+            /* purple */
+            color: white;
+        }
+
+        .template-card {
+            background-color: #1E293B;
+            border: 1px solid #334155;
+        }
+
+        .membership-card {
+            background-color: #1E293B;
+            border: 1px solid #334155;
+        }
+
+        .error-message {
+            color: #EF4444;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+
+        .success-message {
+            color: #10B981;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+        }
+    </style>
+</head>
+
+<body class="font-sans antialiased text-gray-200 bg-gray-900">
+    <!-- Cookie Consent Popup -->
+    <div id="cookieConsent"
+        class="fixed bottom-0 left-0 right-0 bg-gray-800 shadow-lg p-4 hidden z-50 border-t border-gray-700">
+        <div class="max-w-6xl mx-auto flex flex-col md:flex-row items-center justify-between">
+            <div class="mb-4 md:mb-0 md:mr-8">
+                <p class="text-gray-300">We use cookies to enhance your experience on our website. By continuing to
+                    browse, you agree to our use of cookies.</p>
+            </div>
+            <div class="flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-4">
+                <button id="acceptCookies"
+                    class="px-4 py-2 bg-primary text-white rounded-md hover:bg-blue-700 transition">Accept</button>
+                <button id="declineCookies"
+                    class="px-4 py-2 bg-gray-700 text-gray-200 rounded-md hover:bg-gray-600 transition">Decline</button>
+                <a href="/privacy/" class="px-4 py-2 text-primary hover:underline">Learn More</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="bg-gray-800 shadow-sm sticky top-0 z-40 border-b border-gray-700">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="/" class="flex items-center">
+                        <img src="/assets/logo.png" alt="SkillNext Course Logo" class="h-12 w-auto">
+                    </a>
+                </div>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="/" class="text-primary font-medium border-b-2 border-primary px-1 pb-1">Home</a>
+                    <a href="/courses/" class="text-gray-400 hover:text-primary font-medium px-1 pb-1">Courses</a>
+                    <a href="/blog/" class="text-gray-400 hover:text-primary font-medium px-1 pb-1">Blog</a>
+                    <a href="/about/" class="text-gray-400 hover:text-primary font-medium px-1 pb-1">About</a>
+                    <a href="/contact/" class="text-gray-400 hover:text-primary font-medium px-1 pb-1">Contact</a>
+                </nav>
+
+                <!-- Auth Buttons -->
+                <div class="hidden md:flex items-center space-x-4">
+                    <div id="userGreeting" class="hidden">
+                        <span class="text-gray-300">Hi, <span id="usernameDisplay"></span></span>
+                        <button id="logoutBtn" class="ml-2 text-primary hover:underline">Logout</button>
+                    </div>
+                    <div id="authButtons">
+                        <a href="javascript:void(0)" id="loginBtn"
+                            class="text-gray-400 hover:text-primary font-medium">Login</a>
+                        <a href="javascript:void(0)" id="registerBtn"
+                            class="ml-4 px-4 py-2 bg-primary text-white rounded-md hover:bg-blue-700 transition">Register</a>
+                    </div>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobileMenuButton" class="text-gray-400 hover:text-primary focus:outline-none">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile menu -->
+        <div id="mobileMenu" class="mobile-menu md:hidden fixed inset-y-0 right-0 w-64 shadow-lg z-50 overflow-y-auto">
+            <div class="flex justify-end p-4">
+                <button id="closeMobileMenu" class="text-gray-400 hover:text-primary focus:outline-none">
+                    <i class="fas fa-times text-2xl"></i>
+                </button>
+            </div>
+            <nav class="px-6 py-4">
+                <div class="flex flex-col space-y-6">
+                    <a href="/" class="text-primary font-medium border-b-2 border-primary px-1 pb-1">Home</a>
+                    <a href="/courses/" class="text-gray-400 hover:text-primary font-medium px-1 pb-1">Courses</a>
+                    <a href="/blog/" class="text-gray-400 hover:text-primary font-medium px-1 pb-1">Blog</a>
+                    <a href="/about" class="text-gray-400 hover:text-primary font-medium px-1 pb-1">About</a>
+                    <a href="/contact/" class="text-gray-400 hover:text-primary font-medium px-1 pb-1">Contact</a>
+
+                    <div class="pt-4 border-t border-gray-700">
+                        <div id="mobileUserGreeting" class="hidden mb-4">
+                            <span class="text-gray-300">Hi, <span id="mobileUsernameDisplay"></span></span>
+                            <button id="mobileLogoutBtn" class="block mt-2 text-primary hover:underline">Logout</button>
+                        </div>
+                        <div id="mobileAuthButtons">
+                            <a href="javascript:void(0)" id="mobileLoginBtn"
+                                class="block px-4 py-2 bg-primary text-white rounded-md hover:bg-blue-700 transition text-center mb-4">Login</a>
+                            <a href="javascript:void(0)" id="mobileRegisterBtn"
+                                class="block px-4 py-2 bg-primary text-white rounded-md hover:bg-blue-700 transition text-center">Register</a>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden">
+        <div class="modal-content rounded-lg shadow-xl max-w-md w-full p-6">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-2xl font-bold text-white">Login</h3>
+                <button id="closeLoginModal" class="text-gray-400 hover:text-gray-200">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="loginForm" class="space-y-4">
+                <div id="loginError" class="error-message hidden"></div>
+                <div>
+                    <label for="loginEmail" class="block text-sm font-medium text-gray-300">Email</label>
+                    <input type="email" id="loginEmail" required
+                        class="mt-1 block w-full border rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary">
+                </div>
+                <div>
+                    <label for="loginPassword" class="block text-sm font-medium text-gray-300">Password</label>
+                    <input type="password" id="loginPassword" required
+                        class="mt-1 block border w-full rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary">
+                </div>
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <input id="rememberMe" type="checkbox"
+                            class="h-4 w-4 border text-primary focus:ring-primary border-gray-600 rounded bg-gray-700">
+                        <label for="rememberMe" class="ml-2 block text-sm text-gray-300">Remember me</label>
+                    </div>
+                    <a href="javascript:void(0)" id="forgotPassword" class="text-sm text-primary hover:underline">Forgot
+                        password?</a>
+                </div>
+                <div>
+                    <button type="submit"
+                        class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                        Login
+                    </button>
+                </div>
+                <div class="text-center text-sm text-gray-400">
+                    Don't have an account? <a href="javascript:void(0)" id="switchToRegister"
+                        class="text-primary hover:underline">Register</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div id="registerModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden">
+        <div class="modal-content rounded-lg shadow-xl max-w-md w-full p-6">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-2xl font-bold text-white">Register</h3>
+                <button id="closeRegisterModal" class="text-gray-400 hover:text-gray-200">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="registerForm" class="space-y-4">
+                <div id="registerSuccess" class="success-message hidden"></div>
+                <div>
+                    <label for="registerName" class="block text-sm font-medium text-gray-300">Full Name</label>
+                    <input type="text" id="registerName" required
+                        class="mt-1 block w-full border rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary">
+                </div>
+                <div>
+                    <label for="registerEmail" class="block text-sm font-medium text-gray-300">Email</label>
+                    <input type="email" id="registerEmail" required
+                        class="mt-1 block w-full border rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary">
+                </div>
+                <div>
+                    <label for="registerPassword" class="block text-sm font-medium text-gray-300">Password</label>
+                    <input type="password" id="registerPassword" required minlength="6"
+                        class="mt-1 block w-full border rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary">
+                </div>
+                <div>
+                    <label for="registerConfirmPassword" class="block text-sm font-medium text-gray-300">Confirm
+                        Password</label>
+                    <input type="password" id="registerConfirmPassword" required minlength="6"
+                        class="mt-1 block w-full border rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary">
+                </div>
+                <div class="flex items-center">
+                    <input id="agreeTerms" type="checkbox" required
+                        class="h-4 w-4 text-primary border focus:ring-primary border-gray-600 rounded bg-gray-700">
+                    <label for="agreeTerms" class="ml-2 block text-sm text-gray-300">I agree to the <a href="/terms/"
+                            class="text-primary hover:underline">Terms of Service</a> and <a href="/privacy/"
+                            class="text-primary hover:underline">Privacy Policy</a></label>
+                </div>
+                <div>
+                    <button type="submit"
+                        class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                        Register
+                    </button>
+                </div>
+                <div class="text-center text-sm text-gray-400">
+                    Already have an account? <a href="javascript:void(0)" id="switchToLogin"
+                        class="text-primary hover:underline">Login</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Booking Modal -->
+    <div id="bookingModal" class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden">
+        <div class="modal-content rounded-lg shadow-xl max-w-2xl w-full p-6">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-2xl font-bold text-white">Book Your Session</h3>
+                <button id="closeBookingModal" class="text-gray-400 hover:text-gray-200">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <form id="bookingForm" class="space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label for="bookingName" class="block text-sm font-medium text-gray-300">Full Name</label>
+                        <input type="text" id="bookingName"
+                            class="mt-1 block w-full border rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary">
+                    </div>
+                    <div>
+                        <label for="bookingEmail" class="block text-sm font-medium text-gray-300">Email</label>
+                        <input type="email" id="bookingEmail"
+                            class="mt-1 block w-full border rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary">
+                    </div>
+                    <div>
+                        <label for="bookingPhone" class="block text-sm font-medium text-gray-300">Phone Number</label>
+                        <input type="tel" id="bookingPhone"
+                            class="mt-1 block w-full border  rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary">
+                    </div>
+                    <div>
+                        <label for="bookingPackage" class="block text-sm font-medium text-gray-300">Package</label>
+                        <input type="text" id="bookingPackage"
+                            class="mt-1 block w-full border rounded-md shadow-sm py-2 px-3 bg-gray-800 cursor-not-allowed"
+                            readonly>
+                    </div>
+                </div>
+
+                <!-- Instructor Selection -->
+                <div id="instructorSelection" class="hidden">
+                    <label class="block text-sm font-medium text-gray-300 mb-2">Select Instructor</label>
+                    <div id="instructorOptions" class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        <!-- Instructor options will be populated here -->
+                    </div>
+                </div>
+
+                <div>
+                    <label for="bookingComments" class="block text-sm font-medium text-gray-300">Comments
+                        (Optional)</label>
+                    <textarea id="bookingComments" rows="3"
+                        class="mt-1 block w-full border rounded-md shadow-sm py-2 px-3 focus:outline-none focus:ring-primary focus:border-primary"></textarea>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-300 mb-2">Select Date</label>
+                    <div id="datePicker" class="grid grid-cols-5 gap-2">
+                        <!-- Dates will be populated by JavaScript -->
+                    </div>
+                </div>
+                <div>
+                    <button type="submit"
+                        class="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                        Confirm Booking
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Booking Confirmation Modal -->
+    <div id="bookingConfirmationModal"
+        class="fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center z-50 hidden">
+        <div class="modal-content rounded-lg shadow-xl max-w-md w-full p-6 text-center">
+            <div class="mb-4">
+                <i class="fas fa-check-circle text-5xl text-green-500"></i>
+            </div>
+            <h3 class="text-2xl font-bold text-white mb-2">Booking Confirmed!</h3>
+            <p class="text-gray-300 mb-6">We'll get back to you ASAP via email with the details of your session.</p>
+            <button id="closeConfirmationModal"
+                class="px-4 py-2 bg-primary text-white rounded-md hover:bg-blue-700 transition">
+                Close
+            </button>
+        </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section
+        class="relative md:h-screen py-20 flex items-center justify-center overflow-hidden bg-gradient-to-r from-primary to-accent bg-cover bg-center"
+        style="background-image: url('/assets/hero-img.jpg');">
+        <!-- Three.js Background -->
+        <div id="threejsCanvas" class="absolute inset-0 z-0"></div>
+
+        <div class="absolute inset-0 bg-black opacity-40 z-10"></div>
+
+        <div class="relative z-20 text-center px-4 sm:px-6 lg:px-8">
+            <h1 id="heroTitle" class="text-4xl sm:text-5xl md:text-6xl font-bold text-white mb-6">
+                <span class="block">Master Digital Skills</span>
+                <span class="block">With Expert Guidance</span>
+            </h1>
+            <p class="text-xl text-gray-200 mb-8 max-w-3xl mx-auto">
+                Access premium courses, tools, and memberships to accelerate your career or business growth.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="/courses/"
+                    class="px-6 py-3 bg-white text-primary rounded-md hover:bg-gray-100 transition font-medium">
+                    Explore Courses
+                </a>
+                <a href="javascript:void(0)" id="heroRegisterBtn"
+                    class="px-6 py-3 bg-accent text-white rounded-md hover:bg-yellow-600 transition font-medium">
+                    Register Now & Get Bonus
+                </a>
+            </div>
+        </div>
+
+        <div class="absolute bottom-10 left-0 right-0 z-20 text-center hidden md:block">
+            <a href="#featured-courses" class="text-white animate-bounce inline-block">
+                <i class="fas fa-chevron-down text-2xl"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Featured Courses -->
+    <section id="featured-courses" class="py-16 ">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-white mb-4">Featured Online Courses</h2>
+                <p class="text-lg text-gray-300 max-w-3xl mx-auto">
+                    Learn from industry experts with our comprehensive course offerings. Choose from flexible learning
+                    options.
+                </p>
+            </div>
+
+            <!-- Course Categories -->
+            <div class="flex justify-center mb-8">
+                <div class="inline-flex rounded-md shadow-sm">
+                    <button type="button"
+                        class="px-4 py-2 text-sm font-medium rounded-l-lg border border-gray-600 category-btn active"
+                        data-category="all">
+                        All Categories
+                    </button>
+                    <button type="button"
+                        class="px-4 py-2 text-sm font-medium border-t border-b border-gray-600 category-btn"
+                        data-category="marketing">
+                        Marketing
+                    </button>
+                    <button type="button" class="px-4 py-2 text-sm font-medium border border-gray-600 category-btn"
+                        data-category="video">
+                        Video Editing
+                    </button>
+                    <button type="button"
+                        class="px-4 py-2 text-sm font-medium rounded-r-lg border border-gray-600 category-btn"
+                        data-category="content">
+                        Content Creation
+                    </button>
+                </div>
+            </div>
+
+            <!-- Marketing Strategy Courses -->
+            <div class="course-category" data-category="marketing">
+                <h3 class="text-2xl font-bold text-white mb-6">Marketing Strategy Courses</h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Instructor 1 -->
+                    <div class="course-card rounded-lg shadow-md overflow-hidden ">
+                        <div class="p-6">
+                            <div class="flex items-center mb-4">
+                                <div class="ml-4 flex gap-3">
+
+                                    <img alt="Instructor Sarah Johnson" src="/assets/instructors/sarah-johnson.jpg"
+                                        class="w-12 h-12 object-cover  rounded-full ">
+                                    <div>
+                                        <h4 class="font-bold text-white">Sarah Johnson</h4>
+                                        <p class="text-sm text-gray-400">Digital Marketing Strategist</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-gray-300 mb-4">With 10+ years at Google and Facebook, Sarah specializes in
+                                data-driven marketing strategies that deliver measurable results.</p>
+
+                            <div class="space-y-3">
+                                <div class="border border-gray-700 rounded-md p-3">
+                                    <div class="flex justify-between items-center">
+                                        <div>
+                                            <h5 class="font-medium text-white">1h Private Session</h5>
+                                            <p class="text-sm text-gray-400">Personalized coaching</p>
+                                        </div>
+                                        <span class="font-bold text-primary">$99</span>
+                                    </div>
+                                    <button
+                                        class="book-now-btn mt-2 w-full py-2 px-4 border border-primary rounded-md text-primary font-medium hover:bg-primary hover:text-white transition"
+                                        data-package="1h Private Session - $99" data-instructor="Sarah Johnson"
+                                        data-course="Marketing Strategy">
+                                        Book Now
+                                    </button>
+                                </div>
+
+                                <div class="border border-gray-700 rounded-md p-3">
+                                    <div class="flex justify-between items-center">
+                                        <div>
+                                            <h5 class="font-medium text-white">Full Course Access</h5>
+                                            <p class="text-sm text-gray-400">12 modules, 6 months</p>
+                                        </div>
+                                        <span class="font-bold text-primary">$599</span>
+                                    </div>
+                                    <button
+                                        class="book-now-btn mt-2 w-full py-2 px-4 border border-primary rounded-md text-primary font-medium hover:bg-primary hover:text-white transition"
+                                        data-package="Full Course Access - $599" data-instructor="Sarah Johnson"
+                                        data-course="Marketing Strategy">
+                                        Book Now
+                                    </button>
+                                </div>
+
+                                <div class="border border-gray-700 rounded-md p-3">
+                                    <div class="flex justify-between items-center">
+                                        <div>
+                                            <h5 class="font-medium text-white">Weekly Mentorship</h5>
+                                            <p class="text-sm text-gray-400">8 weeks, 2h/week</p>
+                                        </div>
+                                        <span class="font-bold text-primary">$1,299</span>
+                                    </div>
+                                    <button
+                                        class="book-now-btn mt-2 w-full py-2 px-4 border border-primary rounded-md text-primary font-medium hover:bg-primary hover:text-white transition"
+                                        data-package="Weekly Mentorship - $1,299" data-instructor="Sarah Johnson"
+                                        data-course="Marketing Strategy">
+                                        Book Now
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Instructor 2 -->
+                    <div class="course-card rounded-lg shadow-md overflow-hidden ">
+                        <div class="p-6">
+                            <div class="flex items-center mb-4">
+                                <div class="ml-4 flex gap-3">
+
+                                    <img alt="Instructor Sarah Johnson" src="/assets/instructors/michael.avif"
+                                        class="w-12 h-12  object-cover rounded-full ">
+                                    <div>
+                                        <h4 class="font-bold text-white">Michael Chen</h4>
+                                        <p class="text-sm text-gray-400">Growth Marketing Expert</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-gray-300 mb-4">Former Head of Growth at two unicorn startups, Michael teaches
+                                scalable acquisition strategies for fast-growing companies.</p>
+
+                            <div class="space-y-3">
+                                <div class="border border-gray-700 rounded-md p-3">
+                                    <div class="flex justify-between items-center">
+                                        <div>
+                                            <h5 class="font-medium text-white">1h Private Session</h5>
+                                            <p class="text-sm text-gray-400">Personalized coaching</p>
+                                        </div>
+                                        <span class="font-bold text-primary">$149</span>
+                                    </div>
+                                    <button
+                                        class="book-now-btn mt-2 w-full py-2 px-4 border border-primary rounded-md text-primary font-medium hover:bg-primary hover:text-white transition"
+                                        data-package="1h Private Session - $149" data-instructor="Michael Chen"
+                                        data-course="Marketing Strategy">
+                                        Book Now
+                                    </button>
+                                </div>
+
+                                <div class="border border-gray-700 rounded-md p-3">
+                                    <div class="flex justify-between items-center">
+                                        <div>
+                                            <h5 class="font-medium text-white">Full Course Access</h5>
+                                            <p class="text-sm text-gray-400">8 modules, 4 months</p>
+                                        </div>
+                                        <span class="font-bold text-primary">$799</span>
+                                    </div>
+                                    <button
+                                        class="book-now-btn mt-2 w-full py-2 px-4 border border-primary rounded-md text-primary font-medium hover:bg-primary hover:text-white transition"
+                                        data-package="Full Course Access - $799" data-instructor="Michael Chen"
+                                        data-course="Marketing Strategy">
+                                        Book Now
+                                    </button>
+                                </div>
+
+                                <div class="border border-gray-700 rounded-md p-3">
+                                    <div class="flex justify-between items-center">
+                                        <div>
+                                            <h5 class="font-medium text-white">Growth Mastermind</h5>
+                                            <p class="text-sm text-gray-400">12 weeks, group sessions</p>
+                                        </div>
+                                        <span class="font-bold text-primary">$1,999</span>
+                                    </div>
+                                    <button
+                                        class="book-now-btn mt-2 w-full py-2 px-4 border border-primary rounded-md text-primary font-medium hover:bg-primary hover:text-white transition"
+                                        data-package="Growth Mastermind - $1,999" data-instructor="Michael Chen"
+                                        data-course="Marketing Strategy">
+                                        Book Now
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Instructor 3 -->
+                    <div class="course-card rounded-lg shadow-md overflow-hidden">
+                        <div class="p-6">
+                            <div class="flex items-center mb-4">
+                                <div class="ml-4 flex gap-3">
+
+                                    <img alt="Instructor Sarah Johnson" src="/assets/instructors/david.jpg"
+                                        class="w-12 h-12 object-cover  rounded-full ">
+                                    <div>
+                                        <h4 class="font-bold text-white">David Rodriguez</h4>
+                                        <p class="text-sm text-gray-400">SEO & Content Specialist</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-gray-300 mb-4">David has helped over 200 businesses rank #1 on Google through
+                                his proven SEO frameworks and content strategies.</p>
+
+                            <div class="space-y-3">
+                                <div class="border border-gray-700 rounded-md p-3">
+                                    <div class="flex justify-between items-center">
+                                        <div>
+                                            <h5 class="font-medium text-white">1h Private Session</h5>
+                                            <p class="text-sm text-gray-400">SEO audit review</p>
+                                        </div>
+                                        <span class="font-bold text-primary">$79</span>
+                                    </div>
+                                    <button
+                                        class="book-now-btn mt-2 w-full py-2 px-4 border border-primary rounded-md text-primary font-medium hover:bg-primary hover:text-white transition"
+                                        data-package="1h Private Session - $79" data-instructor="David Rodriguez"
+                                        data-course="Marketing Strategy">
+                                        Book Now
+                                    </button>
+                                </div>
+
+                                <div class="border border-gray-700 rounded-md p-3">
+                                    <div class="flex justify-between items-center">
+                                        <div>
+                                            <h5 class="font-medium text-white">SEO Mastery Course</h5>
+                                            <p class="text-sm text-gray-400">6 modules, lifetime access</p>
+                                        </div>
+                                        <span class="font-bold text-primary">$499</span>
+                                    </div>
+                                    <button
+                                        class="book-now-btn mt-2 w-full py-2 px-4 border border-primary rounded-md text-primary font-medium hover:bg-primary hover:text-white transition"
+                                        data-package="SEO Mastery Course - $499" data-instructor="David Rodriguez"
+                                        data-course="Marketing Strategy">
+                                        Book Now
+                                    </button>
+                                </div>
+
+                                <div class="border border-gray-700 rounded-md p-3">
+                                    <div class="flex justify-between items-center">
+                                        <div>
+                                            <h5 class="font-medium text-white">Content Strategy</h5>
+                                            <p class="text-sm text-gray-400">4 weeks, 2h/week</p>
+                                        </div>
+                                        <span class="font-bold text-primary">$899</span>
+                                    </div>
+                                    <button
+                                        class="book-now-btn mt-2 w-full py-2 px-4 border border-primary rounded-md text-primary font-medium hover:bg-primary hover:text-white transition"
+                                        data-package="Content Strategy - $899" data-instructor="David Rodriguez"
+                                        data-course="Marketing Strategy">
+                                        Book Now
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Instructor 4 -->
+                    <div class="course-card rounded-lg shadow-md overflow-hidden ">
+                        <div class="p-6">
+                            <div class="flex items-center mb-4">
+                                <div class="ml-4 flex gap-3">
+
+                                    <img alt="Instructor Lisa Wong" src="/assets/instructors/lisa.jpg"
+                                        class="w-12 h-12  object-cover rounded-full ">
+                                    <div>
+                                        <h4 class="font-bold text-white">Lisa Wong</h4>
+                                        <p class="text-sm text-gray-400">Social Media Strategist</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-gray-300 mb-4">Built multiple 500k+ Instagram accounts. Focuses on organic
+                                growth strategies that work in 2023 and beyond.</p>
+
+                            <div class="space-y-3">
+                                <div class="border border-gray-700 rounded-md p-3">
+                                    <div class="flex justify-between items-center">
+                                        <div>
+                                            <h5 class="font-medium text-white">1h Private Session</h5>
+                                            <p class="text-sm text-gray-400">Account review</p>
+                                        </div>
+                                        <span class="font-bold text-primary">$99</span>
+                                    </div>
+                                    <button
+                                        class="book-now-btn mt-2 w-full py-2 px-4 border border-primary rounded-md text-primary font-medium hover:bg-primary hover:text-white transition"
+                                        data-package="1h Private Session - $99" data-instructor="Lisa Wong"
+                                        data-course="Marketing Strategy">
+                                        Book Now
+                                    </button>
+                                </div>
+
+                                <div class="border border-gray-700 rounded-md p-3">
+                                    <div class="flex justify-between items-center">
+                                        <div>
+                                            <h5 class="font-medium text-white">Social Media Mastery</h5>
+                                            <p class="text-sm text-gray-400">5 modules, 6 weeks</p>
+                                        </div>
+                                        <span class="font-bold text-primary">$449</span>
+                                    </div>
+                                    <button
+                                        class="book-now-btn mt-2 w-full py-2 px-4 border border-primary rounded-md text-primary font-medium hover:bg-primary hover:text-white transition"
+                                        data-package="Social Media Mastery - $449" data-instructor="Lisa Wong"
+                                        data-course="Marketing Strategy">
+                                        Book Now
+                                    </button>
+                                </div>
+
+                                <div class="border border-gray-700 rounded-md p-3">
+                                    <div class="flex justify-between items-center">
+                                        <div>
+                                            <h5 class="font-medium text-white">Content Creation Lab</h5>
+                                            <p class="text-sm text-gray-400">8 weeks, hands-on</p>
+                                        </div>
+                                        <span class="font-bold text-primary">$899</span>
+                                    </div>
+                                    <button
+                                        class="book-now-btn mt-2 w-full py-2 px-4 border border-primary rounded-md text-primary font-medium hover:bg-primary hover:text-white transition"
+                                        data-package="Content Creation Lab - $899" data-instructor="Lisa Wong"
+                                        data-course="Marketing Strategy">
+                                        Book Now
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Instructor 5 -->
+                    <div class="course-card rounded-lg shadow-md overflow-hidden ">
+                        <div class="p-6">
+                            <div class="flex items-center mb-4">
+                                <div class="ml-4 flex gap-3">
+
+                                    <img alt="Instructor James Peterson" src="/assets/instructors/james.jpg"
+                                        class="w-12 h-12 object-cover  rounded-full ">
+                                    <div>
+                                        <h4 class="font-bold text-white">James Peterson</h4>
+                                        <p class="text-sm text-gray-400">Email Marketing Expert</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-gray-300 mb-4">Generated over $50M in revenue through email campaigns.
+                                Specializes in high-converting email sequences and automation.</p>
+
+                            <div class="space-y-3">
+                                <div class="border border-gray-700 rounded-md p-3">
+                                    <div class="flex justify-between items-center">
+                                        <div>
+                                            <h5 class="font-medium text-white">1h Private Session</h5>
+                                            <p class="text-sm text-gray-400">Sequence review</p>
+                                        </div>
+                                        <span class="font-bold text-primary">$129</span>
+                                    </div>
+                                    <button
+                                        class="book-now-btn mt-2 w-full py-2 px-4 border border-primary rounded-md text-primary font-medium hover:bg-primary hover:text-white transition"
+                                        data-package="1h Private Session - $129" data-instructor="James Peterson"
+                                        data-course="Marketing Strategy">
+                                        Book Now
+                                    </button>
+                                </div>
+
+                                <div class="border border-gray-700 rounded-md p-3">
+                                    <div class="flex justify-between items-center">
+                                        <div>
+                                            <h5 class="font-medium text-white">Email Mastery Course</h5>
+                                            <p class="text-sm text-gray-400">6 modules, 4 weeks</p>
+                                        </div>
+                                        <span class="font-bold text-primary">$599</span>
+                                    </div>
+                                    <button
+                                        class="book-now-btn mt-2 w-full py-2 px-4 border border-primary rounded-md text-primary font-medium hover:bg-primary hover:text-white transition"
+                                        data-package="Email Mastery Course - $599" data-instructor="James Peterson"
+                                        data-course="Marketing Strategy">
+                                        Book Now
+                                    </button>
+                                </div>
+
+                                <div class="border border-gray-700 rounded-md p-3">
+                                    <div class="flex justify-between items-center">
+                                        <div>
+                                            <h5 class="font-medium text-white">Automation Intensive</h5>
+                                            <p class="text-sm text-gray-400">4 weeks, technical focus</p>
+                                        </div>
+                                        <span class="font-bold text-primary">$1,199</span>
+                                    </div>
+                                    <button
+                                        class="book-now-btn mt-2 w-full py-2 px-4 border border-primary rounded-md text-primary font-medium hover:bg-primary hover:text-white transition"
+                                        data-package="Automation Intensive - $1,199" data-instructor="James Peterson"
+                                        data-course="Marketing Strategy">
+                                        Book Now
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Video Editing Courses -->
+            <div class="course-category mt-12 hidden" data-category="video">
+                <h3 class="text-2xl font-bold text-white mb-6">Video Editing Tutorials</h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Instructor 6 -->
+                    <div class="course-card rounded-lg shadow-md overflow-hidden transition duration-300">
+                        <div class="p-6">
+                            <div class="flex items-center mb-4">
+                                <div class="ml-4 flex gap-3">
+
+                                    <img alt="Instructor Sarah Johnson" src="/assets/instructors/emma.webp"
+                                        class="w-12 h-12 object-cover rounded-full ">
+                                    <div>
+                                        <h4 class="font-bold text-white">Emma Wilson</h4>
+                                        <p class="text-sm text-gray-400">DaVinci Resolve Expert</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-gray-300 mb-4">Professional colorist with 8+ years experience working on
+                                Hollywood films and Netflix series. Certified DaVinci Resolve Trainer.</p>
+
+                            <div class="space-y-3">
+                                <div class="border border-gray-700 rounded-md p-3">
+                                    <div class="flex justify-between items-center">
+                                        <div>
+                                            <h5 class="font-medium text-white">1h Private Session</h5>
+                                            <p class="text-sm text-gray-400">Color grading review</p>
+                                        </div>
+                                        <span class="font-bold text-primary">$129</span>
+                                    </div>
+                                    <button
+                                        class="book-now-btn mt-2 w-full py-2 px-4 border border-primary rounded-md text-primary font-medium hover:bg-primary hover:text-white transition"
+                                        data-package="1h Private Session - $129" data-instructor="Emma Wilson"
+                                        data-course="Video Editing">
+                                        Book Now
+                                    </button>
+                                </div>
+
+                                <div class="border border-gray-700 rounded-md p-3">
+                                    <div class="flex justify-between items-center">
+                                        <div>
+                                            <h5 class="font-medium text-white">DaVinci Masterclass</h5>
+                                            <p class="text-sm text-gray-400">8 weeks, project-based</p>
+                                        </div>
+                                        <span class="font-bold text-primary">$699</span>
+                                    </div>
+                                    <button
+                                        class="book-now-btn mt-2 w-full py-2 px-4 border border-primary rounded-md text-primary font-medium hover:bg-primary hover:text-white transition"
+                                        data-package="DaVinci Masterclass - $699" data-instructor="Emma Wilson"
+                                        data-course="Video Editing">
+                                        Book Now
+                                    </button>
+                                </div>
+
+                                <div class="border border-gray-700 rounded-md p-3">
+                                    <div class="flex justify-between items-center">
+                                        <div>
+                                            <h5 class="font-medium text-white">Color Grading Bootcamp</h5>
+                                            <p class="text-sm text-gray-400">6 weeks intensive</p>
+                                        </div>
+                                        <span class="font-bold text-primary">$1,499</span>
+                                    </div>
+                                    <button
+                                        class="book-now-btn mt-2 w-full py-2 px-4 border border-primary rounded-md text-primary font-medium hover:bg-primary hover:text-white transition"
+                                        data-package="Color Grading Bootcamp - $1,499" data-instructor="Emma Wilson"
+                                        data-course="Video Editing">
+                                        Book Now
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Instructor 7 -->
+                    <div class="course-card rounded-lg shadow-md overflow-hidden transition duration-300">
+                        <div class="p-6">
+                            <div class="flex items-center mb-4">
+                                <div class="ml-4 flex gap-3">
+
+                                    <img alt="Instructor Alex Rivera" src="/assets/instructors/alex.jpg"
+                                        class="w-12 h-12  object-cover rounded-full ">
+                                    <div>
+                                        <h4 class="font-bold text-white">Alex Rivera</h4>
+                                        <p class="text-sm text-gray-400">Adobe Premiere Pro Trainer</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-gray-300 mb-4">Former Adobe employee with 12 years of editing experience.
+                                Specializes in efficient workflows for content creators.</p>
+
+                            <div class="space-y-3">
+                                <div class="border border-gray-700 rounded-md p-3">
+                                    <div class="flex justify-between items-center">
+                                        <div>
+                                            <h5 class="font-medium text-white">1h Private Session</h5>
+                                            <p class="text-sm text-gray-400">Workflow optimization</p>
+                                        </div>
+                                        <span class="font-bold text-primary">$89</span>
+                                    </div>
+                                    <button
+                                        class="book-now-btn mt-2 w-full py-2 px-4 border border-primary rounded-md text-primary font-medium hover:bg-primary hover:text-white transition"
+                                        data-package="1h Private Session - $89" data-instructor="Alex Rivera"
+                                        data-course="Video Editing">
+                                        Book Now
+                                    </button>
+                                </div>
+
+                                <div class="border border-gray-700 rounded-md p-3">
+                                    <div class="flex justify-between items-center">
+                                        <div>
+                                            <h5 class="font-medium text-white">Premiere Pro Essentials</h5>
+                                            <p class="text-sm text-gray-400">6 modules, 4 weeks</p>
+                                        </div>
+                                        <span class="font-bold text-primary">$399</span>
+                                    </div>
+                                    <button
+                                        class="book-now-btn mt-2 w-full py-2 px-4 border border-primary rounded-md text-primary font-medium hover:bg-primary hover:text-white transition"
+                                        data-package="Premiere Pro Essentials - $399" data-instructor="Alex Rivera"
+                                        data-course="Video Editing">
+                                        Book Now
+                                    </button>
+                                </div>
+
+                                <div class="border border-gray-700 rounded-md p-3">
+                                    <div class="flex justify-between items-center">
+                                        <div>
+                                            <h5 class="font-medium text-white">Advanced Editing</h5>
+                                            <p class="text-sm text-gray-400">8 weeks, real projects</p>
+                                        </div>
+                                        <span class="font-bold text-primary">$999</span>
+                                    </div>
+                                    <button
+                                        class="book-now-btn mt-2 w-full py-2 px-4 border border-primary rounded-md text-primary font-medium hover:bg-primary hover:text-white transition"
+                                        data-package="Advanced Editing - $999" data-instructor="Alex Rivera"
+                                        data-course="Video Editing">
+                                        Book Now
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Instructor 8 -->
+                    <div class="course-card rounded-lg shadow-md overflow-hidden transition duration-300">
+                        <div class="p-6">
+                            <div class="flex items-center mb-4">
+                                <div class="ml-4 flex gap-3">
+
+                                    <img alt="Instructor Sarah Johnson" src="/assets/instructors/shophia-kim.jpeg"
+                                        class="w-12 h-12 object-cover  rounded-full ">
+                                    <div>
+                                        <h4 class="font-bold text-white">Sophia Kim</h4>
+                                        <p class="text-sm text-gray-400">After Effects Specialist</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-gray-300 mb-4">Motion graphics artist with work featured by Apple, Nike, and
+                                Spotify. Focuses on practical, real-world techniques.</p>
+
+                            <div class="space-y-3">
+                                <div class="border border-gray-700 rounded-md p-3">
+                                    <div class="flex justify-between items-center">
+                                        <div>
+                                            <h5 class="font-medium text-white">1h Private Session</h5>
+                                            <p class="text-sm text-gray-400">Portfolio review</p>
+                                        </div>
+                                        <span class="font-bold text-primary">$119</span>
+                                    </div>
+                                    <button
+                                        class="book-now-btn mt-2 w-full py-2 px-4 border border-primary rounded-md text-primary font-medium hover:bg-primary hover:text-white transition"
+                                        data-package="1h Private Session - $119" data-instructor="Sophia Kim"
+                                        data-course="Video Editing">
+                                        Book Now
+                                    </button>
+                                </div>
+
+                                <div class="border border-gray-700 rounded-md p-3">
+                                    <div class="flex justify-between items-center">
+                                        <div>
+                                            <h5 class="font-medium text-white">After Effects Basics</h5>
+                                            <p class="text-sm text-gray-400">4 weeks, beginner-friendly</p>
+                                        </div>
+                                        <span class="font-bold text-primary">$349</span>
+                                    </div>
+                                    <button
+                                        class="book-now-btn mt-2 w-full py-2 px-4 border border-primary rounded-md text-primary font-medium hover:bg-primary hover:text-white transition"
+                                        data-package="After Effects Basics - $349" data-instructor="Sophia Kim"
+                                        data-course="Video Editing">
+                                        Book Now
+                                    </button>
+                                </div>
+
+                                <div class="border border-gray-700 rounded-md p-3">
+                                    <div class="flex justify-between items-center">
+                                        <div>
+                                            <h5 class="font-medium text-white">Motion Design Mastery</h5>
+                                            <p class="text-sm text-gray-400">10 weeks intensive</p>
+                                        </div>
+                                        <span class="font-bold text-primary">$1,299</span>
+                                    </div>
+                                    <button
+                                        class="book-now-btn mt-2 w-full py-2 px-4 border border-primary rounded-md text-primary font-medium hover:bg-primary hover:text-white transition"
+                                        data-package="Motion Design Mastery - $1,299" data-instructor="Sophia Kim"
+                                        data-course="Video Editing">
+                                        Book Now
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Instructor 9 -->
+                    <div class="course-card rounded-lg shadow-md overflow-hidden transition duration-300">
+                        <div class="p-6">
+                            <div class="flex items-center mb-4">
+                                <div class="ml-4 flex gap-3">
+
+                                    <img alt="Instructor Sarah Johnson" src="/assets/instructors/marcus.jpg"
+                                        class="w-12 h-12 object-cover  rounded-full ">
+                                    <div>
+                                        <h4 class="font-bold text-white">Marcus Lee</h4>
+                                        <p class="text-sm text-gray-400">Final Cut Pro Expert</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-gray-300 mb-4">Professional editor with 15+ years experience in broadcast
+                                television. Specializes in fast-paced editing workflows.</p>
+
+                            <div class="space-y-3">
+                                <div class="border border-gray-700 rounded-md p-3">
+                                    <div class="flex justify-between items-center">
+                                        <div>
+                                            <h5 class="font-medium text-white">1h Private Session</h5>
+                                            <p class="text-sm text-gray-400">Workflow consultation</p>
+                                        </div>
+                                        <span class="font-bold text-primary">$109</span>
+                                    </div>
+                                    <button
+                                        class="book-now-btn mt-2 w-full py-2 px-4 border border-primary rounded-md text-primary font-medium hover:bg-primary hover:text-white transition"
+                                        data-package="1h Private Session - $109" data-instructor="Marcus Lee"
+                                        data-course="Video Editing">
+                                        Book Now
+                                    </button>
+                                </div>
+
+                                <div class="border border-gray-700 rounded-md p-3">
+                                    <div class="flex justify-between items-center">
+                                        <div>
+                                            <h5 class="font-medium text-white">Final Cut Pro Mastery</h5>
+                                            <p class="text-sm text-gray-400">6 modules, 4 weeks</p>
+                                        </div>
+                                        <span class="font-bold text-primary">$499</span>
+                                    </div>
+                                    <button
+                                        class="book-now-btn mt-2 w-full py-2 px-4 border border-primary rounded-md text-primary font-medium hover:bg-primary hover:text-white transition"
+                                        data-package="Final Cut Pro Mastery - $499" data-instructor="Marcus Lee"
+                                        data-course="Video Editing">
+                                        Book Now
+                                    </button>
+                                </div>
+
+                                <div class="border border-gray-700 rounded-md p-3">
+                                    <div class="flex justify-between items-center">
+                                        <div>
+                                            <h5 class="font-medium text-white">Broadcast Editing</h5>
+                                            <p class="text-sm text-gray-400">8 weeks intensive</p>
+                                        </div>
+                                        <span class="font-bold text-primary">$1,199</span>
+                                    </div>
+                                    <button
+                                        class="book-now-btn mt-2 w-full py-2 px-4 border border-primary rounded-md text-primary font-medium hover:bg-primary hover:text-white transition"
+                                        data-package="Broadcast Editing - $1,199" data-instructor="Marcus Lee"
+                                        data-course="Video Editing">
+                                        Book Now
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Instructor 10 -->
+                    <div class="course-card rounded-lg shadow-md overflow-hidden transition duration-300">
+                        <div class="p-6">
+                            <div class="flex items-center mb-4">
+                                <div class="ml-4 flex gap-3">
+
+                                    <img alt="Instructor Sarah Johnson" src="/assets/instructors/olivia.jpg"
+                                        class="w-12 h-12 object-cover  rounded-full ">
+                                    <div>
+                                        <h4 class="font-bold text-white">Olivia Smith</h4>
+                                        <p class="text-sm text-gray-400">Documentary Filmmaker</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-gray-300 mb-4">Award-winning documentary filmmaker with 10+ years experience.
+                                Focuses on storytelling through editing.</p>
+
+                            <div class="space-y-3">
+                                <div class="border border-gray-700 rounded-md p-3">
+                                    <div class="flex justify-between items-center">
+                                        <div>
+                                            <h5 class="font-medium text-white">1h Private Session</h5>
+                                            <p class="text-sm text-gray-400">Story review</p>
+                                        </div>
+                                        <span class="font-bold text-primary">$99</span>
+                                    </div>
+                                    <button
+                                        class="book-now-btn mt-2 w-full py-2 px-4 border border-primary rounded-md text-primary font-medium hover:bg-primary hover:text-white transition"
+                                        data-package="1h Private Session - $99" data-instructor="Olivia Smith"
+                                        data-course="Video Editing">
+                                        Book Now
+                                    </button>
+                                </div>
+
+                                <div class="border border-gray-700 rounded-md p-3">
+                                    <div class="flex justify-between items-center">
+                                        <div>
+                                            <h5 class="font-medium text-white">Documentary Editing</h5>
+                                            <p class="text-sm text-gray-400">6 modules, 4 weeks</p>
+                                        </div>
+                                        <span class="font-bold text-primary">$599</span>
+                                    </div>
+                                    <button
+                                        class="book-now-btn mt-2 w-full py-2 px-4 border border-primary rounded-md text-primary font-medium hover:bg-primary hover:text-white transition"
+                                        data-package="Documentary Editing - $599" data-instructor="Olivia Smith"
+                                        data-course="Video Editing">
+                                        Book Now
+                                    </button>
+                                </div>
+
+                                <div class="border border-gray-700 rounded-md p-3">
+                                    <div class="flex justify-between items-center">
+                                        <div>
+                                            <h5 class="font-medium text-white">Storytelling Masterclass</h5>
+                                            <p class="text-sm text-gray-400">8 weeks intensive</p>
+                                        </div>
+                                        <span class="font-bold text-primary">$1,299</span>
+                                    </div>
+                                    <button
+                                        class="book-now-btn mt-2 w-full py-2 px-4 border border-primary rounded-md text-primary font-medium hover:bg-primary hover:text-white transition"
+                                        data-package="Storytelling Masterclass - $1,299" data-instructor="Olivia Smith"
+                                        data-course="Video Editing">
+                                        Book Now
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Content Creation Courses -->
+            <div class="course-category mt-12 hidden" data-category="content">
+                <h3 class="text-2xl font-bold text-white mb-6">Content Creation & Personal Branding</h3>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                    <!-- Instructor 11 -->
+                    <div class="course-card rounded-lg shadow-md overflow-hidden transition duration-300">
+                        <div class="p-6">
+                            <div class="flex items-center mb-4">
+                                <div class="ml-4 flex gap-3">
+
+                                    <img alt="Instructor Sarah Johnson" src="/assets/instructors/jennifer.jpg"
+                                        class="w-12 h-12 object-cover  rounded-full ">
+                                    <div>
+                                        <h4 class="font-bold text-white">Jennifer S.</h4>
+                                        <p class="text-sm text-gray-400">YouTube Strategist</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-gray-300 mb-4">Grew personal channel to 2M+ subscribers in 18 months.
+                                Specializes in algorithm-friendly content strategies.</p>
+
+                            <div class="space-y-3">
+                                <div class="border border-gray-700 rounded-md p-3">
+                                    <div class="flex justify-between items-center">
+                                        <div>
+                                            <h5 class="font-medium text-white">1h Private Session</h5>
+                                            <p class="text-sm text-gray-400">Channel audit</p>
+                                        </div>
+                                        <span class="font-bold text-primary">$149</span>
+                                    </div>
+                                    <button
+                                        class="book-now-btn mt-2 w-full py-2 px-4 border border-primary rounded-md text-primary font-medium hover:bg-primary hover:text-white transition"
+                                        data-package="1h Private Session - $149" data-instructor="Jennifer S."
+                                        data-course="Content Creation">
+                                        Book Now
+                                    </button>
+                                </div>
+
+                                <div class="border border-gray-700 rounded-md p-3">
+                                    <div class="flex justify-between items-center">
+                                        <div>
+                                            <h5 class="font-medium text-white">YouTube Growth</h5>
+                                            <p class="text-sm text-gray-400">6 modules, 8 weeks</p>
+                                        </div>
+                                        <span class="font-bold text-primary">$599</span>
+                                    </div>
+                                    <button
+                                        class="book-now-btn mt-2 w-full py-2 px-4 border border-primary rounded-md text-primary font-medium hover:bg-primary hover:text-white transition"
+                                        data-package="YouTube Growth - $599" data-instructor="Jennifer S."
+                                        data-course="Content Creation">
+                                        Book Now
+                                    </button>
+                                </div>
+
+                                <div class="border border-gray-700 rounded-md p-3">
+                                    <div class="flex justify-between items-center">
+                                        <div>
+                                            <h5 class="font-medium text-white">Advanced Monetization</h5>
+                                            <p class="text-sm text-gray-400">4 weeks, sponsorship focus</p>
+                                        </div>
+                                        <span class="font-bold text-primary">$1,199</span>
+                                    </div>
+                                    <button
+                                        class="book-now-btn mt-2 w-full py-2 px-4 border border-primary rounded-md text-primary font-medium hover:bg-primary hover:text-white transition"
+                                        data-package="Advanced Monetization - $1,199" data-instructor="Jennifer S."
+                                        data-course="Content Creation">
+                                        Book Now
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Instructor 12 -->
+                    <div class="course-card rounded-lg shadow-md overflow-hidden transition duration-300">
+                        <div class="p-6">
+                            <div class="flex items-center mb-4">
+                                <div class="ml-4 flex gap-3">
+
+                                    <img alt="Instructor Sarah Johnson" src="/assets/instructors/raj.jpg"
+                                        class="w-12 h-12  object-cover rounded-full ">
+                                    <div>
+                                        <h4 class="font-bold text-white">Raj P.</h4>
+                                        <p class="text-sm text-gray-400">Instagram Growth Expert</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-gray-300 mb-4">Built multiple 500k+ Instagram accounts. Focuses on organic
+                                growth strategies that work in 2023 and beyond.</p>
+
+                            <div class="space-y-3">
+                                <div class="border border-gray-700 rounded-md p-3">
+                                    <div class="flex justify-between items-center">
+                                        <div>
+                                            <h5 class="font-medium text-white">1h Private Session</h5>
+                                            <p class="text-sm text-gray-400">Account review</p>
+                                        </div>
+                                        <span class="font-bold text-primary">$99</span>
+                                    </div>
+                                    <button
+                                        class="book-now-btn mt-2 w-full py-2 px-4 border border-primary rounded-md text-primary font-medium hover:bg-primary hover:text-white transition"
+                                        data-package="1h Private Session - $99" data-instructor="Raj P."
+                                        data-course="Content Creation">
+                                        Book Now
+                                    </button>
+                                </div>
+
+                                <div class="border border-gray-700 rounded-md p-3">
+                                    <div class="flex justify-between items-center">
+                                        <div>
+                                            <h5 class="font-medium text-white">Instagram Mastery</h5>
+                                            <p class="text-sm text-gray-400">5 modules, 6 weeks</p>
+                                        </div>
+                                        <span class="font-bold text-primary">$449</span>
+                                    </div>
+                                    <button
+                                        class="book-now-btn mt-2 w-full py-2 px-4 border border-primary rounded-md text-primary font-medium hover:bg-primary hover:text-white transition"
+                                        data-package="Instagram Mastery - $449" data-instructor="Raj P."
+                                        data-course="Content Creation">
+                                        Book Now
+                                    </button>
+                                </div>
+
+                                <div class="border border-gray-700 rounded-md p-3">
+                                    <div class="flex justify-between items-center">
+                                        <div>
+                                            <h5 class="font-medium text-white">Content Creation Lab</h5>
+                                            <p class="text-sm text-gray-400">8 weeks, hands-on</p>
+                                        </div>
+                                        <span class="font-bold text-primary">$899</span>
+                                    </div>
+                                    <button
+                                        class="book-now-btn mt-2 w-full py-2 px-4 border border-primary rounded-md text-primary font-medium hover:bg-primary hover:text-white transition"
+                                        data-package="Content Creation Lab - $899" data-instructor="Raj P."
+                                        data-course="Content Creation">
+                                        Book Now
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Instructor 13 -->
+                    <div class="course-card rounded-lg shadow-md overflow-hidden transition duration-300">
+                        <div class="p-6">
+                            <div class="flex items-center mb-4">
+                                <div class="ml-4 flex gap-3">
+
+                                    <img alt="Instructor Sarah Johnson" src="/assets/instructors/tanya.avif"
+                                        class="w-12 h-12 object-cover  rounded-full ">
+                                    <div>
+                                        <h4 class="font-bold text-white">Tanya M.</h4>
+                                        <p class="text-sm text-gray-400">Personal Branding Coach</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-gray-300 mb-4">Helped 100+ entrepreneurs build 6-figure personal brands.
+                                Focuses on authentic storytelling and audience connection.</p>
+
+                            <div class="space-y-3">
+                                <div class="border border-gray-700 rounded-md p-3">
+                                    <div class="flex justify-between items-center">
+                                        <div>
+                                            <h5 class="font-medium text-white">1h Private Session</h5>
+                                            <p class="text-sm text-gray-400">Brand positioning</p>
+                                        </div>
+                                        <span class="font-bold text-primary">$199</span>
+                                    </div>
+                                    <button
+                                        class="book-now-btn mt-2 w-full py-2 px-4 border border-primary rounded-md text-primary font-medium hover:bg-primary hover:text-white transition"
+                                        data-package="1h Private Session - $199" data-instructor="Tanya M."
+                                        data-course="Content Creation">
+                                        Book Now
+                                    </button>
+                                </div>
+
+                                <div class="border border-gray-700 rounded-md p-3">
+                                    <div class="flex justify-between items-center">
+                                        <div>
+                                            <h5 class="font-medium text-white">Brand Blueprint</h5>
+                                            <p class="text-sm text-gray-400">4 modules, self-paced</p>
+                                        </div>
+                                        <span class="font-bold text-primary">$499</span>
+                                    </div>
+                                    <button
+                                        class="book-now-btn mt-2 w-full py-2 px-4 border border-primary rounded-md text-primary font-medium hover:bg-primary hover:text-white transition"
+                                        data-package="Brand Blueprint - $499" data-instructor="Tanya M."
+                                        data-course="Content Creation">
+                                        Book Now
+                                    </button>
+                                </div>
+
+                                <div class="border border-gray-700 rounded-md p-3">
+                                    <div class="flex justify-between items-center">
+                                        <div>
+                                            <h5 class="font-medium text-white">Authority Accelerator</h5>
+                                            <p class="text-sm text-gray-400">12 weeks, 1:1 coaching</p>
+                                        </div>
+                                        <span class="font-bold text-primary">$2,999</span>
+                                    </div>
+                                    <button
+                                        class="book-now-btn mt-2 w-full py-2 px-4 border border-primary rounded-md text-primary font-medium hover:bg-primary hover:text-white transition"
+                                        data-package="Authority Accelerator - $2,999" data-instructor="Tanya M."
+                                        data-course="Content Creation">
+                                        Book Now
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Instructor 14 -->
+                    <div class="course-card rounded-lg shadow-md overflow-hidden transition duration-300">
+                        <div class="p-6">
+                            <div class="flex items-center mb-4">
+                                <div class="ml-4 flex gap-3">
+
+                                    <img alt="Instructor Sarah Johnson" src="/assets/instructors/daniel.avif"
+                                        class="w-12 h-12 object-cover   rounded-full ">
+                                    <div>
+                                        <h4 class="font-bold text-white">Daniel K.</h4>
+                                        <p class="text-sm text-gray-400">Podcasting Expert</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-gray-300 mb-4">Host of a top 100 podcast with over 5M downloads. Specializes
+                                in podcast growth and monetization strategies.</p>
+
+                            <div class="space-y-3">
+                                <div class="border border-gray-700 rounded-md p-3">
+                                    <div class="flex justify-between items-center">
+                                        <div>
+                                            <h5 class="font-medium text-white">1h Private Session</h5>
+                                            <p class="text-sm text-gray-400">Show review</p>
+                                        </div>
+                                        <span class="font-bold text-primary">$129</span>
+                                    </div>
+                                    <button
+                                        class="book-now-btn mt-2 w-full py-2 px-4 border border-primary rounded-md text-primary font-medium hover:bg-primary hover:text-white transition"
+                                        data-package="1h Private Session - $129" data-instructor="Daniel K."
+                                        data-course="Content Creation">
+                                        Book Now
+                                    </button>
+                                </div>
+
+                                <div class="border border-gray-700 rounded-md p-3">
+                                    <div class="flex justify-between items-center">
+                                        <div>
+                                            <h5 class="font-medium text-white">Podcast Launch</h5>
+                                            <p class="text-sm text-gray-400">4 modules, 4 weeks</p>
+                                        </div>
+                                        <span class="font-bold text-primary">$499</span>
+                                    </div>
+                                    <button
+                                        class="book-now-btn mt-2 w-full py-2 px-4 border border-primary rounded-md text-primary font-medium hover:bg-primary hover:text-white transition"
+                                        data-package="Podcast Launch - $499" data-instructor="Daniel K."
+                                        data-course="Content Creation">
+                                        Book Now
+                                    </button>
+                                </div>
+
+                                <div class="border border-gray-700 rounded-md p-3">
+                                    <div class="flex justify-between items-center">
+                                        <div>
+                                            <h5 class="font-medium text-white">Monetization Mastery</h5>
+                                            <p class="text-sm text-gray-400">6 weeks intensive</p>
+                                        </div>
+                                        <span class="font-bold text-primary">$1,199</span>
+                                    </div>
+                                    <button
+                                        class="book-now-btn mt-2 w-full py-2 px-4 border border-primary rounded-md text-primary font-medium hover:bg-primary hover:text-white transition"
+                                        data-package="Monetization Mastery - $1,199" data-instructor="Daniel K."
+                                        data-course="Content Creation">
+                                        Book Now
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Instructor 15 -->
+                    <div class="course-card rounded-lg shadow-md overflow-hidden transition duration-300">
+                        <div class="p-6">
+                            <div class="flex items-center mb-4">
+                                <div class="ml-4 flex gap-3">
+
+                                    <img alt="Instructor Sarah Johnson" src="/assets/instructors/shopie.png"
+                                        class="w-12 h-12  object-cover rounded-full ">
+                                    <div>
+                                        <h4 class="font-bold text-white">Sophie L.</h4>
+                                        <p class="text-sm text-gray-400">Writing Coach</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-gray-300 mb-4">Published author and former editor at major publishing house.
+                                Helps creators develop compelling written content.</p>
+
+                            <div class="space-y-3">
+                                <div class="border border-gray-700 rounded-md p-3">
+                                    <div class="flex justify-between items-center">
+                                        <div>
+                                            <h5 class="font-medium text-white">1h Private Session</h5>
+                                            <p class="text-sm text-gray-400">Writing review</p>
+                                        </div>
+                                        <span class="font-bold text-primary">$89</span>
+                                    </div>
+                                    <button
+                                        class="book-now-btn mt-2 w-full py-2 px-4 border border-primary rounded-md text-primary font-medium hover:bg-primary hover:text-white transition"
+                                        data-package="1h Private Session - $89" data-instructor="Sophie L."
+                                        data-course="Content Creation">
+                                        Book Now
+                                    </button>
+                                </div>
+
+                                <div class="border border-gray-700 rounded-md p-3">
+                                    <div class="flex justify-between items-center">
+                                        <div>
+                                            <h5 class="font-medium text-white">Content Writing</h5>
+                                            <p class="text-sm text-gray-400">4 modules, 4 weeks</p>
+                                        </div>
+                                        <span class="font-bold text-primary">$399</span>
+                                    </div>
+                                    <button
+                                        class="book-now-btn mt-2 w-full py-2 px-4 border border-primary rounded-md text-primary font-medium hover:bg-primary hover:text-white transition"
+                                        data-package="Content Writing - $399" data-instructor="Sophie L."
+                                        data-course="Content Creation">
+                                        Book Now
+                                    </button>
+                                </div>
+
+                                <div class="border border-gray-700 rounded-md p-3">
+                                    <div class="flex justify-between items-center">
+                                        <div>
+                                            <h5 class="font-medium text-white">Storytelling Intensive</h5>
+                                            <p class="text-sm text-gray-400">8 weeks, hands-on</p>
+                                        </div>
+                                        <span class="font-bold text-primary">$999</span>
+                                    </div>
+                                    <button
+                                        class="book-now-btn mt-2 w-full py-2 px-4 border border-primary rounded-md text-primary font-medium hover:bg-primary hover:text-white transition"
+                                        data-package="Storytelling Intensive - $999" data-instructor="Sophie L."
+                                        data-course="Content Creation">
+                                        Book Now
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="text-center mt-12">
+                <a href="/courses/"
+                    class="px-6 py-3 bg-primary text-white rounded-md hover:bg-blue-700 transition font-medium">
+                    View All Courses
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Digital Templates Section -->
+    <section class="py-16 bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-white mb-4">Digital Templates & Tools</h2>
+                <p class="text-lg text-gray-300 max-w-3xl mx-auto">
+                    Premium resources to streamline your creative workflow and boost productivity.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Template 1 -->
+                <div class="template-card rounded-lg shadow-md overflow-hidden transition duration-300 hover:shadow-lg">
+                    <div class="h-48 bg-gray-700 flex items-center justify-center">
+                        <img src="/assets/templates/template1.avif" alt="UI Kit Template"
+                            class="h-full w-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-white">Modern UI Kit</h3>
+                            <span
+                                class="bg-blue-900 text-blue-200 text-xs font-semibold px-2.5 py-0.5 rounded">Figma</span>
+                        </div>
+                        <p class="text-gray-400 text-sm mb-4">Clean, minimalist UI components for web and mobile apps.
+                        </p>
+
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <span class="text-white font-bold">$49</span>
+                                <span class="text-gray-500 text-sm ml-1">or $99 bundle</span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Template 2 -->
+                <div class="template-card rounded-lg shadow-md overflow-hidden transition duration-300 hover:shadow-lg">
+                    <div class="h-48 bg-gray-700 flex items-center justify-center">
+                        <img src="/assets/templates/template2.avif" alt="Premiere Pro Template"
+                            class="h-full w-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-white">Video Intro Pack</h3>
+                            <span
+                                class="bg-purple-900 text-purple-200 text-xs font-semibold px-2.5 py-0.5 rounded">Premiere</span>
+                        </div>
+                        <p class="text-gray-400 text-sm mb-4">10 customizable intro templates for YouTube and social
+                            media.</p>
+
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <span class="text-white font-bold">$29</span>
+                                <span class="text-gray-500 text-sm ml-1">or $79 bundle</span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Template 3 -->
+                <div class="template-card rounded-lg shadow-md overflow-hidden transition duration-300 hover:shadow-lg">
+                    <div class="h-48 bg-gray-700 flex items-center justify-center">
+                        <img src="/assets/templates/template3.webp" alt="Notion Template"
+                            class="h-full w-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-white">Productivity System</h3>
+                            <span
+                                class="bg-gray-700 text-gray-200 text-xs font-semibold px-2.5 py-0.5 rounded">Notion</span>
+                        </div>
+                        <p class="text-gray-400 text-sm mb-4">Complete task management and project tracking template.
+                        </p>
+
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <span class="text-white font-bold">$19</span>
+                                <span class="text-gray-500 text-sm ml-1">or $49 bundle</span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Template 4 -->
+                <div class="template-card rounded-lg shadow-md overflow-hidden transition duration-300 hover:shadow-lg">
+                    <div class="h-48 bg-gray-700 flex items-center justify-center">
+                        <img src="/assets/templates/template4.jpeg" alt="Canva Template"
+                            class="h-full w-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex justify-between items-start mb-2">
+                            <h3 class="font-bold text-white">Social Media Pack</h3>
+                            <span
+                                class="bg-green-900 text-green-200 text-xs font-semibold px-2.5 py-0.5 rounded">Canva</span>
+                        </div>
+                        <p class="text-gray-400 text-sm mb-4">200+ templates for Instagram, Facebook, and LinkedIn.</p>
+
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <span class="text-white font-bold">$39</span>
+                                <span class="text-gray-500 text-sm ml-1">or $89 bundle</span>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>            
+        </div>
+    </section>
+
+    <!-- Digital Memberships Section -->
+    <section class="py-16 bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-white mb-4">Premium Digital Memberships</h2>
+                <p class="text-lg text-gray-300 max-w-3xl mx-auto">
+                    Get exclusive access to top software and services at discounted rates.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Membership 1 -->
+                <div class="membership-card rounded-lg shadow-md overflow-hidden border border-gray-700">
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <img src="/assets/memberships/adobe.png" alt="Adobe Creative Cloud"
+                                class="h-12 w-12 object-contain rounded-full">
+                            <div class="ml-4">
+                                <h3 class="font-bold text-white">Adobe Creative Cloud</h3>
+                                <p class="text-sm text-gray-400">All Apps Plan</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-300 mb-6">Access to Photoshop, Illustrator, Premiere Pro, After Effects, and
+                            20+ more creative apps.</p>
+
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-300">Activation Method:</span>
+                                <span class="font-medium text-white">Email-linked account</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-300">Regular Price:</span>
+                                <span class="text-gray-500 line-through">$52.99/mo</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-300">Our Price:</span>
+                                <span class="font-bold text-primary text-xl">$39.99/mo</span>
+                            </div>
+                        </div>
+
+                        <div class="mt-6">
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                                <span class="text-sm text-gray-300">Auto-renewal available</span>
+                            </div>
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                                <span class="text-sm text-gray-300">Gift option available</span>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 space-y-3">
+                            <button
+                                class="w-full py-2 px-4 bg-primary text-white rounded-md hover:bg-blue-700 transition font-medium">
+                                1 Month - $39.99
+                            </button>
+                            <button
+                                class="w-full py-2 px-4 border border-primary text-primary rounded-md hover:bg-primary hover:text-white transition font-medium">
+                                12 Months - $399.99 (Save $80)
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Membership 2 -->
+                <div class="membership-card rounded-lg shadow-md overflow-hidden border border-gray-700">
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <img src="/assets/memberships/grammarly.png" alt="Grammarly Premium"
+                                class="h-12 w-12 object-contain rounded-full">
+                            <div class="ml-4">
+                                <h3 class="font-bold text-white">Grammarly Premium</h3>
+                                <p class="text-sm text-gray-400">Advanced Writing Assistant</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-300 mb-6">Real-time grammar, spelling, and style suggestions for all your
+                            writing needs.</p>
+
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-300">Activation Method:</span>
+                                <span class="font-medium text-white">Redeem key</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-300">Regular Price:</span>
+                                <span class="text-gray-500 line-through">$29.95/mo</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-300">Our Price:</span>
+                                <span class="font-bold text-primary text-xl">$19.99/mo</span>
+                            </div>
+                        </div>
+
+                        <div class="mt-6">
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                                <span class="text-sm text-gray-300">Auto-renewal available</span>
+                            </div>
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                                <span class="text-sm text-gray-300">Gift option available</span>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 space-y-3">
+                            <button
+                                class="w-full py-2 px-4 bg-primary text-white rounded-md hover:bg-blue-700 transition font-medium">
+                                1 Month - $19.99
+                            </button>
+                            <button
+                                class="w-full py-2 px-4 border border-primary text-primary rounded-md hover:bg-primary hover:text-white transition font-medium">
+                                12 Months - $199.99 (Save $40)
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Membership 3 -->
+                <div class="membership-card rounded-lg shadow-md overflow-hidden border border-gray-700">
+                    <div class="p-6">
+                        <div class="flex items-center mb-4">
+                            <img src="/assets/memberships/youtube.jpg" alt="YouTube Premium"
+                                class="h-12 w-12 object-contain rounded-full">
+                            <div class="ml-4">
+                                <h3 class="font-bold text-white">YouTube Premium</h3>
+                                <p class="text-sm text-gray-400">Ad-free Experience</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-300 mb-6">Watch videos without ads, download videos, and enjoy background
+                            play.</p>
+
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-300">Activation Method:</span>
+                                <span class="font-medium text-white">Email-linked account</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-300">Regular Price:</span>
+                                <span class="text-gray-500 line-through">$11.99/mo</span>
+                            </div>
+                            <div class="flex justify-between items-center">
+                                <span class="text-gray-300">Our Price:</span>
+                                <span class="font-bold text-primary text-xl">$8.99/mo</span>
+                            </div>
+                        </div>
+
+                        <div class="mt-6">
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                                <span class="text-sm text-gray-300">Auto-renewal available</span>
+                            </div>
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-check-circle text-green-500 mr-2"></i>
+                                <span class="text-sm text-gray-300">Gift option available</span>
+                            </div>
+                        </div>
+
+                        <div class="mt-6 space-y-3">
+                            <button
+                                class="w-full py-2 px-4 bg-primary text-white rounded-md hover:bg-blue-700 transition font-medium">
+                                1 Month - $8.99
+                            </button>
+                            <button
+                                class="w-full py-2 px-4 border border-primary text-primary rounded-md hover:bg-primary hover:text-white transition font-medium">
+                                12 Months - $89.99 (Save $18)
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="py-16 bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-white mb-4">What Our Students Say</h2>
+                <p class="text-lg text-gray-300 max-w-3xl mx-auto">
+                    Don't just take our word for it. Here's what our community has to say about their learning
+                    experience.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Testimonial 1 -->
+                <div class="testimonial-card rounded-lg p-6">
+                    <div class="flex items-center mb-4">
+                        <img src="/assets/testimonials/testimonial1.avif" alt="Jennifer S."
+                            class="w-12 h-12 rounded-full object-cover">
+                        <div class="ml-4">
+                            <h4 class="font-bold text-white">Jennifer S.</h4>
+                            <div class="flex text-yellow-400 mt-1">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4">"The video editing course with Emma completely transformed my skills.
+                        I went from beginner to landing my first freelance gig in just 3 months!"</p>
+                    <p class="text-sm text-gray-500">Marketing Strategy Course</p>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="testimonial-card rounded-lg p-6">
+                    <div class="flex items-center mb-4">
+                        <img src="/assets/testimonials/testimonial2.jpg" alt="Raj P."
+                            class="w-12 h-12 rounded-full object-cover">
+                        <div class="ml-4">
+                            <h4 class="font-bold text-white">Raj P.</h4>
+                            <div class="flex text-yellow-400 mt-1">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4">"Michael's growth marketing strategies helped me scale my startup's
+                        user base by 300% in 6 months. Worth every penny!"</p>
+                    <p class="text-sm text-gray-500">Growth Marketing Course</p>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="testimonial-card rounded-lg p-6">
+                    <div class="flex items-center mb-4">
+                        <img src="/assets/testimonials/testimonial3.jpg" alt="Tanya M."
+                            class="w-12 h-12 rounded-full object-cover">
+                        <div class="ml-4">
+                            <h4 class="font-bold text-white">Tanya M.</h4>
+                            <div class="flex text-yellow-400 mt-1">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                        </div>
+                    </div>
+                    <p class="text-gray-300 mb-4">"The UI templates saved me countless hours of design work. The quality
+                        is exceptional and they're so easy to customize for my clients."</p>
+                    <p class="text-sm text-gray-500">Figma UI Kit</p>
+                </div>
+            </div>
+
+
+        </div>
+    </section>
+    <!-- Blog Section for Home Page -->
+    <section class="py-16 bg-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Section Title -->
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-white mb-4">Latest From Our Blog</h2>
+                <p class="text-lg text-gray-300 max-w-3xl mx-auto">
+                    Discover insights, tips, and industry trends from our experts
+                </p>
+            </div>
+
+            <!-- Blog Posts Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+                <!-- Blog Post 1 -->
+                <div class="blog-card rounded-lg overflow-hidden transition duration-300">
+                    <div class="h-48">
+                        <img src="/assets/blog/post1.jpg" alt="Blog Post 1" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center text-sm text-gray-400 mb-3">
+                            <span class="mr-4">June 10, 2025</span>
+                            <span>6 min read</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3">Mastering DaVinci Resolve: Essential Tips</h3>
+                        <p class="text-gray-300 mb-4">
+                            Getting started with DaVinci Resolve can be overwhelming. This guide breaks down the
+                            essential tools...
+                        </p>
+                        <a href="/blog/davinci-resolve-tips/" class="text-primary hover:underline text-sm font-medium">
+                            Read More →
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Blog Post 2 -->
+                <div class="blog-card rounded-lg overflow-hidden transition duration-300">
+                    <div class="h-48">
+                        <img src="/assets/blog/post2.png" alt="Blog Post 2" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center text-sm text-gray-400 mb-3">
+                            <span class="mr-4">June 5, 2025</span>
+                            <span>10 min read</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3">Content Marketing Strategies for 2025</h3>
+                        <p class="text-gray-300 mb-4">
+                            With algorithm changes and shifting consumer behaviors, content marketing requires new
+                            approaches...
+                        </p>
+                        <a href="/blog/content-marketing-strategies/"
+                            class="text-primary hover:underline text-sm font-medium">
+                            Read More →
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Blog Post 3 -->
+                <div class="blog-card rounded-lg overflow-hidden transition duration-300">
+                    <div class="h-48">
+                        <img src="/assets/blog/post3.webp" alt="Blog Post 3" class="w-full h-full object-cover">
+                    </div>
+                    <div class="p-6">
+                        <div class="flex items-center text-sm text-gray-400 mb-3">
+                            <span class="mr-4">May 28, 2025</span>
+                            <span>7 min read</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-3">Building a Personal Brand</h3>
+                        <p class="text-gray-300 mb-4">
+                            In today's competitive market, your personal brand can make all the difference. Learn how to
+                            establish...
+                        </p>
+                        <a href="/blog/personal-branding/" class="text-primary hover:underline text-sm font-medium">
+                            Read More →
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- View All Button -->
+            <div class="text-center">
+                <a href="/blog/"
+                    class="inline-block px-6 py-3 bg-primary text-white rounded-md hover:bg-blue-700 transition font-medium">
+                    View All Blog Posts
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="relative py-16 md:py-32 bg-cover bg-center text-white"
+        style="background-image: url('/assets/cta-bg.jpg');">
+        <!-- Overlay -->
+        <div class="absolute inset-0 bg-black bg-opacity-50 z-0"></div>
+
+        <!-- Content -->
+        <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <h2 class="text-3xl font-bold mb-6">Ready to Upgrade Your Skills?</h2>
+            <p class="text-xl mb-8 max-w-3xl mx-auto">
+                Join thousands of students who have transformed their careers with our courses and resources.
+            </p>
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="javascript:void(0)" id="ctaRegisterBtn"
+                    class="px-6 py-3 bg-white text-primary rounded-md hover:bg-gray-100 transition font-medium">
+                    Register Now & Get Bonus
+                </a>
+                <a href="/courses/"
+                    class="px-6 py-3 border border-white text-white rounded-md hover:bg-white hover:text-primary transition font-medium">
+                    Browse Courses
+                </a>
+            </div>
+        </div>
+    </section>
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white pt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- Top Section -->
+            <div class="flex flex-col md:flex-row md:justify-between gap-8 mb-8">
+                <!-- Logo and Description -->
+                <div class="md:w-1/3 text-center md:text-left">
+                    <img src="/assets/logo.png" alt="Logo" class="h-10 mb-4 mx-auto md:mx-0">
+                    <p class="text-gray-400 text-sm">
+                        Empowering learners with skills for the digital age through expert-led courses.
+                    </p>
+                </div>
+
+                <!-- Navigation Links -->
+                <div class="md:w-2/3 grid grid-cols-2 md:grid-cols-3 gap-6 text-center md:text-left">
+                    <div>
+                        <h4 class="text-lg font-semibold mb-4">Courses</h4>
+                        <ul class="space-y-2 text-gray-400 text-sm">
+                            <li><a href="/courses/" class="hover:text-white transition">Marketing</a></li>
+                            <li><a href="/courses/" class="hover:text-white transition">Video Editing</a></li>
+                            <li><a href="/courses/" class="hover:text-white transition">Branding</a></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="text-lg font-semibold mb-4">Company</h4>
+                        <ul class="space-y-2 text-gray-400 text-sm">
+                            <li><a href="/about" class="hover:text-white transition">About Us</a></li>
+                            <li><a href="/contact" class="hover:text-white transition">Contact</a></li>
+                            <li><a href="/blog" class="hover:text-white transition">Blog</a></li>
+                        </ul>
+                    </div>
+                    <div class="hidden md:block">
+                        <h4 class="text-lg font-semibold mb-4  md:text-left">Address Info</h4>
+                        <ul class="space-y-2 text-gray-400 text-sm">
+                            <li class="flex flex-col items-center md:items-start">
+                                <a href="#" class="hover:text-white transition inline-flex items-center">
+                                    <i class="fas fa-envelope text-gray-400 mr-2"></i>
+                                    <span>info@skillnextcourse.online</span>
+                                </a>
+                            </li>
+                            <li class="flex flex-col items-center md:items-start">
+                                <a href="#" class="hover:text-white transition inline-flex items-center">
+                                    <i class="fas fa-map-marker-alt text-gray-400 mr-2"></i>
+                                    <span>490 Chem. de Vassan, Val-d'Or, QC J9P 0C1, Canada</span>
+                                </a>
+                            </li>
+                            <li class="flex flex-col items-center md:items-start">
+                                <a href="#" class="hover:text-white transition inline-flex items-center">
+                                    <i class="fas fa-phone-alt text-gray-400 mr-2"></i>
+                                    <span>+1 (819) 824-3146</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="md:hidden ">
+                        <h4 class="text-lg font-semibold mb-4 text-center">Address Info</h4>
+                        <ul class="space-y-2 text-gray-400 text-sm">
+                            <li class="flex flex-col items-start">
+                                <a href="#" class="hover:text-white transition inline-flex items-start">
+                                    <i class="fas fa-envelope text-gray-400 mr-2"></i>
+                                    <span>info@skillnextcourse.online</span>
+                                </a>
+                            </li>
+                            <li class="flex flex-col items-start">
+                                <a href="#" class="hover:text-white transition inline-flex items-start">
+                                    <i class="fas fa-map-marker-alt text-gray-400 mr-2"></i>
+                                    <span>490 Chem. de Vassan, Val-d'Or, QC J9P 0C1, Canada</span>
+                                </a>
+                            </li>
+                            <li class="flex flex-col items-start">
+                                <a href="#" class="hover:text-white transition inline-flex items-start">
+                                    <i class="fas fa-phone-alt text-gray-400 mr-2"></i>
+                                    <span>+1 (819) 824-3146</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+            </div>
+
+            <!-- Divider -->
+            <div
+                class="border-t border-gray-800 pt-6 pb-8 flex flex-col md:flex-row justify-between items-center gap-4">
+                <!-- Legal Navigation -->
+                <ul class="flex flex-wrap gap-4 text-sm text-gray-400 justify-center md:justify-start">
+                    <li><a href="/terms/" class="hover:text-white transition">Terms</a></li>
+                    <li><a href="/privacy/" class="hover:text-white transition">Privacy</a></li>
+                    <li><a href="/cookies/" class="hover:text-white transition">Cookies</a></li>
+                </ul>
+
+                <!-- Copyright -->
+                <p class="text-sm text-gray-500 text-center md:text-right">
+                    We are not an affiliate agency. All products are sold independently through our platform.
+                </p>
+            </div>
+
+            <!-- Bottom Copyright -->
+            <div class="border-t border-gray-800 pt-6 pb-8 text-center">
+                <p class="text-sm text-gray-500">
+                    &copy; 2025 SkillNext Course. All rights reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+
+    <script>
+        // Check if cookie consent has been given
+        function checkCookieConsent() {
+            const consent = localStorage.getItem('cookieConsent');
+            if (consent === null) {
+                document.getElementById('cookieConsent').classList.remove('hidden');
+            }
+        }
+
+        // Set cookie consent
+        document.getElementById('acceptCookies').addEventListener('click', function () {
+            localStorage.setItem('cookieConsent', 'accepted');
+            document.getElementById('cookieConsent').classList.add('hidden');
+        });
+
+        document.getElementById('declineCookies').addEventListener('click', function () {
+            localStorage.setItem('cookieConsent', 'declined');
+            document.getElementById('cookieConsent').classList.add('hidden');
+        });
+
+        // Mobile menu toggle
+        document.getElementById('mobileMenuButton').addEventListener('click', function () {
+            document.getElementById('mobileMenu').classList.add('open');
+        });
+
+        document.getElementById('closeMobileMenu').addEventListener('click', function () {
+            document.getElementById('mobileMenu').classList.remove('open');
+        });
+
+        // Auth functionality
+        let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        let registeredUsers = JSON.parse(localStorage.getItem('registeredUsers')) || [];
+
+        function updateAuthUI() {
+            if (currentUser) {
+                document.getElementById('userGreeting').classList.remove('hidden');
+                document.getElementById('authButtons').classList.add('hidden');
+                document.getElementById('usernameDisplay').textContent = currentUser.name;
+
+                document.getElementById('mobileUserGreeting').classList.remove('hidden');
+                document.getElementById('mobileAuthButtons').classList.add('hidden');
+                document.getElementById('mobileUsernameDisplay').textContent = currentUser.name;
+            } else {
+                document.getElementById('userGreeting').classList.add('hidden');
+                document.getElementById('authButtons').classList.remove('hidden');
+
+                document.getElementById('mobileUserGreeting').classList.add('hidden');
+                document.getElementById('mobileAuthButtons').classList.remove('hidden');
+            }
+        }
+
+        // Login/Register modals
+        document.getElementById('loginBtn').addEventListener('click', function () {
+            document.getElementById('loginModal').classList.remove('hidden');
+        });
+
+        document.getElementById('mobileLoginBtn').addEventListener('click', function () {
+            document.getElementById('mobileMenu').classList.remove('open');
+            document.getElementById('loginModal').classList.remove('hidden');
+        });
+
+        document.getElementById('closeLoginModal').addEventListener('click', function () {
+            document.getElementById('loginModal').classList.add('hidden');
+            document.getElementById('loginError').classList.add('hidden');
+        });
+
+        document.getElementById('registerBtn').addEventListener('click', function () {
+            document.getElementById('registerModal').classList.remove('hidden');
+        });
+
+        document.getElementById('mobileRegisterBtn').addEventListener('click', function () {
+            document.getElementById('mobileMenu').classList.remove('open');
+            document.getElementById('registerModal').classList.remove('hidden');
+        });
+
+        document.getElementById('closeRegisterModal').addEventListener('click', function () {
+            document.getElementById('registerModal').classList.add('hidden');
+            document.getElementById('registerSuccess').classList.add('hidden');
+        });
+
+        document.getElementById('switchToRegister').addEventListener('click', function () {
+            document.getElementById('loginModal').classList.add('hidden');
+            document.getElementById('registerModal').classList.remove('hidden');
+        });
+
+        document.getElementById('switchToLogin').addEventListener('click', function () {
+            document.getElementById('registerModal').classList.add('hidden');
+            document.getElementById('loginModal').classList.remove('hidden');
+        });
+
+        document.getElementById('heroRegisterBtn').addEventListener('click', function () {
+            document.getElementById('registerModal').classList.remove('hidden');
+        });
+
+        document.getElementById('ctaRegisterBtn').addEventListener('click', function () {
+            document.getElementById('registerModal').classList.remove('hidden');
+        });
+
+        // Login form
+        document.getElementById('loginForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            const errorElement = document.getElementById('loginError');
+
+            // Check if user exists in registered users
+            const userExists = registeredUsers.some(user => user.email === email);
+
+            if (!userExists) {
+                errorElement.textContent = "No account found with this email. Please register first.";
+                errorElement.classList.remove('hidden');
+                return;
+            }
+
+            // In a real app, you would validate password and send to backend
+            // For demo, we'll just check if the user exists in registered users
+            const user = registeredUsers.find(user => user.email === email);
+
+            if (user) {
+                currentUser = {
+                    name: user.name,
+                    email: user.email
+                };
+
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                updateAuthUI();
+                document.getElementById('loginModal').classList.add('hidden');
+            } else {
+                errorElement.textContent = "Invalid email or password. Please try again or register.";
+                errorElement.classList.remove('hidden');
+            }
+        });
+
+        // Register form
+        document.getElementById('registerForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const password = document.getElementById('registerPassword').value;
+            const confirmPassword = document.getElementById('registerConfirmPassword').value;
+            const successElement = document.getElementById('registerSuccess');
+
+            if (password !== confirmPassword) {
+                successElement.textContent = "Passwords don't match!";
+                successElement.classList.remove('hidden');
+                successElement.classList.remove('success-message');
+                successElement.classList.add('error-message');
+                return;
+            }
+
+            if (!document.getElementById('agreeTerms').checked) {
+                successElement.textContent = "You must agree to the terms and conditions!";
+                successElement.classList.remove('hidden');
+                successElement.classList.remove('success-message');
+                successElement.classList.add('error-message');
+                return;
+            }
+
+            // Check if user already exists
+            const userExists = registeredUsers.some(user => user.email === email);
+            if (userExists) {
+                successElement.textContent = "An account with this email already exists. Please login.";
+                successElement.classList.remove('hidden');
+                successElement.classList.remove('success-message');
+                successElement.classList.add('error-message');
+                return;
+            }
+
+            // Add new user to registered users
+            const newUser = {
+                name: name,
+                email: email,
+                password: password // In a real app, you would hash this
+            };
+
+            registeredUsers.push(newUser);
+            localStorage.setItem('registeredUsers', JSON.stringify(registeredUsers));
+
+            // Set as current user
+            currentUser = newUser;
+            localStorage.setItem('currentUser', JSON.stringify(currentUser));
+
+            successElement.textContent = "Registration successful! You are now logged in.";
+            successElement.classList.remove('hidden');
+            successElement.classList.remove('error-message');
+            successElement.classList.add('success-message');
+
+            // Update UI and close modal after delay
+            updateAuthUI();
+            setTimeout(() => {
+                document.getElementById('registerModal').classList.add('hidden');
+                successElement.classList.add('hidden');
+            }, 2000);
+        });
+
+        // Logout
+        document.getElementById('logoutBtn').addEventListener('click', function () {
+            currentUser = null;
+            localStorage.removeItem('currentUser');
+            updateAuthUI();
+        });
+
+        document.getElementById('mobileLogoutBtn').addEventListener('click', function () {
+            currentUser = null;
+            localStorage.removeItem('currentUser');
+            updateAuthUI();
+            document.getElementById('mobileMenu').classList.remove('open');
+        });
+
+        // Booking functionality
+        const bookNowButtons = document.querySelectorAll('.book-now-btn');
+
+        bookNowButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                if (!currentUser) {
+                    document.getElementById('registerModal').classList.remove('hidden');
+                    return;
+                }
+
+                const packageInfo = this.getAttribute('data-package');
+                const instructor = this.getAttribute('data-instructor');
+                const course = this.getAttribute('data-course');
+
+                document.getElementById('bookingPackage').value = packageInfo;
+                document.getElementById('bookingName').value = currentUser.name;
+                document.getElementById('bookingEmail').value = currentUser.email;
+
+                // Populate instructor options if there are multiple instructors for this course
+                const instructors = getInstructorsForCourse(course);
+                if (instructors.length > 1) {
+                    const instructorOptions = document.getElementById('instructorOptions');
+                    instructorOptions.innerHTML = '';
+
+                    instructors.forEach(instructor => {
+                        const instructorOption = document.createElement('button');
+                        instructorOption.type = 'button';
+                        instructorOption.className = 'instructor-option p-3 border rounded-md text-left';
+                        instructorOption.innerHTML = `
+                            <div class="flex items-center">
+                               
+                                <div>
+                                    <h4 class="font-medium text-white">${instructor.name}</h4>
+                                    <p class="text-sm text-gray-400">${instructor.specialty}</p>
+                                </div>
+                            </div>
+                        `;
+
+                        instructorOption.addEventListener('click', function () {
+                            document.querySelectorAll('.instructor-option').forEach(opt => {
+                                opt.classList.remove('selected');
+                            });
+                            this.classList.add('selected');
+                        });
+
+                        if (instructor.name === instructor) {
+                            instructorOption.classList.add('selected');
+                        }
+
+                        instructorOptions.appendChild(instructorOption);
+                    });
+
+                    document.getElementById('instructorSelection').classList.remove('hidden');
+                } else {
+                    document.getElementById('instructorSelection').classList.add('hidden');
+                }
+
+                // Populate date picker
+                const datePicker = document.getElementById('datePicker');
+                datePicker.innerHTML = '';
+
+                const today = new Date();
+                const bookedDates = [2, 4]; // Random dates to show as booked
+
+                for (let i = 1; i <= 5; i++) {
+                    const date = new Date();
+                    date.setDate(today.getDate() + i);
+
+                    const dateElement = document.createElement('button');
+                    dateElement.type = 'button';
+                    dateElement.className = 'py-2 rounded-md text-sm font-medium';
+
+                    if (bookedDates.includes(i)) {
+                        dateElement.classList.add('booked');
+                        dateElement.textContent = `${date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' })} (Booked)`;
+                        dateElement.disabled = true;
+                    } else {
+                        dateElement.classList.add('available');
+                        dateElement.textContent = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                        dateElement.addEventListener('click', function () {
+                            document.querySelectorAll('#datePicker button').forEach(btn => {
+                                btn.classList.remove('ring-2', 'ring-primary');
+                            });
+                            this.classList.add('ring-2', 'ring-primary');
+                        });
+                    }
+
+                    datePicker.appendChild(dateElement);
+                }
+
+                document.getElementById('bookingModal').classList.remove('hidden');
+            });
+        });
+
+        // Mock function to get instructors for a course
+        function getInstructorsForCourse(course) {
+            const instructors = {
+                'Marketing Strategy': [
+                    { id: 'instructor1', name: 'Sarah Johnson', specialty: 'Digital Marketing Strategist' },
+                    { id: 'instructor2', name: 'Michael Chen', specialty: 'Growth Marketing Expert' },
+                    { id: 'instructor3', name: 'David Rodriguez', specialty: 'SEO & Content Specialist' },
+                    { id: 'instructor4', name: 'Lisa Wong', specialty: 'Social Media Strategist' },
+                    { id: 'instructor5', name: 'James Peterson', specialty: 'Email Marketing Expert' }
+                ],
+                'Video Editing': [
+                    { id: 'instructor6', name: 'Emma Wilson', specialty: 'DaVinci Resolve Expert' },
+                    { id: 'instructor7', name: 'Alex Rivera', specialty: 'Adobe Premiere Pro Trainer' },
+                    { id: 'instructor8', name: 'Sophia Kim', specialty: 'After Effects Specialist' },
+                    { id: 'instructor9', name: 'Marcus Lee', specialty: 'Final Cut Pro Expert' },
+                    { id: 'instructor10', name: 'Olivia Smith', specialty: 'Documentary Filmmaker' }
+                ],
+                'Content Creation': [
+                    { id: 'instructor11', name: 'Jennifer S.', specialty: 'YouTube Strategist' },
+                    { id: 'instructor12', name: 'Raj P.', specialty: 'Instagram Growth Expert' },
+                    { id: 'instructor13', name: 'Tanya M.', specialty: 'Personal Branding Coach' },
+                    { id: 'instructor14', name: 'Daniel K.', specialty: 'Podcasting Expert' },
+                    { id: 'instructor15', name: 'Sophie L.', specialty: 'Writing Coach' }
+                ]
+            };
+
+            return instructors[course] || [];
+        }
+
+        document.getElementById('closeBookingModal').addEventListener('click', function () {
+            document.getElementById('bookingModal').classList.add('hidden');
+        });
+
+        document.getElementById('bookingForm').addEventListener('submit', function (e) {
+            e.preventDefault();
+            document.getElementById('bookingModal').classList.add('hidden');
+            document.getElementById('bookingConfirmationModal').classList.remove('hidden');
+        });
+
+        document.getElementById('closeConfirmationModal').addEventListener('click', function () {
+            document.getElementById('bookingConfirmationModal').classList.add('hidden');
+        });
+
+        // Course category filtering
+        const categoryButtons = document.querySelectorAll('[data-category]');
+        const courseCategories = document.querySelectorAll('.course-category');
+
+        categoryButtons.forEach(button => {
+            button.addEventListener('click', function () {
+                const category = this.getAttribute('data-category');
+
+                // Update active button - remove active class from all first
+                categoryButtons.forEach(btn => {
+                    btn.classList.remove('active');
+                    btn.classList.remove('text-white');
+                    btn.classList.add('text-gray-300');
+                });
+
+                // Add active class to clicked button
+                this.classList.add('active');
+                this.classList.remove('text-gray-300');
+                this.classList.add('text-white');
+
+                // Show/hide categories
+                courseCategories.forEach(cat => {
+                    if (category === 'all' || cat.getAttribute('data-category') === category) {
+                        cat.classList.remove('hidden');
+                    } else {
+                        cat.classList.add('hidden');
+                    }
+                });
+            });
+        });
+        // Three.js background for hero section
+        function initThreeJS() {
+            const canvas = document.getElementById('threejsCanvas');
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            canvas.appendChild(renderer.domElement);
+
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            camera.position.z = 5;
+
+            // Create particles
+            const particlesGeometry = new THREE.BufferGeometry();
+            const particleCount = 1000;
+
+            const posArray = new Float32Array(particleCount * 3);
+
+            for (let i = 0; i < particleCount * 3; i++) {
+                posArray[i] = (Math.random() - 0.5) * 10;
+            }
+
+            particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+
+            const particlesMaterial = new THREE.PointsMaterial({
+                size: 0.02,
+                color: 0x3B82F6,
+                transparent: true,
+                opacity: 0.8
+            });
+
+            const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+            scene.add(particlesMesh);
+
+            // Animation
+            function animate() {
+                requestAnimationFrame(animate);
+
+                particlesMesh.rotation.x += 0.0005;
+                particlesMesh.rotation.y += 0.0005;
+
+                renderer.render(scene, camera);
+            }
+
+            animate();
+
+            // Handle window resize
+            window.addEventListener('resize', function () {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        }
+
+        // GSAP animations
+        function initGSAPAnimations() {
+            gsap.from("#heroTitle span", {
+                duration: 1.5,
+                y: 50,
+                opacity: 0,
+                stagger: 0.3,
+                ease: "power3.out"
+            });
+
+            gsap.from("#featured-courses, #digital-templates, #digital-memberships", {
+                scrollTrigger: {
+                    trigger: "#featured-courses",
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                },
+                duration: 1,
+                y: 50,
+                opacity: 0,
+                stagger: 0.2,
+                ease: "power3.out"
+            });
+
+            gsap.from(".course-card", {
+                scrollTrigger: {
+                    trigger: ".course-card",
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                },
+                duration: 0.8,
+                y: 30,
+                opacity: 0,
+                stagger: 0.1,
+                ease: "power2.out"
+            });
+        }
+
+        // Initialize everything when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function () {
+            checkCookieConsent();
+            updateAuthUI();
+            initThreeJS();
+            initGSAPAnimations();
+        });
+    </script>
+</body>
+
+</html>

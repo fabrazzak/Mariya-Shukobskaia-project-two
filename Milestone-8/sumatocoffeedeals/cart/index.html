@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart | Sumato Coffee Deals</title>
+    <meta name="description" content="Review your Sumato Coffee cart. Premium specialty coffee freshly roasted to order.">
+    <meta name="keywords" content="coffee cart, sumato coffee, checkout, coffee beans, fresh roasted coffee, coffee subscription">
+    
+    <!-- Favicon -->
+     <link rel="icon" href="/assets/favicon.png" type="image/x-icon">
+     <link rel="canonical" href="https://sumatocoffeedeals.com/cart/">
+
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6F4E37',
+                        secondary: '#C4A484',
+                        accent: '#E5B880',
+                        dark: '#3E2723',
+                        light: '#F5F5F5'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['"Playfair Display"', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #C4A484;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #6F4E37;
+        }
+        
+        /* Button hover effect */
+        .btn-hover {
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn-hover:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+            z-index: -1;
+        }
+        
+        .btn-hover:hover:before {
+            left: 100%;
+        }
+        
+        /* Transition effects */
+        .transition-all {
+            transition-property: all;
+            transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+            transition-duration: 150ms;
+        }
+    </style>
+</head>
+<body class="font-sans text-dark bg-light">
+    <!-- Navigation -->
+    <nav class="fixed w-full bg-white shadow-md z-40">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+             <a href="/" class="flex items-center">
+               <img src="/assets/logo-header.png" alt="Sumato Coffee Logo" class="h-12 rounded">
+            </a>
+            
+            <div class="hidden lg:flex space-x-8">
+                <a href="/" class="text-dark font-medium hover:text-primary transition">Home</a>
+                <a href="/products/" class="text-dark font-medium hover:text-primary transition">Shop Coffee</a>
+                <a href="/about/" class="text-dark font-medium hover:text-primary transition">Our Story</a>
+                <a href="/blog/" class="text-dark font-medium hover:text-primary transition">Blog</a>
+                <a href="/contact/" class="text-dark font-medium hover:text-primary transition">Contact</a>
+            </div>
+            
+            <div class="flex items-center space-x-4">
+                <button class="p-2 text-dark hover:text-primary transition hidden">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                </button>
+                <a href="/cart/" class="p-2 text-primary transition relative">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+                    </svg>
+                    <span id="cartCount" class="absolute -top-1 -right-1 bg-primary text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                </a>
+                <button id="mobileMenuBtn" class="lg:hidden p-2 text-dark hover:text-primary transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="lg:hidden bg-white absolute top-full left-0 right-0 shadow-lg hidden">
+            <div class="container mx-auto px-4 py-3 flex flex-col space-y-3">
+                <a href="/" class="py-2 text-primary font-medium border-b border-gray-100">Home</a>
+                <a href="/products/" class="py-2 text-dark font-medium border-b border-gray-100">Shop Coffee</a>
+                <a href="/about/" class="py-2 text-dark font-medium border-b border-gray-100">Our Story</a>
+                <a href="/blog/" class="py-2 text-dark font-medium border-b border-gray-100">Blog</a>
+                <a href="/contact/" class="py-2 text-dark font-medium">Contact</a>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <main class="pt-24 pb-16">
+        <div class="container mx-auto px-4">
+            <div class="mb-8">
+                <h1 class="text-3xl md:text-4xl font-display font-bold mb-2">Your Cart</h1>
+                <a href="/products/" class="text-primary hover:underline">Continue Shopping</a>
+            </div>
+            
+            <div class="flex flex-col lg:flex-row gap-8">
+                <!-- Cart Items -->
+                <div class="lg:w-2/3">
+                    <div id="emptyCart" class="bg-white rounded-lg shadow p-8 text-center hidden">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 mx-auto text-gray-400 mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+                        <h2 class="text-xl font-semibold mb-2">Your cart is empty</h2>
+                        <p class="text-gray-600 mb-4">Looks like you haven't added anything to your cart yet</p>
+                        <a href="/products/" class="inline-block px-6 py-3 bg-primary text-white rounded-lg font-medium hover:bg-secondary transition btn-hover">Shop Coffee</a>
+                    </div>
+                    
+                    <div id="cartItems" class="bg-white rounded-lg shadow divide-y divide-gray-200">
+                        <!-- Cart items will be dynamically inserted here -->
+                    </div>
+                </div>
+                
+                <!-- Order Summary -->
+                <div class="lg:w-1/3">
+                    <div class="bg-white rounded-lg shadow p-6 sticky top-24">
+                        <h2 class="text-xl font-semibold mb-4">Order Summary</h2>
+                        
+                        <div class="space-y-3 mb-6">
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Subtotal</span>
+                                <span id="subtotal" class="font-medium">$0.00</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Shipping</span>
+                                <span id="shipping" class="font-medium">Calculated at checkout</span>
+                            </div>
+                            <div class="flex justify-between border-t border-gray-200 pt-3">
+                                <span class="text-gray-600">Estimated Tax</span>
+                                <span id="tax" class="font-medium">Calculated at checkout</span>
+                            </div>
+                            <div class="flex justify-between border-t border-gray-200 pt-3">
+                                <span class="text-lg font-semibold">Total</span>
+                                <span id="total" class="text-lg font-bold text-primary">$0.00</span>
+                            </div>
+                        </div>
+                        
+                        <button id="checkoutBtn" class="w-full px-6 py-3 bg-primary text-white rounded-lg font-medium hover:bg-secondary transition btn-hover disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                            Proceed to Checkout
+                        </button>
+                        
+                        <div class="mt-4 text-center">
+                            <p class="text-sm text-gray-500">or</p>
+                            <a href="/products/" class="text-sm text-primary font-medium hover:underline">Continue Shopping</a>
+                        </div>
+                        
+                        
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Frequently Bought Together -->
+            <div id="frequentlyBought" class="mt-16 hidden">                
+                
+            </div>
+        </div>
+    </main>
+    
+    <footer class="bg-dark text-white pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+                <div>
+               <img src="/assets/logo.png" alt="Sumato Coffee Logo" class="h-16 mb-4  px-2 py-2 rounded">
+                    <p class="text-gray-400 mb-4">Freshly roasted specialty coffee delivered to your doorstep. Because mediocre coffee should never be part of your job description.</p>
+                    <div class="flex space-x-4">
+                        <a href="https://www.facebook.com/sumatocoffee" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition">
+                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12c0 4.991 3.657 9.128 8.438 9.878v-6.987h-2.54V12h2.54V9.797c0-2.506 1.492-3.89 3.777-3.89 1.094 0 2.238.195 2.238.195v2.46h-1.26c-1.243 0-1.63.771-1.63 1.562V12h2.773l-.443 2.89h-2.33v6.988C18.343 21.128 22 16.991 22 12z" clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                        <a href="https://www.instagram.com/sumatocoffee/" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition">
+                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path fill-rule="evenodd" d="M12.315 2c2.43 0 2.784.013 3.808.06 1.064.049 1.791.218 2.427.465a4.902 4.902 0 011.772 1.153 4.902 4.902 0 011.153 1.772c.247.636.416 1.363.465 2.427.048 1.067.06 1.407.06 4.123v.08c0 2.643-.012 2.987-.06 4.043-.049 1.064-.218 1.791-.465 2.427a4.902 4.902 0 01-1.153 1.772 4.902 4.902 0 01-1.772 1.153c-.636.247-1.363.416-2.427.465-1.067.048-1.407.06-4.123.06h-.08c-2.643 0-2.987-.012-4.043-.06-1.064-.049-1.791-.218-2.427-.465a4.902 4.902 0 01-1.772-1.153 4.902 4.902 0 01-1.153-1.772c-.247-.636-.416-1.363-.465-2.427-.047-1.024-.06-1.379-.06-3.808v-.63c0-2.43.013-2.784.06-3.808.049-1.064.218-1.791.465-2.427a4.902 4.902 0 011.153-1.772A4.902 4.902 0 015.45 2.525c.636-.247 1.363-.416 2.427-.465C8.901 2.013 9.256 2 11.685 2h.63zm-.081 1.802h-.468c-2.456 0-2.784.011-3.807.058-.975.045-1.504.207-1.857.344-.467.182-.8.398-1.15.748-.35.35-.566.683-.748 1.15-.137.353-.3.882-.344 1.857-.047 1.023-.058 1.351-.058 3.807v.468c0 2.456.011 2.784.058 3.807.045.975.207 1.504.344 1.857.182.466.399.8.748 1.15.35.35.683.566 1.15.748.353.137.882.3 1.857.344 1.054.048 1.37.058 4.041.058h.08c2.597 0 2.917-.01 3.96-.058.976-.045 1.505-.207 1.858-.344.466-.182.8-.398 1.15-.748.35-.35.566-.683.748-1.15.137-.353.3-.882.344-1.857.048-1.055.058-1.37.058-4.041v-.08c0-2.597-.01-2.917-.058-3.96-.045-.976-.207-1.505-.344-1.858a3.097 3.097 0 00-.748-1.15 3.098 3.098 0 00-1.15-.748c-.353-.137-.882-.3-1.857-.344-1.023-.047-1.351-.058-3.807-.058zM12 6.865a5.135 5.135 0 110 10.27 5.135 5.135 0 010-10.27zm0 1.802a3.333 3.333 0 100 6.666 3.333 3.333 0 000-6.666zm5.338-3.205a1.2 1.2 0 110 2.4 1.2 1.2 0 010-2.4z" clip-rule="evenodd" />
+                            </svg>
+                        </a>
+                        <a href="https://x.com/sumatocoffee" target="_blank" rel="noopener noreferrer" class="text-gray-400 hover:text-white transition">
+                            <svg class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M8.29 20.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0022 5.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.072 4.072 0 012.8 9.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 012 18.407a11.616 11.616 0 006.29 1.84" />
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Shop</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/products/" class="text-gray-400 hover:text-white transition">All Coffee</a></li>
+                        <li><a href="/products/" class="text-gray-400 hover:text-white transition">Single Origin</a></li>
+                        <li><a href="/products/" class="text-gray-400 hover:text-white transition">Blends</a></li>
+                        <li><a href="/products/" class="text-gray-400 hover:text-white transition">Decaf</a></li>
+                        <li><a href="/products/" class="text-gray-400 hover:text-white transition">Merchandise</a></li>
+                        <li><a href="/products/" class="text-gray-400 hover:text-white transition">Gift Cards</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Company</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/about/" class="text-gray-400 hover:text-white transition">Our Story</a></li>
+                        <li><a href="/blog/" class="text-gray-400 hover:text-white transition">Blog</a></li>
+                        <li><a href="/contact/" class="text-gray-400 hover:text-white transition">Contact Us</a></li>
+                    
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Help</h3>
+                    <ul class="space-y-2">
+                       
+                        <li><a href="/privacy/" class="text-gray-400 hover:text-white transition">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="text-gray-400 hover:text-white transition">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-400 mb-4 md:mb-0">© 2025 Sumato Coffee Deals. All rights reserved.</p>
+                    <div class="flex space-x-6">
+                        <a href="/privacy/" class="text-gray-400 hover:text-white transition">Privacy Policy</a>
+                        <a href="/terms/" class="text-gray-400 hover:text-white transition">Terms of Service</a>
+                        <a href="/cookies/" class="text-gray-400 hover:text-white transition">Cookies</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Success Modal -->
+    <div id="successModal" class="fixed inset-0 z-50 hidden flex items-center justify-center">
+        <div class="absolute inset-0 bg-black bg-opacity-50"></div>
+        <div class="bg-white rounded-lg max-w-md w-full mx-4 p-6 relative z-10">
+            <div class="text-center">
+                <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                    </svg>
+                </div>
+                <h3 class="text-xl font-semibold mb-2">Item Added to Cart</h3>
+                <p class="text-gray-600 mb-6">Your item has been successfully added to your shopping cart.</p>
+                <div class="flex space-x-3">
+                    <button id="continueShoppingBtn" class="flex-1 px-4 py-2 border border-gray-300 rounded hover:bg-gray-50 transition">
+                        Continue Shopping
+                    </button>
+                    <a href="/checkout/" class="flex-1 px-4 py-2 bg-primary text-white rounded hover:bg-secondary transition text-center">
+                        Checkout
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Cart functionality
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        const cartItemsContainer = document.getElementById('cartItems');
+        const emptyCartMessage = document.getElementById('emptyCart');
+        const cartCount = document.getElementById('cartCount');
+        const subtotalElement = document.getElementById('subtotal');
+        const totalElement = document.getElementById('total');
+        const checkoutBtn = document.getElementById('checkoutBtn');
+        const frequentlyBoughtSection = document.getElementById('frequentlyBought');
+        const successModal = document.getElementById('successModal');
+        
+        // Initialize cart display
+        function renderCart() {
+            cartItemsContainer.innerHTML = '';
+            
+            if (cart.length === 0) {
+                emptyCartMessage.classList.remove('hidden');
+                cartItemsContainer.classList.add('hidden');
+                checkoutBtn.disabled = true;
+                frequentlyBoughtSection.classList.add('hidden');
+            } else {
+                emptyCartMessage.classList.add('hidden');
+                cartItemsContainer.classList.remove('hidden');
+                checkoutBtn.disabled = false;
+                frequentlyBoughtSection.classList.remove('hidden');
+                
+                cart.forEach((item, index) => {
+                    const cartItem = document.createElement('div');
+                    cartItem.className = 'p-4 flex flex-col sm:flex-row';
+                    cartItem.innerHTML = `
+                        <div class="flex-shrink-0 mb-4 sm:mb-0 sm:mr-4">
+                            <img src="${item.image}" alt="${item.name}" class="w-24 h-24 object-cover rounded">
+                        </div>
+                        <div class="flex-grow">
+                            <div class="flex justify-between">
+                                <h3 class="font-medium">${item.name}</h3>
+                                <span class="font-semibold">$${(item.price * item.quantity).toFixed(2)}</span>
+                            </div>
+                            <p class="text-sm text-gray-600 mb-2">${getProductDescription(item.product)}</p>
+                            <div class="flex items-center justify-between mt-2">
+                                <div class="flex items-center border border-gray-300 rounded">
+                                    <button class="decrease-quantity px-3 py-1" data-index="${index}">-</button>
+                                    <span class="quantity px-3 py-1">${item.quantity}</span>
+                                    <button class="increase-quantity px-3 py-1" data-index="${index}">+</button>
+                                </div>
+                                <button class="remove-item text-sm text-red-600 hover:text-red-800 transition" data-index="${index}">
+                                    Remove
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                    cartItemsContainer.appendChild(cartItem);
+                });
+            }
+            
+            updateCartTotals();
+        }
+        
+        function getProductDescription(product) {
+            switch(product) {
+                case 'the-sender': return 'Single Origin Costa Rican - Medium Roast';
+                case 'rise-grinder': return 'Colombian-Guatemalan Blend - Dark Roast';
+                case 'the-founder': return 'Single Origin Ethiopian - Light Roast';
+                case 'adventurers-mug': return '12oz Enamel Camping Mug';
+                case 'discovery-pack': return '5 Different Blends to Try';
+                case 'coffee-grinder': return 'Premium Burr Grinder';
+                case 'coffee-filters': return '100 Count, Natural Paper';
+                default: return 'Premium Coffee';
+            }
+        }
+        
+        function updateCartTotals() {
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            subtotalElement.textContent = `$${subtotal.toFixed(2)}`;
+            totalElement.textContent = `$${subtotal.toFixed(2)}`;
+            
+            // Update cart count
+            const itemCount = cart.reduce((total, item) => total + item.quantity, 0);
+            cartCount.textContent = itemCount;
+            
+            if (itemCount > 0) {
+                cartCount.classList.remove('hidden');
+            } else {
+                cartCount.classList.add('hidden');
+            }
+        }
+        
+        // Event delegation for quantity buttons
+        cartItemsContainer.addEventListener('click', (e) => {
+            if (e.target.classList.contains('increase-quantity')) {
+                const index = e.target.getAttribute('data-index');
+                cart[index].quantity += 1;
+                localStorage.setItem('cart', JSON.stringify(cart));
+                renderCart();
+            }
+            
+            if (e.target.classList.contains('decrease-quantity')) {
+                const index = e.target.getAttribute('data-index');
+                if (cart[index].quantity > 1) {
+                    cart[index].quantity -= 1;
+                } else {
+                    cart.splice(index, 1);
+                }
+                localStorage.setItem('cart', JSON.stringify(cart));
+                renderCart();
+            }
+            
+            if (e.target.classList.contains('remove-item')) {
+                const index = e.target.getAttribute('data-index');
+                cart.splice(index, 1);
+                localStorage.setItem('cart', JSON.stringify(cart));
+                renderCart();
+            }
+        });
+        
+        // Add recommended items to cart
+        document.querySelectorAll('.add-recommendation-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const product = btn.getAttribute('data-product');
+                const price = parseFloat(btn.getAttribute('data-price'));
+                const name = getProductName(product);
+                const image = getProductImage(product);
+                
+                // Check if product already in cart
+                const existingItem = cart.find(item => item.product === product);
+                
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    cart.push({
+                        product: product,
+                        name: name,
+                        price: price,
+                        quantity: 1,
+                        image: image
+                    });
+                }
+                
+                localStorage.setItem('cart', JSON.stringify(cart));
+                renderCart();
+                
+                // Show success modal
+                successModal.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            });
+        });
+        
+        // Success modal buttons
+        document.getElementById('continueShoppingBtn').addEventListener('click', () => {
+            successModal.classList.add('hidden');
+            document.body.style.overflow = 'auto';
+        });
+        
+        // Close modal when clicking outside
+        successModal.addEventListener('click', (e) => {
+            if (e.target === successModal) {
+                successModal.classList.add('hidden');
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        // Initialize cart on page load
+        renderCart();
+        
+        // Checkout button
+        checkoutBtn.addEventListener('click', () => {
+            window.location.href = '/checkout/';
+        });
+    </script>
+</body>
+</html>

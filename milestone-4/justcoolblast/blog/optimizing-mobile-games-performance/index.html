@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Tech Behind Our Water Physics | JustCoolBlast</title>
+
+    <!-- Favicon -->
+    <link rel="icon" href="/images/favicon.png" type="image/x-icon">
+    <link rel="icon" href="/images/favicon.png" type="image/x-icon">
+
+    <!-- Meta Tags -->
+    <meta name="description" content="A deep dive into the technical challenges of creating realistic water physics for Boat Attack on mobile devices.">
+    <meta name="keywords" content="water physics, game development, mobile graphics, boat simulation, unity shaders">
+    <meta name="author" content="JustCool">
+    <link rel="canonical" href="https://justcoolblast.app/blog/water-physics-explained/" />
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Custom Tailwind Config -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#6366F1',  // Indigo
+                        secondary: '#8B5CF6',  // Violet
+                        accent: '#EC4899',  // Pink
+                        dark: '#1F2937',
+                        light: '#F9FAFB',
+                        surface: '#FFFFFF',
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'float-fast': 'float 4s ease-in-out infinite',
+                        'pulse-slow': 'pulse 5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #F9FAFB;
+            color: #1F2937;
+        }
+
+        .hero-gradient {
+            background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 50%, #EC4899 100%);
+        }
+
+        .nav-blur {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        .card-hover {
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .card-hover:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .text-gradient {
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+        }
+
+        .section-title {
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 50%;
+            height: 4px;
+            background: linear-gradient(90deg, #6366F1, #EC4899);
+            border-radius: 2px;
+        }
+        
+        .content-wrapper a {
+            color: #6366F1;
+            text-decoration: underline;
+        }
+        
+        .content-wrapper a:hover {
+            color: #8B5CF6;
+        }
+        
+        .content-wrapper h2 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: #6366F1;
+        }
+        
+        .content-wrapper h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-top: 1.5rem;
+            margin-bottom: 0.75rem;
+        }
+        
+        .content-wrapper p {
+            margin-bottom: 1.25rem;
+            line-height: 1.7;
+        }
+        
+        .content-wrapper ul, 
+        .content-wrapper ol {
+            margin-bottom: 1.25rem;
+            padding-left: 1.5rem;
+        }
+        
+        .content-wrapper ul {
+            list-style-type: disc;
+        }
+        
+        .content-wrapper ol {
+            list-style-type: decimal;
+        }
+        
+        .content-wrapper li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .content-wrapper img {
+            border-radius: 0.5rem;
+            margin: 1.5rem 0;
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .content-wrapper blockquote {
+            border-left: 4px solid #6366F1;
+            padding-left: 1rem;
+            margin: 1.5rem 0;
+            color: #6B7280;
+            font-style: italic;
+        }
+        
+        .content-wrapper .code-block {
+            background-color: #E5E7EB;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-family: monospace;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            color: #1F2937;
+        }
+        
+        .tech-card {
+            background-color: #E5E7EB;
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-left: 4px solid #6366F1;
+        }
+        
+        .tech-card .tech-title {
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: #6366F1;
+            margin-bottom: 0.5rem;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+        
+        .comparison-table th, 
+        .comparison-table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid #D1D5DB;
+        }
+        
+        .comparison-table th {
+            background-color: #E5E7EB;
+            font-weight: 600;
+        }
+        
+        .comparison-table tr:hover {
+            background-color: #E5E7EB;
+        }
+        
+        .performance-graph {
+            height: 200px;
+            background-color: #E5E7EB;
+            border-radius: 0.5rem;
+            margin: 1.5rem 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .graph-bar {
+            position: absolute;
+            bottom: 0;
+            height: 0;
+            width: 30px;
+            background: linear-gradient(to top, #6366F1, #8B5CF6);
+            transition: height 1s ease-out;
+        }
+        
+        .graph-label {
+            position: absolute;
+            bottom: -25px;
+            width: 100%;
+            text-align: center;
+            font-size: 0.75rem;
+            color: #6B7280;
+        }
+        
+        .article-hero {
+            background: linear-gradient(135deg, #6366F1 0%, #8B5CF6 50%, #EC4899 100%);
+        }
+        
+        .article-hero-overlay {
+            background: rgba(0, 0, 0, 0.4);
+        }
+    </style>
+</head>
+
+<body class="antialiased">
+    <!-- Cookies Consent Banner -->
+    <div id="cookies-banner"
+        class="fixed bottom-4 left-4 right-4 max-w-2xl mx-auto bg-surface rounded-xl shadow-xl p-6 z-50 hidden border border-gray-200">
+        <div class="flex flex-col md:flex-row items-start md:items-center">
+            <div class="mb-4 md:mb-0 md:mr-6 flex-1">
+                <h4 class="font-semibold text-lg mb-1">We value your privacy</h4>
+                <p class="text-gray-600 text-sm">We use cookies to enhance your experience on our website. By continuing
+                    to browse,
+                    you agree to our use of cookies.</p>
+            </div>
+            <div class="flex flex-col sm:flex-row w-full md:w-auto space-y-2 sm:space-y-0 sm:space-x-2">
+                <button id="accept-cookies"
+                    class="px-4 py-2 bg-primary hover:bg-indigo-600 rounded-lg transition duration-300 text-sm font-medium text-white shadow-sm">
+                    Accept
+                </button>
+                <button id="decline-cookies"
+                    class="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-lg transition duration-300 text-sm font-medium text-gray-800">
+                    Decline
+                </button>
+                <a href="/privacy/"
+                    class="px-4 py-2 bg-transparent hover:bg-gray-100 border border-gray-200 rounded-lg transition duration-300 text-sm font-medium text-gray-700">
+                    Learn More
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="fixed w-full z-40 nav-blur bg-white/80 border-b border-gray-100">
+        <div class="container mx-auto px-6">
+            <div class="flex justify-between items-center h-20">
+                <div class="flex items-center space-x-2">
+                     <a href="/" class="flex items-center space-x-3">
+                        <img src="/images/logo.png" alt="JustCoolBlast Logo" class="h-12  rounded-xl">                       
+                    </a>
+                </div>
+
+                <div class="hidden lg:flex items-center space-x-8">
+                    <a href="/" class="text-gray-800 hover:text-primary font-medium transition duration-300">Home</a>
+                    <a href="/games" class="text-gray-600 hover:text-primary transition duration-300">Games</a>
+                    <a href="/about" class="text-gray-600 hover:text-primary transition duration-300">About</a>
+                    <a href="/blog" class="text-primary font-medium transition duration-300">Blog</a>
+                    <a href="/contact/" class="text-gray-600 hover:text-primary transition duration-300">Contact</a>
+                </div>
+
+                <div class="flex items-center space-x-4">
+                    <a href="https://play.google.com/store/apps/details?id=com.justcool.boatattack" target="_blank"
+                        class="hidden md:flex items-center bg-gradient-to-r from-primary to-accent hover:from-indigo-600 hover:to-pink-500 text-white px-5 py-2.5 rounded-lg font-medium transition duration-300 shadow-md">
+                        <i class="fab fa-google-play mr-2"></i> Download
+                    </a>
+                    <button id="mobile-menu-button"
+                        class="lg:hidden text-gray-600 hover:text-gray-900 focus:outline-none">
+                        <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="lg:hidden hidden bg-white border-t border-gray-100 shadow-lg">
+            <div class="container mx-auto px-6 py-4 flex flex-col space-y-3">
+                <a href="/" class="py-3 px-4 rounded-lg hover:bg-gray-50 font-medium">Home</a>
+                <a href="/games" class="py-3 px-4 rounded-lg hover:bg-gray-50">Games</a>
+                <a href="/about/" class="py-3 px-4 rounded-lg hover:bg-gray-50">About</a>
+                <a href="/blog/" class="py-3 px-4 rounded-lg hover:bg-gray-50 bg-gray-100 text-primary">Blog</a>
+                <a href="/contact/" class="py-3 px-4 rounded-lg hover:bg-gray-50">Contact</a>
+                <a href="https://play.google.com/store/apps/details?id=com.justcool.boatattack" target="_blank"
+                    class="flex items-center justify-center bg-gradient-to-r from-primary to-accent hover:from-indigo-600 hover:to-pink-500 text-white px-5 py-3 rounded-lg font-medium transition duration-300 mt-2 shadow-md">
+                    <i class="fab fa-google-play mr-2"></i> Download Now
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Article Header -->
+    <section class="relative h-[40vh] flex items-center justify-center overflow-hidden pt-16 article-hero">
+        <div class="article-hero-overlay absolute inset-0 z-0"></div>
+        
+        <div class="container mx-auto px-6 z-10 text-center">
+            <div class="max-w-4xl mx-auto">
+                <span class="inline-block bg-white text-primary text-xs font-semibold px-3 py-1 rounded-full mb-4">TECH</span>
+                <h1 class="text-3xl md:text-5xl font-bold mb-4 text-white">
+                    The Tech Behind Our Water Physics
+                </h1>
+                <div class="flex items-center justify-center text-gray-200 text-sm md:text-base">
+                    <span>Published on March 10, 2025</span>
+                    <span class="mx-2">•</span>
+                    <span>7 min read</span>
+                    <span class="mx-2">•</span>
+                    <span>By JustCool Engineering Team</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Article Content -->
+    <section class="py-16 bg-white">
+        <div class="container mx-auto px-6">
+            <div class="flex flex-col lg:flex-row gap-12">
+                <!-- Main Content -->
+                <div class="lg:w-2/3 mx-auto">
+                    <article class="content-wrapper bg-surface rounded-xl p-6 md:p-8 border border-gray-200 shadow-sm">
+                        <p class="text-lg text-gray-700 mb-6">
+                            Creating realistic water physics for Boat Attack was one of our biggest technical challenges. Today we're pulling back the curtain to share how we achieved fluid, responsive water interactions that work across a wide range of mobile devices while maintaining stunning visual quality.
+                        </p>
+                        
+                        <h2>The Challenge</h2>
+                        
+                        <p>
+                            Water simulation in games typically requires significant computational resources. Our goals for Boat Attack presented unique challenges:
+                        </p>
+                        
+                        <ul>
+                            <li>Real-time interaction between boats and water surface</li>
+                            <li>Dynamic wave propagation that affects gameplay</li>
+                            <li>Visual fidelity that holds up on mobile screens</li>
+                            <li>Consistent 60fps performance on mid-range devices</li>
+                            <li>Believable physics for boats of different sizes and weights</li>
+                        </ul>
+                        
+                        <div class="tech-card">
+                            <div class="tech-title">Performance Constraints</div>
+                            <p>
+                                Mobile GPUs have strict limits on vertex processing and fill rates. Our water system needed to work within these constraints while still delivering visually impressive results.
+                            </p>
+                            <div class="performance-graph" id="perfGraph">
+                                <div class="graph-bar" style="left: 20%;" data-height="30">
+                                    <div class="graph-label">Basic</div>
+                                </div>
+                                <div class="graph-bar" style="left: 40%;" data-height="70">
+                                    <div class="graph-label">Standard</div>
+                                </div>
+                                <div class="graph-bar" style="left: 60%;" data-height="100">
+                                    <div class="graph-label">Our Solution</div>
+                                </div>
+                                <div class="graph-bar" style="left: 80%;" data-height="150">
+                                    <div class="graph-label">Desktop-Quality</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h2>Our Solution</h2>
+                        
+                        <p>
+                            After months of experimentation, we developed a hybrid approach combining multiple techniques:
+                        </p>
+                        
+                        <h3>1. Vertex Displacement Shader</h3>
+                        
+                        <p>
+                            The foundation of our water system is a vertex displacement shader that modifies the water mesh in real-time:
+                        </p>
+                        
+                        <div class="code-block">
+                            // Simplified vertex shader excerpt<br>
+                            void vert(inout appdata_full v) {<br>
+                            &nbsp;&nbsp;// Sample wave texture<br>
+                            &nbsp;&nbsp;float wave = tex2Dlod(_WaveTex, float4(v.texcoord.xy, 0, 0)).r;<br>
+                            &nbsp;&nbsp;// Apply displacement<br>
+                            &nbsp;&nbsp;v.vertex.y += wave * _WaveHeight;<br>
+                            &nbsp;&nbsp;// Calculate normals for lighting<br>
+                            &nbsp;&nbsp;v.normal = normalize(float3(<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;-ddx(v.vertex.y),<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;1.0,<br>
+                            &nbsp;&nbsp;&nbsp;&nbsp;-ddy(v.vertex.y)<br>
+                            &nbsp;&nbsp;));<br>
+                            }
+                        </div>
+                        
+                        <h3>2. Physics Interaction System</h3>
+                        
+                        <p>
+                            Boats interact with the water surface through a custom physics system:
+                        </p>
+                        
+                        <ul>
+                            <li>Each boat has multiple buoyancy points sampling water height</li>
+                            <li>Forces are calculated based on submersion depth and velocity</li>
+                            <li>Wave reactions are approximated using impulse responses</li>
+                        </ul>
+                        
+                        <h3>3. Optimized Wave Propagation</h3>
+                        
+                        <p>
+                            Rather than simulating full fluid dynamics (too expensive for mobile), we use:
+                        </p>
+                        
+                        <table class="comparison-table">
+                            <thead>
+                                <tr>
+                                    <th>Technique</th>
+                                    <th>Performance Cost</th>
+                                    <th>Visual Quality</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Gerstner Waves</td>
+                                    <td>Low</td>
+                                    <td>Medium</td>
+                                </tr>
+                                <tr>
+                                    <td>FFT Ocean</td>
+                                    <td>High</td>
+                                    <td>High</td>
+                                </tr>
+                                <tr>
+                                    <td>Our Hybrid Approach</td>
+                                    <td>Medium</td>
+                                    <td>High</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        
+                        <div class="tech-card">
+                            <div class="tech-title">Procedural Detail</div>
+                            <p>
+                                To add visual detail without heavy computation, we use screen-space reflections and procedural foam that generates based on wave steepness and boat interactions.
+                            </p>
+                        </div>
+                        
+                        <h2>Performance Optimization</h2>
+                        
+                        <p>
+                            Making this all work on mobile required several optimizations:
+                        </p>
+                        
+                        <ul>
+                            <li><strong>Level of Detail (LOD):</strong> Water mesh complexity reduces with distance</li>
+                            <li><strong>Approximate Calculations:</strong> Using half-precision floats where possible</li>
+                            <li><strong>Baking:</strong> Pre-computing static wave patterns</li>
+                            <li><strong>Shader Variants:</strong> Different quality levels for different devices</li>
+                        </ul>
+                        
+                        <div class="code-block">
+                            // Device-specific quality settings<br>
+                            #if defined(SHADER_API_MOBILE)<br>
+                            &nbsp;&nbsp;#define WAVE_STEPS 8<br>
+                            &nbsp;&nbsp;#define USE_HALF_PRECISION<br>
+                            #else<br>
+                            &nbsp;&nbsp;#define WAVE_STEPS 16<br>
+                            #endif
+                        </div>
+                        
+                        <h2>The Results</h2>
+                        
+                        <p>
+                            Our final implementation achieves:
+                        </p>
+                        
+                        <ul>
+                            <li>60fps on devices as old as iPhone X</li>
+                            <li>Responsive physics that affects gameplay</li>
+                            <li>Visually impressive waves and interactions</li>
+                            <li>Only 2-3ms of GPU time per frame</li>
+                        </ul>
+                        
+                        <blockquote>
+                            "The water physics became a defining feature of Boat Attack - players consistently mention how good it feels to control the boats through waves."
+                        </blockquote>
+                        
+                        <h2>Future Improvements</h2>
+                        
+                        <p>
+                            We're already working on enhancements for future updates:
+                        </p>
+                        
+                        <ul>
+                            <li>Better wave interactions between multiple boats</li>
+                            <li>More detailed foam and spray effects</li>
+                            <li>Dynamic water trails that persist longer</li>
+                            <li>Improved reflections on high-end devices</li>
+                        </ul>
+                        
+                        <p class="mt-8 text-gray-600">
+                            We hope this technical deep dive was interesting! If you have questions about our implementation or suggestions for improvements, reach out to our team on social media or our developer forums.
+                        </p>
+                        
+                        <div class="mt-12 pt-6 border-t border-gray-200 flex flex-col sm:flex-row justify-between items-start sm:items-center">
+                            <div class="flex items-center mb-4 sm:mb-0">
+                                <!-- Author info if needed -->
+                            </div>
+                            <div>
+                                <a href="/blog/" class="inline-flex items-center text-primary hover:text-indigo-600 transition duration-300">
+                                    <i class="fas fa-arrow-left mr-2"></i> Back to Blog
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-r from-primary to-accent">
+        <div class="container mx-auto px-6 text-center">
+            <div class="max-w-3xl mx-auto">
+                <h2 class="text-3xl md:text-4xl font-bold mb-6 text-white">Experience Our Water Physics</h2>
+                <p class="text-xl text-gray-100 mb-8">
+                    See the technology in action - download Boat Attack and feel the difference our water physics makes.
+                </p>
+                <a href="https://play.google.com/store/apps/details?id=com.justcool.boatattack" target="_blank"
+                    class="inline-block bg-white hover:bg-gray-100 text-primary px-8 py-4 rounded-xl font-bold text-lg transition duration-300 shadow-lg">
+                    <i class="fab fa-google-play mr-2"></i> Download on Google Play
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer class="bg-gray-900 text-gray-300 pt-16 pb-8">
+        <div class="container mx-auto px-6">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-10 mb-12">
+                <div>
+                   <a href="/" class="flex items-center space-x-3">
+                        <img src="/images/logo-bottom.png" alt="JustCoolBlast Logo" class="h-14 max-w-2xl mb-4 rounded-xl">                       
+                    </a>
+                    <p class="text-gray-400 mb-6">
+                        Creating exciting mobile gaming experiences with stunning visuals and immersive gameplay.
+                    </p>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-5">Company</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/about" class="text-gray-400 hover:text-white transition duration-300">About Us</a>
+                        </li>
+                        <li><a href="/blog" class="text-gray-400 hover:text-white transition duration-300">Blog</a></li>
+                        <li><a href="/contact"
+                                class="text-gray-400 hover:text-white transition duration-300">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold text-white mb-5">Legal</h3>
+                    <ul class="space-y-3">
+                        <li><a href="/privacy" class="text-gray-400 hover:text-white transition duration-300">Privacy
+                                Policy</a></li>
+                        <li><a href="/terms" class="text-gray-400 hover:text-white transition duration-300">Terms of
+                                Service</a></li>
+                        <li><a href="/cookies" class="text-gray-400 hover:text-white transition duration-300">Cookie
+                                Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 pt-8 flex flex-col md:flex-row justify-between items-center">
+                <p class="text-gray-500 text-sm mb-4 md:mb-0">
+                    &copy; 2025 JustCool. All rights reserved.
+                </p>
+                <div class="flex items-center">
+                    <a href="https://play.google.com/store/apps/details?id=com.justcool.boatattack" target="_blank">
+                        <img src="/images/playstore.png" alt="Google Play" class="h-10 mr-4">
+                    </a>
+                    
+                    <a href="mailto:gamebeetlestudio@gmail.com"
+                        class="text-gray-400 hover:text-white transition duration-300">
+                        <i class="fas fa-envelope text-xl"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Mobile Menu Toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Cookies Banner
+        const cookiesBanner = document.getElementById('cookies-banner');
+        const acceptCookies = document.getElementById('accept-cookies');
+        const declineCookies = document.getElementById('decline-cookies');
+
+        // Check if user has already made a choice
+        if (!localStorage.getItem('cookiesAccepted')) {
+            cookiesBanner.classList.remove('hidden');
+        }
+
+        acceptCookies.addEventListener('click', () => {
+            localStorage.setItem('cookiesAccepted', 'true');
+            cookiesBanner.classList.add('hidden');
+        });
+
+        declineCookies.addEventListener('click', () => {
+            localStorage.setItem('cookiesAccepted', 'false');
+            cookiesBanner.classList.add('hidden');
+        });
+
+        // Animate performance graph bars
+        document.addEventListener('DOMContentLoaded', function() {
+            const bars = document.querySelectorAll('.graph-bar');
+            bars.forEach(bar => {
+                const height = bar.getAttribute('data-height');
+                bar.style.height = height + 'px';
+            });
+        });
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

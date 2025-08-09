@@ -1,0 +1,763 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us | Murphy Door Ogden | Premium Hidden Door Solutions</title>
+    <meta name="description" content="Get in touch with Murphy Door Ogden for inquiries about our premium hidden door solutions. Contact our team for consultations, support, or any questions.">
+    <meta name="keywords" content="contact Murphy Door, hidden doors support, bookcase doors inquiry, secret doors consultation, Murphy Door customer service">
+    
+    <!-- Favicon -->
+    <link rel="icon" href="/image/logo.png" type="image/x-icon">
+    <link rel="canonical" href="https://murphydoorogden.com/contact/" />
+
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;500;600;700&display=swap');
+        
+        :root {
+            --primary: #1a365d;
+            --secondary: #cba052;
+            --accent: #2d3748;
+            --light: #f7fafc;
+            --dark: #1a202c;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+            background-color: var(--light);
+            color: var(--dark);
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Playfair Display', serif;
+        }
+        
+        .contact-hero {
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6));
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+        
+        .map-container {
+            height: 400px;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        
+        .contact-card {
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+        }
+        
+        .contact-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        
+        .gradient-text {
+            background: linear-gradient(45deg, #cba052, #8a6d3b);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .form-input {
+            transition: all 0.3s ease;
+            border: 1px solid #e2e8f0;
+        }
+        
+        .form-input:focus {
+            border-color: #cba052;
+            box-shadow: 0 0 0 3px rgba(203, 160, 82, 0.2);
+        }
+        
+        .toast {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            transform: translateY(100px);
+            opacity: 0;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .toast.show {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .floating {
+            animation: floating 6s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+    </style>
+</head>
+<body class="relative">
+    <!-- Navigation -->
+<nav class="bg-white shadow-lg sticky top-0 z-50">
+    <div class="container mx-auto px-4">
+        <div class="flex justify-between items-center py-4">
+            <div class="flex items-center">
+                <a href="/" class="flex items-center">
+                    <img src="/image/logo.png" alt="Murphy Door Ogden Logo" class="h-10 w-24 object-cover mr-2">
+                </a>
+            </div>
+            
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="/" class="text-gray-800 hover:text-amber-600 transition">Home</a>
+                <a href="/shop/" class="text-gray-800 hover:text-amber-600 transition">Shop</a>
+                <a href="/about/" class="text-gray-800 hover:text-amber-600 transition">About</a>
+                <a href="/blog/" class="text-gray-800 hover:text-amber-600 transition">Blog</a>
+                <a href="/contact/" class="text-amber-600 hover:text-amber-600 transition">Contact</a>
+                <div class="relative">
+                    <button id="cartButton" class="text-gray-800 hover:text-amber-600 transition relative">
+                        <i class="fas fa-shopping-cart text-xl"></i>
+                        <span id="cartCount" class="absolute -top-2 -right-2 bg-amber-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                    </button>
+                    <div id="cartDropdown" class="hidden absolute right-0 mt-2 w-72 bg-white rounded-md shadow-lg z-50 p-4">
+                        <div id="cartItems" class="max-h-60 overflow-y-auto">
+                            <p class="text-gray-500 text-center py-4">Your cart is empty</p>
+                        </div>
+                        <div class="border-t mt-2 pt-2">
+                            <a href="/cart/" class="block text-center bg-amber-600 text-white py-2 rounded hover:bg-amber-700 transition">View Cart</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu Button - Custom door icon -->
+            <button id="mobileMenuButton" class="md:hidden text-gray-800 focus:outline-none">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                </svg>
+            </button>
+        </div>
+    </div>
+</nav>
+
+<!-- Mobile Menu Panel - Unique sliding door design -->
+<div id="mobileMenu" class="hidden fixed inset-0 z-50 overflow-hidden">
+    <div class="absolute inset-0 overflow-hidden">
+        <!-- Background overlay with fade animation -->
+        <div id="menuOverlay" class="absolute inset-0 bg-black bg-opacity-50 transition-opacity duration-300 opacity-0"></div>
+        
+        <!-- Menu panel with sliding door effect -->
+        <div id="menuPanel" class="fixed inset-y-0 right-0 max-w-full flex transform transition-all duration-500 translate-x-full">
+            <div class="relative w-screen max-w-xs">
+                <div class="h-full flex flex-col bg-gradient-to-b from-amber-800 to-amber-900 shadow-xl overflow-y-auto">
+                    <!-- Decorative door handle -->
+                    <div class="absolute left-0 top-1/2 -ml-2 w-6 h-12 bg-amber-600 rounded-l-lg shadow-lg transform -translate-y-1/2 hidden"></div>
+                    
+                    <!-- Menu header with close button -->
+                    <div class="flex items-center justify-between px-6 py-2 border-b border-amber-700">
+                        <img src="/image/logo-white.png" alt="Murphy Door Ogden Logo" class="h-14">
+                        <button id="closeMobileMenu" class="text-amber-200 hover:text-white">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                            </svg>
+                        </button>
+                    </div>
+                    
+                    <!-- Menu navigation links -->
+                    <div class="flex-1 px-6 py-8">
+                        <nav class="space-y-6">
+                            <a href="/" class="flex items-center text-amber-100 hover:text-white group">
+                                <span class="mr-3 h-1 w-6 bg-amber-600 group-hover:bg-white transition-all duration-300"></span>
+                                Home
+                            </a>
+                            <a href="/shop/" class="flex items-center text-amber-100 hover:text-white group">
+                                <span class="mr-3 h-1 w-6 bg-amber-600 group-hover:bg-white transition-all duration-300"></span>
+                                Shop
+                            </a>
+                            <a href="/about/" class="flex items-center text-amber-100 hover:text-white group">
+                                <span class="mr-3 h-1 w-6 bg-amber-600 group-hover:bg-white transition-all duration-300"></span>
+                                About
+                            </a>
+                            <a href="/blog/" class="flex items-center text-amber-100 hover:text-white group">
+                                <span class="mr-3 h-1 w-6 bg-amber-600 group-hover:bg-white transition-all duration-300"></span>
+                                Blog
+                            </a>
+                            <a href="/contact/" class="flex font-bold items-center text-amber-100 hover:text-white group">
+                                <span class="mr-3 h-1 w-6 bg-amber-600 group-hover:bg-white transition-all duration-300"></span>
+                                Contact
+                            </a>
+                            <a href="/cart/" class="flex items-center text-amber-100 hover:text-white group mt-10 pt-6 border-t border-amber-700">
+                                <i class="fas fa-shopping-cart mr-3"></i> 
+                                Cart (<span id="mobileCartCount">0</span>)
+                            </a>
+                        </nav>
+                    </div>
+                    
+                    <!-- Menu footer with tagline -->
+                    <div class="px-6 py-4 border-t border-amber-700 text-center">
+                        <p class="text-xs text-amber-300">"Opening doors to hidden possibilities"</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Mobile Menu Toggle - Enhanced with door animation
+    document.getElementById('mobileMenuButton').addEventListener('click', function() {
+        const menu = document.getElementById('mobileMenu');
+        const overlay = document.getElementById('menuOverlay');
+        const panel = document.getElementById('menuPanel');
+        
+        menu.classList.remove('hidden');
+        setTimeout(() => {
+            overlay.classList.add('opacity-100');
+            panel.classList.remove('translate-x-full');
+        }, 20);
+    });
+
+    // Close mobile menu
+    document.getElementById('closeMobileMenu').addEventListener('click', function() {
+        closeMobileMenu();
+    });
+
+    // Close when clicking overlay
+    document.getElementById('menuOverlay').addEventListener('click', function() {
+        closeMobileMenu();
+    });
+
+    function closeMobileMenu() {
+        const menu = document.getElementById('mobileMenu');
+        const overlay = document.getElementById('menuOverlay');
+        const panel = document.getElementById('menuPanel');
+        
+        overlay.classList.remove('opacity-100');
+        panel.classList.add('translate-x-full');
+        
+        setTimeout(() => {
+            menu.classList.add('hidden');
+        }, 500);
+    }
+
+    // Cart Dropdown Toggle (unchanged from original)
+    document.getElementById('cartButton').addEventListener('click', function(e) {
+        e.stopPropagation();
+        const dropdown = document.getElementById('cartDropdown');
+        dropdown.classList.toggle('hidden');
+    });
+    
+    // Close cart dropdown when clicking outside
+    document.addEventListener('click', function() {
+        const dropdown = document.getElementById('cartDropdown');
+        if (!dropdown.classList.contains('hidden')) {
+            dropdown.classList.add('hidden');
+        }
+    });
+</script>
+    <!-- Contact Hero Section with Background Image -->
+<section class="min-h-[50vh] flex items-center justify-center text-white relative overflow-hidden bg-cover bg-center" style="background-image: url('/image/blog/diy-installation.webp');">
+    <!-- Dark overlay -->
+    <div class="absolute inset-0 bg-black opacity-40"></div>
+
+    <!-- Text content -->
+    <div class="container mx-auto px-4 z-10 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold mb-6">
+            Get In <span class="gradient-text">Touch</span>
+        </h1>
+        <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto">
+            We'd love to hear from you! Contact our team for inquiries, support, or to schedule a consultation for your custom hidden door solution.
+        </p>
+    </div>
+
+    <!-- Animated floating elements -->
+    <div class="absolute bottom-20 left-10 w-16 h-16 bg-white rounded-full opacity-20 floating" style="animation-delay: 0s;"></div>
+    <div class="absolute top-1/4 right-20 w-12 h-12 bg-amber-400 rounded-full opacity-20 floating" style="animation-delay: 1s;"></div>
+</section>
+
+    <!-- Contact Info Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- Contact Card 1 -->
+                <div class="contact-card bg-gray-50 p-8 rounded-lg shadow-sm text-center">
+                    <div class="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-map-marker-alt text-2xl text-amber-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Our Location</h3>
+                    <address class="text-gray-600 not-italic">
+                        36 Darlinghurst Road<br>
+                        Sydney, NSW 2010<br>
+                        Australia
+                    </address>
+                </div>
+                
+                <!-- Contact Card 2 -->
+                <div class="contact-card bg-gray-50 p-8 rounded-lg shadow-sm text-center">
+                    <div class="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-phone-alt text-2xl text-amber-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Phone & Email</h3>
+                    <p class="text-gray-600 mb-1">
+                        <a href="tel:+61290117626" class="hover:text-amber-600 transition">+61 2 9011 7626</a>
+                    </p>
+                    <p class="text-gray-600">
+                        <a href="mailto:info@murphydoorogden.com" class="hover:text-amber-600 transition">info@murphydoorogden.com</a>
+                    </p>
+                </div>
+                
+                <!-- Contact Card 3 -->
+                <div class="contact-card bg-gray-50 p-8 rounded-lg shadow-sm text-center">
+                    <div class="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <i class="fas fa-clock text-2xl text-amber-600"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-3">Business Hours</h3>
+                    <p class="text-gray-600 mb-1">Monday - Friday: 9am - 5pm</p>
+                    <p class="text-gray-600">Saturday: 10am - 2pm</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact Form & Map Section -->
+    <section class="py-20 bg-gray-50">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col lg:flex-row gap-12">
+                <!-- Contact Form -->
+                <div class="lg:w-1/2">
+                    <h2 class="text-3xl font-bold mb-6">Send Us a Message</h2>
+                    <p class="text-gray-600 mb-8">Have questions about our products or need assistance with your order? Fill out the form below and our team will get back to you as soon as possible.</p>
+                    
+                    <form id="contactForm" class="space-y-6">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div>
+                                <label for="firstName" class="block text-gray-700 mb-2">First Name*</label>
+                                <input type="text" id="firstName" name="firstName" required class="form-input w-full px-4 py-3 rounded focus:outline-none">
+                            </div>
+                            <div>
+                                <label for="lastName" class="block text-gray-700 mb-2">Last Name*</label>
+                                <input type="text" id="lastName" name="lastName" required class="form-input w-full px-4 py-3 rounded focus:outline-none">
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <label for="email" class="block text-gray-700 mb-2">Email Address*</label>
+                            <input type="email" id="email" name="email" required class="form-input w-full px-4 py-3 rounded focus:outline-none">
+                        </div>
+                        
+                        <div>
+                            <label for="phone" class="block text-gray-700 mb-2">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" class="form-input w-full px-4 py-3 rounded focus:outline-none">
+                        </div>
+                        
+                        <div>
+                            <label for="subject" class="block text-gray-700 mb-2">Subject*</label>
+                            <select id="subject" name="subject" required class="form-input w-full px-4 py-3 rounded focus:outline-none">
+                                <option value="" disabled selected>Select a subject</option>
+                                <option value="General Inquiry">General Inquiry</option>
+                                <option value="Product Questions">Product Questions</option>
+                                <option value="Order Support">Order Support</option>
+                                <option value="Custom Design">Custom Design Consultation</option>
+                                <option value="Installation Help">Installation Help</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label for="message" class="block text-gray-700 mb-2">Your Message*</label>
+                            <textarea id="message" name="message" rows="5" required class="form-input w-full px-4 py-3 rounded focus:outline-none"></textarea>
+                        </div>
+                        
+                        <div class="flex items-center">
+                            <input type="checkbox" id="consent" name="consent" required class="mr-2">
+                            <label for="consent" class="text-gray-700 text-sm">I agree to the <a href="/privacy/" class="text-amber-600 hover:underline">privacy policy</a> and consent to Murphy Door Ogden contacting me regarding my inquiry.</label>
+                        </div>
+                        
+                        <button type="submit" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-3 px-6 rounded transition transform hover:scale-105">
+                            Send Message
+                        </button>
+                    </form>
+                </div>
+                
+                <!-- Map -->
+                <div class="lg:w-1/2">
+                    <h2 class="text-3xl font-bold mb-6">Find Our Showroom</h2>
+                    <p class="text-gray-600 mb-8">Visit our Sydney showroom to see our hidden door solutions in person and speak with our design consultants about your project.</p>
+                    
+                    <div class="map-container">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3312.6887863102645!2d151.2227123152104!3d-33.87392698065692!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6b12ae3a3b5e0c1f%3A0x6b5e5f5e5f5e5f5e!2s36%20Darlinghurst%20Rd%2C%20Potts%20Point%20NSW%202011%2C%20Australia!5e0!3m2!1sen!2sus!4v1620000000000!5m2!1sen!2sus" 
+                                width="100%" 
+                                height="100%" 
+                                style="border:0;" 
+                                allowfullscreen="" 
+                                loading="lazy"></iframe>
+                    </div>
+                    
+                    <div class="mt-8">
+                        <h3 class="text-xl font-bold mb-4">Public Transport</h3>
+                        <ul class="space-y-2 text-gray-600">
+                            <li class="flex items-start">
+                                <i class="fas fa-train text-amber-600 mt-1 mr-2"></i>
+                                <span>Kings Cross Station - 5 minute walk</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-bus text-amber-600 mt-1 mr-2"></i>
+                                <span>Bus routes 311, 324, 325 - Stop at Darlinghurst Rd</span>
+                            </li>
+                        </ul>
+                        
+                        <h3 class="text-xl font-bold mt-6 mb-4">Parking</h3>
+                        <ul class="space-y-2 text-gray-600">
+                            <li class="flex items-start">
+                                <i class="fas fa-parking text-amber-600 mt-1 mr-2"></i>
+                                <span>Street parking available (metered)</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-square text-amber-600 mt-1 mr-2"></i>
+                                <span>Nearby parking garage at 44 Macleay St (2 min walk)</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- FAQ Section -->
+    <section class="py-20 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Frequently Asked Questions</h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">Find quick answers to common questions about our products and services.</p>
+            </div>
+            
+            <div class="max-w-3xl mx-auto space-y-6">
+                <!-- FAQ Item 1 -->
+                <div class="border border-gray-200 rounded-lg overflow-hidden">
+                    <button class="faq-toggle w-full flex justify-between items-center p-6 text-left focus:outline-none">
+                        <h3 class="text-lg font-bold">How long does it take to receive a custom Murphy Door?</h3>
+                        <i class="fas fa-chevron-down text-amber-600 transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-content px-6 pb-6 hidden">
+                        <p class="text-gray-600">The production time for custom hidden doors varies based on the complexity of the design and our current order volume. Typically, custom doors take between 4-6 weeks from the date of order confirmation to shipment. We'll provide you with an estimated timeline during your consultation.</p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 2 -->
+                <div class="border border-gray-200 rounded-lg overflow-hidden">
+                    <button class="faq-toggle w-full flex justify-between items-center p-6 text-left focus:outline-none">
+                        <h3 class="text-lg font-bold">Do you offer installation services for your hidden doors?</h3>
+                        <i class="fas fa-chevron-down text-amber-600 transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-content px-6 pb-6 hidden">
+                        <p class="text-gray-600">Yes, we offer professional installation services for all our hidden door solutions in the Sydney metropolitan area. Our experienced installers will ensure your door is perfectly fitted and functioning smoothly. Installation typically takes 1-2 days depending on the complexity of the project.</p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 3 -->
+                <div class="border border-gray-200 rounded-lg overflow-hidden">
+                    <button class="faq-toggle w-full flex justify-between items-center p-6 text-left focus:outline-none">
+                        <h3 class="text-lg font-bold">What is your return policy?</h3>
+                        <i class="fas fa-chevron-down text-amber-600 transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-content px-6 pb-6 hidden">
+                        <p class="text-gray-600">We accept returns of standard, non-custom products within 14 days of delivery, provided the items are in their original condition and packaging. Custom-made doors cannot be returned unless there is a manufacturing defect. Please review our full  for complete details.</p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 4 -->
+                <div class="border border-gray-200 rounded-lg overflow-hidden">
+                    <button class="faq-toggle w-full flex justify-between items-center p-6 text-left focus:outline-none">
+                        <h3 class="text-lg font-bold">Can I modify an existing door to be a hidden door?</h3>
+                        <i class="fas fa-chevron-down text-amber-600 transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-content px-6 pb-6 hidden">
+                        <p class="text-gray-600">In some cases, existing doors can be modified to function as hidden doors, depending on the structure of your wall and the door's current configuration. We offer consultation services to assess whether your existing door is suitable for conversion or if a new custom solution would be more appropriate.</p>
+                    </div>
+                </div>
+                
+                <!-- FAQ Item 5 -->
+                <div class="border border-gray-200 rounded-lg overflow-hidden">
+                    <button class="faq-toggle w-full flex justify-between items-center p-6 text-left focus:outline-none">
+                        <h3 class="text-lg font-bold">Do you ship internationally?</h3>
+                        <i class="fas fa-chevron-down text-amber-600 transition-transform duration-300"></i>
+                    </button>
+                    <div class="faq-content px-6 pb-6 hidden">
+                        <p class="text-gray-600">Yes, we ship our hidden door solutions worldwide. International shipping costs and delivery times vary by destination. Please contact our sales team for a shipping quote to your location. Note that some larger custom pieces may have shipping restrictions to certain countries.</p>
+                    </div>
+                </div>
+            </div>
+            
+            
+        </div>
+    </section>
+      
+ <!-- CTA Section with Background Image -->
+<section class="py-20 bg-cover bg-center bg-no-repeat text-white relative" style="background-image: url('/image/blog/diy-installation.webp');">
+    <!-- Dark overlay for better readability -->
+    <div class="absolute inset-0 bg-black opacity-60"></div>
+
+    <!-- CTA Content -->
+    <div class="container mx-auto px-4 text-center relative z-10">
+        <h2 class="text-3xl md:text-4xl font-bold mb-6">
+            Ready to Transform Your Space?
+        </h2>
+        <p class="text-xl mb-8 max-w-2xl mx-auto">
+            Schedule a free consultation with our hidden door experts today and discover the perfect solution for your home.
+        </p>
+        <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+            <a href="/contact/" class="bg-white hover:bg-gray-100 text-amber-800 font-bold py-3 px-8 rounded-full transition transform hover:scale-105">
+                Get Started
+            </a>
+            <a href="tel:+61290117626" class="bg-transparent hover:bg-white hover:text-amber-800 border-2 border-white text-white font-bold py-3 px-8 rounded-full transition">
+                Call Us: +61 2 9011 7626
+            </a>
+        </div>
+    </div>
+</section>
+
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-12">
+                <div>
+                    <a href="/" class="flex items-center mb-6">
+                     <img src="/image/logo-white.png" alt="Murphy Door Ogden Logo" class="h-16 w-24 object-cover mr-2">
+                    </a>
+                    <p class="text-gray-400 mb-4">Innovative hidden door solutions that combine functionality with elegant design for modern living spaces.</p>
+                    <div class="flex space-x-4">
+                         <a href="https://www.facebook.com/MurphyDoor/" class="text-gray-400 hover:text-white transition"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/murphydoor/" class="text-gray-400 hover:text-white transition"><i class="fab fa-instagram"></i></a>
+                        <a href="https://www.pinterest.com/murphydoor/" class="text-gray-400 hover:text-white transition"><i class="fab fa-pinterest"></i></a>
+                        <a href="https://www.youtube.com/@murphydoor" class="text-gray-400 hover:text-white transition"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/" class="text-gray-400 hover:text-white transition">Home</a></li>
+                        <li><a href="/shop/" class="text-gray-400 hover:text-white transition">Shop</a></li>
+                        <li><a href="/about/" class="text-gray-400 hover:text-white transition">About Us</a></li>
+                        <li><a href="/blog/" class="text-gray-400 hover:text-white transition">Blog</a></li>
+                        <li><a href="/contact/" class="text-gray-400 hover:text-white transition">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Customer Service</h3>
+                    <ul class="space-y-2">
+                      
+                        <li><a href="/cookies/" class="text-gray-400 hover:text-white transition">Cookies</a></li>
+                        <li><a href="/privacy/" class="text-gray-400 hover:text-white transition">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="text-gray-400 hover:text-white transition">Terms of Service</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Contact Us</h3>
+                    <address class="not-italic text-gray-400">
+                        <p class="mb-2">36 Darlinghurst Road,</p>
+                        <p class="mb-2">Sydney, NSW 2010,</p>
+                        <p class="mb-4">Australia</p>
+                        <p class="mb-2"><a href="tel:+61290117626" class="hover:text-white transition">+61 2 9011 7626</a></p>
+                        <p class="mb-4"><a href="mailto:info@murphydoorogden.com" class="hover:text-white transition">info@murphydoorogden.com</a></p>
+                        <p>Mon-Fri: 9am-5pm</p>
+                        <p>Sat: 10am-2pm</p>
+                    </address>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 pt-8 text-center text-gray-400 text-sm">
+                <p>&copy; 2025 Murphy Door Ogden. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Toast Notification -->
+    <div id="toast" class="toast p-4 bg-green-600 text-white rounded-lg shadow-lg">
+        <div class="flex items-center">
+            <i class="fas fa-check-circle mr-2"></i>
+            <span id="toastMessage">Your message has been sent!</span>
+        </div>
+    </div>
+    
+    <script>
+        
+        
+        // Cart Dropdown Toggle
+        document.getElementById('cartButton').addEventListener('click', function(e) {
+            e.stopPropagation();
+            const dropdown = document.getElementById('cartDropdown');
+            dropdown.classList.toggle('hidden');
+        });
+        
+        // Close cart dropdown when clicking outside
+        document.addEventListener('click', function() {
+            const dropdown = document.getElementById('cartDropdown');
+            if (!dropdown.classList.contains('hidden')) {
+                dropdown.classList.add('hidden');
+            }
+        });
+        
+        // Cart functionality
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        
+        function updateCartCount() {
+            const count = cart.reduce((total, item) => total + item.quantity, 0);
+            document.getElementById('cartCount').textContent = count;
+            document.getElementById('mobileCartCount').textContent = count;
+        }
+        
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toastMessage');
+            
+            toastMessage.textContent = message;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+        
+        function updateCartDropdown() {
+            const cartItems = document.getElementById('cartItems');
+            
+            if (cart.length === 0) {
+                cartItems.innerHTML = '<p class="text-gray-500 text-center py-4">Your cart is empty</p>';
+                return;
+            }
+            
+            let html = '';
+            cart.forEach(item => {
+                html += `
+                    <div class="flex items-center py-2 border-b">
+                        <img src="${item.image}" alt="${item.name}" class="w-12 h-12 object-cover rounded mr-3">
+                        <div class="flex-grow">
+                            <h4 class="text-sm font-medium">${item.name}</h4>
+                            <p class="text-xs text-gray-500">$${item.price.toFixed(2)} x ${item.quantity}</p>
+                        </div>
+                        <button class="remove-from-cart text-red-500 hover:text-red-700" data-id="${item.id}">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                `;
+            });
+            
+            cartItems.innerHTML = html;
+            
+            // Add event listeners to remove buttons
+            document.querySelectorAll('.remove-from-cart').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    e.stopPropagation();
+                    const id = this.getAttribute('data-id');
+                    removeFromCart(id);
+                });
+            });
+        }
+        
+        function removeFromCart(id) {
+            cart = cart.filter(item => item.id !== id);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+            updateCartDropdown();
+            showToast('Item removed from cart');
+        }
+        
+        // Initialize cart
+        updateCartCount();
+        updateCartDropdown();
+        
+        // FAQ Toggle
+        document.querySelectorAll('.faq-toggle').forEach(button => {
+            button.addEventListener('click', function() {
+                const content = this.nextElementSibling;
+                const icon = this.querySelector('i');
+                
+                content.classList.toggle('hidden');
+                icon.classList.toggle('rotate-180');
+            });
+        });
+        
+        // Contact Form Submission
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // In a real implementation, you would send the form data to your server here
+            // For demonstration, we'll just show a success message
+            
+            showToast('Your message has been sent successfully!');
+            this.reset();
+            
+            // Example of what you might do with the form data:
+            // const formData = new FormData(this);
+            // fetch('/api/contact', {
+            //     method: 'POST',
+            //     body: formData
+            // })
+            // .then(response => response.json())
+            // .then(data => {
+            //     showToast('Your message has been sent successfully!');
+            //     this.reset();
+            // })
+            // .catch(error => {
+            //     showToast('There was an error sending your message. Please try again.');
+            // });
+        });
+        
+        // GSAP Animations
+        gsap.registerPlugin(ScrollTrigger);
+        
+        // Animate elements on scroll
+        gsap.utils.toArray('.contact-card, .map-container, .faq-toggle').forEach(element => {
+            gsap.from(element, {
+                scrollTrigger: {
+                    trigger: element,
+                    start: "top 80%",
+                    toggleActions: "play none none none"
+                },
+                y: 50,
+                opacity: 0,
+                duration: 0.8,
+                ease: "power2.out"
+            });
+        });
+        
+        // Animate form inputs on focus
+        document.querySelectorAll('.form-input').forEach(input => {
+            input.addEventListener('focus', function() {
+                gsap.to(this, {
+                    scale: 1.02,
+                    duration: 0.3,
+                    ease: "power2.out"
+                });
+            });
+            
+            input.addEventListener('blur', function() {
+                gsap.to(this, {
+                    scale: 1,
+                    duration: 0.3,
+                    ease: "power2.out"
+                });
+            });
+        });
+    </script>
+</body>
+</html>

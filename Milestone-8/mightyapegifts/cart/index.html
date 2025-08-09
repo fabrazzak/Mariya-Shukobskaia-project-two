@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart | Mighty Ape Gifts</title>
+    <meta name="description" content="Review your cart items at Mighty Ape Gifts. Fast shipping across New Zealand with Jungle Express delivery.">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    
+    <style>
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: #555;
+        }
+        
+        .cart-item {
+            transition: all 0.3s ease;
+        }
+        
+        .cart-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body class="font-sans bg-gray-50">
+    <!-- Header -->
+    <header class="bg-white shadow-md sticky top-0 z-40">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <div class="flex items-center">
+                     <a href="/" class="flex items-center">
+                        <img src="/images/logo.svg" alt="Mighty Ape Gifts" class="h-10 bg-black rounded-lg pr-1  ">
+                    </a>
+                </div>
+                
+                <!-- Navigation -->
+                <nav class="hidden md:flex space-x-8">
+                    <a href="/" class="text-gray-700 hover:text-purple-600 transition">Home</a>                    
+                    <a href="/shop/" class="text-gray-700 hover:text-purple-600 transition">Shop</a>
+                    <a href="/blog/" class="text-gray-700 hover:text-purple-600 transition">Blog</a>
+                    <a href="/about/" class="text-gray-700 hover:text-purple-600 transition">About</a>
+                    <a href="/contact/" class="text-gray-700 hover:text-purple-600 transition">Contact</a>
+                </nav>
+                
+                <!-- Cart -->
+                <div class="flex items-center space-x-4">
+                    <a href="/cart/" class="relative p-2 text-purple-600 transition">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span id="cart-count" class="absolute -top-1 -right-1 bg-purple-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">0</span>
+                    </a>
+                    <button class="md:hidden p-2 text-gray-600 hover:text-purple-600 transition">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="fixed inset-0 bg-white z-50 hidden">
+        <div class="container mx-auto px-4 py-8">
+            <div class="flex justify-between items-center mb-8">
+                <a href="/" class="flex items-center">
+                        <img src="/images/logo.svg" alt="Mighty Ape Gifts" class="h-10 bg-black rounded-lg pr-1  ">
+                    </a>
+                <button id="close-menu" class="p-2 text-gray-600">
+                    <i class="fas fa-times text-2xl"></i>
+                </button>
+            </div>
+            <nav class="flex flex-col space-y-6">
+                <a href="/" class="text-2xl font-medium text-purple-600">Home</a>
+                <a href="/shop/" class="text-2xl font-medium text-gray-700">Shop</a>
+                <a href="/blog/" class="text-2xl font-medium text-gray-700">Blog</a>
+                <a href="/about/" class="text-2xl font-medium text-gray-700">About</a>
+                <a href="/contact/" class="text-2xl font-medium text-gray-700">Contact</a>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Cart Section -->
+    <section class="py-12">
+        <div class="container mx-auto px-4">
+            <h1 class="text-3xl font-bold mb-8">Your Cart</h1>
+            
+            <div class="flex flex-col lg:flex-row gap-8">
+                <!-- Cart Items -->
+                <div class="lg:w-2/3">
+                    <div id="cart-items" class="bg-white rounded-lg shadow-md p-6">
+                        <!-- Cart items will be dynamically inserted here -->
+                        <div class="text-center py-12">
+                            <i class="fas fa-shopping-cart text-4xl text-gray-300 mb-4"></i>
+                            <p class="text-gray-500">Your cart is empty</p>
+                            <a href="/shop/" class="inline-block mt-4 px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition">Continue Shopping</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Order Summary -->
+                <div class="lg:w-1/3">
+                    <div class="bg-white rounded-lg shadow-md p-6 sticky top-4">
+                        <h2 class="text-xl font-bold mb-4">Order Summary</h2>
+                        
+                        <div class="space-y-4 mb-6">
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Subtotal</span>
+                                <span id="subtotal" class="font-medium">$0.00</span>
+                            </div>
+                            <div class="flex justify-between">
+                                <span class="text-gray-600">Shipping</span>
+                                <span id="shipping" class="font-medium">$5.00</span>
+                            </div>
+                            <div class="flex justify-between border-t border-gray-200 pt-4">
+                                <span class="text-lg font-bold">Total</span>
+                                <span id="total" class="text-lg font-bold">$5.00</span>
+                            </div>
+                        </div>
+                        
+                        <button id="checkout-btn" class="w-full bg-purple-600 hover:bg-purple-700 text-white py-3 rounded-lg font-medium transition disabled:opacity-50 disabled:cursor-not-allowed" disabled>
+                            Proceed to Checkout
+                        </button>
+                        
+                        <p class="text-sm text-gray-500 mt-4 text-center">or <a href="/shop/" class="text-purple-600 hover:underline">Continue Shopping</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white pt-16 pb-8">
+        <div class="container mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 mb-12">
+                <div>
+                    <div class="flex items-center mb-4">
+                        <img src="/images/logo.svg" alt="Mighty Ape Gifts" class="h-10">
+                    </div>
+                    <p class="text-gray-400">Your one-stop shop for unique gifts in New Zealand.</p>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Shop</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/shop/" class="text-gray-400 hover:text-white transition">Gifts for Her</a></li>
+                        <li><a href="/shop/" class="text-gray-400 hover:text-white transition">Gifts for Him</a></li>
+                        <li><a href="/shop/" class="text-gray-400 hover:text-white transition">Home & Living</a></li>
+                        <li><a href="/shop/" class="text-gray-400 hover:text-white transition">Novelty Gifts</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">About</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/about/" class="text-gray-400 hover:text-white transition">About</a></li>
+                        <li><a href="/blog/" class="text-gray-400 hover:text-white transition">Blog</a></li>
+                        <li><a href="/contact/" class="text-gray-400 hover:text-white transition">Contact Us</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h3 class="text-lg font-bold mb-4">Legal</h3>
+                    <ul class="space-y-2">
+                        <li><a href="/privacy/" class="text-gray-400 hover:text-white transition">Privacy Policy</a></li>
+                        <li><a href="/terms/" class="text-gray-400 hover:text-white transition">Terms of Service</a></li>
+                        <li><a href="/cookies/" class="text-gray-400 hover:text-white transition">Cookie Policy</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 pt-8">
+                <div class="flex flex-col md:flex-row justify-center items-center">
+                    <div class="text-gray-400 text-center text-sm mb-4 md:mb-0">
+                        &copy; 2025 Mighty Ape Gifts. All rights reserved.
+                    </div>
+                     
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.querySelector('header button.md\\:hidden').addEventListener('click', function() {
+            document.getElementById('mobile-menu').classList.remove('hidden');
+        });
+        
+        document.getElementById('close-menu').addEventListener('click', function() {
+            document.getElementById('mobile-menu').classList.add('hidden');
+        });
+        
+        // Cart functionality
+        function updateCartCount() {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            document.getElementById('cart-count').textContent = cart.reduce((total, item) => total + item.quantity, 0);
+        }
+        
+        function renderCartItems() {
+            const cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const cartItemsContainer = document.getElementById('cart-items');
+            const subtotalElement = document.getElementById('subtotal');
+            const shippingElement = document.getElementById('shipping');
+            const totalElement = document.getElementById('total');
+            const checkoutBtn = document.getElementById('checkout-btn');
+            
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = `
+                    <div class="text-center py-12">
+                        <i class="fas fa-shopping-cart text-4xl text-gray-300 mb-4"></i>
+                        <p class="text-gray-500">Your cart is empty</p>
+                        <a href="/shop/" class="inline-block mt-4 px-6 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition">Continue Shopping</a>
+                    </div>
+                `;
+                subtotalElement.textContent = '$0.00';
+                shippingElement.textContent = '$0.00';
+                totalElement.textContent = '$0.00';
+                checkoutBtn.disabled = true;
+                return;
+            }
+            
+            let cartItemsHTML = '';
+            let subtotal = 0;
+            
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                subtotal += itemTotal;
+                
+                cartItemsHTML += `
+                    <div class="cart-item bg-white border-b border-gray-200 pb-6 mb-6 last:border-0 last:pb-0 last:mb-0">
+                        <div class="flex flex-col sm:flex-row gap-4">
+                            <div class="sm:w-1/4">
+                                <img src="${item.image}" alt="${item.name}" class="w-full h-auto rounded-lg">
+                            </div>
+                            <div class="sm:w-3/4">
+                                <div class="flex justify-between items-start">
+                                    <div>
+                                        <h3 class="font-medium text-lg">${item.name}</h3>
+                                        <p class="text-gray-600">${item.quantity} × $${item.price.toFixed(2)}</p>
+                                    </div>
+                                    <span class="font-bold">$${itemTotal.toFixed(2)}</span>
+                                </div>
+                                
+                                <div class="flex items-center mt-4">
+                                    <div class="flex items-center border border-gray-300 rounded">
+                                        <button class="quantity-decrease px-3 py-1 text-gray-600 hover:text-purple-600 transition" data-id="${item.id}">-</button>
+                                        <span class="quantity px-3 py-1 border-x border-gray-300">${item.quantity}</span>
+                                        <button class="quantity-increase px-3 py-1 text-gray-600 hover:text-purple-600 transition" data-id="${item.id}">+</button>
+                                    </div>
+                                    <button class="remove-item ml-4 text-red-600 hover:text-red-800 transition" data-id="${item.id}">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+            
+            const shipping = subtotal >= 100 ? 0 : 5;
+            const total = subtotal + shipping;
+            
+            cartItemsContainer.innerHTML = cartItemsHTML;
+            subtotalElement.textContent = `$${subtotal.toFixed(2)}`;
+            shippingElement.textContent = subtotal >= 100 ? 'FREE' : `$${shipping.toFixed(2)}`;
+            totalElement.textContent = `$${total.toFixed(2)}`;
+            checkoutBtn.disabled = false;
+            
+            // Add event listeners to quantity buttons
+            document.querySelectorAll('.quantity-increase').forEach(button => {
+                button.addEventListener('click', function() {
+                    const productId = this.getAttribute('data-id');
+                    updateQuantity(productId, 1);
+                });
+            });
+            
+            document.querySelectorAll('.quantity-decrease').forEach(button => {
+                button.addEventListener('click', function() {
+                    const productId = this.getAttribute('data-id');
+                    updateQuantity(productId, -1);
+                });
+            });
+            
+            document.querySelectorAll('.remove-item').forEach(button => {
+                button.addEventListener('click', function() {
+                    const productId = this.getAttribute('data-id');
+                    removeItem(productId);
+                });
+            });
+        }
+        
+        function updateQuantity(productId, change) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            const itemIndex = cart.findIndex(item => item.id === productId);
+            
+            if (itemIndex !== -1) {
+                cart[itemIndex].quantity += change;
+                
+                // Remove item if quantity is 0 or less
+                if (cart[itemIndex].quantity <= 0) {
+                    cart.splice(itemIndex, 1);
+                }
+                
+                localStorage.setItem('cart', JSON.stringify(cart));
+                updateCartCount();
+                renderCartItems();
+            }
+        }
+        
+        function removeItem(productId) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart = cart.filter(item => item.id !== productId);
+            
+            localStorage.setItem('cart', JSON.stringify(cart));
+            updateCartCount();
+            renderCartItems();
+        }
+        
+        // Initialize cart
+        updateCartCount();
+        renderCartItems();
+        
+        // Checkout button
+        document.getElementById('checkout-btn').addEventListener('click', function() {
+            window.location.href = '/checkout/';
+        });
+    </script>
+</body>
+</html>

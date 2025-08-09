@@ -1,0 +1,1446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Friendly Spinners | Premium Social Casino Experience</title>
+    <meta name="description" content="Learn about Friendly Spinners - the premier social casino platform offering free-to-play games with no real money involved. Our mission, vision, and team.">
+    <meta name="keywords" content="about social casino, free slots platform, online gaming community, no real money gambling, virtual casino experience">
+    <link rel="canonical" href="https://friendlyspinners.org/about/">
+
+    <!-- Favicon -->
+    <link rel="icon" href="/assets/virtual-rewards.png" type="image/x-icon">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#FF5E5B',
+                        secondary: '#00A6A6',
+                        accent: '#FFD166',
+                        dark: '#0F1621',
+                        light: '#F8F9FA',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        display: ['Bebas Neue', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <!-- GSAP -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.5/ScrollTrigger.min.js"></script>
+    
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    
+    <!-- Particles.js -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        body {
+            overflow-x: hidden;
+            font-family: 'Inter', sans-serif;
+            background-color: #0F1621;
+            color: #F8F9FA;
+        }
+        
+        .hero-gradient {
+            background: radial-gradient(ellipse at top, #1A1A2E, #0F1621);
+        }
+        
+        .feature-card {
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+            perspective: 1000px;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Unique Hamburger Menu */
+        .hamburger-menu {
+            width: 40px;
+            height: 40px;
+            position: relative;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .hamburger-line {
+            width: 30px;
+            height: 3px;
+            background: #FF5E5B;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+        
+        .hamburger-line::before, .hamburger-line::after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 3px;
+            background: #FF5E5B;
+            border-radius: 3px;
+            transition: all 0.3s ease;
+        }
+        
+        .hamburger-line::before {
+            transform: translateY(-10px);
+        }
+        
+        .hamburger-line::after {
+            transform: translateY(10px);
+        }
+        
+        .hamburger-menu.open .hamburger-line {
+            background: transparent;
+        }
+        
+        .hamburger-menu.open .hamburger-line::before {
+            transform: rotate(45deg);
+        }
+        
+        .hamburger-menu.open .hamburger-line::after {
+            transform: rotate(-45deg);
+        }
+        
+        .age-verification {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(10, 10, 20, 0.95);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(10px);
+        }
+        
+        .game-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(10, 10, 20, 0.95);
+            z-index: 999;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            height: 100vh;
+        }
+        
+        .login-modal, .register-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(10, 10, 20, 0.95);
+            z-index: 999;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(10px);
+        }
+        
+        .game-iframe-container {
+            width: 90%;
+            height: 80%;
+            position: relative;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: -40px;
+            right: 0;
+            background: #FF5E5B;
+            color: white;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .team-member:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.2);
+        }
+        
+        .particles-js-canvas-el {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        
+        .glow-text {
+            text-shadow: 0 0 10px rgba(255, 94, 91, 0.7);
+        }
+        
+        .glow-box {
+            box-shadow: 0 0 20px rgba(0, 166, 166, 0.5);
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        .floating {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        /* Unique 3D button effect */
+        .btn-3d {
+            position: relative;
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+        }
+        
+        .btn-3d:hover {
+            transform: translateY(-3px) rotateX(10deg);
+        }
+        
+        .btn-3d:active {
+            transform: translateY(1px);
+        }
+        
+        /* Advanced hover effects for cards */
+        .hover-tilt {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .hover-tilt:hover {
+            transform: perspective(1000px) rotateX(5deg) rotateY(5deg) scale(1.02);
+            box-shadow: 0 20px 30px -10px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* Gradient text */
+        .gradient-text {
+            background: linear-gradient(90deg, #FF5E5B, #FFD166);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        /* Timeline */
+        .timeline-item {
+            position: relative;
+            padding-left: 3rem;
+            margin-bottom: 4rem;
+        }
+        
+        .timeline-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0.5rem;
+            top: 0;
+            height: 100%;
+            width: 2px;
+            background: linear-gradient(to bottom, #FF5E5B, #00A6A6);
+        }
+        
+        .timeline-dot {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: 50%;
+            background: #FF5E5B;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+        
+        /* Team member cards */
+        .team-member {
+            transition: all 0.3s ease;
+            transform-style: preserve-3d;
+        }
+        
+        .team-member:hover {
+            transform: translateY(-10px);
+        }
+        
+        .team-social {
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .team-member:hover .team-social {
+            opacity: 1;
+        }
+        body,html{
+            overflow-x: hidden;
+
+        }
+    </style>
+</head>
+<body class="relative">
+    <!-- Age Verification Modal -->
+    <div class="age-verification">
+        <div class="bg-dark p-8 rounded-xl max-w-md w-full mx-4 text-center relative z-10">
+            <div class="mb-6">
+                <h2 class="text-3xl font-bold text-primary mb-2">Age Verification Required</h2>
+                <p class="text-light">You must be 18 years or older to access this social casino platform. Please confirm your age to continue and enjoy our premium gaming experience.</p>
+            </div>
+            
+            <div class="flex flex-col space-y-4">
+                <button id="confirmAge" class="bg-primary hover:bg-opacity-90 text-white font-bold py-3 px-6 rounded-full text-lg transition-all duration-300 transform hover:scale-105">
+                    <i class="fas fa-check-circle mr-2"></i> I am 18 or older
+                </button>
+                <button id="denyAge" class="bg-gray-600 hover:bg-gray-700 text-white font-bold py-3 px-6 rounded-full text-lg transition-all duration-300">
+                    <i class="fas fa-times-circle mr-2"></i> I am under 18
+                </button>
+            </div>
+            
+            <p class="text-sm text-gray-400 mt-6">Important: This platform is for entertainment only. No real money gambling is involved.</p>
+        </div>
+    </div>
+    
+    <!-- Login Modal -->
+    <div class="login-modal">
+        <div class="bg-dark p-8 rounded-xl max-w-md w-full mx-4 relative z-10 border border-gray-700">
+            <button class="close-modal absolute top-4 right-4">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="text-center mb-6">
+                <h2 class="text-2xl font-bold text-white mb-2">Welcome Back!</h2>
+                <p class="text-gray-400">Login to access your account and continue playing</p>
+            </div>
+            
+            <form id="loginForm" class="space-y-4">
+                <div>
+                    <label for="loginEmail" class="block text-gray-400 mb-2">Email</label>
+                    <input type="email" id="loginEmail" required class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary">
+                </div>
+                
+                <div>
+                    <label for="loginPassword" class="block text-gray-400 mb-2">Password</label>
+                    <input type="password" id="loginPassword" required class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary">
+                </div>
+                
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                        <input type="checkbox" id="rememberMe" class="h-4 w-4 text-primary focus:ring-primary border-gray-600 rounded">
+                        <label for="rememberMe" class="ml-2 block text-sm text-gray-400">Remember me</label>
+                    </div>
+                    <a href="javascript:void(0)" class="text-sm text-primary hover:text-opacity-80">Forgot password?</a>
+                </div>
+                
+                <button type="submit" class="w-full bg-primary hover:bg-opacity-90 text-white font-bold py-3 px-4 rounded-lg transition-all duration-300">
+                    Log In
+                </button>
+                
+                <div class="text-center text-gray-400">
+                    Don't have an account? <button id="switchToRegister" class="text-primary hover:text-opacity-80">Register</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Register Modal -->
+    <div class="register-modal">
+        <div class="bg-dark p-8 rounded-xl max-w-md w-full mx-4 relative z-10 border border-gray-700">
+            <button class="close-modal absolute top-4 right-4">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="text-center mb-6">
+                <h2 class="text-2xl font-bold text-white mb-2">Create Your Account</h2>
+                <p class="text-gray-400">Register now and get 5,000 free points!</p>
+            </div>
+            
+            <form id="registerForm" class="space-y-4">
+                <div>
+                    <label for="registerUsername" class="block text-gray-400 mb-2">Username</label>
+                    <input type="text" id="registerUsername" required class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary">
+                </div>
+                
+                <div>
+                    <label for="registerEmail" class="block text-gray-400 mb-2">Email</label>
+                    <input type="email" id="registerEmail" required class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary">
+                </div>
+                
+                <div>
+                    <label for="registerPassword" class="block text-gray-400 mb-2">Password</label>
+                    <input type="password" id="registerPassword" required class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary">
+                </div>
+                
+                <div>
+                    <label for="registerConfirmPassword" class="block text-gray-400 mb-2">Confirm Password</label>
+                    <input type="password" id="registerConfirmPassword" required class="w-full bg-gray-800 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:ring-2 focus:ring-primary">
+                </div>
+                
+                <div class="flex items-center">
+                    <input type="checkbox" id="acceptTerms" required class="h-4 w-4 text-primary focus:ring-primary border-gray-600 rounded">
+                    <label for="acceptTerms" class="ml-2 block text-sm text-gray-400">
+                        I agree to the <a href="/terms/" class="text-primary hover:text-opacity-80">Terms of Service</a> and <a href="/privacy/" class="text-primary hover:text-opacity-80">Privacy Policy</a>
+                    </label>
+                </div>
+                
+                <button type="submit" class="w-full bg-primary hover:bg-opacity-90 text-white font-bold py-3 px-4 rounded-lg transition-all duration-300">
+                    Register Now
+                </button>
+                
+                <div class="text-center text-gray-400">
+                    Already have an account? <button id="switchToLogin" class="text-primary hover:text-opacity-80">Log In</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Game Modal -->
+    <div class="game-modal">
+        <div class="game-iframe-container bg-dark p-6 rounded-lg">
+            <div class="flex justify-between items-center mb-4">
+                <h3 id="gameModalTitle" class="text-white text-xl font-bold"></h3>
+                <button class="close-modal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <iframe id="gameIframe" class="w-full h-[95%] rounded-lg" frameborder="0"></iframe>
+        </div>
+    </div>
+    
+    <!-- Navigation -->
+    <nav class="fixed w-full z-50 bg-dark bg-opacity-90 backdrop-filter backdrop-blur-md border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <!-- Logo -->
+                <div class="flex-shrink-0 flex items-center">
+                    <a href="/" class="text-2xl font-bold text-white flex items-center">
+                            <img src="/assets/logo.png" class="h-14 py-1"  alt="logo"/>
+                    </a>
+                </div>
+                
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="/" class="text-white hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">Home</a>
+                    <a href="/games/" class="text-white hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">Games</a>
+                    <a href="/about/" class="text-primary px-3 py-2 rounded-md text-sm font-medium">About Us</a>
+                    <a href="/responsible-gaming/" class="text-white hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">Responsible Gaming</a>
+                    <a href="/contact/" class="text-white hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition-colors">Contact</a>
+                    
+                    <div class="ml-4 flex items-center space-x-4" id="authButtons">
+                        <button id="loginBtn" class="text-white hover:text-primary px-4 py-2 rounded-md text-sm font-medium transition-colors">
+                            <i class="fas fa-sign-in-alt mr-1"></i> Log In
+                        </button>
+                        <button id="registerBtn" class="bg-primary hover:bg-opacity-90 text-white px-4 py-2 rounded-full text-sm font-bold transition-colors transform hover:scale-105">
+                            <i class="fas fa-user-plus mr-1"></i> Register
+                        </button>
+                    </div>
+                    
+                    <div class="ml-4 flex items-center space-x-4 hidden" id="userInfo">
+                        <div class="text-white flex flex-col items-center justify-center border p-1 px-3 rounded-lg">
+                            <div class="flex item items-center justify-center gap-2">
+                            <i class="fas fa-coins text-yellow-400 mr-1"></i>
+                            <span id="userCoins">0</span> Coins
+                            </div>
+                             <span id="usernameDisplay" class="font-medium">Guest</span>
+                        </div>
+                        <div class="flex items-center">
+                           
+                        </div>
+                        <button id="mobileLogoutBtn" class="w-full text-left px-3 py-2 rounded-md text-base font-medium text-white hover:text-primary">
+                        <i class="fas fa-sign-out-alt mr-2"></i> Log Out
+                    </button>
+                    </div>
+                </div>
+                
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobileMenuBtn" class="hamburger-menu">
+                        <span class="hamburger-line"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="hidden md:hidden bg-dark border-t border-gray-800">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="/" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-primary">Home</a>
+                <a href="/games/" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-primary">Games</a>
+                <a href="/about/" class="block px-3 py-2 rounded-md text-base font-medium text-primary">About Us</a>
+                <a href="/responsible-gaming/" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-primary">Responsible Gaming</a>
+                <a href="/contact/" class="block px-3 py-2 rounded-md text-base font-medium text-white hover:text-primary">Contact</a>
+                
+                <div class="pt-4 border-t border-gray-800" id="mobileAuthButtons">
+                    <button id="mobileLoginBtn" class="w-full text-left px-3 py-2 rounded-md text-base font-medium text-white hover:text-primary">
+                        <i class="fas fa-sign-in-alt mr-2"></i> Log In
+                    </button>
+                    <button id="mobileRegisterBtn" class="w-full mt-2 bg-primary hover:bg-opacity-90 text-white px-3 py-2 rounded-full text-base font-bold">
+                        <i class="fas fa-user-plus mr-2"></i> Register
+                    </button>
+                </div>
+                
+                <div class="pt-4 border-t border-gray-800 hidden" id="mobileUserInfo">
+                    <div class="px-3 py-2 text-white">
+                        <i class="fas fa-user mr-2"></i>
+                        <span id="mobileUsernameDisplay">Guest</span>
+                    </div>
+                    <div class="px-3 py-2 text-white">
+                        <i class="fas fa-coins text-yellow-400 mr-2"></i>
+                        <span id="mobileUserCoins">0</span> Coins
+                    </div>
+                    <button id="mobileLogoutBtn" class="w-full text-left px-3 py-2 rounded-md text-base font-medium text-white hover:text-primary">
+                        <i class="fas fa-sign-out-alt mr-2"></i> Log Out
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Hero Section -->
+    <section class="hero-gradient pt-32 pb-20 relative overflow-hidden">
+        <div id="particles-js" class="absolute inset-0"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div class="text-center">
+                <h1 class="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
+                    <span class="text-primary">About</span> <span class="text-secondary glow-text">FriendlySpinners</span>
+                </h1>
+                <p class="text-xl text-gray-300 mb-8 max-w-3xl mx-auto">
+                    Discover the story behind Canada's premier social casino platform - where entertainment meets innovation in a safe, responsible gaming environment.
+                </p>
+                
+                <div class="flex justify-center">
+                    <button id="aboutRegisterBtn" class="bg-primary hover:bg-opacity-90 text-white font-bold py-4 px-8 rounded-full text-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center btn-3d">
+                        <i class="fas fa-gem mr-2"></i> Join Our Community
+                    </button>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Our Story Section -->
+    <section class="py-16 bg-dark">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="lg:grid lg:grid-cols-2 lg:gap-12 items-center">
+                <div class="mb-12 lg:mb-0">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-6">
+                        Our <span class="text-primary">Story</span>
+                    </h2>
+                    <p class="text-gray-400 mb-6">
+                        Founded in 2023, FriendlySpinners began with a simple vision: to create the most engaging social casino experience without the risks of real-money gambling. Based in Val-d'Or, Quebec, our team of gaming enthusiasts and tech innovators came together to build a platform that prioritizes fun, fairness, and responsible entertainment.
+                    </p>
+                    <p class="text-gray-400 mb-6">
+                        What started as a small project has grown into a thriving community of thousands of players who enjoy our premium selection of free-to-play casino games. We partner with top game providers like Hacksaw Gaming to bring you the latest and most exciting titles in the industry.
+                    </p>
+                    <p class="text-gray-400">
+                        At FriendlySpinners, we believe that casino-style games should be accessible to everyone as a form of entertainment, without financial risk. Our virtual coin system ensures a fun, pressure-free environment where you can enjoy the thrill of the game.
+                    </p>
+                </div>
+                
+                <div class="relative">
+                    <div class="floating">
+                        <img src="/assets/virtual-rewards.png" alt="Casino chips and cards" class="w-full rounded-xl shadow-2xl ">
+                    </div>
+                    <div class="absolute -bottom-10 -left-10 w-32 h-32 bg-accent rounded-full filter blur-3xl opacity-20"></div>
+                    <div class="absolute -top-10 -right-10 w-32 h-32 bg-primary rounded-full filter blur-3xl opacity-20"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Mission & Values -->
+    <section class="py-16 bg-gray-900">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                    Our <span class="text-primary">Mission</span> & <span class="text-secondary">Values</span>
+                </h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">
+                    The principles that guide everything we do at FriendlySpinners
+                </p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="feature-card bg-dark p-6 rounded-xl border border-gray-800 hover:border-primary transition-all duration-300 hover-tilt">
+                    <div class="w-14 h-14 bg-primary bg-opacity-20 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-star text-2xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-white">Premium Entertainment</h3>
+                    <p class="text-gray-400">
+                        We're committed to delivering the highest quality gaming experience with cutting-edge graphics, smooth gameplay, and innovative features.
+                    </p>
+                </div>
+                
+                <div class="feature-card bg-dark p-6 rounded-xl border border-gray-800 hover:border-secondary transition-all duration-300 hover-tilt">
+                    <div class="w-14 h-14 bg-secondary bg-opacity-20 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-shield-alt text-2xl text-secondary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-white">Responsible Gaming</h3>
+                    <p class="text-gray-400">
+                        Our platform is designed for entertainment only, with robust tools and resources to promote healthy gaming habits and prevent problematic behavior.
+                    </p>
+                </div>
+                
+                <div class="feature-card bg-dark p-6 rounded-xl border border-gray-800 hover:border-primary transition-all duration-300 hover-tilt">
+                    <div class="w-14 h-14 bg-primary bg-opacity-20 rounded-full flex items-center justify-center mb-4">
+                        <i class="fas fa-users text-2xl text-primary"></i>
+                    </div>
+                    <h3 class="text-xl font-bold mb-2 text-white">Community First</h3>
+                    <p class="text-gray-400">
+                        We foster a vibrant, inclusive community where players can connect, compete, and share their passion for social casino gaming.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Timeline Section -->
+    <section class="py-16 bg-dark">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                    Our <span class="text-primary">Journey</span>
+                </h2>
+                <p class="text-gray-400 max-w-2xl mx-auto">
+                    Key milestones in the FriendlySpinners story
+                </p>
+            </div>
+            
+            <div class="max-w-3xl mx-auto">
+                <div class="timeline-item">
+                    <div class="timeline-dot">1</div>
+                    <div class="bg-gray-900 p-6 rounded-xl border border-gray-800">
+                        <h3 class="text-xl font-bold text-white mb-2">Foundation</h3>
+                        <p class="text-gray-400">January 2023</p>
+                        <p class="text-gray-400 mt-2">
+                            FriendlySpinners was founded in Val-d'Or by a team of gaming enthusiasts with a vision for responsible social casino entertainment.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot">2</div>
+                    <div class="bg-gray-900 p-6 rounded-xl border border-gray-800">
+                        <h3 class="text-xl font-bold text-white mb-2">Beta Launch</h3>
+                        <p class="text-gray-400">May 2023</p>
+                        <p class="text-gray-400 mt-2">
+                            Our platform launched in beta with 10 games, attracting our first 1,000 registered users within the first month.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot">3</div>
+                    <div class="bg-gray-900 p-6 rounded-xl border border-gray-800">
+                        <h3 class="text-xl font-bold text-white mb-2">Hacksaw Gaming Partnership</h3>
+                        <p class="text-gray-400">September 2023</p>
+                        <p class="text-gray-400 mt-2">
+                            We formed our first major partnership with Hacksaw Gaming, adding their premium slot games to our platform.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot">4</div>
+                    <div class="bg-gray-900 p-6 rounded-xl border border-gray-800">
+                        <h3 class="text-xl font-bold text-white mb-2">10,000 Users</h3>
+                        <p class="text-gray-400">January 2024</p>
+                        <p class="text-gray-400 mt-2">
+                            We celebrated reaching 10,000 registered users, a testament to our growing community of social casino enthusiasts.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="timeline-item">
+                    <div class="timeline-dot">5</div>
+                    <div class="bg-gray-900 p-6 rounded-xl border border-gray-800">
+                        <h3 class="text-xl font-bold text-white mb-2">Current</h3>
+                        <p class="text-gray-400">2025</p>
+                        <p class="text-gray-400 mt-2">
+                            Today, FriendlySpinners offers 50+ games to over 50,000 users, with new features and titles added monthly.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+  
+   
+    
+  <section class="relative py-16 bg-cover bg-center bg-no-repeat" style="background-image: url('/assets/reatures-bg.jpg');">
+  <!-- Overlay -->
+  <div class="absolute inset-0 bg-dark/50 0 z-0"></div>
+
+  <!-- Content -->
+  <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center z-10">
+    <h2 class="text-3xl md:text-4xl font-bold mb-6 text-white drop-shadow-lg"> 
+      Ready to Start Playing?
+    </h2>
+    <p class="text-white text-xl mb-8 max-w-2xl mx-auto drop-shadow-md">
+      Join thousands of players enjoying our premium social casino experience today!
+    </p>
+    <div class="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-4">
+      <button id="bottomRegisterBtn" class="bg-white hover:bg-opacity-90 text-primary font-bold py-4 px-8 rounded-full text-lg transition-all duration-300 transform hover:scale-105 btn-3d shadow-lg hover:shadow-xl">
+        <i class="fas fa-user-plus mr-2"></i> Register Now
+      </button>
+      <button id="learnMoreBtn" class="bg-transparent hover:bg-white hover:bg-opacity-20 text-white font-bold py-4 px-8 rounded-full text-lg border-2 border-white transition-all duration-300 btn-3d shadow-lg hover:shadow-xl hover:scale-105">
+        <i class="fas fa-info-circle mr-2"></i> Learn More
+      </button>
+    </div>
+  </div>
+</section>
+
+
+    
+    <!-- Responsible Gaming Section -->
+    <section class="py-12 bg-dark border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="md:col-span-2">
+                    <h3 class="text-xl font-bold mb-4 text-white">
+                        <i class="fas fa-shield-alt text-primary mr-2"></i> Responsible Gaming Commitment
+                    </h3>
+                    <p class="text-gray-400 mb-4">
+                        FriendlySpinners is committed to promoting responsible gaming practices. We provide comprehensive tools and resources to help players maintain control over their gaming habits and ensure a safe, enjoyable experience for all users.
+                    </p>
+                    <p class="text-gray-400 font-semibold">
+                        Important Notice: This is a social casino platform for entertainment only. No real money gambling or payouts are involved. All coins are virtual and have no monetary value.
+                    </p>
+                </div>
+                <div class="flex flex-col md:items-end justify-center space-y-3">
+                    <a href="https://www.gamcare.org.uk/" target="_blank" class="text-primary hover:text-opacity-80 flex items-center">
+                        <i class="fas fa-external-link-alt mr-2"></i> GamCare
+                    </a>
+                    <a href="https://www.gambleaware.org/" target="_blank" class="text-primary hover:text-opacity-80 flex items-center">
+                        <i class="fas fa-external-link-alt mr-2"></i> GambleAware
+                    </a>
+                    <a href="/responsible-gaming/" class="text-primary hover:text-opacity-80 flex items-center">
+                        <i class="fas fa-file-alt mr-2"></i> Responsible Gaming Policy
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+  
+  
+  <!-- Footer - Diamond Casino Layout -->
+<footer class="bg-gray-900 text-gray-400 overflow-hidden">
+  <!-- Decorative elements -->
+  <div class="relative">
+    <div class="absolute -top-20 left-0 w-full h-20 bg-gradient-to-b from-transparent to-gray-900 z-10"></div>
+    <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-primary via-yellow-400 to-primary opacity-30"></div>
+    <div class="absolute -top-10 left-1/4 w-2 h-10 bg-primary rotate-45"></div>
+    <div class="absolute -top-10 right-1/4 w-2 h-10 bg-primary -rotate-45"></div>
+  </div>
+
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 relative">
+    <!-- Diamond grid background pattern -->
+    <div class="absolute inset-0 overflow-hidden opacity-5">
+      <div class="absolute inset-0 bg-repeat" style="background-image: url(''); background-size: 12px;"></div>
+    </div>
+
+    <div class="relative z-10">
+      <!-- Logo and tagline with card suit decorations -->
+      <div class="flex flex-col items-center mb-16">
+        <div class="flex items-center mb-4">
+          <span class="text-red-500 text-2xl mr-2">♥</span>
+          <a href="/" class="gradient-text text-3xl">
+            <img src="/assets/logo.png" class="h-16 py-1" alt="logo"/>
+          </a>
+          <span class="text-red-500 text-2xl ml-2">♦</span>
+        </div>
+        <p class="text-center max-w-2xl mx-auto text-sm px-4 relative">
+          <span class="text-black-500 absolute -left-2 hidden sm:inline">♠</span>
+          The premier social casino platform offering the best free-to-play casino games
+          <span class="text-black-500 absolute -right-2 hidden sm:inline">♣</span>
+        </p>
+      </div>
+
+      <!-- Links in a circular layout -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-12 mb-20">
+        <!-- Left column - Explore -->
+        <div class="relative text-center md:text-left">
+          <div class="absolute -left-8 top-0 w-1 h-full bg-gradient-to-b from-primary to-transparent hidden md:block"></div>
+          <h4 class="text-white font-bold text-lg mb-6 flex items-center justify-center md:justify-start">
+            <span class="w-3 h-3 bg-primary rounded-full mr-3"></span>
+            Explore
+          </h4>
+          <ul class="space-y-3 md:pl-6">
+            <li><a href="/" class="hover:text-primary transition-colors flex items-center justify-center md:justify-start group">
+              <span class="w-2 h-2 bg-gray-600 rounded-full mr-3 group-hover:bg-primary"></span>
+              Home
+            </a></li>
+            <li><a href="/games/" class="hover:text-primary transition-colors flex items-center justify-center md:justify-start group">
+              <span class="w-2 h-2 bg-gray-600 rounded-full mr-3 group-hover:bg-primary"></span>
+              Games
+            </a></li>
+            <li><a href="/about/" class="hover:text-primary transition-colors flex items-center justify-center md:justify-start group">
+              <span class="w-2 h-2 bg-gray-600 rounded-full mr-3 group-hover:bg-primary"></span>
+              About Us
+            </a></li>
+            <li><a href="/contact/" class="hover:text-primary transition-colors flex items-center justify-center md:justify-start group">
+              <span class="w-2 h-2 bg-gray-600 rounded-full mr-3 group-hover:bg-primary"></span>
+              Contact
+            </a></li>
+          </ul>
+        </div>
+
+        <!-- Middle column - Legal -->
+        <div class="relative">
+          <div class="absolute left-1/2 transform -translate-x-1/2 -top-8 w-16 h-16 rounded-full border-2 border-primary border-dashed flex items-center  justify-center">
+            <span class="text-primary text-xs font-bold">LEGAL</span>
+          </div>
+          <ul class="space-y-3 text-center pt-14">
+            <li><a href="/privacy/" class="hover:text-primary transition-colors">Privacy Policy</a></li>
+            <li><a href="/terms/" class="hover:text-primary transition-colors">Terms of Service</a></li>
+            <li><a href="/cookies/" class="hover:text-primary transition-colors">Cookies Policy</a></li>
+            <li><a href="/responsible-gaming/" class="hover:text-primary transition-colors">Responsible Gaming</a></li>
+          </ul>
+        </div>
+
+        <!-- Right column - Contact -->
+        <div class="relative text-center md:text-right">
+          <div class="absolute -right-8 top-0 w-1 h-full bg-gradient-to-b from-primary to-transparent hidden md:block"></div>
+          <h4 class="text-white font-bold text-lg mb-6 flex items-center justify-center md:justify-end">
+            <span class="md:hidden w-3 h-3 bg-primary rounded-full mr-3"></span>
+            Contact Us
+            <span class="w-3 h-3 bg-primary rounded-full ml-3 hidden md:block"></span>
+          </h4>
+          <ul class="space-y-4 md:pr-6">
+            <li>
+              <a href="mailto:info@friendlyspinners.org" class="hover:text-primary transition-colors inline-flex items-center justify-center md:justify-end w-full">
+                <span>info@friendlyspinners.org</span>
+                <i class="fas fa-envelope text-primary ml-2 hidden md:block"></i>
+              </a>
+            </li>
+            <li>
+              <a href="tel:+18198243146" class="hover:text-primary transition-colors inline-flex items-center justify-center md:justify-end w-full">
+                <span>+1 (819) 824-3146</span>
+                <i class="fas fa-phone-alt text-primary ml-2 hidden md:block "></i>
+              </a>
+            </li>
+            <li class="flex flex-col md:flex-row md:items-start md:justify-end">
+              <div class="flex items-center justify-center md:justify-end">
+                <span>490 Chem. de Vassan, Val-d'Or, QC J9P 0C1, Canada</span>
+                <i class="fas fa-map-marker-alt text-primary ml-2 hidden md:block"></i>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Bottom section with chips design -->
+      <div class="border-t border-gray-800 pt-12 relative">
+        <div class="absolute -top-6 left-1/2 transform -translate-x-1/2 flex space-x-2">
+          <span class="w-10 h-6 rounded-full bg-gray-800 border border-gray-700"></span>
+          <span class="w-10 h-6 rounded-full bg-gray-800 border border-gray-700"></span>
+          <span class="w-10 h-6 rounded-full bg-gray-800 border border-gray-700"></span>
+        </div>
+
+        <div class="flex flex-col md:flex-row justify-between items-center gap-6">
+          <p class="text-sm text-center md:text-left order-2 md:order-1">
+            &copy; 2025 FriendlySpinners. All rights reserved.
+          </p>
+          
+          <div class="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-sm order-1 md:order-2">
+            <span class="px-3 py-1 rounded-full border border-primary text-primary">18+ Only</span>
+            <span class="hidden md:block text-primary">•</span>
+            <span class="text-center">Social Casino Platform</span>
+            <span class="hidden md:block text-primary">•</span>
+            <span class="text-center">No Real Money Gambling</span>
+          </div>
+        </div>
+
+        <p class="mt-8 text-xs text-gray-600 text-center max-w-3xl mx-auto relative px-8">
+          <span class="absolute left-0 top-0 text-primary hidden sm:inline">✻</span>
+          <span class="absolute right-0 top-0 text-primary hidden sm:inline">✻</span>
+          This website operates as a social casino platform for entertainment purposes only. No real money gambling, betting, or wagering is involved. Virtual coins and winnings have no cash value and cannot be exchanged for real money, prizes, or any monetary compensation. Success in social casino games does not guarantee future success at real money gambling activities.
+        </p>
+      </div>
+    </div>
+  </div>
+</footer>
+    
+    
+    
+    <script>
+        // User Management System
+        class UserManager {
+            constructor() {
+                this.currentUser = null;
+                this.loadUser();
+            }
+            
+            loadUser() {
+                const userData = localStorage.getItem('currentUser');
+                if (userData) {
+                    this.currentUser = JSON.parse(userData);
+                    this.updateUI();
+                }
+            }
+            
+            register(username, email, password) {
+                // Check if user already exists
+                const users = JSON.parse(localStorage.getItem('users') )|| [];
+                const userExists = users.some(user => user.email === email);
+                
+                if (userExists) {
+                    return { success: false, message: 'Email already registered' };
+                }
+                
+                // Create new user
+                const newUser = {
+                    id: Date.now().toString(),
+                    username,
+                    email,
+                    password, // Note: In a real app, you would hash the password
+                    coins: 5000, // Starting bonus
+                    joinDate: new Date().toISOString(),
+                    lastLogin: new Date().toISOString()
+                };
+                
+                users.push(newUser);
+                localStorage.setItem('users', JSON.stringify(users));
+                
+                // Log the user in
+                return this.login(email, password);
+            }
+            
+            login(email, password) {
+                const users = JSON.parse(localStorage.getItem('users')) || [];
+                const user = users.find(u => u.email === email && u.password === password);
+                
+                if (user) {
+                    // Update last login
+                    user.lastLogin = new Date().toISOString();
+                    localStorage.setItem('users', JSON.stringify(users));
+                    
+                    // Set current user
+                    this.currentUser = user;
+                    localStorage.setItem('currentUser', JSON.stringify(user));
+                    
+                    this.updateUI();
+                    return { success: true, user };
+                }
+                
+                return { success: false, message: 'Invalid email or password' };
+            }
+            
+            logout() {
+                this.currentUser = null;
+                localStorage.removeItem('currentUser');
+                this.updateUI();
+            }
+            
+            updateUI() {
+                const authButtons = document.getElementById('authButtons');
+                const userInfo = document.getElementById('userInfo');
+                const usernameDisplay = document.getElementById('usernameDisplay');
+                const userCoins = document.getElementById('userCoins');
+                
+                const mobileAuthButtons = document.getElementById('mobileAuthButtons');
+                const mobileUserInfo = document.getElementById('mobileUserInfo');
+                const mobileUsernameDisplay = document.getElementById('mobileUsernameDisplay');
+                const mobileUserCoins = document.getElementById('mobileUserCoins');
+                
+                if (this.currentUser) {
+                    // Desktop UI
+                    if (authButtons) authButtons.classList.add('hidden');
+                    if (userInfo) userInfo.classList.remove('hidden');
+                    if (usernameDisplay) usernameDisplay.textContent = this.currentUser.username;
+                    if (userCoins) userCoins.textContent = this.currentUser.coins.toLocaleString();
+                    
+                    // Mobile UI
+                    if (mobileAuthButtons) mobileAuthButtons.classList.add('hidden');
+                    if (mobileUserInfo) mobileUserInfo.classList.remove('hidden');
+                    if (mobileUsernameDisplay) mobileUsernameDisplay.textContent = this.currentUser.username;
+                    if (mobileUserCoins) mobileUserCoins.textContent = this.currentUser.coins.toLocaleString();
+                } else {
+                    // Desktop UI
+                    if (authButtons) authButtons.classList.remove('hidden');
+                    if (userInfo) userInfo.classList.add('hidden');
+                    
+                    // Mobile UI
+                    if (mobileAuthButtons) mobileAuthButtons.classList.remove('hidden');
+                    if (mobileUserInfo) mobileUserInfo.classList.add('hidden');
+                }
+            }
+            
+            isLoggedIn() {
+                return this.currentUser !== null;
+            }
+        }
+        
+        // Initialize User Manager
+        const userManager = new UserManager();
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            // Age Verification
+            const ageVerified = localStorage.getItem('ageVerified');
+            
+            if (ageVerified === 'true') {
+                document.querySelector('.age-verification').style.display = 'none';
+            } else {
+                document.querySelector('.age-verification').style.display = 'flex';
+            }
+            
+            document.getElementById('confirmAge').addEventListener('click', function() {
+                localStorage.setItem('ageVerified', 'true');
+                document.querySelector('.age-verification').style.display = 'none';
+                gsap.from('nav', { y: -50, opacity: 0, duration: 0.5 });
+                gsap.from('section', { y: 50, opacity: 0, duration: 0.5, stagger: 0.1 });
+            });
+            
+            document.getElementById('denyAge').addEventListener('click', function() {
+                window.location.href = 'https://www.google.com/';
+            });
+            
+            // Mobile Menu Toggle
+            const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+            const mobileMenu = document.getElementById('mobileMenu');
+            
+            if (mobileMenuBtn && mobileMenu) {
+                mobileMenuBtn.addEventListener('click', function() {
+                    this.classList.toggle('open');
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+            
+            // Register Buttons
+            const registerButtons = [
+                document.getElementById('registerBtn'),
+                document.getElementById('aboutRegisterBtn'),
+                document.getElementById('bottomAboutRegisterBtn'),
+                document.getElementById('mobileRegisterBtn')
+            ];
+            
+            registerButtons.forEach(button => {
+                if (button) {
+                    button.addEventListener('click', function() {
+                        document.querySelector('.register-modal').style.display = 'flex';
+                        document.querySelector('.login-modal').style.display = 'none';
+                    });
+                }
+            });
+            
+            // Login Buttons
+            const loginButtons = [
+                document.getElementById('loginBtn'),
+                document.getElementById('mobileLoginBtn')
+            ];
+            
+            loginButtons.forEach(button => {
+                if (button) {
+                    button.addEventListener('click', function() {
+                        document.querySelector('.login-modal').style.display = 'flex';
+                        document.querySelector('.register-modal').style.display = 'none';
+                    });
+                }
+            });
+            
+            // Close modals
+            const closeModal = document.querySelectorAll('.close-modal');
+            closeModal.forEach(button => {
+                button.addEventListener('click', function() {
+                    document.querySelectorAll('.game-modal, .login-modal, .register-modal').forEach(modal => {
+                        modal.style.display = 'none';
+                    });
+                    document.body.style.overflow = 'auto';
+                });
+            });
+            
+            // Close modal when clicking outside
+            document.querySelectorAll('.game-modal, .login-modal, .register-modal').forEach(modal => {
+                modal.addEventListener('click', function(e) {
+                    if (e.target === modal) {
+                        modal.style.display = 'none';
+                        document.body.style.overflow = 'auto';
+                    }
+                });
+            });
+            
+            // Switch between login and register forms
+            const switchToRegister = document.getElementById('switchToRegister');
+            if (switchToRegister) {
+                switchToRegister.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    document.querySelector('.login-modal').style.display = 'none';
+                    document.querySelector('.register-modal').style.display = 'flex';
+                });
+            }
+            
+            const switchToLogin = document.getElementById('switchToLogin');
+            if (switchToLogin) {
+                switchToLogin.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    document.querySelector('.register-modal').style.display = 'none';
+                    document.querySelector('.login-modal').style.display = 'flex';
+                });
+            }
+            
+            // Login form submission
+            const loginForm = document.getElementById('loginForm');
+            if (loginForm) {
+                loginForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const email = document.getElementById('loginEmail').value;
+                    const password = document.getElementById('loginPassword').value;
+                    
+                    const result = userManager.login(email, password);
+                    if (result.success) {
+                        // Show success message
+                        const successMsg = document.createElement('div');
+                        successMsg.className = 'bg-green-500 text-white p-3 rounded mb-4';
+                        successMsg.innerHTML = '<i class="fas fa-check-circle mr-2"></i> Login successful!';
+                        loginForm.prepend(successMsg);
+                        
+                        // Hide message after 3 seconds and close modal
+                        setTimeout(() => {
+                            successMsg.remove();
+                            document.querySelector('.login-modal').style.display = 'none';
+                        }, 3000);
+                    } else {
+                        // Show error message
+                        const errorMsg = document.createElement('div');
+                        errorMsg.className = 'bg-red-500 text-white p-3 rounded mb-4';
+                        errorMsg.innerHTML = `<i class="fas fa-exclamation-circle mr-2"></i> ${result.message}`;
+                        
+                        // Remove previous error if exists
+                        const existingError = loginForm.querySelector('.bg-red-500');
+                        if (existingError) existingError.remove();
+                        
+                        loginForm.prepend(errorMsg);
+                    }
+                });
+            }
+            
+            // Register form submission
+            const registerForm = document.getElementById('registerForm');
+            if (registerForm) {
+                registerForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const username = document.getElementById('registerUsername').value;
+                    const email = document.getElementById('registerEmail').value;
+                    const password = document.getElementById('registerPassword').value;
+                    const confirmPassword = document.getElementById('registerConfirmPassword').value;
+                    
+                    if (password !== confirmPassword) {
+                        const errorMsg = document.createElement('div');
+                        errorMsg.className = 'bg-red-500 text-white p-3 rounded mb-4';
+                        errorMsg.innerHTML = '<i class="fas fa-exclamation-circle mr-2"></i> Passwords do not match!';
+                        
+                        // Remove previous error if exists
+                        const existingError = registerForm.querySelector('.bg-red-500');
+                        if (existingError) existingError.remove();
+                        
+                        registerForm.prepend(errorMsg);
+                        return;
+                    }
+                    
+                    const result = userManager.register(username, email, password);
+                    if (result.success) {
+                        // Show success message
+                        const successMsg = document.createElement('div');
+                        successMsg.className = 'bg-green-500 text-white p-3 rounded mb-4';
+                        successMsg.innerHTML = '<i class="fas fa-check-circle mr-2"></i> Registration successful! 5,000 points added to your account.';
+                        registerForm.prepend(successMsg);
+                        
+                        // Hide message after 3 seconds and close modal
+                        setTimeout(() => {
+                            successMsg.remove();
+                            document.querySelector('.register-modal').style.display = 'none';
+                        }, 3000);
+                    } else {
+                        // Show error message
+                        const errorMsg = document.createElement('div');
+                        errorMsg.className = 'bg-red-500 text-white p-3 rounded mb-4';
+                        errorMsg.innerHTML = `<i class="fas fa-exclamation-circle mr-2"></i> ${result.message}`;
+                        
+                        // Remove previous error if exists
+                        const existingError = registerForm.querySelector('.bg-red-500');
+                        if (existingError) existingError.remove();
+                        
+                        registerForm.prepend(errorMsg);
+                    }
+                });
+            }
+            
+            // Logout buttons
+            const logoutBtn = document.getElementById('logoutBtn');
+            if (logoutBtn) {
+                logoutBtn.addEventListener('click', function() {
+                    userManager.logout();
+                    window.location.reload();
+                });
+            }
+            
+            const mobileLogoutBtn = document.getElementById('mobileLogoutBtn');
+            if (mobileLogoutBtn) {
+                mobileLogoutBtn.addEventListener('click', function() {
+                    userManager.logout();
+                    window.location.reload();
+                });
+            }
+            
+            // Initialize Particles.js
+            if (document.getElementById('particles-js')) {
+                particlesJS('particles-js', {
+                    "particles": {
+                        "number": {
+                            "value": 80,
+                            "density": {
+                                "enable": true,
+                                "value_area": 800
+                            }
+                        },
+                        "color": {
+                            "value": "#FF5E5B"
+                        },
+                        "shape": {
+                            "type": "circle",
+                            "stroke": {
+                                "width": 0,
+                                "color": "#000000"
+                            },
+                            "polygon": {
+                                "nb_sides": 5
+                            }
+                        },
+                        "opacity": {
+                            "value": 0.5,
+                            "random": false,
+                            "anim": {
+                                "enable": false,
+                                "speed": 1,
+                                "opacity_min": 0.1,
+                                "sync": false
+                            }
+                        },
+                        "size": {
+                            "value": 3,
+                            "random": true,
+                            "anim": {
+                                "enable": false,
+                                "speed": 40,
+                                "size_min": 0.1,
+                                "sync": false
+                            }
+                        },
+                        "line_linked": {
+                            "enable": true,
+                            "distance": 150,
+                            "color": "#FF5E5B",
+                            "opacity": 0.4,
+                            "width": 1
+                        },
+                        "move": {
+                            "enable": true,
+                            "speed": 2,
+                            "direction": "none",
+                            "random": false,
+                            "straight": false,
+                            "out_mode": "out",
+                            "bounce": false,
+                            "attract": {
+                                "enable": false,
+                                "rotateX": 600,
+                                "rotateY": 1200
+                            }
+                        }
+                    },
+                    "interactivity": {
+                        "detect_on": "canvas",
+                        "events": {
+                            "onhover": {
+                                "enable": true,
+                                "mode": "grab"
+                            },
+                            "onclick": {
+                                "enable": true,
+                                "mode": "push"
+                            },
+                            "resize": true
+                        },
+                        "modes": {
+                            "grab": {
+                                "distance": 140,
+                                "line_linked": {
+                                    "opacity": 1
+                                }
+                            },
+                            "bubble": {
+                                "distance": 400,
+                                "size": 40,
+                                "duration": 2,
+                                "opacity": 8,
+                                "speed": 3
+                            },
+                            "repulse": {
+                                "distance": 200,
+                                "duration": 0.4
+                            },
+                            "push": {
+                                "particles_nb": 4
+                            },
+                            "remove": {
+                                "particles_nb": 2
+                            }
+                        }
+                    },
+                    "retina_detect": true
+                });
+            }
+            
+            // GSAP Animations
+            if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+                gsap.registerPlugin(ScrollTrigger);
+                
+                // Animate timeline items
+                gsap.utils.toArray('.timeline-item').forEach((item, i) => {
+                    gsap.from(item, {
+                        scrollTrigger: {
+                            trigger: item,
+                            start: "top 80%",
+                            toggleActions: "play none none none"
+                        },
+                        x: -50,
+                        opacity: 0,
+                        duration: 0.8,
+                        delay: i * 0.1
+                    });
+                });
+                
+                // Animate team members
+                gsap.utils.toArray('.team-member').forEach((member, i) => {
+                    gsap.from(member, {
+                        scrollTrigger: {
+                            trigger: member,
+                            start: "top 80%",
+                            toggleActions: "play none none none"
+                        },
+                        y: 50,
+                        opacity: 0,
+                        duration: 0.8,
+                        delay: i * 0.1
+                    });
+                });
+                
+                // Animate feature cards
+                gsap.utils.toArray('.feature-card').forEach((card, i) => {
+                    gsap.from(card, {
+                        scrollTrigger: {
+                            trigger: card,
+                            start: "top 80%",
+                            toggleActions: "play none none none"
+                        },
+                        y: 50,
+                        opacity: 0,
+                        duration: 0.8,
+                        delay: i * 0.1
+                    });
+                });
+            }
+            
+            // Three.js Background for Hero Section
+            if (typeof THREE !== 'undefined' && document.querySelector('.hero-gradient')) {
+                const scene = new THREE.Scene();
+                const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+                const renderer = new THREE.WebGLRenderer({ alpha: true });
+                renderer.setSize(window.innerWidth, window.innerHeight);
+                renderer.domElement.style.position = 'absolute';
+                renderer.domElement.style.top = '0';
+                renderer.domElement.style.left = '0';
+                renderer.domElement.style.zIndex = '0';
+                renderer.domElement.style.opacity = '0.3';
+                document.querySelector('.hero-gradient').appendChild(renderer.domElement);
+                
+                // Create a complex geometry for the background
+                const geometry = new THREE.IcosahedronGeometry(10, 2);
+                const material = new THREE.MeshBasicMaterial({ 
+                    color: 0xFF5E5B, 
+                    wireframe: true,
+                    transparent: true,
+                    opacity: 0.5
+                });
+                const mesh = new THREE.Mesh(geometry, material);
+                scene.add(mesh);
+                
+                // Add some floating particles
+                const particlesGeometry = new THREE.BufferGeometry();
+                const particlesCount = 500;
+                const posArray = new Float32Array(particlesCount * 3);
+                
+                for(let i = 0; i < particlesCount * 3; i++) {
+                    posArray[i] = (Math.random() - 0.5) * 50;
+                }
+                
+                particlesGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+                const particlesMaterial = new THREE.PointsMaterial({
+                    size: 0.1,
+                    color: 0x00A6A6,
+                    transparent: true,
+                    opacity: 0.8
+                });
+                const particlesMesh = new THREE.Points(particlesGeometry, particlesMaterial);
+                scene.add(particlesMesh);
+                
+                camera.position.z = 25;
+                
+                function animate() {
+                    requestAnimationFrame(animate);
+                    mesh.rotation.x += 0.005;
+                    mesh.rotation.y += 0.01;
+                    particlesMesh.rotation.y += 0.001;
+                    renderer.render(scene, camera);
+                }
+                
+                animate();
+                
+                window.addEventListener('resize', function() {
+                    camera.aspect = window.innerWidth / window.innerHeight;
+                    camera.updateProjectionMatrix();
+                    renderer.setSize(window.innerWidth, window.innerHeight);
+                });
+            }
+        });
+    </script>
+</body>
+</html>

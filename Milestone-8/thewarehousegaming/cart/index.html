@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart | The Warehouse Gaming</title>
+    <meta name="description"
+        content="Review your cart items at The Warehouse Gaming. Checkout securely for your gaming gear.">
+    <meta name="keywords" content="gaming cart, PS5 cart, Xbox cart, Nintendo cart, gaming accessories cart">
+    <meta name="robots" content="noindex, follow">
+    <link rel="canonical" href="https://www.thewarehousegaming.com/cart/" />
+
+    <!-- Favicon -->
+    <link rel="icon" href="/assets/favicon.png" type="image/x-icon">
+    <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            200: '#bae6fd',
+                            300: '#7dd3fc',
+                            400: '#38bdf8',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                        },
+                        neon: {
+                            blue: '#00f0ff',
+                            purple: '#b400ff',
+                            pink: '#ff00e6',
+                            green: '#00ff9d',
+                            yellow: '#ffde00'
+                        },
+                        dark: {
+                            950: '#0a0a12',
+                            900: '#12121d',
+                            800: '#1a1a28',
+                            700: '#252538',
+                            600: '#30304a'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['"Exo 2"', 'sans-serif'],
+                        heading: ['"Orbitron"', 'sans-serif']
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-in-out',
+                        'fade-up': 'fadeUp 0.7s ease-out',
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'spin-slow': 'spin 8s linear infinite'
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0' },
+                            '100%': { opacity: '1' }
+                        },
+                        fadeUp: {
+                            '0%': { opacity: '0', transform: 'translateY(20px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' }
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-20px)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;400;500;600;700;800;900&family=Orbitron:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* Custom Styles */
+        :root {
+            --color-neon-blue: #00f0ff;
+            --color-neon-purple: #b400ff;
+            --color-neon-pink: #ff00e6;
+            --color-neon-green: #00ff9d;
+            --color-neon-yellow: #ffde00;
+        }
+
+        body {
+            background-color: #0a0a12;
+            color: #f0f0f0;
+            overflow-x: hidden;
+            font-family: 'Exo 2', sans-serif;
+        }
+
+        .heading-font {
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 0.05em;
+        }
+
+        .gradient-text {
+            background: linear-gradient(90deg, var(--color-neon-blue), var(--color-neon-purple), var(--color-neon-pink));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            background-size: 200% auto;
+            animation: gradientText 8s ease infinite;
+        }
+
+        @keyframes gradientText {
+            0% {
+                background-position: 0% center;
+            }
+
+            50% {
+                background-position: 100% center;
+            }
+
+            100% {
+                background-position: 0% center;
+            }
+        }
+
+        .gradient-border {
+            position: relative;
+            border-radius: 12px;
+            background: linear-gradient(#0a0a12, #0a0a12) padding-box,
+                linear-gradient(45deg, var(--color-neon-blue), var(--color-neon-purple), var(--color-neon-pink)) border-box;
+            border: 2px solid transparent;
+            transition: all 0.4s ease;
+        }
+
+        .gradient-border:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 240, 255, 0.2);
+        }
+
+        .gradient-bg {
+            background: linear-gradient(135deg, var(--color-neon-blue), var(--color-neon-purple), var(--color-neon-pink));
+            background-size: 200% 200%;
+            animation: gradientBG 8s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: linear-gradient(45deg, var(--color-neon-pink), var(--color-neon-purple));
+            color: white;
+            border-radius: 50%;
+            width: 22px;
+            height: 22px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1a1a28;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(var(--color-neon-blue), var(--color-neon-purple));
+            border-radius: 4px;
+        }
+
+        /* Quantity Selector */
+        .quantity-selector {
+            display: flex;
+            align-items: center;
+        }
+
+        .quantity-btn {
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #1a1a28;
+            border: none;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .quantity-input {
+            width: 50px;
+            height: 32px;
+            text-align: center;
+            background-color: #1a1a28;
+            border: none;
+            color: white;
+            margin: 0 5px;
+        }
+
+        .empty-cart {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 40px 0;
+        }
+
+        .empty-cart-icon {
+            font-size: 80px;
+            color: #30304a;
+            margin-bottom: 20px;
+        }
+
+        .cart-item-image {
+            width: 80px;
+            height: 80px;
+            object-fit: contain;
+            border-radius: 8px;
+            border: 1px solid #252538;
+        }
+
+        @media (min-width: 768px) {
+            .cart-item-image {
+                width: 100px;
+                height: 100px;
+            }
+        }
+
+        .checkout-btn {
+            background: linear-gradient(135deg, var(--color-neon-blue), var(--color-neon-purple));
+            transition: all 0.3s ease;
+        }
+
+        .checkout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 240, 255, 0.3);
+        }
+
+        .remove-item-btn {
+            color: #f87171;
+            transition: all 0.2s ease;
+        }
+
+        .remove-item-btn:hover {
+            color: #ef4444;
+            transform: scale(1.1);
+        }
+
+        .continue-shopping-btn {
+            border: 1px solid var(--color-neon-blue);
+            transition: all 0.3s ease;
+        }
+
+        .continue-shopping-btn:hover {
+            background-color: var(--color-neon-blue);
+            color: #0a0a12;
+        }
+    </style>
+</head>
+
+<body class="font-sans bg-dark-950 text-gray-200">
+    <!-- Header -->
+    <header class="fixed top-0 left-0 right-0 z-40 bg-dark-900/90 backdrop-blur-md border-b border-gray-800 shadow-lg">
+        <!-- Top Header - Social Icons and Cart -->
+        <div class="bg-dark-800 py-2 border-b border-gray-800">
+            <div class="container mx-auto px-4 sm:px-6 flex justify-between items-center">
+                <!-- Social Icons -->
+                <div class="flex items-center space-x-4">
+                    <a href="https://www.facebook.com/TheWarehouseNZ"
+                        class="text-gray-400 hover:text-neon-blue transition-colors" aria-label="Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </a>
+                    <a href="https://www.instagram.com/thewarehousenz/"
+                        class="text-gray-400 hover:text-neon-pink transition-colors" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/company/the-warehouse-ltd/"
+                        class="text-gray-400 hover:text-neon-blue transition-colors" aria-label="LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                </div>
+
+                <!-- Top Right Cart and User -->
+                <div class="flex items-center space-x-4 mt-1">
+                    <a href="/cart/"
+                        class="text-gray-400 hover:text-neon-pink transition-colors duration-300 relative group">
+                        <i class="fas fa-shopping-cart text-xl"></i>
+                        <span id="cart-count" class="cart-count">0</span>
+                        <span
+                            class="absolute -bottom-1 left-1/2 w-0 h-0.5 bg-neon-pink group-hover:w-4 group-hover:-translate-x-2 transition-all duration-300"></span>
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Header - Logo and Navigation -->
+        <div class="container mx-auto px-4 sm:px-6 py-3">
+            <div class="flex items-center justify-between">
+                <!-- Logo -->
+                <a href="/" class="flex items-center space-x-2 group">
+                    <div
+                        class="w-10 h-10 rounded-full bg-gradient-to-br from-neon-blue to-neon-purple flex items-center justify-center group-hover:rotate-180 transition-transform duration-500">
+                        <i class="fas fa-gamepad text-dark-900 text-lg"></i>
+                    </div>
+                    <span class="text-xl font-bold heading-font">
+                        <span class="text-white">THE</span>
+                        <span class="gradient-text">WAREHOUSE</span>
+                    </span>
+                </a>
+
+                <!-- Desktop Navigation -->
+                <nav class="hidden lg:flex items-end space-x-6">
+                    <a href="/" class="relative group text-white hover:text-neon-blue transition-colors duration-300">
+                        Home
+                        <span
+                            class="absolute bottom-0 left-0 w-0 h-0.5 bg-neon-blue group-hover:w-full transition-all duration-300"></span>
+                    </a>
+                    <a href="/products/"
+                        class="relative group text-gray-400 hover:text-neon-purple transition-colors duration-300">
+                        Products
+                        <span
+                            class="absolute bottom-0 left-0 w-0 h-0.5 bg-neon-purple group-hover:w-full transition-all duration-300"></span>
+                    </a>
+                    <a href="/blog/"
+                        class="relative group text-gray-400 hover:text-neon-purple transition-colors duration-300">
+                        Blog
+                        <span
+                            class="absolute bottom-0 left-0 w-0 h-0.5 bg-neon-purple group-hover:w-full transition-all duration-300"></span>
+                    </a>
+
+                    <a href="/about/"
+                        class="relative group text-gray-400 hover:text-neon-pink transition-colors duration-300">
+                        About
+                        <span
+                            class="absolute bottom-0 left-0 w-0 h-0.5 bg-neon-pink group-hover:w-full transition-all duration-300"></span>
+                    </a>
+
+                    <a href="/contact/"
+                        class="relative group text-gray-400 hover:text-neon-pink transition-colors duration-300">
+                        Contact
+                        <span
+                            class="absolute bottom-0 left-0 w-0 h-0.5 bg-neon-pink group-hover:w-full transition-all duration-300"></span>
+                    </a>
+                </nav>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-button" class="lg:hidden text-white focus:outline-none">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+
+                <!-- Cart and Search -->
+                <div class="flex items-center space-x-4 sm:space-x-6 hidden">
+                    <button
+                        class="text-gray-400 hover:text-neon-blue transition-colors duration-300 relative group hidden"
+                        id="search-button">
+                        <i class="fas fa-search text-xl"></i>
+                        <span
+                            class="absolute -bottom-1 left-1/2 w-0 h-0.5 bg-neon-blue group-hover:w-4 group-hover:-translate-x-2 transition-all duration-300"></span>
+                    </button>
+                    <a href="/cart/"
+                        class="text-gray-400 hover:text-neon-pink transition-colors duration-300 relative group lg:hidden">
+                        <i class="fas fa-shopping-cart text-xl"></i>
+                        <span id="cart-count-mobile" class="cart-count">0</span>
+                        <span
+                            class="absolute -bottom-1 left-1/2 w-0 h-0.5 bg-neon-pink group-hover:w-4 group-hover:-translate-x-2 transition-all duration-300"></span>
+                    </a>
+                    <button
+                        class="text-gray-400 hover:text-neon-green transition-colors duration-300 relative group hidden"
+                        id="theme-toggle">
+                        <i class="fas fa-moon text-xl" id="theme-icon"></i>
+                        <span
+                            class="absolute -bottom-1 left-1/2 w-0 h-0.5 bg-neon-green group-hover:w-4 group-hover:-translate-x-2 transition-all duration-300"></span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Mobile Menu -->
+            <div id="mobile-menu" class="lg:hidden hidden mt-4 pb-4">
+                <div class="flex flex-col space-y-3">
+                    <a href="/"
+                        class="text-white font-medium py-2 border-b border-gray-800 hover:text-neon-blue transition-colors">Home</a>
+                    <a href="/products/"
+                        class="text-gray-400 hover:text-neon-purple transition-colors py-2 border-b border-gray-800">Products</a>
+                    <a href="/blog/"
+                        class="text-gray-400 hover:text-neon-purple transition-colors py-2 border-b border-gray-800">Blog</a>
+
+                    <a href="/about/" class="text-gray-400 hover:text-neon-pink transition-colors py-2">About</a>
+                    <a href="/contact/" class="text-gray-400 hover:text-neon-pink transition-colors py-2">Contact</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="pt-32 pb-16 min-h-screen">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="flex items-center justify-between mb-8">
+                <h1 class="text-3xl sm:text-4xl font-bold heading-font">
+                    <span class="gradient-text">Your</span> Cart
+                </h1>
+                <a href="/products/" class="text-neon-blue hover:underline">Continue Shopping</a>
+            </div>
+
+            <div id="cart-container">
+                <!-- Cart items will be dynamically inserted here -->
+                <div class="empty-cart" id="empty-cart">
+                    <i class="fas fa-shopping-cart empty-cart-icon"></i>
+                    <h2 class="text-2xl font-bold mb-2">Your cart is empty</h2>
+                    <p class="text-gray-500 mb-6 max-w-md mx-auto">Looks like you haven't added anything to your cart
+                        yet. Browse our collection of gaming products to find something you'll love!</p>
+                    <a href="/products/" class="continue-shopping-btn px-6 py-3 rounded-lg text-neon-blue font-medium">
+                        Continue Shopping
+                    </a>
+                </div>
+
+                <div class="hidden" id="cart-with-items">
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                        <div class="lg:col-span-2">
+                            <div class="gradient-border bg-dark-800 rounded-xl p-4 sm:p-6">
+                                <div class="hidden sm:grid grid-cols-12 gap-4 border-b border-gray-800 pb-4 mb-4">
+                                    <div class="col-span-6 font-medium text-gray-400">Product</div>
+                                    <div class="col-span-2 font-medium text-gray-400">Price</div>
+                                    <div class="col-span-2 font-medium text-gray-400">Quantity</div>
+                                    <div class="col-span-2 font-medium text-gray-400 text-right">Total</div>
+                                </div>
+
+                                <div id="cart-items-list">
+                                    <!-- Cart items will be inserted here -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <div class="gradient-border bg-dark-800 rounded-xl p-4 sm:p-6">
+                                <h3 class="text-xl font-bold mb-6 heading-font">Order Summary</h3>
+
+                                <div class="space-y-4 mb-6">
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-400">Subtotal</span>
+                                        <span class="font-medium" id="cart-subtotal">$0.00</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span class="text-gray-400">Shipping</span>
+                                        <span class="font-medium" id="cart-shipping">Calculated at checkout</span>
+                                    </div>
+                                    <div class="flex justify-between border-t border-gray-800 pt-4">
+                                        <span class="text-gray-400">Estimated Total</span>
+                                        <span class="font-bold text-xl text-neon-blue" id="cart-total">$0.00</span>
+                                    </div>
+                                </div>
+
+                                <a href="/checkout/" class="text-neon-blue hover:underline"> <button
+                                        class="checkout-btn w-full py-3 rounded-lg font-bold mb-4" id="checkout-btn">
+                                        Proceed to Checkout
+                                    </button></a>
+                                <div class="text-center text-sm text-gray-500">
+                                    or <a href="/products/" class="text-neon-blue hover:underline"> Continue
+                                        Shopping</a>
+                                </div>
+
+                            </div>
+
+
+
+                        </div>
+
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark-900 border-t border-gray-800 pt-12 sm:pt-16 pb-6 sm:pb-8">
+        <div class="container mx-auto px-4 sm:px-6">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-8 sm:gap-12 mb-8 sm:mb-12">
+                <div>
+                    <a href="/" class="flex items-center mb-4 sm:mb-6">
+                        <div
+                            class="w-10 h-10 rounded-full bg-gradient-to-br from-neon-blue to-neon-purple flex items-center justify-center mr-3">
+                            <i class="fas fa-gamepad text-dark-900"></i>
+                        </div>
+                        <span class="text-xl font-bold heading-font">
+                            <span class="text-white">THE</span>
+                            <span class="gradient-text">WAREHOUSE</span>
+                        </span>
+                    </a>
+                    <p class="text-gray-500 text-sm sm:text-base mb-4">
+                        Your premier destination for next-gen gaming in New Zealand.
+                    </p>
+                    <div class="flex space-x-3 sm:space-x-4">
+                        <a href="https://www.facebook.com/TheWarehouseNZ"
+                            class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-dark-800 flex items-center justify-center text-gray-400 hover:text-neon-blue hover:bg-dark-700 transition-colors">
+                            <i class="fab fa-facebook-f text-sm sm:text-base"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/company/the-warehouse-ltd/"
+                            class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-dark-800 flex items-center justify-center text-gray-400 hover:text-neon-blue hover:bg-dark-700 transition-colors">
+                            <i class="fab fa-linkedin-in text-sm sm:text-base"></i>
+                        </a>
+                        <a href="https://www.instagram.com/thewarehousenz/"
+                            class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-dark-800 flex items-center justify-center text-gray-400 hover:text-neon-pink hover:bg-dark-700 transition-colors">
+                            <i class="fab fa-instagram text-sm sm:text-base"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold mb-4 sm:mb-6 text-white">Shop</h3>
+                    <ul class="space-y-2 sm:space-y-3">
+                        <li>
+                            <a href="/products/"
+                                class="text-gray-500 hover:text-neon-blue transition-colors text-sm sm:text-base">PlayStation
+                                5</a>
+                        </li>
+                        <li>
+                            <a href="/products/"
+                                class="text-gray-500 hover:text-neon-blue transition-colors text-sm sm:text-base">Xbox
+                                Series X</a>
+                        </li>
+                        <li>
+                            <a href="/products/"
+                                class="text-gray-500 hover:text-neon-blue transition-colors text-sm sm:text-base">Nintendo
+                                Switch</a>
+                        </li>
+                        <li>
+                            <a href="/products/"
+                                class="text-gray-500 hover:text-neon-blue transition-colors text-sm sm:text-base">Video
+                                Games</a>
+                        </li>
+                        <li>
+                            <a href="/products/"
+                                class="text-gray-500 hover:text-neon-blue transition-colors text-sm sm:text-base">Accessories</a>
+                        </li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold mb-4 sm:mb-6 text-white">Legal</h3>
+                    <ul class="space-y-2 sm:space-y-3">
+                        <li><a href="/privacy/"
+                                class="text-gray-500 hover:text-neon-blue transition-colors text-sm sm:text-base">Privacy
+                                Policy</a></li>
+                        <li><a href="/cookies/"
+                                class="text-gray-500 hover:text-neon-blue transition-colors text-sm sm:text-base">Cookies
+                                Policy</a></li>
+                        <li><a href="/terms/"
+                                class="text-gray-500 hover:text-neon-blue transition-colors text-sm sm:text-base">Terms
+                                of Service</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h3 class="text-lg font-semibold mb-4 sm:mb-6 text-white">Company</h3>
+                    <ul class="space-y-2 sm:space-y-3">
+                        <li><a href="/about/"
+                                class="text-gray-500 hover:text-neon-blue transition-colors text-sm sm:text-base">About
+                                Us</a></li>
+                        <li><a href="/blog/"
+                                class="text-gray-500 hover:text-neon-blue transition-colors text-sm sm:text-base">Blog</a>
+                        </li>
+                        <li><a href="/contact/"
+                                class="text-gray-500 hover:text-neon-blue transition-colors text-sm sm:text-base">Contact
+                                Us</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="border-t border-gray-800 pt-6 sm:pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-gray-600 text-xs sm:text-sm mb-4 md:mb-0">
+                        &copy; 2025 The Warehouse Gaming. All rights reserved.
+                    </p>
+                    <div class="flex space-x-4 sm:space-x-6">
+                        <img src="/assets/visa.webp" alt="Visa" class="h-5 sm:h-6 opacity-80">
+                        <img src="/assets/mastercard.png" alt="Mastercard" class="h-5 sm:h-6 opacity-80">
+                        <img src="/assets/amex.png" alt="American Express" class="h-5 sm:h-6 opacity-80">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile Menu Toggle
+        document.getElementById('mobile-menu-button').addEventListener('click', function () {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+            this.innerHTML = menu.classList.contains('hidden') ? '<i class="fas fa-bars text-xl"></i>' : '<i class="fas fa-times text-xl"></i>';
+        });
+
+        // Cart functionality
+        document.addEventListener('DOMContentLoaded', function () {
+            // Initialize cart from local storage
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            updateCartDisplay();
+
+            // Update cart count in header
+            function updateCartCount() {
+                const count = cart.reduce((total, item) => total + item.quantity, 0);
+                document.getElementById('cart-count').textContent = count;
+                document.getElementById('cart-count-mobile').textContent = count;
+            }
+
+            // Update the cart display
+            function updateCartDisplay() {
+                updateCartCount();
+
+                if (cart.length === 0) {
+                    document.getElementById('empty-cart').classList.remove('hidden');
+                    document.getElementById('cart-with-items').classList.add('hidden');
+                    return;
+                }
+
+                document.getElementById('empty-cart').classList.add('hidden');
+                document.getElementById('cart-with-items').classList.remove('hidden');
+
+                // Calculate totals
+                const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+                document.getElementById('cart-subtotal').textContent = `$${subtotal.toFixed(2)}`;
+                document.getElementById('cart-total').textContent = `$${subtotal.toFixed(2)}`;
+
+                // Render cart items
+                const cartItemsList = document.getElementById('cart-items-list');
+                cartItemsList.innerHTML = '';
+
+                cart.forEach((item, index) => {
+                    const cartItem = document.createElement('div');
+                    cartItem.className = 'grid grid-cols-12 gap-4 py-4 border-b border-gray-800 last:border-0';
+                    cartItem.innerHTML = `
+                        <div class="col-span-6 flex items-center">
+                            <img src="${item?.image}" alt="${item.name}" class="cart-item-image mr-4">
+                            <div>
+                                <h4 class="font-medium">${item.name}</h4>
+                                <button class="remove-item-btn text-xs mt-1" data-index="${index}">
+                                    <i class="fas fa-trash-alt mr-1"></i> Remove
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-span-2 flex items-center">
+                            <span>$${item.price.toFixed(2)}</span>
+                        </div>
+                        <div class="col-span-2 flex items-center">
+                            <div class="quantity-selector">
+                                <button class="quantity-btn decrease" data-index="${index}">-</button>
+                                <input type="number" value="${item.quantity}" min="1" class="quantity-input" data-index="${index}">
+                                <button class="quantity-btn increase" data-index="${index}">+</button>
+                            </div>
+                        </div>
+                        <div class="col-span-2 flex items-center justify-end">
+                            <span class="font-medium">$${(item.price * item.quantity).toFixed(2)}</span>
+                        </div>
+                    `;
+                    cartItemsList.appendChild(cartItem);
+                });
+
+                // Add event listeners to quantity controls
+                document.querySelectorAll('.quantity-btn.decrease').forEach(button => {
+                    button.addEventListener('click', function () {
+                        const index = parseInt(this.getAttribute('data-index'));
+                        if (cart[index].quantity > 1) {
+                            cart[index].quantity--;
+                            localStorage.setItem('cart', JSON.stringify(cart));
+                            updateCartDisplay();
+                        }
+                    });
+                });
+
+                document.querySelectorAll('.quantity-btn.increase').forEach(button => {
+                    button.addEventListener('click', function () {
+                        const index = parseInt(this.getAttribute('data-index'));
+                        cart[index].quantity++;
+                        localStorage.setItem('cart', JSON.stringify(cart));
+                        updateCartDisplay();
+                    });
+                });
+
+                document.querySelectorAll('.quantity-input').forEach(input => {
+                    input.addEventListener('change', function () {
+                        const index = parseInt(this.getAttribute('data-index'));
+                        const newQuantity = parseInt(this.value);
+                        if (newQuantity >= 1) {
+                            cart[index].quantity = newQuantity;
+                            localStorage.setItem('cart', JSON.stringify(cart));
+                            updateCartDisplay();
+                        } else {
+                            this.value = cart[index].quantity;
+                        }
+                    });
+                });
+
+                // Add event listeners to remove buttons
+                document.querySelectorAll('.remove-item-btn').forEach(button => {
+                    button.addEventListener('click', function () {
+                        const index = parseInt(this.getAttribute('data-index'));
+                        cart.splice(index, 1);
+                        localStorage.setItem('cart', JSON.stringify(cart));
+                        updateCartDisplay();
+                    });
+                });
+            }
+
+           
+        });
+    </script>
+</body>
+
+</html>
